@@ -1,6 +1,7 @@
-from .default_interface_refl import Ui_MainWindow
 from PyQt4 import QtGui
 
+from refred_main_interface import Ui_MainWindow
+from gui_handling.initialize_gui import InitializeGui
 
 class MainGui(QtGui.QMainWindow):
 
@@ -13,7 +14,7 @@ class MainGui(QtGui.QMainWindow):
         self.ui=Ui_MainWindow()
         self.ui.setupUi(self)
         
-#        InitializeGui(self)
+        InitializeGui(self)
 #        MakeGuiConnections(self)
         
 

@@ -3046,7 +3046,7 @@ p, li { white-space: pre-wrap; }
                   <item>
                    <widget class="QTableWidget" name="reductionTable">
                     <property name="enabled">
-                     <bool>false</bool>
+                     <bool>true</bool>
                     </property>
                     <property name="minimumSize">
                      <size>
@@ -3202,6 +3202,11 @@ p, li { white-space: pre-wrap; }
                       <string>New Row</string>
                      </property>
                     </row>
+                    <column>
+                     <property name="text">
+                      <string>New Column</string>
+                     </property>
+                    </column>
                     <column>
                      <property name="text">
                       <string>New Column</string>

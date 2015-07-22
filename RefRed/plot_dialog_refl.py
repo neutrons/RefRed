@@ -1,556 +1,322 @@
-from PyQt4.QtGui import QDialog, QPalette, QFileDialog
-from PyQt4.QtCore import Qt
-from plot_dialog_refl_interface import Ui_Dialog as UiPlot
-from mplwidget import MPLWidget
-import colors
-import os
-import utilities
+# -*- coding: utf-8 -*-
+#@PydevCodeAnalysisIgnore
 
-class PlotDialogREFL(QDialog):
-	
-	main_gui = None
-	type = 'data'
-	data = None
-	
-	_open_instances = []
-	yaxis = None
-	peak = None
-	back = None
-	
-	_prev_peak1 = -1
-	_prev_peak2 = -1
-	_prev_back1 = -1
-	_prev_back2 = -1
+# Form implementation generated from reading ui file 'designer/plot_dialog_refl.ui'
+#
+# Created: Wed Jul 22 12:38:53 2015
+#      by: PyQt4 UI code generator 4.11.3
+#
+# WARNING! All changes made in this file will be lost!
 
-	isJimLog = True
-	isJohnLog = True
-	
-	nbr_pixel_y_axis = 304
-	
-	def __init__(self, main_gui, type, active_data, parent=None):
+from PyQt4 import QtCore, QtGui
 
-		self.type = type
-		self.main_gui = main_gui
-		self.data = active_data
+try:
+    _fromUtf8 = QtCore.QString.fromUtf8
+except AttributeError:
+    def _fromUtf8(s):
+        return s
 
-		QDialog.__init__(self, parent=parent)
-		self.setWindowModality(False)
-		self._open_instances.append(self)
-		self.ui = UiPlot()
-		self.ui.setupUi(self)
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
-		self.setWindowTitle('Counts vs Y pixel (Jim and John views)')
-		self.hide_and_format_invalid_widgets()
-		
-		self.ui.plot_counts_vs_pixel.leaveFigure.connect(self.leave_plot_counts_vs_pixel)
-		self.ui.plot_counts_vs_pixel.toolbar.homeClicked.connect(self.home_plot_counts_vs_pixel)
-		self.ui.plot_counts_vs_pixel.toolbar.exportClicked.connect(self.export_counts_vs_pixel)
-		
-		self.ui.plot_pixel_vs_counts.leaveFigure.connect(self.leave_plot_pixel_vs_counts)
-		self.ui.plot_pixel_vs_counts.toolbar.homeClicked.connect(self.home_plot_pixel_vs_counts)
-		self.ui.plot_pixel_vs_counts.toolbar.exportClicked.connect(self.export_counts_vs_pixel)
-		
-		_new_detector_geometry_flag = self.data.new_detector_geometry_flag
-		if not _new_detector_geometry_flag:
-			self.reset_max_ui_value()
-			self.nbr_pixel_y_axis = 256 #TODO MAGIC NUMBER
-		
-		self.init_plot()
+class Ui_Dialog(object):
+    def setupUi(self, Dialog):
+        Dialog.setObjectName(_fromUtf8("Dialog"))
+        Dialog.resize(1232, 1001)
+        self.verticalLayout_3 = QtGui.QVBoxLayout(Dialog)
+        self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
+        self.tabWidget = QtGui.QTabWidget(Dialog)
+        self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
+        self.tab = QtGui.QWidget()
+        self.tab.setObjectName(_fromUtf8("tab"))
+        self.horizontalLayout = QtGui.QHBoxLayout(self.tab)
+        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
+        self.plot_pixel_vs_counts = MPLWidgetXLog(self.tab)
+        self.plot_pixel_vs_counts.setObjectName(_fromUtf8("plot_pixel_vs_counts"))
+        self.horizontalLayout.addWidget(self.plot_pixel_vs_counts)
+        self.groupBox_4 = QtGui.QGroupBox(self.tab)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.groupBox_4.sizePolicy().hasHeightForWidth())
+        self.groupBox_4.setSizePolicy(sizePolicy)
+        self.groupBox_4.setObjectName(_fromUtf8("groupBox_4"))
+        self.verticalLayout_11 = QtGui.QVBoxLayout(self.groupBox_4)
+        self.verticalLayout_11.setObjectName(_fromUtf8("verticalLayout_11"))
+        self.frame = QtGui.QFrame(self.groupBox_4)
+        self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtGui.QFrame.Raised)
+        self.frame.setObjectName(_fromUtf8("frame"))
+        self.verticalLayout_12 = QtGui.QVBoxLayout(self.frame)
+        self.verticalLayout_12.setObjectName(_fromUtf8("verticalLayout_12"))
+        self.horizontalLayout_15 = QtGui.QHBoxLayout()
+        self.horizontalLayout_15.setObjectName(_fromUtf8("horizontalLayout_15"))
+        self.verticalLayout_13 = QtGui.QVBoxLayout()
+        self.verticalLayout_13.setObjectName(_fromUtf8("verticalLayout_13"))
+        spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_13.addItem(spacerItem)
+        self.john_peak2_label = QtGui.QLabel(self.frame)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.john_peak2_label.setFont(font)
+        self.john_peak2_label.setAccessibleDescription(_fromUtf8(""))
+        self.john_peak2_label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
+        self.john_peak2_label.setObjectName(_fromUtf8("john_peak2_label"))
+        self.verticalLayout_13.addWidget(self.john_peak2_label)
+        self.john_peak2 = QtGui.QSpinBox(self.frame)
+        self.john_peak2.setMaximum(303)
+        self.john_peak2.setObjectName(_fromUtf8("john_peak2"))
+        self.verticalLayout_13.addWidget(self.john_peak2)
+        self.horizontalLayout_15.addLayout(self.verticalLayout_13)
+        self.verticalLayout_12.addLayout(self.horizontalLayout_15)
+        self.horizontalLayout_16 = QtGui.QHBoxLayout()
+        self.horizontalLayout_16.setObjectName(_fromUtf8("horizontalLayout_16"))
+        self.verticalLayout_14 = QtGui.QVBoxLayout()
+        self.verticalLayout_14.setObjectName(_fromUtf8("verticalLayout_14"))
+        self.john_peak1 = QtGui.QSpinBox(self.frame)
+        self.john_peak1.setMaximum(303)
+        self.john_peak1.setObjectName(_fromUtf8("john_peak1"))
+        self.verticalLayout_14.addWidget(self.john_peak1)
+        self.john_peak1_label = QtGui.QLabel(self.frame)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.john_peak1_label.setFont(font)
+        self.john_peak1_label.setAccessibleDescription(_fromUtf8(""))
+        self.john_peak1_label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
+        self.john_peak1_label.setObjectName(_fromUtf8("john_peak1_label"))
+        self.verticalLayout_14.addWidget(self.john_peak1_label)
+        spacerItem1 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_14.addItem(spacerItem1)
+        self.horizontalLayout_16.addLayout(self.verticalLayout_14)
+        self.verticalLayout_12.addLayout(self.horizontalLayout_16)
+        self.verticalLayout_11.addWidget(self.frame)
+        self.horizontalLayout.addWidget(self.groupBox_4)
+        self.groupBox_3 = QtGui.QGroupBox(self.tab)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.groupBox_3.sizePolicy().hasHeightForWidth())
+        self.groupBox_3.setSizePolicy(sizePolicy)
+        self.groupBox_3.setObjectName(_fromUtf8("groupBox_3"))
+        self.verticalLayout_8 = QtGui.QVBoxLayout(self.groupBox_3)
+        self.verticalLayout_8.setObjectName(_fromUtf8("verticalLayout_8"))
+        self.frame_2 = QtGui.QFrame(self.groupBox_3)
+        self.frame_2.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.frame_2.setFrameShadow(QtGui.QFrame.Raised)
+        self.frame_2.setObjectName(_fromUtf8("frame_2"))
+        self.verticalLayout_7 = QtGui.QVBoxLayout(self.frame_2)
+        self.verticalLayout_7.setObjectName(_fromUtf8("verticalLayout_7"))
+        self.horizontalLayout_13 = QtGui.QHBoxLayout()
+        self.horizontalLayout_13.setObjectName(_fromUtf8("horizontalLayout_13"))
+        self.verticalLayout_9 = QtGui.QVBoxLayout()
+        self.verticalLayout_9.setObjectName(_fromUtf8("verticalLayout_9"))
+        self.john_back_flag = QtGui.QCheckBox(self.frame_2)
+        self.john_back_flag.setObjectName(_fromUtf8("john_back_flag"))
+        self.verticalLayout_9.addWidget(self.john_back_flag)
+        spacerItem2 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem2)
+        self.john_back2_label = QtGui.QLabel(self.frame_2)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.john_back2_label.setFont(font)
+        self.john_back2_label.setAccessibleDescription(_fromUtf8(""))
+        self.john_back2_label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
+        self.john_back2_label.setObjectName(_fromUtf8("john_back2_label"))
+        self.verticalLayout_9.addWidget(self.john_back2_label)
+        self.john_back2 = QtGui.QSpinBox(self.frame_2)
+        self.john_back2.setMaximum(303)
+        self.john_back2.setObjectName(_fromUtf8("john_back2"))
+        self.verticalLayout_9.addWidget(self.john_back2)
+        spacerItem3 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem3)
+        self.horizontalLayout_13.addLayout(self.verticalLayout_9)
+        self.verticalLayout_7.addLayout(self.horizontalLayout_13)
+        self.horizontalLayout_14 = QtGui.QHBoxLayout()
+        self.horizontalLayout_14.setObjectName(_fromUtf8("horizontalLayout_14"))
+        self.verticalLayout_10 = QtGui.QVBoxLayout()
+        self.verticalLayout_10.setObjectName(_fromUtf8("verticalLayout_10"))
+        spacerItem4 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_10.addItem(spacerItem4)
+        self.john_back1 = QtGui.QSpinBox(self.frame_2)
+        self.john_back1.setMaximum(303)
+        self.john_back1.setObjectName(_fromUtf8("john_back1"))
+        self.verticalLayout_10.addWidget(self.john_back1)
+        self.john_back1_label = QtGui.QLabel(self.frame_2)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.john_back1_label.setFont(font)
+        self.john_back1_label.setAccessibleDescription(_fromUtf8(""))
+        self.john_back1_label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
+        self.john_back1_label.setObjectName(_fromUtf8("john_back1_label"))
+        self.verticalLayout_10.addWidget(self.john_back1_label)
+        spacerItem5 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_10.addItem(spacerItem5)
+        self.horizontalLayout_14.addLayout(self.verticalLayout_10)
+        self.verticalLayout_7.addLayout(self.horizontalLayout_14)
+        self.verticalLayout_8.addWidget(self.frame_2)
+        self.horizontalLayout.addWidget(self.groupBox_3)
+        self.tabWidget.addTab(self.tab, _fromUtf8(""))
+        self.tab_2 = QtGui.QWidget()
+        self.tab_2.setObjectName(_fromUtf8("tab_2"))
+        self.verticalLayout = QtGui.QVBoxLayout(self.tab_2)
+        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
+        self.plot_counts_vs_pixel = MPLWidget(self.tab_2)
+        self.plot_counts_vs_pixel.setObjectName(_fromUtf8("plot_counts_vs_pixel"))
+        self.verticalLayout.addWidget(self.plot_counts_vs_pixel)
+        self.groupBox = QtGui.QGroupBox(self.tab_2)
+        self.groupBox.setObjectName(_fromUtf8("groupBox"))
+        self.horizontalLayout_3 = QtGui.QHBoxLayout(self.groupBox)
+        self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
+        self.frame_3 = QtGui.QFrame(self.groupBox)
+        self.frame_3.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QtGui.QFrame.Raised)
+        self.frame_3.setObjectName(_fromUtf8("frame_3"))
+        self.horizontalLayout_9 = QtGui.QHBoxLayout(self.frame_3)
+        self.horizontalLayout_9.setObjectName(_fromUtf8("horizontalLayout_9"))
+        self.verticalLayout_2 = QtGui.QVBoxLayout()
+        self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
+        self.horizontalLayout_4 = QtGui.QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(_fromUtf8("horizontalLayout_4"))
+        spacerItem6 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_4.addItem(spacerItem6)
+        self.jim_peak1_label = QtGui.QLabel(self.frame_3)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.jim_peak1_label.setFont(font)
+        self.jim_peak1_label.setAccessibleDescription(_fromUtf8(""))
+        self.jim_peak1_label.setInputMethodHints(QtCore.Qt.ImhNone)
+        self.jim_peak1_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.jim_peak1_label.setObjectName(_fromUtf8("jim_peak1_label"))
+        self.horizontalLayout_4.addWidget(self.jim_peak1_label)
+        self.jim_peak1 = QtGui.QSpinBox(self.frame_3)
+        self.jim_peak1.setMaximum(303)
+        self.jim_peak1.setObjectName(_fromUtf8("jim_peak1"))
+        self.horizontalLayout_4.addWidget(self.jim_peak1)
+        self.jim_peak2 = QtGui.QSpinBox(self.frame_3)
+        self.jim_peak2.setMaximum(303)
+        self.jim_peak2.setObjectName(_fromUtf8("jim_peak2"))
+        self.horizontalLayout_4.addWidget(self.jim_peak2)
+        self.jim_peak2_label = QtGui.QLabel(self.frame_3)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.jim_peak2_label.setFont(font)
+        self.jim_peak2_label.setAccessibleDescription(_fromUtf8(""))
+        self.jim_peak2_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.jim_peak2_label.setObjectName(_fromUtf8("jim_peak2_label"))
+        self.horizontalLayout_4.addWidget(self.jim_peak2_label)
+        spacerItem7 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_4.addItem(spacerItem7)
+        self.verticalLayout_2.addLayout(self.horizontalLayout_4)
+        self.horizontalLayout_9.addLayout(self.verticalLayout_2)
+        self.horizontalLayout_3.addWidget(self.frame_3)
+        self.verticalLayout.addWidget(self.groupBox)
+        self.groupBox_2 = QtGui.QGroupBox(self.tab_2)
+        self.groupBox_2.setObjectName(_fromUtf8("groupBox_2"))
+        self.horizontalLayout_6 = QtGui.QHBoxLayout(self.groupBox_2)
+        self.horizontalLayout_6.setObjectName(_fromUtf8("horizontalLayout_6"))
+        self.frame_4 = QtGui.QFrame(self.groupBox_2)
+        self.frame_4.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.frame_4.setFrameShadow(QtGui.QFrame.Raised)
+        self.frame_4.setObjectName(_fromUtf8("frame_4"))
+        self.horizontalLayout_5 = QtGui.QHBoxLayout(self.frame_4)
+        self.horizontalLayout_5.setObjectName(_fromUtf8("horizontalLayout_5"))
+        self.jim_back_flag = QtGui.QCheckBox(self.frame_4)
+        self.jim_back_flag.setObjectName(_fromUtf8("jim_back_flag"))
+        self.horizontalLayout_5.addWidget(self.jim_back_flag)
+        spacerItem8 = QtGui.QSpacerItem(200, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_5.addItem(spacerItem8)
+        self.jim_back1_label = QtGui.QLabel(self.frame_4)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.jim_back1_label.setFont(font)
+        self.jim_back1_label.setAccessibleDescription(_fromUtf8(""))
+        self.jim_back1_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.jim_back1_label.setObjectName(_fromUtf8("jim_back1_label"))
+        self.horizontalLayout_5.addWidget(self.jim_back1_label)
+        self.jim_back1 = QtGui.QSpinBox(self.frame_4)
+        self.jim_back1.setMaximum(303)
+        self.jim_back1.setObjectName(_fromUtf8("jim_back1"))
+        self.horizontalLayout_5.addWidget(self.jim_back1)
+        spacerItem9 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_5.addItem(spacerItem9)
+        self.jim_back2 = QtGui.QSpinBox(self.frame_4)
+        self.jim_back2.setMaximum(303)
+        self.jim_back2.setObjectName(_fromUtf8("jim_back2"))
+        self.horizontalLayout_5.addWidget(self.jim_back2)
+        self.jim_back2_label = QtGui.QLabel(self.frame_4)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.jim_back2_label.setFont(font)
+        self.jim_back2_label.setAccessibleDescription(_fromUtf8(""))
+        self.jim_back2_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.jim_back2_label.setObjectName(_fromUtf8("jim_back2_label"))
+        self.horizontalLayout_5.addWidget(self.jim_back2_label)
+        spacerItem10 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_5.addItem(spacerItem10)
+        self.horizontalLayout_6.addWidget(self.frame_4)
+        self.verticalLayout.addWidget(self.groupBox_2)
+        self.tabWidget.addTab(self.tab_2, _fromUtf8(""))
+        self.verticalLayout_3.addWidget(self.tabWidget)
+        self.invalid_selection_label = QtGui.QLabel(Dialog)
+        self.invalid_selection_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.invalid_selection_label.setObjectName(_fromUtf8("invalid_selection_label"))
+        self.verticalLayout_3.addWidget(self.invalid_selection_label)
 
-	def export_counts_vs_pixel(self):
+        self.retranslateUi(Dialog)
+        self.tabWidget.setCurrentIndex(1)
+        QtCore.QObject.connect(self.jim_peak1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.jim_peak1_spinbox_signal)
+        QtCore.QObject.connect(self.john_peak1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.john_peak1_spinbox_signal)
+        QtCore.QObject.connect(self.jim_peak2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.jim_peak2_spinbox_signal)
+        QtCore.QObject.connect(self.john_peak2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.john_peak2_spinbox_signal)
+        QtCore.QObject.connect(self.jim_back1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.jim_back1_spinbox_signal)
+        QtCore.QObject.connect(self.john_back1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.john_back1_spinbox_signal)
+        QtCore.QObject.connect(self.jim_back2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.jim_back2_spinbox_signal)
+        QtCore.QObject.connect(self.john_back2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.john_back2_spinbox_signal)
+        QtCore.QObject.connect(self.jim_back_flag, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), Dialog.jim_back_flag_clicked)
+        QtCore.QObject.connect(self.john_back_flag, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), Dialog.john_back_flag_clicked)
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-		_active_data = self.data
-		run_number = _active_data.run_number
-		default_filename = 'REFL_' + str(run_number) + '_rpx.txt'
-		_path = self.main_gui.path_ascii
-		default_filename = _path + '/' + default_filename
-		filename = QFileDialog.getSaveFileName(self, 'Create Counts vs Pixel ASCII File', default_filename)
-		
-		#user canceled
-		if str(filename).strip() == '':
-			return
-		
-		self.main_gui.path_ascii = os.path.dirname(filename)
+    def retranslateUi(self, Dialog):
+        Dialog.setWindowTitle(_translate("Dialog", "Dialog", None))
+        self.groupBox_4.setTitle(_translate("Dialog", "PEAK", None))
+        self.john_peak2_label.setText(_translate("Dialog", "*", None))
+        self.john_peak1_label.setText(_translate("Dialog", "*", None))
+        self.groupBox_3.setTitle(_translate("Dialog", "BACKGROUND", None))
+        self.john_back_flag.setText(_translate("Dialog", "with Back.", None))
+        self.john_back2_label.setText(_translate("Dialog", "*", None))
+        self.john_back1_label.setText(_translate("Dialog", "*", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Dialog", "John", None))
+        self.groupBox.setTitle(_translate("Dialog", "PEAK", None))
+        self.jim_peak1_label.setText(_translate("Dialog", "*", None))
+        self.jim_peak2_label.setText(_translate("Dialog", "*", None))
+        self.groupBox_2.setTitle(_translate("Dialog", "BACKGROUND", None))
+        self.jim_back_flag.setText(_translate("Dialog", "with Background", None))
+        self.jim_back1_label.setText(_translate("Dialog", "*", None))
+        self.jim_back2_label.setText(_translate("Dialog", "*", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Dialog", "Jim", None))
+        self.invalid_selection_label.setText(_translate("Dialog", "(*)    INVALID SELECTION", None))
 
-		ycountsdata = _active_data.ycountsdata
-		pixelaxis = range(len(ycountsdata))
-		
-		text = ['#Couns vs Pixels','#Pixel - Counts']
-		sz = len(pixelaxis)
-		for i in range(sz):
-			_line = str(pixelaxis[i]) + ' ' + str(ycountsdata[i])
-			text.append(_line)
-			
-		utilities.write_ascii_file(filename, text)
-	
-	def leave_plot_counts_vs_pixel(self):
-		[xmin,xmax] = self.ui.plot_counts_vs_pixel.canvas.ax.yaxis.get_view_interval()
-		[ymin,ymax] = self.ui.plot_counts_vs_pixel.canvas.ax.xaxis.get_view_interval()
-		self.ui.plot_counts_vs_pixel.canvas.ax.xaxis.set_data_interval(xmin,xmax)
-		self.ui.plot_counts_vs_pixel.canvas.ax.yaxis.set_data_interval(ymin,ymax)
-		self.ui.plot_counts_vs_pixel.draw()
-		self.ui.plot_pixel_vs_counts.canvas.ax.xaxis.set_data_interval(ymin,ymax)
-		self.ui.plot_pixel_vs_counts.canvas.ax.yaxis.set_data_interval(xmin,xmax)
-		self.ui.plot_pixel_vs_counts.draw()
-		self.data.all_plot_axis.yi_view_interval = [xmin,xmax,ymin,ymax]
-		self.update_pixel_vs_counts_plot()
-	
-	def home_plot_counts_vs_pixel(self):
-		[xmin,xmax,ymin,ymax] = self.data.all_plot_axis.yi_data_interval
-		self.ui.plot_counts_vs_pixel.canvas.ax.set_ylim([xmin,xmax])
-		self.ui.plot_counts_vs_pixel.canvas.ax.set_xlim([ymin,ymax])
-		self.ui.plot_counts_vs_pixel.draw()
-		self.ui.plot_pixel_vs_counts.canvas.ax.set_xlim([xmin,xmax])
-		self.ui.plot_pixel_vs_counts.canvas.ax.set_ylim([ymin,ymax])
-		self.ui.plot_pixel_vs_counts.draw()
-	
-	def leave_plot_pixel_vs_counts(self):
-		[xmin,xmax] = self.ui.plot_pixel_vs_counts.canvas.ax.xaxis.get_view_interval()
-		[ymin,ymax] = self.ui.plot_pixel_vs_counts.canvas.ax.yaxis.get_view_interval()
-		self.ui.plot_pixel_vs_counts.canvas.ax.xaxis.set_data_interval(xmin,xmax)
-		self.ui.plot_pixel_vs_counts.canvas.ax.yaxis.set_data_interval(ymin,ymax)
-		self.ui.plot_pixel_vs_counts.draw()
-		self.ui.plot_counts_vs_pixel.canvas.ax.xaxis.set_data_interval(ymin,ymax)
-		self.ui.plot_counts_vs_pixel.canvas.ax.yaxis.set_data_interval(xmin,xmax)
-		self.ui.plot_counts_vs_pixel.draw()
-		self.data.all_plot_axis.yi_view_interval = [xmin,xmax,ymin,ymax]
-		self.update_counts_vs_pixel_plot()
-	
-	def home_plot_pixel_vs_counts(self):
-		[xmin,xmax,ymin,ymax] = self.data.all_plot_axis.yi_data_interval
-		self.ui.plot_pixel_vs_counts.canvas.ax.set_xlim([xmin,xmax])
-		self.ui.plot_pixel_vs_counts.canvas.ax.set_ylim([ymin,ymax])
-		self.ui.plot_pixel_vs_counts.draw()
-		self.ui.plot_counts_vs_pixel.canvas.ax.set_xlim([ymin,ymax])
-		self.ui.plot_counts_vs_pixel.canvas.ax.set_ylim([xmin,xmax])
-		self.ui.plot_counts_vs_pixel.draw()
-		
-	def hide_and_format_invalid_widgets(self):
-		palette = QPalette()
-		palette.setColor(QPalette.Foreground, Qt.red)
-		self.ui.jim_peak1_label.setVisible(False)
-		self.ui.jim_peak1_label.setPalette(palette)
-		self.ui.jim_peak2_label.setVisible(False)
-		self.ui.jim_peak2_label.setPalette(palette)
-		self.ui.jim_back1_label.setVisible(False)
-		self.ui.jim_back1_label.setPalette(palette)
-		self.ui.jim_back2_label.setVisible(False)
-		self.ui.jim_back2_label.setPalette(palette)
-		self.ui.john_peak1_label.setVisible(False)
-		self.ui.john_peak1_label.setPalette(palette)
-		self.ui.john_peak2_label.setVisible(False)
-		self.ui.john_peak2_label.setPalette(palette)
-		self.ui.john_back1_label.setVisible(False)
-		self.ui.john_back1_label.setPalette(palette)
-		self.ui.john_back2_label.setVisible(False)
-		self.ui.john_back2_label.setPalette(palette)
-		self.ui.invalid_selection_label.setVisible(False)
-		self.ui.invalid_selection_label.setPalette(palette)
-
-	def sort_peak_back_input(self):
-		peak1 = self.ui.jim_peak1.value()
-		peak2 = self.ui.jim_peak2.value()
-		peak_min = min([peak1,peak2])
-		peak_max = max([peak1,peak2])
-		if peak_min != peak1:
-			self.ui.jim_peak1.setValue(peak2)
-			self.ui.john_peak1.setValue(peak2)
-			self.ui.jim_peak2.setValue(peak1)
-			self.ui.john_peak2.setValue(peak1)
-			
-		back1 = self.ui.jim_back1.value()
-		back2 = self.ui.jim_back2.value()
-		back_min = min([back1,back2])
-		back_max = max([back1,back2])
-		if back_min != back1:
-			self.ui.jim_back1.setValue(back2)
-			self.ui.john_back1.setValue(back2)
-			self.ui.jim_back2.setValue(back1)
-			self.ui.john_back2.setValue(back1)
-		
-	def check_peak_back_input_validity(self):
-		peak1 = self.ui.jim_peak1.value()
-		peak2 = self.ui.jim_peak2.value()
-		back1 = self.ui.jim_back1.value()
-		back2 = self.ui.jim_back2.value()
-
-		_show_widgets_1 = False
-		_show_widgets_2 = False
-		
-		if self.ui.jim_back_flag.isChecked():
-			if back1 > peak1:
-				_show_widgets_1 = True
-			if back2 < peak2:
-				_show_widgets_2 = True
-		
-		self.ui.jim_back1_label.setVisible(_show_widgets_1)
-		self.ui.jim_peak1_label.setVisible(_show_widgets_1)
-		self.ui.jim_back2_label.setVisible(_show_widgets_2)
-		self.ui.jim_peak2_label.setVisible(_show_widgets_2)
-
-		self.ui.john_back1_label.setVisible(_show_widgets_1)
-		self.ui.john_peak1_label.setVisible(_show_widgets_1)
-		self.ui.john_back2_label.setVisible(_show_widgets_2)
-		self.ui.john_peak2_label.setVisible(_show_widgets_2)
-				
-		self.ui.invalid_selection_label.setVisible(_show_widgets_1 or _show_widgets_2)
-				
-	def widgets_to_show(self, widget, status):
-		if widget == 'peak1':
-			self.ui.jim_peak1_label.setVisible(status)
-			self.ui.john_peak1_label.setVisible(status)
-		if widget == 'peak2':
-			self.ui.jim_peak2_label.setVisible(status)
-			self.ui.john_peak2_label.setVisible(status)
-		if widget == 'back1':
-			self.ui.jim_back1_label.setVisible(status)
-			self.ui.john_back1_label.setVisible(status)
-		if widget == 'back2':
-			self.ui.jim_back2_label.setVisible(status)
-			self.ui.john_back2_label.setVisible(status)
-		
-	def reset_max_ui_value(self):
-		self.ui.john_peak1.setMaximum(255)
-		self.ui.john_peak2.setMaximum(255)
-		self.ui.jim_peak1.setMaximum(255)
-		self.ui.jim_peak2.setMaximum(255)
-		self.ui.john_back1.setMaximum(255)
-		self.ui.john_back2.setMaximum(255)
-		self.ui.jim_back1.setMaximum(255)
-		self.ui.jim_back2.setMaximum(255)
-
-	def init_plot(self):
-		_yaxis = self.data.ycountsdata
-		xaxis = range(len(_yaxis))
-		self.xaxis = xaxis
-		
-		_peak = self.data.peak
-		_back = self.data.back
-		[peak1, peak2] = _peak
-		[back1, back2] = _back
-		back_flag = utilities.str2bool(self.data.back_flag)
-		self.ui.jim_back_flag.setChecked(back_flag)
-		self.ui.john_back_flag.setChecked(back_flag)
-		
-		peak1 = int(peak1)
-		peak2 = int(peak2)
-		back1 = int(back1)
-		back2 = int(back2)
-		
-		self._prev_peak1 = peak1
-		self._prev_peak2 = peak2
-		self._prev_back1 = back1
-		self._prev_back2 = back2
-		
-		# John
-		ui_plot1 = self.ui.plot_pixel_vs_counts
-		ui_plot1.plot(_yaxis, xaxis)
-		ui_plot1.canvas.ax.set_xlabel(u'counts')
-		ui_plot1.canvas.ax.set_ylabel(u'Pixels')
-		if self.isJohnLog:
-			ui_plot1.canvas.ax.set_xscale('log')
-		else:
-			ui_plot1.canvas.ax.set_xscale('linear')
-		ui_plot1.canvas.ax.set_ylim(0,self.nbr_pixel_y_axis-1)
-		ui_plot1.canvas.ax.axhline(peak1, color=colors.PEAK_SELECTION_COLOR)
-		ui_plot1.canvas.ax.axhline(peak2, color=colors.PEAK_SELECTION_COLOR)
-
-		if back_flag:
-			ui_plot1.canvas.ax.axhline(back1, color=colors.BACK_SELECTION_COLOR)
-			ui_plot1.canvas.ax.axhline(back2, color=colors.BACK_SELECTION_COLOR)
-			
-		if self.data.all_plot_axis.yi_data_interval is None:
-			ui_plot1.draw()
-			[xmin,xmax] = self.ui.plot_pixel_vs_counts.canvas.ax.xaxis.get_view_interval()
-			[ymin,ymax] = self.ui.plot_pixel_vs_counts.canvas.ax.yaxis.get_view_interval()
-			self.data.all_plot_axis.yi_data_interval = [xmin,xmax,ymin,ymax]
-			self.data.all_plot_axis.yi_view_interval = [xmin,xmax,ymin,ymax]
-			self.ui.plot_pixel_vs_counts.toolbar.home_settings = [xmin,xmax,ymin,ymax]
-		else:
-			[xmin,xmax,ymin,ymax] = self.data.all_plot_axis.yi_view_interval
-			self.ui.plot_pixel_vs_counts.canvas.ax.set_xlim([xmin,xmax])
-			self.ui.plot_pixel_vs_counts.canvas.ax.set_ylim([ymin,ymax])
-			ui_plot1.draw()
-
-		# Jim
-		ui_plot2 = self.ui.plot_counts_vs_pixel
-		ui_plot2.canvas.ax.plot(xaxis, _yaxis)
-		ui_plot2.canvas.ax.set_xlabel(u'Pixels')
-		ui_plot2.canvas.ax.set_ylabel(u'Counts')
-		if self.isJimLog:
-			ui_plot2.canvas.ax.set_yscale('log')
-		else:
-			ui_plot2.canvas.ax.set_yscale('linear')
-		ui_plot2.canvas.ax.set_xlim(0,self.nbr_pixel_y_axis-1)
-		ui_plot2.canvas.ax.axvline(peak1, color=colors.PEAK_SELECTION_COLOR)
-		ui_plot2.canvas.ax.axvline(peak2, color=colors.PEAK_SELECTION_COLOR)
-
-		if back_flag:
-			ui_plot2.canvas.ax.axvline(back1, color=colors.BACK_SELECTION_COLOR)
-			ui_plot2.canvas.ax.axvline(back2, color=colors.BACK_SELECTION_COLOR)
-		
-		self.ui.plot_counts_vs_pixel.canvas.ax.set_xlim([ymin,ymax])
-		self.ui.plot_counts_vs_pixel.canvas.ax.set_ylim([xmin,xmax])
-		ui_plot2.draw()
-		
-		# John and Jim peak and back
-		self.set_peak_value(peak1, peak2)
-		self.set_back_value(back1, back2)
-		
-		ui_plot1.logtogx.connect(self.logtogglexlog)
-		ui_plot2.logtogy.connect(self.logtoggleylog)
-
-	def logtogglexlog(self, status):
-		if status == 'log':
-			self.isJohnLog = True
-		else:
-			self.isJohnLog = False
-	
-	def logtoggleylog(self, status):
-		if status == 'log':
-			self.isJimLog = True
-		else:
-			self.isJimLog = False
-		
-	def jim_back_flag_clicked(self, status):
-		self.ui.john_back_flag.setChecked(status)
-		self.data.back_flag = status
-		self.update_plots()
-		self.update_back_flag_widgets()
-		self.check_peak_back_input_validity()		
-		
-	def john_back_flag_clicked(self, status):
-		self.ui.jim_back_flag.setChecked(status)
-		self.data.back_flag = status
-		self.update_plots()
-		self.update_back_flag_widgets()
-		self.check_peak_back_input_validity()		
-
-	def update_back_flag_widgets(self):
-		status_flag = self.ui.jim_back_flag.isChecked()
-		self.ui.jim_back1.setEnabled(status_flag)
-		self.ui.jim_back2.setEnabled(status_flag)
-		self.ui.john_back1.setEnabled(status_flag)
-		self.ui.john_back2.setEnabled(status_flag)
-				
-	def set_peak_value(self, peak1, peak2):
-		self.ui.john_peak1.setValue(peak1)
-		self.ui.jim_peak1.setValue(peak1)
-		self.ui.john_peak2.setValue(peak2)
-		self.ui.jim_peak2.setValue(peak2)
-		self.check_peak_back_input_validity()
-	
-	def set_back_value(self, back1, back2):
-		self.ui.john_back1.setValue(back1)
-		self.ui.jim_back1.setValue(back1)
-		self.ui.john_back2.setValue(back2)
-		self.ui.jim_back2.setValue(back2)
-		self.check_peak_back_input_validity()
-
-	# peak1
-	def update_peak1(self, value, updateJimSpinbox=True,
-	                 updateJohnSpinbox=True):
-		if updateJimSpinbox:
-			self.ui.jim_peak1.setValue(value)
-		if updateJohnSpinbox:
-			self.ui.john_peak1.setValue(value)
-		self._prev_peak1 = value				
-	def jim_peak1_spinbox_signal(self):
-		value = self.ui.jim_peak1.value()
-		if value == self._prev_peak1:
-			return
-		self.update_peak1(value, updateJimSpinbox=False)
-		self.sort_peak_back_input()
-		self.check_peak_back_input_validity()
-		self.update_plots()
-		
-	def john_peak1_spinbox_signal(self):
-		value = self.ui.john_peak1.value()
-		if value == self._prev_peak1:
-			return
-		self.update_peak1(value, updateJohnSpinbox=False)
-		self.sort_peak_back_input()
-		self.check_peak_back_input_validity()
-		self.update_plots()		
-
-	# peak2
-	def update_peak2(self, value, updateJimSpinbox=True,
-	                 updateJohnSpinbox=True):
-		if updateJimSpinbox:
-			self.ui.jim_peak2.setValue(value)
-		if updateJohnSpinbox:
-			self.ui.john_peak2.setValue(value)
-		self._prev_peak2 = value
-		self.check_peak_back_input_validity()
-		
-	def jim_peak2_spinbox_signal(self):
-		value = self.ui.jim_peak2.value()
-		if value == self._prev_peak2:
-			return
-		self.update_peak2(value, updateJimSpinbox=False)
-		self.sort_peak_back_input()
-		self.check_peak_back_input_validity()
-		self.update_plots()
-				
-	def john_peak2_spinbox_signal(self):
-		value = self.ui.john_peak2.value()
-		if value == self._prev_peak2:
-			return
-		self.update_peak2(value, updateJohnSpinbox=False)
-		self.sort_peak_back_input()
-		self.check_peak_back_input_validity()
-		self.update_plots()
-		
-	# back1
-	def update_back1(self, value, updateJimSpinbox=True,
-	                 updateJohnSpinbox=True):
-		if updateJimSpinbox:
-			self.ui.jim_back1.setValue(value)
-		if updateJohnSpinbox:
-			self.ui.john_back1.setValue(value)
-		self._prev_back1 = value
-		self.check_peak_back_input_validity()			
-			
-	def jim_back1_spinbox_signal(self):
-		value = self.ui.jim_back1.value()
-		if value == self._prev_back1:
-			return
-		self.update_back1(value, updateJimSpinbox=False)
-		self.sort_peak_back_input()
-		self.check_peak_back_input_validity()		
-		self.update_plots()
-				
-	def john_back1_spinbox_signal(self):
-		value = self.ui.john_back1.value()
-		if value == self._prev_back1:
-			return
-		self.update_back1(value, updateJohnSpinbox=False)
-		self.sort_peak_back_input()
-		self.check_peak_back_input_validity()
-		self.update_plots()
-				
-	# back2
-	def update_back2(self, value, updateJimSpinbox=True,
-	                 updateJohnSpinbox=True):
-		if updateJimSpinbox:
-			self.ui.jim_back2.setValue(value)
-		if updateJohnSpinbox:
-			self.ui.john_back2.setValue(value)
-		self._prev_back2 = value
-		self.check_peak_back_input_validity()
-		
-	def jim_back2_spinbox_signal(self):
-		value = self.ui.jim_back2.value()
-		if value == self._prev_back2:
-			return
-		self.update_back2(value, updateJimSpinbox=False)
-		self.sort_peak_back_input()
-		self.check_peak_back_input_validity()
-		self.update_plots()
-		
-	def john_back2_spinbox_signal(self):
-		value = self.ui.john_back2.value()
-		if value == self._prev_back2:
-			return
-		self.update_back2(value, updateJohnSpinbox=False)
-		self.sort_peak_back_input()
-		self.check_peak_back_input_validity()
-		self.update_plots()
-		
-	def update_plots(self):
-		self.update_pixel_vs_counts_plot()
-		self.update_counts_vs_pixel_plot()
-		
-	def update_pixel_vs_counts_plot(self):
-		self.ui.plot_pixel_vs_counts.clear()
-		
-		peak1 = self.ui.jim_peak1.value()
-		peak2 = self.ui.jim_peak2.value()
-		back1 = self.ui.jim_back1.value()
-		back2 = self.ui.jim_back2.value()
-		_yaxis = self.data.ycountsdata
-		
-		ui_plot1 = self.ui.plot_pixel_vs_counts
-		ui_plot1.canvas.ax.plot(_yaxis, self.xaxis)
-		ui_plot1.canvas.ax.set_xlabel(u'counts')
-		ui_plot1.canvas.ax.set_ylabel(u'Pixels')
-		if self.isJohnLog:
-			ui_plot1.canvas.ax.set_xscale('log')
-		else:
-			ui_plot1.canvas.ax.set_xscale('linear')
-#		ui_plot1.canvas.ax.set_ylim(0,self.nbr_pixel_y_axis-1)		
-		ui_plot1.canvas.ax.axhline(peak1, color=colors.PEAK_SELECTION_COLOR)
-		ui_plot1.canvas.ax.axhline(peak2, color=colors.PEAK_SELECTION_COLOR)
-
-		if self.data.back_flag:
-			ui_plot1.canvas.ax.axhline(back1, color=colors.BACK_SELECTION_COLOR)
-			ui_plot1.canvas.ax.axhline(back2, color=colors.BACK_SELECTION_COLOR)
-
-		[xmin,xmax,ymin,ymax] = self.data.all_plot_axis.yi_view_interval
-		self.ui.plot_pixel_vs_counts.canvas.ax.set_xlim([xmin,xmax])
-		self.ui.plot_pixel_vs_counts.canvas.ax.set_ylim([ymin,ymax])
-		ui_plot1.canvas.draw()
-		
-	def update_counts_vs_pixel_plot(self):
-		self.ui.plot_counts_vs_pixel.clear()
-		
-		peak1 = self.ui.jim_peak1.value()
-		peak2 = self.ui.jim_peak2.value()
-		back1 = self.ui.jim_back1.value()
-		back2 = self.ui.jim_back2.value()
-		_yaxis = self.data.ycountsdata
-
-		ui_plot2 = self.ui.plot_counts_vs_pixel
-		ui_plot2.canvas.ax.plot(self.xaxis, _yaxis)
-		ui_plot2.canvas.ax.set_xlabel(u'Pixels')
-		ui_plot2.canvas.ax.set_ylabel(u'Counts')
-		if self.isJimLog:
-			ui_plot2.canvas.ax.set_yscale('log')
-		else:
-			ui_plot2.canvas.ax.set_yscale('linear')
-#		ui_plot2.canvas.ax.set_xlim(0,self.nbr_pixel_y_axis-1)
-		ui_plot2.canvas.ax.axvline(peak1, color=colors.PEAK_SELECTION_COLOR)
-		ui_plot2.canvas.ax.axvline(peak2, color=colors.PEAK_SELECTION_COLOR)
-		
-		if self.data.back_flag:
-			ui_plot2.canvas.ax.axvline(back1, color=colors.BACK_SELECTION_COLOR)
-			ui_plot2.canvas.ax.axvline(back2, color=colors.BACK_SELECTION_COLOR)
-
-		[xmin,xmax,ymin,ymax] = self.data.all_plot_axis.yi_view_interval
-		self.ui.plot_counts_vs_pixel.canvas.ax.set_xlim([ymin,ymax])
-		self.ui.plot_counts_vs_pixel.canvas.ax.set_ylim([xmin,xmax])
-		ui_plot2.canvas.draw()
-		
-	def closeEvent(self, event=None):
-		peak1 = self.ui.jim_peak1.value()
-		peak2 = self.ui.jim_peak2.value()
-		back1 = self.ui.jim_back1.value()
-		back2 = self.ui.jim_back2.value()
-		backFlag = self.ui.jim_back_flag.isChecked()
-		
-		if self.type == 'data':
-			self.main_gui.ui.dataPeakFromValue.setValue(peak1)
-			self.main_gui.ui.dataPeakToValue.setValue(peak2)
-			self.main_gui.ui.dataBackFromValue.setValue(back1)
-			self.main_gui.ui.dataBackToValue.setValue(back2)
-			self.main_gui.ui.dataBackgroundFlag.setChecked(backFlag)
-			self.main_gui.data_peak_and_back_validation(False)
-			self.main_gui.ui.dataBackFromLabel.setEnabled(backFlag)
-			self.main_gui.ui.dataBackFromValue.setEnabled(backFlag)
-			self.main_gui.ui.dataBackToLabel.setEnabled(backFlag)
-			self.main_gui.ui.dataBackToValue.setEnabled(backFlag)
-		else:
-			self.main_gui.ui.normPeakFromValue.setValue(peak1)
-			self.main_gui.ui.normPeakToValue.setValue(peak2)
-			self.main_gui.ui.normBackFromValue.setValue(back1)
-			self.main_gui.ui.normBackToValue.setValue(back2)
-			self.main_gui.ui.normBackgroundFlag.setChecked(backFlag)
-			self.main_gui.norm_peak_and_back_validation(False)
-			self.main_gui.ui.normBackFromLabel.setEnabled(backFlag)
-			self.main_gui.ui.normBackFromValue.setEnabled(backFlag)
-			self.main_gui.ui.normBackToLabel.setEnabled(backFlag)
-			self.main_gui.ui.normBackToValue.setEnabled(backFlag)
-
-		self.main_gui.plot_overview_REFL(plot_it=False, plot_ix=False)
-		
-	
+from .mplwidget import MPLWidget
+from .mplwidgetxlog import MPLWidgetXLog
+import icons_rc

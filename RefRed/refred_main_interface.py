@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 #@PydevCodeAnalysisIgnore
 
-# Form implementation generated from reading ui file 'designer/default_interface_refl.ui'
+# Form implementation generated from reading ui file 'designer/refred_main_interface.ui'
 #
-# Created: Wed Jul 22 12:38:52 2015
+# Created: Wed Jul 22 12:38:54 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -1208,7 +1208,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_25.addLayout(self.horizontalLayout_14)
         self.verticalLayout_24.addLayout(self.verticalLayout_25)
         self.reductionTable = QtGui.QTableWidget(self.layoutWidget_3)
-        self.reductionTable.setEnabled(False)
+        self.reductionTable.setEnabled(True)
         self.reductionTable.setMinimumSize(QtCore.QSize(0, 200))
         self.reductionTable.setMaximumSize(QtCore.QSize(16777215, 300))
         self.reductionTable.setFocusPolicy(QtCore.Qt.TabFocus)
@@ -1222,7 +1222,7 @@ class Ui_MainWindow(object):
         self.reductionTable.setWordWrap(False)
         self.reductionTable.setRowCount(17)
         self.reductionTable.setObjectName(_fromUtf8("reductionTable"))
-        self.reductionTable.setColumnCount(7)
+        self.reductionTable.setColumnCount(8)
         item = QtGui.QTableWidgetItem()
         self.reductionTable.setVerticalHeaderItem(0, item)
         item = QtGui.QTableWidgetItem()
@@ -1271,6 +1271,8 @@ class Ui_MainWindow(object):
         self.reductionTable.setHorizontalHeaderItem(5, item)
         item = QtGui.QTableWidgetItem()
         self.reductionTable.setHorizontalHeaderItem(6, item)
+        item = QtGui.QTableWidgetItem()
+        self.reductionTable.setHorizontalHeaderItem(7, item)
         self.reductionTable.horizontalHeader().setVisible(True)
         self.reductionTable.horizontalHeader().setDefaultSectionSize(50)
         self.reductionTable.horizontalHeader().setMinimumSectionSize(25)
@@ -1678,6 +1680,8 @@ class Ui_MainWindow(object):
         item = self.reductionTable.horizontalHeaderItem(5)
         item.setText(_translate("MainWindow", "New Column", None))
         item = self.reductionTable.horizontalHeaderItem(6)
+        item.setText(_translate("MainWindow", "New Column", None))
+        item = self.reductionTable.horizontalHeaderItem(7)
         item.setText(_translate("MainWindow", "New Column", None))
         self.reduceButton.setText(_translate("MainWindow", "R E D U C E", None))
         self.RvsQ.setText(_translate("MainWindow", "R vs Q", None))
