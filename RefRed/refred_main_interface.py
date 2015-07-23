@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer/refred_main_interface.ui'
 #
-# Created: Thu Jul 23 09:00:09 2015
+# Created: Thu Jul 23 09:35:00 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -1413,14 +1413,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout_7.addWidget(self.LogRvsQ_2)
         self.verticalLayout_3.addLayout(self.horizontalLayout_7)
         self.plotTab.addTab(self.data_stitching_Tab, _fromUtf8(""))
-        self.logbookTab = QtGui.QWidget()
-        self.logbookTab.setObjectName(_fromUtf8("logbookTab"))
-        self.verticalLayout_2 = QtGui.QVBoxLayout(self.logbookTab)
-        self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
-        self.logbook = QtGui.QTextEdit(self.logbookTab)
-        self.logbook.setObjectName(_fromUtf8("logbook"))
-        self.verticalLayout_2.addWidget(self.logbook)
-        self.plotTab.addTab(self.logbookTab, _fromUtf8(""))
         self.verticalLayout_6.addWidget(self.mainSplitter)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
@@ -1711,7 +1703,6 @@ class Ui_MainWindow(object):
         self.RQ4vsQ_2.setText(_translate("MainWindow", "RQ^4 vs Q", None))
         self.LogRvsQ_2.setText(_translate("MainWindow", "LogR vs Q", None))
         self.plotTab.setTabText(self.plotTab.indexOf(self.data_stitching_Tab), _translate("MainWindow", "Data Stitching", None))
-        self.plotTab.setTabText(self.plotTab.indexOf(self.logbookTab), _translate("MainWindow", "Logbook", None))
         self.menuHelp.setTitle(_translate("MainWindow", "Help", None))
         self.menuFile.setTitle(_translate("MainWindow", "Configuration", None))
         self.menuAdvanced.setTitle(_translate("MainWindow", "Tools", None))

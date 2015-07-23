@@ -85,6 +85,9 @@ class Gui(object):
 			for col_index in range(len(self.column_widths)):
 				if col_index == 0:
 					_widget = QtGui.QCheckBox()
+					_widget.setChecked(False)
+					signal_function = self.get_checkbox_signal_function(row_index)
+					QtCore.QObject.connect(_widget, QtCore.SIGNAL("stateChanged(int)"), eval(signal_function))
 					parent.ui.reductionTable.setCellWidget(row_index, col_index, _widget)
 				elif (col_index == 1) or (col_index == 2):
 					_item = QtGui.QTableWidgetItem()
@@ -103,6 +106,9 @@ class Gui(object):
 					_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
 					parent.ui.reductionTable.setItem(row_index, col_index, _item)
 				
+	def get_checkbox_signal_function(self, row_index):
+		root_function_name = 'self.parent.reduction_table_visibility_changed_' + str(row_index)
+		return root_function_name
 
 	def set_context_menu(self):
 		''' Define the context menu of the main table'''

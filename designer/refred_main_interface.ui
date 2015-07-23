@@ -3567,16 +3567,6 @@ p, li { white-space: pre-wrap; }
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="logbookTab">
-        <attribute name="title">
-         <string>Logbook</string>
-        </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <widget class="QTextEdit" name="logbook"/>
-         </item>
-        </layout>
-       </widget>
       </widget>
      </widget>
     </item>
