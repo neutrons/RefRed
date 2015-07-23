@@ -87,6 +87,7 @@ class Gui(object):
 					_widget = QtGui.QCheckBox()
 					_widget.setChecked(False)
 					signal_function = self.get_checkbox_signal_function(row_index)
+					
 					QtCore.QObject.connect(_widget, QtCore.SIGNAL("stateChanged(int)"), eval(signal_function))
 					parent.ui.reductionTable.setCellWidget(row_index, col_index, _widget)
 				elif (col_index == 1) or (col_index == 2):
@@ -99,12 +100,13 @@ class Gui(object):
 						_color = QtGui.QColor(colors.NORM_TABLE_BACKGROUND)
 						_item.setBackground(_color)
 					parent.ui.reductionTable.setItem(row_index, col_index, _item)
-					
 
 				else:
 					_item = QtGui.QTableWidgetItem()
-					_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+					_item.setFlags(QtCore.Qt.ItemIsSelectable)
 					parent.ui.reductionTable.setItem(row_index, col_index, _item)
+		QtCore.QObject.connect(self.parent.ui.reductionTable, QtCore.SIGNAL("cellChanged(int,int)"), self.parent.table_reduction_cell_changed_value)
+		
 				
 	def get_checkbox_signal_function(self, row_index):
 		root_function_name = 'self.parent.reduction_table_visibility_changed_' + str(row_index)

@@ -7,6 +7,8 @@ from config_file_launcher import ConfigFileLauncher
 from initialization.gui_connections import GuiConnections as MakeGuiConnections
 from initialization.reduction_table_check_box import ReductionTableCheckBox
 
+#from mantid.simpleapi import *
+
 #from RefRed.export_plot_ascii import ExportPlotAscii
 #from RefRed.home_plot_button_clicked import HomePlotButtonClicked
 #from RefRed.mouse_leave_plot import MouseLeavePlot
@@ -127,7 +129,6 @@ class MainGui(QtGui.QMainWindow):
         LogPlotToggle(self,checked,'stitching',is_y_log=True)
 
     def reduction_table_visibility_changed_0(self, state):
-        print(state)
         ReductionTableCheckBox(parent=self, row_selected=0)
     def reduction_table_visibility_changed_1(self, state):
         ReductionTableCheckBox(parent=self, row_selected=1)
@@ -187,3 +188,15 @@ class MainGui(QtGui.QMainWindow):
         ReductionTableCheckBox(parent=self, row_selected=28)
     def reduction_table_visibility_changed_29(self, state):
         ReductionTableCheckBox(parent=self, row_selected=29)
+
+
+    def table_reduction_cell_changed_value(self, row, col):
+        item = self.ui.reductionTable.item(row, col)
+        if item is None:
+            return
+        if (item.text() == ''):
+            print("clear selected run if necessary")
+        else:
+            print("validate new run")
+        
+        
