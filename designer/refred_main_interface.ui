@@ -311,123 +311,6 @@ p, li { white-space: pre-wrap; }
          </spacer>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_8">
-          <item>
-           <widget class="QCheckBox" name="actionAutomaticPeakFinder">
-            <property name="toolTip">
-             <string extracomment="Automatic selection of the reflectivity peak"/>
-            </property>
-            <property name="text">
-             <string>Use Auto. Peak/Back. Selection</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QFrame" name="autoPeakBackSelectionFrame">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_9">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_19">
-               <item>
-                <widget class="QLabel" name="label">
-                 <property name="text">
-                  <string>Back selection</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_10">
-                 <property name="text">
-                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; vertical-align:super;&quot;&gt;+&lt;/span&gt;/&lt;span style=&quot; vertical-align:sub;&quot;&gt;-&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="autoBackSelectionWidth">
-                 <property name="toolTip">
-                  <string extracomment="Number of pixels from peak"/>
-                 </property>
-                 <property name="maximum">
-                  <number>100</number>
-                 </property>
-                 <property name="value">
-                  <number>4</number>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_11">
-                 <property name="text">
-                  <string>px</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_13">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <widget class="QPushButton" name="findPeakBack">
-               <property name="text">
-                <string>Find Peak/Back </string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="autoTofFlag">
-            <property name="text">
-             <string>Use Auto TOF Range Finder</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_9">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
          <layout class="QVBoxLayout" name="verticalLayout_15">
           <item>
            <widget class="QCheckBox" name="geometryCorrectionFlag">
@@ -3067,7 +2950,7 @@ p, li { white-space: pre-wrap; }
                      <enum>Qt::CustomContextMenu</enum>
                     </property>
                     <property name="editTriggers">
-                     <set>QAbstractItemView::SelectedClicked</set>
+                     <set>QAbstractItemView::AllEditTriggers</set>
                     </property>
                     <property name="showDropIndicator" stdset="0">
                      <bool>true</bool>
@@ -3091,7 +2974,7 @@ p, li { white-space: pre-wrap; }
                      <bool>false</bool>
                     </property>
                     <property name="rowCount">
-                     <number>45</number>
+                     <number>30</number>
                     </property>
                     <attribute name="horizontalHeaderVisible">
                      <bool>true</bool>
@@ -3120,81 +3003,6 @@ p, li { white-space: pre-wrap; }
                     <attribute name="verticalHeaderStretchLastSection">
                      <bool>false</bool>
                     </attribute>
-                    <row>
-                     <property name="text">
-                      <string>New Row</string>
-                     </property>
-                    </row>
-                    <row>
-                     <property name="text">
-                      <string>New Row</string>
-                     </property>
-                    </row>
-                    <row>
-                     <property name="text">
-                      <string>New Row</string>
-                     </property>
-                    </row>
-                    <row>
-                     <property name="text">
-                      <string>New Row</string>
-                     </property>
-                    </row>
-                    <row>
-                     <property name="text">
-                      <string>New Row</string>
-                     </property>
-                    </row>
-                    <row>
-                     <property name="text">
-                      <string>New Row</string>
-                     </property>
-                    </row>
-                    <row>
-                     <property name="text">
-                      <string>New Row</string>
-                     </property>
-                    </row>
-                    <row>
-                     <property name="text">
-                      <string>New Row</string>
-                     </property>
-                    </row>
-                    <row>
-                     <property name="text">
-                      <string>New Row</string>
-                     </property>
-                    </row>
-                    <row>
-                     <property name="text">
-                      <string>New Row</string>
-                     </property>
-                    </row>
-                    <row>
-                     <property name="text">
-                      <string>New Row</string>
-                     </property>
-                    </row>
-                    <row>
-                     <property name="text">
-                      <string>New Row</string>
-                     </property>
-                    </row>
-                    <row>
-                     <property name="text">
-                      <string>New Row</string>
-                     </property>
-                    </row>
-                    <row>
-                     <property name="text">
-                      <string>New Row</string>
-                     </property>
-                    </row>
-                    <row>
-                     <property name="text">
-                      <string>New Row</string>
-                     </property>
-                    </row>
                     <row>
                      <property name="text">
                       <string>New Row</string>

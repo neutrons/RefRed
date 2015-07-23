@@ -14,3 +14,5 @@ BASE_SEARCH = u'*/data/REF_L_%s_'
 OLD_BASE_SEARCH = u'*/*/%s/NeXus/REF_L_%s*'
 LIVE_DATA = u'/SNS/REF_L/shared/LiveData/meta_data.xml'
 EXTENSION_SCRIPTS = u'/SNS/REF_L/shared/quicknxs_scripts'
+
+local_data_base = '/users/j35/'

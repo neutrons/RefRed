@@ -19,7 +19,7 @@ class ReducedConfigFilesHandler(object):
 		self.populateWithCurrentConfigContain()
 		
 	def populateWithCurrentConfigContain(self):
-		from quicknxs.config import refllastloadedfiles
+		from RefRed.config import refllastloadedfiles
 		refllastloadedfiles.switch_config('config_files')
 		file1 = refllastloadedfiles.reduce1
 		file2 = refllastloadedfiles.reduce2

@@ -1,9 +1,7 @@
-from plot2d_dialog_refl import Plot2dDialogREFL
-
-class MakeGuiConnections(object):
+class GuiConnections(object):
     
     def __init__(cls, self):
-
+        
         self.ui.data_yt_plot.singleClick.connect(self.single_click_data_yt_plot)
         self.ui.data_yt_plot.leaveFigure.connect(self.leave_figure_yt_plot)
         self.ui.data_yt_plot.logtogy.connect(self.logy_toggle_yt_plot)
