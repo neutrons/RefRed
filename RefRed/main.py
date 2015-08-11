@@ -1,7 +1,7 @@
 from PyQt4 import QtGui
 import numpy as np
 
-from refred_main_interface import Ui_MainWindow
+from interfaces.refred_main_interface import Ui_MainWindow
 from initialization.gui import Gui as InitializeGui
 from config_file_launcher import ConfigFileLauncher
 from initialization.gui_connections import GuiConnections as MakeGuiConnections
