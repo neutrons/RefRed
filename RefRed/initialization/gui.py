@@ -86,6 +86,7 @@ class Gui(object):
 				if col_index == 0:
 					_widget = QtGui.QCheckBox()
 					_widget.setChecked(False)
+					_widget.setEnabled(True)
 					signal_function = self.get_checkbox_signal_function(row_index)
 					
 					QtCore.QObject.connect(_widget, QtCore.SIGNAL("stateChanged(int)"), eval(signal_function))
@@ -103,7 +104,7 @@ class Gui(object):
 
 				else:
 					_item = QtGui.QTableWidgetItem()
-					_item.setFlags(QtCore.Qt.ItemIsSelectable)
+					_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
 					parent.ui.reductionTable.setItem(row_index, col_index, _item)
 		QtCore.QObject.connect(self.parent.ui.reductionTable, QtCore.SIGNAL("cellChanged(int,int)"), self.parent.table_reduction_cell_changed_value)
 		
