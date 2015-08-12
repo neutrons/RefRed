@@ -6,6 +6,7 @@ from initialization.gui import Gui as InitializeGui
 from config_file_launcher import ConfigFileLauncher
 from initialization.gui_connections import GuiConnections as MakeGuiConnections
 from initialization.reduction_table_check_box import ReductionTableCheckBox
+from update_reduction_table import UpdateReductionTable
 
 #from mantid.simpleapi import *
 
@@ -195,8 +196,8 @@ class MainGui(QtGui.QMainWindow):
         if item is None:
             return
         if (item.text() == ''):
-            print("clear selected run if necessary")
+            UpdateReductionTable(parent=self, row=row, col=col, clear_cell=True)
         else:
-            print("validate new run")
+            UpdateReductionTable(parent=self, runs=item.text(), row=row, col=col)
         
         
