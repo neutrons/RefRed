@@ -20,7 +20,7 @@ class Gui(object):
 	                   u'\u03bbmax (\u00c5)',
 	                   u'Qmin (1/\u00c5)',
 	                   u'Qmax (1/\u00c5)']
-	column_widths = [40, 120, 120, 80, 80, 80, 80, 80]	
+	column_widths = [40, 150, 150, 80, 80, 80, 80, 80]	
 	
 	def __init__(self, parent):
 		

@@ -1,4 +1,5 @@
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
+from RefRed.check_list_run_compatibility import CheckListRunCompatibility
 
 class UpdateReductionTable(object):
     
@@ -14,6 +15,8 @@ class UpdateReductionTable(object):
         self.raw_runs = str(runs)
         run_breaker = RunSequenceBreaker(run_sequence=self.raw_runs)
         list_run = run_breaker.final_list
+        nxs_loader = CheckListRunCompatibility(list_run=list_run)
+        
     
     def clear_cell(self):
         print('in clear cell')
