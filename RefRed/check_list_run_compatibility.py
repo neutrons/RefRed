@@ -17,4 +17,4 @@ class CheckListRunCompatibility(object):
                                         list_run=list_run_found, 
                                         metadata_only=True)
         
-        print(list_wks_object.list_wks)
+        print(list_wks_object.list_wks_loaded)

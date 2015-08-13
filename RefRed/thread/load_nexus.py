@@ -1,5 +1,6 @@
 from PyQt4 import QtCore
 from mantid.simpleapi import *
+import time
 
 class LoadNexus(QtCore.QThread):
     
@@ -10,8 +11,23 @@ class LoadNexus(QtCore.QThread):
         self.metadata_only = metadata_only
         
     def run(self):
+#        try:
+        print("working with %s\n" %self.filename)
         _workspace = LoadEventNexus(Filename=self.filename,
                                     OutputWorkspace=self.output_wks,
                                     MetadataOnly=self.metadata_only)
+        print("done with %s\n" %self.filename)
+        
+        self.parent.runs_loaded += 1
+        self.parent.list_wks.append(_workspace)
+        #except:
+        #   self.parent.number_of_runs = self.parent.number_of_runs - 1
+        
+    def stop(self):
+        pass
     
+    def pause(self):
+        pass
+
+
     
