@@ -14,6 +14,8 @@ class LocateListRun(object):
             return
         self.list_run = list_run
         
+        self.init_parameters()
+        
         for run in list_run:
             try:
                 nexus_file_name = FileFinder.findRuns("%s_%d" %(INSTRUMENT_SHORT_NAME, 
@@ -23,4 +25,9 @@ class LocateListRun(object):
             except:
                 self.list_run_not_found.append(run)
                 
+    def init_parameters(self):
+        self.list_run = None
+        self.list_nexus_found = []
+        self.list_run_found = []
+        self.list_run_not_found = []
             

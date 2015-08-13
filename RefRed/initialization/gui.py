@@ -19,8 +19,9 @@ class Gui(object):
 	                   u'\u03bbmin(\u00c5)',
 	                   u'\u03bbmax (\u00c5)',
 	                   u'Qmin (1/\u00c5)',
-	                   u'Qmax (1/\u00c5)']
-	column_widths = [40, 150, 150, 80, 80, 80, 80, 80]	
+	                   u'Qmax (1/\u00c5)',
+	                   u'Status']
+	column_widths = [40, 150, 150, 60, 80, 80, 90, 90, 50]	
 	
 	def __init__(self, parent):
 		
@@ -87,7 +88,8 @@ class Gui(object):
 					_widget.setEnabled(True)
 					signal_function = self.get_checkbox_signal_function(row_index)
 					
-					QtCore.QObject.connect(_widget, QtCore.SIGNAL("stateChanged(int)"), eval(signal_function))
+					QtCore.QObject.connect(_widget, QtCore.SIGNAL("stateChanged(int)"), 
+					                       eval(signal_function))
 					parent.ui.reductionTable.setCellWidget(row_index, col_index, _widget)
 				elif (col_index == 1) or (col_index == 2):
 					_item = QtGui.QTableWidgetItem()
@@ -104,9 +106,10 @@ class Gui(object):
 					_item = QtGui.QTableWidgetItem()
 					_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
 					parent.ui.reductionTable.setItem(row_index, col_index, _item)
-		QtCore.QObject.connect(self.parent.ui.reductionTable, QtCore.SIGNAL("cellChanged(int,int)"), self.parent.table_reduction_cell_changed_value)
 		
-				
+		QtCore.QObject.connect(self.parent.ui.reductionTable, QtCore.SIGNAL("cellChanged(int,int)"), 
+		                       self.parent.table_reduction_cell_changed_value)
+						
 	def get_checkbox_signal_function(self, row_index):
 		root_function_name = 'self.parent.reduction_table_visibility_changed_' + str(row_index)
 		return root_function_name

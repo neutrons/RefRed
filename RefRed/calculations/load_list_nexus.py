@@ -19,6 +19,8 @@ class LoadListNexus(object):
         self.list_run = list_run
         self.number_of_runs = len(list_run)
         
+        self.init_parameters()
+        
         for index, nexus_name in enumerate(list_nexus):
             filename = list_nexus[index]
             _run = list_run[index]
@@ -26,10 +28,15 @@ class LoadListNexus(object):
             wks_object = LoadNexus(filename = filename, 
                                    output_wks = _ws_name,
                                    metadata_only = True)
-            if (wks_object):
-                self.list_wks_loaded.append(wks_object)
+            if (wks_object.workspace):
+                self.list_wks_loaded.append(wks_object.workspace)
                 self.list_run_loaded.append(_run)
                 self.list_nxs_loaded.append(nexus_name)
+
+    def init_parameters(self):
+        self.list_wks_loaded = []
+        self.list_run_loaded = []
+        self.list_nxs_loaded = []
 
 
         
