@@ -6,7 +6,7 @@ from initialization.gui import Gui as InitializeGui
 from config_file_launcher import ConfigFileLauncher
 from initialization.gui_connections import GuiConnections as MakeGuiConnections
 from initialization.reduction_table_check_box import ReductionTableCheckBox
-from update_reduction_table import UpdateReductionTable
+from reduction_table_handling.update_reduction_table import UpdateReductionTable
 
 #from mantid.simpleapi import *
 
