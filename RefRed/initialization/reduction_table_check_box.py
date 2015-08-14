@@ -17,26 +17,42 @@ class ReductionTableCheckBox(object):
             return
         
         self.prev_row_selected = parent.prev_table_reduction_row_selected
-        if row_selected == self.prev_row_selected:
-            return
-        
         self.row_selected = row_selected
         self.parent = parent
-        _reduction_table_check_box_state = parent.reduction_table_check_box_state
-
-        self.size_check_box_state_table = len(_reduction_table_check_box_state)
-        old_check_box_state = _reduction_table_check_box_state[row_selected]
-        _reduction_table_check_box_state = np.zeros((self.size_check_box_state_table), dtype=bool)
+        if row_selected == self.prev_row_selected:
+            pass
+        else:
+            _reduction_table_check_box_state = parent.reduction_table_check_box_state
+    
+            self.size_check_box_state_table = len(_reduction_table_check_box_state)
+            old_check_box_state = _reduction_table_check_box_state[row_selected]
+            _reduction_table_check_box_state = np.zeros((self.size_check_box_state_table), dtype=bool)
+            
+            _reduction_table_check_box_state[row_selected] = not old_check_box_state
+            self._reduction_table_check_box_state = _reduction_table_check_box_state
+            
+            self.update_state_of_all_checkboxes()
+            parent.reduction_table_check_box_state = _reduction_table_check_box_state
+            
+            parent.prev_table_reduction_row_selected = row_selected
         
-        _reduction_table_check_box_state[row_selected] = not old_check_box_state
-        self._reduction_table_check_box_state = _reduction_table_check_box_state
+        self.launch_update_of_plot()
         
-        self.update_state_of_all_checkboxes()
-        parent.reduction_table_check_box_state = _reduction_table_check_box_state
+    def launch_update_of_plot(self):
+        _row_selected = self.row_selected
+        if self.is_row_selected_checked(_row_selected):
+            print('display plot')
+        else:
+            print('clear plots')
         
-        parent.prev_table_reduction_row_selected = row_selected
-        
-        
+    def is_row_selected_checked(self, row_selected):
+        _widget = self.parent.ui.reductionTable.cellWidget(row_selected, 0)
+        current_state = _widget.checkState()
+        if current_state == Qt.Unchecked:
+            return False
+        else:
+            return True
+    
     def update_state_of_all_checkboxes(self):
         for row in range(self.size_check_box_state_table):
             _state = self._reduction_table_check_box_state[row]
@@ -46,7 +62,7 @@ class ReductionTableCheckBox(object):
     def change_state_of_given_checkbox(self, row):
         _widget = self.parent.ui.reductionTable.cellWidget(row, 0)
         _current_state = _widget.checkState()
-        if _current_state == Qt.Unchecked():
+        if _current_state == Qt.Unchecked:
             _widget.setChecked(True)
         else:
             _widget_setChecked(False)

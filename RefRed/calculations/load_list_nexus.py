@@ -27,9 +27,9 @@ class LoadListNexus(object):
             _ws_name = "_data_file_%s" %_run
             wks_object = LoadNexus(filename = filename, 
                                    output_wks = _ws_name,
-                                   metadata_only = True)
+                                   metadata_only = metadata_only)
             if (wks_object.workspace):
-                self.list_wks_loaded.append(wks_object.workspace)
+                self.list_wks_loaded.append(_ws_name)
                 self.list_run_loaded.append(_run)
                 self.list_nxs_loaded.append(nexus_name)
 

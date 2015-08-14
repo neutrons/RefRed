@@ -5,6 +5,7 @@ from RefRed.reduction_table_handling.check_list_run_compatibility import CheckLi
 from RefRed.plot.display_reduction_table import DisplayReductionTable
 import RefRed.colors 
 from RefRed.lconfigdataset import LConfigDataset
+from RefRed.plot.clear_plots import ClearPlots
 
 class UpdateReductionTable(object):
     
@@ -32,15 +33,24 @@ class UpdateReductionTable(object):
             _color = QtGui.QColor(RefRed.colors.VALUE_BAD)
         self.parent.ui.reductionTable.item(row, 8).setBackground(_color)
     
+        is_data_displayed = True if (col == 1) else False
         if self.display_of_this_row_checked():
-            is_data_displayed = True if (col == 1) else False
             DisplayReductionTable(parent=self.parent, 
                                   row=self.row,
-                                  is_data_displayed=_is_data_displayed)
+                                  is_data_displayed=is_data_displayed)
+        else:
+            ClearPlots(self.parent, 
+                       is_data = is_data_displayed,
+                       is_norm = (not is_data_displayed),
+                       plot_yt = True,
+                       plot_yi = True,
+                       plot_it = True,
+                       plot_ix = True)
     
     def update_lconfigdataset(self, nxs_loaded):
         list_nexus_found = nxs_loaded.list_nexus_found
         list_run_found = nxs_loaded.list_run_found
+        list_wks = nxs_loaded.list_wks
         
         _row = self.row
         big_table_data = self.parent.big_table_data
@@ -52,10 +62,12 @@ class UpdateReductionTable(object):
             
         if self.col == 1: #data
             _lconfig.data_full_file_name = list_nexus_found
-            _lconfig_data_sets = list_run_found
+            _lconfig.data_sets = list_run_found
+            _lconfig.data_wks =  list_wks
         else: #norm
             _lconfig.norm_full_file_name = list_nexus_found
             _lconfig.norm_sets = list_run_found
+            _lconfig.norm_wks = list_wks
             
         big_table_data[_row, 2] = _lconfig
         self.parent.big_table_data = big_table_data
