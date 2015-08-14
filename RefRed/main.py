@@ -25,6 +25,9 @@ class MainGui(QtGui.QMainWindow):
     prev_table_reduction_row_selected = -1
     reduction_table_check_box_state = np.zeros((nbr_row_table_reduction), dtype=bool)
 
+    #[data, norm, metadata]
+    big_table_data = np.empty((nbr_row_table_reduction, 3), dtype=object)
+
     def __init__(self, argv=[], parent=None):
         if parent is None:
             QtGui.QMainWindow.__init__(self)
@@ -35,7 +38,6 @@ class MainGui(QtGui.QMainWindow):
         
         InitializeGui(self)
 #        MakeGuiConnections(self)
-
 
     # config files from menu
     def launch_config_file1(self):
@@ -189,7 +191,6 @@ class MainGui(QtGui.QMainWindow):
         ReductionTableCheckBox(parent=self, row_selected=28)
     def reduction_table_visibility_changed_29(self, state):
         ReductionTableCheckBox(parent=self, row_selected=29)
-
 
     def table_reduction_cell_changed_value(self, row, col):
         item = self.ui.reductionTable.item(row, col)

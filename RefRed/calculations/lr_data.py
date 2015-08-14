@@ -1,19 +1,16 @@
-from mantid.simpleapi import *
-from sort_nxsdata import SortNXSData
 import numpy as np
 import logging
 import math
 import os
 
-from peakfinderalgorithms.peakfinderderivation import PeakFinderDerivation
-
+from mantid.simpleapi import *
+from RefRed.sort_nxsdata import SortNXSData
+from RefRed.peakfinderalgorithms.peakfinderderivation import PeakFinderDerivation
 
 NEUTRON_MASS = 1.675e-27  # kg
 PLANCK_CONSTANT = 6.626e-34  # m^2 kg s^-1
 H_OVER_M_NEUTRON = PLANCK_CONSTANT / NEUTRON_MASS
 
-
-        
 class LRData(object):
     tof_range = None
     low_res = ['0','255']

@@ -109,6 +109,9 @@ class Gui(object):
 		
 		QtCore.QObject.connect(self.parent.ui.reductionTable, QtCore.SIGNAL("cellChanged(int,int)"), 
 		                       self.parent.table_reduction_cell_changed_value)
+				       
+		#QtCore.QObject.connect(self.parent.ui.reductionTable, QtCore.SIGNAL("keyPressEvent()"),
+		                       #self.parent.table_reduction_cell_changed_value)
 						
 	def get_checkbox_signal_function(self, row_index):
 		root_function_name = 'self.parent.reduction_table_visibility_changed_' + str(row_index)

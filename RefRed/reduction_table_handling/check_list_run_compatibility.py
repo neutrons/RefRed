@@ -7,6 +7,9 @@ class CheckListRunCompatibility(object):
     list_run = None
     list_wks = None
     
+    list_run_found = None
+    list_nexus_found = None
+    
     runs_compatible = False
     
     def __init__(self, list_run=None):
@@ -16,6 +19,9 @@ class CheckListRunCompatibility(object):
         list_run_object = LocateListRun(list_run=list_run)
         list_nexus_found = list_run_object.list_nexus_found
         list_run_found = list_run_object.list_run_found
+        
+        self.list_nexus_found = list_nexus_found
+        self.list_run_found = list_run_found
         
         load_object = LoadListNexus(list_nexus=list_nexus_found, 
                                  list_run=list_run_found, 
