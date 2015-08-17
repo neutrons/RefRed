@@ -20,9 +20,9 @@ class Gui(object):
 	                   u'\u03bbmax (\u00c5)',
 	                   u'Qmin (1/\u00c5)',
 	                   u'Qmax (1/\u00c5)',
-	                   u'Status']
-	column_widths = [40, 150, 150, 60, 80, 80, 90, 90, 50]	
-	
+	                   'Comments']
+	column_widths = [40, 200, 200, 65, 85, 85, 95, 95, 400]	
+		
 	def __init__(self, parent):
 		
 		self.parent = parent

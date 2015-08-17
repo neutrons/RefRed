@@ -20,18 +20,31 @@ class UpdateReductionTable(object):
             self.clear_cell()
             return
         
+        if col==1:
+            data_type = 'data'
+        else:
+            data_type = 'norm'
+
         self.raw_runs = str(runs)
         run_breaker = RunSequenceBreaker(run_sequence=self.raw_runs)
         _list_run = run_breaker.final_list
         nxs_loader = CheckListRunCompatibility(list_run=_list_run)
+        if nxs_loader.no_nexus_found:
+            _color = QtGui.QColor(RefRed.colors.VALUE_BAD)
+            self.parent.ui.reductionTable.item(row, 8).setBackground(_color)
+            self.parent.ui.reductionTable.item(row, 8).setText(data_type + " not found !")
+            return
         
         self.update_lconfigdataset(nxs_loader)
-
+        
         if nxs_loader.runs_compatible:
             _color = QtGui.QColor(RefRed.colors.VALUE_OK)
+            _message = data_type + " runs not compat. !"
         else:
             _color = QtGui.QColor(RefRed.colors.VALUE_BAD)
+            _message = ""
         self.parent.ui.reductionTable.item(row, 8).setBackground(_color)
+#        self.parent.ui.reductionTable.item(row, message_col_index).setText(_message)
     
         is_data_displayed = True if (col == 1) else False
         if self.display_of_this_row_checked():

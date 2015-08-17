@@ -1,5 +1,7 @@
 from RefRed.plot.clear_plots import ClearPlots
+from RefRed.plot.display_plots import DisplayPlots
 from RefRed.calculations.add_list_nexus import AddListNexus
+
 
 class DisplayReductionTable(object):
     
@@ -37,9 +39,11 @@ class DisplayReductionTable(object):
             big_table_data[row, col_index] = self.wks
             self.parent.big_table_data = big_table_data
         else:
-            print("retrieve data")
+            self.wks = _data
         
-        print("display data")
+        DisplayPlots(parent = self.parent, 
+                     row = self.row,
+                     is_data = self.is_data_displayed)
         
     def retrieve_list_nexus_run(self):
         print('in retrieve list nexus')

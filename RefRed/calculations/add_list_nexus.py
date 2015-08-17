@@ -51,5 +51,5 @@ class AddListNexus(object):
                     self.addition_worked = False
                 
             else:
-                self.wks = _list_wks[0]
+                self.wks = _list_wks
                 

@@ -11,12 +11,15 @@ class CheckListRunCompatibility(object):
     list_nexus_found = None
     
     runs_compatible = False
+    no_nexus_found = True
     
     def __init__(self, list_run=None):
         if list_run is None:
             return
         
         list_run_object = LocateListRun(list_run=list_run)
+        if list_run_object.list_nexus_found == []:
+            return
         list_nexus_found = list_run_object.list_nexus_found
         list_run_found = list_run_object.list_run_found
         
@@ -35,4 +38,4 @@ class CheckListRunCompatibility(object):
         else:
             self.runs_compatible = False
                     
-            
+        self.no_nexus_found = False
