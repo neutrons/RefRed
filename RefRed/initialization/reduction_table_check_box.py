@@ -2,6 +2,8 @@ import numpy as np
 from PyQt4 import QtGui
 from PyQt4.QtCore import Qt
 
+from RefRed.plot.display_reduction_table import DisplayReductionTable
+
 class ReductionTableCheckBox(object):
 
     row_selected = -1
@@ -40,10 +42,19 @@ class ReductionTableCheckBox(object):
         
     def launch_update_of_plot(self):
         _row_selected = self.row_selected
+        _is_data_selected = self.is_data_tab_selected()
         if self.is_row_selected_checked(_row_selected):
-            print('display plot')
+            DisplayReductionTable(parent=self.parent, 
+                                  row=_row_selected, 
+                                  is_data_displayed=_is_data_selected)
         else:
             print('clear plots')
+        
+    def is_data_tab_selected(self):
+        if self.parent.ui.dataNormTabWidget.currentIndex() == 0:
+            return True
+        else:
+            return False
         
     def is_row_selected_checked(self, row_selected):
         _widget = self.parent.ui.reductionTable.cellWidget(row_selected, 0)
