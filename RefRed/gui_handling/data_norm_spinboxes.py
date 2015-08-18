@@ -25,6 +25,11 @@ class SpinBox(object):
             val1 = self.parent.ui.dataBackFromValue.value()
             val2 = self.parent.ui.dataBackToValue.value()
 
+        print("inside SpinBox\n")
+        print("val1: %d\n" %val1)
+        print("val2: %d\n" %val2)
+        print
+            
         if (val1 > val2):
             val_min = val2
             val_max = val1

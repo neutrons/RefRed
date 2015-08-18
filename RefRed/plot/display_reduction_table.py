@@ -21,7 +21,7 @@ class DisplayReductionTable(object):
         self.is_data_displayed = is_data_displayed
         
         o_gui_utility = GuiUtility(parent=parent)
-        tab_widget_index = o_gui_utility.data_norm_tab_widget_row_to_display()
+        tab_widget_index = o_gui_utility.data_norm_tab_widget_tab_selected()
         
         if is_data_displayed and (tab_widget_index == 1):
             ClearPlots(self.parent,
@@ -29,13 +29,13 @@ class DisplayReductionTable(object):
                        is_norm = not is_data_displayed,
                        all_plots = True)
             return
-
-        #if (not is_data_displayed) and (tab_widget_index == 0):
-            #ClearPlots(self.parent,
-                       #is_data = is_data_displayed,
-                       #is_norm = not is_data_displayed,
-                       #all_plots = True)
-            #return
+        
+        if (not is_data_displayed) and (tab_widget_index == 0):
+            ClearPlots(self.parent,
+                       is_data = is_data_displayed,
+                       is_norm = not is_data_displayed,
+                       all_plots = True)
+            return
         
         big_table_data = self.parent.big_table_data
         lconfig = big_table_data[row, 2]
