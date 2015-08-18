@@ -23,6 +23,17 @@ class DisplayReductionTable(object):
         big_table_data = self.parent.big_table_data
         lconfig = big_table_data[row, 2]
 
+        if is_data_displayed:
+            runs_compatible = lconfig.data_runs_compatible
+        else:
+            runs_compatible = lconfig.norm_runs_compatible
+        if runs_compatible is False:
+            ClearPlots(self.parent,
+                       is_data = is_data_displayed,
+                       is_norm = not is_data_displayed,
+                       all_plots = True)
+            return
+
         big_table_data_col_index = 0 if is_data_displayed else 1
 
         # check that the data or norm lr_data object is there (data already loaded)

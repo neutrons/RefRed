@@ -49,7 +49,6 @@ class ReductionTableCheckBox(object):
                                   row=_row_selected, 
                                   is_data_displayed=_is_data_selected)
         else:
-            print('clearing plot')
             ClearPlots(self.parent,
                        is_data = _is_data_selected,
                        is_norm = not(_is_data_selected),

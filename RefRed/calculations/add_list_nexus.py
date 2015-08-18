@@ -34,13 +34,17 @@ class AddListNexus(object):
                                              metadata_only=metadata_only)
             _list_wks = load_list_object.list_wks_loaded
             if len(_list_wks) > 1:
+                is_same_property = False
                 if check_nexus_compatibility:
                     check_same_property = CheckIfSameNxsProperty(list_wks = _list_wks,
                                                                  property_name = 'LambdaRequest')
+                    is_same_property = check_same_property.is_same_property
+                    
                 else: #we force true
-                    check_same_property.is_same_property = True
+                    
+                    is_same_property = True
 
-                if check_same_property.is_same_property:
+                if is_same_property:
                     lwks = _list_wks[0]
                     for i in range(1,len(_list_wks)):
                         rwks = _list_wks[1]
