@@ -12,7 +12,7 @@ import colors
 class Gui(object):
 	
 	parent = None
-	vertical_header = ["",
+	vertical_header = ["Active",
 	                   "Data Run #",
 	                   "Norm. Run #",
 	                   u'2\u03b8 (\u00B0)',
@@ -21,7 +21,7 @@ class Gui(object):
 	                   u'Qmin (1/\u00c5)',
 	                   u'Qmax (1/\u00c5)',
 	                   'Comments']
-	column_widths = [40, 200, 200, 65, 85, 85, 95, 95, 400]	
+	column_widths = [60, 200, 200, 65, 85, 85, 95, 95, 400]	
 		
 	def __init__(self, parent):
 		

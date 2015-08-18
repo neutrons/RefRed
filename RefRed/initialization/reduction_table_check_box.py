@@ -3,6 +3,7 @@ from PyQt4 import QtGui
 from PyQt4.QtCore import Qt
 
 from RefRed.plot.display_reduction_table import DisplayReductionTable
+from RefRed.plot.clear_plots import ClearPlots
 
 class ReductionTableCheckBox(object):
 
@@ -48,7 +49,11 @@ class ReductionTableCheckBox(object):
                                   row=_row_selected, 
                                   is_data_displayed=_is_data_selected)
         else:
-            print('clear plots')
+            print('clearing plot')
+            ClearPlots(self.parent,
+                       is_data = _is_data_selected,
+                       is_norm = not(_is_data_selected),
+                       all_plots = True)
         
     def is_data_tab_selected(self):
         if self.parent.ui.dataNormTabWidget.currentIndex() == 0:
