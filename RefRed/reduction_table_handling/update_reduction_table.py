@@ -43,8 +43,23 @@ class UpdateReductionTable(object):
                        plot_it = True,
                        plot_ix = True)     
             self.parent.ui.reductionTable.item(row,col).setText('')
+
+            #create empty lconfig
+            big_table_data = self.parent.big_table_data
+            lconfig = big_table_data[row, 2]
+            if lconfig is None:
+                big_table_data[row, 2] = LConfigDataset()
+            else:
+                if is_data_displayed:
+                    lconfig.data_runs_compatible = False
+                else:
+                    lconfig.norm_runs_compatible = False
+            big_table_data[row, 2] = lconfig
+            self.parent.big_table_data = big_table_data
             return
-        
+
+        self.update_lconfigdataset(nxs_loader)
+
         #if nxs_loader.runs_compatible:
             #_color = QtGui.QColor(RefRed.colors.VALUE_OK)
             #_message = data_type + " runs not compat. !"
@@ -67,11 +82,11 @@ class UpdateReductionTable(object):
                        plot_it = True,
                        plot_ix = True)
     
-    def update_lconfigdataset(self, nxs_loaded):
-        list_nexus_found = nxs_loaded.list_nexus_found
-        list_run_found = nxs_loaded.list_run_found
-        list_wks = nxs_loaded.list_wks
-        runs_compatible = nxs_loaded.runs_compatible
+    def update_lconfigdataset(self, nxs_loader):
+        list_nexus_found = nxs_loader.list_nexus_found
+        list_run_found = nxs_loader.list_run_found
+        list_wks = nxs_loader.list_wks
+        runs_compatible = nxs_loader.runs_compatible
         
         _row = self.row
         big_table_data = self.parent.big_table_data
