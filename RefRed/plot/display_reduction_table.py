@@ -87,18 +87,13 @@ class DisplayReductionTable(object):
             lrdata = LRData(wks)
             col_index = 0 if is_data_displayed else 1
             big_table_data[row, col_index] = lrdata
-            self.big_table_data = big_table_data
+            self.parent.big_table_data = big_table_data
             
         DisplayPlots(parent = self.parent, 
                      row = self.row,
                      is_data = self.is_data_displayed)
-            
-        
-        
         
         return
-
-
 
         lconfig = big_table_data[row, 2]
         if is_data_displayed: #data

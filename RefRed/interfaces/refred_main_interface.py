@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Tue Aug 18 17:06:38 2015
+# Created: Tue Aug 18 18:19:30 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1484,16 +1484,16 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.plotTab.setCurrentIndex(0)
-        self.dataNormTabWidget.setCurrentIndex(0)
+        self.dataNormTabWidget.setCurrentIndex(1)
         QtCore.QObject.connect(self.dataNormTabWidget, QtCore.SIGNAL("currentChanged(int)"), MainWindow.data_norm_tab_changed)
-        QtCore.QObject.connect(self.dataBackToValue, QtCore.SIGNAL("valueChanged(int)"), MainWindow.data_back_spinbox_validation)
-        QtCore.QObject.connect(self.dataBackFromValue, QtCore.SIGNAL("valueChanged(int)"), MainWindow.data_back_spinbox_validation)
-        QtCore.QObject.connect(self.dataPeakFromValue, QtCore.SIGNAL("valueChanged(int)"), MainWindow.data_peak_spinbox_validation)
-        QtCore.QObject.connect(self.dataPeakToValue, QtCore.SIGNAL("valueChanged(int)"), MainWindow.data_peak_spinbox_validation)
-        QtCore.QObject.connect(self.normBackToValue, QtCore.SIGNAL("valueChanged(int)"), MainWindow.norm_back_spinbox_validation)
-        QtCore.QObject.connect(self.normBackFromValue, QtCore.SIGNAL("valueChanged(int)"), MainWindow.norm_back_spinbox_validation)
-        QtCore.QObject.connect(self.normPeakFromValue, QtCore.SIGNAL("valueChanged(int)"), MainWindow.norm_peak_spinbox_validation)
-        QtCore.QObject.connect(self.normPeakToValue, QtCore.SIGNAL("valueChanged(int)"), MainWindow.norm_peak_spinbox_validation)
+        QtCore.QObject.connect(self.dataBackToValue, QtCore.SIGNAL("editingFinished()"), MainWindow.data_back_spinbox_validation)
+        QtCore.QObject.connect(self.dataBackFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.data_back_spinbox_validation)
+        QtCore.QObject.connect(self.dataPeakFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.data_peak_spinbox_validation)
+        QtCore.QObject.connect(self.dataPeakToValue, QtCore.SIGNAL("editingFinished()"), MainWindow.data_peak_spinbox_validation)
+        QtCore.QObject.connect(self.normBackToValue, QtCore.SIGNAL("editingFinished()"), MainWindow.norm_back_spinbox_validation)
+        QtCore.QObject.connect(self.normBackFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.norm_back_spinbox_validation)
+        QtCore.QObject.connect(self.normPeakFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.norm_peak_spinbox_validation)
+        QtCore.QObject.connect(self.normPeakToValue, QtCore.SIGNAL("editingFinished()"), MainWindow.norm_peak_spinbox_validation)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.eventTofBins, self.plotTab)
 

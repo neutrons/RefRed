@@ -198,7 +198,6 @@ class MainGui(QtGui.QMainWindow):
         ReductionTableCheckBox(parent=self, row_selected=29)
 
     def table_reduction_cell_changed_value(self, row, col):
-        print("inside table_reduction_cell_changed_value")
         item = self.ui.reductionTable.item(row, col)
         if item is None:
             return
