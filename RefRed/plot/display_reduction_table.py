@@ -22,6 +22,13 @@ class DisplayReductionTable(object):
         
         big_table_data = self.parent.big_table_data
         lconfig = big_table_data[row, 2]
+        
+        if is_data_displayed and lconfig is None:
+            ClearPlots(self.parent,
+                       is_data = is_data_displayed,
+                       is_norm = not is_data_displayed,
+                       all_plots = True)
+            return
 
         if is_data_displayed:
             runs_compatible = lconfig.data_runs_compatible

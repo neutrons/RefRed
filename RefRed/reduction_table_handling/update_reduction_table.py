@@ -56,6 +56,7 @@ class UpdateReductionTable(object):
                     lconfig.norm_runs_compatible = False
             big_table_data[row, 2] = lconfig
             self.parent.big_table_data = big_table_data
+            
             return
 
         self.update_lconfigdataset(nxs_loader)

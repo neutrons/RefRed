@@ -6,7 +6,7 @@ from initialization.gui import Gui as InitializeGui
 from config_file_launcher import ConfigFileLauncher
 from initialization.gui_connections import GuiConnections as MakeGuiConnections
 from initialization.reduction_table_check_box import ReductionTableCheckBox
-from reduction_table_handling.update_reduction_table import UpdateReductionTable
+from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
 from RefRed.update_data_norm_tab import UpdateDataNormTab
 
 #from mantid.simpleapi import *
@@ -24,6 +24,7 @@ class MainGui(QtGui.QMainWindow):
     path_ascii = '.'  # ascii files
     nbr_row_table_reduction = 30
     prev_table_reduction_row_selected = -1
+    current_table_reduction_row_selected = -1
     reduction_table_check_box_state = np.zeros((nbr_row_table_reduction), dtype=bool)
 
     #[data, norm, metadata]

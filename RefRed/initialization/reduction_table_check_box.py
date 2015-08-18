@@ -22,6 +22,12 @@ class ReductionTableCheckBox(object):
         self.prev_row_selected = parent.prev_table_reduction_row_selected
         self.row_selected = row_selected
         self.parent = parent
+        
+        if row_selected == self.parent.current_table_reduction_row_selected:
+            self.parent.current_table_reduction_row_selected = -1
+        else:
+            self.parent.current_table_reduction_row_selected = row_selected
+
         if row_selected == self.prev_row_selected:
             pass
         else:

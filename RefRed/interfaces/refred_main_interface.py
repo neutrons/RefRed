@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Tue Aug 18 13:55:32 2015
+# Created: Tue Aug 18 16:03:24 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -226,7 +226,7 @@ class Ui_MainWindow(object):
         self.dataNormTabWidget.setEnabled(True)
         self.dataNormTabWidget.setObjectName("dataNormTabWidget")
         self.tab = QtGui.QWidget()
-        self.tab.setEnabled(False)
+        self.tab.setEnabled(True)
         self.tab.setObjectName("tab")
         self.verticalLayout_12 = QtGui.QVBoxLayout(self.tab)
         self.verticalLayout_12.setObjectName("verticalLayout_12")
@@ -255,6 +255,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_31 = QtGui.QHBoxLayout(self.layoutWidget_5)
         self.horizontalLayout_31.setObjectName("horizontalLayout_31")
         self.data_yi_plot = MPLWidgetXLog(self.layoutWidget_5)
+        self.data_yi_plot.setEnabled(True)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -284,6 +285,7 @@ class Ui_MainWindow(object):
         self.dataPrimToLabel.setObjectName("dataPrimToLabel")
         self.horizontalLayout_36.addWidget(self.dataPrimToLabel)
         self.dataPrimToValue = QtGui.QSpinBox(self.frame_11)
+        self.dataPrimToValue.setEnabled(True)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -313,6 +315,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_32 = QtGui.QHBoxLayout()
         self.horizontalLayout_32.setObjectName("horizontalLayout_32")
         self.dataBackFromLabel = QtGui.QLabel(self.frame_11)
+        self.dataBackFromLabel.setEnabled(True)
         self.dataBackFromLabel.setObjectName("dataBackFromLabel")
         self.horizontalLayout_32.addWidget(self.dataBackFromLabel)
         self.dataBackToValue = QtGui.QSpinBox(self.frame_11)
@@ -348,6 +351,7 @@ class Ui_MainWindow(object):
         self.dataPeakFromLabel.setObjectName("dataPeakFromLabel")
         self.horizontalLayout_33.addWidget(self.dataPeakFromLabel)
         self.dataPeakToValue = QtGui.QSpinBox(self.frame_11)
+        self.dataPeakToValue.setEnabled(True)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(0, 255, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -377,9 +381,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_34 = QtGui.QHBoxLayout()
         self.horizontalLayout_34.setObjectName("horizontalLayout_34")
         self.dataPeakToLabel = QtGui.QLabel(self.frame_11)
+        self.dataPeakToLabel.setEnabled(True)
         self.dataPeakToLabel.setObjectName("dataPeakToLabel")
         self.horizontalLayout_34.addWidget(self.dataPeakToLabel)
         self.dataPeakFromValue = QtGui.QSpinBox(self.frame_11)
+        self.dataPeakFromValue.setEnabled(True)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(0, 255, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -575,7 +581,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_12.addWidget(self.splitter_3)
         self.dataNormTabWidget.addTab(self.tab, "")
         self.tab_2 = QtGui.QWidget()
-        self.tab_2.setEnabled(False)
+        self.tab_2.setEnabled(True)
         self.tab_2.setObjectName("tab_2")
         self.verticalLayout_17 = QtGui.QVBoxLayout(self.tab_2)
         self.verticalLayout_17.setObjectName("verticalLayout_17")

@@ -1,6 +1,7 @@
 from PyQt4 import QtGui, QtCore
 import RefRed.colors as colors
 from RefRed.plot.clear_plots import ClearPlots
+from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
 
 class DisplayPlots(object):
 	
@@ -87,14 +88,18 @@ class DisplayPlots(object):
 		self.backFlag = bool(_data.back_flag)
 		self.lowResFlag = bool(_data.low_res_flag)
 		
+#		o_update_plot_widgets = UpdatePlotWidgetStatus(parent = parent)
+		
 		if is_data:
 			self.qRange = _data.q_range
 			self.incidentAngle = _data.incident_angle
 			self.lambdaRange = _data.lambda_range
 			self.workWithData()
+#			o_update_plot_widgets.enable_data()
 		else:
 #			self.useItFlag = _data.use_it_flag
 			self.workWithNorm()
+#			o_update_plot_widgets.enable_norm()
 		
 		if plot_yt:
 			ClearPlots(self.parent, plot_yt=True, 

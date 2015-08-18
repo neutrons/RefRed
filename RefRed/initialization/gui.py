@@ -8,6 +8,7 @@ from ..reduced_config_files_handler import ReducedConfigFilesHandler
 from ..all_plot_axis import AllPlotAxis
 #from .gui_utils import DelayedTrigger
 import colors
+from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
 
 class Gui(object):
 	
@@ -39,7 +40,11 @@ class Gui(object):
 		self.init_error_label_widgets()
 		parent.allPlotAxis = AllPlotAxis()
 		self.init_primary_fraction_range_widgets() # NEW FEATURE COMING SOON
-
+		
+		#enabled all widgets
+		o_update_plot = UpdatePlotWidgetStatus(parent=parent)
+		o_update_plot.enable_data()
+		o_update_plot.enable_norm()
 
 		## start a separate thread for delayed actions
 		#parent.trigger=DelayedTrigger()
