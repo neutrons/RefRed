@@ -19,11 +19,9 @@ class UpdateReductionTable(object):
         if clear_cell:
             self.clear_cell()
             return
-        
-        if col==1:
-            data_type = 'data'
-        else:
-            data_type = 'norm'
+
+        data_type = 'data' if col == 1 else 'norm'
+        is_data_displayed = True if (col == 1) else False
 
         self.raw_runs = str(runs)
         run_breaker = RunSequenceBreaker(run_sequence=self.raw_runs)
@@ -35,7 +33,17 @@ class UpdateReductionTable(object):
             #self.parent.ui.reductionTable.item(row, 8).setText(data_type + " not found !")
             #return
         
-        self.update_lconfigdataset(nxs_loader)
+        is_nexus_found = False if nxs_loader.list_nexus_found == None else True
+        if is_nexus_found is False:
+            ClearPlots(self.parent, 
+                       is_data = is_data_displayed,
+                       is_norm = (not is_data_displayed),
+                       plot_yt = True,
+                       plot_yi = True,
+                       plot_it = True,
+                       plot_ix = True)     
+            self.parent.ui.reductionTable.item(row,col).setText('')
+            return
         
         #if nxs_loader.runs_compatible:
             #_color = QtGui.QColor(RefRed.colors.VALUE_OK)
@@ -46,7 +54,6 @@ class UpdateReductionTable(object):
         #self.parent.ui.reductionTable.item(row, 8).setBackground(_color)
         ##self.parent.ui.reductionTable.item(row, message_col_index).setText(_message)
     
-        is_data_displayed = True if (col == 1) else False
         if self.display_of_this_row_checked():
             DisplayReductionTable(parent=self.parent, 
                                   row=self.row,

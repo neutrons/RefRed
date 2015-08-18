@@ -22,6 +22,8 @@ class DisplayReductionTable(object):
         
         big_table_data = self.parent.big_table_data
         lconfig = big_table_data[row, 2]
+        if lconfig is None:
+            return
 
         if is_data_displayed:
             runs_compatible = lconfig.data_runs_compatible
