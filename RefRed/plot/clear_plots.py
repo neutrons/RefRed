@@ -1,6 +1,6 @@
 class ClearPlots(object):
 	
-	self = None
+	parent = None
 	
 	plot_yt = False
 	plot_yi = False
@@ -9,7 +9,8 @@ class ClearPlots(object):
 	reduced = False
 	stitched = False
 	
-	def __init__(cls, self, is_data=True, 
+	def __init__(self, parent, 
+	             is_data=True, 
 	             is_norm=False, 
 	             plot_yt=False, 
 	             plot_yi=False, 
@@ -18,78 +19,78 @@ class ClearPlots(object):
 	             reduced=False, 
 	             stitched=False,
 	             all_plots=False):
-		cls.self = self
+		self.parent = parent
 		
-		cls.plot_yt = plot_yt
-		cls.plot_yi = plot_yi
-		cls.plot_it = plot_it
-		cls.plot_ix = plot_ix
-		cls.reduced = reduced
-		cls.stitched = stitched
+		self.plot_yt = plot_yt
+		self.plot_yi = plot_yi
+		self.plot_it = plot_it
+		self.plot_ix = plot_ix
+		self.reduced = reduced
+		self.stitched = stitched
 		
 		if all_plots:
-			cls.plot_yt = True
-			cls.plot_yi = True
-			cls.plot_it = True
-			cls.plot_ix = True
-			cls.reduced = True
-			cls.stitched = True
+			self.plot_yt = True
+			self.plot_yi = True
+			self.plot_it = True
+			self.plot_ix = True
+			self.reduced = True
+			self.stitched = True
 		
 		if is_data:
-			cls.clear_data_plots()
-			self.ui.dataNameOfFile.setText('')
+			self.clear_data_plots()
+			parent.ui.dataNameOfFile.setText('')
 		
 		if is_norm:
-			cls.clear_norm_plots()
-			self.ui.normNameOfFile.setText('')
+			self.clear_norm_plots()
+			parent.ui.normNameOfFile.setText('')
 			
-		if cls.reduced:
-			cls.clear_reduced()
+		if self.reduced:
+			self.clear_reduced()
 		
-		if cls.stitched:
-			cls.clear_stitched()
+		if self.stitched:
+			self.clear_stitched()
 			
-	def clear_data_plots(cls):
-		self = cls.self
-		if cls.plot_yt:
-			self.ui.data_yt_plot.clear()
-			self.ui.data_yt_plot.draw()
+	def clear_data_plots(self):
+		parent = self.parent
+		if self.plot_yt:
+			parent.ui.data_yt_plot.clear()
+			parent.ui.data_yt_plot.draw()
 	  
-		if cls.plot_yi:
-			self.ui.data_yi_plot.clear()
-			self.ui.data_yi_plot.draw()
+		if self.plot_yi:
+			parent.ui.data_yi_plot.clear()
+			parent.ui.data_yi_plot.draw()
 	  
-		if cls.plot_it:
-			self.ui.data_it_plot.clear()
-			self.ui.data_it_plot.draw()
+		if self.plot_it:
+			parent.ui.data_it_plot.clear()
+			parent.ui.data_it_plot.draw()
 	  
-		if cls.plot_ix:
-			self.ui.data_ix_plot.clear()
-			self.ui.data_ix_plot.draw()
+		if self.plot_ix:
+			parent.ui.data_ix_plot.clear()
+			parent.ui.data_ix_plot.draw()
 
-	def clear_norm_plots(cls):
-		self = cls.self
-		if cls.plot_yt:
-			self.ui.norm_yt_plot.clear()
-			self.ui.norm_yt_plot.draw()
+	def clear_norm_plots(self):
+		parent = self.parent
+		if self.plot_yt:
+			parent.ui.norm_yt_plot.clear()
+			parent.ui.norm_yt_plot.draw()
 	  
-		if cls.plot_yi:
-			self.ui.norm_yi_plot.clear()
-			self.ui.norm_yi_plot.draw()
+		if self.plot_yi:
+			parent.ui.norm_yi_plot.clear()
+			parent.ui.norm_yi_plot.draw()
 	  
-		if cls.plot_it:
-			self.ui.norm_it_plot.clear()
-			self.ui.norm_it_plot.draw()
+		if self.plot_it:
+			parent.ui.norm_it_plot.clear()
+			parent.ui.norm_it_plot.draw()
 	  
-		if cls.plot_ix:
-			self.ui.norm_ix_plot.clear()
-			self.ui.norm_ix_plot.draw()
+		if self.plot_ix:
+			parent.ui.norm_ix_plot.clear()
+			parent.ui.norm_ix_plot.draw()
 	
-	def clear_reduced(cls):
-		cls.self.ui.reflectivity_plot.clear()
-		cls.self.ui.reflectivity_plot.draw()
+	def clear_reduced(self):
+		self.parent.ui.reflectivity_plot.clear()
+		self.parent.ui.reflectivity_plot.draw()
 		
-	def clear_stitched(cls):
-		cls.self.ui.data_stitching_plot.clear()
-		cls.self.ui.data_stitching_plot.draw()
+	def clear_stitched(self):
+		self.parent.ui.data_stitching_plot.clear()
+		self.parent.ui.data_stitching_plot.draw()
 	
