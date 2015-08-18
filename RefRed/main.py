@@ -8,7 +8,7 @@ from initialization.gui_connections import GuiConnections as MakeGuiConnections
 from initialization.reduction_table_check_box import ReductionTableCheckBox
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
 from RefRed.update_data_norm_tab import UpdateDataNormTab
-from RefRed.gui_handling.data_norm_spinboxes import DataPeakSpinbox, DataBackSpinbox
+from RefRed.gui_handling.data_norm_spinboxes import DataPeakSpinbox, DataBackSpinbox, NormPeakSpinbox, NormBackSpinbox
 
 
 
@@ -217,7 +217,7 @@ class MainGui(QtGui.QMainWindow):
         DataPeakSpinbox(parent=self)
     
     def norm_back_spinbox_validation(self):
-        pass
+        NormBackSpinbox(parent=self)
     
     def norm_peak_spinbox_validation(self):
-        pass
+        NormPeakSpinbox(parent=self)

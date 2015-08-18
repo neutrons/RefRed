@@ -85,6 +85,7 @@ class DisplayPlots(object):
 
         self.peak = self.sortIntArray(_data.peak)
         self.back = self.sortIntArray(_data.back)
+        
         self.lowRes = self.sortIntArray(_data.low_res)
         self.backFlag = bool(_data.back_flag)
         self.lowResFlag = bool(_data.low_res_flag)
@@ -99,7 +100,7 @@ class DisplayPlots(object):
 #			o_update_plot_widgets.enable_data()
         else:
 #			self.useItFlag = _data.use_it_flag
-            self.workWithNorm()
+            self.workWithNorm(update_reduction_table = refresh_reduction_table)
 #			o_update_plot_widgets.enable_norm()
 
         if plot_yt:
@@ -331,7 +332,7 @@ class DisplayPlots(object):
         parent.ui.TOFmanualFromValue.setText(stmin)
         parent.ui.TOFmanualToValue.setText(stmax)
 
-    def workWithNorm(self):
+    def workWithNorm(self, update_reduction_table = True):
         parent = self.parent
         self.yt_plot_ui = parent.ui.norm_yt_plot
         self.yi_plot_ui = parent.ui.norm_yi_plot

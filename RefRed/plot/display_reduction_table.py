@@ -2,7 +2,7 @@ from RefRed.plot.clear_plots import ClearPlots
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.calculations.add_list_nexus import AddListNexus
 from RefRed.calculations.lr_data import LRData
-
+from RefRed.gui_handling.gui_utility import GuiUtility
 
 class DisplayReductionTable(object):
     
@@ -20,18 +20,36 @@ class DisplayReductionTable(object):
         self.row = row
         self.is_data_displayed = is_data_displayed
         
-        big_table_data = self.parent.big_table_data
-        lconfig = big_table_data[row, 2]
+        o_gui_utility = GuiUtility(parent=parent)
+        tab_widget_index = o_gui_utility.data_norm_tab_widget_row_to_display()
         
-        if is_data_displayed and lconfig is None:
+        if is_data_displayed and (tab_widget_index == 1):
             ClearPlots(self.parent,
                        is_data = is_data_displayed,
                        is_norm = not is_data_displayed,
                        all_plots = True)
             return
 
+        #if (not is_data_displayed) and (tab_widget_index == 0):
+            #ClearPlots(self.parent,
+                       #is_data = is_data_displayed,
+                       #is_norm = not is_data_displayed,
+                       #all_plots = True)
+            #return
+        
+        big_table_data = self.parent.big_table_data
+        lconfig = big_table_data[row, 2]
+        
+#        if is_data_displayed and lconfig is None:
         if lconfig is None:
+            ClearPlots(self.parent,
+                       is_data = is_data_displayed,
+                       is_norm = not is_data_displayed,
+                       all_plots = True)
             return
+
+        #if lconfig is None:
+            #return
 
         if is_data_displayed:
             runs_compatible = lconfig.data_runs_compatible
