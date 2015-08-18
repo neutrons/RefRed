@@ -6,7 +6,7 @@ import os
 from mantid.simpleapi import *
 #from RefRed.sort_nxsdata import SortNXSData
 from RefRed.peakfinderalgorithms.peakfinderderivation import PeakFinderDerivation
-import RefRed.constants
+import RefRed.constants as constants
 from RefRed.plot.all_plot_axis import AllPlotAxis
 
 NEUTRON_MASS = 1.675e-27  # kg
@@ -112,7 +112,7 @@ class LRData(object):
         self.back_flag = True
         self.all_plot_axis = AllPlotAxis()
         self.tof_auto_flag = True
-        self.new_detector_geometry_flag = self.is_nexus_taken_after_refDate(date)
+        self.new_detector_geometry_flag = self.is_nexus_taken_after_refDate()
         self.data_loaded = False
         self.read_data()
 
@@ -297,7 +297,7 @@ class LRData(object):
         '''
         This function parses the output.date and returns true if this date is after the ref date
         '''
-        ref_data = constans.new_geometry_detector_data
+        ref_date = constants.new_geometry_detector_date
         nexus_date = self.date
         nexus_date_acquistion = nexus_date.split('T')[0]
 

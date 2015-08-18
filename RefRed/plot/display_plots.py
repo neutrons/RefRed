@@ -1,5 +1,5 @@
 from PyQt4 import QtGui, QtCore
-import RefRed.colors
+import RefRed.colors as colors
 from RefRed.plot.clear_plots import ClearPlots
 
 class DisplayPlots(object):
@@ -9,6 +9,9 @@ class DisplayPlots(object):
 
 	row = -1
 	col = -1
+
+	xlim = 255
+	ylim = 303
 
 	def __init__(self, parent=None, 
 	             row=-1,
@@ -23,6 +26,7 @@ class DisplayPlots(object):
 			return
 		
 		self.parent = parent
+		is_norm = not is_data
 		
 		if is_data:
 			col = 0
@@ -64,12 +68,12 @@ class DisplayPlots(object):
 			#parent.bigTableData[row,col] = _data
 		
 		if parent.ui.dataTOFmanualMode.isChecked():
-			self.tofRangeAuto = self.getTOFrangeInMs(_active_data.tof_range)
+			self.tofRangeAuto = self.getTOFrangeInMs(_data.tof_range)
 		else:
-			self.tofRangeAuto = self.getTOFrangeInMs(_active_data.tof_range_auto)
+			self.tofRangeAuto = self.getTOFrangeInMs(_data.tof_range_auto)
 
-		self.tofAxis = self.getTOFrangeInMs(_active_data.tof_axis_auto_with_margin)
-		self.fullTofAxis = self.getFullTOFinMs(_active_data.tof_axis_auto_with_margin)
+		self.tofAxis = self.getTOFrangeInMs(_data.tof_axis_auto_with_margin)
+		self.fullTofAxis = self.getFullTOFinMs(_data.tof_axis_auto_with_margin)
 		
 		self.xy  = _data.xydata
 		self.ytof = _data.ytofdata
@@ -93,26 +97,34 @@ class DisplayPlots(object):
 			self.workWithNorm()
 		
 		if plot_yt:
-			ClearPlots(self.parent, plot_yt=True, is_data=is_data, is_norm=is_norm)
+			ClearPlots(self.parent, plot_yt=True, 
+			           is_data = is_data, 
+			           is_norm = is_norm)
 			self.plot_yt()
 
-
-
-
 		if plot_it:
-			ClearPlots(self.parent, plot_it=True, is_data=is_data, is_norm=is_norm)
+			ClearPlots(self.parent, 
+			           plot_it = True, 
+			           is_data = is_data, 
+			           is_norm = is_norm)
 			self.plot_it()
 			
 		if plot_yi:
-			ClearPlots(self.parent, plot_yi=True, is_data=is_data, is_norm=is_norm)
+			ClearPlots(self.parent, 
+			           plot_yi = True, 
+			           is_data = is_data, 
+			           is_norm = is_norm)
 			self.plot_yi()
 			
 		if plot_ix:
-			ClearPlots(self.parent, plot_ix=True, is_data=is_data, is_norm=is_norm)
+			ClearPlots(self.parent, 
+			           plot_ix = True, 
+			           is_data = is_data, 
+			           is_norm = is_norm)
 			self.plot_ix()
 		
 		if plot_yt or plot_it or plot_yi or plot_ix:
-			if self.isDataSelected():
+			if is_data:
 				parent.ui.dataNameOfFile.setText('%s'%(self.filename))
 			else:
 				parent.ui.normNameOfFile.setText('%s'%(self.filename))
@@ -375,7 +387,7 @@ class DisplayPlots(object):
 		_item_incident = QtGui.QTableWidgetItem(str(incident_angle))
 		_item_incident.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)      
 
-		[row, col] = self.rowColSelected
+		row = self.row
 		parent.ui.reductionTable.setItem(row, 6, _item_min)
 		parent.ui.reductionTable.setItem(row, 7, _item_max)
 		parent.ui.reductionTable.setItem(row, 4, _item_lmin)
