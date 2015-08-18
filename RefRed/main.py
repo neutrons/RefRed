@@ -7,6 +7,7 @@ from config_file_launcher import ConfigFileLauncher
 from initialization.gui_connections import GuiConnections as MakeGuiConnections
 from initialization.reduction_table_check_box import ReductionTableCheckBox
 from reduction_table_handling.update_reduction_table import UpdateReductionTable
+from RefRed.update_data_norm_tab import UpdateDataNormTab
 
 #from mantid.simpleapi import *
 
@@ -201,4 +202,6 @@ class MainGui(QtGui.QMainWindow):
         else:
             UpdateReductionTable(parent=self, runs=item.text(), row=row, col=col)
         
+    def data_norm_tab_changed(self, index):
+        UpdateDataNormTab(parent = self, tab_index = index)
         

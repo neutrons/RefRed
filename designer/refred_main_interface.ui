@@ -585,7 +585,6 @@ p, li { white-space: pre-wrap; }
                          <property name="whatsThis">
                           <string extracomment="ya"/>
                          </property>
-                         <zorder>splitter</zorder>
                         </widget>
                        </item>
                        <item>
@@ -1168,8 +1167,6 @@ p, li { white-space: pre-wrap; }
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
-                         <zorder>splitter</zorder>
-                         <zorder>splitter</zorder>
                         </widget>
                        </item>
                        <item>
@@ -3829,112 +3826,26 @@ p, li { white-space: pre-wrap; }
  <resources>
   <include location="../icons/icons.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>dataNormTabWidget</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_norm_tab_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1145</x>
+     <y>379</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>999</x>
+     <y>608</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
   <signal>signal1()</signal>
-  <slot>fileOpenDialog()</slot>
-  <slot>plotActiveTab()</slot>
-  <slot>fileOpenList()</slot>
-  <slot>toggleColorbars()</slot>
-  <slot>toggleHide()</slot>
-  <slot>setNorm()</slot>
-  <slot>addRefList()</slot>
-  <slot>clearRefList()</slot>
-  <slot>plot_refl()</slot>
-  <slot>replotProjections()</slot>
-  <slot>nextFile()</slot>
-  <slot>prevFile()</slot>
-  <slot>reduceDatasets()</slot>
-  <slot>overwriteDirectBeam()</slot>
-  <slot>overwriteChanged()</slot>
-  <slot>normalizeTotalReflection()</slot>
-  <slot>reductionTableChanged(QTableWidgetItem*)</slot>
-  <slot>changeActiveChannel()</slot>
-  <slot>removeRefList()</slot>
-  <slot>changeRegionValues()</slot>
-  <slot>refineXpos()</slot>
-  <slot>visualizePeakfinding()</slot>
-  <slot>folderModified()</slot>
-  <slot>clearOverwrite()</slot>
-  <slot>openByNumber()</slot>
-  <slot>loadExtraction()</slot>
-  <slot>aboutDialog()</slot>
-  <slot>automaticExtraction()</slot>
-  <slot>helpDialog()</slot>
-  <slot>clearNormList()</slot>
-  <slot>change_offspec_colorscale()</slot>
-  <slot>change_gisans_colorscale()</slot>
-  <slot>open_compare_window()</slot>
-  <slot>open_advanced_background()</slot>
-  <slot>clip_offspec_colorscale()</slot>
-  <slot>fileOpenSumDialog()</slot>
-  <slot>reloadFile()</slot>
-  <slot>cutPoints()</slot>
-  <slot>autoRef()</slot>
-  <slot>stripOverlap()</slot>
-  <slot>open_polarization_window()</slot>
-  <slot>open_rawdata_dialog()</slot>
-  <slot>raiseError()</slot>
-  <slot>set_debug()</slot>
-  <slot>quickReduce()</slot>
-  <slot>open_nxs_dialog()</slot>
-  <slot>open_filter_dialog()</slot>
-  <slot>open_reduction_preview()</slot>
-  <slot>data_background_switch()</slot>
-  <slot>data_low_res_switch()</slot>
-  <slot>normalization_switch()</slot>
-  <slot>normalization_background_switch()</slot>
-  <slot>normalization_low_res_switch()</slot>
-  <slot>auto_tof_switch()</slot>
-  <slot>manual_tof_switch()</slot>
-  <slot>tof_ms_switch()</slot>
-  <slot>tof_micros_switch()</slot>
-  <slot>data_peak_spinbox_validation()</slot>
-  <slot>data_spinbox()</slot>
-  <slot>data_back_spinbox_validation()</slot>
-  <slot>data_lowres_spinbox_validation()</slot>
-  <slot>norm_peak_spinbox_validation()</slot>
-  <slot>norm_back_spinbox_validation()</slot>
-  <slot>norm_lowres_spinbox_validation()</slot>
-  <slot>norm_spinbox()</slot>
-  <slot>manual_tof_selection()</slot>
-  <slot>loading_configuration()</slot>
-  <slot>saving_configuration()</slot>
-  <slot>bigTable_selection_changed()</slot>
   <slot>data_norm_tab_changed()</slot>
-  <slot>runReduction()</slot>
-  <slot>sf_widgets_status()</slot>
-  <slot>sf_browse_button()</slot>
-  <slot>output_data_into_ascii()</slot>
-  <slot>reduction_table_cell_modified()</slot>
-  <slot>reduction_table_cell_double_clicked()</slot>
-  <slot>remove_row_reductionTable()</slot>
-  <slot>clear_reductionTable()</slot>
-  <slot>loading_full_configuration()</slot>
-  <slot>find_peak_back()</slot>
-  <slot>data_stitching_is_auto()</slot>
-  <slot>data_stitching_is_manual()</slot>
-  <slot>data_stitching_is_1()</slot>
-  <slot>reduce_plot_RvsQ_radiobutton()</slot>
-  <slot>reduce_plot_RQ4vsQ_radiobutton()</slot>
-  <slot>reduce_plot_LogRvsQ_radiobutton()</slot>
-  <slot>reduce_plot_RvsQ_2_radiobutton()</slot>
-  <slot>reduce_plot_RQ4vsQ_2_radiobutton()</slot>
-  <slot>reduce_plot_LogRvsQ_2_radiobutton()</slot>
-  <slot>output_selected_data_into_ivspx_ascii()</slot>
-  <slot>output_selected_data_into_crtof_ascii()</slot>
-  <slot>load_reduced_ascii()</slot>
-  <slot>refresh_stitching_ascii_plot()</slot>
-  <slot>reduction_table_cell_single_clicked()</slot>
-  <slot>useAutoPeakBackSelectionCheckBox()</slot>
-  <slot>useGeometryCorrectionCheckBox()</slot>
-  <slot>useScalingFactorConfigCheckBox()</slot>
-  <slot>reduction_table_right_click()</slot>
-  <slot>metadataFinderEvent()</slot>
-  <slot>launch_SFcalculator()</slot>
-  <slot>saving_configuration_as()</slot>
-  <slot>fileHasBeenModified()</slot>
-  <slot>selectIncidentMediumListEvent()</slot>
-  <slot>primaryFractionFlagEvent()</slot>
  </slots>
 </ui>

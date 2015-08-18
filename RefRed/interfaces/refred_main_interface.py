@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Mon Aug 17 15:12:33 2015
+# Created: Tue Aug 18 13:55:32 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1479,6 +1479,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.plotTab.setCurrentIndex(0)
         self.dataNormTabWidget.setCurrentIndex(0)
+        QtCore.QObject.connect(self.dataNormTabWidget, QtCore.SIGNAL("currentChanged(int)"), MainWindow.data_norm_tab_changed)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.eventTofBins, self.plotTab)
 
