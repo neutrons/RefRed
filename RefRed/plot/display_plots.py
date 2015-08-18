@@ -93,7 +93,7 @@ class DisplayPlots(object):
 			self.lambdaRange = _data.lambda_range
 			self.workWithData()
 		else:
-			self.useItFlag = _active_data.use_it_flag
+#			self.useItFlag = _data.use_it_flag
 			self.workWithNorm()
 		
 		if plot_yt:
@@ -125,9 +125,9 @@ class DisplayPlots(object):
 		
 		if plot_yt or plot_it or plot_yi or plot_ix:
 			if is_data:
-				parent.ui.dataNameOfFile.setText('%s'%(self.filename))
+				parent.ui.dataNameOfFile.setText('%s'%(_data.filename))
 			else:
-				parent.ui.normNameOfFile.setText('%s'%(self.filename))
+				parent.ui.normNameOfFile.setText('%s'%(_data.filename))
 			self.displayMetadata()
 					
 	def displayMetadata(self):
@@ -328,7 +328,7 @@ class DisplayPlots(object):
 	def workWithNorm(self):
 		parent = self.parent
 		
-		parent.ui.useNormalizationFlag.setChecked(self.useItFlag)
+		#parent.ui.useNormalizationFlag.setChecked(self.useItFlag)
 		
 		[peak1, peak2] = self.peak
 		parent.ui.normPeakFromValue.setValue(peak1)

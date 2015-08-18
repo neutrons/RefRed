@@ -36,6 +36,9 @@ class DisplayReductionTable(object):
                 list_nexus = lconfig.norm_full_file_name
                 list_run = lconfig.norm_sets
 
+            if list_nexus == ['']:
+                return
+
             nexus_loader = AddListNexus(list_nexus = list_nexus,
                                         list_run = list_run,
                                         metadata_only = False,
