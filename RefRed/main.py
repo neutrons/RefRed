@@ -8,6 +8,7 @@ from initialization.gui_connections import GuiConnections as MakeGuiConnections
 from initialization.reduction_table_check_box import ReductionTableCheckBox
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
 from RefRed.update_data_norm_tab import UpdateDataNormTab
+from RefRed.gui_handling.data_norm_spinboxes import DataPeakSpinbox
 
 #from mantid.simpleapi import *
 
@@ -195,6 +196,7 @@ class MainGui(QtGui.QMainWindow):
         ReductionTableCheckBox(parent=self, row_selected=29)
 
     def table_reduction_cell_changed_value(self, row, col):
+        print("inside table_reduction_cell_changed_value")
         item = self.ui.reductionTable.item(row, col)
         if item is None:
             return
@@ -206,3 +208,14 @@ class MainGui(QtGui.QMainWindow):
     def data_norm_tab_changed(self, index):
         UpdateDataNormTab(parent = self, tab_index = index)
         
+    def data_back_spinbox_validation(self):
+        pass
+    
+    def data_peak_spinbox_validation(self):
+        DataPeakSpinbox(parent=self)
+    
+    def norm_back_spinbox_validation(self):
+        pass
+    
+    def norm_peak_spinbox_validation(self):
+        pass

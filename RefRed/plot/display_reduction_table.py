@@ -30,6 +30,9 @@ class DisplayReductionTable(object):
                        all_plots = True)
             return
 
+        if lconfig is None:
+            return
+
         if is_data_displayed:
             runs_compatible = lconfig.data_runs_compatible
         else:

@@ -526,7 +526,7 @@ p, li { white-space: pre-wrap; }
                  <bool>true</bool>
                 </property>
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>1</number>
                 </property>
                 <widget class="QWidget" name="tab">
                  <property name="enabled">
@@ -3861,9 +3861,141 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>dataBackToValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_back_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1878</x>
+     <y>301</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>999</x>
+     <y>608</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataBackFromValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_back_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1878</x>
+     <y>421</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>999</x>
+     <y>608</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataPeakFromValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_peak_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1878</x>
+     <y>381</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>999</x>
+     <y>608</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataPeakToValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_peak_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1878</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>999</x>
+     <y>608</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normBackToValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_back_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1895</x>
+     <y>317</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>999</x>
+     <y>608</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normBackFromValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_back_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1895</x>
+     <y>437</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>999</x>
+     <y>608</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normPeakFromValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_peak_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1895</x>
+     <y>397</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>999</x>
+     <y>608</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normPeakToValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_peak_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1895</x>
+     <y>357</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>999</x>
+     <y>608</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
   <slot>data_norm_tab_changed()</slot>
+  <slot>norm_back_spinbox_validation()</slot>
+  <slot>data_back_spinbox_validation()</slot>
+  <slot>norm_peak_spinbox_validation()</slot>
+  <slot>data_peak_spinbox_validation()</slot>
  </slots>
 </ui>
