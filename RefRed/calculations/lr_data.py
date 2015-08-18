@@ -4,7 +4,7 @@ import math
 import os
 
 from mantid.simpleapi import *
-from RefRed.sort_nxsdata import SortNXSData
+#from RefRed.sort_nxsdata import SortNXSData
 from RefRed.peakfinderalgorithms.peakfinderderivation import PeakFinderDerivation
 
 NEUTRON_MASS = 1.675e-27  # kg
@@ -12,12 +12,20 @@ PLANCK_CONSTANT = 6.626e-34  # m^2 kg s^-1
 H_OVER_M_NEUTRON = PLANCK_CONSTANT / NEUTRON_MASS
 
 class LRData(object):
+
+    read_options = dict(is_auto_tof_finder = True,
+                        is_auto_peak_finder = True,
+                        back_offset_from_peak = True,
+                        bins = 50,
+                        angle_offset = 0.001)
+
     tof_range = None
     low_res = ['0','255']
     low_res_flag = True    
-    def __init__(self, workspace, read_options):
-        self.workspace = workspace
-        self.read_options = read_options
+    def __init__(self, workspace):
+        
+        self.workspace = mtd[workspace]
+
         mt_run = self.workspace.getRun()
 
         self.run_number = mt_run.getProperty('run_number').value

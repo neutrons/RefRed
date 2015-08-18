@@ -6,7 +6,7 @@ class LConfigDataset(object):
     '''
     proton_charge = -1
 
-    data_wks = ['']
+    data_wks = None
     data_sets = ['']
     data_full_file_name = ['']
     data_peak = ['0','0']
@@ -20,7 +20,7 @@ class LConfigDataset(object):
     tof_units = 'ms'
     tof_auto_flag = True
 
-    norm_wks = ['']
+    norm_wks = None
     norm_sets = ['']
     norm_full_file_name = ['']
     norm_flag = True

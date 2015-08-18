@@ -1,5 +1,5 @@
-from compare_two_nxsdata_for_sfcalculator import CompareTwoNXSDataForSFcalculator
-from qreduce import NXSData
+from RefRed.compare_two_nxsdata_for_sfcalculator import CompareTwoNXSDataForSFcalculator
+from RefRed.qreduce import NXSData
 
 class Position(object):
 	before = -1

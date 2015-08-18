@@ -8,7 +8,10 @@ class AddListNexus(object):
     wks = None
     addition_worked = True
     
-    def __init__(self, list_nexus=None, list_run=None, metadata_only=False, check_nexus_compatibility=True):
+    def __init__(self, list_nexus=None, 
+                 list_run=None, 
+                 metadata_only=False, 
+                 check_nexus_compatibility=True):
         if list_nexus is None:
             return
         
@@ -23,7 +26,7 @@ class AddListNexus(object):
                                    output_wks = _ws_name,
                                    metadata_only = metadata_only)
             
-            self.wks = wks_object
+            self.wks = _ws_name
             
         else:
             load_list_object = LoadListNexus(list_nexus=list_nexus, 
@@ -41,7 +44,7 @@ class AddListNexus(object):
                     lwks = _list_wks[0]
                     for i in range(1,len(_list_wks)):
                         rwks = _list_wks[1]
-                        lwks = Plus(LHSWorkspace=lwks,
+                        lwks_temp = Plus(LHSWorkspace=lwks,
                                     RHSWorkspace=rwks,
                                     OutputWorkspace=lwks)
                     self.wks = lwks

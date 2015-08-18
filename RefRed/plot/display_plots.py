@@ -5,6 +5,7 @@ from RefRed.plot.clear_plots import ClearPlots
 class DisplayPlots(object):
 	
 	parent = None
+	_data = None
 
 	row = -1
 	col = -1
@@ -30,27 +31,18 @@ class DisplayPlots(object):
 		self.row = row
 		self.col = col
 
-		print('in DisplayPlots')
-		return
-		
-		
-		
-		
-		
-		                
-		                
-
-
-
-		self.rowColSelected = [row,col]
-		_data = parent.bigTableData[row,col]
+		_data = self.parent.big_table_data[row, col]
 		if _data is None:
-			ClearPlots(parent, is_data=self.isDataSelected(), is_norm=not self.isDataSelected(), all_plots=True)
+			print("clear plots")
+			#ClearPlots(parent, is_data=self.isDataSelected(), is_norm=not self.isDataSelected(), all_plots=True)
 			return
-		
-		_active_data = _data.active_data
-		self.activeData = _active_data
-		self.filename = _active_data.filename
+
+
+
+
+
+
+		self._data = _data
 		if (not _active_data.new_detector_geometry_flag):
 			self.xlim = 303
 			self.ylim = 255
