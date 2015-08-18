@@ -1,12 +1,11 @@
 from RefRed.plot.display_plots import DisplayPlots
 
-class DataPeakSpinbox(object):
+class DataSpinbox(object):
     
     parent = None
     
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, is_peak=True, value_min=-1, value_max=-1):
         self.parent = parent
-        
         big_table_data = parent.big_table_data
         row = parent.current_table_reduction_row_selected
         
@@ -15,22 +14,27 @@ class DataPeakSpinbox(object):
         
         data = big_table_data[row,0]
         
-        peak1 = self.parent.ui.dataPeakFromValue.value()
-        peak2 = self.parent.ui.dataPeakToValue.value()
-        
-        if (peak1 > peak2):
-            peak_min = peak2
-            peak_max = peak1
+        if is_peak:
+            val1 = self.parent.ui.dataPeakFromValue.value()
+            val2 = self.parent.ui.dataPeakToValue.value()
         else:
-            peak_min = peak1
-            peak_max = peak2
+            val1 = self.parent.ui.dataBackFromValue.value()
+            val2 = self.parent.ui.dataBackToValue.value()
+
+        if (val1 > val2):
+            val_min = val2
+            val_max = val1
+        else:
+            val_min = val1
+            val_max = val2
         
-        data.peak = [str(peak_min), str(peak_max)]
+        if is_peak:
+            data.peak = [str(val_min), str(val_max)]
+        else:
+            data.back = [str(val_min), str(val_max)]
+            
         big_table_data[row, 0] = data
         self.parent.big_table_data = big_table_data
-        
-        #self.parent.ui.dataPeakFromValue.setValue(peak_min)
-        #self.parent.ui.dataPeakToValue.setValue(peak_max)
         
         DisplayPlots(parent = self.parent,
                      row = row,
@@ -40,3 +44,30 @@ class DataPeakSpinbox(object):
                      plot_it = False,
                      plot_ix = False,
                      refresh_reduction_table = False)
+        
+
+class DataPeakSpinbox(object):
+    
+    def __init__(self, parent=None):
+        self.parent = parent
+        peak1 = self.parent.ui.dataPeakFromValue.value()
+        peak2 = self.parent.ui.dataPeakToValue.value()
+
+        DataSpinbox(parent = parent,
+                    is_peak = True,
+                    value_min = peak1,
+                    value_max = peak2)
+       
+class DataBackSpinbox(object):
+    
+    parent = None
+    
+    def __init__(self, parent=None):
+        self.parent = parent
+        back1 = self.parent.ui.dataBackFromValue.value()
+        back2 = self.parent.ui.dataBackToValue.value()
+        
+        DataSpinbox(parent = parent,
+                    is_peak = False,
+                    value_min = back1,
+                    value_max = back2)
