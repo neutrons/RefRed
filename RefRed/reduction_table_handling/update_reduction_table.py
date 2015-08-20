@@ -39,7 +39,8 @@ class UpdateReductionTable(object):
             _color = QtGui.QColor(RefRed.colors.VALUE_BAD)
             self.parent.ui.reductionTable.item(row, 8).setBackground(_color)
         else:
-            self.parent.ui.reductionTable.item(row, 8).setText('')
+            mess = "%s runs have been located!" %data_type
+            self.parent.ui.reductionTable.item(row, 8).setText(mess)
             _color = QtGui.QColor(RefRed.colors.VALUE_OK)
             self.parent.ui.reductionTable.item(row, 8).setBackground(_color)
             
