@@ -20,32 +20,35 @@ class ReductionTableCheckBox(object):
             return
         
         self.prev_row_selected = parent.prev_table_reduction_row_selected
-        self.row_selected = row_selected
         self.parent = parent
-        
-        if row_selected == self.parent.current_table_reduction_row_selected:
+        self.row_selected = row_selected
+        self.handle_check_boxes_single_selection()
+#        self.launch_update_of_plot()
+
+    def handle_check_boxes_single_selection(self):
+                
+        if self.row_selected == self.parent.current_table_reduction_row_selected:
             self.parent.current_table_reduction_row_selected = -1
         else:
-            self.parent.current_table_reduction_row_selected = row_selected
+            self.parent.current_table_reduction_row_selected = self.row_selected
 
-        if row_selected == self.prev_row_selected:
+        if self.row_selected == self.prev_row_selected:
             pass
         else:
-            _reduction_table_check_box_state = parent.reduction_table_check_box_state
+            _reduction_table_check_box_state = self.parent.reduction_table_check_box_state
     
             self.size_check_box_state_table = len(_reduction_table_check_box_state)
-            old_check_box_state = _reduction_table_check_box_state[row_selected]
+            old_check_box_state = _reduction_table_check_box_state[self.row_selected]
             _reduction_table_check_box_state = np.zeros((self.size_check_box_state_table), dtype=bool)
             
-            _reduction_table_check_box_state[row_selected] = not old_check_box_state
+            _reduction_table_check_box_state[self.row_selected] = not old_check_box_state
             self._reduction_table_check_box_state = _reduction_table_check_box_state
             
             self.update_state_of_all_checkboxes()
-            parent.reduction_table_check_box_state = _reduction_table_check_box_state
+            self.parent.reduction_table_check_box_state = _reduction_table_check_box_state
             
-            parent.prev_table_reduction_row_selected = row_selected
-        
-        self.launch_update_of_plot()
+            self.parent.prev_table_reduction_row_selected = self.row_selected
+
         
     def launch_update_of_plot(self):
         _row_selected = self.row_selected

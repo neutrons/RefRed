@@ -5,7 +5,7 @@ from interfaces.refred_main_interface import Ui_MainWindow
 from initialization.gui import Gui as InitializeGui
 from config_file_launcher import ConfigFileLauncher
 from initialization.gui_connections import GuiConnections as MakeGuiConnections
-from initialization.reduction_table_check_box import ReductionTableCheckBox
+from RefRed.reduction_table_handling.reduction_table_check_box import ReductionTableCheckBox
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
 from RefRed.update_data_norm_tab import UpdateDataNormTab
 from RefRed.gui_handling.data_norm_spinboxes import DataPeakSpinbox, DataBackSpinbox, NormPeakSpinbox, NormBackSpinbox
