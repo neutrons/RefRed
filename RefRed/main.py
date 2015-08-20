@@ -29,7 +29,7 @@ class MainGui(QtGui.QMainWindow):
     prev_table_reduction_row_selected = -1
     current_table_reduction_row_selected = -1
     reduction_table_check_box_state = np.zeros((nbr_row_table_reduction), dtype=bool)
-    loading_nxs_thread = None
+    loading_nxs_thread = {'thread1': None, 'thread2': None, 'thread3': None, 'thread4': None}
 
     #[data, norm, metadata]
     big_table_data = np.empty((nbr_row_table_reduction, 3), dtype=object)

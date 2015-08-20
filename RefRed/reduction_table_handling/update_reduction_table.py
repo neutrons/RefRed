@@ -55,15 +55,16 @@ class UpdateReductionTable(object):
         self.parent.ui.reductionTable.item(row, col).setText(final_list_run_found)
 
         list_nexus_found = list_run_object.list_nexus_found
-        self.parent.loading_nxs_thread = CheckListRunCompatibilityAndDisplayThread()
-        self.parent.loading_nxs_thread.setup(parent=self.parent,
+        thread_index = (self.col + 2*self.row)%4
+        self.parent.loading_nxs_thread[thread_index] = CheckListRunCompatibilityAndDisplayThread()
+        self.parent.loading_nxs_thread[thread_index].setup(parent=self.parent,
                        list_run = list_run_found,
                        list_nexus = list_nexus_found,
                        row = row,
                        col = col, 
                        is_working_with_data_column = self.is_data_displayed,
                        is_display_requested = self.display_of_this_row_checked())
-        self.parent.loading_nxs_thread.start()
+        self.parent.loading_nxs_thread[thread_index].start()
 
     def clear_cell(self):
         print('in clear cell')
