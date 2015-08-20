@@ -21,7 +21,6 @@ class DisplayPlots(object):
                  plot_yi=True, 
                  plot_it=True, 
                  plot_ix=True, 
-                 plot_reduced=False, 
                  plot_stitched=False,
                  refresh_reduction_table=True):
         if row == -1:
@@ -46,7 +45,6 @@ class DisplayPlots(object):
                        plot_yi = plot_yi,
                        plot_it = plot_it,
                        plot_ix = plot_ix,
-                       reduced = plot_reduced,
                        stitched = plot_stitched)
             return
         self._data = _data

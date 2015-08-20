@@ -8,7 +8,6 @@ class ClearPlots(object):
 	plot_yi = False
 	plot_it = False
 	plot_ix = False
-	reduced = False
 	stitched = False
 	
 	def __init__(self, parent, 
@@ -18,7 +17,6 @@ class ClearPlots(object):
 	             plot_yi=False, 
 	             plot_it=False, 
 	             plot_ix=False, 
-	             reduced=False, 
 	             stitched=False,
 	             all_plots=False):
 		self.parent = parent
@@ -27,7 +25,6 @@ class ClearPlots(object):
 		self.plot_yi = plot_yi
 		self.plot_it = plot_it
 		self.plot_ix = plot_ix
-		self.reduced = reduced
 		self.stitched = stitched
 		
 		if all_plots:
@@ -35,7 +32,6 @@ class ClearPlots(object):
 			self.plot_yi = True
 			self.plot_it = True
 			self.plot_ix = True
-			self.reduced = True
 			self.stitched = True
 		
 #		update_obj = UpdatePlotWidgetStatus(parent = parent)
@@ -49,10 +45,6 @@ class ClearPlots(object):
 			parent.ui.normNameOfFile.setText('')
 #			update_obj.disable_norm()
 			
-		if self.reduced:
-			self.clear_reduced()
-#			update_obj.disable_reduced()
-		
 		if self.stitched:
 			self.clear_stitched()
 #			update_obj.disable_stitched()
@@ -93,10 +85,6 @@ class ClearPlots(object):
 			parent.ui.norm_ix_plot.clear()
 			parent.ui.norm_ix_plot.draw()
 	
-	def clear_reduced(self):
-		self.parent.ui.reflectivity_plot.clear()
-		self.parent.ui.reflectivity_plot.draw()
-		
 	def clear_stitched(self):
 		self.parent.ui.data_stitching_plot.clear()
 		self.parent.ui.data_stitching_plot.draw()
