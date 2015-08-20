@@ -39,9 +39,10 @@ class MainGui(QtGui.QMainWindow):
         else:
             QtGui.QMainWindow.__init__(self, parent, QtCore.Qt.Window)
         self.ui=Ui_MainWindow()
-        self.ui.setupUi(self)
+        self.ui.setupUi(self)        
         
         InitializeGui(self)
+        self.ui.reductionTable.setUI(self)   
 #        MakeGuiConnections(self)
 
     # config files from menu
@@ -197,14 +198,23 @@ class MainGui(QtGui.QMainWindow):
     def reduction_table_visibility_changed_29(self, state):
         ReductionTableCheckBox(parent=self, row_selected=29)
 
-    def table_reduction_cell_changed_value(self, row, col):
+    def table_reduction_cell_enter_pressed(self):
+        row = self.ui.reductionTable.currentRow()
+        col = self.ui.reductionTable.currentColumn()
         item = self.ui.reductionTable.item(row, col)
+        self.select_next_field(current_row=row, current_col=col)
         if item is None:
             return
-        if (item.text() == ''):
-            UpdateReductionTable(parent=self, row=row, col=col, clear_cell=True)
+        UpdateReductionTable(parent=self, row=row, col=col)
+        
+    def select_next_field(self, current_row=-1, current_col=-1):
+        # trick to be able to retrieve value in editing mode
+        if current_row == self.ui.reductionTable.rowCount()-1:
+            self.ui.reductionTable.setCurrentCell(0, 1)
+        elif current_col == 1:
+            self.ui.reductionTable.setCurrentCell(current_row, current_col+1)
         else:
-            UpdateReductionTable(parent=self, runs=item.text(), row=row, col=col)
+            self.ui.reductionTable.setCurrentCell(current_row+1, current_col-1)
         
     def data_norm_tab_changed(self, index):
         UpdateDataNormTab(parent = self, tab_index = index)

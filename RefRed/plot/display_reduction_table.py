@@ -95,6 +95,16 @@ class DisplayReductionTable(object):
         
         return
 
+
+
+
+
+
+
+
+
+
+
         lconfig = big_table_data[row, 2]
         if is_data_displayed: #data
             _data = lconfig.data_wks

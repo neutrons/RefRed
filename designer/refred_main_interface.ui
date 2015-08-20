@@ -3189,7 +3189,7 @@ p, li { white-space: pre-wrap; }
          </layout>
         </item>
         <item>
-         <widget class="QTableWidget" name="reductionTable">
+         <widget class="MyTableWidget" name="reductionTable">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -3836,6 +3836,11 @@ p, li { white-space: pre-wrap; }
    <header location="global">mplwidgetxlogylog.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>MyTableWidget</class>
+   <extends>QTableWidget</extends>
+   <header location="global">mytablewidget.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>eventTofBins</tabstop>
@@ -3845,22 +3850,6 @@ p, li { white-space: pre-wrap; }
   <include location="../icons/icons.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>dataNormTabWidget</sender>
-   <signal>currentChanged(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>data_norm_tab_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1145</x>
-     <y>379</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>999</x>
-     <y>608</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>dataBackToValue</sender>
    <signal>editingFinished()</signal>
@@ -3992,10 +3981,10 @@ p, li { white-space: pre-wrap; }
  </connections>
  <slots>
   <signal>signal1()</signal>
-  <slot>data_norm_tab_changed()</slot>
   <slot>norm_back_spinbox_validation()</slot>
   <slot>data_back_spinbox_validation()</slot>
   <slot>norm_peak_spinbox_validation()</slot>
   <slot>data_peak_spinbox_validation()</slot>
+  <slot>table_reduction_cell_changed()</slot>
  </slots>
 </ui>

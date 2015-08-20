@@ -6,26 +6,65 @@ from RefRed.plot.display_reduction_table import DisplayReductionTable
 import RefRed.colors 
 from RefRed.lconfigdataset import LConfigDataset
 from RefRed.plot.clear_plots import ClearPlots
+from RefRed.calculations.locate_list_run import LocateListRun
 
 class UpdateReductionTable(object):
     
     raw_runs = None
     
-    def __init__(self, parent=None, runs=None, row=0, col=1, clear_cell=False):
+    def __init__(self, parent=None, row=0, col=1, clear_cell=False):
         self.parent= parent
         self.row = row
         self.col = col
         
-        if clear_cell:
+        item = self.parent.ui.reductionTable.item(row, col)
+        print('item.txt(): ', str(item.text()), '*')
+        if item.text() == '':
             self.clear_cell()
             return
-
+        
         data_type = 'data' if col == 1 else 'norm'
         is_data_displayed = True if (col == 1) else False
 
+        runs = self.parent.ui.reductionTable.item(row, col).text()
         self.raw_runs = str(runs)
+        return
+    
         run_breaker = RunSequenceBreaker(run_sequence=self.raw_runs)
-        _list_run = run_breaker.final_list
+        list_run = run_breaker.final_list
+        
+        # check if nexus can be found
+        list_run_object = LocateListRun(list_run = list_run)
+        if list_run_object.list_nexus_found != []:
+            runs_not_located = ', '.join(list_run_object.list_run_not_found)
+            mess = "Can not locate runs: %s" %runs_not_located
+            self.parent.ui.reductionTable.item(row, 8).setText(mess)
+            _color = QtGui.QColor(RefRed.colors.VALUE_BAD)
+            self.parent.ui.reductionTable.item(row, 8).setBackground(_color)
+            
+        list_run_found = list_run_object.list_run_found
+        
+
+
+        if list_run_found == []:
+            self.parent.ui.reductionTable.item(row, col).setText('')
+            return
+        mess_run_found = ','.join(list_run_found)
+        self.parent.ui.reductionTable.item(row, col).setText(list_run_found)
+
+        list_nexus_found = list_run_object.list_nexus_found
+        CheckListRunCompatibilityAndDisplayThread(parent = self.parent,
+                                                  list_run = list_run_found,
+                                                  list_nexus = list_nexus_found,
+                                                  row = row,
+                                                  is_working_with_data_column = is_data_displayed,
+                                                  is_display_requested = self.display_of_this_row_checked())
+
+        return
+        
+        
+        
+        
         nxs_loader = CheckListRunCompatibility(list_run=_list_run)
         #if nxs_loader.no_nexus_found:
             #_color = QtGui.QColor(RefRed.colors.VALUE_BAD)

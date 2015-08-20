@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Tue Aug 18 18:19:30 2015
+# Created: Thu Aug 20 12:05:55 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1262,7 +1262,7 @@ class Ui_MainWindow(object):
         self.line_2.setObjectName("line_2")
         self.verticalLayout_25.addWidget(self.line_2)
         self.verticalLayout_24.addLayout(self.verticalLayout_25)
-        self.reductionTable = QtGui.QTableWidget(self.layoutWidget_3)
+        self.reductionTable = MyTableWidget(self.layoutWidget_3)
         self.reductionTable.setEnabled(True)
         self.reductionTable.setMinimumSize(QtCore.QSize(0, 200))
         self.reductionTable.setMaximumSize(QtCore.QSize(16777215, 300))
@@ -1485,7 +1485,6 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.plotTab.setCurrentIndex(0)
         self.dataNormTabWidget.setCurrentIndex(1)
-        QtCore.QObject.connect(self.dataNormTabWidget, QtCore.SIGNAL("currentChanged(int)"), MainWindow.data_norm_tab_changed)
         QtCore.QObject.connect(self.dataBackToValue, QtCore.SIGNAL("editingFinished()"), MainWindow.data_back_spinbox_validation)
         QtCore.QObject.connect(self.dataBackFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.data_back_spinbox_validation)
         QtCore.QObject.connect(self.dataPeakFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.data_peak_spinbox_validation)
@@ -1705,5 +1704,6 @@ class Ui_MainWindow(object):
 from mplwidgetnolog import MPLWidgetNoLog
 from .mplwidget import MPLWidget
 from mplwidgetxlogylog import MPLWidgetXLogYLog
+from mytablewidget import MyTableWidget
 from .mplwidgetxlog import MPLWidgetXLog
 import icons_rc
