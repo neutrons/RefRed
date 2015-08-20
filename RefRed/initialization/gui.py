@@ -1,11 +1,11 @@
 from PyQt4 import QtGui, QtCore
 import socket
 
-from ..version import str_version, window_title
-from ..export.export_stitching_ascii_settings import ExportStitchingAsciiSettings
+from RefRed.version import str_version, window_title
+from RefRed.export.export_stitching_ascii_settings import ExportStitchingAsciiSettings
 from file_menu import FileMenu as InitFileMenu
-from ..reduced_config_files_handler import ReducedConfigFilesHandler
-from ..all_plot_axis import AllPlotAxis
+from RefRed.reduced_config_files_handler import ReducedConfigFilesHandler
+from RefRed.plot.all_plot_axis import AllPlotAxis
 #from .gui_utils import DelayedTrigger
 import colors
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
