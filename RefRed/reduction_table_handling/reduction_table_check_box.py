@@ -2,7 +2,7 @@ import numpy as np
 from PyQt4 import QtGui
 from PyQt4.QtCore import Qt
 
-from RefRed.plot.display_reduction_table import DisplayReductionTable
+from RefRed.plot.display_plots import DisplayPlots
 from RefRed.plot.clear_plots import ClearPlots
 
 class ReductionTableCheckBox(object):
@@ -23,7 +23,7 @@ class ReductionTableCheckBox(object):
         self.parent = parent
         self.row_selected = row_selected
         self.handle_check_boxes_single_selection()
-#        self.launch_update_of_plot()
+        self.launch_update_of_plot()
 
     def handle_check_boxes_single_selection(self):
                 
@@ -54,9 +54,9 @@ class ReductionTableCheckBox(object):
         _row_selected = self.row_selected
         _is_data_selected = self.is_data_tab_selected()
         if self.is_row_selected_checked(_row_selected):
-            DisplayReductionTable(parent=self.parent, 
-                                  row=_row_selected, 
-                                  is_data_displayed=_is_data_selected)
+            DisplayPlots(parent = self.parent,
+                         row = self.row_selected,
+                         is_data = self.is_data_tab_selected())
         else:
             ClearPlots(self.parent,
                        is_data = _is_data_selected,

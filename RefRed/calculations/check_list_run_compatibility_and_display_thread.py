@@ -57,9 +57,10 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
         self.runs_are_compatible = runs_are_compatible
         self.update_lconfigdataset()
         
-        self.loading_lr_data()
-        if self.is_display_requested:
-            self.display_plots()
+        if runs_are_compatible:
+            self.loading_lr_data()
+            if self.is_display_requested:
+                self.display_plots()
             
     def update_lconfigdataset(self):
         runs_are_compatible = self.runs_are_compatible
