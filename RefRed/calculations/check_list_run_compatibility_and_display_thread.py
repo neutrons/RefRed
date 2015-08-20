@@ -4,6 +4,8 @@ from PyQt4 import QtCore, QtGui
 from RefRed.reduction_table_handling.check_list_run_compatibility import CheckListRunCompatibility
 from RefRed.calculations.add_list_nexus import AddListNexus
 from RefRed.lconfigdataset import LConfigDataset
+from RefRed.calculations.lr_data import LRData
+from RefRed.plot.display_plots import DisplayPlots
 
 
 class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
@@ -54,6 +56,10 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
         self.wks = wks
         self.runs_are_compatible = runs_are_compatible
         self.update_lconfigdataset()
+        
+        self.loading_lr_data()
+        if self.is_display_requested:
+            self.display_plots()
             
     def update_lconfigdataset(self):
         runs_are_compatible = self.runs_are_compatible
@@ -76,3 +82,16 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
             
         big_table_data[self.row, 2] = _lconfig
         self.parent.big_table_data = big_table_data
+
+    def loading_lr_data(self):
+        wks = self.wks
+        lrdata = LRData(wks)
+        big_table_data = self.parent.big_table_data
+        col_index = 0 if self.is_working_with_data_column else 1
+        big_table_data[self.row, col_index] = lrdata
+        self.parent.big_table_data = big_table_data
+        
+    def display_plots(self):
+        DisplayPlots(parent = self.parent,
+                     row = self.row,
+                     is_data = self.is_working_with_data_column)
