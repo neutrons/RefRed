@@ -28,18 +28,16 @@ class RunSequenceBreaker(object):
 				if nbr_element > 1:
 					_range = self.getRangeBetweenTwoNumbers(hypen_separated[0], hypen_separated[1])
 					for _r in _range:
-						final_list.append(_r)
-						str_final_list.append(str(_r))
+						self.final_list.append(_r)
+						self.str_final_list.append(str(_r))
 						
 				else:
-					final_list.append(int(hypen_separated[0]))
-					str_final_list.append(str(hypen_separated[0]))
+					self.final_list.append(int(hypen_separated[0]))
+					self.str_final_list.append(str(hypen_separated[0]))
 		except:
-			final_list = [-2]
-			str_final_list = ['']
-		self.final_list = final_list
-		self.str_final_list = str_final_list
-	
+			self.final_list = [-2]
+			self.str_final_list = ['']
+
 	def getRangeBetweenTwoNumbers(self, num1, num2):
 		_num1 = int(num1)
 		_num2 = int(num2)

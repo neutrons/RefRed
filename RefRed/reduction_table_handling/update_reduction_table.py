@@ -1,7 +1,7 @@
 from PyQt4 import QtGui
 
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
-from RefRed.reduction_table_handling.check_list_run_compatibility import CheckListRunCompatibility
+from RefRed.calculations.check_list_run_compatibility_and_display_thread import CheckListRunCompatibilityAndDisplayThread
 from RefRed.plot.display_reduction_table import DisplayReductionTable
 import RefRed.colors 
 from RefRed.lconfigdataset import LConfigDataset
@@ -12,13 +12,12 @@ class UpdateReductionTable(object):
     
     raw_runs = None
     
-    def __init__(self, parent=None, row=0, col=1, clear_cell=False):
+    def __init__(self, parent=None, row=0, col=1, runs=None):
         self.parent= parent
         self.row = row
         self.col = col
         
         item = self.parent.ui.reductionTable.item(row, col)
-        print('item.txt(): ', str(item.text()), '*')
         if item.text() == '':
             self.clear_cell()
             return
@@ -26,39 +25,43 @@ class UpdateReductionTable(object):
         data_type = 'data' if col == 1 else 'norm'
         is_data_displayed = True if (col == 1) else False
 
-        runs = self.parent.ui.reductionTable.item(row, col).text()
         self.raw_runs = str(runs)
-        return
-    
         run_breaker = RunSequenceBreaker(run_sequence=self.raw_runs)
         list_run = run_breaker.final_list
         
         # check if nexus can be found
         list_run_object = LocateListRun(list_run = list_run)
-        if list_run_object.list_nexus_found != []:
-            runs_not_located = ', '.join(list_run_object.list_run_not_found)
-            mess = "Can not locate runs: %s" %runs_not_located
+        if list_run_object.list_run_not_found != []:
+            str_list_run_not_found = [str(x) for x in list_run_object.list_run_not_found]
+            runs_not_located = ', '.join(str_list_run_not_found)
+            mess = "Can not locate %s run(s): %s" %(data_type, runs_not_located)
             self.parent.ui.reductionTable.item(row, 8).setText(mess)
             _color = QtGui.QColor(RefRed.colors.VALUE_BAD)
             self.parent.ui.reductionTable.item(row, 8).setBackground(_color)
+        else:
+            self.parent.ui.reductionTable.item(row, 8).setText('')
+            _color = QtGui.QColor(RefRed.colors.VALUE_OK)
+            self.parent.ui.reductionTable.item(row, 8).setBackground(_color)
             
-        list_run_found = list_run_object.list_run_found
-        
-
+        list_run_found = list(list_run_object.list_run_found)
 
         if list_run_found == []:
             self.parent.ui.reductionTable.item(row, col).setText('')
             return
-        mess_run_found = ','.join(list_run_found)
-        self.parent.ui.reductionTable.item(row, col).setText(list_run_found)
+        str_list_run_found = [str(x) for x in list_run_found]
+        final_list_run_found = ','.join(str_list_run_found)        
+        self.parent.ui.reductionTable.item(row, col).setText(final_list_run_found)
 
         list_nexus_found = list_run_object.list_nexus_found
-        CheckListRunCompatibilityAndDisplayThread(parent = self.parent,
-                                                  list_run = list_run_found,
-                                                  list_nexus = list_nexus_found,
-                                                  row = row,
-                                                  is_working_with_data_column = is_data_displayed,
-                                                  is_display_requested = self.display_of_this_row_checked())
+        self.parent.loading_nxs_thread = CheckListRunCompatibilityAndDisplayThread()
+        self.parent.loading_nxs_thread.setup(parent=self.parent,
+                       list_run = list_run_found,
+                       list_nexus = list_nexus_found,
+                       row = row,
+                       col = col, 
+                       is_working_with_data_column = is_data_displayed,
+                       is_display_requested = self.display_of_this_row_checked())
+        self.parent.loading_nxs_thread.start()
 
         return
         

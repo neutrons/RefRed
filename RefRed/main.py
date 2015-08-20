@@ -29,6 +29,7 @@ class MainGui(QtGui.QMainWindow):
     prev_table_reduction_row_selected = -1
     current_table_reduction_row_selected = -1
     reduction_table_check_box_state = np.zeros((nbr_row_table_reduction), dtype=bool)
+    loading_nxs_thread = None
 
     #[data, norm, metadata]
     big_table_data = np.empty((nbr_row_table_reduction, 3), dtype=object)
@@ -202,10 +203,11 @@ class MainGui(QtGui.QMainWindow):
         row = self.ui.reductionTable.currentRow()
         col = self.ui.reductionTable.currentColumn()
         item = self.ui.reductionTable.item(row, col)
-        self.select_next_field(current_row=row, current_col=col)
         if item is None:
             return
-        UpdateReductionTable(parent=self, row=row, col=col)
+        self.select_next_field(current_row=row, current_col=col)
+        runs = self.ui.reductionTable.item(row, col).text()
+        UpdateReductionTable(parent=self, row=row, col=col, runs=runs)
         
     def select_next_field(self, current_row=-1, current_col=-1):
         # trick to be able to retrieve value in editing mode

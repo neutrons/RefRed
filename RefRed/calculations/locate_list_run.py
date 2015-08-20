@@ -4,7 +4,7 @@ INSTRUMENT_SHORT_NAME = "REF_L"
 
 class LocateListRun(object):
    
-    list_run = None
+    list_run = []
     list_nexus_found = []
     list_run_found = []
     list_run_not_found = []
@@ -26,7 +26,7 @@ class LocateListRun(object):
                 self.list_run_not_found.append(run)
                 
     def init_parameters(self):
-        self.list_run = None
+        self.list_run = []
         self.list_nexus_found = []
         self.list_run_found = []
         self.list_run_not_found = []

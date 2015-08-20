@@ -17,9 +17,6 @@ class MyTableWidget(QtGui.QTableWidget):
         else:
             super(MyTableWidget, self).keyPressEvent(event)
             
-    def cellChanged(self, col, row):
-        print('in cell changed with col:%d and row=%d' %(col, row))
-        
     def setUI(self, ui_parent):
         self.parent = ui_parent
             
