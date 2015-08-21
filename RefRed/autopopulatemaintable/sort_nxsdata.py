@@ -1,5 +1,5 @@
-from qreduce import NXSData
-from compare_two_nxsdata import CompareTwoNXSData
+#from RefRed.qreduce import NXSData
+from RefRed.autopopulatemaintable.compare_two_nxsdata import CompareTwoNXSData
 
 class MyError(Exception):
     def __init(self, value):

@@ -55,7 +55,7 @@ class UpdateReductionTable(object):
         self.parent.ui.reductionTable.item(row, col).setText(final_list_run_found)
 
         list_nexus_found = list_run_object.list_nexus_found
-        thread_index = (self.col + 2*self.row)%4
+        thread_index = ((self.col-1) + 2*self.row)%4
         self.parent.loading_nxs_thread[thread_index] = CheckListRunCompatibilityAndDisplayThread()
         self.parent.loading_nxs_thread[thread_index].setup(parent=self.parent,
                        list_run = list_run_found,

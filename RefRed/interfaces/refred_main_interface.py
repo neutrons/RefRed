@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Thu Aug 20 18:04:15 2015
+# Created: Fri Aug 21 08:34:03 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -80,15 +80,15 @@ class Ui_MainWindow(object):
         self.label = QtGui.QLabel(self.groupBox_3)
         self.label.setObjectName("label")
         self.gridLayout_2.addWidget(self.label, 0, 0, 1, 1)
-        self.lineEdit = QtGui.QLineEdit(self.groupBox_3)
-        self.lineEdit.setObjectName("lineEdit")
-        self.gridLayout_2.addWidget(self.lineEdit, 0, 1, 1, 1)
+        self.data_sequence_lineEdit = QtGui.QLineEdit(self.groupBox_3)
+        self.data_sequence_lineEdit.setObjectName("data_sequence_lineEdit")
+        self.gridLayout_2.addWidget(self.data_sequence_lineEdit, 0, 1, 1, 1)
         self.label_2 = QtGui.QLabel(self.groupBox_3)
         self.label_2.setObjectName("label_2")
         self.gridLayout_2.addWidget(self.label_2, 1, 0, 1, 1)
-        self.lineEdit_2 = QtGui.QLineEdit(self.groupBox_3)
-        self.lineEdit_2.setObjectName("lineEdit_2")
-        self.gridLayout_2.addWidget(self.lineEdit_2, 1, 1, 1, 1)
+        self.norm_sequence_lineEdit = QtGui.QLineEdit(self.groupBox_3)
+        self.norm_sequence_lineEdit.setObjectName("norm_sequence_lineEdit")
+        self.gridLayout_2.addWidget(self.norm_sequence_lineEdit, 1, 1, 1, 1)
         self.verticalLayout_14.addLayout(self.gridLayout_2)
         self.verticalLayout_18.addWidget(self.groupBox_3)
         self.groupBox_2 = QtGui.QGroupBox(self.leftEntries)
@@ -1546,6 +1546,8 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.plotTab.setCurrentIndex(0)
         self.dataNormTabWidget.setCurrentIndex(0)
+        QtCore.QObject.connect(self.data_sequence_lineEdit, QtCore.SIGNAL("returnPressed()"), MainWindow.data_sequence_event)
+        QtCore.QObject.connect(self.norm_sequence_lineEdit, QtCore.SIGNAL("returnPressed()"), MainWindow.norm_sequence_event)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

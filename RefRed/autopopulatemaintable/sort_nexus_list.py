@@ -1,9 +1,8 @@
 import numpy as np
-from qreduce import NXSData
+#from RefRed.qreduce import NXSData
 import sys
-from os import path
-sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
-from quicknxs.autopopulatemaintable.sort_nxsdata import SortNXSData
+
+from RefRed.autopopulatemaintable.sort_nxsdata import SortNXSData
 
 class MyError(Exception):
     def __init__(self, value):

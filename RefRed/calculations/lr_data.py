@@ -27,6 +27,7 @@ class LRData(object):
     def __init__(self, workspace):
         
         self.workspace = mtd[workspace]
+        self.workspace_name = workspace
 
         mt_run = self.workspace.getRun()
 
@@ -240,7 +241,7 @@ class LRData(object):
         '''
         will format the histogrma NeXus to retrieve the full 3D data set
         '''
-        _tof_axis = nxs_histo.readX(0)[:].copy()
+        _tof_axis = nxs_histo.readX(0)[:]
         nbr_tof = len(_tof_axis)
 
         _y_axis = np.zeros((self.number_x_pixels, self.number_y_pixels, nbr_tof - 1))
@@ -260,8 +261,13 @@ class LRData(object):
         return [_tof_axis, _y_axis, _y_error_axis]    
         
     def read_data(self):
-        nxs_histo = Rebin(InputWorkspace=self.workspace, Params=self.binning, PreserveEvents=True)
+        output_workspace_name = self.workspace_name + '_rebin'
+        nxs_histo = Rebin(InputWorkspace=self.workspace, 
+                          OutputWorkspace=output_workspace_name,
+                          Params=self.binning, 
+                          PreserveEvents=True)
         # retrieve 3D array
+        nxs_histo = mtd[output_workspace_name]
         [_tof_axis, Ixyt, Exyt] = self.getIxyt(nxs_histo)
         self.tof_axis_auto_with_margin = _tof_axis
 
@@ -292,6 +298,8 @@ class LRData(object):
         self.ycountsdata = Iyi.astype(float)
 
         self.data_loaded = True
+
+        #TODO remove cleanup workspace
 
     def is_nexus_taken_after_refDate(self):
         '''

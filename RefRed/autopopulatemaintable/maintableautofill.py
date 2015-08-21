@@ -1,19 +1,24 @@
 import sys
 import time
-from os import path
-sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
-from quicknxs.run_sequence_breaker import RunSequenceBreaker
-from quicknxs.autopopulatemaintable.extract_lconfigdataset_runs import ExtractLConfigDataSetRuns
-from quicknxs.autopopulatemaintable.thread import LocateRunThread, LoadRunThread
-from quicknxs.autopopulatemaintable.sort_nexus_list import SortNexusList
+
+from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
+from RefRed.autopopulatemaintable.extract_lconfigdataset_runs import ExtractLConfigDataSetRuns
+from RefRed.thread.locate_run import LocateRunThread
+from RefRed.autopopulatemaintable.sort_nexus_list import SortNexusList
+
 
 class MainTableAutoFill(object):
 
     list_full_file_name = []
     list_nxs = []
 
-    def __init__(self, main_gui=None, list_of_run_from_input='',
-                 data_type_selected='data', reset_table=True):
+    def __init__(self, main_gui=None, 
+                 list_of_run_from_input='',
+                 data_type_selected='data', 
+                 reset_table=False):
+
+        if list_of_run_from_input == '':
+            return
 
         if data_type_selected != 'data':
             self.data_type_selected = 'norm'
@@ -54,10 +59,18 @@ class MainTableAutoFill(object):
                 _full_list_of_runs.append(int(_run))
         self.full_list_of_runs = _full_list_of_runs
 
+        self.remove_duplicate_runs()
+        
+        # start calculation
+        self.run()
+
     def run(self):
         self.locate_runs()
-        self.loading_runs()
-        self.sorting_runs()
+#        self.loading_runs()
+#        self.sorting_runs()
+
+
+
 
     def locate_runs(self):
         _list_of_runs = self.full_list_of_runs
@@ -128,10 +141,16 @@ class MainTableAutoFill(object):
         main_gui = self.main_gui
         if main_gui is None:
             return
-        _big_table_data = main_gui.bigTableData
+        _big_table_data = main_gui.big_table_data
         self.big_table_data = _big_table_data
         _extract_runs = ExtractLConfigDataSetRuns(_big_table_data[:, 2])
         self.list_of_run_from_lconfig = _extract_runs.list_runs()
+
+    def remove_duplicate_runs(self):
+        full_list_of_runs = self.full_list_of_runs
+        full_list_without_duplicate = list(set(full_list_of_runs))
+        self.full_list_of_runs = full_list_without_duplicate
+
 
 if __name__ == "__main__":
     maintable = MainTableAutoFill('1, 2, 3, 5-10, 15, 16', reset_table=True)

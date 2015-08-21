@@ -2,11 +2,8 @@ from PyQt4 import QtCore
 import time
 import mantid
 import sys
-from os import path
-sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
-import nexus_utilities
-import qreduce
 
+import RefRed.nexus_utilities
 
 class LocateRunThread(QtCore.QThread):
 
@@ -16,7 +13,7 @@ class LocateRunThread(QtCore.QThread):
         self.index = index
     
     def run(self):
-        full_file_name = nexus_utilities.findNeXusFullPath(self.run_number)
+        full_file_name = RefRed.nexus_utilities.findNeXusFullPath(self.run_number)
         if full_file_name == '':
             self.parent.number_of_runs = self.parent.number_of_runs - 1
             self.parent.list_full_file_name.pop()
@@ -39,7 +36,8 @@ class LoadRunThread(QtCore.QThread):
         self.index = index
         
     def run(self):
-        nxs = qreduce.NXSData(self.file_name, metadata_only=True)
+        #nxs = qreduce.NXSData(self.file_name, metadata_only=True)
+        nxs = 'yo'
         self.parent.list_nxs[self.index] = nxs
         self.parent.runs_loaded += 1
         print 'here'

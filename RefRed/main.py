@@ -9,7 +9,7 @@ from RefRed.reduction_table_handling.reduction_table_check_box import ReductionT
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
 from RefRed.update_data_norm_tab import UpdateDataNormTab
 from RefRed.gui_handling.data_norm_spinboxes import DataPeakSpinbox, DataBackSpinbox, NormPeakSpinbox, NormBackSpinbox
-
+from RefRed.autopopulatemaintable.maintableautofill import MainTableAutoFill
 
 
 #from mantid.simpleapi import *
@@ -232,3 +232,12 @@ class MainGui(QtGui.QMainWindow):
     
     def norm_peak_spinbox_validation(self):
         NormPeakSpinbox(parent=self)
+        
+    def data_sequence_event(self):
+        str_data_input = self.ui.data_sequence_lineEdit.text()
+        MainTableAutoFill(main_gui = self,
+                          list_of_run_from_input = str_data_input,
+                          data_type_selected = 'data')
+        
+    def norm_sequence_event(self):
+        print('in norm sequence event')
