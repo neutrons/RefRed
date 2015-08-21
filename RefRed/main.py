@@ -238,6 +238,7 @@ class MainGui(QtGui.QMainWindow):
         MainTableAutoFill(main_gui = self,
                           list_of_run_from_input = str_data_input,
                           data_type_selected = 'data')
+        self.ui.data_sequence_lineEdit.setText('')
         
     def norm_sequence_event(self):
         print('in norm sequence event')

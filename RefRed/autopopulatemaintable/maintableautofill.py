@@ -8,7 +8,7 @@ from RefRed.thread.locate_run import LocateRunThread
 from RefRed.calculations.load_list_nexus import LoadListNexus
 from RefRed.calculations.sort_lrdata_list import SortLRDataList
 from RefRed.calculations.lr_data import LRData
-
+from RefRed.autopopulatemaintable.populate_reduction_table_from_list_lrdata import PopulateReductionTableFromListLRData
 
 class MainTableAutoFill(object):
 
@@ -69,12 +69,13 @@ class MainTableAutoFill(object):
         
         # start calculation
         self.run()
-
+        
     def run(self):
         self.locate_runs()
         self.loading_runs()
         self.loading_lrdata()
         self.sorting_runs()
+        self.updating_reductionTable()
 
     def locate_runs(self):
         _list_of_runs = self.full_list_of_runs
@@ -110,14 +111,23 @@ class MainTableAutoFill(object):
         o_wks_sorted = SortLRDataList(parent = self.main_gui,
                                    list_lrdata = np.array(self.list_lrdata),
                                    list_runs = np.array(self.full_list_of_runs),
-                                   list_wks = np.array(self.list_wks_loaded))
+                                   list_wks = np.array(self.list_wks_loaded),
+                                   data_type_selected = self.data_type_selected)
 
         o_wks_sorted.run()
         self.list_lrdata_sorted = o_wks_sorted.list_lrdata_sorted
         self.list_runs_sorted = o_wks_sorted.list_runs_sorted
         self.list_wks_sorted = o_wks_sorted.list_wks_sorted
-
-        print(self.list_runs_sorted)
+        
+    def updating_reductionTable(self):
+        list_lrdata_sorted = self.list_lrdata_sorted
+        list_runs_sorted = self.list_runs_sorted
+        list_wks_sorted = self.list_wks_sorted
+        o_pop_reduction_table = PopulateReductionTableFromListLRData(parent=self.main_gui,
+                                                                     list_lrdata = list_lrdata_sorted,
+                                                                     list_wks = list_wks_sorted,
+                                                                     list_run = list_runs_sorted,
+                                                                     is_data = True)
 
     def init_filename_thread_array(self, sz):
         _filename_thread_array = []
