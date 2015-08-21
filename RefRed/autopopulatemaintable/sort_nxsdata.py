@@ -1,4 +1,4 @@
-#from RefRed.qreduce import NXSData
+from RefRed.calculations.add_list_nexus import AddListNexus
 from RefRed.autopopulatemaintable.compare_two_nxsdata import CompareTwoNXSData
 
 class MyError(Exception):
@@ -60,6 +60,14 @@ class SortNXSData(object):
     def merged_nxsdata(self, nxsdata1, nxsdata2):
         _full_file_name1 = nxsdata1.active_data.filename
         _full_file_name2 = nxsdata2.active_data.filename
+        list_nexus = [_full_file_name1, _full_file_name2]
+
+
+        o_add_nexus = AddListNexus(list_nexus = list_nexus,
+                                   )
+
+
+
         _new_nxsdata =  NXSData([_full_file_name1, _full_file_name2], bins=self.sf_gui.bin_size, is_auto_peak_finder=True)
         return _new_nxsdata
 

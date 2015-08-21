@@ -1,8 +1,8 @@
 import numpy as np
-#from RefRed.qreduce import NXSData
 import sys
 
-from RefRed.autopopulatemaintable.sort_nxsdata import SortNXSData
+
+
 
 class MyError(Exception):
     def __init__(self, value):
@@ -20,8 +20,13 @@ class SortNexusList(object):
     parent = None
     
     list_nxs_sorted = None
-    criteria_type = ['increasing','decreasing']
-    raw_list_nxs = None
+    list_runs_sorted = None
+    list_wks_sorted = None
+    
+    criteria_type = ['increase','decrease']
+    list_nxs = None
+    list_runs = None
+    list_wks = None
     
     criteria1_value = None
     criteria1_type = ''
@@ -29,7 +34,13 @@ class SortNexusList(object):
     criteria2_value = None
     criteria2_type = ''
         
-    def __init__(self, parent = None, list_nxs = None, criteria1 = None, criteria2 = None):
+    def __init__(self, parent = None, 
+                 list_nxs = None, 
+                 list_runs = None,
+                 list_wks = None,
+                 criteria1 = None, 
+                 criteria2 = None):
+
         if list_nxs is None:
             raise MyError("Need a list of nexus")
         if type(list_nxs) is not np.ndarray:
@@ -51,10 +62,15 @@ class SortNexusList(object):
                 raise MyError("Wrong criteria2 argument name")
             [self.criteria2_value, self.criteria2_type] = criteria2
             
-        self.raw_list_nxs = list_nxs
+        self.list_nxs = list_nxs
+        self.list_runs = list_runs
+        self.list_wks = list_wks
         self.parent = parent
  
-    def sortList(self):
+    def run(self):
+        print('here')
+        return
+    
         _list_nxs = self.raw_list_nxs
         nbr_nxs = _list_nxs.size
         if nbr_nxs == 1:

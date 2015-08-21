@@ -30,7 +30,6 @@ class UpdatePlotWidgetStatus(object):
    
     def data_tab_widgets(self, status=False):
         parent = self.parent
-        print("status is ", status)
         parent.ui.data_yt_plot.setEnabled(status)
         parent.ui.dataNameOfFile.setEnabled(status)
         parent.ui.data_yi_plot.setEnabled(status)

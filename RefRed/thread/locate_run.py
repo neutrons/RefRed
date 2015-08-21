@@ -2,7 +2,7 @@ from PyQt4 import QtCore
 import time
 import mantid
 import sys
-
+from mantid.simpleapi import *
 import RefRed.nexus_utilities
 
 class LocateRunThread(QtCore.QThread):
@@ -30,14 +30,15 @@ class LocateRunThread(QtCore.QThread):
 
 class LoadRunThread(QtCore.QThread):
     
-    def setup(self, parent, file_name, index):
+    def setup(self, parent, file_name, output_wks, index):
         self.parent = parent
         self.file_name = file_name
+        self.output_wks = output_wks
         self.index = index
         
     def run(self):
-        #nxs = qreduce.NXSData(self.file_name, metadata_only=True)
-        nxs = 'yo'
-        self.parent.list_nxs[self.index] = nxs
+        _workspace = LoadEventNexus(Filename = self.file_name,
+                                    OutputWorkspace = self.output_wks,
+                                    MetadataOnly = True)
+        self.parent.list_nxs[self.index] = self.output_wks
         self.parent.runs_loaded += 1
-        print 'here'

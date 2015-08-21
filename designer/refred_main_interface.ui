@@ -113,7 +113,7 @@
                     <item>
                      <widget class="QGroupBox" name="groupBox_3">
                       <property name="title">
-                       <string>Sequence</string>
+                       <string>Run Numbers</string>
                       </property>
                       <layout class="QVBoxLayout" name="verticalLayout_14">
                        <item>
@@ -126,7 +126,11 @@
                           </widget>
                          </item>
                          <item row="0" column="1">
-                          <widget class="QLineEdit" name="data_sequence_lineEdit"/>
+                          <widget class="QLineEdit" name="data_sequence_lineEdit">
+                           <property name="text">
+                            <string>128910-128915</string>
+                           </property>
+                          </widget>
                          </item>
                          <item row="1" column="0">
                           <widget class="QLabel" name="label_2">
@@ -207,18 +211,18 @@ p, li { white-space: pre-wrap; }
                           <widget class="QLabel" name="label_6">
                            <property name="minimumSize">
                             <size>
-                             <width>40</width>
+                             <width>70</width>
                              <height>0</height>
                             </size>
                            </property>
                            <property name="maximumSize">
                             <size>
-                             <width>60</width>
+                             <width>70</width>
                              <height>16777215</height>
                             </size>
                            </property>
                            <property name="text">
-                            <string>Q steps</string>
+                            <string>Q binning</string>
                            </property>
                           </widget>
                          </item>
@@ -261,90 +265,86 @@ p, li { white-space: pre-wrap; }
                     </item>
                     <item>
                      <widget class="QGroupBox" name="groupBox_4">
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>110</height>
+                       </size>
+                      </property>
                       <property name="title">
                        <string>Geometry Correction</string>
                       </property>
-                      <layout class="QVBoxLayout" name="verticalLayout_15">
+                      <layout class="QHBoxLayout" name="horizontalLayout_10">
                        <item>
-                        <layout class="QVBoxLayout" name="verticalLayout_16">
-                         <item>
-                          <widget class="QCheckBox" name="geometryCorrectionFlag">
-                           <property name="text">
-                            <string>Use Geometry Correction</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QFrame" name="geometryCorrectionFrame">
-                           <property name="enabled">
-                            <bool>false</bool>
-                           </property>
-                           <property name="frameShape">
-                            <enum>QFrame::StyledPanel</enum>
-                           </property>
-                           <property name="frameShadow">
-                            <enum>QFrame::Raised</enum>
-                           </property>
-                           <layout class="QVBoxLayout" name="verticalLayout_19">
-                            <item>
-                             <widget class="QLabel" name="label_32">
-                              <property name="text">
-                               <string>Angle Offset</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <layout class="QHBoxLayout" name="horizontalLayout_26">
-                              <item>
-                               <widget class="QLineEdit" name="angleOffsetValue">
-                                <property name="maximumSize">
-                                 <size>
-                                  <width>50</width>
-                                  <height>16777215</height>
-                                 </size>
-                                </property>
-                                <property name="text">
-                                 <string>0.008</string>
-                                </property>
-                               </widget>
-                              </item>
-                              <item>
-                               <widget class="QLabel" name="label_20">
-                                <property name="text">
-                                 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+                        <widget class="QFrame" name="geometryCorrectionFrame">
+                         <property name="enabled">
+                          <bool>false</bool>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>80</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>80</height>
+                          </size>
+                         </property>
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QHBoxLayout" name="horizontalLayout_9">
+                          <item>
+                           <widget class="QLineEdit" name="angleOffsetValue">
+                            <property name="maximumSize">
+                             <size>
+                              <width>50</width>
+                              <height>16777215</height>
+                             </size>
+                            </property>
+                            <property name="text">
+                             <string>0.008</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QLabel" name="label_20">
+                            <property name="text">
+                             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Lucida Grande'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&amp;#177;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                                </property>
-                               </widget>
-                              </item>
-                              <item>
-                               <widget class="QLineEdit" name="angleOffsetError">
-                                <property name="maximumSize">
-                                 <size>
-                                  <width>50</width>
-                                  <height>16777215</height>
-                                 </size>
-                                </property>
-                                <property name="text">
-                                 <string>0.001</string>
-                                </property>
-                               </widget>
-                              </item>
-                              <item>
-                               <widget class="QLabel" name="label_21">
-                                <property name="text">
-                                 <string>degrees</string>
-                                </property>
-                               </widget>
-                              </item>
-                             </layout>
-                            </item>
-                           </layout>
-                          </widget>
-                         </item>
-                        </layout>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QLineEdit" name="angleOffsetError">
+                            <property name="maximumSize">
+                             <size>
+                              <width>50</width>
+                              <height>16777215</height>
+                             </size>
+                            </property>
+                            <property name="text">
+                             <string>0.001</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QLabel" name="label_21">
+                            <property name="text">
+                             <string>degrees</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
                        </item>
                       </layout>
                      </widget>

@@ -12,11 +12,9 @@ class LoadNexus(QtCore.QThread):
         
     def run(self):
 #        try:
-        print("working with %s\n" %self.filename)
         _workspace = LoadEventNexus(Filename=self.filename,
                                     OutputWorkspace=self.output_wks,
                                     MetadataOnly=self.metadata_only)
-        print("done with %s\n" %self.filename)
         
         self.parent.runs_loaded += 1
         self.parent.list_wks.append(_workspace)
