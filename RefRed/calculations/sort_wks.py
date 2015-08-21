@@ -1,11 +1,16 @@
 from RefRed.calculations.add_list_nexus import AddListNexus
-from RefRed.autopopulatemaintable.compare_two_nxsdata import CompareTwoNXSData
+#from RefRed.autopopulatemaintable.compare_two_nxsdata import CompareTwoNXSData
 
 class MyError(Exception):
     def __init(self, value):
         self.value = value
     def __str__(self):
         return repr(self.value)
+
+class Position(object):
+    before = -1
+    same = 0
+    after = 1
 
 class SortNXSData(object):
 
@@ -17,6 +22,8 @@ class SortNXSData(object):
                  array_nxsdata_to_sort = None, 
                  criteria1 = None,
                  criteria2 = None): 
+
+
 
         if array_nxsdata_to_sort is None:
             raise MyError("need something to sort")

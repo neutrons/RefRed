@@ -16,9 +16,9 @@ class LocateRunThread(QtCore.QThread):
         full_file_name = RefRed.nexus_utilities.findNeXusFullPath(self.run_number)
         if full_file_name == '':
             self.parent.number_of_runs = self.parent.number_of_runs - 1
-            self.parent.list_full_file_name.pop()
+            self.parent.list_nxs.pop()
         else:
-            self.parent.list_full_file_name[self.index] = full_file_name
+            self.parent.list_nxs[self.index] = full_file_name
             self.parent.runs_found += 1
             
     def stop(self):
@@ -40,5 +40,5 @@ class LoadRunThread(QtCore.QThread):
         _workspace = LoadEventNexus(Filename = self.file_name,
                                     OutputWorkspace = self.output_wks,
                                     MetadataOnly = True)
-        self.parent.list_nxs[self.index] = self.output_wks
+        self.parent.list_wks[self.index] = self.output_wks
         self.parent.runs_loaded += 1
