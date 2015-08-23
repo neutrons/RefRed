@@ -22,9 +22,9 @@ class AddListNexus(object):
             _filename = list_nexus[0]
             _run = list_run[0]
             _ws_name = "_data_file_%s" %_run
-            wks_object = LoadNexus(filename=_filename,
-                                   output_wks = _ws_name,
-                                   metadata_only = metadata_only)
+            LoadNexus(filename=_filename,
+                      output_wks = _ws_name,
+                      metadata_only = metadata_only)
             
             self.wks = _ws_name
             

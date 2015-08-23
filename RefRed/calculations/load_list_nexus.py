@@ -10,7 +10,7 @@ class LoadListNexus(object):
 
     list_wks_loaded = []
     list_run_loaded = []
-    list_nxs_loaded = []
+    list_nexuss_loaded = []
     
     def __init__(self, list_nexus=None, list_run=None, metadata_only=False):
         if list_nexus is None:
@@ -31,12 +31,12 @@ class LoadListNexus(object):
             if (wks_object.workspace):
                 self.list_wks_loaded.append(_ws_name)
                 self.list_run_loaded.append(_run)
-                self.list_nxs_loaded.append(nexus_name)
+                self.list_nexus_loaded.append(nexus_name)
 
     def init_parameters(self):
         self.list_wks_loaded = []
         self.list_run_loaded = []
-        self.list_nxs_loaded = []
+        self.list_nexus_loaded = []
 
 
         

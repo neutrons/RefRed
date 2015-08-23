@@ -20,6 +20,3 @@ class LoadNexus(object):
         except:
             pass
 
-        
-
-    

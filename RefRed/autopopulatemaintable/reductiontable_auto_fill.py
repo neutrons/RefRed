@@ -1,6 +1,7 @@
 import sys
 import time
 import numpy as np
+from PyQt4.QtGui import QApplication
 
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.autopopulatemaintable.extract_lconfigdataset_runs import ExtractLConfigDataSetRuns
@@ -9,6 +10,10 @@ from RefRed.calculations.load_list_nexus import LoadListNexus
 from RefRed.calculations.sort_lrdata_list import SortLRDataList
 from RefRed.calculations.lr_data import LRData
 from RefRed.autopopulatemaintable.populate_reduction_table_from_list_lrdata import PopulateReductionTableFromListLRData
+from RefRed.calculations.check_list_run_compatibility_and_display_thread import CheckListRunCompatibilityAndDisplayThread
+from RefRed.calculations.check_list_run_compatibility_and_display import CheckListRunCompatibilityAndDisplay
+from RefRed.utilities import format_to_list
+
 
 class ReductionTableAutoFill(object):
 
@@ -19,8 +24,9 @@ class ReductionTableAutoFill(object):
     list_lrdata_sorted = []
     list_runs_sorted = []
     list_wks_sorted = []
+    list_nexus_sorted = []
 
-    def __init__(self, main_gui=None, 
+    def __init__(self, parent=None, 
                  list_of_run_from_input='',
                  data_type_selected='data', 
                  reset_table=False):
@@ -38,7 +44,7 @@ class ReductionTableAutoFill(object):
 
         self.raw_run_from_input = list_of_run_from_input
         self.list_of_run_from_input = None
-        self.main_gui = main_gui
+        self.parent = parent
         self.list_of_run_from_lconfig = None
         self.full_list_of_runs = None
         self.list_lrdata_sorted = None
@@ -48,7 +54,8 @@ class ReductionTableAutoFill(object):
         self.number_of_runs = None
         self.filename_thread_array = None
         self.number_of_runs = None
-        self.list_nxs_sorted = None
+        self.list_nexus_sorted = None
+        self.list_nexus_loaded = None
 
         self.calculate_discrete_list_of_runs() # step1 -> list_new_runs
 
@@ -76,6 +83,34 @@ class ReductionTableAutoFill(object):
         self.loading_lrdata()
         self.sorting_runs()
         self.updating_reductionTable()
+        self.loading_full_reductionTable_thread()
+        
+    def loading_full_reductionTable_thread(self):
+        _list_nexus_sorted = self.list_nexus_sorted
+        _list_run_sorted = self.list_runs_sorted
+        _data_type_selected = self.data_type_selected
+        _is_working_with_data_column = True if self.data_type_selected == 'data' else False
+        _list_run_sorted = format_to_list(_list_run_sorted)
+        _list_nexus_sorted = format_to_list(_list_nexus_sorted)
+        
+        for index, nexus in enumerate(_list_nexus_sorted):
+            _is_display_requested = self.display_of_this_row_checked(index)
+            _list_run = format_to_list(_list_run_sorted[index])
+            _nexus = format_to_list(nexus)
+            o_check_and_load = CheckListRunCompatibilityAndDisplay(parent=self.parent,
+                                                                   list_run = _list_run,
+                                                                   list_nexus = _nexus,
+                                                                   row = index,
+                                                                   is_working_with_data_column = _is_working_with_data_column,
+                                                                   is_display_requested = _is_display_requested)
+            o_check_and_load.run()
+            QApplication.processEvents()
+        
+    def display_of_this_row_checked(self, row):
+        _button_status = self.parent.ui.reductionTable.cellWidget(row, 0).checkState()
+        if _button_status == 2:
+            return True
+        return False
 
     def locate_runs(self):
         _list_of_runs = self.full_list_of_runs
@@ -98,6 +133,7 @@ class ReductionTableAutoFill(object):
                                     list_run = _list_run,
                                     metadata_only = False)
         self.list_wks_loaded = o_load_list.list_wks_loaded
+        self.list_nexus_loaded = o_load_list.list_nexus_loaded
 
     def loading_lrdata(self):
         _list_wks_loaded = self.list_wks_loaded
@@ -108,22 +144,24 @@ class ReductionTableAutoFill(object):
         self.list_lrdata = _list_lrdata
 
     def sorting_runs(self):
-        o_wks_sorted = SortLRDataList(parent = self.main_gui,
+        o_wks_sorted = SortLRDataList(parent = self.parent,
                                    list_lrdata = np.array(self.list_lrdata),
                                    list_runs = np.array(self.full_list_of_runs),
                                    list_wks = np.array(self.list_wks_loaded),
+                                   list_nexus = np.array(self.list_nexus_loaded),
                                    data_type_selected = self.data_type_selected)
 
         o_wks_sorted.run()
         self.list_lrdata_sorted = o_wks_sorted.list_lrdata_sorted
         self.list_runs_sorted = o_wks_sorted.list_runs_sorted
         self.list_wks_sorted = o_wks_sorted.list_wks_sorted
+        self.list_nexus_sorted = o_wks_sorted.list_nexus_sorted
         
     def updating_reductionTable(self):
         list_lrdata_sorted = self.list_lrdata_sorted
         list_runs_sorted = self.list_runs_sorted
         list_wks_sorted = self.list_wks_sorted
-        o_pop_reduction_table = PopulateReductionTableFromListLRData(parent=self.main_gui,
+        o_pop_reduction_table = PopulateReductionTableFromListLRData(parent=self.parent,
                                                                      list_lrdata = list_lrdata_sorted,
                                                                      list_wks = list_wks_sorted,
                                                                      list_run = list_runs_sorted,
@@ -144,10 +182,10 @@ class ReductionTableAutoFill(object):
         self.list_of_run_from_input = sequence_breaker.final_list
 
     def retrieve_bigtable_list_data_loaded(self):
-        main_gui = self.main_gui
-        if main_gui is None:
+        parent = self.parent
+        if parent is None:
             return
-        _big_table_data = main_gui.big_table_data
+        _big_table_data = parent.big_table_data
         self.big_table_data = _big_table_data
         _extract_runs = ExtractLConfigDataSetRuns(_big_table_data[:, 2])
         self.list_of_run_from_lconfig = _extract_runs.list_runs()

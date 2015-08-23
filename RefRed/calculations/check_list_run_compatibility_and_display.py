@@ -9,17 +9,16 @@ from RefRed.plot.display_plots import DisplayPlots
 from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
 
 
-class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
+class CheckListRunCompatibilityAndDisplay(object):
     
     runs_are_compatible = False
     wks = None
     lrdata = None
     
-    def setup(self, parent=None,
+    def __init__(self, parent=None,
                  list_run=None,
                  list_nexus=None,
                  row=-1,
-#                 col=-1,
                  is_working_with_data_column=True,
                  is_display_requested=False):
         self.parent = parent
@@ -61,7 +60,6 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
         self.runs_are_compatible = runs_are_compatible
         self.update_lconfigdataset()
         
-        print('runs_are_compatible: ' , runs_are_compatible)
         if runs_are_compatible:
             self.loading_lr_data()
             self.updating_reductionTable_metadata()

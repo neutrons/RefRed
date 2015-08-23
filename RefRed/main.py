@@ -27,7 +27,14 @@ class MainGui(QtGui.QMainWindow):
     prev_table_reduction_row_selected = -1
     current_table_reduction_row_selected = -1
     reduction_table_check_box_state = np.zeros((nbr_row_table_reduction), dtype=bool)
-    loading_nxs_thread = {'thread1': None, 'thread2': None, 'thread3': None, 'thread4': None}
+    loading_nxs_thread = {'thread1': None, 'thread2': None, 'thread3': None, 'thread4': None,
+                          'thread5': None, 'thread6': None, 'thread7': None, 'thread8': None,
+                          'thread9': None, 'thread10': None, 'thread11': None, 'thread12': None,
+                          'thread13': None, 'thread14': None, 'thread15': None, 'thread16': None,
+                          'thread17': None, 'thread18': None, 'thread19': None, 'thread20': None,
+                          'thread21': None, 'thread22': None, 'thread23': None, 'thread24': None,
+                          'thread25': None, 'thread26': None, 'thread27': None, 'thread28': None}
+
 
     #[data, norm, metadata]
     big_table_data = np.empty((nbr_row_table_reduction, 3), dtype=object)
@@ -233,7 +240,7 @@ class MainGui(QtGui.QMainWindow):
         
     def data_sequence_event(self):
         str_data_input = self.ui.data_sequence_lineEdit.text()
-        ReductionTableAutoFill(main_gui = self,
+        ReductionTableAutoFill(parent = self,
                                list_of_run_from_input = str_data_input,
                                data_type_selected = 'data')
         self.ui.data_sequence_lineEdit.setText('')
