@@ -1,5 +1,6 @@
 from PyQt4 import QtGui, QtCore
 import socket
+import os
 
 from RefRed.version import str_version, window_title
 from RefRed.export.export_stitching_ascii_settings import ExportStitchingAsciiSettings
@@ -52,7 +53,15 @@ class Gui(object):
         #parent.trigger.start()
 
         parent.ui.reductionTable.setCurrentCell(0,1)
-        parent.ui.reductionTable.setFocus()		
+        parent.ui.reductionTable.setFocus()	
+        
+        self.init_icons()
+        
+    def init_icons(self):
+        pixmap = QtGui.QPixmap(u':/General/check_icon.png')
+        self.parent.ui.check1.setFixedWidth(25)
+        self.parent.ui.check1.setFixedHeight(25)
+        self.parent.ui.check1.setPixmap(pixmap)
 
     def set_gui_title(self):
         ''' Define the raw title of the main window '''

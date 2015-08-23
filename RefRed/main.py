@@ -246,4 +246,8 @@ class MainGui(QtGui.QMainWindow):
         self.ui.data_sequence_lineEdit.setText('')
         
     def norm_sequence_event(self):
-        print('in norm sequence event')
+        str_norm_input = self.ui.norm_sequence_lineEdit.text()
+        ReductionTableAutoFill(parent = self,
+                               list_of_run_from_input = str_norm_input,
+                               data_type_selected = 'norm')
+        self.ui.norm_sequence_lineEdit.setText('')

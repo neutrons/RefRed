@@ -40,18 +40,17 @@ class SortLRDataList(object):
         self.list_runs = list_runs
         self.list_wks = list_wks
         self.parent = parent
-        self.data_type_selected = data_type_selected
         self.list_nexus = list_nexus
+        self.data_type_selected = 'data'
         
     def run(self):
-        if len(self.list_lrdata) < 2:
-            self.list_lrdata_sorted = self.list_lrdata
-            self.list_runs_sorted = self.list_runs
-            self.list_wks_sorted = self.list_wks
-            self.list_nexus_sorted = self.list_nexus
-            return
-        
         if self.data_type_selected == 'data':
+            if len(self.list_lrdata) < 2:
+                self.list_lrdata_sorted = self.list_lrdata
+                self.list_runs_sorted = self.list_runs
+                self.list_wks_sorted = self.list_wks
+                self.list_nexus_sorted = self.list_nexus
+                return
             self.run_data()
         else:
             self.run_norm()

@@ -23,12 +23,15 @@ class PopulateReductionTableFromListLRData(object):
             self.reductionTable_col = 2
             self.big_table_data_col = 1
 
-        self.clear_reductionTable()
+        if is_data:
+            self.clear_reductionTable()
+            
         self.insert_runs_into_table()    
         
-        self.clear_big_table_data()
+        if is_data:
+            self.clear_big_table_data()
+            
         self.update_big_table_data()
-                
                 
         self.parent.big_table_data = self.big_table_data
                 

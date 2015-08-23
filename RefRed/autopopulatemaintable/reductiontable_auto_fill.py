@@ -26,6 +26,8 @@ class ReductionTableAutoFill(object):
     list_wks_sorted = []
     list_nexus_sorted = []
 
+    data_type_selected = 'data'
+
     def __init__(self, parent=None, 
                  list_of_run_from_input='',
                  data_type_selected='data', 
@@ -35,16 +37,20 @@ class ReductionTableAutoFill(object):
             return
 
         if data_type_selected != 'data':
-            self.data_type_selected = 'norm'
-        else:
-            self.data_type_selected = 'data'
+            data_type_selected = 'norm'
+        self.data_type_selected = data_type_selected
+
         if list_of_run_from_input == '':
             self.sorted_list_of_runs = []
             return
 
+        self.parent = parent
+        is_minimum_requirements = self.check_minimum_requirements()
+        if is_minimum_requirements is False:
+            return
+
         self.raw_run_from_input = list_of_run_from_input
         self.list_of_run_from_input = None
-        self.parent = parent
         self.list_of_run_from_lconfig = None
         self.full_list_of_runs = None
         self.list_lrdata_sorted = None
@@ -76,16 +82,25 @@ class ReductionTableAutoFill(object):
         
         # start calculation
         self.run()
-        
+
+    def check_minimum_requirements(self):
+        _data_type_selected = self.data_type_selected
+        if _data_type_selected == 'data':
+            return True
+            
+        big_table_data = self.parent.big_table_data
+        if big_table_data[0,0] is None:
+            return False
+
     def run(self):
         self.locate_runs()
         self.loading_runs()
         self.loading_lrdata()
         self.sorting_runs()
         self.updating_reductionTable()
-        self.loading_full_reductionTable_thread()
+        self.loading_full_reductionTable()
         
-    def loading_full_reductionTable_thread(self):
+    def loading_full_reductionTable(self):
         _list_nexus_sorted = self.list_nexus_sorted
         _list_run_sorted = self.list_runs_sorted
         _data_type_selected = self.data_type_selected
@@ -145,11 +160,11 @@ class ReductionTableAutoFill(object):
 
     def sorting_runs(self):
         o_wks_sorted = SortLRDataList(parent = self.parent,
-                                   list_lrdata = np.array(self.list_lrdata),
-                                   list_runs = np.array(self.full_list_of_runs),
-                                   list_wks = np.array(self.list_wks_loaded),
-                                   list_nexus = np.array(self.list_nexus_loaded),
-                                   data_type_selected = self.data_type_selected)
+                                      list_lrdata = np.array(self.list_lrdata),
+                                      list_runs = np.array(self.full_list_of_runs),
+                                      list_wks = np.array(self.list_wks_loaded),
+                                      list_nexus = np.array(self.list_nexus_loaded),
+                                      data_type_selected = self.data_type_selected)
 
         o_wks_sorted.run()
         self.list_lrdata_sorted = o_wks_sorted.list_lrdata_sorted
@@ -161,11 +176,12 @@ class ReductionTableAutoFill(object):
         list_lrdata_sorted = self.list_lrdata_sorted
         list_runs_sorted = self.list_runs_sorted
         list_wks_sorted = self.list_wks_sorted
+        is_data = True if self.data_type_selected == 'data' else False
         o_pop_reduction_table = PopulateReductionTableFromListLRData(parent=self.parent,
                                                                      list_lrdata = list_lrdata_sorted,
                                                                      list_wks = list_wks_sorted,
                                                                      list_run = list_runs_sorted,
-                                                                     is_data = True)
+                                                                     is_data = is_data)
 
     def init_filename_thread_array(self, sz):
         _filename_thread_array = []
