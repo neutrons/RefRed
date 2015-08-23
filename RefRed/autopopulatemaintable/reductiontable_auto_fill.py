@@ -10,7 +10,7 @@ from RefRed.calculations.sort_lrdata_list import SortLRDataList
 from RefRed.calculations.lr_data import LRData
 from RefRed.autopopulatemaintable.populate_reduction_table_from_list_lrdata import PopulateReductionTableFromListLRData
 
-class MainTableAutoFill(object):
+class ReductionTableAutoFill(object):
 
     list_full_file_name = []
     list_nxs = []
