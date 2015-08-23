@@ -91,9 +91,9 @@ class DisplayPlots(object):
 #		o_update_plot_widgets = UpdatePlotWidgetStatus(parent = parent)
 
         if is_data:
-            self.qRange = _data.q_range
-            self.incidentAngle = _data.incident_angle
-            self.lambdaRange = _data.lambda_range
+            #self.qRange = _data.q_range
+            #self.incidentAngle = _data.incident_angle
+            #self.lambdaRange = _data.lambda_range
             self.workWithData(update_reduction_table = refresh_reduction_table)
 #			o_update_plot_widgets.enable_data()
         else:
@@ -376,30 +376,7 @@ class DisplayPlots(object):
             parent.ui.dataLowResFromValue.setValue(lowRes1)
             parent.ui.dataLowResToValue.setValue(lowRes2)
             parent.ui.dataLowResFlag.setChecked(self.lowResFlag)
-
-            [qmin, qmax] = self.qRange
-            _item_min = QtGui.QTableWidgetItem(str(qmin))
-            _item_min.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)      
-            _item_max = QtGui.QTableWidgetItem(str(qmax))
-            _item_max.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)      
-
-            [lmin, lmax] = self.lambdaRange
-            _item_lmin = QtGui.QTableWidgetItem(str(lmin))
-            _item_lmin.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)      
-            _item_lmax = QtGui.QTableWidgetItem(str(lmax))
-            _item_lmax.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)      
-
-            incident_angle = self.incidentAngle
-            _item_incident = QtGui.QTableWidgetItem(str(incident_angle))
-            _item_incident.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)      
-
-            row = self.row
-            parent.ui.reductionTable.setItem(row, 6, _item_min)
-            parent.ui.reductionTable.setItem(row, 7, _item_max)
-            parent.ui.reductionTable.setItem(row, 4, _item_lmin)
-            parent.ui.reductionTable.setItem(row, 5, _item_lmax)
-            parent.ui.reductionTable.setItem(row, 3, _item_incident)
-
+        
     def isDataSelected(self):
         if self.parent.ui.dataNormTabWidget.currentIndex() == 0:
             return True

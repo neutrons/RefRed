@@ -6,12 +6,14 @@ from RefRed.calculations.add_list_nexus import AddListNexus
 from RefRed.lconfigdataset import LConfigDataset
 from RefRed.calculations.lr_data import LRData
 from RefRed.plot.display_plots import DisplayPlots
+from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
 
 
 class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
     
     runs_are_compatible = False
     wks = None
+    lrdata = None
     
     def setup(self, parent=None,
                  list_run=None,
@@ -28,6 +30,7 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
         self.is_working_with_data_column = is_working_with_data_column
         self.is_display_requested = is_display_requested
         self.runs_are_compatible = False
+        self.lrdata = None
         
     def run(self):
         runs_are_compatible = True
@@ -59,8 +62,20 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
         
         if runs_are_compatible:
             self.loading_lr_data()
+            self.updating_reductionTable_metadata()
             if self.is_display_requested:
                 self.display_plots()
+            
+    def updating_reductionTable_metadata(self):
+        is_working_with_data_column = self.is_working_with_data_column
+        if is_working_with_data_column is False:
+            return
+
+        row = self.row
+        lrdata = self.lrdata 
+        UpdateReductionTableMetadata(parent = self.parent, 
+                                     lrdata = lrdata,
+                                     row = row)
             
     def update_lconfigdataset(self):
         runs_are_compatible = self.runs_are_compatible
@@ -68,7 +83,6 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
         _lconfig = big_table_data[self.row, 2]
         if _lconfig is None:
             _lconfig = LConfigDataset()
-        
         
         if self.is_working_with_data_column:
             _lconfig.data_full_file_anme = self.list_nexus
@@ -87,6 +101,7 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
     def loading_lr_data(self):
         wks = self.wks
         lrdata = LRData(wks)
+        self.lrdata = lrdata
         big_table_data = self.parent.big_table_data
         col_index = 0 if self.is_working_with_data_column else 1
         big_table_data[self.row, col_index] = lrdata
