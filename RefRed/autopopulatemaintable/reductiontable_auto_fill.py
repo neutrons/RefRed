@@ -13,6 +13,7 @@ from RefRed.autopopulatemaintable.populate_reduction_table_from_list_lrdata impo
 from RefRed.calculations.check_list_run_compatibility_and_display_thread import CheckListRunCompatibilityAndDisplayThread
 from RefRed.calculations.check_list_run_compatibility_and_display import CheckListRunCompatibilityAndDisplay
 from RefRed.utilities import format_to_list
+from RefRed.autopopulatemaintable.auto_fill_widgets_handler import AutoFillWidgetsHandler
 
 
 class ReductionTableAutoFill(object):
@@ -27,6 +28,7 @@ class ReductionTableAutoFill(object):
     list_nexus_sorted = []
 
     data_type_selected = 'data'
+    o_auto_fill_widgets_handler = None
 
     def __init__(self, parent=None, 
                  list_of_run_from_input='',
@@ -48,6 +50,8 @@ class ReductionTableAutoFill(object):
         is_minimum_requirements = self.check_minimum_requirements()
         if is_minimum_requirements is False:
             return
+        
+        self.o_auto_fill_widgets_handler = AutoFillWidgetsHandler(parent=self.parent)
 
         self.raw_run_from_input = list_of_run_from_input
         self.list_of_run_from_input = None
@@ -99,6 +103,7 @@ class ReductionTableAutoFill(object):
         self.sorting_runs()
         self.updating_reductionTable()
         self.loading_full_reductionTable()
+        self.o_auto_fill_widgets_handler.end()
         
     def loading_full_reductionTable(self):
         _list_nexus_sorted = self.list_nexus_sorted
@@ -121,6 +126,8 @@ class ReductionTableAutoFill(object):
             o_check_and_load.run()
             QApplication.processEvents()
         
+        self.o_auto_fill_widgets_handler.step5()
+        
     def display_of_this_row_checked(self, row):
         _button_status = self.parent.ui.reductionTable.cellWidget(row, 0).checkState()
         if _button_status == 2:
@@ -139,6 +146,8 @@ class ReductionTableAutoFill(object):
 
         while self.runs_found < self.number_of_runs:
             time.sleep(0.5)
+            
+        self.o_auto_fill_widgets_handler.step1()
 
     def loading_runs(self):
         _list_full_file_name = self.list_nxs
@@ -149,7 +158,7 @@ class ReductionTableAutoFill(object):
                                     metadata_only = False)
         self.list_wks_loaded = o_load_list.list_wks_loaded
         self.list_nexus_loaded = o_load_list.list_nexus_loaded
-
+        
     def loading_lrdata(self):
         _list_wks_loaded = self.list_wks_loaded
         _list_lrdata = []
@@ -157,6 +166,8 @@ class ReductionTableAutoFill(object):
             _lrdata = LRData(_list_wks_loaded[index])
             _list_lrdata.append(_lrdata)
         self.list_lrdata = _list_lrdata
+        
+        self.o_auto_fill_widgets_handler.step2()
 
     def sorting_runs(self):
         o_wks_sorted = SortLRDataList(parent = self.parent,
@@ -172,6 +183,8 @@ class ReductionTableAutoFill(object):
         self.list_wks_sorted = o_wks_sorted.list_wks_sorted
         self.list_nexus_sorted = o_wks_sorted.list_nexus_sorted
         
+        self.o_auto_fill_widgets_handler.step3()
+        
     def updating_reductionTable(self):
         list_lrdata_sorted = self.list_lrdata_sorted
         list_runs_sorted = self.list_runs_sorted
@@ -182,6 +195,8 @@ class ReductionTableAutoFill(object):
                                                                      list_wks = list_wks_sorted,
                                                                      list_run = list_runs_sorted,
                                                                      is_data = is_data)
+        
+        self.o_auto_fill_widgets_handler.step4()
 
     def init_filename_thread_array(self, sz):
         _filename_thread_array = []

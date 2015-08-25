@@ -35,6 +35,7 @@ class MainGui(QtGui.QMainWindow):
                           'thread21': None, 'thread22': None, 'thread23': None, 'thread24': None,
                           'thread25': None, 'thread26': None, 'thread27': None, 'thread28': None}
 
+#    delay_closing_thread = None
 
     #[data, norm, metadata]
     big_table_data = np.empty((nbr_row_table_reduction, 3), dtype=object)

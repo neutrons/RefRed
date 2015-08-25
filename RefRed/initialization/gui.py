@@ -55,13 +55,38 @@ class Gui(object):
         parent.ui.reductionTable.setCurrentCell(0,1)
         parent.ui.reductionTable.setFocus()	
         
-        self.init_icons()
+        self.init_autopopulate_widgets()
         
-    def init_icons(self):
+    def init_autopopulate_widgets(self):
         pixmap = QtGui.QPixmap(u':/General/check_icon.png')
         self.parent.ui.check1.setFixedWidth(25)
         self.parent.ui.check1.setFixedHeight(25)
         self.parent.ui.check1.setPixmap(pixmap)
+        self.parent.ui.check1.setVisible(False)
+        self.parent.ui.check2.setFixedWidth(25)
+        self.parent.ui.check2.setFixedHeight(25)
+        self.parent.ui.check2.setPixmap(pixmap)
+        self.parent.ui.check2.setVisible(False)
+        self.parent.ui.check3.setFixedWidth(25)
+        self.parent.ui.check3.setFixedHeight(25)
+        self.parent.ui.check3.setPixmap(pixmap)
+        self.parent.ui.check3.setVisible(False)
+        self.parent.ui.check4.setFixedWidth(25)
+        self.parent.ui.check4.setFixedHeight(25)
+        self.parent.ui.check4.setPixmap(pixmap)
+        self.parent.ui.check4.setVisible(False)
+        self.parent.ui.check5.setFixedWidth(25)
+        self.parent.ui.check5.setFixedHeight(25)
+        self.parent.ui.check5.setPixmap(pixmap)
+        self.parent.ui.check5.setVisible(False)
+        
+        self.parent.ui.progressBar_check1.setVisible(False)
+        self.parent.ui.progressBar_check2.setVisible(False)
+        self.parent.ui.progressBar_check3.setVisible(False)
+        self.parent.ui.progressBar_check4.setVisible(False)
+        self.parent.ui.progressBar_check5.setVisible(False)
+        
+        self.parent.ui.frame_autofill_check_status.setVisible(False)
 
     def set_gui_title(self):
         ''' Define the raw title of the main window '''

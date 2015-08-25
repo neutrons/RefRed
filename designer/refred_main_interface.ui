@@ -149,51 +149,16 @@
                         </layout>
                        </item>
                        <item>
-                        <widget class="QFrame" name="frame_2">
+                        <widget class="QFrame" name="frame_autofill_check_status">
                          <property name="frameShape">
                           <enum>QFrame::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
                          </property>
-                         <layout class="QVBoxLayout" name="verticalLayout_9">
+                         <layout class="QHBoxLayout" name="horizontalLayout_11">
                           <item>
                            <layout class="QGridLayout" name="gridLayout_5">
-                            <item row="0" column="1">
-                             <widget class="QLabel" name="label_check1">
-                              <property name="text">
-                               <string>Locate Runs</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="1" column="1">
-                             <widget class="QLabel" name="label_check2">
-                              <property name="text">
-                               <string>Load NeXus (light)</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="2" column="1">
-                             <widget class="QLabel" name="label_check3">
-                              <property name="text">
-                               <string>Sort Runs</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="3" column="1">
-                             <widget class="QLabel" name="label_check4">
-                              <property name="text">
-                               <string>Populate Table</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item row="4" column="1">
-                             <widget class="QLabel" name="label_check5">
-                              <property name="text">
-                               <string>Load NeXus (full)</string>
-                              </property>
-                             </widget>
-                            </item>
                             <item row="0" column="0">
                              <widget class="QLabel" name="check1">
                               <property name="sizePolicy">
@@ -216,6 +181,23 @@
                               </property>
                               <property name="text">
                                <string/>
+                              </property>
+                             </widget>
+                            </item>
+                            <item row="0" column="1">
+                             <widget class="QLabel" name="label_check1">
+                              <property name="text">
+                               <string>Locate Runs</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item row="0" column="2">
+                             <widget class="QProgressBar" name="progressBar_check1">
+                              <property name="value">
+                               <number>24</number>
+                              </property>
+                              <property name="textVisible">
+                               <bool>true</bool>
                               </property>
                              </widget>
                             </item>
@@ -244,6 +226,20 @@
                               </property>
                              </widget>
                             </item>
+                            <item row="1" column="1">
+                             <widget class="QLabel" name="label_check2">
+                              <property name="text">
+                               <string>Load NeXus (light)</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item row="1" column="2">
+                             <widget class="QProgressBar" name="progressBar_check2">
+                              <property name="value">
+                               <number>24</number>
+                              </property>
+                             </widget>
+                            </item>
                             <item row="2" column="0">
                              <widget class="QLabel" name="check3">
                               <property name="sizePolicy">
@@ -266,6 +262,20 @@
                               </property>
                               <property name="text">
                                <string/>
+                              </property>
+                             </widget>
+                            </item>
+                            <item row="2" column="1">
+                             <widget class="QLabel" name="label_check3">
+                              <property name="text">
+                               <string>Sort Runs</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item row="2" column="2">
+                             <widget class="QProgressBar" name="progressBar_check3">
+                              <property name="value">
+                               <number>24</number>
                               </property>
                              </widget>
                             </item>
@@ -294,6 +304,20 @@
                               </property>
                              </widget>
                             </item>
+                            <item row="3" column="1">
+                             <widget class="QLabel" name="label_check4">
+                              <property name="text">
+                               <string>Populate Table</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item row="3" column="2">
+                             <widget class="QProgressBar" name="progressBar_check4">
+                              <property name="value">
+                               <number>24</number>
+                              </property>
+                             </widget>
+                            </item>
                             <item row="4" column="0">
                              <widget class="QLabel" name="check5">
                               <property name="sizePolicy">
@@ -316,6 +340,20 @@
                               </property>
                               <property name="text">
                                <string/>
+                              </property>
+                             </widget>
+                            </item>
+                            <item row="4" column="1">
+                             <widget class="QLabel" name="label_check5">
+                              <property name="text">
+                               <string>Load NeXus (full)</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item row="4" column="2">
+                             <widget class="QProgressBar" name="progressBar_check5">
+                              <property name="value">
+                               <number>24</number>
                               </property>
                              </widget>
                             </item>
