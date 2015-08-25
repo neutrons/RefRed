@@ -52,10 +52,10 @@ class SortLRDataList(object):
             return
         
         if not self.is_data_type_selected:
-            self.list_lrdata_sorted = self.list_lrdata
-            self.list_runs_sorted = self.list_runs
-            self.list_wks_sorted = self.list_wks
-            self.list_nexus_sorted = self.list_nexus
+            self.list_lrdata_sorted = list(self.list_lrdata)
+            self.list_runs_sorted = list(self.list_runs)
+            self.list_wks_sorted = list(self.list_wks)
+            self.list_nexus_sorted = list(self.list_nexus)
             return
         
         self.run_data()

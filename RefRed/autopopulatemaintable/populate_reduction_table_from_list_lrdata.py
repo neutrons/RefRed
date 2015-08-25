@@ -56,7 +56,7 @@ class PopulateReductionTableFromListLRData(object):
         _list_lrdata = self.list_lrdata
         _list_run = self.list_run
         _big_table_data = self.big_table_data
-        _list_data_lrdata = _big_table_data[0,:]
+        _list_data_lrdata = _big_table_data[:,0]
         _data_index = 0
         _data_lrdata = _list_data_lrdata[_data_index]
         while (_data_lrdata is not None):

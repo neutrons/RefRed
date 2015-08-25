@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Tue Aug 25 13:49:23 2015
+# Created: Tue Aug 25 15:53:21 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1637,7 +1637,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Liquids Reflectometer Reduction", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_3.setTitle(QtGui.QApplication.translate("MainWindow", "Run Numbers", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Data:", None, QtGui.QApplication.UnicodeUTF8))
-        self.data_sequence_lineEdit.setText(QtGui.QApplication.translate("MainWindow", "128910-128912", None, QtGui.QApplication.UnicodeUTF8))
+        self.data_sequence_lineEdit.setText(QtGui.QApplication.translate("MainWindow", "128910-128911", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Normalization:", None, QtGui.QApplication.UnicodeUTF8))
         self.norm_sequence_lineEdit.setText(QtGui.QApplication.translate("MainWindow", "128910-128911", None, QtGui.QApplication.UnicodeUTF8))
         self.label_check1.setText(QtGui.QApplication.translate("MainWindow", "Locate Runs", None, QtGui.QApplication.UnicodeUTF8))
