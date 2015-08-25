@@ -110,6 +110,8 @@ class ReductionTableAutoFill(object):
 
     def run(self):
         self.locate_runs()
+        if self.runs_found == 0:
+            return
         self.loading_runs()
         self.loading_lrdata()
         self.sorting_runs()
@@ -166,7 +168,10 @@ class ReductionTableAutoFill(object):
         while self.runs_found < self.number_of_runs:
             time.sleep(0.5)
             
-        self.o_auto_fill_widgets_handler.step1()
+        if self.runs_found > 0:
+            self.o_auto_fill_widgets_handler.step1()
+        else:
+            self.o_auto_fill_widgets_handler.error_step1()
 
     def loading_runs(self):
         _list_full_file_name = self.list_nxs

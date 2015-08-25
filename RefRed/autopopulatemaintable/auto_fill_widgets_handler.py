@@ -1,5 +1,5 @@
 from PyQt4.QtGui import QApplication
-from PyQt4 import QtCore
+from PyQt4 import QtCore, QtGui
 import time
 
 class AutoFillWidgetsHandler(object):
@@ -40,6 +40,16 @@ class AutoFillWidgetsHandler(object):
     def step1(self):
         self.parent.ui.check1.setVisible(True)
         QApplication.processEvents()
+        
+    def error_step1(self):
+        pixmap = QtGui.QPixmap(u':/General/clear_icon.png')
+        self.parent.ui.check1.setFixedWidth(25)
+        self.parent.ui.check1.setFixedHeight(25)
+        self.parent.ui.check1.setPixmap(pixmap)
+        QApplication.processEvents()
+        self.parent.ui.check1.setVisible(True)
+        QApplication.processEvents()
+#        self.end()
         
     def step2(self):
         self.parent.ui.check2.setVisible(True)
