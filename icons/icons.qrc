@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="General">
+    <file>clear_icon.png</file>
     <file>check_icon.png</file>
     <file>export_ascii.png</file>
     <file>logo_refl.png</file>
@@ -25,7 +26,6 @@
     <file>extractNormalization.png</file>
   </qresource>
   <qresource prefix="MPL Toolbar">
-    <file>clear_icon.png</file>
     <file>export_ascii.png</file>
     <file>toggle-log.png</file>
     <file>toggle-xlog.png</file>

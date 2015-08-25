@@ -46,10 +46,9 @@ class AutoFillWidgetsHandler(object):
         self.parent.ui.check1.setFixedWidth(25)
         self.parent.ui.check1.setFixedHeight(25)
         self.parent.ui.check1.setPixmap(pixmap)
-        QApplication.processEvents()
         self.parent.ui.check1.setVisible(True)
         QApplication.processEvents()
-#        self.end()
+        self.end()
         
     def step2(self):
         self.parent.ui.check2.setVisible(True)
