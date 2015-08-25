@@ -41,19 +41,16 @@ class SortLRDataList(object):
         self.list_wks = list_wks
         self.parent = parent
         self.list_nexus = list_nexus
-        self.data_type_selected = 'data'
+        self.is_data_type_selected = True if data_type_selected == 'data' else False
         
     def run(self):
-        if self.data_type_selected == 'data':
-            if len(self.list_lrdata) < 2:
-                self.list_lrdata_sorted = self.list_lrdata
-                self.list_runs_sorted = self.list_runs
-                self.list_wks_sorted = self.list_wks
-                self.list_nexus_sorted = self.list_nexus
-                return
-            self.run_data()
-        else:
-            self.run_norm()
+        if len(self.list_lrdata) < 2:
+            self.list_lrdata_sorted = self.list_lrdata
+            self.list_runs_sorted = self.list_runs
+            self.list_wks_sorted = self.list_wks
+            self.list_nexus_sorted = self.list_nexus
+            return
+        self.run_data()
             
     def run_data(self):
         _list_wks = self.list_wks
@@ -85,7 +82,8 @@ class SortLRDataList(object):
                     nexus_fix = nexus_fix[0]
                     
                 o_compare_lrdata = CompareTwoLRData(lrdata_1 = lrdata_fix,
-                                                    lrdata_2 = lrdata_mov)
+                                                    lrdata_2 = lrdata_mov,
+                                                    is_data_type_selected = self.is_data_type_selected)
                 if o_compare_lrdata.result_comparison < 0:
                     list_lrdata_sorted.insert(index_lrdata_fix, lrdata_mov)
                     list_runs_sorted.insert(index_lrdata_fix, runs_mov)
@@ -124,6 +122,4 @@ class SortLRDataList(object):
             self.list_lrdata_sorted = list_lrdata_sorted
             self.list_wks_sorted = list_wks_sorted
             self.list_nexus_sorted = list_nexus_sorted
-            
-    def run_norm(self):
-        pass
+ 
