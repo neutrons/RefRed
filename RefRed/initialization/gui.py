@@ -58,7 +58,7 @@ class Gui(object):
         self.init_autopopulate_widgets()
         
     def init_autopopulate_widgets(self):
-        pixmap = QtGui.QPixmap(u':/General/clear_icon.png')
+        pixmap = QtGui.QPixmap(u':/General/check_icon.png')
         self.parent.ui.check1.setFixedWidth(25)
         self.parent.ui.check1.setFixedHeight(25)
         self.parent.ui.check1.setPixmap(pixmap)
