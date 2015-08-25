@@ -14,6 +14,7 @@ class CheckListRunCompatibilityAndDisplay(object):
     runs_are_compatible = False
     wks = None
     lrdata = None
+    prefix = 'data'
     
     def __init__(self, parent=None,
                  list_run=None,
@@ -30,6 +31,12 @@ class CheckListRunCompatibilityAndDisplay(object):
         self.is_display_requested = is_display_requested
         self.runs_are_compatible = False
         self.lrdata = None
+        self.prefix = 'data' if self.is_working_with_data_column else 'norm'
+        
+        print('in checkListRunCompatibilyAndDisplay')
+        print('self.prefix: ' , self.prefix)
+        print('self.row: %d' %self.row)
+        print('self.col: %d' %self.col)
         
     def run(self):
         runs_are_compatible = True
@@ -53,7 +60,8 @@ class CheckListRunCompatibilityAndDisplay(object):
             o_add_list_nexus = AddListNexus(list_nexus = self.list_nexus,
                                             list_run = self.list_run,
                                             metadata_only = False,
-                                            check_nexus_compatibility = False)
+                                            check_nexus_compatibility = False,
+                                            prefix = self.prefix)
             wks = o_add_list_nexus.wks
             
         self.wks = wks

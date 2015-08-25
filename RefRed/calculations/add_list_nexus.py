@@ -7,21 +7,24 @@ class AddListNexus(object):
     
     wks = None
     addition_worked = True
+    prefix = 'data'
     
     def __init__(self, list_nexus=None, 
                  list_run=None, 
                  metadata_only=False, 
-                 check_nexus_compatibility=True):
+                 check_nexus_compatibility=True,
+                 prefix='data'):
         if list_nexus is None:
             return
         
         self.wks = None
         self.addition_worked = True
+        self.prefix = prefix
         
         if len(list_nexus) == 1:
             _filename = list_nexus[0]
             _run = list_run[0]
-            _ws_name = "_data_file_%s" %_run
+            _ws_name = "_%s_file_%s" %(self.prefix, _run)
             LoadNexus(filename=_filename,
                       output_wks = _ws_name,
                       metadata_only = metadata_only)
@@ -31,7 +34,8 @@ class AddListNexus(object):
         else:
             load_list_object = LoadListNexus(list_nexus=list_nexus, 
                                              list_run=list_run,
-                                             metadata_only=metadata_only)
+                                             metadata_only=metadata_only,
+                                             prefix = self.prefix)
             _list_wks = load_list_object.list_wks_loaded
             if len(_list_wks) > 1:
                 is_same_property = False

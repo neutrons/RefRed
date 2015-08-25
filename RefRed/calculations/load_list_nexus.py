@@ -7,24 +7,26 @@ class LoadListNexus(object):
 
     list_nexus = None
     list_run = None
+    prefix = 'data'
 
     list_wks_loaded = []
     list_run_loaded = []
     list_nexuss_loaded = []
     
-    def __init__(self, list_nexus=None, list_run=None, metadata_only=False):
+    def __init__(self, list_nexus=None, list_run=None, metadata_only=False, prefix='data'):
         if list_nexus is None:
             return
         self.list_nexus = list_nexus
         self.list_run = list_run
         self.number_of_runs = len(list_run)
+        self.prefix = prefix
         
         self.init_parameters()
         
         for index, nexus_name in enumerate(list_nexus):
             filename = list_nexus[index]
             _run = list_run[index]
-            _ws_name = "_data_file_%s" %_run
+            _ws_name = "%s_file_%s" %(self.prefix, _run)
             wks_object = LoadNexus(filename = filename, 
                                    output_wks = _ws_name,
                                    metadata_only = metadata_only)

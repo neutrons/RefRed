@@ -137,7 +137,7 @@ class ReductionTableAutoFill(object):
             _is_display_requested = self.display_of_this_row_checked(index)
             _list_run = format_to_list(_list_run_sorted[index])
             _nexus = format_to_list(nexus)
-            o_check_and_load = CheckListRunCompatibilityAndDisplay(parent=self.parent,
+            o_check_and_load = CheckListRunCompatibilityAndDisplay(parent = self.parent,
                                                                    list_run = _list_run,
                                                                    list_nexus = _nexus,
                                                                    row = index,
@@ -176,10 +176,11 @@ class ReductionTableAutoFill(object):
     def loading_runs(self):
         _list_full_file_name = self.list_nxs
         _list_run = self.full_list_of_runs
-        
+        _prefix = self.data_type_selected
         o_load_list = LoadListNexus(list_nexus = _list_full_file_name,
                                     list_run = _list_run,
-                                    metadata_only = False)
+                                    metadata_only = False,
+                                    prefix = _prefix)
         self.list_wks_loaded = o_load_list.list_wks_loaded
         self.list_nexus_loaded = o_load_list.list_nexus_loaded
         
