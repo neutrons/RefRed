@@ -6,8 +6,20 @@ class AutoFillWidgetsHandler(object):
     
     def __init__(self, parent=None):
         self.parent = parent
+        self.setup()
         self.start()
         
+    def setup(self):
+        self.parent.ui.progressBar_check2.setValue(0)
+        self.parent.ui.progressBar_check5.setValue(0)
+        self.parent.ui.progressBar_check2.setVisible(False)
+        self.parent.ui.progressBar_check5.setVisible(False)
+        self.parent.ui.check1.setVisible(False)
+        self.parent.ui.check2.setVisible(False)
+        self.parent.ui.check3.setVisible(False)
+        self.parent.ui.check4.setVisible(False)
+        self.parent.ui.check5.setVisible(False)
+    
     def start(self):
         self.parent.ui.frame_autofill_check_status.setVisible(True)
         QApplication.processEvents()
@@ -15,9 +27,15 @@ class AutoFillWidgetsHandler(object):
     def end(self):
         time.sleep(2)
         self.parent.ui.frame_autofill_check_status.setVisible(False)
-#        self.parent.delay_closing_thread = DelayClosing()
-#        self.parent.delay_closing_thread.setup(self.parent)
-#        self.parent.delay_closing_thread.start()
+        self.parent.ui.progressBar_check3.setValue(0)
+        self.parent.ui.progressBar_check5.setValue(0)
+        self.parent.ui.progressBar_check3.setVisible(False)
+        self.parent.ui.progressBar_check5.setVisible(False)
+        self.parent.ui.check1.setVisible(False)
+        self.parent.ui.check2.setVisible(False)
+        self.parent.ui.check3.setVisible(False)
+        self.parent.ui.check4.setVisible(False)
+        self.parent.ui.check5.setVisible(False)
         
     def step1(self):
         self.parent.ui.check1.setVisible(True)

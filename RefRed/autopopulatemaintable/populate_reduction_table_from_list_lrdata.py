@@ -45,9 +45,36 @@ class PopulateReductionTableFromListLRData(object):
                 _lrdata = list_lrdata[_index]
             big_table_data[_index, self.big_table_data_col] = _lrdata
         self.big_table_data = big_table_data
-                
-                
+                                
     def insert_runs_into_table(self):
+        if self.is_data:
+            self.insert_data_runs_into_table()
+        else:
+            self.insert_norm_runs_into_table()
+
+    def insert_norm_runs_into_table(self):
+        _list_lrdata = self.list_lrdata
+        _list_run = self.list_run
+        _big_table_data = self.big_table_data
+        _list_data_lrdata = _big_table_data[0,:]
+        _data_index = 0
+        _data_lrdata = _list_data_lrdata[_data_index]
+        while (_data_lrdata is not None):
+            _data_lambda_value = _data_lrdata.lambda_requested
+            for _norm_index, _norm_lrdata in enumerate(_list_lrdata):
+                _norm_lambda_value = _norm_lrdata.lambda_requested
+                if (_norm_lambda_value == _data_lambda_value):
+                    _run = _list_run[_norm_index]
+                    if type(_run) == type([]):
+                        str_run = ",".join(_run)
+                    else:
+                        str_run = str(_run)
+                    self.parent.ui.reductionTable.item(_data_index, self.reductionTable_col).setText(str_run)
+                    break
+            _data_index += 1
+            _data_lrdata = _list_data_lrdata[_data_index]
+            
+    def insert_data_runs_into_table(self):
         for _index, _run in enumerate(self.list_run):
             if type(_run) == type([]):
                 str_run = ",".join(_run)

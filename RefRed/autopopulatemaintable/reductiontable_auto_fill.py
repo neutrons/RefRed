@@ -20,7 +20,7 @@ class ReductionTableAutoFill(object):
 
     list_full_file_name = []
     list_nxs = []
-    list_lradata = []
+    list_lrdata = []
 
     list_lrdata_sorted = []
     list_runs_sorted = []
@@ -46,31 +46,22 @@ class ReductionTableAutoFill(object):
             self.sorted_list_of_runs = []
             return
 
+        self.init_variable()
+
         self.parent = parent
         is_minimum_requirements = self.check_minimum_requirements()
         if is_minimum_requirements is False:
             return
         
         self.o_auto_fill_widgets_handler = AutoFillWidgetsHandler(parent=self.parent)
+        self.o_auto_fill_widgets_handler.setup()
 
         self.raw_run_from_input = list_of_run_from_input
-        self.list_of_run_from_input = None
-        self.list_of_run_from_lconfig = None
-        self.full_list_of_runs = None
-        self.list_lrdata_sorted = None
-
-        self.runs_found = 0
-
-        self.number_of_runs = None
-        self.filename_thread_array = None
-        self.number_of_runs = None
-        self.list_nexus_sorted = None
-        self.list_nexus_loaded = None
 
         self.calculate_discrete_list_of_runs() # step1 -> list_new_runs
 
         self.big_table_data = None
-        if not reset_table:
+        if (not reset_table) and (data_type_selected == 'data'):
             self.retrieve_bigtable_list_data_loaded() # step2 -> list_old_runs
 
         _full_list_of_runs = []
@@ -86,6 +77,27 @@ class ReductionTableAutoFill(object):
         
         # start calculation
         self.run()
+
+    def init_variable(self):
+        self.list_full_file_name = []
+        self.list_nxs = []
+        self.lrdata = []
+        self.list_lrdata_sorted = []
+        self.list_runs_sorted = []
+        self.list_wks_sorted = []
+        self.list_nexus_sorted = []
+        self.full_list_of_runs = None
+        self.list_of_run_from_input = None
+        self.list_of_run_from_lconfig = None
+        self.list_lrdata_sorted = None
+    
+        self.runs_found = 0
+    
+        self.number_of_runs = None
+        self.filename_thread_array = None
+        self.number_of_runs = None
+        self.list_nexus_sorted = None
+        self.list_nexus_loaded = None
 
     def check_minimum_requirements(self):
         _data_type_selected = self.data_type_selected
@@ -113,6 +125,12 @@ class ReductionTableAutoFill(object):
         _list_run_sorted = format_to_list(_list_run_sorted)
         _list_nexus_sorted = format_to_list(_list_nexus_sorted)
         
+        self.parent.ui.progressBar_check5.setMinimum(0)
+        self.parent.ui.progressBar_check5.setValue(0)
+        self.parent.ui.progressBar_check5.setMaximum(len(_list_nexus_sorted))
+        self.parent.ui.progressBar_check5.setVisible(True)
+        QApplication.processEvents()
+        
         for index, nexus in enumerate(_list_nexus_sorted):
             _is_display_requested = self.display_of_this_row_checked(index)
             _list_run = format_to_list(_list_run_sorted[index])
@@ -124,6 +142,7 @@ class ReductionTableAutoFill(object):
                                                                    is_working_with_data_column = _is_working_with_data_column,
                                                                    is_display_requested = _is_display_requested)
             o_check_and_load.run()
+            self.parent.ui.progressBar_check5.setValue(index+1)
             QApplication.processEvents()
         
         self.o_auto_fill_widgets_handler.step5()
@@ -162,9 +181,18 @@ class ReductionTableAutoFill(object):
     def loading_lrdata(self):
         _list_wks_loaded = self.list_wks_loaded
         _list_lrdata = []
+        
+        self.parent.ui.progressBar_check2.setMinimum(0)
+        self.parent.ui.progressBar_check2.setValue(0)
+        self.parent.ui.progressBar_check2.setMaximum(len(_list_wks_loaded))
+        self.parent.ui.progressBar_check2.setVisible(True)
+        QApplication.processEvents()
+        
         for index in range(len(_list_wks_loaded)):
             _lrdata = LRData(_list_wks_loaded[index])
             _list_lrdata.append(_lrdata)
+            self.parent.ui.progressBar_check2.setValue(index+1)
+            QApplication.processEvents()
         self.list_lrdata = _list_lrdata
         
         self.o_auto_fill_widgets_handler.step2()

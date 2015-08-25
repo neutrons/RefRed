@@ -1,4 +1,4 @@
-from PyQt4 import QtCore
+from PyQt4 import QtCore, QtGui
 import time
 import mantid
 import sys

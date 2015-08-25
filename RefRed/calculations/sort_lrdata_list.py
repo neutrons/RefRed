@@ -50,6 +50,14 @@ class SortLRDataList(object):
             self.list_wks_sorted = self.list_wks
             self.list_nexus_sorted = self.list_nexus
             return
+        
+        if not self.is_data_type_selected:
+            self.list_lrdata_sorted = self.list_lrdata
+            self.list_runs_sorted = self.list_runs
+            self.list_wks_sorted = self.list_wks
+            self.list_nexus_sorted = self.list_nexus
+            return
+        
         self.run_data()
             
     def run_data(self):
@@ -82,8 +90,7 @@ class SortLRDataList(object):
                     nexus_fix = nexus_fix[0]
                     
                 o_compare_lrdata = CompareTwoLRData(lrdata_1 = lrdata_fix,
-                                                    lrdata_2 = lrdata_mov,
-                                                    is_data_type_selected = self.is_data_type_selected)
+                                                    lrdata_2 = lrdata_mov)
                 if o_compare_lrdata.result_comparison < 0:
                     list_lrdata_sorted.insert(index_lrdata_fix, lrdata_mov)
                     list_runs_sorted.insert(index_lrdata_fix, runs_mov)

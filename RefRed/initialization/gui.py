@@ -80,7 +80,6 @@ class Gui(object):
         self.parent.ui.check5.setPixmap(pixmap)
         self.parent.ui.check5.setVisible(False)
         
-        self.parent.ui.progressBar_check1.setVisible(False)
         self.parent.ui.progressBar_check2.setVisible(False)
         self.parent.ui.progressBar_check3.setVisible(False)
         self.parent.ui.progressBar_check4.setVisible(False)

@@ -2,8 +2,7 @@ class CompareTwoLRData(object):
     
     def __init__(self,
                  lrdata_1 = None,
-                 lrdata_2 = None,
-                 is_data_type_selected = True):
+                 lrdata_2 = None):
         
         self.lrdata_1 = lrdata_1
         self.lrdata_2 = lrdata_2
@@ -12,10 +11,6 @@ class CompareTwoLRData(object):
         compare1 = self.compare_lambda_requested()
         if compare1 != 0:
             self.result_comparison = compare1
-            return
-        
-        # no need to check theta when working with norm runs
-        if not is_data_type_selected:
             return
         
         compare2 = self.compare_theta()

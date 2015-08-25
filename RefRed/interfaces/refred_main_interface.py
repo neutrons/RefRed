@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Tue Aug 25 09:20:10 2015
+# Created: Tue Aug 25 13:24:33 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -112,11 +112,6 @@ class Ui_MainWindow(object):
         self.label_check1 = QtGui.QLabel(self.frame_autofill_check_status)
         self.label_check1.setObjectName("label_check1")
         self.gridLayout_5.addWidget(self.label_check1, 0, 1, 1, 1)
-        self.progressBar_check1 = QtGui.QProgressBar(self.frame_autofill_check_status)
-        self.progressBar_check1.setProperty("value", 24)
-        self.progressBar_check1.setTextVisible(True)
-        self.progressBar_check1.setObjectName("progressBar_check1")
-        self.gridLayout_5.addWidget(self.progressBar_check1, 0, 2, 1, 1)
         self.check2 = QtGui.QLabel(self.frame_autofill_check_status)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -132,7 +127,7 @@ class Ui_MainWindow(object):
         self.label_check2.setObjectName("label_check2")
         self.gridLayout_5.addWidget(self.label_check2, 1, 1, 1, 1)
         self.progressBar_check2 = QtGui.QProgressBar(self.frame_autofill_check_status)
-        self.progressBar_check2.setProperty("value", 24)
+        self.progressBar_check2.setProperty("value", 0)
         self.progressBar_check2.setObjectName("progressBar_check2")
         self.gridLayout_5.addWidget(self.progressBar_check2, 1, 2, 1, 1)
         self.check3 = QtGui.QLabel(self.frame_autofill_check_status)
@@ -150,7 +145,7 @@ class Ui_MainWindow(object):
         self.label_check3.setObjectName("label_check3")
         self.gridLayout_5.addWidget(self.label_check3, 2, 1, 1, 1)
         self.progressBar_check3 = QtGui.QProgressBar(self.frame_autofill_check_status)
-        self.progressBar_check3.setProperty("value", 24)
+        self.progressBar_check3.setProperty("value", 0)
         self.progressBar_check3.setObjectName("progressBar_check3")
         self.gridLayout_5.addWidget(self.progressBar_check3, 2, 2, 1, 1)
         self.check4 = QtGui.QLabel(self.frame_autofill_check_status)
@@ -168,7 +163,7 @@ class Ui_MainWindow(object):
         self.label_check4.setObjectName("label_check4")
         self.gridLayout_5.addWidget(self.label_check4, 3, 1, 1, 1)
         self.progressBar_check4 = QtGui.QProgressBar(self.frame_autofill_check_status)
-        self.progressBar_check4.setProperty("value", 24)
+        self.progressBar_check4.setProperty("value", 0)
         self.progressBar_check4.setObjectName("progressBar_check4")
         self.gridLayout_5.addWidget(self.progressBar_check4, 3, 2, 1, 1)
         self.check5 = QtGui.QLabel(self.frame_autofill_check_status)
@@ -186,7 +181,7 @@ class Ui_MainWindow(object):
         self.label_check5.setObjectName("label_check5")
         self.gridLayout_5.addWidget(self.label_check5, 4, 1, 1, 1)
         self.progressBar_check5 = QtGui.QProgressBar(self.frame_autofill_check_status)
-        self.progressBar_check5.setProperty("value", 24)
+        self.progressBar_check5.setProperty("value", 0)
         self.progressBar_check5.setObjectName("progressBar_check5")
         self.gridLayout_5.addWidget(self.progressBar_check5, 4, 2, 1, 1)
         self.horizontalLayout_11.addLayout(self.gridLayout_5)
@@ -1644,7 +1639,7 @@ class Ui_MainWindow(object):
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Data:", None, QtGui.QApplication.UnicodeUTF8))
         self.data_sequence_lineEdit.setText(QtGui.QApplication.translate("MainWindow", "128910-128912", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Normalization:", None, QtGui.QApplication.UnicodeUTF8))
-        self.norm_sequence_lineEdit.setText(QtGui.QApplication.translate("MainWindow", "128910-128912", None, QtGui.QApplication.UnicodeUTF8))
+        self.norm_sequence_lineEdit.setText(QtGui.QApplication.translate("MainWindow", "128910-128911", None, QtGui.QApplication.UnicodeUTF8))
         self.label_check1.setText(QtGui.QApplication.translate("MainWindow", "Locate Runs", None, QtGui.QApplication.UnicodeUTF8))
         self.label_check2.setText(QtGui.QApplication.translate("MainWindow", "Load NeXus (light)", None, QtGui.QApplication.UnicodeUTF8))
         self.label_check3.setText(QtGui.QApplication.translate("MainWindow", "Sort Runs", None, QtGui.QApplication.UnicodeUTF8))

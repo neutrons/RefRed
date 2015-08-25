@@ -142,7 +142,7 @@
                          <item row="1" column="1">
                           <widget class="QLineEdit" name="norm_sequence_lineEdit">
                            <property name="text">
-                            <string>128910-128912</string>
+                            <string>128910-128911</string>
                            </property>
                           </widget>
                          </item>
@@ -191,16 +191,6 @@
                               </property>
                              </widget>
                             </item>
-                            <item row="0" column="2">
-                             <widget class="QProgressBar" name="progressBar_check1">
-                              <property name="value">
-                               <number>24</number>
-                              </property>
-                              <property name="textVisible">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
                             <item row="1" column="0">
                              <widget class="QLabel" name="check2">
                               <property name="sizePolicy">
@@ -236,7 +226,7 @@
                             <item row="1" column="2">
                              <widget class="QProgressBar" name="progressBar_check2">
                               <property name="value">
-                               <number>24</number>
+                               <number>0</number>
                               </property>
                              </widget>
                             </item>
@@ -275,7 +265,7 @@
                             <item row="2" column="2">
                              <widget class="QProgressBar" name="progressBar_check3">
                               <property name="value">
-                               <number>24</number>
+                               <number>0</number>
                               </property>
                              </widget>
                             </item>
@@ -314,7 +304,7 @@
                             <item row="3" column="2">
                              <widget class="QProgressBar" name="progressBar_check4">
                               <property name="value">
-                               <number>24</number>
+                               <number>0</number>
                               </property>
                              </widget>
                             </item>
@@ -353,7 +343,7 @@
                             <item row="4" column="2">
                              <widget class="QProgressBar" name="progressBar_check5">
                               <property name="value">
-                               <number>24</number>
+                               <number>0</number>
                               </property>
                              </widget>
                             </item>
