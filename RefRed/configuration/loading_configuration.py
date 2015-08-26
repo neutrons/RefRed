@@ -4,6 +4,8 @@ import os
 from xml.dom import minidom
 from numpy import empty
 from RefRed.lconfigdataset import LConfigDataset
+from RefRed.configuration.populate_reduction_table_from_lconfigdataset import PopulateReductionTableFromLConfigDataSet as PopulateReductionTable
+from RefRed.configuration.load_reduction_table_from_lconfigdataset import LoadReductionTableFromLConfigDataSet as LoadReductionTable
 
 class LoadingConfiguration(object):
 	
@@ -21,6 +23,7 @@ class LoadingConfiguration(object):
 		filename = QtGui.QFileDialog.getOpenFileName(self.parent, 
 		                                             'Open Configuration File', 
 		                                             _path)
+		QtGui.QApplication.processEvents()
 		if not (filename == ""):
 			self.filename = str(filename)
 			self.loading()
@@ -29,7 +32,8 @@ class LoadingConfiguration(object):
 		self.parent.path_config = os.path.dirname(self.filename)
 		self.clear_reductionTable()
 		self.load_config_in_big_table_data()
-		
+		self.populate_reduction_table_from_lconfigdataset()
+		self.load_reduction_table_from_lconfigdataset()
 		
 	def load_config_in_big_table_data(self):
 		filename = self.filename
@@ -94,7 +98,8 @@ class LoadingConfiguration(object):
 		iMetadata.tof_units = 'micros'
 		
 		_data_sets = parent.getNodeValue(node, 'data_sets')
-		iMetadata.data_sets = _data_sets.split(',')
+		_data_sets = _data_sets.split(',')
+		iMetadata.data_sets = [str(x) for x in _data_sets]
 		
 		_tof_auto = parent.getNodeValue(node, 'tof_range_flag')
 		iMetadata.tof_auto_flag = _tof_auto
@@ -111,7 +116,8 @@ class LoadingConfiguration(object):
 		iMetadata.norm_back = [_back_min, _back_max]
 		
 		_norm_sets = parent.getNodeValue(node, 'norm_dataset')
-		iMetadata.norm_sets = _norm_sets.split(',')
+		_norm_sets = _norm_sets.split(',')
+		iMetadata.norm_sets = [str(x) for x in _norm_sets]
 	    
 		_low_res_min = parent.getNodeValue(node, 'norm_x_min')
 		_low_res_max = parent.getNodeValue(node, 'norm_x_max')
@@ -126,6 +132,7 @@ class LoadingConfiguration(object):
 		try:
 			_data_full_file_name = parent.getNodeValue(node, 'data_full_file_name')
 			_data_full_file_name = _data_full_file_name.split(',')
+			_data_full_file_name = [str(x) for x in _data_full_file_name]
 		except:
 			_data_full_file_name = ['']
 		iMetadata.data_full_file_name = _data_full_file_name
@@ -133,6 +140,7 @@ class LoadingConfiguration(object):
 		try:
 			_norm_full_file_name = parent.getNodeValue(node, 'norm_full_file_name')
 			_norm_full_file_name = _norm_full_file_name.split(',')
+			_norm_full_fil_name = [str(x) for x in _norm_full_file_name]
 		except:
 			_norm_full_file_name = ['']
 		iMetadata.norm_full_file_name = _norm_full_file_name
@@ -153,3 +161,10 @@ class LoadingConfiguration(object):
 		for _row in range(nbr_row):
 			for _col in range(1, nbr_col):
 				self.parent.ui.reductionTable.item(_row, _col).setText("")
+
+	def populate_reduction_table_from_lconfigdataset(self):
+		o_pop_reduction_table = PopulateReductionTable(parent = self.parent)
+		QtGui.QApplication.processEvents()
+
+	def load_reduction_table_from_lconfigdataset(self):
+		o_load_reduction_table = LoadReductionTable(parent = self.parent)
