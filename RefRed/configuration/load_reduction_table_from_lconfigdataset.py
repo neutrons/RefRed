@@ -1,5 +1,7 @@
 from RefRed.calculations.add_list_nexus import AddListNexus
 from RefRed.calculations.lr_data import LRData
+from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
+from PyQt4 import QtGui
 
 
 class LoadReductionTableFromLConfigDataSet(object):
@@ -79,6 +81,12 @@ class LoadReductionTableFromLConfigDataSet(object):
         index_col = 0 if type == 'data' else 1
         big_table_data[row, index_col] = lrdata
         self.parent.big_table_data = big_table_data
+        
+        if type == 'data':
+            UpdateReductionTableMetadata(parent = self.parent,
+                                         lrdata = lrdata, 
+                                         row = row)
+            QtGui.QApplication.processEvents()                                             
         
         
         
