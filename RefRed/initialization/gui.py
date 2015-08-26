@@ -3,7 +3,7 @@ import socket
 import os
 
 from RefRed.version import str_version, window_title
-from RefRed.export.export_stitching_ascii_settings import ExportStitchingAsciiSettings
+from RefRed.configuration.export_stitching_ascii_settings import ExportStitchingAsciiSettings
 from file_menu import FileMenu as InitFileMenu
 from RefRed.reduced_config_files_handler import ReducedConfigFilesHandler
 from RefRed.plot.all_plot_axis import AllPlotAxis

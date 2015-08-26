@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Wed Aug 26 15:45:43 2015
+# Created: Wed Aug 26 16:25:10 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1606,20 +1606,20 @@ class Ui_MainWindow(object):
         self.action_load_configuration.setObjectName("action_load_configuration")
         self.actionLoadFullConfiguration_2 = QtGui.QAction(MainWindow)
         self.actionLoadFullConfiguration_2.setObjectName("actionLoadFullConfiguration_2")
-        self.actionSaveConfigurationAs_2 = QtGui.QAction(MainWindow)
-        self.actionSaveConfigurationAs_2.setObjectName("actionSaveConfigurationAs_2")
+        self.action_save_as_configuration = QtGui.QAction(MainWindow)
+        self.action_save_as_configuration.setObjectName("action_save_as_configuration")
         self.actionSF_Calculator = QtGui.QAction(MainWindow)
         self.actionSF_Calculator.setObjectName("actionSF_Calculator")
         self.actionMetadataFinder = QtGui.QAction(MainWindow)
         self.actionMetadataFinder.setObjectName("actionMetadataFinder")
-        self.actionSaveConfiguration_2 = QtGui.QAction(MainWindow)
-        self.actionSaveConfiguration_2.setEnabled(True)
-        self.actionSaveConfiguration_2.setObjectName("actionSaveConfiguration_2")
+        self.action_save_configuration = QtGui.QAction(MainWindow)
+        self.action_save_configuration.setEnabled(True)
+        self.action_save_configuration.setObjectName("action_save_configuration")
         self.menuHelp.addSeparator()
         self.menuHelp.addAction(self.actionAbout)
         self.menuFile.addAction(self.action_load_configuration)
-        self.menuFile.addAction(self.actionSaveConfigurationAs_2)
-        self.menuFile.addAction(self.actionSaveConfiguration_2)
+        self.menuFile.addAction(self.action_save_as_configuration)
+        self.menuFile.addAction(self.action_save_configuration)
         self.menuAdvanced.addAction(self.actionMetadataFinder)
         self.menuAdvanced.addAction(self.actionSF_Calculator)
         self.menubar.addAction(self.menuFile.menuAction())
@@ -1633,6 +1633,8 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.norm_sequence_lineEdit, QtCore.SIGNAL("returnPressed()"), MainWindow.norm_sequence_event)
         QtCore.QObject.connect(self.dataNormTabWidget, QtCore.SIGNAL("currentChanged(int)"), MainWindow.data_norm_tab_changed)
         QtCore.QObject.connect(self.action_load_configuration, QtCore.SIGNAL("triggered()"), MainWindow.load_configuration)
+        QtCore.QObject.connect(self.action_save_as_configuration, QtCore.SIGNAL("triggered()"), MainWindow.save_as_configuration)
+        QtCore.QObject.connect(self.action_save_configuration, QtCore.SIGNAL("triggered()"), MainWindow.save_configuration)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1840,14 +1842,14 @@ class Ui_MainWindow(object):
         self.action_load_configuration.setText(QtGui.QApplication.translate("MainWindow", "Load ...", None, QtGui.QApplication.UnicodeUTF8))
         self.action_load_configuration.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+O", None, QtGui.QApplication.UnicodeUTF8))
         self.actionLoadFullConfiguration_2.setText(QtGui.QApplication.translate("MainWindow", "Load Configuration (heavy and slow) ...", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionSaveConfigurationAs_2.setText(QtGui.QApplication.translate("MainWindow", "Save As ..", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionSaveConfigurationAs_2.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+Shift+S", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_save_as_configuration.setText(QtGui.QApplication.translate("MainWindow", "Save As ..", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_save_as_configuration.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+Shift+S", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSF_Calculator.setText(QtGui.QApplication.translate("MainWindow", "SF Calculator ...", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSF_Calculator.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+C", None, QtGui.QApplication.UnicodeUTF8))
         self.actionMetadataFinder.setText(QtGui.QApplication.translate("MainWindow", "Metadata Finder ...", None, QtGui.QApplication.UnicodeUTF8))
         self.actionMetadataFinder.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+M", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionSaveConfiguration_2.setText(QtGui.QApplication.translate("MainWindow", "Save", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionSaveConfiguration_2.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+S", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_save_configuration.setText(QtGui.QApplication.translate("MainWindow", "Save", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_save_configuration.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+S", None, QtGui.QApplication.UnicodeUTF8))
 
 from mplwidgetnolog import MPLWidgetNoLog
 from .mplwidget import MPLWidget

@@ -24,7 +24,9 @@ class LRData(object):
 
     tof_range = None
     low_res = ['0','255']
-    low_res_flag = True    
+    low_res_flag = True 
+    use_it_flag = True
+    
     def __init__(self, workspace):
         
         self._tof_axis = []

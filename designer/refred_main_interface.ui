@@ -3793,8 +3793,8 @@ p, li { white-space: pre-wrap; }
      <string>Configuration</string>
     </property>
     <addaction name="action_load_configuration"/>
-    <addaction name="actionSaveConfigurationAs_2"/>
-    <addaction name="actionSaveConfiguration_2"/>
+    <addaction name="action_save_as_configuration"/>
+    <addaction name="action_save_configuration"/>
    </widget>
    <widget class="QMenu" name="menuAdvanced">
     <property name="title">
@@ -3958,7 +3958,7 @@ p, li { white-space: pre-wrap; }
     <string>Load Configuration (heavy and slow) ...</string>
    </property>
   </action>
-  <action name="actionSaveConfigurationAs_2">
+  <action name="action_save_as_configuration">
    <property name="text">
     <string>Save As ..</string>
    </property>
@@ -3982,7 +3982,7 @@ p, li { white-space: pre-wrap; }
     <string>Meta+M</string>
    </property>
   </action>
-  <action name="actionSaveConfiguration_2">
+  <action name="action_save_configuration">
    <property name="enabled">
     <bool>true</bool>
    </property>
@@ -4093,6 +4093,38 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_save_as_configuration</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>save_as_configuration()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_save_configuration</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>save_configuration()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -4105,5 +4137,7 @@ p, li { white-space: pre-wrap; }
   <slot>norm_sequence_event()</slot>
   <slot>data_norm_tab_changed()</slot>
   <slot>load_configuration()</slot>
+  <slot>save_configuration()</slot>
+  <slot>save_as_configuration()</slot>
  </slots>
 </ui>

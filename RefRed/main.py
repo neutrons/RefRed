@@ -12,7 +12,7 @@ from RefRed.update_data_norm_tab import UpdateDataNormTab
 from RefRed.gui_handling.data_norm_spinboxes import DataPeakSpinbox, DataBackSpinbox, NormPeakSpinbox, NormBackSpinbox
 from RefRed.autopopulatemaintable.reductiontable_auto_fill import ReductionTableAutoFill
 from RefRed.configuration.loading_configuration import LoadingConfiguration
-
+from RefRed.configuration.saving_configuration import SavingConfiguration
 
 #from RefRed.export_plot_ascii import ExportPlotAscii
 #from RefRed.home_plot_button_clicked import HomePlotButtonClicked
@@ -261,3 +261,10 @@ class MainGui(QtGui.QMainWindow):
     def load_configuration(self):
         o_load_config = LoadingConfiguration(parent = self)
         o_load_config.run()
+        
+    def save_configuration(self):
+        print('here')
+        
+    def save_as_configuration(self):
+        o_save_config = SavingConfiguration(parent = self)
+        o_save_config.run()
