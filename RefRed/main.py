@@ -225,7 +225,8 @@ class MainGui(QtGui.QMainWindow):
             self.ui.reductionTable.setCurrentCell(current_row+1, current_col-1)
         
     def data_norm_tab_changed(self, index):
-        UpdateDataNormTab(parent = self, tab_index = index)
+        ReductionTableCheckBox(parent = self,
+                               row_selected = self.current_table_reduction_row_selected)
         
     def data_back_spinbox_validation(self):
         DataBackSpinbox(parent=self)

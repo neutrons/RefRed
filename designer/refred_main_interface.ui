@@ -1309,7 +1309,7 @@ p, li { white-space: pre-wrap; }
                <bool>true</bool>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="tab">
                <property name="enabled">
@@ -4061,6 +4061,22 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>dataNormTabWidget</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_norm_tab_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1016</x>
+     <y>373</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -4071,5 +4087,6 @@ p, li { white-space: pre-wrap; }
   <slot>table_reduction_cell_changed()</slot>
   <slot>data_sequence_event()</slot>
   <slot>norm_sequence_event()</slot>
+  <slot>data_norm_tab_changed()</slot>
  </slots>
 </ui>
