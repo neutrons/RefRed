@@ -26,6 +26,7 @@ class LRData(object):
     low_res = ['0','255']
     low_res_flag = True 
     use_it_flag = True
+    full_file_name = ['']
     
     def __init__(self, workspace):
         
@@ -67,8 +68,9 @@ class LRData(object):
 
         self.attenuatorNbr = mt_run.getProperty('vATT').value[0] - 1
         self.date = mt_run.getProperty('run_start').value
-        self.full_file_name = mt_run.getProperty('Filename').value[0]
-        self.filename = os.path.basename(self.full_file_name)
+        
+        #self.full_file_name = mt_run.getProperty('Filename').value[0]
+        #self.filename = os.path.basename(self.full_file_name)
 
         sample = self.workspace.getInstrument().getSample()
         source = self.workspace.getInstrument().getSource()

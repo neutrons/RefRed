@@ -60,7 +60,7 @@ class ExportXMLConfig(object):
 	    str_array.append('  <RefLData>\n')
 	    str_array.append('   <peak_selection_type>narrow</peak_selection_type>\n')
 	    
-	    data_full_file_name = _data.filename
+	    data_full_file_name = _data.full_file_name
 	    if type(data_full_file_name) == type([]):
 		data_full_file_name = ','.join(data_full_file_name)
 	    data_peak = _data.peak
@@ -75,11 +75,10 @@ class ExportXMLConfig(object):
 	    q_range = _data.q_range
 	    lambda_range = _data.lambda_range
 	    incident_angle = _data.incident_angle
-            
 
             _norm = _big_table_data[row,1]
 
-	    norm_full_file_name = _norm.filename
+	    norm_full_file_name = _norm.full_file_name
 	    if type(norm_full_file_name) == type([]):
 		norm_full_file_name = ','.join(norm_full_file_name)
 

@@ -55,6 +55,7 @@ class LoadReductionTableFromLConfigDataSet(object):
             low_res1 = int(lconfig.data_low_res[0])
             low_res2 = int(lconfig.data_low_res[1])
             low_res_flag = lconfig.data_low_res_flag
+            full_file_name = lconfig.data_full_file_name
             
         else:
             peak1 = int(lconfig.norm_peak[0])
@@ -65,6 +66,7 @@ class LoadReductionTableFromLConfigDataSet(object):
             low_res1 = int(lconfig.norm_low_res[0])
             low_res2 = int(lconfig.norm_low_res[1])
             low_res_flag = lconfig.norm_low_res_flag
+            full_file_name = lconfig.norm_full_file_name
             
         tof_auto_flag = lconfig.tof_auto_flag
         tof_range = lconfig.tof_range
@@ -77,6 +79,7 @@ class LoadReductionTableFromLConfigDataSet(object):
         lrdata.low_res_flag = low_res_flag
         lrdata.tof_range = tof_range
         lrdata.tof_auto_flag = tof_auto_flag
+        lrdata.full_file_name = full_file_name
         
         index_col = 0 if type == 'data' else 1
         big_table_data[row, index_col] = lrdata
