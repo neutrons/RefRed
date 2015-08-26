@@ -2,6 +2,7 @@ import numpy as np
 import logging
 import math
 import os
+import gc
 
 from mantid.simpleapi import *
 #from RefRed.sort_nxsdata import SortNXSData
@@ -25,6 +26,19 @@ class LRData(object):
     low_res = ['0','255']
     low_res_flag = True    
     def __init__(self, workspace):
+        
+        self._tof_axis = []
+        self.Ixyt = []
+        self.Exyt= []
+        
+        self.data = []
+        self.xydata = []
+        self.ytofdata = []
+
+        self.countstofdata = []
+        self.countxdata = []
+        self.ycountsdata = []
+        
         
         self.workspace = mtd[workspace]
         self.workspace_name = workspace
@@ -241,11 +255,11 @@ class LRData(object):
         '''
         will format the histogrma NeXus to retrieve the full 3D data set
         '''
-        _tof_axis = nxs_histo.readX(0)[:]
-        nbr_tof = len(_tof_axis)
+        self._tof_axis = nxs_histo.readX(0)[:]
+        nbr_tof = len(self._tof_axis)
 
-        _y_axis = np.zeros((self.number_x_pixels, self.number_y_pixels, nbr_tof - 1))
-        _y_error_axis = np.zeros((self.number_x_pixels, self.number_y_pixels, nbr_tof - 1))
+        Ixyt = np.zeros((self.number_x_pixels, self.number_y_pixels, nbr_tof - 1))
+        Exyt = np.zeros((self.number_x_pixels, self.number_y_pixels, nbr_tof - 1))
 
         x_range = range(self.number_x_pixels)
         y_range = range(self.number_y_pixels)
@@ -253,53 +267,47 @@ class LRData(object):
         for x in x_range:
             for y in y_range:
                 _index = int(self.number_y_pixels * x + y)
-                _tmp_data = nxs_histo.readY(_index)[:]
-                _y_axis[x, y, :] = _tmp_data
-                _tmp_error = nxs_histo.readE(_index)[:]
-                _y_error_axis[x, y, :] = _tmp_error
+                Ixyt[x, y, :] = nxs_histo.readY(_index)[:]
+                Exyt[x, y, :] = nxs_histo.readE(_index)[:]
+        gc.collect()
+        self.Ixyt = Ixyt
+        self.Exyt = Exyt
 
-        return [_tof_axis, _y_axis, _y_error_axis]    
-        
     def read_data(self):
         output_workspace_name = self.workspace_name + '_rebin'
-        nxs_histo = Rebin(InputWorkspace=self.workspace, 
-                          OutputWorkspace=output_workspace_name,
-                          Params=self.binning, 
-                          PreserveEvents=True)
+        nxs_histo = Rebin(InputWorkspace = self.workspace, 
+                          OutputWorkspace = output_workspace_name,
+                          Params = self.binning, 
+                          PreserveEvents = True)
         # retrieve 3D array
         nxs_histo = mtd[output_workspace_name]
-        [_tof_axis, Ixyt, Exyt] = self.getIxyt(nxs_histo)
-        self.tof_axis_auto_with_margin = _tof_axis
+        #[_tof_axis, Ixyt, Exyt] = self.getIxyt(nxs_histo)
+        self.getIxyt(nxs_histo)
+        self.tof_axis_auto_with_margin = self._tof_axis
 
         # # keep only the low resolution range requested
         from_pixel = 0
         to_pixel = self.number_x_pixels-1
 
         # keep only low resolution range defined
-        Ixyt = Ixyt[from_pixel:to_pixel, :, :]
-        Exyt = Exyt[from_pixel:to_pixel, :, :]
-
-        self.Ixyt = Ixyt
-        self.Exyt = Exyt
+        self.Ixyt = self.Ixyt[from_pixel:to_pixel, :, :]
+        self.Exyt = self.Exyt[from_pixel:to_pixel, :, :]
 
         # create projections for the 2D datasets
-        Ixy = Ixyt.sum(axis=2)
-        Iyt = Ixyt.sum(axis=0)
+        Ixy = self.Ixyt.sum(axis=2)
+        Iyt = self.Ixyt.sum(axis=0)
         Iit = Iyt.sum(axis=0)
         Iix = Ixy.sum(axis=1)
         Iyi = Iyt.sum(axis=1)
 
-        self.data = Ixyt.astype(float)  # 3D dataset
         self.xydata = Ixy.transpose().astype(float)  # 2D dataset
         self.ytofdata = Iyt.astype(float)  # 2D dataset
 
         self.countstofdata = Iit.astype(float)
         self.countsxdata = Iix.astype(float)
         self.ycountsdata = Iyi.astype(float)
-
+        
         self.data_loaded = True
-
-        #TODO remove cleanup workspace
 
     def is_nexus_taken_after_refDate(self):
         '''

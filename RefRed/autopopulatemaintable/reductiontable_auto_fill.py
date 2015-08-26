@@ -2,6 +2,7 @@ import sys
 import time
 import numpy as np
 from PyQt4.QtGui import QApplication
+from mantid.simpleapi import *
 
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.autopopulatemaintable.extract_lconfigdataset_runs import ExtractLConfigDataSetRuns
@@ -99,16 +100,8 @@ class ReductionTableAutoFill(object):
         self.list_nexus_sorted = None
         self.list_nexus_loaded = None
 
-    def check_minimum_requirements(self):
-        _data_type_selected = self.data_type_selected
-        if _data_type_selected == 'data':
-            return True
-            
-        big_table_data = self.parent.big_table_data
-        if big_table_data[0,0] is None:
-            return False
-
     def run(self):
+        self.cleanup_workspaces()        
         self.locate_runs()
         if self.runs_found == 0:
             return
@@ -118,6 +111,12 @@ class ReductionTableAutoFill(object):
         self.updating_reductionTable()
         self.loading_full_reductionTable()
         self.o_auto_fill_widgets_handler.end()
+        
+    def cleanup_workspaces(self):
+        ws_list = AnalysisDataService.getObjectNames()
+        for _ws in ws_list:
+#            if (_ws.endswith('_rebin') or _ws.startswith('_')):
+            DeleteWorkspace(_ws)
         
     def loading_full_reductionTable(self):
         _list_nexus_sorted = self.list_nexus_sorted
@@ -259,6 +258,15 @@ class ReductionTableAutoFill(object):
         full_list_of_runs = self.full_list_of_runs
         full_list_without_duplicate = list(set(full_list_of_runs))
         self.full_list_of_runs = full_list_without_duplicate
+
+    def check_minimum_requirements(self):
+        _data_type_selected = self.data_type_selected
+        if _data_type_selected == 'data':
+            return True
+            
+        big_table_data = self.parent.big_table_data
+        if big_table_data[0,0] is None:
+            return False
 
 
 if __name__ == "__main__":

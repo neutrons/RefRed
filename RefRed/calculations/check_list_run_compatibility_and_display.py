@@ -33,11 +33,6 @@ class CheckListRunCompatibilityAndDisplay(object):
         self.lrdata = None
         self.prefix = 'data' if self.is_working_with_data_column else 'norm'
         
-        print('in checkListRunCompatibilyAndDisplay')
-        print('self.prefix: ' , self.prefix)
-        print('self.row: %d' %self.row)
-        print('self.col: %d' %self.col)
-        
     def run(self):
         runs_are_compatible = True
         wks = []
