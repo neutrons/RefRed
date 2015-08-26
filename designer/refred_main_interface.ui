@@ -3792,7 +3792,7 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Configuration</string>
     </property>
-    <addaction name="actionLoadConfiguration_2"/>
+    <addaction name="action_load_configuration"/>
     <addaction name="actionSaveConfigurationAs_2"/>
     <addaction name="actionSaveConfiguration_2"/>
    </widget>
@@ -3945,7 +3945,7 @@ p, li { white-space: pre-wrap; }
     <string>Load Configuration (light)</string>
    </property>
   </action>
-  <action name="actionLoadConfiguration_2">
+  <action name="action_load_configuration">
    <property name="text">
     <string>Load ...</string>
    </property>
@@ -4077,6 +4077,22 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_load_configuration</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>load_configuration()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -4088,5 +4104,6 @@ p, li { white-space: pre-wrap; }
   <slot>data_sequence_event()</slot>
   <slot>norm_sequence_event()</slot>
   <slot>data_norm_tab_changed()</slot>
+  <slot>load_configuration()</slot>
  </slots>
 </ui>

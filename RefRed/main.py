@@ -1,5 +1,6 @@
 from PyQt4 import QtGui
 import numpy as np
+import os
 
 from interfaces.refred_main_interface import Ui_MainWindow
 from initialization.gui import Gui as InitializeGui
@@ -10,6 +11,7 @@ from RefRed.reduction_table_handling.update_reduction_table import UpdateReducti
 from RefRed.update_data_norm_tab import UpdateDataNormTab
 from RefRed.gui_handling.data_norm_spinboxes import DataPeakSpinbox, DataBackSpinbox, NormPeakSpinbox, NormBackSpinbox
 from RefRed.autopopulatemaintable.reductiontable_auto_fill import ReductionTableAutoFill
+from RefRed.configuration.loading_configuration import LoadingConfiguration
 
 
 #from RefRed.export_plot_ascii import ExportPlotAscii
@@ -23,6 +25,8 @@ class MainGui(QtGui.QMainWindow):
     
     # default location
     path_ascii = '.'  # ascii files
+    path_config = '/home/j35/' # config files
+    
     nbr_row_table_reduction = 30
     prev_table_reduction_row_selected = -1
     current_table_reduction_row_selected = -1
@@ -253,3 +257,7 @@ class MainGui(QtGui.QMainWindow):
                                list_of_run_from_input = str_norm_input,
                                data_type_selected = 'norm')
         self.ui.norm_sequence_lineEdit.setText('')
+        
+    def load_configuration(self):
+        o_load_config = LoadingConfiguration(parent = self)
+        o_load_config.run()

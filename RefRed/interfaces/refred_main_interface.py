@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Wed Aug 26 13:04:40 2015
+# Created: Wed Aug 26 13:36:10 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1602,8 +1602,8 @@ class Ui_MainWindow(object):
         self.actionLoadFullConfiguration.setObjectName("actionLoadFullConfiguration")
         self.actionLoad_Configuration_light = QtGui.QAction(MainWindow)
         self.actionLoad_Configuration_light.setObjectName("actionLoad_Configuration_light")
-        self.actionLoadConfiguration_2 = QtGui.QAction(MainWindow)
-        self.actionLoadConfiguration_2.setObjectName("actionLoadConfiguration_2")
+        self.action_load_configuration = QtGui.QAction(MainWindow)
+        self.action_load_configuration.setObjectName("action_load_configuration")
         self.actionLoadFullConfiguration_2 = QtGui.QAction(MainWindow)
         self.actionLoadFullConfiguration_2.setObjectName("actionLoadFullConfiguration_2")
         self.actionSaveConfigurationAs_2 = QtGui.QAction(MainWindow)
@@ -1617,7 +1617,7 @@ class Ui_MainWindow(object):
         self.actionSaveConfiguration_2.setObjectName("actionSaveConfiguration_2")
         self.menuHelp.addSeparator()
         self.menuHelp.addAction(self.actionAbout)
-        self.menuFile.addAction(self.actionLoadConfiguration_2)
+        self.menuFile.addAction(self.action_load_configuration)
         self.menuFile.addAction(self.actionSaveConfigurationAs_2)
         self.menuFile.addAction(self.actionSaveConfiguration_2)
         self.menuAdvanced.addAction(self.actionMetadataFinder)
@@ -1632,6 +1632,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.data_sequence_lineEdit, QtCore.SIGNAL("returnPressed()"), MainWindow.data_sequence_event)
         QtCore.QObject.connect(self.norm_sequence_lineEdit, QtCore.SIGNAL("returnPressed()"), MainWindow.norm_sequence_event)
         QtCore.QObject.connect(self.dataNormTabWidget, QtCore.SIGNAL("currentChanged(int)"), MainWindow.data_norm_tab_changed)
+        QtCore.QObject.connect(self.action_load_configuration, QtCore.SIGNAL("triggered()"), MainWindow.load_configuration)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1836,8 +1837,8 @@ class Ui_MainWindow(object):
         self.actionSaveConfiguration.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+S", None, QtGui.QApplication.UnicodeUTF8))
         self.actionLoadFullConfiguration.setText(QtGui.QApplication.translate("MainWindow", "Load Configuration (heavy and slow) ...", None, QtGui.QApplication.UnicodeUTF8))
         self.actionLoad_Configuration_light.setText(QtGui.QApplication.translate("MainWindow", "Load Configuration (light)", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionLoadConfiguration_2.setText(QtGui.QApplication.translate("MainWindow", "Load ...", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionLoadConfiguration_2.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+O", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_load_configuration.setText(QtGui.QApplication.translate("MainWindow", "Load ...", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_load_configuration.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+O", None, QtGui.QApplication.UnicodeUTF8))
         self.actionLoadFullConfiguration_2.setText(QtGui.QApplication.translate("MainWindow", "Load Configuration (heavy and slow) ...", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSaveConfigurationAs_2.setText(QtGui.QApplication.translate("MainWindow", "Save As ..", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSaveConfigurationAs_2.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+Shift+S", None, QtGui.QApplication.UnicodeUTF8))
