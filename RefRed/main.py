@@ -2,19 +2,20 @@ from PyQt4 import QtGui
 import numpy as np
 import os
 
-from interfaces.refred_main_interface import Ui_MainWindow
-from initialization.gui import Gui as InitializeGui
-from config_file_launcher import ConfigFileLauncher
-from initialization.gui_connections import GuiConnections as MakeGuiConnections
-from RefRed.reduction_table_handling.reduction_table_check_box import ReductionTableCheckBox
-from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
-from RefRed.update_data_norm_tab import UpdateDataNormTab
+from RefRed.autopopulatemaintable.reductiontable_auto_fill import ReductionTableAutoFill
+from RefRed.config_file_launcher import ConfigFileLauncher
+from RefRed.configuration.loading_configuration import LoadingConfiguration
+from RefRed.configuration.saving_configuration import SavingConfiguration
 from RefRed.gui_handling.data_norm_spinboxes import DataPeakSpinbox, NormPeakSpinbox
 from RefRed.gui_handling.data_norm_spinboxes import DataBackSpinbox, NormBackSpinbox
 from RefRed.gui_handling.data_norm_spinboxes import DataLowResSpinbox, NormLowResSpinbox
-from RefRed.autopopulatemaintable.reductiontable_auto_fill import ReductionTableAutoFill
-from RefRed.configuration.loading_configuration import LoadingConfiguration
-from RefRed.configuration.saving_configuration import SavingConfiguration
+from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidgetsHandler
+from RefRed.initialization.gui import Gui as InitializeGui
+from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
+from RefRed.interfaces.refred_main_interface import Ui_MainWindow
+from RefRed.reduction_table_handling.reduction_table_check_box import ReductionTableCheckBox
+from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
+from RefRed.update_data_norm_tab import UpdateDataNormTab
 
 #from RefRed.export_plot_ascii import ExportPlotAscii
 #from RefRed.home_plot_button_clicked import HomePlotButtonClicked
@@ -288,3 +289,12 @@ class MainGui(QtGui.QMainWindow):
     def save_as_configuration(self):
         o_save_config = SavingConfiguration(parent = self)
         o_save_config.run()
+        
+    def use_scaling_factor_checkbox(self, status):
+        o_scaling_factor = ScalingFactorWidgetsHandler(parent = self)
+        o_scaling_factor.checkbox(status = status)
+        
+    def browse_scaling_factor_button(self):
+        o_scaling_factor = ScalingFactorWidgetsHandler(parent = self)
+        o_scaling_factor.browse()
+        

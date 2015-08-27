@@ -4392,6 +4392,38 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>scalingFactorFlag</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>use_scaling_factor_checkbox()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>256</x>
+     <y>643</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sfBrowseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>browse_scaling_factor_button()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>256</x>
+     <y>719</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -4412,5 +4444,7 @@ p, li { white-space: pre-wrap; }
   <slot>norm_back_checkbox()</slot>
   <slot>data_low_res_checkbox()</slot>
   <slot>norm_low_res_checkbox()</slot>
+  <slot>use_scaling_factor_checkbox()</slot>
+  <slot>browse_scaling_factor_button()</slot>
  </slots>
 </ui>

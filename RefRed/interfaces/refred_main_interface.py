@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Thu Aug 27 13:16:43 2015
+# Created: Thu Aug 27 13:35:12 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1654,6 +1654,8 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.normBackgroundFlag, QtCore.SIGNAL("clicked()"), MainWindow.norm_back_checkbox)
         QtCore.QObject.connect(self.dataLowResFlag, QtCore.SIGNAL("clicked()"), MainWindow.data_low_res_checkbox)
         QtCore.QObject.connect(self.normLowResFlag, QtCore.SIGNAL("clicked()"), MainWindow.norm_low_res_checkbox)
+        QtCore.QObject.connect(self.scalingFactorFlag, QtCore.SIGNAL("clicked(bool)"), MainWindow.use_scaling_factor_checkbox)
+        QtCore.QObject.connect(self.sfBrowseButton, QtCore.SIGNAL("clicked()"), MainWindow.browse_scaling_factor_button)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
