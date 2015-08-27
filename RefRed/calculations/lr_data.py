@@ -23,7 +23,7 @@ class LRData(object):
                         angle_offset = 0.001)
 
     tof_range = None
-    low_res = ['0','255']
+    low_res = ['0', '255']
     low_res_flag = True 
     use_it_flag = True
     full_file_name = ['']

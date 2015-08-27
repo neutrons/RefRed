@@ -9,7 +9,9 @@ from initialization.gui_connections import GuiConnections as MakeGuiConnections
 from RefRed.reduction_table_handling.reduction_table_check_box import ReductionTableCheckBox
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
 from RefRed.update_data_norm_tab import UpdateDataNormTab
-from RefRed.gui_handling.data_norm_spinboxes import DataPeakSpinbox, DataBackSpinbox, NormPeakSpinbox, NormBackSpinbox
+from RefRed.gui_handling.data_norm_spinboxes import DataPeakSpinbox, NormPeakSpinbox
+from RefRed.gui_handling.data_norm_spinboxes import DataBackSpinbox, NormBackSpinbox
+from RefRed.gui_handling.data_norm_spinboxes import DataLowResSpinbox, NormLowResSpinbox
 from RefRed.autopopulatemaintable.reductiontable_auto_fill import ReductionTableAutoFill
 from RefRed.configuration.loading_configuration import LoadingConfiguration
 from RefRed.configuration.saving_configuration import SavingConfiguration
@@ -233,16 +235,22 @@ class MainGui(QtGui.QMainWindow):
                                row_selected = self.current_table_reduction_row_selected)
         
     def data_back_spinbox_validation(self):
-        DataBackSpinbox(parent=self)
+        DataBackSpinbox(parent = self)
     
     def data_peak_spinbox_validation(self):
-        DataPeakSpinbox(parent=self)
+        DataPeakSpinbox(parent = self)
     
     def norm_back_spinbox_validation(self):
-        NormBackSpinbox(parent=self)
+        NormBackSpinbox(parent = self)
     
     def norm_peak_spinbox_validation(self):
-        NormPeakSpinbox(parent=self)
+        NormPeakSpinbox(parent = self)
+
+    def data_low_res_validation(self):
+        DataLowResSpinbox(parent = self)
+        
+    def norm_low_res_validation(self):
+        NormLowResSpinbox(parent = self)
         
     def data_sequence_event(self):
         str_data_input = self.ui.data_sequence_lineEdit.text()

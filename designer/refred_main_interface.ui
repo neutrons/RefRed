@@ -4253,6 +4253,70 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>dataLowResFromValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_low_res_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1021</x>
+     <y>636</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataLowResToValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_low_res_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1308</x>
+     <y>636</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normLowResFromValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_low_res_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1318</x>
+     <y>635</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normLowResToValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_low_res_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1441</x>
+     <y>635</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -4267,5 +4331,7 @@ p, li { white-space: pre-wrap; }
   <slot>load_configuration()</slot>
   <slot>save_configuration()</slot>
   <slot>save_as_configuration()</slot>
+  <slot>data_low_res_validation()</slot>
+  <slot>norm_low_res_validation()</slot>
  </slots>
 </ui>

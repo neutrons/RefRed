@@ -5,7 +5,7 @@ class SpinBox(object):
     
     parent = None
     
-    def __init__(self, parent=None, is_data=True, is_peak=True, value_min=-1, value_max=-1):
+    def __init__(self, parent=None, is_data=True, entry_type='peak', value_min=-1, value_max=-1):
         self.parent = parent
         big_table_data = parent.big_table_data
         gui_utility = GuiUtility(self.parent)
@@ -30,10 +30,19 @@ class SpinBox(object):
             val_min = val1
             val_max = val2
         
-        if is_peak:
+        is_plot_yt = True
+        is_plot_yi = True
+        is_plot_it = False
+        is_plot_ix = False
+        if entry_type == 'data':
             data.peak = [str(val_min), str(val_max)]
-        else:
+        elif entry_type == 'norm':
             data.back = [str(val_min), str(val_max)]
+        else:
+            is_plot_yt = False
+            is_plot_yi = False
+            is_plot_ix = True
+            data.low_res = [str(val_min), str(val_max)]
             
         big_table_data[row, index] = data
         self.parent.big_table_data = big_table_data
@@ -41,27 +50,27 @@ class SpinBox(object):
         DisplayPlots(parent = self.parent,
                      row = row,
                      is_data = is_data,
-                     plot_yt = True,
-                     plot_yi = True,
-                     plot_it = False,
-                     plot_ix = False,
+                     plot_yt = is_plot_yt,
+                     plot_yi = is_plot_yi,
+                     plot_it = is_plot_it,
+                     plot_ix = is_plot_ix,
                      refresh_reduction_table = False)
 
 class DataSpinbox(object):
 
-    def __init__(self, parent=None, is_peak=True, value_min=-1, value_max=-1):
+    def __init__(self, parent=None, entry_type='peak', value_min=-1, value_max=-1):
         SpinBox(parent = parent, 
                 is_data = True,
-                is_peak = is_peak,
+                entry_type = entry_type,
                 value_min = value_min,
                 value_max = value_max)
 
 class NormSpinbox(object):
     
-    def __init__(self, parent=None, is_peak=True, value_min=-1, value_max=-1):
+    def __init__(self, parent=None, entry_type='peak', value_min=-1, value_max=-1):
         SpinBox(parent = parent, 
                 is_data = False,
-                is_peak = is_peak,
+                entry_type = entry_type,
                 value_min = value_min,
                 value_max = value_max)
 
@@ -73,9 +82,8 @@ class DataPeakSpinbox(object):
         self.parent = parent
         peak1 = self.parent.ui.dataPeakFromValue.value()
         peak2 = self.parent.ui.dataPeakToValue.value()
-
         DataSpinbox(parent = parent,
-                    is_peak = True,
+                    entry_type = 'peak',
                     value_min = peak1,
                     value_max = peak2)
        
@@ -87,9 +95,8 @@ class DataBackSpinbox(object):
         self.parent = parent
         back1 = self.parent.ui.dataBackFromValue.value()
         back2 = self.parent.ui.dataBackToValue.value()
-        
         DataSpinbox(parent = parent,
-                    is_peak = False,
+                    entry_type = 'back',
                     value_min = back1,
                     value_max = back2)
 
@@ -102,7 +109,7 @@ class NormPeakSpinbox(object):
         peak1 = self.parent.ui.normPeakFromValue.value()
         peak2 = self.parent.ui.normPeakToValue.value()
         NormSpinbox(parent = parent,
-                    is_peak = True,
+                    entry_type = 'peak',
                     value_min = peak1,
                     value_max = peak2)
        
@@ -114,9 +121,34 @@ class NormBackSpinbox(object):
         self.parent = parent
         back1 = self.parent.ui.normBackFromValue.value()
         back2 = self.parent.ui.normBackToValue.value()
-        
         NormSpinbox(parent = parent,
-                    is_peak = False,
+                    entry_type = 'back',
                     value_min = back1,
                     value_max = back2)
 
+class DataLowResSpinbox(object):
+    
+    parent = None
+    
+    def __init__(self, parent=None):
+        self.parent = parent
+        lowres1 = self.parent.ui.dataLowResFromValue.value()
+        lowres2 = self.parent.ui.dataLowResToValue.value()
+        DataSpinbox(parent = parent,
+                    entry_type = 'low_res',
+                    value_min = lowres1,
+                    value_max = lowres2)
+
+class NormLowResSpinbox(object):
+    
+    parent = None
+    
+    def __init__(self, parent=None):
+        self.parent = parent
+        lowres1 = self.parent.ui.normLowResFromValue.value()
+        lowres2 = self.parent.ui.normLowResToValue.value()
+        NormSpinbox(parent = parent,
+                    entry_type = 'low_res',
+                    value_min = lowres1,
+                    value_max = lowres2)
+        

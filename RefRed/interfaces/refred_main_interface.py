@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Thu Aug 27 10:31:18 2015
+# Created: Thu Aug 27 11:17:34 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1643,6 +1643,10 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.normBackFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.norm_back_spinbox_validation)
         QtCore.QObject.connect(self.normPeakFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.norm_peak_spinbox_validation)
         QtCore.QObject.connect(self.normPeakToValue, QtCore.SIGNAL("editingFinished()"), MainWindow.norm_peak_spinbox_validation)
+        QtCore.QObject.connect(self.dataLowResFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.data_low_res_validation)
+        QtCore.QObject.connect(self.dataLowResToValue, QtCore.SIGNAL("editingFinished()"), MainWindow.data_low_res_validation)
+        QtCore.QObject.connect(self.normLowResFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.norm_low_res_validation)
+        QtCore.QObject.connect(self.normLowResToValue, QtCore.SIGNAL("editingFinished()"), MainWindow.norm_low_res_validation)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
