@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Thu Aug 27 11:17:34 2015
+# Created: Thu Aug 27 13:16:43 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1559,6 +1559,9 @@ class Ui_MainWindow(object):
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        self.toolBar = QtGui.QToolBar(MainWindow)
+        self.toolBar.setObjectName("toolBar")
+        MainWindow.addToolBar(QtCore.Qt.ToolBarArea(QtCore.Qt.TopToolBarArea), self.toolBar)
         self.actionOpen = QtGui.QAction(MainWindow)
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/General/document-open.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -1647,6 +1650,10 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.dataLowResToValue, QtCore.SIGNAL("editingFinished()"), MainWindow.data_low_res_validation)
         QtCore.QObject.connect(self.normLowResFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.norm_low_res_validation)
         QtCore.QObject.connect(self.normLowResToValue, QtCore.SIGNAL("editingFinished()"), MainWindow.norm_low_res_validation)
+        QtCore.QObject.connect(self.dataBackgroundFlag, QtCore.SIGNAL("clicked()"), MainWindow.data_back_checkbox)
+        QtCore.QObject.connect(self.normBackgroundFlag, QtCore.SIGNAL("clicked()"), MainWindow.norm_back_checkbox)
+        QtCore.QObject.connect(self.dataLowResFlag, QtCore.SIGNAL("clicked()"), MainWindow.data_low_res_checkbox)
+        QtCore.QObject.connect(self.normLowResFlag, QtCore.SIGNAL("clicked()"), MainWindow.norm_low_res_checkbox)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1820,6 +1827,7 @@ class Ui_MainWindow(object):
         self.menuHelp.setTitle(QtGui.QApplication.translate("MainWindow", "Help", None, QtGui.QApplication.UnicodeUTF8))
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "Configuration", None, QtGui.QApplication.UnicodeUTF8))
         self.menuAdvanced.setTitle(QtGui.QApplication.translate("MainWindow", "Tools", None, QtGui.QApplication.UnicodeUTF8))
+        self.toolBar.setWindowTitle(QtGui.QApplication.translate("MainWindow", "toolBar", None, QtGui.QApplication.UnicodeUTF8))
         self.actionOpen.setText(QtGui.QApplication.translate("MainWindow", "Open...", None, QtGui.QApplication.UnicodeUTF8))
         self.actionOpen.setToolTip(QtGui.QApplication.translate("MainWindow", "Open a new file (Ctrl+O)", None, QtGui.QApplication.UnicodeUTF8))
         self.actionOpen.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+O", None, QtGui.QApplication.UnicodeUTF8))

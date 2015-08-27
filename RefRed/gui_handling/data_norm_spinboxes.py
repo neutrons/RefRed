@@ -5,7 +5,13 @@ class SpinBox(object):
     
     parent = None
     
-    def __init__(self, parent=None, is_data=True, entry_type='peak', value_min=-1, value_max=-1):
+    def __init__(self, parent=None, 
+                 is_data=True, 
+                 entry_type='peak', 
+                 value_min=-1, 
+                 value_max=-1, 
+                 flag=True):
+
         self.parent = parent
         big_table_data = parent.big_table_data
         gui_utility = GuiUtility(self.parent)
@@ -34,15 +40,17 @@ class SpinBox(object):
         is_plot_yi = True
         is_plot_it = False
         is_plot_ix = False
-        if entry_type == 'data':
+        if entry_type == 'peak':
             data.peak = [str(val_min), str(val_max)]
-        elif entry_type == 'norm':
+        elif entry_type == 'back':
             data.back = [str(val_min), str(val_max)]
+            data.back_flag = flag
         else:
             is_plot_yt = False
             is_plot_yi = False
             is_plot_ix = True
             data.low_res = [str(val_min), str(val_max)]
+            data.low_res_flag = flag
             
         big_table_data[row, index] = data
         self.parent.big_table_data = big_table_data
@@ -58,21 +66,23 @@ class SpinBox(object):
 
 class DataSpinbox(object):
 
-    def __init__(self, parent=None, entry_type='peak', value_min=-1, value_max=-1):
+    def __init__(self, parent=None, entry_type='peak', value_min=-1, value_max=-1, flag=True):
         SpinBox(parent = parent, 
                 is_data = True,
                 entry_type = entry_type,
                 value_min = value_min,
-                value_max = value_max)
+                value_max = value_max,
+                flag = flag)
 
 class NormSpinbox(object):
     
-    def __init__(self, parent=None, entry_type='peak', value_min=-1, value_max=-1):
+    def __init__(self, parent=None, entry_type='peak', value_min=-1, value_max=-1, flag=True):
         SpinBox(parent = parent, 
                 is_data = False,
                 entry_type = entry_type,
                 value_min = value_min,
-                value_max = value_max)
+                value_max = value_max,
+                flag = flag)
 
 class DataPeakSpinbox(object):
     
@@ -95,10 +105,12 @@ class DataBackSpinbox(object):
         self.parent = parent
         back1 = self.parent.ui.dataBackFromValue.value()
         back2 = self.parent.ui.dataBackToValue.value()
+        back_flag = self.parent.ui.dataBackgroundFlag.isChecked()
         DataSpinbox(parent = parent,
                     entry_type = 'back',
                     value_min = back1,
-                    value_max = back2)
+                    value_max = back2,
+                    flag = back_flag)
 
 class NormPeakSpinbox(object):
 
@@ -121,10 +133,12 @@ class NormBackSpinbox(object):
         self.parent = parent
         back1 = self.parent.ui.normBackFromValue.value()
         back2 = self.parent.ui.normBackToValue.value()
+        back_flag = self.parent.ui.normBackgroundFlag.isChecked()
         NormSpinbox(parent = parent,
                     entry_type = 'back',
                     value_min = back1,
-                    value_max = back2)
+                    value_max = back2,
+                    flag = back_flag)
 
 class DataLowResSpinbox(object):
     
@@ -134,10 +148,12 @@ class DataLowResSpinbox(object):
         self.parent = parent
         lowres1 = self.parent.ui.dataLowResFromValue.value()
         lowres2 = self.parent.ui.dataLowResToValue.value()
+        flag = self.parent.ui.dataLowResFlag.isChecked()
         DataSpinbox(parent = parent,
                     entry_type = 'low_res',
                     value_min = lowres1,
-                    value_max = lowres2)
+                    value_max = lowres2,
+                    flag = flag)
 
 class NormLowResSpinbox(object):
     
@@ -147,8 +163,10 @@ class NormLowResSpinbox(object):
         self.parent = parent
         lowres1 = self.parent.ui.normLowResFromValue.value()
         lowres2 = self.parent.ui.normLowResToValue.value()
+        flag = self.parent.ui.normLowResFlag.isChecked()
         NormSpinbox(parent = parent,
                     entry_type = 'low_res',
                     value_min = lowres1,
-                    value_max = lowres2)
+                    value_max = lowres2,
+                    flag = flag)
         

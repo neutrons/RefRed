@@ -3808,6 +3808,17 @@ p, li { white-space: pre-wrap; }
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="../icons/icons.qrc">
@@ -4317,6 +4328,70 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>dataBackgroundFlag</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_back_checkbox()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1436</x>
+     <y>490</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normBackgroundFlag</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_back_checkbox()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1446</x>
+     <y>476</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataLowResFlag</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_low_res_checkbox()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>734</x>
+     <y>635</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normLowResFlag</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_low_res_checkbox()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1141</x>
+     <y>634</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -4333,5 +4408,9 @@ p, li { white-space: pre-wrap; }
   <slot>save_as_configuration()</slot>
   <slot>data_low_res_validation()</slot>
   <slot>norm_low_res_validation()</slot>
+  <slot>data_back_checkbox()</slot>
+  <slot>norm_back_checkbox()</slot>
+  <slot>data_low_res_checkbox()</slot>
+  <slot>norm_low_res_checkbox()</slot>
  </slots>
 </ui>

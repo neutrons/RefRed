@@ -237,10 +237,16 @@ class MainGui(QtGui.QMainWindow):
     def data_back_spinbox_validation(self):
         DataBackSpinbox(parent = self)
     
+    def data_back_checkbox(self):
+        DataBackSpinbox(parent = self)
+    
     def data_peak_spinbox_validation(self):
         DataPeakSpinbox(parent = self)
     
     def norm_back_spinbox_validation(self):
+        NormBackSpinbox(parent = self)
+        
+    def norm_back_checkbox(self):
         NormBackSpinbox(parent = self)
     
     def norm_peak_spinbox_validation(self):
@@ -250,6 +256,12 @@ class MainGui(QtGui.QMainWindow):
         DataLowResSpinbox(parent = self)
         
     def norm_low_res_validation(self):
+        NormLowResSpinbox(parent = self)
+        
+    def data_low_res_checkbox(self):
+        DataLowResSpinbox(parent = self)
+        
+    def norm_low_res_checkbox(self):
         NormLowResSpinbox(parent = self)
         
     def data_sequence_event(self):
