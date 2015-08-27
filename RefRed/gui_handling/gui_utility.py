@@ -21,5 +21,6 @@ class GuiUtility(object):
             if _state == Qt.Checked:
                 return row
         return -1
-        
-        
+    
+    def get_data_norm_tab_selected(self):
+        return self.parent.ui.dataNormTabWidget.currentIndex()

@@ -13,6 +13,7 @@ from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidg
 from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
 from RefRed.interfaces.refred_main_interface import Ui_MainWindow
+from RefRed.plot.single_click_plot import SingleClickPlot
 from RefRed.reduction_table_handling.reduction_table_check_box import ReductionTableCheckBox
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
 from RefRed.update_data_norm_tab import UpdateDataNormTab
@@ -42,6 +43,8 @@ class MainGui(QtGui.QMainWindow):
                           'thread21': None, 'thread22': None, 'thread23': None, 'thread24': None,
                           'thread25': None, 'thread26': None, 'thread27': None, 'thread28': None}
 
+    time_click1 = 0 #use by double click of plots
+
 #    delay_closing_thread = None
 
     #[data, norm, metadata]
@@ -57,7 +60,7 @@ class MainGui(QtGui.QMainWindow):
         
         InitializeGui(self)
         self.ui.reductionTable.setUI(self)   
-#        MakeGuiConnections(self)
+        MakeGuiConnections(self)
 
     # config files from menu
     def launch_config_file1(self):
@@ -119,23 +122,23 @@ class MainGui(QtGui.QMainWindow):
 
     # single click
     def single_click_data_yi_plot(self, isPanOrZoomActivated):
-        SinglePlotClick(self, 'data','yi')
+        SingleClickPlot(self, data_type = 'data', plot_type = 'yi')
     def single_click_norm_yi_plot(self, isPanOrZoomActivated):
-        SinglePlotClick(self,'norm','yi')
+        SingleClickPlot(self, data_type = 'norm', plot_type = 'yi')
     def single_click_norm_yt_plot(self, isPanOrZoomActivated):
-        SinglePlotClick(self,'norm','yt')
+        SingleClickPlot(self, data_type = 'norm', plot_type = 'yt')
     def single_click_data_yt_plot(self, isPanOrZoomActivated):
-        SinglePlotClick(self,'data','yt')
+        SingleClickPlot(self, data_type = 'data', plot_type = 'yt')
     def single_click_norm_it_plot(self, isPanOrZoomActivated):
-        SinglePlotClick(self, 'norm','it')
+        SingleClickPlot(self, data_type = 'norm', plot_type = 'it')
     def single_click_data_it_plot(self, isPanOrZoomActivated):
-        SinglePlotClick(self,'data','it')
+        SingleClickPlot(self, data_type = 'data', plot_type = 'it')
     def single_click_norm_ix_plot(self, isPanOrZoomActivated):
-        SinglePlotClick(self,'norm','ix')
+        SingleClickPlot(self, data_type = 'norm', plot_type = 'ix')
     def single_click_data_ix_plot(self, isPanOrZoomActivated):
-        SinglePlotClick(self,'data','ix')
+        SingleClickPlot(self, data_type = 'data', plot_type = 'ix')
     def single_click_data_stitching_plot(self, isPanOrZoomActivated):
-        SinglePlotClick(self,'data','stitching')
+        SingleClickPlot(self, data_type = 'data', plot_type = 'stitching')
 
     # toggle log
     def logy_toggle_yt_plot(self, checked):

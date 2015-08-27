@@ -248,7 +248,8 @@ class MainGUI(QtGui.QMainWindow):
 
     # single click
     def single_click_data_yi_plot(self, isPanOrZoomActivated):
-        SinglePlotClick(self, 'data','yi')
+	print('here"')
+#        SinglePlotClick(self, 'data','yi')
     def single_click_norm_yi_plot(self, isPanOrZoomActivated):
         SinglePlotClick(self,'norm','yi')
     def single_click_norm_yt_plot(self, isPanOrZoomActivated):
