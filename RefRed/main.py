@@ -25,7 +25,7 @@ class MainGui(QtGui.QMainWindow):
     
     # default location
     path_ascii = '.'  # ascii files
-    path_config = '/home/j35/' # config files
+    path_config = '/home/j35/sandbox' # config files
     
     nbr_row_table_reduction = 30
     prev_table_reduction_row_selected = -1

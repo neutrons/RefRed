@@ -37,6 +37,7 @@ class DisplayPlots(object):
         self.col = col
 
         _data = self.parent.big_table_data[row, col]
+        
         if _data is None:
             ClearPlots(self.parent,
                        is_data = is_data,
@@ -102,7 +103,8 @@ class DisplayPlots(object):
 #			o_update_plot_widgets.enable_norm()
 
         if plot_yt:
-            ClearPlots(self.parent, plot_yt=True, 
+            ClearPlots(self.parent, 
+                       plot_yt = True, 
                        is_data = is_data, 
                        is_norm = is_norm)
             self.plot_yt()

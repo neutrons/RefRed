@@ -1,4 +1,5 @@
 from RefRed.plot.display_plots import DisplayPlots
+from RefRed.gui_handling.gui_utility import GuiUtility
 
 class SpinBox(object):
     
@@ -7,7 +8,8 @@ class SpinBox(object):
     def __init__(self, parent=None, is_data=True, is_peak=True, value_min=-1, value_max=-1):
         self.parent = parent
         big_table_data = parent.big_table_data
-        row = parent.current_table_reduction_row_selected
+        gui_utility = GuiUtility(self.parent)
+        row = gui_utility.get_current_table_reduction_check_box_checked()
         
         if row == -1:
             return
@@ -18,12 +20,8 @@ class SpinBox(object):
             index = 1
         data = big_table_data[row, index]
         
-        if is_peak:
-            val1 = self.parent.ui.dataPeakFromValue.value()
-            val2 = self.parent.ui.dataPeakToValue.value()
-        else:
-            val1 = self.parent.ui.dataBackFromValue.value()
-            val2 = self.parent.ui.dataBackToValue.value()
+        val1 = value_min
+        val2 = value_max
 
         if (val1 > val2):
             val_min = val2
@@ -39,7 +37,7 @@ class SpinBox(object):
             
         big_table_data[row, index] = data
         self.parent.big_table_data = big_table_data
-        
+                
         DisplayPlots(parent = self.parent,
                      row = row,
                      is_data = is_data,
@@ -50,9 +48,7 @@ class SpinBox(object):
                      refresh_reduction_table = False)
 
 class DataSpinbox(object):
-    
-    parent = None
-    
+
     def __init__(self, parent=None, is_peak=True, value_min=-1, value_max=-1):
         SpinBox(parent = parent, 
                 is_data = True,
@@ -62,8 +58,6 @@ class DataSpinbox(object):
 
 class NormSpinbox(object):
     
-    parent = None
-    
     def __init__(self, parent=None, is_peak=True, value_min=-1, value_max=-1):
         SpinBox(parent = parent, 
                 is_data = False,
@@ -72,6 +66,8 @@ class NormSpinbox(object):
                 value_max = value_max)
 
 class DataPeakSpinbox(object):
+    
+    parent = None
     
     def __init__(self, parent=None):
         self.parent = parent
@@ -98,12 +94,13 @@ class DataBackSpinbox(object):
                     value_max = back2)
 
 class NormPeakSpinbox(object):
+
+    Parent = None
     
     def __init__(self, parent=None):
         self.parent = parent
         peak1 = self.parent.ui.normPeakFromValue.value()
         peak2 = self.parent.ui.normPeakToValue.value()
-
         NormSpinbox(parent = parent,
                     is_peak = True,
                     value_min = peak1,

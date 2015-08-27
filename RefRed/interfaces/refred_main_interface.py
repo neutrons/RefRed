@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Wed Aug 26 16:25:10 2015
+# Created: Thu Aug 27 10:31:18 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1635,6 +1635,14 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.action_load_configuration, QtCore.SIGNAL("triggered()"), MainWindow.load_configuration)
         QtCore.QObject.connect(self.action_save_as_configuration, QtCore.SIGNAL("triggered()"), MainWindow.save_as_configuration)
         QtCore.QObject.connect(self.action_save_configuration, QtCore.SIGNAL("triggered()"), MainWindow.save_configuration)
+        QtCore.QObject.connect(self.dataBackToValue, QtCore.SIGNAL("editingFinished()"), MainWindow.data_back_spinbox_validation)
+        QtCore.QObject.connect(self.dataBackFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.data_back_spinbox_validation)
+        QtCore.QObject.connect(self.dataPeakToValue, QtCore.SIGNAL("editingFinished()"), MainWindow.data_peak_spinbox_validation)
+        QtCore.QObject.connect(self.dataPeakFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.data_peak_spinbox_validation)
+        QtCore.QObject.connect(self.normBackToValue, QtCore.SIGNAL("editingFinished()"), MainWindow.norm_back_spinbox_validation)
+        QtCore.QObject.connect(self.normBackFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.norm_back_spinbox_validation)
+        QtCore.QObject.connect(self.normPeakFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.norm_peak_spinbox_validation)
+        QtCore.QObject.connect(self.normPeakToValue, QtCore.SIGNAL("editingFinished()"), MainWindow.norm_peak_spinbox_validation)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

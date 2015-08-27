@@ -37,7 +37,7 @@ class Gui(object):
         self.set_reduced_table()
         self.set_export_stitching_settings()
         self.set_default_path()
-        self.init_file_menu()
+        #self.init_file_menu()
         self.init_error_label_widgets()
         parent.allPlotAxis = AllPlotAxis()
         self.init_primary_fraction_range_widgets() # NEW FEATURE COMING SOON
