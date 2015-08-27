@@ -24,3 +24,92 @@ class GuiUtility(object):
     
     def get_data_norm_tab_selected(self):
         return self.parent.ui.dataNormTabWidget.currentIndex()
+    
+    #def data_peak_and_back_validation(self, with_plot_update = True):
+        #self.data_peak_spinbox_validation(with_plot_update = with_plot_update)
+        #self.data_back_spinbox_validation(with_plot_update = with_plot_update)
+##        CheckErrorWidgets(self)
+##	self.fileHasBeenModified()
+    
+    #def data_peak_spinbox_validation(self, with_plot_update = True):
+        #'''
+        #This function, reached when the user is done editing the
+        #spinboxes (ENTER, leaving the spinbox) 
+        #will make sure the min value is < max value    
+        #'''
+
+        #bigTableData = self.bigTableData
+        ##[row,col] = self.getCurrentRowColumnSelected()
+        #row = self._cur_row_selected
+        #col = self._cur_column_selected
+        #if col != 0:
+            #col = 1
+        #data = bigTableData[row,col]
+        #data = data.active_data
+
+        #peak1 = self.ui.dataPeakFromValue.value()
+        #peak2 = self.ui.dataPeakToValue.value()
+
+        #if (peak1 > peak2):
+            #peak_min = peak2
+            #peak_max = peak1
+        #else:
+            #peak_min = peak1
+            #peak_max = peak2
+
+        #data.peak = [str(peak_min),str(peak_max)]
+        #self.active_data = data
+
+        #self.ui.dataPeakFromValue.setValue(peak_min)
+        #self.ui.dataPeakToValue.setValue(peak_max)
+
+        ## refresh plots
+        #if withPlotUpdate:
+            #self.plot_overview_REFL(plot_ix=True, plot_yt=True, plot_yi=True)
+
+        ## save new settings
+        #self.save_new_settings()
+
+        #CheckErrorWidgets(self)
+        #self.fileHasBeenModified()
+        #self.checkRunReductionButton()	
+
+    ## data back spinboxes
+    #def data_back_spinbox_validation(self, withPlotUpdate=True):
+        #r = self._cur_row_selected
+        #c = self._cur_column_selected
+        #if c != 0:
+            #c = 1
+        #_data = self.bigTableData[r,c]
+        #if _data is None:
+            #return
+        #data = _data.active_data
+
+        #back1 = self.ui.dataBackFromValue.value()
+        #back2 = self.ui.dataBackToValue.value()
+
+        #if (back1 > back2):
+            #back_min = back2
+            #back_max = back1
+        #else:
+            #back_min = back1
+            #back_max = back2
+
+        #data.back = [str(back_min),str(back_max)]
+
+        #_data.active_data = data
+        #self.bigTableData[r,c] = _data
+
+        #self.ui.dataBackFromValue.setValue(back_min)
+        #self.ui.dataBackToValue.setValue(back_max)
+
+        ## save new settings
+        #self.save_new_settings()
+
+        ## refresh plots
+        #self.plot_overview_REFL(plot_ix=True, plot_yt=True, plot_yi=True)
+
+        #CheckErrorWidgets(self)
+        #self.fileHasBeenModified()
+        #self.checkRunReductionButton()
+    

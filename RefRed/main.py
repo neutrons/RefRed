@@ -301,3 +301,4 @@ class MainGui(QtGui.QMainWindow):
         o_scaling_factor = ScalingFactorWidgetsHandler(parent = self)
         o_scaling_factor.browse()
         
+        

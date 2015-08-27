@@ -4,6 +4,8 @@ import os
 
 from RefRed.interfaces.plot_dialog_refl_interface import Ui_Dialog as UiPlot
 from RefRed.interfaces.mplwidget import MPLWidget
+from RefRed.plot.display_plots import DisplayPlots
+from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.colors
 import RefRed.utilities
 
@@ -12,6 +14,9 @@ class PopupPlot1d(QDialog):
 	parent = None
 	data_type = 'data'
 	data = None
+	is_data = True
+	row = 0
+	col = 0 # 0 for data, 1 for norm
 	
 	_open_instances = []
 	yaxis = None
@@ -28,11 +33,17 @@ class PopupPlot1d(QDialog):
 	
 	nbr_pixel_y_axis = 304
 	
-	def __init__(self, parent = None, data_type = 'data', data = None):
+	def __init__(self, parent = None, 
+	             data_type = 'data', 
+	             data = None,
+	             row = 0):
 
 		self.data_type = data_type
 		self.parent = parent
 		self.data = data
+		self.row = row
+		self.col = 0 if data_type == 'data' else 1
+		self.is_data = True if data_type == 'data' else False
 
 		QDialog.__init__(self, parent=parent)
 		self.setWindowModality(False)
@@ -544,6 +555,16 @@ class PopupPlot1d(QDialog):
 		back1 = self.ui.jim_back1.value()
 		back2 = self.ui.jim_back2.value()
 		backFlag = self.ui.jim_back_flag.isChecked()
+
+		big_table_data = self.parent.big_table_data
+		
+		_data = big_table_data[self.row, self.col]
+		_data.peak = [str(peak1), str(peak2)]
+		_data.back = [str(back1), str(back2)]
+		_data.back_flag = backFlag
+		
+		big_table_data[self.row, self.col] = _data
+		self.parent.big_table_data = big_table_data
 		
 		if self.data_type == 'data':
 			self.parent.ui.dataPeakFromValue.setValue(peak1)
@@ -551,7 +572,7 @@ class PopupPlot1d(QDialog):
 			self.parent.ui.dataBackFromValue.setValue(back1)
 			self.parent.ui.dataBackToValue.setValue(back2)
 			self.parent.ui.dataBackgroundFlag.setChecked(backFlag)
-			self.parent.data_peak_and_back_validation(False)
+#			self.parent.data_peak_and_back_validation(False)
 			self.parent.ui.dataBackFromLabel.setEnabled(backFlag)
 			self.parent.ui.dataBackFromValue.setEnabled(backFlag)
 			self.parent.ui.dataBackToLabel.setEnabled(backFlag)
@@ -562,12 +583,18 @@ class PopupPlot1d(QDialog):
 			self.parent.ui.normBackFromValue.setValue(back1)
 			self.parent.ui.normBackToValue.setValue(back2)
 			self.parent.ui.normBackgroundFlag.setChecked(backFlag)
-			self.parent.norm_peak_and_back_validation(False)
+#			self.parent.norm_peak_and_back_validation(False)
 			self.parent.ui.normBackFromLabel.setEnabled(backFlag)
 			self.parent.ui.normBackFromValue.setEnabled(backFlag)
 			self.parent.ui.normBackToLabel.setEnabled(backFlag)
 			self.parent.ui.normBackToValue.setEnabled(backFlag)
 
-		self.parent.plot_overview_REFL(plot_it=False, plot_ix=False)
-		
-	
+		DisplayPlots(parent = self.parent,
+		             row = self.row,
+		             is_data = self.is_data,
+		             plot_yt = True,
+		             plot_yi = True,
+		             plot_it = False,
+		             plot_ix = False,
+		             refresh_reduction_table = True)
+

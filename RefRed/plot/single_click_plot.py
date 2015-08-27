@@ -10,6 +10,7 @@ class SingleClickPlot(object):
 	
 	parent = None
 	data = None
+	row = 0
 	
 	def __init__(self, parent, 
 	             data_type = 'data', 
@@ -21,6 +22,7 @@ class SingleClickPlot(object):
 		row = o_gui_utility.get_current_table_reduction_check_box_checked()
 		if row == -1:
 			return
+		self.row = row
 		col = o_gui_utility.get_data_norm_tab_selected()
 
 
@@ -37,6 +39,7 @@ class SingleClickPlot(object):
 		
 		if plot_type == 'yi':
 			self.single_yi_plot_click(data_type = data_type)
+			                          
 		
 		#if plot_type == 'yt':
 			#self.single_yt_plot_click(data_type)
@@ -56,7 +59,8 @@ class SingleClickPlot(object):
 		if (_time_click2 - parent.time_click1) <= RefRed.constants.double_click_if_within_time:
 			popup_plot = PopupPlot1d(parent = self.parent, 
 			                         data_type = data_type,
-			                         data = self.data)
+			                         data = self.data,
+			                         row = self.row)
 			popup_plot.show()
 			
 		parent.time_click1 = -1
