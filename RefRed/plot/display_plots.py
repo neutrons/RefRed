@@ -69,7 +69,7 @@ class DisplayPlots(object):
             #parent.bigTableData[row,col] = _data
 
         if parent.ui.dataTOFmanualMode.isChecked():
-            self.tofRangeAuto = self.getTOFrangeInMs(_data.tof_range)
+            self.tofRangeAuto = self.getTOFrangeInMs(_data.tof_range_manual)
         else:
             self.tofRangeAuto = self.getTOFrangeInMs(_data.tof_range_auto)
 
@@ -407,11 +407,12 @@ class DisplayPlots(object):
         return [_element_min, _element_max]
 
     def getTOFrangeInMs(self, tof_axis):
-        if tof_axis[-1] > 1000:
-            coeff = 1e-3
+        if float(tof_axis[-1]) > 1000:
+            coeff = 1.e-3
         else:
-            coeff = 1
-        return [tof_axis[0] * coeff, tof_axis[-1]*coeff]
+            coeff = 1.
+        return [float(tof_axis[0]) * coeff, 
+                float(tof_axis[-1]) * coeff]
 
     def getFullTOFinMs(self, tof_axis):
         if tof_axis[-1] > 1000:

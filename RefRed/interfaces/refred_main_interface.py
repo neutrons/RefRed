@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Fri Aug 28 10:56:07 2015
+# Created: Fri Aug 28 11:16:21 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1616,7 +1616,7 @@ class Ui_MainWindow(object):
         self.actionMetadataFinder = QtGui.QAction(MainWindow)
         self.actionMetadataFinder.setObjectName("actionMetadataFinder")
         self.action_save_configuration = QtGui.QAction(MainWindow)
-        self.action_save_configuration.setEnabled(True)
+        self.action_save_configuration.setEnabled(False)
         self.action_save_configuration.setObjectName("action_save_configuration")
         self.menuHelp.addSeparator()
         self.menuHelp.addAction(self.actionAbout)
