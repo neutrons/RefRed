@@ -23,6 +23,7 @@ class LRData(object):
                         angle_offset = 0.001)
 
     tof_range = None
+    tof_range_auto_flag = True
     low_res = ['0', '255']
     low_res_flag = True 
     use_it_flag = True
@@ -96,13 +97,16 @@ class LRData(object):
         # calculate theta
         self.theta = self.calculate_theta()
 
-        if self.read_options['is_auto_tof_finder'] or self.tof_range == None:
-            autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 - 1.7) * 1e-4
-            autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 1.7) * 1e-4
-        else:
-            autotmin = np.float(self.tof_range[0])
-            autotmax = np.float(self.tof_range[1])
+        #if self.read_options['is_auto_tof_finder'] or self.tof_range == None:
+        
+        # automatically calculate the TOF range 
+        autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 - 1.7) * 1e-4
+        autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 1.7) * 1e-4
+        #else:
+            #autotmin = np.float(self.tof_range[0])
+            #autotmax = np.float(self.tof_range[1])
 
+        # automatically calcualte the TOF range for display
         if mt_run.getProperty('Speed1').value[0] == 60:
             tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 2.5) * 1e-4
             tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 - 2.5) * 1e-4
@@ -112,7 +116,10 @@ class LRData(object):
 
         self.tof_range_auto = [autotmin, autotmax]  # microS
         self.tof_range_auto_with_margin = [tmin, tmax]  # microS
+        
+        # manual tof range (if user wants to use a manual time range)
         self.tof_range = [autotmin, autotmax]  # for the first time, initialize tof_range like auto (microS)
+
         self.binning = [tmin, self.read_options['bins'], tmax]
         self.calculate_lambda_range()
         self.q_range = self.calculate_q_range()

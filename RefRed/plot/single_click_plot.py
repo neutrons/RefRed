@@ -2,7 +2,7 @@ import time
 
 import RefRed.constants
 from RefRed.plot.popup_plot_1d import PopupPlot1d
-#from RefRed.plot.plot2d_dialog_refl import Plot2dDialogREFL
+from RefRed.plot.popup_plot_2d import PopupPlot2d
 from RefRed.gui_handling.gui_utility import GuiUtility
 
 
@@ -41,8 +41,8 @@ class SingleClickPlot(object):
 			self.single_yi_plot_click(data_type = data_type)
 			                          
 		
-		#if plot_type == 'yt':
-			#self.single_yt_plot_click(data_type)
+		if plot_type == 'yt':
+			self.single_yt_plot_click(data_type = data_type)
 		
 	def single_yi_plot_click(self, data_type = 'data'):
 		parent = self.parent
@@ -65,20 +65,22 @@ class SingleClickPlot(object):
 			
 		parent.time_click1 = -1
 	
-	#def single_yt_plot_click(self, data_type):
-		#parent = self.parent
+	def single_yt_plot_click(self, data_type = 'data'):
+		parent = self.parent
 
-		#if parent.timeClick1 == -1:
-			#parent.timeClick1 = time.time()
-			#return
-		#elif abs(parent.timeClick1 - time.time()) > 0.5:
-			#parent.timeClick1 = time.time()
-			#return
-		#else:
-			#_timeClick2 = time.time()
+		if parent.time_click1 == -1:
+			parent.time_click1 = time.time()
+			return
+		elif abs(parent.time_click1 - time.time()) > 0.5:
+			parent.time_click1 = time.time()
+			return
+		else:
+			_time_click2 = time.time()
 	      
-		#if (_timeClick2 - parent.timeClick1) <= constants.double_click_if_within_time:
-			#data = parent.active_data
-			#dialog_refl2d = Plot2dDialogREFL(parent, data_type, data)
-			#dialog_refl2d.show()
+		if (_time_click2 - parent.time_click1) <= RefRed.constants.double_click_if_within_time:
+			popup_plot = PopupPlot2d(parent = self.parent,
+			                         data_type = data_type,
+			                         data = self.data,
+			                         row = self.row)
+			popup_plot.show()
 			

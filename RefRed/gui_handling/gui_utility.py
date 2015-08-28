@@ -113,3 +113,25 @@ class GuiUtility(object):
         #self.fileHasBeenModified()
         #self.checkRunReductionButton()
     
+    #def tofValidation( self, tof_auto_switch_status, tof1, tof2):
+        #self.ui.dataTOFautoMode.setChecked(tof_auto_switch_status)
+        #self.ui.dataTOFmanualMode.setChecked(not tof_auto_switch_status)
+        #bigTableData = self.bigTableData
+        #row = self._cur_row_selected
+        #col = self._cur_column_selected
+        #if col != 0:
+            #col = 1
+        #data = bigTableData[row, col]
+        #_active_data =  data.active_data
+        #tof1 = str(float(tof1)*1000)
+        #tof2 = str(float(tof2)*1000)
+        #if tof_auto_switch_status:
+            #_active_data.tof_range_auto = [tof1, tof2]
+        #else:
+            #_active_data.tof_range = [tof1, tof2]
+        #data.active_data = _active_data
+        #bigTableData[row, col] = data
+        #self.bigTableData = bigTableData
+        #self.auto_tof_switch(tof_auto_switch_status)
+        #self.fileHasBeenModified()
+    
