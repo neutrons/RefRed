@@ -21,7 +21,7 @@ class DisplayReductionTable(object):
         self.is_data_displayed = is_data_displayed
         
         o_gui_utility = GuiUtility(parent=parent)
-        tab_widget_index = o_gui_utility.data_norm_tab_widget_tab_selected()
+        tab_widget_index = o_gui_utility.get_data_norm_tab_selected()
         
         if is_data_displayed and (tab_widget_index == 1):
             ClearPlots(self.parent,

@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Thu Aug 27 15:10:36 2015
+# Created: Fri Aug 28 10:56:07 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1631,7 +1631,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.plotTab.setCurrentIndex(0)
-        self.dataNormTabWidget.setCurrentIndex(0)
+        self.dataNormTabWidget.setCurrentIndex(1)
         QtCore.QObject.connect(self.data_sequence_lineEdit, QtCore.SIGNAL("returnPressed()"), MainWindow.data_sequence_event)
         QtCore.QObject.connect(self.norm_sequence_lineEdit, QtCore.SIGNAL("returnPressed()"), MainWindow.norm_sequence_event)
         QtCore.QObject.connect(self.dataNormTabWidget, QtCore.SIGNAL("currentChanged(int)"), MainWindow.data_norm_tab_changed)
@@ -1656,6 +1656,10 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.normLowResFlag, QtCore.SIGNAL("clicked()"), MainWindow.norm_low_res_checkbox)
         QtCore.QObject.connect(self.scalingFactorFlag, QtCore.SIGNAL("clicked(bool)"), MainWindow.use_scaling_factor_checkbox)
         QtCore.QObject.connect(self.sfBrowseButton, QtCore.SIGNAL("clicked()"), MainWindow.browse_scaling_factor_button)
+        QtCore.QObject.connect(self.dataTOFautoMode, QtCore.SIGNAL("clicked()"), MainWindow.auto_tof_range_radio_button)
+        QtCore.QObject.connect(self.dataTOFmanualMode, QtCore.SIGNAL("clicked()"), MainWindow.auto_tof_range_radio_button)
+        QtCore.QObject.connect(self.TOFmanualFromValue, QtCore.SIGNAL("returnPressed()"), MainWindow.manual_tof_range_line_edit_validation)
+        QtCore.QObject.connect(self.TOFmanualToValue, QtCore.SIGNAL("returnPressed()"), MainWindow.manual_tof_range_line_edit_validation)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

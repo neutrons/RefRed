@@ -10,6 +10,7 @@ from RefRed.gui_handling.data_norm_spinboxes import DataPeakSpinbox, NormPeakSpi
 from RefRed.gui_handling.data_norm_spinboxes import DataBackSpinbox, NormBackSpinbox
 from RefRed.gui_handling.data_norm_spinboxes import DataLowResSpinbox, NormLowResSpinbox
 from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidgetsHandler
+from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
 from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
 from RefRed.interfaces.refred_main_interface import Ui_MainWindow
@@ -267,6 +268,14 @@ class MainGui(QtGui.QMainWindow):
         
     def norm_low_res_checkbox(self):
         NormLowResSpinbox(parent = self)
+
+    def auto_tof_range_radio_button(self):
+        o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent = self)
+        o_auto_tof_range.radio_button_handler()
+
+    def manual_tof_range_line_edit_validation(self):
+        o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent = self)
+        o_auto_tof_range.line_edit_validation()
         
     def data_sequence_event(self):
         str_data_input = self.ui.data_sequence_lineEdit.text()
@@ -300,5 +309,4 @@ class MainGui(QtGui.QMainWindow):
     def browse_scaling_factor_button(self):
         o_scaling_factor = ScalingFactorWidgetsHandler(parent = self)
         o_scaling_factor.browse()
-        
         

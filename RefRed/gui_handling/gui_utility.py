@@ -10,8 +10,8 @@ class GuiUtility(object):
     def data_norm_tab_widget_row_to_display(self):
         return self.parent.current_table_reduction_row_selected
     
-    def data_norm_tab_widget_tab_selected(self):
-        return self.parent.ui.dataNormTabWidget.currentIndex()
+    #def data_norm_tab_widget_tab_selected(self):
+        #return self.parent.ui.dataNormTabWidget.currentIndex()
 
     def get_current_table_reduction_check_box_checked(self):
         nbr_row_table_reduction = self.parent.nbr_row_table_reduction
@@ -24,6 +24,9 @@ class GuiUtility(object):
     
     def get_data_norm_tab_selected(self):
         return self.parent.ui.dataNormTabWidget.currentIndex()
+    
+    def is_auto_tof_range_radio_button_selected(self):
+        return self.parent.ui.dataTOFautoMode.isChecked()
     
     #def data_peak_and_back_validation(self, with_plot_update = True):
         #self.data_peak_spinbox_validation(with_plot_update = with_plot_update)

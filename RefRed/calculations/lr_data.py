@@ -23,7 +23,11 @@ class LRData(object):
                         angle_offset = 0.001)
 
     tof_range = None
+    tof_range_manual = None
+    tof_range_auto = None
     tof_range_auto_flag = True
+    tof_range_auto_with_margin = []
+
     low_res = ['0', '255']
     low_res_flag = True 
     use_it_flag = True
@@ -119,6 +123,7 @@ class LRData(object):
         
         # manual tof range (if user wants to use a manual time range)
         self.tof_range = [autotmin, autotmax]  # for the first time, initialize tof_range like auto (microS)
+        self.tof_range_manual = [autotmin, autotmax]
 
         self.binning = [tmin, self.read_options['bins'], tmax]
         self.calculate_lambda_range()

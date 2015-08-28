@@ -1309,7 +1309,7 @@ p, li { white-space: pre-wrap; }
                <bool>true</bool>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="tab">
                <property name="enabled">
@@ -4424,6 +4424,70 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>dataTOFautoMode</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>auto_tof_range_radio_button()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>782</x>
+     <y>700</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataTOFmanualMode</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>auto_tof_range_radio_button()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>901</x>
+     <y>700</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>TOFmanualFromValue</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>manual_tof_range_line_edit_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1087</x>
+     <y>700</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>TOFmanualToValue</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>manual_tof_range_line_edit_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1284</x>
+     <y>700</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -4446,5 +4510,7 @@ p, li { white-space: pre-wrap; }
   <slot>norm_low_res_checkbox()</slot>
   <slot>use_scaling_factor_checkbox()</slot>
   <slot>browse_scaling_factor_button()</slot>
+  <slot>auto_tof_range_radio_button()</slot>
+  <slot>manual_tof_range_line_edit_validation()</slot>
  </slots>
 </ui>
