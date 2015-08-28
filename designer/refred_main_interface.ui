@@ -4441,22 +4441,6 @@ p, li { white-space: pre-wrap; }
    </hints>
   </connection>
   <connection>
-   <sender>dataTOFmanualMode</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>auto_tof_range_radio_button()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>901</x>
-     <y>700</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>TOFmanualFromValue</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
@@ -4480,6 +4464,22 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>1284</x>
+     <y>700</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataTOFmanualMode</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>auto_tof_range_radio_button()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>901</x>
      <y>700</y>
     </hint>
     <hint type="destinationlabel">

@@ -2,6 +2,7 @@ from PyQt4 import QtGui, QtCore
 import RefRed.colors as colors
 from RefRed.plot.clear_plots import ClearPlots
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
+from RefRed.gui_handling.gui_utility import GuiUtility
 
 class DisplayPlots(object):
 
@@ -68,10 +69,15 @@ class DisplayPlots(object):
             #_data.active_data = _active_data
             #parent.bigTableData[row,col] = _data
 
-        if parent.ui.dataTOFmanualMode.isChecked():
-            self.tofRangeAuto = self.getTOFrangeInMs(_data.tof_range_manual)
-        else:
+        if _data.tof_range_auto_flag:
             self.tofRangeAuto = self.getTOFrangeInMs(_data.tof_range_auto)
+        else:
+            self.tofRangeAuto = self.getTOFrangeInMs(_data.tof_range_manual)
+        self.displayTOFrange(self.tofRangeAuto[0], self.tofRangeAuto[1], 'ms')
+        #print(self.tofRangeAuto)
+        
+#        o_gui_utility = GuiUtility(parent = self.parent)
+#        o_gui_utility.set_auto_tof_range_widgets(status = _data.tof_range_auto_flag)
 
         self.tofAxis = self.getTOFrangeInMs(_data.tof_axis_auto_with_margin)
         self.fullTofAxis = self.getFullTOFinMs(_data.tof_axis_auto_with_margin)
@@ -299,7 +305,7 @@ class DisplayPlots(object):
 
         autotmin = float(self.tofRangeAuto[0])
         autotmax = float(self.tofRangeAuto[1])
-        self.displayTOFrange(autotmin, autotmax, 'ms')
+
         [tmin, tmax] = self.getTOFrangeInMs([autotmin, autotmax])
         self.yt_plot_ui.canvas.ax.axvline(tmin, color=colors.TOF_SELECTION_COLOR)
         self.yt_plot_ui.canvas.ax.axvline(tmax, color=colors.TOF_SELECTION_COLOR)

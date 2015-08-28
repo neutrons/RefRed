@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Fri Aug 28 11:16:21 2015
+# Created: Fri Aug 28 14:36:59 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1657,9 +1657,9 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.scalingFactorFlag, QtCore.SIGNAL("clicked(bool)"), MainWindow.use_scaling_factor_checkbox)
         QtCore.QObject.connect(self.sfBrowseButton, QtCore.SIGNAL("clicked()"), MainWindow.browse_scaling_factor_button)
         QtCore.QObject.connect(self.dataTOFautoMode, QtCore.SIGNAL("clicked()"), MainWindow.auto_tof_range_radio_button)
-        QtCore.QObject.connect(self.dataTOFmanualMode, QtCore.SIGNAL("clicked()"), MainWindow.auto_tof_range_radio_button)
         QtCore.QObject.connect(self.TOFmanualFromValue, QtCore.SIGNAL("returnPressed()"), MainWindow.manual_tof_range_line_edit_validation)
         QtCore.QObject.connect(self.TOFmanualToValue, QtCore.SIGNAL("returnPressed()"), MainWindow.manual_tof_range_line_edit_validation)
+        QtCore.QObject.connect(self.dataTOFmanualMode, QtCore.SIGNAL("clicked()"), MainWindow.auto_tof_range_radio_button)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

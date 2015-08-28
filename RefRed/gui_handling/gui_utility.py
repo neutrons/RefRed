@@ -28,6 +28,20 @@ class GuiUtility(object):
     def is_auto_tof_range_radio_button_selected(self):
         return self.parent.ui.dataTOFautoMode.isChecked()
     
+    def set_auto_tof_range_radio_button(self, status = True):
+        self.parent.ui.dataTOFautoMode.setChecked(status)
+        self.parent.ui.dataTOFmanualMode.setChecked(not status)
+        self.set_auto_tof_range_widgets(status = status)
+    
+    def set_auto_tof_range_widgets(self, status = True):    
+        self.parent.ui.TOFmanualFromLabel.setEnabled(not status)
+        self.parent.ui.TOFmanualFromValue.setEnabled(not status)
+        self.parent.ui.TOFmanualFromUnitsValue.setEnabled(not status)
+        self.parent.ui.TOFmanualToValue.setEnabled(not status)
+        self.parent.ui.TOFmanualToLabel.setEnabled(not status)
+        self.parent.ui.TOFmanualToUnitsValue.setEnabled(not status)
+    
+    
     #def data_peak_and_back_validation(self, with_plot_update = True):
         #self.data_peak_spinbox_validation(with_plot_update = with_plot_update)
         #self.data_back_spinbox_validation(with_plot_update = with_plot_update)
