@@ -13,6 +13,7 @@ from RefRed.calculations.lr_data import LRData
 from RefRed.autopopulatemaintable.populate_reduction_table_from_list_lrdata import PopulateReductionTableFromListLRData
 from RefRed.calculations.check_list_run_compatibility_and_display_thread import CheckListRunCompatibilityAndDisplayThread
 from RefRed.calculations.check_list_run_compatibility_and_display import CheckListRunCompatibilityAndDisplay
+from RefRed.mantid_utility import MantidUtility
 from RefRed.utilities import format_to_list
 from RefRed.autopopulatemaintable.auto_fill_widgets_handler import AutoFillWidgetsHandler
 
@@ -113,10 +114,8 @@ class ReductionTableAutoFill(object):
         self.o_auto_fill_widgets_handler.end()
         
     def cleanup_workspaces(self):
-        ws_list = AnalysisDataService.getObjectNames()
-        for _ws in ws_list:
-#            if (_ws.endswith('_rebin') or _ws.startswith('_')):
-            DeleteWorkspace(_ws)
+        o_mantid_utility = MantidUtility(parent = self.parent)
+        o_mantid_utility.cleanup_workspaces()
         
     def loading_full_reductionTable(self):
         _list_nexus_sorted = self.list_nexus_sorted

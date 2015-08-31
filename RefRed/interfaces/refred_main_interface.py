@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Mon Aug 31 09:02:32 2015
+# Created: Mon Aug 31 13:42:34 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -234,7 +234,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_10 = QtGui.QHBoxLayout(self.groupBox_4)
         self.horizontalLayout_10.setObjectName("horizontalLayout_10")
         self.geometryCorrectionFrame = QtGui.QFrame(self.groupBox_4)
-        self.geometryCorrectionFrame.setEnabled(False)
+        self.geometryCorrectionFrame.setEnabled(True)
         self.geometryCorrectionFrame.setMinimumSize(QtCore.QSize(0, 80))
         self.geometryCorrectionFrame.setMaximumSize(QtCore.QSize(16777215, 80))
         self.geometryCorrectionFrame.setFrameShape(QtGui.QFrame.StyledPanel)
@@ -1660,6 +1660,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.TOFmanualFromValue, QtCore.SIGNAL("returnPressed()"), MainWindow.manual_tof_range_line_edit_validation)
         QtCore.QObject.connect(self.TOFmanualToValue, QtCore.SIGNAL("returnPressed()"), MainWindow.manual_tof_range_line_edit_validation)
         QtCore.QObject.connect(self.dataTOFmanualMode, QtCore.SIGNAL("clicked()"), MainWindow.auto_tof_range_radio_button)
+        QtCore.QObject.connect(self.reduceButton, QtCore.SIGNAL("pressed()"), MainWindow.run_reduction_button)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

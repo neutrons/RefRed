@@ -39,6 +39,7 @@ class LConfigDataset(object):
     reduce_q_axis = []
     reduce_y_axis = []
     reduce_e_axis = []
+
     sf_auto = 1 # auto scaling calculated by program
     sf_auto_found_match = False 
     sf_manual = 1 # manual scaling defined by user

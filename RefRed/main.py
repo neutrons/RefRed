@@ -16,6 +16,7 @@ from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
 from RefRed.interfaces.refred_main_interface import Ui_MainWindow
 from RefRed.plot.single_click_plot import SingleClickPlot
+from RefRed.reduction.reduction_handler import ReductionHandler
 from RefRed.reduction_table_handling.reduction_table_check_box import ReductionTableCheckBox
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
 from RefRed.update_data_norm_tab import UpdateDataNormTab
@@ -314,3 +315,7 @@ class MainGui(QtGui.QMainWindow):
         o_scaling_factor = ScalingFactorWidgetsHandler(parent = self)
         o_scaling_factor.browse()
         
+    def run_reduction_button(self):
+        o_reduction = ReductionHandler(parent = self)
+        o_reduction.run()
+        o_reduction.stitch()
