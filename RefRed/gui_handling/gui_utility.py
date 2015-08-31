@@ -1,5 +1,6 @@
 from PyQt4.QtCore import Qt
 
+
 class GuiUtility(object):
     
     parent = None
@@ -41,7 +42,22 @@ class GuiUtility(object):
         self.parent.ui.TOFmanualToLabel.setEnabled(not status)
         self.parent.ui.TOFmanualToUnitsValue.setEnabled(not status)
     
+    def clear_table(self, table_ui):
+        nbr_row = table_ui.rowCount()
+        nbr_col = table_ui.columnCount()
+        for _row in range(nbr_row):
+            for _col in range(0, nbr_col):
+                _item = table_ui.item(_row, _col)
+                if _item is not None:
+                    _item.setText("")
     
+    def clear_reductionTable(self):
+        nbr_row = self.parent.ui.reductionTable.rowCount()
+        nbr_col = self.parent.ui.reductionTable.columnCount()
+        for _row in range(nbr_row):
+            for _col in range(1, nbr_col):
+                self.parent.ui.reductionTable.item(_row, _col).setText("")
+
     #def data_peak_and_back_validation(self, with_plot_update = True):
         #self.data_peak_spinbox_validation(with_plot_update = with_plot_update)
         #self.data_back_spinbox_validation(with_plot_update = with_plot_update)

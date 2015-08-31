@@ -44,9 +44,6 @@ class ReductionHandler(object):
                                      nbr_process = self.nbr_reduction_process)
         o_calculate_sf.run()
 
-
-
-
     def launch_reduction(self, o_general = None, o_individual = None, debug = False):
         
         if debug:

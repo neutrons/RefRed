@@ -3526,7 +3526,13 @@ p, li { white-space: pre-wrap; }
             <item>
              <widget class="QTableWidget" name="dataStitchingTable">
               <property name="enabled">
-               <bool>false</bool>
+               <bool>true</bool>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>320</width>
+                <height>0</height>
+               </size>
               </property>
               <property name="maximumSize">
                <size>
@@ -3546,6 +3552,171 @@ p, li { white-space: pre-wrap; }
               <attribute name="verticalHeaderVisible">
                <bool>false</bool>
               </attribute>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string>New Row</string>
+               </property>
+              </row>
               <column>
                <property name="text">
                 <string>New Column</string>
@@ -3601,7 +3772,7 @@ p, li { white-space: pre-wrap; }
                <item>
                 <widget class="QRadioButton" name="autoSF">
                  <property name="enabled">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <property name="text">
                   <string>auto</string>
@@ -3614,7 +3785,7 @@ p, li { white-space: pre-wrap; }
                <item>
                 <widget class="QRadioButton" name="manualSF">
                  <property name="enabled">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <property name="text">
                   <string>manual</string>
@@ -3624,7 +3795,7 @@ p, li { white-space: pre-wrap; }
                <item>
                 <widget class="QRadioButton" name="oneSF">
                  <property name="enabled">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <property name="text">
                   <string>1</string>
@@ -3641,6 +3812,9 @@ p, li { white-space: pre-wrap; }
              <layout class="QVBoxLayout" name="verticalLayout_7">
               <item>
                <widget class="QPushButton" name="loadReducedAsciiDataSet">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="minimumSize">
                  <size>
                   <width>300</width>
@@ -3660,6 +3834,9 @@ p, li { white-space: pre-wrap; }
               </item>
               <item>
                <widget class="QTableWidget" name="reducedAsciiDataSetTable">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="minimumSize">
                  <size>
                   <width>300</width>
@@ -3686,6 +3863,9 @@ p, li { white-space: pre-wrap; }
               </item>
               <item>
                <widget class="QPushButton" name="refreshStitchingAsciiPlot">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="maximumSize">
                  <size>
                   <width>300</width>
