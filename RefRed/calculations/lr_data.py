@@ -272,7 +272,7 @@ class LRData(object):
         '''
         will format the histogrma NeXus to retrieve the full 3D data set
         '''
-        self._tof_axis = nxs_histo.readX(0)[:]
+        self._tof_axis = nxs_histo.readX(0)[:].copy()
         nbr_tof = len(self._tof_axis)
 
         Ixyt = np.zeros((self.number_x_pixels, self.number_y_pixels, nbr_tof - 1))
@@ -284,8 +284,8 @@ class LRData(object):
         for x in x_range:
             for y in y_range:
                 _index = int(self.number_y_pixels * x + y)
-                Ixyt[x, y, :] = nxs_histo.readY(_index)[:]
-                Exyt[x, y, :] = nxs_histo.readE(_index)[:]
+                Ixyt[x, y, :] = nxs_histo.readY(_index)[:].copy()
+                Exyt[x, y, :] = nxs_histo.readE(_index)[:].copy()
         gc.collect()
         self.Ixyt = Ixyt
         self.Exyt = Exyt

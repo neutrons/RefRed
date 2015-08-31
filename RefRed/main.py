@@ -11,6 +11,7 @@ from RefRed.gui_handling.data_norm_spinboxes import DataBackSpinbox, NormBackSpi
 from RefRed.gui_handling.data_norm_spinboxes import DataLowResSpinbox, NormLowResSpinbox
 from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidgetsHandler
 from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
+from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
 from RefRed.interfaces.refred_main_interface import Ui_MainWindow
@@ -18,6 +19,7 @@ from RefRed.plot.single_click_plot import SingleClickPlot
 from RefRed.reduction_table_handling.reduction_table_check_box import ReductionTableCheckBox
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
 from RefRed.update_data_norm_tab import UpdateDataNormTab
+
 
 #from RefRed.export_plot_ascii import ExportPlotAscii
 #from RefRed.home_plot_button_clicked import HomePlotButtonClicked
@@ -236,8 +238,10 @@ class MainGui(QtGui.QMainWindow):
             self.ui.reductionTable.setCurrentCell(current_row+1, current_col-1)
         
     def data_norm_tab_changed(self, index):
+        o_gui_utility = GuiUtility(parent = self)
+        _current_table_reduction_row_selected = o_gui_utility.get_current_table_reduction_check_box_checked()
         ReductionTableCheckBox(parent = self,
-                               row_selected = self.current_table_reduction_row_selected)
+                               row_selected = _current_table_reduction_row_selected)
         
     def data_back_spinbox_validation(self):
         DataBackSpinbox(parent = self)
