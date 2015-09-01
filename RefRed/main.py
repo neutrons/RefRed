@@ -323,7 +323,7 @@ class MainGui(QtGui.QMainWindow):
         
         o_reduced_plot = ReducedDataHandler(parent = self)
         o_reduced_plot.populate_table()
-        #o_reduced_plot.plot()
+        o_reduced_plot.plot()
 
     def data_stitching_table_manual_spin_box(self):
         pass
