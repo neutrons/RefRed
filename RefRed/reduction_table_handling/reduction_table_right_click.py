@@ -1,6 +1,7 @@
 from PyQt4 import QtGui
-import numpy as np
 
+from RefRed.plot.clear_plots import ClearPlots
+from RefRed.reduction_table_handling.reduction_table_handler import ReductionTableHandler
 
 class ReductionTableRightClick(object):
     
@@ -24,19 +25,8 @@ class ReductionTableRightClick(object):
             self.display_metadata()
         
     def clear_table(self):
-        self.clear_big_table_data()
-        self.clear_reduction_table()
-
-    def clear_reduction_table(self):
-        nbr_row = self.parent.ui.reductionTable.rowCount()
-        nbr_col = self.parent.ui.reductionTable.columnCount()
-        for _row in range(nbr_row):
-            for _col in range(1, nbr_col):
-                self.parent.ui.reductionTable.item(_row, _col).setText("")
-        
-    def clear_big_table_data(self):
-        self.parent.big_table_data = np.empty((self.parent.nbr_row_table_reduction,
-                                               3), dtype = object)
+        o_reduction_table_handler = ReductionTableHandler(parent = self.parent)
+        o_reduction_table_handler.full_clear()
         
     def remove_rows(self):
         print('remove_row')
