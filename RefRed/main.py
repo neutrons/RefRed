@@ -6,6 +6,7 @@ from RefRed.autopopulatemaintable.reductiontable_auto_fill import ReductionTable
 from RefRed.config_file_launcher import ConfigFileLauncher
 from RefRed.configuration.loading_configuration import LoadingConfiguration
 from RefRed.configuration.saving_configuration import SavingConfiguration
+from RefRed.export.export_plot_ascii import ExportPlotAscii
 from RefRed.gui_handling.data_norm_spinboxes import DataPeakSpinbox, NormPeakSpinbox
 from RefRed.gui_handling.data_norm_spinboxes import DataBackSpinbox, NormBackSpinbox
 from RefRed.gui_handling.data_norm_spinboxes import DataLowResSpinbox, NormLowResSpinbox
@@ -21,7 +22,6 @@ from RefRed.reduction.reduced_data_handler import ReducedDataHandler
 from RefRed.reduction_table_handling.reduction_table_check_box import ReductionTableCheckBox
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
 from RefRed.update_data_norm_tab import UpdateDataNormTab
-
 
 #from RefRed.export_plot_ascii import ExportPlotAscii
 #from RefRed.home_plot_button_clicked import HomePlotButtonClicked
@@ -49,6 +49,7 @@ class MainGui(QtGui.QMainWindow):
                           'thread25': None, 'thread26': None, 'thread27': None, 'thread28': None}
 
     time_click1 = 0 #use by double click of plots
+    stitching_ascii_widget = None
 
 #    delay_closing_thread = None
 
@@ -65,7 +66,7 @@ class MainGui(QtGui.QMainWindow):
         
         InitializeGui(self)
         self.ui.reductionTable.setUI(self)   
-        MakeGuiConnections(self)
+        MakeGuiConnections(parent = self)
 
     # config files from menu
     def launch_config_file1(self):
@@ -327,3 +328,29 @@ class MainGui(QtGui.QMainWindow):
 
     def data_stitching_table_manual_spin_box(self):
         pass
+    
+    def export_stitching_data(self):
+        o_export_plot = ExportPlotAscii(parent = self,
+                                        data_type = 'stitched')
+        o_export_plot.export()
+        
+    def export_it(self):
+        o_export_plot = ExportPlotAscii(parent = self,
+                                        data_type = 'it')
+        o_export_plot.export()
+        
+    def export_yi(self):
+        o_export_plot = ExportPlotAscii(parent = self,
+                                        data_type = 'yi')
+        o_export_plot.export()
+        
+    def export_ix(self):
+        o_export_plot = ExportPlotAscii(parent = self,
+                                        data_type = 'ix')
+        o_export_plot.export()
+        
+    def export_yt(self):
+        o_export_plot = ExportPlotAscii(parent = self,
+                                        data_type = 'yt')
+        o_export_plot.export()
+        

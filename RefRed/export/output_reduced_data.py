@@ -1,19 +1,19 @@
 from PyQt4.QtGui import QDialog, QFileDialog, QPalette
 from PyQt4.QtCore import Qt
-from output_reduced_data_dialog import Ui_Dialog as UiDialog
-from stitching_ascii_widget import stitchingAsciiWidgetObject
-from export_stitching_ascii_settings import ExportStitchingAsciiSettings
 from mantid.simpleapi import *
 import os
-import utilities
 import numpy as np
 
+from RefRed.interfaces.output_reduced_data_dialog import Ui_Dialog as UiDialog
+from RefRed.export.stitching_ascii_widget import StitchingAsciiWidget
+from RefRed.configuration.export_stitching_ascii_settings import ExportStitchingAsciiSettings
+import RefRed.utilities
 
 class OutputReducedData(QDialog):
 	
 	_open_instances = []
-	stitchingAsciiWidgetObject = None
-	mainGui = None
+	stitching_ascii_widget = None
+	parent = None
 	filename = ''
 	
 	q_axis = None
@@ -24,46 +24,47 @@ class OutputReducedData(QDialog):
 	
 	metadata = None
 	text_data = None
-	isWith4thColumnFlag = False
+	is_with_4th_column_flag = False
 	dq0 = None
 	dq_over_q = None
-	useLowestErrorValueFlag = True
+	use_lowest_error_value_flag = True
 	
-	def __init__(self, mainGui, stitchingAsciiWidgetObject, parent=None):
-		QDialog.__init__(self, parent=parent)
+	def __init__(self, parent = None, stitching_ascii_widget = None):
+		QDialog.__init__(self, parent = parent)
 		self.setWindowModality(False)
 		self._open_instances.append(self)
 		self.ui = UiDialog()
 		self.ui.setupUi(self)
+		self.parent = parent
 		
 		self.ui.folder_error.setVisible(False)
 		palette = QPalette()
 		palette.setColor(QPalette.Foreground, Qt.red)
 		self.ui.folder_error.setPalette(palette)
 		
-		self.stitchingAsciiWidgetObject = stitchingAsciiWidgetObject
-		self.mainGui = mainGui
+		self.stitching_ascii_widget = stitching_ascii_widget
 		
 		# retrieve gui parameters 
-		_exportStitchingAsciiSettings = self.mainGui.exportStitchingAsciiSettings
-		self.dq0 = str(_exportStitchingAsciiSettings.fourth_column_dq0)
-		self.dq_over_q = str(_exportStitchingAsciiSettings.fourth_column_dq_over_q)
-		self.isWith4thColumnFlag = bool(_exportStitchingAsciiSettings.fourth_column_flag)
-		self.useLowestErrorValueFlag = bool(_exportStitchingAsciiSettings.use_lowest_error_value_flag)
+		_export_stitching_ascii_settings = ExportStitchingAsciiSettings()
+		self.dq0 = str(_export_stitching_ascii_settings.fourth_column_dq0)
+		self.dq_over_q = str(_export_stitching_ascii_settings.fourth_column_dq_over_q)
+		self.is_with_4th_column_flag = bool(_export_stitching_ascii_settings.fourth_column_flag)
+		self.use_lowest_error_value_flag = bool(_export_stitching_ascii_settings.use_lowest_error_value_flag)
+		
 		self.ui.dq0Value.setText(self.dq0)
 		self.ui.dQoverQvalue.setText(self.dq_over_q)
-		self.ui.output4thColumnFlag.setChecked(self.isWith4thColumnFlag)
-		self.ui.usingLessErrorValueFlag.setChecked(self.useLowestErrorValueFlag)
-		self.ui.usingMeanValueFalg.setChecked(not self.useLowestErrorValueFlag)
+		self.ui.output4thColumnFlag.setChecked(self.is_with_4th_column_flag)
+		self.ui.usingLessErrorValueFlag.setChecked(self.use_lowest_error_value_flag)
+		self.ui.usingMeanValueFalg.setChecked(not self.use_lowest_error_value_flag)
 		
 	def create_reduce_ascii_button_event(self):
 		self.ui.folder_error.setVisible(False)
-		if self.stitchingAsciiWidgetObject is None:
+		if self.stitching_ascii_widget is None:
 			return
 		
-		run_number = self.mainGui.ui.reductionTable.item(0,0).text()
+		run_number = self.parent.ui.reductionTable.item(0,0).text()
 		default_filename = 'REFL_' + run_number + '_reduced_stitched_data.txt'
-		path = self.mainGui.path_ascii
+		path = self.parent.path_ascii
 		default_filename = path + '/' + default_filename
 		
 		filename = QFileDialog.getSaveFileName(self, 'Select Location and Name', default_filename)
@@ -76,32 +77,32 @@ class OutputReducedData(QDialog):
 			return
 		
 		self.filename = filename
-		self.mainGui.path_ascii = os.path.dirname(filename)
+		self.parent.path_ascii = os.path.dirname(filename)
 		self.write_ascii()
 		self.close()
 		self.save_back_widget_parameters_used()
 		
 	def save_back_widget_parameters_used(self):
-		_isWith4thColumnFlag = self.ui.output4thColumnFlag.isChecked()
+		_is_with_4th_column_flag = self.ui.output4thColumnFlag.isChecked()
 		_dq0 = self.ui.dq0Value.text()
 		_dq_over_q = self.ui.dQoverQvalue.text()
-		_useLowestErrorValueFlag = self.ui.usingLessErrorValueFlag.isChecked()
+		_use_lowest_error_value_flag = self.ui.usingLessErrorValueFlag.isChecked()
 		
-		_exportStitchingAsciiSettings = ExportStitchingAsciiSettings()
-		_exportStitchingAsciiSettings.fourth_column_dq0 = _dq0
-		_exportStitchingAsciiSettings.fourth_column_dq_over_q = _dq_over_q
-		_exportStitchingAsciiSettings.fourth_column_flag = _isWith4thColumnFlag
-		_exportStitchingAsciiSettings.use_lowest_error_value_flag = _useLowestErrorValueFlag
-		self.mainGui.exportStitchingAsciiSettings = _exportStitchingAsciiSettings
+		_export_stitching_ascii_settings = ExportStitchingAsciiSettings()
+		_export_stitching_ascii_settings.fourth_column_dq0 = _dq0
+		_export_stitching_ascii_settings.fourth_column_dq_over_q = _dq_over_q
+		_export_stitching_ascii_settings.fourth_column_flag = _is_with_4th_column_flag
+		_export_stitching_ascii_settings.use_lowest_error_value_flag = _use_lowest_error_value_flag
+		self.parent.exportStitchingAsciiSettings = _export_stitching_ascii_settings
 		
 	def is_folder_access_granted(self, filename):
 		return os.access(filename,os.W_OK)
 	
 	def write_ascii(self):
-		self.isWith4thColumnFlag = self.ui.output4thColumnFlag.isChecked()
+		self.is_with_4th_column_flag = self.ui.output4thColumnFlag.isChecked()
 		dq_over_q = self.ui.dQoverQvalue.text()
 		self.dq_over_q = float(dq_over_q)
-		if self.isWith4thColumnFlag:
+		if self.is_with_4th_column_flag:
 			dq0 = self.ui.dq0Value.text()
 			self.dq0 = float(dq0)
 			line1 = '#dQ0[1/Angstroms]= ' + dq0
@@ -111,7 +112,7 @@ class OutputReducedData(QDialog):
 		else:
 			text = ['#Q[1/Angstroms] R delta_R']
 			
-		self.useLowestErrorValueFlag = self.ui.usingLessErrorValueFlag.isChecked()
+		self.use_lowest_error_value_flag = self.ui.usingLessErrorValueFlag.isChecked()
 		
 		self.text_data = text
 		self.produce_data_with_common_q_axis()
@@ -119,11 +120,11 @@ class OutputReducedData(QDialog):
 		self.create_file()
 		
 	def create_file(self):
-		utilities.write_ascii_file(self.filename, self.text_data)
+		RefRed.utilities.write_ascii_file(self.filename, self.text_data)
 		
 	def produce_data_with_common_q_axis(self):
-		nbrRow = self.mainGui.ui.reductionTable.rowCount()
-		_dataObject = self.stitchingAsciiWidgetObject.loadedAsciiArray[0]
+		nbrRow = self.parent.ui.reductionTable.rowCount()
+		_dataObject = self.stitching_ascii_widget.loadedAsciiArray[0]
 		_bigTableData = _dataObject.bigTableData
 		
 		minQ = 100
@@ -195,13 +196,13 @@ class OutputReducedData(QDialog):
 					
 				if data_y[j] > 0 and data_y_k[j] > 0:
 					  
-					if self.useLowestErrorValueFlag:
+					if self.use_lowest_error_value_flag:
 						if (data_e[j] > data_e_k[j]):
 							data_y[j] = data_y_k[j]
 							data_e[j] = data_e_k[j]
 							
 					else:
-						[data_y[j], data_e[j]] = utilities.weighted_mean([data_y[j], data_y_k[j]],
+						[data_y[j], data_e[j]] = RefRed.utilities.weighted_mean([data_y[j], data_y_k[j]],
 						                                                 [data_e[j], data_e_k[j]])
 							
 				elif (data_y[j] == 0) and (data_y_k[j]>0):
@@ -215,9 +216,9 @@ class OutputReducedData(QDialog):
 		self.e_axis = data_e
 		
 	def applySF(self, _data, y_array, e_array):
-		if self.mainGui.ui.autoSF.isChecked():
+		if self.parent.ui.autoSF.isChecked():
 			_sf = _data.sf_auto
-		elif self.mainGui.ui.manualSF.isChecked():
+		elif self.parent.ui.manualSF.isChecked():
 			_sf = _data.sf_manual
 		else:
 			_sf = 1
@@ -235,7 +236,7 @@ class OutputReducedData(QDialog):
 		_e_axis = self.e_axis
 		text = self.text_data
 		
-		if self.isWith4thColumnFlag:
+		if self.is_with_4th_column_flag:
 			dq0 = self.dq0
 			dq_over_q = self.dq_over_q
 		
@@ -245,7 +246,7 @@ class OutputReducedData(QDialog):
 				_line = str(_q_axis[i])
 				_line += ' ' + str(_y_axis[i])
 				_line += ' ' + str(_e_axis[i])
-				if self.isWith4thColumnFlag:
+				if self.is_with_4th_column_flag:
 					_precision = str(dq0 + dq_over_q * _q_axis[i])
 					_line += ' ' + _precision
 				text.append(_line)

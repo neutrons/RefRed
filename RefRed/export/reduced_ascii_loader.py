@@ -1,5 +1,5 @@
 import os
-from ascii_loader import asciiLoader
+from RefRed.export.ascii_loader import asciiLoader
 
 class reducedAsciiLoader(object):
 	

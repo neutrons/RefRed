@@ -1,24 +1,25 @@
 from PyQt4 import QtGui, QtCore
-from reduced_ascii_loader import reducedAsciiLoader
-import colors
 import numpy as np
 
-class stitchingAsciiWidgetObject(object):
+from RefRed.export.reduced_ascii_loader import reducedAsciiLoader
+import RefRed.colors
+
+class StitchingAsciiWidget(object):
 
 	loadedAsciiArray = []
 	tableUi = None
 	stitchingPlot = None
-	mainGui = None
+	parent = None
 	isylog = True
 	isxlog = True
 	yaxistype = 'RvsQ'
 	
-	def __init__(self, mainGui, loadedAscii):
+	def __init__(self, parent, loadedAscii):
 		
-		self.mainGui = mainGui
+		self.parent = parent
 		self.loadedAsciiArray.append(loadedAscii)
-		self.tableUi = mainGui.ui.reducedAsciiDataSetTable
-		self.stitchingPlot = mainGui.ui.data_stitching_plot
+		self.tableUi = parent.ui.reducedAsciiDataSetTable
+		self.stitchingPlot = parent.ui.data_stitching_plot
 		
 	def addData(self, newLoadedAscii):
 		
@@ -51,7 +52,7 @@ class stitchingAsciiWidgetObject(object):
 			
 			_data_object = self.loadedAsciiArray[i]
 			
-			_item_state = self.mainGui.ui.reducedAsciiDataSetTable.cellWidget(i,1).checkState()
+			_item_state = self.parent.ui.reducedAsciiDataSetTable.cellWidget(i,1).checkState()
 			if _item_state == 2:
 				_data_object.isEnabled = True
 			else:
@@ -123,7 +124,7 @@ class stitchingAsciiWidgetObject(object):
 		'''
 		
 		bigTableData = _data_object.bigTableData
-		_colors = colors.COLOR_LIST
+		_colors = RefRed.colors.COLOR_LIST
 		_colors.append(_colors)
 		
 		_data0 = bigTableData[0,0]
@@ -172,7 +173,7 @@ class stitchingAsciiWidgetObject(object):
 			self.stitchingPlot.draw()
 			
 		bigTableData[0,0] = _data0
-		self.mainGui.bigTableData = bigTableData
+		self.parent.bigTableData = bigTableData
 
 		self.stitchingPlot.set_xlabel(u'Q (1/Angstroms)')
 		type = self.getSelectedReducedOutput()
@@ -215,7 +216,7 @@ class stitchingAsciiWidgetObject(object):
 	def getSelectedReducedOutput(self):
 		return self.yaxistype
 
-	def 	displayLoadedAscii(self, _data_object):
+	def displayLoadedAscii(self, _data_object):
 		'''
 		plot data coming from ascii file loaded
 		'''

@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Mon Aug 31 16:07:55 2015
+# Created: Tue Sep  1 09:37:32 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1586,7 +1586,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.addLayout(self.verticalLayout_7)
         self.horizontalLayout_2.addLayout(self.verticalLayout_4)
         self.data_stitching_plot = MPLWidgetXLogYLog(self.data_stitching_Tab)
-        self.data_stitching_plot.setEnabled(False)
+        self.data_stitching_plot.setEnabled(True)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
