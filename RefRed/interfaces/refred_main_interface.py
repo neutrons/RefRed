@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Tue Sep  1 13:32:30 2015
+# Created: Tue Sep  1 14:49:34 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1331,7 +1331,7 @@ class Ui_MainWindow(object):
         self.reductionTable.setProperty("showDropIndicator", True)
         self.reductionTable.setDragDropOverwriteMode(True)
         self.reductionTable.setAlternatingRowColors(True)
-        self.reductionTable.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
+        self.reductionTable.setSelectionMode(QtGui.QAbstractItemView.ContiguousSelection)
         self.reductionTable.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
         self.reductionTable.setHorizontalScrollMode(QtGui.QAbstractItemView.ScrollPerPixel)
         self.reductionTable.setWordWrap(False)

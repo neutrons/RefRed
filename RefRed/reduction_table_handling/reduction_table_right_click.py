@@ -1,6 +1,5 @@
 from PyQt4 import QtGui
 
-from RefRed.plot.clear_plots import ClearPlots
 from RefRed.reduction_table_handling.reduction_table_handler import ReductionTableHandler
 
 class ReductionTableRightClick(object):
@@ -29,7 +28,8 @@ class ReductionTableRightClick(object):
         o_reduction_table_handler.full_clear()
         
     def remove_rows(self):
-        print('remove_row')
+        o_reduction_table_handler = ReductionTableHandler(parent = self.parent)
+        o_reduction_table_handler.clear_rows_selected()
         
     def display_metadata(self):
         print('display metadata')
