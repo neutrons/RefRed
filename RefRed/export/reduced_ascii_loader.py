@@ -1,11 +1,11 @@
 import os
-from RefRed.export.ascii_loader import asciiLoader
+from RefRed.export.ascii_loader import AsciiLoader
 
-class reducedAsciiLoader(object):
+class ReducedAsciiLoader(object):
 	
-	mainGui = None
-	asciiFilename = ''
-	shortAsciiFilename = ''
+	parent = None
+	ascii_file_name = ''
+	short_ascii_file_name = ''
 	
 	# used when data comes from ascii file
 	col1 = []
@@ -14,22 +14,22 @@ class reducedAsciiLoader(object):
 	col4 = []
 	
 	# used when data comes from Live Reduced Set
-	bigTableData = []
+	big_table_data = []
 	
 	isEnabled = True
-	isLiveReduced = False
+	is_live_reduction = False
 	
-	def __init__(self, mainGui, asciiFilename='', isLiveReduced=False, bigTableData=None):
+	def __init__(self, parent=None, ascii_file_name='', is_live_reduction=False):
 		
-		self.mainGui = mainGui
-		self.isLiveReduced = isLiveReduced
-		if isLiveReduced:
-			self.asciiFilename = 'LAST REDUCED SET'
-			self.shortAsciiFilename = 'LAST REDUCED SET'
-			self.bigTableData = bigTableData
+		self.parent = parent
+		self.is_live_reduction = is_live_reduction
+		if is_live_reduction:
+			self.ascii_file_name = 'LAST REDUCED SET'
+			self.short_ascii_file_name = 'LAST REDUCED SET'
+			self.big_table_data = self.parent.big_table_data
 		else:
-			self.asciiFilename = asciiFilename
-			self.shortAsciiFilename = self.get_short_ascii_filename(asciiFilename)
+			self.ascii_file_name = ascii_file_name
+			self.short_ascii_file_name = self.get_short_ascii_filename(ascii_file_name)
 			self.retrieve_ascii_data()
 		
 	def get_short_ascii_filename(self, fullFilename):
@@ -37,10 +37,10 @@ class reducedAsciiLoader(object):
 	
 	def retrieve_ascii_data(self):
 		
-		filename = self.asciiFilename
-		nbrColumns = 3
-		_asciiData = asciiLoader(filename,
-		                         nbrColumns=nbrColumns)
+		filename = self.ascii_file_name
+		nbr_col = 3
+		_asciiData = AsciiLoader(filename = filename,
+		                         nbr_col = nbr_col)
 		
 		[self.col1, self.col2, self.col3, self.col4] = _asciiData.data()
 		

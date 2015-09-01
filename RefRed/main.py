@@ -49,7 +49,7 @@ class MainGui(QtGui.QMainWindow):
                           'thread25': None, 'thread26': None, 'thread27': None, 'thread28': None}
 
     time_click1 = 0 #use by double click of plots
-    stitching_ascii_widget = None
+    o_stitching_ascii_widget = None
 
 #    delay_closing_thread = None
 

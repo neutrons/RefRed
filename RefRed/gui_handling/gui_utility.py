@@ -58,6 +58,13 @@ class GuiUtility(object):
             for _col in range(1, nbr_col):
                 self.parent.ui.reductionTable.item(_row, _col).setText("")
 
+    def reductionTable_nbr_row(self):
+        big_table_data = self.parent.big_table_data
+        for _index_row, _ldata in enumerate(big_table_data[:,0]):
+            if _ldata is None:
+                return _index_row
+        return _index_row
+
     #def data_peak_and_back_validation(self, with_plot_update = True):
         #self.data_peak_spinbox_validation(with_plot_update = with_plot_update)
         #self.data_back_spinbox_validation(with_plot_update = with_plot_update)

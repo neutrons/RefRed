@@ -7,12 +7,14 @@ import numpy as np
 from RefRed.interfaces.output_reduced_data_dialog import Ui_Dialog as UiDialog
 from RefRed.export.stitching_ascii_widget import StitchingAsciiWidget
 from RefRed.configuration.export_stitching_ascii_settings import ExportStitchingAsciiSettings
+from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
+from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.utilities
 
 class OutputReducedData(QDialog):
 	
 	_open_instances = []
-	stitching_ascii_widget = None
+	o_stitching_ascii_widget = None
 	parent = None
 	filename = ''
 	
@@ -29,7 +31,7 @@ class OutputReducedData(QDialog):
 	dq_over_q = None
 	use_lowest_error_value_flag = True
 	
-	def __init__(self, parent = None, stitching_ascii_widget = None):
+	def __init__(self, parent = None):
 		QDialog.__init__(self, parent = parent)
 		self.setWindowModality(False)
 		self._open_instances.append(self)
@@ -42,7 +44,13 @@ class OutputReducedData(QDialog):
 		palette.setColor(QPalette.Foreground, Qt.red)
 		self.ui.folder_error.setPalette(palette)
 		
-		self.stitching_ascii_widget = stitching_ascii_widget
+		o_loaded_ascii = ReducedAsciiLoader(parent = parent,
+		                                    ascii_file_name = '',
+		                                    is_live_reduction = True)
+		if parent.o_stitching_ascii_widget is None:
+			o_stitching_ascii_widget = StitchingAsciiWidget(parent = self.parent,
+			                                                loaded_ascii = o_loaded_ascii)
+			parent.o_stitching_ascii_widget = o_stitching_ascii_widget
 		
 		# retrieve gui parameters 
 		_export_stitching_ascii_settings = ExportStitchingAsciiSettings()
@@ -59,16 +67,18 @@ class OutputReducedData(QDialog):
 		
 	def create_reduce_ascii_button_event(self):
 		self.ui.folder_error.setVisible(False)
-		if self.stitching_ascii_widget is None:
+		if self.parent.o_stitching_ascii_widget is None:
 			return
 		
-		run_number = self.parent.ui.reductionTable.item(0,0).text()
+		run_number = self.parent.ui.reductionTable.item(0,1).text()
 		default_filename = 'REFL_' + run_number + '_reduced_stitched_data.txt'
 		path = self.parent.path_ascii
 		default_filename = path + '/' + default_filename
 		
-		filename = QFileDialog.getSaveFileName(self, 'Select Location and Name', default_filename)
-		if str(filename).strip() == '':
+		filename = str(QFileDialog.getSaveFileName(self, 
+		                                           'Select Location and Name', 
+		                                           default_filename))
+		if filename.strip() == '':
 			return
 		
 		folder = os.path.dirname(filename)
@@ -123,16 +133,19 @@ class OutputReducedData(QDialog):
 		RefRed.utilities.write_ascii_file(self.filename, self.text_data)
 		
 	def produce_data_with_common_q_axis(self):
-		nbrRow = self.parent.ui.reductionTable.rowCount()
-		_dataObject = self.stitching_ascii_widget.loadedAsciiArray[0]
-		_bigTableData = _dataObject.bigTableData
+		o_gui_utility = GuiUtility(parent = self.parent)
+		nbr_row = o_gui_utility.reductionTable_nbr_row()
+
+		_dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
+		_big_table_data = _dataObject.big_table_data
 		
 		minQ = 100
 		maxQ = 0
 		
-		for i in range(nbrRow):
+		for i in range(nbr_row):
+			_data = _big_table_data[i,2]
+			
 			tmp_wks_name = 'wks_' + str(i)
-			_data = _bigTableData[i,2]
 			
 			_q_axis = _data.reduce_q_axis
 			_y_axis = _data.reduce_y_axis[:-1]
@@ -154,7 +167,7 @@ class OutputReducedData(QDialog):
 			# rebin everyting using the same Q binning parameters  
 		binQ = self.dq_over_q
 		bin_parameters = str(minQ) + ',-' + str(binQ) + ',' + str(maxQ)
-		for i in range(nbrRow):  
+		for i in range(nbr_row):  
 				
 			tmp_wks_name = 'wks_' + str(i)
 			ConvertToHistogram(InputWorkspace = tmp_wks_name,
@@ -171,7 +184,7 @@ class OutputReducedData(QDialog):
 		skip_index = 0
 		point_to_skip = 2
 			
-		for k in range(1,nbrRow):
+		for k in range(1, nbr_row):
 
 			skip_point = True
 			can_skip_last_point = False

@@ -136,8 +136,7 @@ class ExportPlotAscii(object):
 		RefRed.utilities.write_ascii_file(filename, text)
 		
 	def export_stitched(self):
-		_tmp = OutputReducedData(parent = self.parent, 
-		                         stitching_ascii_widget = self.parent.stitching_ascii_widget)
+		_tmp = OutputReducedData(parent = self.parent)
 		_tmp.show()
 		
 	def get_current_row_col_displayed(self):
