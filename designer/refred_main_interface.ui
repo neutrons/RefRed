@@ -4684,6 +4684,22 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>reductionTable</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>reduction_table_right_click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1016</x>
+     <y>878</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -4709,5 +4725,6 @@ p, li { white-space: pre-wrap; }
   <slot>auto_tof_range_radio_button()</slot>
   <slot>manual_tof_range_line_edit_validation()</slot>
   <slot>run_reduction_button()</slot>
+  <slot>reduction_table_right_click()</slot>
  </slots>
 </ui>

@@ -48,7 +48,25 @@ class ClearPlots(object):
 		if self.stitched:
 			self.clear_stitched()
 #			update_obj.disable_stitched()
+
+		if self.plot_yt and self.plot_yi and self.plot_it and self.plot_ix:
+			self.clear_metadata()
 			
+	def clear_metadata(self):
+		parent = self.parent
+		parent.ui.metadataProtonChargeValue.setText('N/A')
+		parent.ui.metadataProtonChargeUnits.setText('units')
+		parent.ui.metadataLambdaRequestedValue.setText('N/A')
+		parent.ui.metadataLambdaRequestedUnits.setText('units')
+		parent.ui.metadatathiValue.setText('N/A')
+		parent.ui.metadatathiUnits.setText('units')
+		parent.ui.metadatatthdValue.setText('N/A')
+		parent.ui.metadatatthdUnits.setText('units')
+		parent.ui.metadataS1WValue.setText('N/A')
+		parent.ui.metadataS1HValue.setText('N/A')
+		parent.ui.metadataS2WValue.setText('N/A')
+		parent.ui.metadataS2HValue.setText('N/A')
+
 	def clear_data_plots(self):
 		parent = self.parent
 		if self.plot_yt:

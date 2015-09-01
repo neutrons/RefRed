@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Tue Sep  1 09:37:32 2015
+# Created: Tue Sep  1 13:32:30 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1731,6 +1731,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.TOFmanualToValue, QtCore.SIGNAL("returnPressed()"), MainWindow.manual_tof_range_line_edit_validation)
         QtCore.QObject.connect(self.dataTOFmanualMode, QtCore.SIGNAL("clicked()"), MainWindow.auto_tof_range_radio_button)
         QtCore.QObject.connect(self.reduceButton, QtCore.SIGNAL("pressed()"), MainWindow.run_reduction_button)
+        QtCore.QObject.connect(self.reductionTable, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), MainWindow.reduction_table_right_click)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

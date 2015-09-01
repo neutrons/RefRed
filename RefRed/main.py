@@ -21,6 +21,7 @@ from RefRed.reduction.reduction_handler import ReductionHandler
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
 from RefRed.reduction_table_handling.reduction_table_check_box import ReductionTableCheckBox
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
+from RefRed.reduction_table_handling.reduction_table_right_click import ReductionTableRightClick
 from RefRed.update_data_norm_tab import UpdateDataNormTab
 
 #from RefRed.export_plot_ascii import ExportPlotAscii
@@ -354,3 +355,7 @@ class MainGui(QtGui.QMainWindow):
                                         data_type = 'yt')
         o_export_plot.export()
         
+    def reduction_table_right_click(self, position):
+        o_reduction_table_right_click = ReductionTableRightClick(parent = self,
+                                                                 position = position)
+        o_reduction_table_right_click.run()
