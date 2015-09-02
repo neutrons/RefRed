@@ -23,6 +23,7 @@ from RefRed.reduction_table_handling.reduction_table_check_box import ReductionT
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
 from RefRed.reduction_table_handling.reduction_table_right_click import ReductionTableRightClick
 from RefRed.update_data_norm_tab import UpdateDataNormTab
+from RefRed.sf_calculator.sf_calculator import SFCalculator
 
 #from RefRed.export_plot_ascii import ExportPlotAscii
 #from RefRed.home_plot_button_clicked import HomePlotButtonClicked
@@ -359,3 +360,7 @@ class MainGui(QtGui.QMainWindow):
         o_reduction_table_right_click = ReductionTableRightClick(parent = self,
                                                                  position = position)
         o_reduction_table_right_click.run()
+        
+    def launch_sf_calculator(self):
+        o_sf_calculator = SFCalculator()
+        o_sf_calculator.show()

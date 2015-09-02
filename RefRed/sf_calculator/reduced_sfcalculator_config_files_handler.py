@@ -1,6 +1,7 @@
-from file_loaded_object import FileLoadedObject
 from PyQt4 import QtGui
 from PyQt4 import QtCore
+
+from RefRed.file_loaded_object import FileLoadedObject
 
 class ReducedSFCalculatorConfigFilesHandler(object):
 	'''
@@ -19,7 +20,7 @@ class ReducedSFCalculatorConfigFilesHandler(object):
 		self.populateWithCurrentConfigContain()
 		
 	def populateWithCurrentConfigContain(self):
-		from quicknxs.config import reflsfcalculatorlastloadedfiles
+		from RefRed.config import reflsfcalculatorlastloadedfiles
 		reflsfcalculatorlastloadedfiles.switch_config('config_files')
 		file1 = reflsfcalculatorlastloadedfiles.reduce1
 		file2 = reflsfcalculatorlastloadedfiles.reduce2

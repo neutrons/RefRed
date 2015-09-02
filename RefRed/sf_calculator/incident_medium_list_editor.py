@@ -1,7 +1,8 @@
 from PyQt4.QtGui import QDialog
 from PyQt4.QtCore import Qt
-from incident_medium_list_editor_interface import Ui_Dialog as UiDialog
-from utilities import removeEmptyStrElementAndUpdateIndexSelected
+
+from RefRed.interfaces.incident_medium_list_editor_interface import Ui_Dialog as UiDialog
+from RefRed.utilities import removeEmptyStrElementAndUpdateIndexSelected
 
 class IncidentMediumListEditor(QDialog):
 	

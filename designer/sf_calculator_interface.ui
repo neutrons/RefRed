@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>SFCalculatorInterface</class>
+ <widget class="QMainWindow" name="SFCalculatorInterface">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -766,15 +766,6 @@
         <attribute name="verticalHeaderDefaultSectionSize">
          <number>45</number>
         </attribute>
-        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderDefaultSectionSize">
-         <number>45</number>
-        </attribute>
-        <attribute name="horizontalHeaderCascadingSectionResizes">
-         <bool>false</bool>
-        </attribute>
         <column>
          <property name="text">
           <string>Run #</string>
@@ -966,7 +957,7 @@
      <x>0</x>
      <y>0</y>
      <width>1656</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1050,7 +1041,7 @@
   <connection>
    <sender>runSequenceLineEdit</sender>
    <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>runSequenceLineEditEvent()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1066,7 +1057,7 @@
   <connection>
    <sender>tableWidget</sender>
    <signal>customContextMenuRequested(QPoint)</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>tableWidgetRightClick()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1082,7 +1073,7 @@
   <connection>
    <sender>sfFileNameBrowseButton</sender>
    <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>browseFile()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1098,7 +1089,7 @@
   <connection>
    <sender>actionSavingAsConfiguration</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>savingAsConfiguration()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1114,7 +1105,7 @@
   <connection>
    <sender>dataTOFautoMode</sender>
    <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>selectAutoTOF()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1130,7 +1121,7 @@
   <connection>
    <sender>dataTOFmanualMode</sender>
    <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>selectManualTOF()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1146,7 +1137,7 @@
   <connection>
    <sender>actionLoadingConfiguration</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>loadingConfiguration()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1162,7 +1153,7 @@
   <connection>
    <sender>tableWidget</sender>
    <signal>cellClicked(int,int)</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>tableWidgetCellSelected()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1178,7 +1169,7 @@
   <connection>
    <sender>dataBackToValue</sender>
    <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>back2SpinBoxValueChanged()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1194,7 +1185,7 @@
   <connection>
    <sender>dataBackFromValue</sender>
    <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>back1SpinBoxValueChanged()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1210,7 +1201,7 @@
   <connection>
    <sender>dataPeakFromValue</sender>
    <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>peak1SpinBoxValueChanged()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1226,7 +1217,7 @@
   <connection>
    <sender>dataPeakToValue</sender>
    <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>peak2SpinBoxValueChanged()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1242,7 +1233,7 @@
   <connection>
    <sender>TOFmanualFromValue</sender>
    <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>manualTOFtextFieldValidated()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1258,7 +1249,7 @@
   <connection>
    <sender>TOFmanualToValue</sender>
    <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>manualTOFtextFieldValidated()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1274,7 +1265,7 @@
   <connection>
    <sender>incidentMediumComboBox</sender>
    <signal>currentIndexChanged(int)</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>incidentMediumComboBoxChanged()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1290,7 +1281,7 @@
   <connection>
    <sender>actionSavingConfiguration</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>savingConfiguration()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1306,7 +1297,7 @@
   <connection>
    <sender>toolButton</sender>
    <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>editIncidentMediumList()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1322,7 +1313,7 @@
   <connection>
    <sender>generateSFfileButton</sender>
    <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>generateSFfile()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1338,7 +1329,7 @@
   <connection>
    <sender>exportButton</sender>
    <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>exportScript()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1354,7 +1345,7 @@
   <connection>
    <sender>tableWidget</sender>
    <signal>cellChanged(int,int)</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>tableWidgetCellEntered()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1370,7 +1361,7 @@
   <connection>
    <sender>clearSFconentFileMenu</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SFCalculatorInterface</receiver>
    <slot>clearSFContentFile()</slot>
    <hints>
     <hint type="sourcelabel">

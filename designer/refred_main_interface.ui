@@ -4700,6 +4700,22 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionSF_Calculator</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>launch_sf_calculator()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -4726,5 +4742,6 @@ p, li { white-space: pre-wrap; }
   <slot>manual_tof_range_line_edit_validation()</slot>
   <slot>run_reduction_button()</slot>
   <slot>reduction_table_right_click()</slot>
+  <slot>launch_sf_calculator()</slot>
  </slots>
 </ui>

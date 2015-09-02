@@ -1,4 +1,4 @@
-from utilities import createAsciiFile, removeEmptyStrElementAndUpdateIndexSelected
+from RefRed.utilities import createAsciiFile, removeEmptyStrElementAndUpdateIndexSelected
 import os
 
 class CreateSFConfigXmlFile(object):

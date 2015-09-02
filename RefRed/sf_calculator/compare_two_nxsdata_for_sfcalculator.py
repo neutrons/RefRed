@@ -12,43 +12,43 @@ class CompareTwoNXSDataForSFcalculator(object):
 	nexusToPositionRun = None
 	resultComparison = 0
 	
-	def __init__(cls, nxsdataToCompareWith, nxsdataToPosition):
-		cls.nexusToCompareWithRun = nxsdataToCompareWith.active_data.nxs.getRun()
-		cls.nexusToPositionRun = nxsdataToPosition.active_data.nxs.getRun()
+	def __init__(self, nxsdataToCompareWith, nxsdataToPosition):
+		self.nexusToCompareWithRun = nxsdataToCompareWith.workspace.getRun()
+		self.nexusToPositionRun = nxsdataToPosition.workspace.getRun()
 				
-		compare1 = cls.compareParameter('LambdaRequest','descending')
+		compare1 = self.compareParameter('LambdaRequest', 'descending')
 		if compare1 != 0:
-			cls.resultComparison = compare1
+			self.resultComparison = compare1
 			return
 		
-		compare2 = cls.compareParameter('vATT','ascending')
+		compare2 = self.compareParameter('vATT', 'ascending')
 		if compare2 != 0:
-			cls.resultComparison = compare2
+			self.resultComparison = compare2
 			return
 		
-		compare3 = cls.compareParameter('SiHWidth','ascending', param_backup='S2HWidth')
+		compare3 = self.compareParameter('SiHWidth', 'ascending', param_backup='S2HWidth')
 		if compare3 != 0:
-			cls.resultComparison = compare3
+			self.resultComparison = compare3
 			return
 		
-		compare4 = cls.compareParameter('SiVHeight','ascending', param_backup = 'S2VHeight')
+		compare4 = self.compareParameter('SiVHeight', 'ascending', param_backup='S2VHeight')
 		if compare4 != 0:
-			cls.resultComparison = compare4
+			self.resultComparison = compare4
 			return
 		
-		compare5 = cls.compareParameter('S1HWidth','ascending')
+		compare5 = self.compareParameter('S1HWidth', 'ascending')
 		if compare5 != 0:
-			cls.resultComparison = compare5
+			self.resultComparison = compare5
 			return
 		
-		compare6 = cls.compareParameter('S1VHeight','ascending')
+		compare6 = self.compareParameter('S1VHeight', 'ascending')
 		if compare6 != 0:
-			cls.resultComparison = compare6
+			self.resultComparison = compare6
 			return
 		
-	def compareParameter(cls, param, order, param_backup=None):
-		_nexusToCompareWithRun = cls.nexusToCompareWithRun
-		_nexusToPositionRun = cls.nexusToPositionRun
+	def compareParameter(self, param, order, param_backup=None):
+		_nexusToCompareWithRun = self.nexusToCompareWithRun
+		_nexusToPositionRun = self.nexusToPositionRun
 		
 		try:
 			_paramNexusToCompareWith = float(_nexusToCompareWithRun.getProperty(param).value[0])
@@ -71,5 +71,5 @@ class CompareTwoNXSDataForSFcalculator(object):
 		else:
 			return 0
 		
-	def result(cls):
-		return cls.resultComparison
+	def result(self):
+		return self.resultComparison

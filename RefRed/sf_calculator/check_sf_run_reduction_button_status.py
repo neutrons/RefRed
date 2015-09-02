@@ -1,4 +1,4 @@
-from utilities import removeEmptyStrElementAndUpdateIndexSelected
+from RefRed.utilities import removeEmptyStrElementAndUpdateIndexSelected
 
 class CheckSfRunReductionButtonStatus(object):
 	
@@ -8,20 +8,20 @@ class CheckSfRunReductionButtonStatus(object):
 		cls.sf_gui = parent
 				
 	def isIncidentMediumReady(cls):
-		_list = [str(cls.sf_gui.ui.incidentMediumComboBox.itemText(i)) for i in range(1,cls.sf_gui.ui.incidentMediumComboBox.count())]
-		_current_index = cls.sf_gui.ui.incidentMediumComboBox.currentIndex()-1
+		_list = [str(cls.sf_gui.incidentMediumComboBox.itemText(i)) for i in range(1,cls.sf_gui.incidentMediumComboBox.count())]
+		_current_index = cls.sf_gui.incidentMediumComboBox.currentIndex()-1
 		[_list, current_index] = removeEmptyStrElementAndUpdateIndexSelected(_list, _current_index)
 		if _list == [] or current_index == -1:
 			return False
 		return True
 	
 	def isBigTableReady(cls):
-		nbr_row = cls.sf_gui.ui.tableWidget.rowCount()
+		nbr_row = cls.sf_gui.tableWidget.rowCount()
 		for _row in range(nbr_row):
-			peak1 = str(cls.sf_gui.ui.tableWidget.item(_row, 10).text())
-			peak2 = str(cls.sf_gui.ui.tableWidget.item(_row, 11).text())
-			back1 = str(cls.sf_gui.ui.tableWidget.item(_row, 12).text())
-			back2 = str(cls.sf_gui.ui.tableWidget.item(_row, 13).text())
+			peak1 = str(cls.sf_gui.tableWidget.item(_row, 10).text())
+			peak2 = str(cls.sf_gui.tableWidget.item(_row, 11).text())
+			back1 = str(cls.sf_gui.tableWidget.item(_row, 12).text())
+			back2 = str(cls.sf_gui.tableWidget.item(_row, 13).text())
 			
 			if (peak1 == 'N/A') or (peak2 == 'N/A') or (back1 == 'N/A') or (back2 == 'N/A'):
 				return false
@@ -35,7 +35,7 @@ class CheckSfRunReductionButtonStatus(object):
 		return True
 	
 	def isOutputFileNameReady(cls):
-		output_file_name = cls.sf_gui.ui.sfFileNameLabel.text()
+		output_file_name = cls.sf_gui.sfFileNameLabel.text()
 		if output_file_name == 'N/A':
 			return False
 		return True

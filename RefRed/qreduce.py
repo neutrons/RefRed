@@ -31,7 +31,7 @@ from lconfigdataset import LConfigDataset
 from logging import debug, info, warn #@Reimport
 from config import instrument
 from decorators import log_call, log_input, log_both
-from ipython_tools import AttributePloter, StringRepr, NiceDict
+#from ipython_tools import AttributePloter, StringRepr, NiceDict
 from utilities import convert_angle, weighted_sum
 import utilities
 import numpy as np
