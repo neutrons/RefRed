@@ -8,14 +8,15 @@ class ExtractLConfigDataSetRuns(object):
     
     def list_runs(self):
         _data_set = self.lconfigdataset
-        list_runs = []
+        full_list_runs = []
         i=0
         
         for _lconfig in _data_set:
             if _lconfig is not None:
-                _run = _lconfig.data_sets
-                if _run is not '':
-                    int_run = int(_run)
-                    list_runs.append(int_run)
+                _list_run = _lconfig.data_sets
+                if _list_run is not ['']:
+                    for _run in _list_run:
+                        int_run = int(_run)
+                        full_list_runs.append(int_run)
                 
-        return list_runs
+        return full_list_runs

@@ -1,0 +1,92 @@
+import numpy as np
+from PyQt4 import QtGui
+from PyQt4.QtCore import Qt
+
+from RefRed.plot.display_plots import DisplayPlots
+from RefRed.plot.clear_plots import ClearPlots
+
+class ReductionTableCheckBox(object):
+
+    row_selected = -1
+    prev_row_selected = -1
+    size_check_box_state_table = None
+    parent = None
+    _reduction_table_check_box_state = None
+    
+    def __init__(self, parent=None, row_selected=-1):
+        if row_selected == -1:
+            return
+        if parent == None:
+            return
+        
+        self.prev_row_selected = parent.prev_table_reduction_row_selected
+        self.parent = parent
+        self.row_selected = row_selected
+        self.handle_check_boxes_single_selection()
+        self.launch_update_of_plot()
+
+    def handle_check_boxes_single_selection(self):
+                
+        if self.row_selected == self.parent.current_table_reduction_row_selected:
+            self.parent.current_table_reduction_row_selected = -1
+        else:
+            self.parent.current_table_reduction_row_selected = self.row_selected
+
+        if self.row_selected == self.prev_row_selected:
+            pass
+        else:
+            _reduction_table_check_box_state = self.parent.reduction_table_check_box_state
+    
+            self.size_check_box_state_table = len(_reduction_table_check_box_state)
+            old_check_box_state = _reduction_table_check_box_state[self.row_selected]
+            _reduction_table_check_box_state = np.zeros((self.size_check_box_state_table), dtype=bool)
+            
+            _reduction_table_check_box_state[self.row_selected] = not old_check_box_state
+            self._reduction_table_check_box_state = _reduction_table_check_box_state
+            
+            self.update_state_of_all_checkboxes()
+            self.parent.reduction_table_check_box_state = _reduction_table_check_box_state
+            
+            self.parent.prev_table_reduction_row_selected = self.row_selected
+
+        
+    def launch_update_of_plot(self):
+        _row_selected = self.row_selected
+        _is_data_selected = self.is_data_tab_selected()
+        if self.is_row_selected_checked(_row_selected):
+            DisplayPlots(parent = self.parent,
+                         row = self.row_selected,
+                         is_data = self.is_data_tab_selected())
+        else:
+            ClearPlots(self.parent,
+                       is_data = _is_data_selected,
+                       is_norm = not(_is_data_selected),
+                       all_plots = True)
+        
+    def is_data_tab_selected(self):
+        if self.parent.ui.dataNormTabWidget.currentIndex() == 0:
+            return True
+        else:
+            return False
+        
+    def is_row_selected_checked(self, row_selected):
+        _widget = self.parent.ui.reductionTable.cellWidget(row_selected, 0)
+        current_state = _widget.checkState()
+        if current_state == Qt.Unchecked:
+            return False
+        else:
+            return True
+    
+    def update_state_of_all_checkboxes(self):
+        for row in range(self.size_check_box_state_table):
+            _state = self._reduction_table_check_box_state[row]
+            _widget = self.parent.ui.reductionTable.cellWidget(row, 0)
+            _widget.setChecked(_state)
+            
+    def change_state_of_given_checkbox(self, row):
+        _widget = self.parent.ui.reductionTable.cellWidget(row, 0)
+        _current_state = _widget.checkState()
+        if _current_state == Qt.Unchecked:
+            _widget.setChecked(True)
+        else:
+            _widget_setChecked(False)

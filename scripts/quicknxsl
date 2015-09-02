@@ -3,9 +3,11 @@
 '''
   Small program for quick access to SNS liquids reflectometer raw data.
 '''
-
 import os
 import sys
+from PyQt4.QtGui import QApplication, QSplashScreen, QPixmap
+from PyQt4.QtCore import Qt
+
 
 # if script was run from commandline
 try:
@@ -18,13 +20,8 @@ except NameError:
 #from quicknxs.gui_logging import setup_system, check_runstate
 
 def _run(argv=[]):
-    from PyQt4.QtGui import QApplication, QSplashScreen, QPixmap
-    from PyQt4.QtCore import Qt
     app=QApplication(argv)
-    from RefRed import version
-#    from quicknxs import icons_rc, version  #@UnusedImport
     splash=QSplashScreen(QPixmap(u':/General/logo_refl_hq.png'))
-#    splash.setStyleSheet("qproperty-alignment: AlignBottom;")
     splash.showMessage(u"""<html>
                        <div style="margin-bottom: 420;"> &nbsp;</div>
                        <div style="font-size: 12pt; margin-bottom: 15;">
@@ -35,13 +32,6 @@ def _run(argv=[]):
                                  alignment=Qt.AlignBottom|Qt.AlignHCenter)
     splash.show()
 
-    # set instrument configuration
-#    from quicknxs import config
-#    config.instrument=config.proxy.add_alias('ref_l', 'instrument')
-  
-    #from quicknxs.refl_main_gui import MainGUI
-    from RefRed.main import MainGui
-    
     window=MainGui(argv)
     window.show()
     splash.finish(window)
@@ -49,6 +39,7 @@ def _run(argv=[]):
 
 if __name__=='__main__':
     from RefRed import config
-#    setup_system()
-#    if 'QuickNXS.app' in sys.argv[0]: sys.argv.pop(-1)
+    from RefRed import version
+    from RefRed.main import MainGui
+    
     sys.exit(_run(sys.argv[1:]))

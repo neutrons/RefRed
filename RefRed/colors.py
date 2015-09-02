@@ -11,3 +11,6 @@ METADATA_CELL_COLOR = QtGui.QColor(100,100,150)
 
 VALUE_OK = QtCore.Qt.darkGreen
 VALUE_BAD = QtCore.Qt.red
+
+DATA_TABLE_BACKGROUND = QtCore.Qt.darkGreen
+NORM_TABLE_BACKGROUND = QtCore.Qt.red

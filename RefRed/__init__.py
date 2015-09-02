@@ -11,4 +11,10 @@ except:
   pass
 
 # used for * imports
-__all__=['qreduce', 'qcalc', 'qio', 'config', 'peakfinderalgorithm','autopopulatemaintable']
+__all__=['gui_handlging',
+         'qreduce', 
+         'qcalc', 
+         'qio', 
+         'config', 
+         'peakfinderalgorithms',
+         'autopopulatemaintable']

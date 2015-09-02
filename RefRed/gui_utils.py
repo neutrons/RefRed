@@ -1046,7 +1046,6 @@ class DelayedTrigger(QThread):
         if time()-ti>self.delay:
           self.activate.emit(name, args)
           del(self.actions[name])
-        print type(self)
         sleep(self.refresh)
 
   def __call__(self, action, *args):

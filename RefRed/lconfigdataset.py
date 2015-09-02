@@ -6,8 +6,10 @@ class LConfigDataset(object):
     '''
     proton_charge = -1
 
-    data_sets = ''
-    data_full_file_name = ''
+    data_runs_compatible = True
+    data_wks = None
+    data_sets = ['']
+    data_full_file_name = ['']
     data_peak = ['0','0']
     data_back = ['0','0']
     data_low_res = ['50','200']
@@ -19,8 +21,10 @@ class LConfigDataset(object):
     tof_units = 'ms'
     tof_auto_flag = True
 
-    norm_sets = ''
-    norm_full_file_name = ''
+    norm_runs_compatible = True
+    norm_wks = None
+    norm_sets = ['']
+    norm_full_file_name = ['']
     norm_flag = True
     norm_peak = ['0','0']
     norm_back = ['0','0']
@@ -35,6 +39,7 @@ class LConfigDataset(object):
     reduce_q_axis = []
     reduce_y_axis = []
     reduce_e_axis = []
+
     sf_auto = 1 # auto scaling calculated by program
     sf_auto_found_match = False 
     sf_manual = 1 # manual scaling defined by user
