@@ -1,6 +1,9 @@
+from PyQt4 import QtGui, QtCore
+from PyQt4.QtCore import Qt
 import numpy as np
 from RefRed.plot.clear_plots import ClearPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
+import RefRed.colors
 
 
 class ReductionTableHandler(object):
@@ -22,6 +25,108 @@ class ReductionTableHandler(object):
         if self.__is_row_displayed_in_range_selected:
             self.__clear_metadata()
             self.__clear_plots()
+        self.__clear_rows_big_table_data()
+        self.__clear_rows_reduction_table()
+        self.__shifs_none_empty_rows_reduction_table()
+
+    def __clear_rows_reduction_table(self):
+        _from_row = self.from_row
+        _to_row = self.to_row
+        _nbr_col = self.parent.ui.reductionTable.columnCount()
+        for row_index in range(_from_row, _to_row + 1):
+            for col_index in range(_nbr_col):
+                if col_index == 0:
+                    _widget = QtGui.QCheckBox()
+                    _widget.setChecked(False)
+                    _widget.setEnabled(True)
+                    signal_function = self.__get_checkbox_signal_function(row_index)
+                    QtCore.QObject.connect(_widget, QtCore.SIGNAL("stateChanged(int)"), 
+                                           eval(signal_function))
+                    self.parent.ui.reductionTable.setCellWidget(row_index, col_index, _widget)
+    
+                elif (col_index == 1) or (col_index == 2):
+                    _item = QtGui.QTableWidgetItem()
+                    _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
+                    #if (col_index == 1):
+                        #_color = QtGui.QColor(RefRed.colors.DATA_TABLE_BACKGROUND)
+                        #_item.setBackground(_color)
+                    #else:
+                        #_color = QtGui.QColor(RefRed.colors.NORM_TABLE_BACKGROUND)
+                        #_item.setBackground(_color)
+                    self.parent.ui.reductionTable.setItem(row_index, col_index, _item)
+    
+                else:
+                    _item = QtGui.QTableWidgetItem()
+                    _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+                    self.parent.ui.reductionTable.setItem(row_index, col_index, _item)
+              
+    def __shifs_none_empty_rows_reduction_table(self):
+        _nbr_row = self.parent.nbr_row_table_reduction
+        _to_row = self.to_row
+        if _to_row == (_nbr_row - 1):
+            return
+        
+        _from_row = self.from_row
+        _row_offset = 0
+        _nbr_col = self.parent.ui.reductionTable.columnCount()
+        for row_index in range(_to_row + 1, _nbr_row):
+            _target_row_index = _from_row + _row_offset
+            for col_index in range(_nbr_col):
+                if col_index == 0:
+                    _widget = self.parent.ui.reductionTable.cellWidget(_target_row_index, col_index)
+                    _widget.setChecked(self.__is_row_selected_checked(row_index))
+                else:
+                    _cell_value = self.parent.ui.reductionTable.item(row_index, col_index).text()
+                    self.parent.ui.reductionTable.item(_target_row_index, col_index).setText(_cell_value)
+            _row_offset += 1
+                    
+    def __is_row_selected_checked(self, row_selected):
+        _widget = self.parent.ui.reductionTable.cellWidget(row_selected, 0)
+        current_state = _widget.checkState()
+        if current_state == Qt.Unchecked:
+            return False
+        else:
+            return True
+            
+    def __get_checkbox_signal_function(self, row_index):
+        root_function_name = 'self.parent.reduction_table_visibility_changed_' + str(row_index)
+        return root_function_name
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        
+        
+        
+        
+    def __clear_rows_big_table_data(self):
+        big_table_data = self.parent.big_table_data
+        for row in range(self.from_row, self.to_row + 1):
+            big_table_data = np.delete(big_table_data, (self.from_row), axis=0)
+            big_table_data = np.append(big_table_data, [[None, None, None]], axis=0)
+        self.parent.big_table_data = big_table_data
 
     def __is_row_displayed_in_range_selected(self):
         _range_selected = range(self.from_row, self.to_row + 1)

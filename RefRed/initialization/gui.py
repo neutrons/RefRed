@@ -8,7 +8,7 @@ from file_menu import FileMenu as InitFileMenu
 from RefRed.reduced_config_files_handler import ReducedConfigFilesHandler
 from RefRed.plot.all_plot_axis import AllPlotAxis
 #from .gui_utils import DelayedTrigger
-import colors
+import RefRed.colors
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
 
 class Gui(object):
@@ -132,12 +132,12 @@ class Gui(object):
                 elif (col_index == 1) or (col_index == 2):
                     _item = QtGui.QTableWidgetItem()
                     _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
-                    if (col_index == 1):
-                        _color = QtGui.QColor(colors.DATA_TABLE_BACKGROUND)
-                        _item.setBackground(_color)
-                    else:
-                        _color = QtGui.QColor(colors.NORM_TABLE_BACKGROUND)
-                        _item.setBackground(_color)
+                    #if (col_index == 1):
+                        #_color = QtGui.QColor(RefRed.colors.DATA_TABLE_BACKGROUND)
+                        #_item.setBackground(_color)
+                    #else:
+                        #_color = QtGui.QColor(RefRed.colors.NORM_TABLE_BACKGROUND)
+                        #_item.setBackground(_color)
                     parent.ui.reductionTable.setItem(row_index, col_index, _item)
 
                 else:
