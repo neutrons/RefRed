@@ -119,10 +119,10 @@ class ReductionTableAutoFill(object):
         
     def loading_full_reductionTable(self):
         _list_nexus_sorted = self.list_nexus_sorted
-        _list_run_sorted = self.list_runs_sorted
+        _list_runs_sorted = self.list_runs_sorted
         _data_type_selected = self.data_type_selected
         _is_working_with_data_column = True if self.data_type_selected == 'data' else False
-        _list_run_sorted = format_to_list(_list_run_sorted)
+        _list_runs_sorted = format_to_list(_list_runs_sorted)
         _list_nexus_sorted = format_to_list(_list_nexus_sorted)
         
         self.parent.ui.progressBar_check5.setMinimum(0)
@@ -133,7 +133,7 @@ class ReductionTableAutoFill(object):
         
         for index, nexus in enumerate(_list_nexus_sorted):
             _is_display_requested = self.display_of_this_row_checked(index)
-            _list_run = format_to_list(_list_run_sorted[index])
+            _list_run = format_to_list(_list_runs_sorted[index])
             _nexus = format_to_list(nexus)
             o_check_and_load = CheckListRunCompatibilityAndDisplay(parent = self.parent,
                                                                    list_run = _list_run,
@@ -221,12 +221,19 @@ class ReductionTableAutoFill(object):
         list_lrdata_sorted = self.list_lrdata_sorted
         list_runs_sorted = self.list_runs_sorted
         list_wks_sorted = self.list_wks_sorted
+        list_nexus_sorted = self.list_nexus_sorted
         is_data = True if self.data_type_selected == 'data' else False
-        o_pop_reduction_table = PopulateReductionTableFromListLRData(parent=self.parent,
+        o_pop_reduction_table = PopulateReductionTableFromListLRData(parent = self.parent,
                                                                      list_lrdata = list_lrdata_sorted,
                                                                      list_wks = list_wks_sorted,
                                                                      list_run = list_runs_sorted,
+                                                                     list_nexus = list_nexus_sorted,
                                                                      is_data = is_data)
+        if not is_data:
+            self.list_runs_sorted = o_pop_reduction_table.list_runs_sorted
+            self.list_lrdata_sorted = o_pop_reduction_table.list_lrdata_sorted
+            self.list_wks_sorted = o_pop_reduction_table.list_wks_sorted
+            self.list_nexus_sorted = o_pop_reduction_table.list_nexus_sorted
         
         self.o_auto_fill_widgets_handler.step4()
 

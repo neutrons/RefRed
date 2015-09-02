@@ -24,6 +24,7 @@ class CheckListRunCompatibilityAndDisplay(object):
                  is_display_requested=False):
         self.parent = parent
         self.list_run = list_run
+        
         self.list_nexus = list_nexus
         self.row = row
         self.col = 1 if is_working_with_data_column else 2

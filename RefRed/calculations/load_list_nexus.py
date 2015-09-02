@@ -13,7 +13,10 @@ class LoadListNexus(object):
     list_run_loaded = []
     list_nexuss_loaded = []
     
-    def __init__(self, list_nexus=None, list_run=None, metadata_only=False, prefix='data'):
+    def __init__(self, list_nexus=None, 
+                 list_run=None, 
+                 metadata_only=False, 
+                 prefix='data'):
         if list_nexus is None:
             return
         self.list_nexus = list_nexus

@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Wed Sep  2 11:03:22 2015
+# Created: Wed Sep  2 15:51:31 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -81,14 +81,12 @@ class Ui_MainWindow(object):
         self.label.setObjectName("label")
         self.gridLayout_2.addWidget(self.label, 0, 0, 1, 1)
         self.data_sequence_lineEdit = QtGui.QLineEdit(self.groupBox_3)
-        self.data_sequence_lineEdit.setText("")
         self.data_sequence_lineEdit.setObjectName("data_sequence_lineEdit")
         self.gridLayout_2.addWidget(self.data_sequence_lineEdit, 0, 1, 1, 1)
         self.label_2 = QtGui.QLabel(self.groupBox_3)
         self.label_2.setObjectName("label_2")
         self.gridLayout_2.addWidget(self.label_2, 1, 0, 1, 1)
         self.norm_sequence_lineEdit = QtGui.QLineEdit(self.groupBox_3)
-        self.norm_sequence_lineEdit.setText("")
         self.norm_sequence_lineEdit.setObjectName("norm_sequence_lineEdit")
         self.gridLayout_2.addWidget(self.norm_sequence_lineEdit, 1, 1, 1, 1)
         self.verticalLayout_14.addLayout(self.gridLayout_2)
@@ -1741,7 +1739,9 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Liquids Reflectometer Reduction", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_3.setTitle(QtGui.QApplication.translate("MainWindow", "Run Numbers", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Data:", None, QtGui.QApplication.UnicodeUTF8))
+        self.data_sequence_lineEdit.setText(QtGui.QApplication.translate("MainWindow", "128910-128915", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Normalization:", None, QtGui.QApplication.UnicodeUTF8))
+        self.norm_sequence_lineEdit.setText(QtGui.QApplication.translate("MainWindow", "128910-128915", None, QtGui.QApplication.UnicodeUTF8))
         self.label_check1.setText(QtGui.QApplication.translate("MainWindow", "Locate Runs", None, QtGui.QApplication.UnicodeUTF8))
         self.label_check2.setText(QtGui.QApplication.translate("MainWindow", "Load NeXus (light)", None, QtGui.QApplication.UnicodeUTF8))
         self.label_check3.setText(QtGui.QApplication.translate("MainWindow", "Sort Runs", None, QtGui.QApplication.UnicodeUTF8))
