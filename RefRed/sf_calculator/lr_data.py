@@ -4,7 +4,7 @@ import logging
 import math
 import os
 
-from RefRed.sort_nxsdata import SortNXSData
+from RefRed.sf_calculator.sort_nxsdata import SortNXSData
 from RefRed.peakfinderalgorithms.peakfinderderivation import PeakFinderDerivation
 from RefRed.plot.all_plot_axis import AllPlotAxis
 
