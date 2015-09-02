@@ -107,7 +107,7 @@ class ReductionHandler(object):
                        row = -1,
                        workspace = None):
         big_table_data = self.big_table_data
-        _config = big_table_data[2, row]
+        _config = big_table_data[row, 2]
         if _config is None:
             _config = LConfigDataset()
         mtd_workspace = mtd[workspace]
