@@ -2,7 +2,7 @@
 '''
   Script used for setup and installation purpose. 
   
-  The script can create exe stand alone programs under windows, but py2app doesn't word until now.
+  The script can create exe stand alone programs under windows, but py2app doesn't work until now.
 '''
 
 import sys, os

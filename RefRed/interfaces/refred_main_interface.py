@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Wed Sep  2 15:51:31 2015
+# Created: Fri Sep  4 13:41:21 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1625,6 +1625,8 @@ class Ui_MainWindow(object):
         self.menuFile.setObjectName("menuFile")
         self.menuAdvanced = QtGui.QMenu(self.menubar)
         self.menuAdvanced.setObjectName("menuAdvanced")
+        self.menuReduction = QtGui.QMenu(self.menubar)
+        self.menuReduction.setObjectName("menuReduction")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -1688,6 +1690,8 @@ class Ui_MainWindow(object):
         self.action_save_configuration = QtGui.QAction(MainWindow)
         self.action_save_configuration.setEnabled(False)
         self.action_save_configuration.setObjectName("action_save_configuration")
+        self.actionRunReduction = QtGui.QAction(MainWindow)
+        self.actionRunReduction.setObjectName("actionRunReduction")
         self.menuHelp.addSeparator()
         self.menuHelp.addAction(self.actionAbout)
         self.menuFile.addAction(self.action_load_configuration)
@@ -1695,8 +1699,10 @@ class Ui_MainWindow(object):
         self.menuFile.addAction(self.action_save_configuration)
         self.menuAdvanced.addAction(self.actionMetadataFinder)
         self.menuAdvanced.addAction(self.actionSF_Calculator)
+        self.menuReduction.addAction(self.actionRunReduction)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuAdvanced.menuAction())
+        self.menubar.addAction(self.menuReduction.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(MainWindow)
@@ -1733,6 +1739,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.reduceButton, QtCore.SIGNAL("pressed()"), MainWindow.run_reduction_button)
         QtCore.QObject.connect(self.reductionTable, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), MainWindow.reduction_table_right_click)
         QtCore.QObject.connect(self.actionSF_Calculator, QtCore.SIGNAL("triggered()"), MainWindow.launch_sf_calculator)
+        QtCore.QObject.connect(self.actionRunReduction, QtCore.SIGNAL("triggered()"), MainWindow.run_reduction_button)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1939,6 +1946,7 @@ class Ui_MainWindow(object):
         self.menuHelp.setTitle(QtGui.QApplication.translate("MainWindow", "Help", None, QtGui.QApplication.UnicodeUTF8))
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "Configuration", None, QtGui.QApplication.UnicodeUTF8))
         self.menuAdvanced.setTitle(QtGui.QApplication.translate("MainWindow", "Tools", None, QtGui.QApplication.UnicodeUTF8))
+        self.menuReduction.setTitle(QtGui.QApplication.translate("MainWindow", "Reduction", None, QtGui.QApplication.UnicodeUTF8))
         self.toolBar.setWindowTitle(QtGui.QApplication.translate("MainWindow", "toolBar", None, QtGui.QApplication.UnicodeUTF8))
         self.actionOpen.setText(QtGui.QApplication.translate("MainWindow", "Open...", None, QtGui.QApplication.UnicodeUTF8))
         self.actionOpen.setToolTip(QtGui.QApplication.translate("MainWindow", "Open a new file (Ctrl+O)", None, QtGui.QApplication.UnicodeUTF8))
@@ -1982,6 +1990,7 @@ class Ui_MainWindow(object):
         self.actionMetadataFinder.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+M", None, QtGui.QApplication.UnicodeUTF8))
         self.action_save_configuration.setText(QtGui.QApplication.translate("MainWindow", "Save", None, QtGui.QApplication.UnicodeUTF8))
         self.action_save_configuration.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+S", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionRunReduction.setText(QtGui.QApplication.translate("MainWindow", "RUN", None, QtGui.QApplication.UnicodeUTF8))
 
 from mplwidgetnolog import MPLWidgetNoLog
 from .mplwidget import MPLWidget

@@ -3983,8 +3983,15 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionMetadataFinder"/>
     <addaction name="actionSF_Calculator"/>
    </widget>
+   <widget class="QMenu" name="menuReduction">
+    <property name="title">
+     <string>Reduction</string>
+    </property>
+    <addaction name="actionRunReduction"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuAdvanced"/>
+   <addaction name="menuReduction"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -4182,6 +4189,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Meta+S</string>
+   </property>
+  </action>
+  <action name="actionRunReduction">
+   <property name="text">
+    <string>RUN</string>
    </property>
   </action>
  </widget>
@@ -4705,6 +4717,22 @@ p, li { white-space: pre-wrap; }
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>launch_sf_calculator()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRunReduction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>run_reduction_button()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
