@@ -92,9 +92,7 @@ class ReductionTableAutoFill(object):
         self.list_of_run_from_input = None
         self.list_of_run_from_lconfig = None
         self.list_lrdata_sorted = None
-    
         self.runs_found = 0
-    
         self.number_of_runs = None
         self.filename_thread_array = None
         self.number_of_runs = None

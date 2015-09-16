@@ -1,5 +1,6 @@
 from RefRed.calculations.add_list_nexus import AddListNexus
 from RefRed.calculations.lr_data import LRData
+from RefRed.calculations.locate_list_run import LocateListRun
 from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
 from PyQt4 import QtGui
 
@@ -17,26 +18,30 @@ class LoadReductionTableFromLConfigDataSet(object):
             if lconfig is None:
                 return
             
-            list_data_nexus = lconfig.data_full_file_name
             list_data_run = lconfig.data_sets
+            o_list_data_nexus = LocateListRun(list_run = list_data_run)
+            list_data_nexus= o_list_data_nexus.list_run_found
             _add_data_nexus = AddListNexus(list_nexus = list_data_nexus,
-                                     list_run = list_data_run,
-                                     metadata_only = False,
-                                     check_nexus_compatibility = False,
-                                     prefix = 'data')
+                                           list_run = list_data_run,
+                                           metadata_only = False,
+                                           check_nexus_compatibility = False,
+                                           prefix = 'data')
             data_lrdata = LRData(_add_data_nexus.wks)
             self.update_lrdata(lrdata = data_lrdata, 
                                lconfig = lconfig, 
                                type = 'data',
                                row = index_row)
-
-            list_norm_nexus = lconfig.norm_full_file_name
+            
             list_norm_run = lconfig.norm_sets
+            o_list_norm_nexus = LocateListRun(list_run = list_norm_run)
+            list_norm_nexus = o_list_norm_nexus.list_run_found
+            if list_norm_nexus == []:
+                continue
             _add_norm_nexus = AddListNexus(list_nexus = list_norm_nexus,
-                                     list_run = list_norm_run,
-                                     metadata_only = False,
-                                     check_nexus_compatibility = False,
-                                     prefix = 'norm')
+                                           list_run = list_norm_run,
+                                           metadata_only = False,
+                                           check_nexus_compatibility = False,
+                                           prefix = 'norm')
             norm_lrdata = LRData(_add_norm_nexus.wks)
             self.update_lrdata(lrdata = norm_lrdata, 
                                lconfig = lconfig, 

@@ -60,9 +60,9 @@ class ExportXMLConfig(object):
 	    str_array.append('  <RefLData>\n')
 	    str_array.append('   <peak_selection_type>narrow</peak_selection_type>\n')
 	    
-	    data_full_file_name = _data.full_file_name
-	    if type(data_full_file_name) == type([]):
-		data_full_file_name = ','.join(data_full_file_name)
+	    #data_full_file_name = _data.full_file_name
+	    #if type(data_full_file_name) == type([]):
+		#data_full_file_name = ','.join(data_full_file_name)
 	    data_peak = _data.peak
 	    data_back = _data.back
 	    data_low_res = _data.low_res
@@ -77,19 +77,27 @@ class ExportXMLConfig(object):
 	    incident_angle = _data.incident_angle
 
             _norm = _big_table_data[row,1]
-
-	    norm_full_file_name = _norm.full_file_name
-	    if type(norm_full_file_name) == type([]):
-		norm_full_file_name = ','.join(norm_full_file_name)
-
-	    norm_flag = _norm.use_it_flag
-	    norm_peak = _norm.peak
-	    norm_back = _norm.back
-	    norm_back_flag = _norm.back_flag
-	    norm_low_res = _norm.low_res
-	    norm_low_res_flag = _norm.low_res_flag
-	    norm_lambda_requested = _norm.lambda_requested
-
+	    if (_norm is not None):
+		norm_full_file_name = _norm.full_file_name
+		#if type(norm_full_file_name) == type([]):
+		    #norm_full_file_name = ','.join(norm_full_file_name)
+		norm_flag = _norm.use_it_flag
+		norm_peak = _norm.peak
+		norm_back = _norm.back
+		norm_back_flag = _norm.back_flag
+		norm_low_res = _norm.low_res
+		norm_low_res_flag = _norm.low_res_flag
+		norm_lambda_requested = _norm.lambda_requested
+	    else:
+		#norm_full_file_name = ''
+		norm_flag = False
+		norm_peak = [0,255]
+		norm_back = [0,255]
+		norm_back_flag = False
+		norm_low_res = [0,255]
+		norm_low_res_flag = False
+		norm_lambda_requested = -1
+	    
             str_array.append('   <from_peak_pixels>' + str(data_peak[0]) + '</from_peak_pixels>\n')
             str_array.append('   <to_peak_pixels>' + str(data_peak[1]) + '</to_peak_pixels>\n')
             str_array.append('   <peak_discrete_selection>N/A</peak_discrete_selection>\n')
@@ -109,9 +117,9 @@ class ExportXMLConfig(object):
 
             _data_run_number = self.parent.ui.reductionTable.item(row,1).text()
             str_array.append('   <data_sets>' + _data_run_number + '</data_sets>\n')
-            if type(data_full_file_name) == type([]):
-                data_full_file_name = ','.join(data_full_file_name)
-            str_array.append('   <data_full_file_name>' + data_full_file_name + '</data_full_file_name>\n')
+            #if type(data_full_file_name) == type([]):
+                #data_full_file_name = ','.join(data_full_file_name)
+            #str_array.append('   <data_full_file_name>' + data_full_file_name + '</data_full_file_name>\n')
 
             str_array.append('   <x_min_pixel>' + str(data_low_res[0]) + '</x_min_pixel>\n')
             str_array.append('   <x_max_pixel>' + str(data_low_res[1]) + '</x_max_pixel>\n')
@@ -140,9 +148,9 @@ class ExportXMLConfig(object):
             else:
                 _norm_run_number = ''
             str_array.append('   <norm_dataset>' + _norm_run_number + '</norm_dataset>\n')
-            if type(norm_full_file_name) == type([]):
-                norm_full_file_name = ','.join(norm_full_file_name)
-            str_array.append('   <norm_full_file_name>' + norm_full_file_name + '</norm_full_file_name>\n')
+            #if type(norm_full_file_name) == type([]):
+                #norm_full_file_name = ','.join(norm_full_file_name)
+            #str_array.append('   <norm_full_file_name>' + norm_full_file_name + '</norm_full_file_name>\n')
 
             q_min = '0'   #FIXME
             q_max = '0'   #FIXME
