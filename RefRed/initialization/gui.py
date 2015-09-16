@@ -14,7 +14,7 @@ from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
 class Gui(object):
 
     parent = None
-    vertical_header = ["Ploted",
+    vertical_header = ["Plotted",
                        "Data Run #",
                        "Norm. Run #",
                        u'2\u03b8 (\u00B0)',

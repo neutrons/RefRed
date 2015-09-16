@@ -44,9 +44,9 @@ class CompareTwoLRData(object):
         value_2 = _lrdata_2.theta
         
         if value_1 < value_2:
-            return -1
-        elif value_1 > value_2:
             return 1
+        elif value_1 > value_2:
+            return -1
         else:
             return 0
         
