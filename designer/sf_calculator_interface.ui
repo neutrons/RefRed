@@ -32,7 +32,7 @@
            <string>1234 or 1234,1236,1239 or 1234-1238</string>
           </property>
           <property name="text">
-           <string/>
+           <string>120142, 120143</string>
           </property>
          </widget>
         </item>
@@ -766,6 +766,15 @@
         <attribute name="verticalHeaderDefaultSectionSize">
          <number>45</number>
         </attribute>
+        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderDefaultSectionSize">
+         <number>45</number>
+        </attribute>
+        <attribute name="horizontalHeaderCascadingSectionResizes">
+         <bool>false</bool>
+        </attribute>
         <column>
          <property name="text">
           <string>Run #</string>
@@ -957,7 +966,7 @@
      <x>0</x>
      <y>0</y>
      <width>1656</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1374,6 +1383,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tableWidget</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>SFCalculatorInterface</receiver>
+   <slot>tableWidgetRowSelected()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>827</x>
+     <y>683</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>827</x>
+     <y>610</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>runSequenceLineEditEvent()</slot>
@@ -1397,5 +1422,6 @@
   <slot>exportScript()</slot>
   <slot>tableWidgetCellEntered()</slot>
   <slot>clearSFContentFile()</slot>
+  <slot>tableWidgetRowSelected()</slot>
  </slots>
 </ui>

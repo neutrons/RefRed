@@ -648,6 +648,11 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         self.checkRunReductionButton()
         self.enabledWidgets(wdg_enabled)
         
+    def tableWidgetRowSelected(self):
+        col = self.tableWidget.currentColumn()
+        row = self.tableWidget.currentRow()
+        self.tableWidgetCellSelected(row, col)
+
     def tableWidgetCellSelected(self, row, col):
         """
             This method is declared in the .ui

@@ -18,7 +18,7 @@ class LRData(object):
 
     read_options = dict(is_auto_tof_finder = True,
                         is_auto_peak_finder = True,
-                        back_offset_from_peak = True,
+                        back_offset_from_peak = 3,
                         bins = 50,
                         angle_offset = 0.001)
 
