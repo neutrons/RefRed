@@ -41,7 +41,7 @@ class ReducedDataHandler(object):
             #else:
             #_brush.setColor(QtCore.Qt.red)
 
-            sf_auto = "%.2f" %_lconfig.sf_auto
+            sf_auto = "%.4f" %_lconfig.sf_auto
             _auto_item = QtGui.QTableWidgetItem(sf_auto)
             _auto_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             #_auto_item.setForeground(_brush)
