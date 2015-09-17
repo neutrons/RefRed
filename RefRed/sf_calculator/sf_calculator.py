@@ -18,6 +18,7 @@ from RefRed.sf_calculator.create_sf_config_xml_file import CreateSFConfigXmlFile
 from RefRed.sf_calculator.load_and_sort_nxsdata_for_sf_calculator import LoadAndSortNXSDataForSFcalculator
 from RefRed.sf_calculator.check_sf_run_reduction_button_status import CheckSfRunReductionButtonStatus
 from RefRed.sf_calculator.reduction_sf_calculator import ReductionSfCalculator
+from RefRed.sf_calculator.sf_calculator_right_click import SFCalculatorRightClick
 
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.utilities import convertTOF
@@ -340,8 +341,10 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         self.sfFileNamePreview.setPlainText(data)
         self.sfFileNamePreview.setEnabled(True)
 
-    def tableWidgetRightClick(self):
-        print "tableWidgetRightClick not implemented"
+    def tableWidgetRightClick(self, position):
+        o_sf_calculator_table_right_click = SFCalculatorRightClick(parent = self,
+                                                                   position =  position)
+        o_sf_calculator_table_right_click.run()
 
     def generateSFfile(self):
         ReductionSfCalculator(parent=self)
