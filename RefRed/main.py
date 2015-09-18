@@ -364,3 +364,15 @@ class MainGui(QtGui.QMainWindow):
     def launch_sf_calculator(self):
         o_sf_calculator = SFCalculator()
         o_sf_calculator.show()
+        
+    def stitching_auto_sf_radio_button(self):
+        o_reduced_plot = ReducedDataHandler(parent = self)
+        o_reduced_plot.plot()
+        
+    def stitching_manual_sf_radio_button(self):
+        o_reduced_plot = ReducedDataHandler(parent = self)
+        o_reduced_plot.plot()
+        
+    def stitching_1_sf_radio_button(self):
+        o_reduced_plot = ReducedDataHandler(parent = self)
+        o_reduced_plot.plot()

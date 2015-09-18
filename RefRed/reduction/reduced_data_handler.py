@@ -78,7 +78,7 @@ class ReducedDataHandler(object):
             _q_axis = _lconfig.q_axis_for_display
             _y_axis = _lconfig.y_axis_for_display
             _e_axis = _lconfig.e_axis_for_display
-            sf = _lconfig.sf
+            sf = self.generate_selected_sf(lconfig = _lconfig)
             
             _y_axis = np.array(_y_axis, dtype = np.float)
             _e_axis = np.array(_e_axis, dtype = np.float)
@@ -95,6 +95,14 @@ class ReducedDataHandler(object):
                                                         e_axis, 
                                                         color = self.get_current_color_plot(index_row))
             self.parent.ui.data_stitching_plot.draw()
+        
+    def generate_selected_sf(self, lconfig=None):
+        if self.parent.ui.autoSF.isChecked():
+            return lconfig.sf_auto
+        elif self.parent.ui.manualSF.isChecked():
+            return lconfig.sf_manual
+        else:
+            return 1
             
     def get_current_color_plot(self, index_color):
         _color_list = self.colors
