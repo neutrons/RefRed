@@ -75,9 +75,9 @@ class ReducedDataHandler(object):
             if _lconfig is None:
                 return        
         
-            _q_axis = _lconfig.q_axis_for_display
-            _y_axis = _lconfig.y_axis_for_display
-            _e_axis = _lconfig.e_axis_for_display
+            _q_axis = _lconfig.q_axis_for_display.copy()
+            _y_axis = _lconfig.y_axis_for_display.copy()
+            _e_axis = _lconfig.e_axis_for_display.copy()
             sf = self.generate_selected_sf(lconfig = _lconfig)
             
             _y_axis = np.array(_y_axis, dtype = np.float)
@@ -85,14 +85,18 @@ class ReducedDataHandler(object):
             
             _y_axis = _y_axis / sf
             _e_axis = _e_axis / sf
-            
-            [y_axis, e_axis] = self.produced_selected_output_scaled(_q_axis,
-                                                                    _y_axis, 
-                                                                    _e_axis)
-            
+
+            o_produce_output = ProducedSelectedOutputScaled(parent = self.parent, 
+                                                            q_axis = _q_axis,
+                                                            y_axis = _y_axis,
+                                                            e_axis = _e_axis)
+            o_produce_output.calculate()
+            y_axis = o_produce_output.output_y_axis
+            e_axis = o_produce_output.output_e_axis
+
             self.parent.ui.data_stitching_plot.errorbar(_q_axis,
                                                         y_axis,
-                                                        e_axis, 
+                                                        yerr = e_axis, 
                                                         color = self.get_current_color_plot(index_row))
             self.parent.ui.data_stitching_plot.draw()
         
@@ -109,34 +113,55 @@ class ReducedDataHandler(object):
         _modulo_index = index_color % len(_color_list)
         return _color_list[_modulo_index]
 
-    def produced_selected_output_scaled(self, q_axis, y_axis, e_axis):
-        scale_type = self.get_selected_scale_type()
+        
+class ProducedSelectedOutputScaled(object):
 
+    parent = None
+    axis_type = 'RvsQ'
+    
+    def __init__(self, parent=None, q_axis=None, y_axis=None, e_axis=None):
+        self.parent = parent
+        self.input_q_axis = q_axis
+        self.input_y_axis = y_axis
+        self.input_e_axis = e_axis
+    
+        self.init_output()
+        
+    def init_output(self):
+        self.output_y_axis = None
+        self.output_e_axis = None
+        
+    def calculate(self):
+        self.get_selected_scale_type()
+        
+        input_q_axis = self.input_q_axis
+        input_y_axis = self.input_y_axis
+        input_e_axis = self.input_e_axis
+        
         # R vs Q selected
-        if type == 'RvsQ':
-            return [y_axis, e_axis]
+        if self.axis_type == 'RvsQ':
+            self.output_y_axis = input_y_axis
+            self.output_e_axis = input_e_axis
+            return
     
         # RQ4 vs Q selected
-        if type == 'RQ4vsQ':
-            _q_axis_4 = q_axis ** 4
-            _final_y_axis = y_axis * _q_axis_4
-            _final_e_axis = e_axis * _q_axis_4
-            return [_final_y_axis, _final_e_axis]
+        if self.axis_type == 'RQ4vsQ':
+            _q_axis_4 = input_q_axis ** 4
+            self.output_y_axis = input_y_axis * _q_axis_4
+            self.output_e_axis = input_e_axis * _q_axis_4
+            return
     
         # Log(R) vs Q
         # make sure there is no <= 0 values of _y_axis
-        y_axis[y_axis <=0] = np.nan
-        _final_y_axis = np.log(y_axis)
+        input_y_axis[input_y_axis <=0] = np.nan
+        self.output_y_axis = np.log(input_y_axis)
     #    _final_e_axis = np.log(_e_axis)
-        _final_e_axis = e_axis  ## FIXME
-        return [_final_y_axis, _final_e_axis]
+        self.output_e_axis = input_e_axis  ## FIXME
         
     def get_selected_scale_type(self):
-        type = 'RvsQ'
+        self.axis_type = 'RvsQ'
         if self.parent.ui.RQ4vsQ_2.isChecked():
-            type = 'RQ4vsQ'
+            self.axis_type = 'RQ4vsQ'
         elif self.parent.ui.LogRvsQ_2.isChecked():
-            type = 'LogRvsQ'
-        return type    
+            self.axis_type = 'LogRvsQ'
         
-            

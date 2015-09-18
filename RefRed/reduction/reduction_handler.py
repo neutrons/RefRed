@@ -10,6 +10,7 @@ class ReductionHandler(object):
     big_table_data = None
     list_reduced_workspace = []
     nbr_reduction_process = -1
+    debug = False
     
     def __init__(self, parent=None):
         self.parent = parent
@@ -33,7 +34,7 @@ class ReductionHandler(object):
             
             self.launch_reduction(o_general = o_general_settings,
                                   o_individual = o_individual_settings,
-                                  debug = True)
+                                  debug = self.debug)
             self.save_reduction(row = row_index,
                                 workspace = o_individual_settings._output_workspace_name)
             
@@ -147,9 +148,6 @@ class ReductionHandler(object):
     def cleanup(self):
         o_mantid_utility = MantidUtility(parent = self.parent)
         o_mantid_utility.cleanup_workspaces()
-        
-
-
 
 
 class IndividualReductionSettingsHandler(object):

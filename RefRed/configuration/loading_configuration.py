@@ -83,6 +83,7 @@ class LoadingConfiguration(object):
 		o_scaling_factor_widget.fill_incident_medium_list(scaling_factor_file)
 		
 		
+		
 
 	def getMetadataObject(parent, node):
 		iMetadata = LConfigDataset()

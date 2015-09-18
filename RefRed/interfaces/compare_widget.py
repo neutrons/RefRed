@@ -3,36 +3,22 @@
 
 # Form implementation generated from reading ui file 'designer//compare_widget.ui'
 #
-# Created: Thu Sep 17 12:42:54 2015
-#      by: PyQt4 UI code generator 4.10.1
+# Created: Fri Sep 18 11:13:51 2015
+#      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
-try:
-    _fromUtf8 = QtCore.QString.fromUtf8
-except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
-
 class Ui_Form(object):
     def setupUi(self, Form):
-        Form.setObjectName(_fromUtf8("Form"))
+        Form.setObjectName("Form")
         Form.resize(851, 718)
         self.verticalLayout = QtGui.QVBoxLayout(Form)
-        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
+        self.verticalLayout.setObjectName("verticalLayout")
         self.splitter = QtGui.QSplitter(Form)
         self.splitter.setOrientation(QtCore.Qt.Vertical)
-        self.splitter.setObjectName(_fromUtf8("splitter"))
+        self.splitter.setObjectName("splitter")
         self.frame_7 = QtGui.QFrame(self.splitter)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -41,11 +27,11 @@ class Ui_Form(object):
         self.frame_7.setSizePolicy(sizePolicy)
         self.frame_7.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame_7.setFrameShadow(QtGui.QFrame.Sunken)
-        self.frame_7.setObjectName(_fromUtf8("frame_7"))
+        self.frame_7.setObjectName("frame_7")
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.frame_7)
-        self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
         self.comparePlot = MPLWidget(self.frame_7)
-        self.comparePlot.setObjectName(_fromUtf8("comparePlot"))
+        self.comparePlot.setObjectName("comparePlot")
         self.verticalLayout_6.addWidget(self.comparePlot)
         self.widget_6 = QtGui.QWidget(self.splitter)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
@@ -53,14 +39,13 @@ class Ui_Form(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.widget_6.sizePolicy().hasHeightForWidth())
         self.widget_6.setSizePolicy(sizePolicy)
-        self.widget_6.setObjectName(_fromUtf8("widget_6"))
+        self.widget_6.setObjectName("widget_6")
         self.horizontalLayout_15 = QtGui.QHBoxLayout(self.widget_6)
-        self.horizontalLayout_15.setMargin(0)
-        self.horizontalLayout_15.setObjectName(_fromUtf8("horizontalLayout_15"))
+        self.horizontalLayout_15.setObjectName("horizontalLayout_15")
         self.compareList = QtGui.QTableWidget(self.widget_6)
         self.compareList.setSelectionMode(QtGui.QAbstractItemView.NoSelection)
         self.compareList.setSelectionBehavior(QtGui.QAbstractItemView.SelectItems)
-        self.compareList.setObjectName(_fromUtf8("compareList"))
+        self.compareList.setObjectName("compareList")
         self.compareList.setColumnCount(3)
         self.compareList.setRowCount(0)
         item = QtGui.QTableWidgetItem()
@@ -73,36 +58,33 @@ class Ui_Form(object):
         self.frame_8 = QtGui.QFrame(self.widget_6)
         self.frame_8.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame_8.setFrameShadow(QtGui.QFrame.Raised)
-        self.frame_8.setObjectName(_fromUtf8("frame_8"))
+        self.frame_8.setObjectName("frame_8")
         self.verticalLayout_10 = QtGui.QVBoxLayout(self.frame_8)
-        self.verticalLayout_10.setObjectName(_fromUtf8("verticalLayout_10"))
+        self.verticalLayout_10.setObjectName("verticalLayout_10")
         self.pushButton = QtGui.QPushButton(self.frame_8)
-        self.pushButton.setObjectName(_fromUtf8("pushButton"))
+        self.pushButton.setObjectName("pushButton")
         self.verticalLayout_10.addWidget(self.pushButton)
         self.pushButton_2 = QtGui.QPushButton(self.frame_8)
-        self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
+        self.pushButton_2.setObjectName("pushButton_2")
         self.verticalLayout_10.addWidget(self.pushButton_2)
         self.horizontalLayout_15.addWidget(self.frame_8)
         self.verticalLayout.addWidget(self.splitter)
 
         self.retranslateUi(Form)
-        QtCore.QObject.connect(self.pushButton_2, QtCore.SIGNAL(_fromUtf8("pressed()")), Form.open_file)
-        QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("pressed()")), Form.clear_plot)
-        QtCore.QObject.connect(self.compareList, QtCore.SIGNAL(_fromUtf8("itemChanged(QTableWidgetItem*)")), Form.draw)
-        QtCore.QObject.connect(self.compareList, QtCore.SIGNAL(_fromUtf8("cellDoubleClicked(int,int)")), Form.edit_cell)
+        QtCore.QObject.connect(self.pushButton_2, QtCore.SIGNAL("pressed()"), Form.open_file)
+        QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL("pressed()"), Form.clear_plot)
+        QtCore.QObject.connect(self.compareList, QtCore.SIGNAL("itemChanged(QTableWidgetItem*)"), Form.draw)
+        QtCore.QObject.connect(self.compareList, QtCore.SIGNAL("cellDoubleClicked(int,int)"), Form.edit_cell)
         QtCore.QMetaObject.connectSlotsByName(Form)
         Form.setTabOrder(self.compareList, self.pushButton_2)
         Form.setTabOrder(self.pushButton_2, self.pushButton)
 
     def retranslateUi(self, Form):
-        Form.setWindowTitle(_translate("Form", "Form", None))
-        item = self.compareList.horizontalHeaderItem(0)
-        item.setText(_translate("Form", "File", None))
-        item = self.compareList.horizontalHeaderItem(1)
-        item.setText(_translate("Form", "Color", None))
-        item = self.compareList.horizontalHeaderItem(2)
-        item.setText(_translate("Form", "Label", None))
-        self.pushButton.setText(_translate("Form", "Clear", None))
-        self.pushButton_2.setText(_translate("Form", "Open", None))
+        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.compareList.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("Form", "File", None, QtGui.QApplication.UnicodeUTF8))
+        self.compareList.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("Form", "Color", None, QtGui.QApplication.UnicodeUTF8))
+        self.compareList.horizontalHeaderItem(2).setText(QtGui.QApplication.translate("Form", "Label", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton.setText(QtGui.QApplication.translate("Form", "Clear", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_2.setText(QtGui.QApplication.translate("Form", "Open", None, QtGui.QApplication.UnicodeUTF8))
 
 from .mplwidget import MPLWidget

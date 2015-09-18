@@ -3,43 +3,29 @@
 
 # Form implementation generated from reading ui file 'designer//display_metadata.ui'
 #
-# Created: Thu Sep 17 12:42:54 2015
-#      by: PyQt4 UI code generator 4.10.1
+# Created: Fri Sep 18 11:13:51 2015
+#      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
-try:
-    _fromUtf8 = QtCore.QString.fromUtf8
-except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
-
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
-        Dialog.setObjectName(_fromUtf8("Dialog"))
+        Dialog.setObjectName("Dialog")
         Dialog.resize(1178, 979)
         self.verticalLayout_2 = QtGui.QVBoxLayout(Dialog)
-        self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.tabWidget = QtGui.QTabWidget(Dialog)
-        self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
+        self.tabWidget.setObjectName("tabWidget")
         self.Metadata = QtGui.QWidget()
-        self.Metadata.setObjectName(_fromUtf8("Metadata"))
+        self.Metadata.setObjectName("Metadata")
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.Metadata)
-        self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.verticalLayout_4 = QtGui.QVBoxLayout()
-        self.verticalLayout_4.setObjectName(_fromUtf8("verticalLayout_4"))
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.metadataTable = QtGui.QTableWidget(self.Metadata)
-        self.metadataTable.setObjectName(_fromUtf8("metadataTable"))
+        self.metadataTable.setObjectName("metadataTable")
         self.metadataTable.setColumnCount(3)
         self.metadataTable.setRowCount(0)
         item = QtGui.QTableWidgetItem()
@@ -50,23 +36,23 @@ class Ui_Dialog(object):
         self.metadataTable.setHorizontalHeaderItem(2, item)
         self.verticalLayout_4.addWidget(self.metadataTable)
         self.horizontalLayout_2 = QtGui.QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem)
         self.saveMetadataAsAsciiButton = QtGui.QPushButton(self.Metadata)
         self.saveMetadataAsAsciiButton.setEnabled(False)
-        self.saveMetadataAsAsciiButton.setObjectName(_fromUtf8("saveMetadataAsAsciiButton"))
+        self.saveMetadataAsAsciiButton.setObjectName("saveMetadataAsAsciiButton")
         self.horizontalLayout_2.addWidget(self.saveMetadataAsAsciiButton)
         self.verticalLayout_4.addLayout(self.horizontalLayout_2)
         self.verticalLayout_3.addLayout(self.verticalLayout_4)
-        self.tabWidget.addTab(self.Metadata, _fromUtf8(""))
+        self.tabWidget.addTab(self.Metadata, "")
         self.Configure = QtGui.QWidget()
-        self.Configure.setObjectName(_fromUtf8("Configure"))
+        self.Configure.setObjectName("Configure")
         self.verticalLayout_5 = QtGui.QVBoxLayout(self.Configure)
-        self.verticalLayout_5.setObjectName(_fromUtf8("verticalLayout_5"))
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.configureTable = QtGui.QTableWidget(self.Configure)
         self.configureTable.setAlternatingRowColors(True)
-        self.configureTable.setObjectName(_fromUtf8("configureTable"))
+        self.configureTable.setObjectName("configureTable")
         self.configureTable.setColumnCount(4)
         self.configureTable.setRowCount(0)
         item = QtGui.QTableWidgetItem()
@@ -81,51 +67,44 @@ class Ui_Dialog(object):
         self.configureTable.verticalHeader().setSortIndicatorShown(False)
         self.verticalLayout_5.addWidget(self.configureTable)
         self.horizontalLayout = QtGui.QHBoxLayout()
-        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
+        self.horizontalLayout.setObjectName("horizontalLayout")
         self.unselectAllButton = QtGui.QPushButton(self.Configure)
-        self.unselectAllButton.setObjectName(_fromUtf8("unselectAllButton"))
+        self.unselectAllButton.setObjectName("unselectAllButton")
         self.horizontalLayout.addWidget(self.unselectAllButton)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
         self.exportConfigurationButton = QtGui.QPushButton(self.Configure)
-        self.exportConfigurationButton.setObjectName(_fromUtf8("exportConfigurationButton"))
+        self.exportConfigurationButton.setObjectName("exportConfigurationButton")
         self.horizontalLayout.addWidget(self.exportConfigurationButton)
         self.importConfigurationButton = QtGui.QPushButton(self.Configure)
-        self.importConfigurationButton.setObjectName(_fromUtf8("importConfigurationButton"))
+        self.importConfigurationButton.setObjectName("importConfigurationButton")
         self.horizontalLayout.addWidget(self.importConfigurationButton)
         self.verticalLayout_5.addLayout(self.horizontalLayout)
-        self.tabWidget.addTab(self.Configure, _fromUtf8(""))
+        self.tabWidget.addTab(self.Configure, "")
         self.verticalLayout_2.addWidget(self.tabWidget)
 
         self.retranslateUi(Dialog)
         self.tabWidget.setCurrentIndex(0)
-        QtCore.QObject.connect(self.tabWidget, QtCore.SIGNAL(_fromUtf8("currentChanged(int)")), Dialog.userChangedTab)
-        QtCore.QObject.connect(self.saveMetadataAsAsciiButton, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.saveMetadataListAsAscii)
-        QtCore.QObject.connect(self.exportConfigurationButton, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.exportConfiguration)
-        QtCore.QObject.connect(self.importConfigurationButton, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.importConfiguration)
-        QtCore.QObject.connect(self.unselectAllButton, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.unselectAll)
+        QtCore.QObject.connect(self.tabWidget, QtCore.SIGNAL("currentChanged(int)"), Dialog.userChangedTab)
+        QtCore.QObject.connect(self.saveMetadataAsAsciiButton, QtCore.SIGNAL("clicked()"), Dialog.saveMetadataListAsAscii)
+        QtCore.QObject.connect(self.exportConfigurationButton, QtCore.SIGNAL("clicked()"), Dialog.exportConfiguration)
+        QtCore.QObject.connect(self.importConfigurationButton, QtCore.SIGNAL("clicked()"), Dialog.importConfiguration)
+        QtCore.QObject.connect(self.unselectAllButton, QtCore.SIGNAL("clicked()"), Dialog.unselectAll)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog", None))
-        item = self.metadataTable.horizontalHeaderItem(0)
-        item.setText(_translate("Dialog", "Name", None))
-        item = self.metadataTable.horizontalHeaderItem(1)
-        item.setText(_translate("Dialog", "Value", None))
-        item = self.metadataTable.horizontalHeaderItem(2)
-        item.setText(_translate("Dialog", "Units", None))
-        self.saveMetadataAsAsciiButton.setText(_translate("Dialog", "Save List of Metadata as ASCII ...", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.Metadata), _translate("Dialog", "Metadata", None))
-        item = self.configureTable.horizontalHeaderItem(0)
-        item.setText(_translate("Dialog", "Display ?", None))
-        item = self.configureTable.horizontalHeaderItem(1)
-        item.setText(_translate("Dialog", "Name", None))
-        item = self.configureTable.horizontalHeaderItem(2)
-        item.setText(_translate("Dialog", "Value", None))
-        item = self.configureTable.horizontalHeaderItem(3)
-        item.setText(_translate("Dialog", "Units", None))
-        self.unselectAllButton.setText(_translate("Dialog", "Unselect All", None))
-        self.exportConfigurationButton.setText(_translate("Dialog", "Export Configuration ...", None))
-        self.importConfigurationButton.setText(_translate("Dialog", "Import Configuration ...", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.Configure), _translate("Dialog", "Configure", None))
+        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
+        self.metadataTable.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("Dialog", "Name", None, QtGui.QApplication.UnicodeUTF8))
+        self.metadataTable.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("Dialog", "Value", None, QtGui.QApplication.UnicodeUTF8))
+        self.metadataTable.horizontalHeaderItem(2).setText(QtGui.QApplication.translate("Dialog", "Units", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveMetadataAsAsciiButton.setText(QtGui.QApplication.translate("Dialog", "Save List of Metadata as ASCII ...", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.Metadata), QtGui.QApplication.translate("Dialog", "Metadata", None, QtGui.QApplication.UnicodeUTF8))
+        self.configureTable.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("Dialog", "Display ?", None, QtGui.QApplication.UnicodeUTF8))
+        self.configureTable.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("Dialog", "Name", None, QtGui.QApplication.UnicodeUTF8))
+        self.configureTable.horizontalHeaderItem(2).setText(QtGui.QApplication.translate("Dialog", "Value", None, QtGui.QApplication.UnicodeUTF8))
+        self.configureTable.horizontalHeaderItem(3).setText(QtGui.QApplication.translate("Dialog", "Units", None, QtGui.QApplication.UnicodeUTF8))
+        self.unselectAllButton.setText(QtGui.QApplication.translate("Dialog", "Unselect All", None, QtGui.QApplication.UnicodeUTF8))
+        self.exportConfigurationButton.setText(QtGui.QApplication.translate("Dialog", "Export Configuration ...", None, QtGui.QApplication.UnicodeUTF8))
+        self.importConfigurationButton.setText(QtGui.QApplication.translate("Dialog", "Import Configuration ...", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.Configure), QtGui.QApplication.translate("Dialog", "Configure", None, QtGui.QApplication.UnicodeUTF8))
 
