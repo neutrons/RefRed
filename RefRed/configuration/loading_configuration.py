@@ -6,6 +6,7 @@ from numpy import empty
 from RefRed.lconfigdataset import LConfigDataset
 from RefRed.configuration.populate_reduction_table_from_lconfigdataset import PopulateReductionTableFromLConfigDataSet as PopulateReductionTable
 from RefRed.configuration.load_reduction_table_from_lconfigdataset import LoadReductionTableFromLConfigDataSet as LoadReductionTable
+from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidgetsHandler
 
 class LoadingConfiguration(object):
 	
@@ -43,9 +44,10 @@ class LoadingConfiguration(object):
 			info('No configuration file loaded')
 			self.load_config_worked = False
 			return
-		self.populate_big_table_data()
+		self.populate_big_table_data_with_lconfig()
+		self.populate_main_gui_general_settings()
 		
-	def populate_big_table_data(self):
+	def populate_big_table_data_with_lconfig(self):
 		dom = self.dom
 		RefLData = dom.getElementsByTagName('RefLData')
 		nbrRowBigTable = len(RefLData)
@@ -59,6 +61,29 @@ class LoadingConfiguration(object):
 		
 		self.parent.big_table_data = big_table_data
 			
+	def populate_main_gui_general_settings(self):
+		dom = self.dom
+		RefLData = dom.getElementsByTagName('RefLData')
+		node_0 = RefLData[0]
+		
+		q_step = self.getNodeValue(node_0, 'q_step')
+		self.parent.ui.qStep.setText(q_step)
+		
+		angle_offset = self.getNodeValue(node_0, 'angle_offset')
+		self.parent.ui.angleOffsetValue.setText(angle_offset)
+		
+		angle_offset_error = self.getNodeValue(node_0, 'angle_offset_error')
+		self.parent.ui.angleOffsetError.setText(angle_offset_error)
+		
+		scaling_factor_file = self.getNodeValue(node_0, 'scaling_factor_file')
+		self.parent.full_scaling_factor_file_name = scaling_factor_file
+		short_scaling_factor_file = os.path.basename(scaling_factor_file)
+		self.parent.ui.scalingFactorFile.setText(short_scaling_factor_file)
+		o_scaling_factor_widget = ScalingFactorWidgetsHandler(parent = self.parent)
+		o_scaling_factor_widget.fill_incident_medium_list(scaling_factor_file)
+		
+		
+
 	def getMetadataObject(parent, node):
 		iMetadata = LConfigDataset()
 		
