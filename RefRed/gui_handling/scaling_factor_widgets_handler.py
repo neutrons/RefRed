@@ -24,10 +24,14 @@ class ScalingFactorWidgetsHandler(object):
             return
         
         self.parent.path_config = os.path.dirname(filename)
+        self.fill_incident_medium_list(filename)
+        
+    def fill_incident_medium_list(self, filename):
         try:
             _listMedium = self.parse_scaling_factor_file(filename)
             self.parent.ui.selectIncidentMediumList.addItems(_listMedium)
             self.parent.ui.scalingFactorFile.setText(os.path.basename(filename))
+            self.parent.full_scaling_factor_file_name = filename
         except:
             _listMedium = 'N/A'
         if self.parent.ui.selectIncidentMediumList.count() > 1:

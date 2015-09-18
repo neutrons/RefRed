@@ -33,7 +33,7 @@ class ReductionHandler(object):
             
             self.launch_reduction(o_general = o_general_settings,
                                   o_individual = o_individual_settings,
-                                  debug = False)
+                                  debug = True)
             self.save_reduction(row = row_index,
                                 workspace = o_individual_settings._output_workspace_name)
             
@@ -73,7 +73,6 @@ class ReductionHandler(object):
             self.print_message('CropFirstAndLastPoints', False)
             self.print_message('SlitsWidthFlag', o_general.slits_width_flag)
             self.print_message('OutputWorkspace', o_individual._output_workspace_name)       
-            return
         
         LiquidsReflectometryReduction( RunNumbers = o_individual._data_run_numbers,
                                        NormalizationRunNumber = o_individual._norm_run_numbers,
@@ -342,7 +341,7 @@ class GlobalReductionSettingsHandler(object):
         return self.parent.ui.scalingFactorFlag.isChecked()
         
     def get_scaling_factor_file(self):
-        return str(self.parent.ui.scalingFactorFile.text())
+        return str(self.parent.full_scaling_factor_file_name)
         
     def get_q_step(self):
         _q_step = self.parent.ui.qStep.text()

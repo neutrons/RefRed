@@ -38,6 +38,8 @@ class MainGui(QtGui.QMainWindow):
     path_ascii = '.'  # ascii files
     path_config = '/home/j35/sandbox' # config files
     
+    full_scaling_factor_file_name = ''
+    
     nbr_row_table_reduction = 30
     prev_table_reduction_row_selected = -1
     current_table_reduction_row_selected = -1
