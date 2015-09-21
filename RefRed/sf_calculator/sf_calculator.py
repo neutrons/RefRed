@@ -171,7 +171,6 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         self.file_menu_object = InitSFCalculatorFileMenu(self)
 
     def singleYTPlot(self, is_pan_or_zoom_activated):
-        print('in singleYTPlot')
         SFSinglePlotClick(self, 'yt', is_pan_or_zoom_activated=is_pan_or_zoom_activated)
         
     def singleYIPlot(self, is_pan_or_zoom_activated):
@@ -406,10 +405,59 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
 
     def loadingConfiguration(self):
         print "loadingConfiguration not implemented"
-    def manualTOFtextFieldValidated(self):
-        print "manualTOFtextFieldValidated not implemented"
+
+    def manualTOFtextFieldValidated(self, with_plot_update = True):
+        tof1 = float(self.TOFmanualFromValue.text())
+        tof2 = float(self.TOFmanualToValue.text())
+        self.updateTableWithTOFinfos(tof1, tof2)
+    
+        tof_min = min([tof1, tof2]) * 1000
+        tof_max = max([tof1, tof2]) * 1000
+        _list_nxsdata_sorted = self.list_nxsdata_sorted
+        _nxdata  = _list_nxsdata_sorted[self.current_table_row_selected]
+        _nxdata.tof_range = [tof_min, tof_max]
+        _list_nxsdata_sorted[self.current_table_row_selected] = _nxdata
+        self.list_nxsdata_sorted = _list_nxsdata_sorted
+        if with_plot_update:
+            self.displayPlot(row=cls.current_table_row_selected, yi_plot=False)
+        self.fileHasBeenModified()
+
+    def updateTableWithTOFinfos(self, tof1_ms, tof2_ms):
+        '''update all the rows that have the same lambda requested 
+        '''
+        list_row = self.getListRowWithSameLambda()
+        for index, _row in enumerate(list_row):
+            if index == 0:
+                color = self.tableWidget.item(_row, 0).backgroundColor()
+            _item = QtGui.QTableWidgetItem("%.2f"%tof1_ms)
+            _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+            _brush_OK = QtGui.QBrush()
+            _brush_OK.setColor(RefRed.colors.VALUE_OK)			
+            _item.setForeground(_brush_OK)
+            _item.setBackgroundColor(color)
+            self.tableWidget.setItem(_row, 14, _item)
+            _item = QtGui.QTableWidgetItem("%.2f"%tof2_ms)
+            _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+            _brush_OK = QtGui.QBrush()
+            _brush_OK.setColor(RefRed.colors.VALUE_OK)			
+            _item.setForeground(_brush_OK)
+            _item.setBackgroundColor(color)
+            self.tableWidget.setItem(_row, 15, _item)
+
+    def getListRowWithSameLambda(self):
+        _row = self.current_table_row_selected
+        _lambda_requested = self.tableWidget.item(_row,5).text()
+        nbr_row = self.tableWidget.rowCount()
+        list_row = []
+        for i in range(nbr_row):
+            _lambda_to_compare_with = self.tableWidget.item(i, 5).text()
+            if _lambda_to_compare_with == _lambda_requested:
+                list_row.append(i)
+        return list_row
+
     def incidentMediumComboBoxChanged(self):
         self.fileHasBeenModified()
+
     def savingConfiguration(self):
         print "savingConfiguration not implemented"
 
@@ -1049,4 +1097,11 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
     def importConfiguration(self, filename):
         _configObject = LoadSFConfigAndPopulateGUI(parent=self, filename=filename)
         return _configObject.getLoadingStatus()
-
+    
+    def tof_validation(self, tof_auto_switch, tof1, tof2, with_plot_update=True):
+        self.dataTOFautoMode.setChecked(tof_auto_switch)
+        self.dataTOFmanualMode.setChecked(not tof_auto_switch)
+        self.manualTOFWidgetsEnabled(not tof_auto_switch)
+        self.TOFmanualFromValue.setText("%.2f"%tof1)
+        self.TOFmanualToValue.setText("%.2f"%tof2)
+        self.manualTOFtextFieldValidated(with_plot_update = with_plot_update)
