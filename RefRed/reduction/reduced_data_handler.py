@@ -83,8 +83,8 @@ class ReducedDataHandler(object):
             _y_axis = np.array(_y_axis, dtype = np.float)
             _e_axis = np.array(_e_axis, dtype = np.float)
             
-            _y_axis = _y_axis / sf
-            _e_axis = _e_axis / sf
+            _y_axis = _y_axis * sf
+            _e_axis = _e_axis *sf
 
             o_produce_output = ProducedSelectedOutputScaled(parent = self.parent, 
                                                             q_axis = _q_axis,
