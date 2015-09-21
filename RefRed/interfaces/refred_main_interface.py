@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Mon Sep 21 09:51:30 2015
+# Created: Mon Sep 21 11:36:10 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1726,6 +1726,9 @@ class Ui_MainWindow(object):
         self.action_save_configuration.setObjectName("action_save_configuration")
         self.actionRunReduction = QtGui.QAction(MainWindow)
         self.actionRunReduction.setObjectName("actionRunReduction")
+        self.actionExportScript = QtGui.QAction(MainWindow)
+        self.actionExportScript.setEnabled(False)
+        self.actionExportScript.setObjectName("actionExportScript")
         self.menuHelp.addSeparator()
         self.menuHelp.addAction(self.actionAbout)
         self.menuFile.addAction(self.action_load_configuration)
@@ -1734,6 +1737,8 @@ class Ui_MainWindow(object):
         self.menuAdvanced.addAction(self.actionMetadataFinder)
         self.menuAdvanced.addAction(self.actionSF_Calculator)
         self.menuReduction.addAction(self.actionRunReduction)
+        self.menuReduction.addSeparator()
+        self.menuReduction.addAction(self.actionExportScript)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuAdvanced.menuAction())
         self.menubar.addAction(self.menuReduction.menuAction())
@@ -1777,6 +1782,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.autoSF, QtCore.SIGNAL("clicked()"), MainWindow.stitching_sf_radio_button)
         QtCore.QObject.connect(self.manualSF, QtCore.SIGNAL("clicked()"), MainWindow.stitching_sf_radio_button)
         QtCore.QObject.connect(self.oneSF, QtCore.SIGNAL("clicked()"), MainWindow.stitching_sf_radio_button)
+        QtCore.QObject.connect(self.actionExportScript, QtCore.SIGNAL("triggered()"), MainWindow.export_reduction_script_button)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -2027,6 +2033,7 @@ class Ui_MainWindow(object):
         self.action_save_configuration.setText(QtGui.QApplication.translate("MainWindow", "Save", None, QtGui.QApplication.UnicodeUTF8))
         self.action_save_configuration.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+S", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRunReduction.setText(QtGui.QApplication.translate("MainWindow", "RUN", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionExportScript.setText(QtGui.QApplication.translate("MainWindow", "Export Script ...", None, QtGui.QApplication.UnicodeUTF8))
 
 from mplwidgetnolog import MPLWidgetNoLog
 from .mplwidget import MPLWidget

@@ -330,6 +330,10 @@ class MainGui(QtGui.QMainWindow):
         o_reduced_plot.populate_table()
         o_reduced_plot.plot()
 
+    def export_reduction_script_button(self):
+        o_reduction = ReductionHandler(parent = self)
+        o_reduction.export()
+
     def data_stitching_table_manual_spin_box(self):
         pass
     

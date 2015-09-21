@@ -4060,6 +4060,8 @@ p, li { white-space: pre-wrap; }
      <string>Reduction</string>
     </property>
     <addaction name="actionRunReduction"/>
+    <addaction name="separator"/>
+    <addaction name="actionExportScript"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuAdvanced"/>
@@ -4269,6 +4271,14 @@ p, li { white-space: pre-wrap; }
   <action name="actionRunReduction">
    <property name="text">
     <string>RUN</string>
+   </property>
+  </action>
+  <action name="actionExportScript">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Export Script ...</string>
    </property>
   </action>
  </widget>
@@ -4867,6 +4877,22 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionExportScript</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>export_reduction_script_button()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -4895,5 +4921,6 @@ p, li { white-space: pre-wrap; }
   <slot>reduction_table_right_click()</slot>
   <slot>launch_sf_calculator()</slot>
   <slot>stitching_sf_radio_button()</slot>
+  <slot>export_reduction_script_button()</slot>
  </slots>
 </ui>

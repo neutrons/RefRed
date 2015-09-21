@@ -46,6 +46,11 @@ class ReductionHandler(object):
         self.parent.big_table_data = self.big_table_data
         o_reduction_progressbar_handler.end()
 
+    def export(self):
+        o_export_script = ExportDataReductionScript(parent = self.parent)
+        o_export_script.define_export_filename()
+        o_export_script.make_script()
+        
     def stitch(self):
         o_calculate_sf = CalculateSF(parent = self.parent,
                                      nbr_process = self.nbr_reduction_process)
