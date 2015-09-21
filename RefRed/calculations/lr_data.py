@@ -130,7 +130,7 @@ class LRData(object):
         self.calculate_lambda_range()
         self.q_range = self.calculate_q_range()
         # self.lambda_range = self.calculate_lambda_range()
-        self.incident_angle = self.calculate_theta(False)
+        self.incident_angle = 2.*self.calculate_theta(with_offset = False) # 2.theta
 
         # Proton charge
         _proton_charge = float(mt_run.getProperty('gd_prtn_chrg').value)
@@ -257,10 +257,10 @@ class LRData(object):
         thi_units = self.thi_units
 
         # Make sure we have radians
-        if thi_units == 'degree':
-            thi_value *= math.pi / 180.0
-        if tthd_units == 'degree':
-            tthd_value *= math.pi / 180.0
+        #if thi_units == 'degree':
+        #    thi_value *= math.pi / 180.0
+        #if tthd_units == 'degree':
+        #    tthd_value *= math.pi / 180.0
 
         theta = math.fabs(tthd_value - thi_value) / 2.
         if theta < 0.001:
@@ -270,8 +270,10 @@ class LRData(object):
         angle_offset = 0.0
         if with_offset and "angle_offset" in self.read_options:
             angle_offset = float(self.read_options['angle_offset'])
-        angle_offset_deg = angle_offset
-        return theta + angle_offset_deg * math.pi / 180.0
+            angle_offset_deg = angle_offset
+            theta = theta + angle_offset_deg * math.pi / 180.0
+            
+        return theta
 
     def getIxyt(self, nxs_histo):
         '''
