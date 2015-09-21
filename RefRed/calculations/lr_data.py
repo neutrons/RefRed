@@ -7,6 +7,7 @@ import gc
 from mantid.simpleapi import *
 #from RefRed.sort_nxsdata import SortNXSData
 from RefRed.peakfinderalgorithms.peakfinderderivation import PeakFinderDerivation
+from RefRed.peakfinderalgorithms.lowresfinderderivation import LowResFinderDerivation
 import RefRed.constants as constants
 from RefRed.plot.all_plot_axis import AllPlotAxis
 
@@ -157,6 +158,10 @@ class LRData(object):
             back1 = int(peak1 - backOffsetFromPeak)
             back2 = int(peak2 + backOffsetFromPeak)
             self.back = [str(back1), str(back2)]
+            
+            lw_pf = LowResFinderDerivation(range(len(self.countsxdata)), self.countsxdata)
+            [lowres1, lowres2] = lw_pf.getRange()
+            self.low_res = [str(lowres1), str(lowres2)]
 
     ################## Properties for easy data access ##########################
     # return the size of the data stored in memory for this dataset
