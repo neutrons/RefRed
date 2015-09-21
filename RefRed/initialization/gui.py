@@ -18,7 +18,7 @@ class Gui(object):
                        "Data Run #",
                        "Norm. Run #",
                        u'2\u03b8 (\u00B0)',
-                       u'\u03bbmin(\u00c5)',
+                       u'\u03bbmin (\u00c5)',
                        u'\u03bbmax (\u00c5)',
                        u'Qmin (1/\u00c5)',
                        u'Qmax (1/\u00c5)',

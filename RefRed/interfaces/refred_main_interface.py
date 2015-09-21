@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Mon Sep 21 11:36:10 2015
+# Created: Mon Sep 21 13:31:16 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1747,8 +1747,8 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.plotTab.setCurrentIndex(0)
         self.dataNormTabWidget.setCurrentIndex(0)
-        QtCore.QObject.connect(self.data_sequence_lineEdit, QtCore.SIGNAL("returnPressed()"), MainWindow.data_sequence_event)
-        QtCore.QObject.connect(self.norm_sequence_lineEdit, QtCore.SIGNAL("returnPressed()"), MainWindow.norm_sequence_event)
+        QtCore.QObject.connect(self.data_sequence_lineEdit, QtCore.SIGNAL("returnPressed()"), MainWindow.data_norm_sequence_event)
+        QtCore.QObject.connect(self.norm_sequence_lineEdit, QtCore.SIGNAL("returnPressed()"), MainWindow.data_norm_sequence_event)
         QtCore.QObject.connect(self.dataNormTabWidget, QtCore.SIGNAL("currentChanged(int)"), MainWindow.data_norm_tab_changed)
         QtCore.QObject.connect(self.action_load_configuration, QtCore.SIGNAL("triggered()"), MainWindow.load_configuration)
         QtCore.QObject.connect(self.action_save_as_configuration, QtCore.SIGNAL("triggered()"), MainWindow.save_as_configuration)

@@ -98,6 +98,7 @@ class ReducedDataHandler(object):
                                                         y_axis,
                                                         yerr = e_axis, 
                                                         color = self.get_current_color_plot(index_row))
+            self.parent.ui.data_stitching_plot.set_yscale('log')
             self.parent.ui.data_stitching_plot.draw()
         
     def generate_selected_sf(self, lconfig=None):

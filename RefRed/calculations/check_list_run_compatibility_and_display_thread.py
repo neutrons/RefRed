@@ -61,7 +61,6 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
         self.runs_are_compatible = runs_are_compatible
         self.update_lconfigdataset()
         
-        print('runs_are_compatible: ' , runs_are_compatible)
         if runs_are_compatible:
             self.loading_lr_data()
             self.updating_reductionTable_metadata()

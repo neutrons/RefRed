@@ -4321,7 +4321,7 @@ p, li { white-space: pre-wrap; }
    <sender>data_sequence_lineEdit</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>data_sequence_event()</slot>
+   <slot>data_norm_sequence_event()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>307</x>
@@ -4337,7 +4337,7 @@ p, li { white-space: pre-wrap; }
    <sender>norm_sequence_lineEdit</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>norm_sequence_event()</slot>
+   <slot>data_norm_sequence_event()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>307</x>
@@ -4901,8 +4901,6 @@ p, li { white-space: pre-wrap; }
   <slot>norm_peak_spinbox_validation()</slot>
   <slot>data_peak_spinbox_validation()</slot>
   <slot>table_reduction_cell_changed()</slot>
-  <slot>data_sequence_event()</slot>
-  <slot>norm_sequence_event()</slot>
   <slot>data_norm_tab_changed()</slot>
   <slot>load_configuration()</slot>
   <slot>save_configuration()</slot>
@@ -4922,5 +4920,6 @@ p, li { white-space: pre-wrap; }
   <slot>launch_sf_calculator()</slot>
   <slot>stitching_sf_radio_button()</slot>
   <slot>export_reduction_script_button()</slot>
+  <slot>data_norm_sequence_event()</slot>
  </slots>
 </ui>

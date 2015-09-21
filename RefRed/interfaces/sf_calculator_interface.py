@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//sf_calculator_interface.ui'
 #
-# Created: Mon Sep 21 11:36:10 2015
+# Created: Mon Sep 21 13:31:16 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -396,7 +396,7 @@ class Ui_SFCalculatorInterface(object):
         self.statusbar.setObjectName("statusbar")
         SFCalculatorInterface.setStatusBar(self.statusbar)
         self.actionLoadingConfiguration = QtGui.QAction(SFCalculatorInterface)
-        self.actionLoadingConfiguration.setEnabled(True)
+        self.actionLoadingConfiguration.setEnabled(False)
         self.actionLoadingConfiguration.setObjectName("actionLoadingConfiguration")
         self.actionSavingAsConfiguration = QtGui.QAction(SFCalculatorInterface)
         self.actionSavingAsConfiguration.setEnabled(False)

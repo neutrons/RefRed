@@ -989,7 +989,7 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionLoadingConfiguration">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Load ...</string>

@@ -288,12 +288,17 @@ class MainGui(QtGui.QMainWindow):
         o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent = self)
         o_auto_tof_range.line_edit_validation()
         
+    def data_norm_sequence_event(self):
+        self.data_sequence_event()
+        self.norm_sequence_event()
+
     def data_sequence_event(self):
         str_data_input = self.ui.data_sequence_lineEdit.text()
         ReductionTableAutoFill(parent = self,
                                list_of_run_from_input = str_data_input,
                                data_type_selected = 'data')
         self.ui.data_sequence_lineEdit.setText('')
+        self.norm_sequence_event()
         
     def norm_sequence_event(self):
         str_norm_input = self.ui.norm_sequence_lineEdit.text()
