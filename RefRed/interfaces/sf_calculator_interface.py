@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//sf_calculator_interface.ui'
 #
-# Created: Mon Sep 21 13:31:16 2015
+# Created: Mon Sep 21 13:56:43 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,6 @@ class Ui_SFCalculatorInterface(object):
         self.label.setObjectName("label")
         self.horizontalLayout_2.addWidget(self.label)
         self.runSequenceLineEdit = QtGui.QLineEdit(self.centralwidget)
-        self.runSequenceLineEdit.setText("")
         self.runSequenceLineEdit.setObjectName("runSequenceLineEdit")
         self.horizontalLayout_2.addWidget(self.runSequenceLineEdit)
         self.incidentMediumComboBox = QtGui.QComboBox(self.centralwidget)
@@ -444,6 +443,7 @@ class Ui_SFCalculatorInterface(object):
         SFCalculatorInterface.setWindowTitle(QtGui.QApplication.translate("SFCalculatorInterface", "SF Calculator", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("SFCalculatorInterface", "Run or Sequence of Runs:", None, QtGui.QApplication.UnicodeUTF8))
         self.runSequenceLineEdit.setToolTip(QtGui.QApplication.translate("SFCalculatorInterface", "1234 or 1234,1236,1239 or 1234-1238", None, QtGui.QApplication.UnicodeUTF8))
+        self.runSequenceLineEdit.setText(QtGui.QApplication.translate("SFCalculatorInterface", "130766-130767", None, QtGui.QApplication.UnicodeUTF8))
         self.incidentMediumComboBox.setItemText(0, QtGui.QApplication.translate("SFCalculatorInterface", "Select or Define Incident Medium ...", None, QtGui.QApplication.UnicodeUTF8))
         self.toolButton.setText(QtGui.QApplication.translate("SFCalculatorInterface", "...", None, QtGui.QApplication.UnicodeUTF8))
         self.error_label.setText(QtGui.QApplication.translate("SFCalculatorInterface", "SELECTION ERROR", None, QtGui.QApplication.UnicodeUTF8))

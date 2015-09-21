@@ -1,11 +1,12 @@
 from PyQt4.QtGui import QDialog, QPalette, QFileDialog
 from PyQt4.QtCore import Qt
-from plot2d_dialog_refl_interface import Ui_Dialog as UiPlot
-from mplwidget import MPLWidget
-import colors
-import utilities
 import os
 from logging import info
+
+from RefRed.interfaces.mplwidget import MPLWidget
+from RefRed.interfaces.plot2d_dialog_refl_interface import Ui_Dialog as UiPlot
+import RefRed.colors
+import RefRed.utilities
 
 class Plot2dSFDialogREFL(QDialog):
 	
@@ -64,7 +65,7 @@ class Plot2dSFDialogREFL(QDialog):
 		
 		self.main_gui.path_ascii = os.path.dirname(filename)
 		image = _active_data.ytofdata
-		utilities.output_2d_ascii_file(filename, image)
+		RefRed.utilities.output_2d_ascii_file(filename, image)
 
 	def export_detector_view(self):
 		_active_data = self.data
@@ -80,7 +81,7 @@ class Plot2dSFDialogREFL(QDialog):
 		
 		self.main_gui.path_ascii = os.path.dirname(filename)
 		image = _active_data.xydata
-		utilities.output_2d_ascii_file(filename, image)
+		RefRed.utilities.output_2d_ascii_file(filename, image)
 
 	def 	init_home_settings(self):
 		home_settings_1 = self.main_gui.ui.yt_plot.toolbar.home_settings
@@ -128,12 +129,16 @@ class Plot2dSFDialogREFL(QDialog):
 	
 		[peak1, peak2, back1, back2, backFlag] = self.retrievePeakBack()
 	
-		p1 = self.ui.detector_plot.canvas.ax.axhline(peak1, color=colors.PEAK_SELECTION_COLOR)
-		p2 = self.ui.detector_plot.canvas.ax.axhline(peak2, color=colors.PEAK_SELECTION_COLOR)
+		p1 = self.ui.detector_plot.canvas.ax.axhline(peak1, 
+		                                             color = RefRed.colors.PEAK_SELECTION_COLOR)
+		p2 = self.ui.detector_plot.canvas.ax.axhline(peak2, 
+		                                             color = RefRed.colors.PEAK_SELECTION_COLOR)
 		
 		if backFlag:
-			b1 = self.ui.detector_plot.canvas.ax.axhline(back1, color=colors.BACK_SELECTION_COLOR)
-			b2 = self.ui.detector_plot.canvas.ax.axhline(back2, color=colors.BACK_SELECTION_COLOR)
+			b1 = self.ui.detector_plot.canvas.ax.axhline(back1, 
+			                                             color = RefRed.colors.BACK_SELECTION_COLOR)
+			b2 = self.ui.detector_plot.canvas.ax.axhline(back2, 
+			                                             color = RefRed.colors.BACK_SELECTION_COLOR)
 	
 		if self.data.all_plot_axis.detector_data_interval is None:
 			self.ui.detector_plot.draw()
@@ -170,15 +175,21 @@ class Plot2dSFDialogREFL(QDialog):
 			tmin /= 1000
 			tmax /= 1000
 		
-		t1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmin, color=colors.TOF_SELECTION_COLOR)
-		t2 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmax, color=colors.TOF_SELECTION_COLOR)
+		t1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmin, 
+		                                                   color = RefRed.colors.TOF_SELECTION_COLOR)
+		t2 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmax, 
+		                                                   color = RefRed.colors.TOF_SELECTION_COLOR)
 		
-		p1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak1, color=colors.PEAK_SELECTION_COLOR)
-		p2 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak2, color=colors.PEAK_SELECTION_COLOR)
+		p1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak1, 
+		                                                   color = RefRed.colors.PEAK_SELECTION_COLOR)
+		p2 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak2, 
+		                                                   color = RefRed.colors.PEAK_SELECTION_COLOR)
 		
 		if backFlag:
-			b1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back1, color=colors.BACK_SELECTION_COLOR)
-			b2 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back2, color=colors.BACK_SELECTION_COLOR)
+			b1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back1, 
+			                                                   color = RefRed.colors.BACK_SELECTION_COLOR)
+			b2 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back2, 
+			                                                   color = RefRed.colors.BACK_SELECTION_COLOR)
 		
 		if self.data.all_plot_axis.yt_data_interval is None:
 			self.ui.y_pixel_vs_tof_plot.canvas.ax.set_ylim(0,pixel_to)

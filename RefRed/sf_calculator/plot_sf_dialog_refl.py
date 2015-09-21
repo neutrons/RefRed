@@ -1,10 +1,11 @@
 from PyQt4.QtGui import QDialog, QPalette, QFileDialog, QApplication
 from PyQt4.QtCore import Qt
-from plot_dialog_refl_interface import Ui_Dialog as UiPlot
-from mplwidget import MPLWidget
-import colors
+from RefRed.interfaces.mplwidget import MPLWidget
 import os
-import utilities
+
+from RefRed.interfaces.plot_dialog_refl_interface import Ui_Dialog as UiPlot
+import RefRed.colors
+import RefRed.utilities
 
 class PlotSFDialogREFL(QDialog):
 	
@@ -80,7 +81,7 @@ class PlotSFDialogREFL(QDialog):
 			_line = str(pixelaxis[i]) + ' ' + str(ycountsdata[i])
 			text.append(_line)
 			
-		utilities.write_ascii_file(filename, text)
+		RefRed.utilities.write_ascii_file(filename, text)
 	
 	def leave_plot_counts_vs_pixel(self):
 		[xmin,xmax] = self.ui.plot_counts_vs_pixel.canvas.ax.yaxis.get_view_interval()
@@ -251,12 +252,16 @@ class PlotSFDialogREFL(QDialog):
 		else:
 			ui_plot1.canvas.ax.set_xscale('linear')
 		ui_plot1.canvas.ax.set_ylim(0,self.nbr_pixel_y_axis-1)
-		ui_plot1.canvas.ax.axhline(peak1, color=colors.PEAK_SELECTION_COLOR)
-		ui_plot1.canvas.ax.axhline(peak2, color=colors.PEAK_SELECTION_COLOR)
+		ui_plot1.canvas.ax.axhline(peak1, 
+		                           color = RefRed.colors.PEAK_SELECTION_COLOR)
+		ui_plot1.canvas.ax.axhline(peak2, 
+		                           color = RefRed.colors.PEAK_SELECTION_COLOR)
 
 		if back_flag:
-			ui_plot1.canvas.ax.axhline(back1, color=colors.BACK_SELECTION_COLOR)
-			ui_plot1.canvas.ax.axhline(back2, color=colors.BACK_SELECTION_COLOR)
+			ui_plot1.canvas.ax.axhline(back1, 
+			                           color = RefRed.colors.BACK_SELECTION_COLOR)
+			ui_plot1.canvas.ax.axhline(back2, 
+			                           color = RefRed.colors.BACK_SELECTION_COLOR)
 			
 		if self.data.all_plot_axis.yi_data_interval is None:
 			ui_plot1.draw()
@@ -281,12 +286,16 @@ class PlotSFDialogREFL(QDialog):
 		else:
 			ui_plot2.canvas.ax.set_yscale('linear')
 		ui_plot2.canvas.ax.set_xlim(0,self.nbr_pixel_y_axis-1)
-		ui_plot2.canvas.ax.axvline(peak1, color=colors.PEAK_SELECTION_COLOR)
-		ui_plot2.canvas.ax.axvline(peak2, color=colors.PEAK_SELECTION_COLOR)
+		ui_plot2.canvas.ax.axvline(peak1, 
+		                           color = RefRed.colors.PEAK_SELECTION_COLOR)
+		ui_plot2.canvas.ax.axvline(peak2, 
+		                           color = RefRed.colors.PEAK_SELECTION_COLOR)
 
 		if back_flag:
-			ui_plot2.canvas.ax.axvline(back1, color=colors.BACK_SELECTION_COLOR)
-			ui_plot2.canvas.ax.axvline(back2, color=colors.BACK_SELECTION_COLOR)
+			ui_plot2.canvas.ax.axvline(back1, 
+			                           color = RefRed.colors.BACK_SELECTION_COLOR)
+			ui_plot2.canvas.ax.axvline(back2, 
+			                           color = RefRed.colors.BACK_SELECTION_COLOR)
 		
 		self.ui.plot_counts_vs_pixel.canvas.ax.set_xlim([ymin,ymax])
 		self.ui.plot_counts_vs_pixel.canvas.ax.set_ylim([xmin,xmax])
@@ -477,12 +486,16 @@ class PlotSFDialogREFL(QDialog):
 			ui_plot1.canvas.ax.set_xscale('log')
 		else:
 			ui_plot1.canvas.ax.set_xscale('linear')
-		ui_plot1.canvas.ax.axhline(peak1, color=colors.PEAK_SELECTION_COLOR)
-		ui_plot1.canvas.ax.axhline(peak2, color=colors.PEAK_SELECTION_COLOR)
+		ui_plot1.canvas.ax.axhline(peak1, 
+		                           color = RefRed.colors.PEAK_SELECTION_COLOR)
+		ui_plot1.canvas.ax.axhline(peak2, 
+		                           color = RefRed.colors.PEAK_SELECTION_COLOR)
 
 		if self.data.back_flag:
-			ui_plot1.canvas.ax.axhline(back1, color=colors.BACK_SELECTION_COLOR)
-			ui_plot1.canvas.ax.axhline(back2, color=colors.BACK_SELECTION_COLOR)
+			ui_plot1.canvas.ax.axhline(back1, 
+			                           color = RefRed.colors.BACK_SELECTION_COLOR)
+			ui_plot1.canvas.ax.axhline(back2, 
+			                           color = RefRed.colors.BACK_SELECTION_COLOR)
 
 		[xmin,xmax,ymin,ymax] = self.data.all_plot_axis.yi_view_interval
 		self.ui.plot_pixel_vs_counts.canvas.ax.set_xlim([xmin,xmax])
@@ -506,12 +519,16 @@ class PlotSFDialogREFL(QDialog):
 			ui_plot2.canvas.ax.set_yscale('log')
 		else:
 			ui_plot2.canvas.ax.set_yscale('linear')
-		ui_plot2.canvas.ax.axvline(peak1, color=colors.PEAK_SELECTION_COLOR)
-		ui_plot2.canvas.ax.axvline(peak2, color=colors.PEAK_SELECTION_COLOR)
+		ui_plot2.canvas.ax.axvline(peak1, 
+		                           color = RefRed.colors.PEAK_SELECTION_COLOR)
+		ui_plot2.canvas.ax.axvline(peak2, 
+		                           color = RefRed.colors.PEAK_SELECTION_COLOR)
 		
 		if self.data.back_flag:
-			ui_plot2.canvas.ax.axvline(back1, color=colors.BACK_SELECTION_COLOR)
-			ui_plot2.canvas.ax.axvline(back2, color=colors.BACK_SELECTION_COLOR)
+			ui_plot2.canvas.ax.axvline(back1, 
+			                           color = RefRed.colors.BACK_SELECTION_COLOR)
+			ui_plot2.canvas.ax.axvline(back2, 
+			                           color = RefRed.colors.BACK_SELECTION_COLOR)
 
 		[xmin,xmax,ymin,ymax] = self.data.all_plot_axis.yi_view_interval
 		self.ui.plot_counts_vs_pixel.canvas.ax.set_xlim([ymin,ymax])

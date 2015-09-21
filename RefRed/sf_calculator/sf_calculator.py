@@ -19,6 +19,7 @@ from RefRed.sf_calculator.load_and_sort_nxsdata_for_sf_calculator import LoadAnd
 from RefRed.sf_calculator.check_sf_run_reduction_button_status import CheckSfRunReductionButtonStatus
 from RefRed.sf_calculator.reduction_sf_calculator import ReductionSfCalculator
 from RefRed.sf_calculator.sf_calculator_right_click import SFCalculatorRightClick
+from RefRed.sf_calculator.sf_single_plot_click import SFSinglePlotClick
 
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.utilities import convertTOF
@@ -35,6 +36,7 @@ def str2bool(v):
 class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
     window_title = 'SF Calculator - '
     user_click_exit = False
+    time_click1 = -1
     current_table_row_selected = -1
     event_progressbar = None
 
@@ -169,6 +171,7 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         self.file_menu_object = InitSFCalculatorFileMenu(self)
 
     def singleYTPlot(self, is_pan_or_zoom_activated):
+        print('in singleYTPlot')
         SFSinglePlotClick(self, 'yt', is_pan_or_zoom_activated=is_pan_or_zoom_activated)
         
     def singleYIPlot(self, is_pan_or_zoom_activated):
