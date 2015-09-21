@@ -86,6 +86,7 @@ class Gui(object):
         self.parent.ui.progressBar_check5.setVisible(False)
         
         self.parent.ui.frame_autofill_check_status.setVisible(False)
+        self.parent.ui.frame_reduction.setVisible(False)
 
     def set_gui_title(self):
         ''' Define the raw title of the main window '''

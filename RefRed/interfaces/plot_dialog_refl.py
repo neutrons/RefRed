@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//plot_dialog_refl.ui'
 #
-# Created: Fri Sep 18 11:13:51 2015
+# Created: Mon Sep 21 09:51:30 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!

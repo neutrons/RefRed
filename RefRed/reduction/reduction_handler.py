@@ -1,6 +1,7 @@
 from RefRed.mantid_utility import MantidUtility
 from RefRed.lconfigdataset import LConfigDataset
 from RefRed.reduction.calculate_sf import CalculateSF
+from RefRed.reduction.reduction_progressbar_handler import ReductionProgressBarHandler
 from mantid.simpleapi import *
 import mantid
 
@@ -26,6 +27,8 @@ class ReductionHandler(object):
         self.cleanup()
 
         o_general_settings = GlobalReductionSettingsHandler(parent = self.parent)
+        o_reduction_progressbar_handler = ReductionProgressBarHandler(parent=self.parent)
+        o_reduction_progressbar_handler.setup(nbr_reduction = self.nbr_reduction_process)
         
         for row_index in range(self.nbr_reduction_process):
             
@@ -37,8 +40,11 @@ class ReductionHandler(object):
                                   debug = self.debug)
             self.save_reduction(row = row_index,
                                 workspace = o_individual_settings._output_workspace_name)
+            o_reduction_progressbar_handler.next_step()
+            
             
         self.parent.big_table_data = self.big_table_data
+        o_reduction_progressbar_handler.end()
 
     def stitch(self):
         o_calculate_sf = CalculateSF(parent = self.parent,
