@@ -120,13 +120,13 @@ class CalculateSF(object):
         b = 0
 
         if type == 'left':
-            x_axis = data_set.reduce_q_axis[threshold_index:-1]
-            y_axis = data_set.tmp_y_axis[threshold_index:-1]
-            e_axis = data_set.tmp_e_axis[threshold_index:-1]
+            x_axis = data_set.reduce_q_axis[threshold_index:]
+            y_axis = data_set.tmp_y_axis[threshold_index:]
+            e_axis = data_set.tmp_e_axis[threshold_index:]
         else:
-            x_axis = data_set.reduce_q_axis[0:threshold_index]
-            y_axis = data_set.reduce_y_axis[0:threshold_index]
-            e_axis = data_set.reduce_e_axis[0:threshold_index]
+            x_axis = data_set.reduce_q_axis[:threshold_index+1]
+            y_axis = data_set.reduce_y_axis[:threshold_index+1]
+            e_axis = data_set.reduce_e_axis[:threshold_index+1]
 
 
         dataToFit = CreateWorkspace(DataX = x_axis,
@@ -179,7 +179,7 @@ class CalculateSF(object):
         left_min_index = 0
         right_max_index = -1
 
-        if left_axis[-1] < right_axis[0]: # no overlap
+        if left_axis[-1] <= right_axis[0]: # no overlap
             return [_min_x, _max_x, left_min_index, right_max_index, no_overlap]
 
         _min_x = right_axis[0]

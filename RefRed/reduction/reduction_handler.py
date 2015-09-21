@@ -314,7 +314,7 @@ class IndividualReductionSettingsHandler(object):
 class GlobalReductionSettingsHandler(object):
     
     incident_medium_selected = ''
-    geometry_correction_flag = True
+    geometry_correction_flag = False
     q_min = 0.005
     q_step = 50
     scaling_factor_file = ''
