@@ -157,6 +157,8 @@ class LRData(object):
             back1 = int(peak1 - backOffsetFromPeak)
             back2 = int(peak2 + backOffsetFromPeak)
             self.back = [str(back1), str(back2)]
+            
+
 
     ################## Properties for easy data access ##########################
     # return the size of the data stored in memory for this dataset

@@ -97,7 +97,7 @@ class ReductionHandler(object):
                                        AngleOffset = o_general.angle_offset,
                                        AngleOffsetError = o_general.angle_offset_error,
                                        ScalingFactorFile = o_general.scaling_factor_file,
-                                       CropFirstAndLastPoints = False,
+                                       CropFirstAndLastPoints = True,
                                        SlitsWidthFlag = o_general.slits_width_flag,
                                        OutputWorkspace = o_individual._output_workspace_name)
         self.list_reduced_workspace.append(o_individual._output_workspace_name)
