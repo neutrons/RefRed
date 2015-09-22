@@ -648,6 +648,7 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         [tof1ms, tof2ms] = convertTOF([tof1, tof2])
         self.TOFmanualFromValue.setText("%.2f" % float(tof1ms))
         self.TOFmanualToValue.setText("%.2f" % float(tof2ms))
+        self.manualTOFWidgetsEnabled(not _nxsdata_row.tof_auto_flag)
 
     def testPeakBackErrorWidgets(self):
         if self.list_nxsdata_sorted == []:
