@@ -175,7 +175,6 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         
     def singleYIPlot(self, is_pan_or_zoom_activated):
         SFSinglePlotClick(self, 'yi', is_pan_or_zoom_activated=is_pan_or_zoom_activated)
-
     
     def exportYtPlot(self):
         row = self.current_table_row_selected
@@ -378,14 +377,37 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
     def savingAsConfiguration(self):
         print "savingAsConfiguration not implemented"
 
+    def selectManualTOF(self):
+        self.manualTOFWidgetsEnabled(True)
+        self.saveTOFautoFlag(auto_flag = False)
+        self.displaySelectedTOFandUpdateTable(mode = 'manual')
+        self.displayPlot(row = self.current_table_row_selected, 
+                         yi_plot = False)
+        self.fileHasBeenModified()
+
     def selectAutoTOF(self):
         self.manualTOFWidgetsEnabled(False)
         self.saveManualTOFmode()
-        self.saveTOFautoFlag(auto_flag=True)
-        self.displaySelectedTOFandUpdateTable(mode='auto')
-        self.displayPlot(row=self.current_table_row_selected, yi_plot=False)
+        self.saveTOFautoFlag(auto_flag = True)
+        self.displaySelectedTOFandUpdateTable(mode = 'auto')
+        self.displayPlot(row = self.current_table_row_selected, 
+                         yi_plot = False)
         self.fileHasBeenModified()
     
+    def saveManualTOFmode(self):
+        tof1 = float(self.TOFmanualFromValue.text())
+        tof2 = float(self.TOFmanualToValue.text())
+        tof_min = min([tof1, tof2])
+        tof_max = max([tof1, tof2])
+        _list_nxsdata_sorted = self.list_nxsdata_sorted
+        _nxdata  = _list_nxsdata_sorted[self.current_table_row_selected]
+        tof1 = 1000 * tof_min
+        tof2 = 1000 * tof_max
+        _nxdata.tof_range = [tof1, tof2]
+        _nxdata.tof_auto_flag = True
+        _list_nxsdata_sorted[self.current_table_row_selected] = _nxdata
+        self.list_nxsdata_sorted = _list_nxsdata_sorted
+
     def saveTOFautoFlag(self, auto_flag=False):
         _list_nxsdata_sorted = self.list_nxsdata_sorted
         _nxdata = _list_nxsdata_sorted[self.current_table_row_selected]
@@ -393,15 +415,23 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         _list_nxsdata_sorted[self.current_table_row_selected] = _nxdata
         self.list_nxsdata_sorted = _list_nxsdata_sorted
         _big_table = self.big_table
-        _big_table[self.current_table_row_selected, 16] = str(auto_flag)
+        auto_flag_value = 1 if auto_flag else 0
+        _big_table[self.current_table_row_selected, 16] = auto_flag_value
         self.big_table = _big_table
     
-    def selectManualTOF(self):
-        self.manualTOFWidgetsEnabled(True)
-        self.saveTOFautoFlag(auto_flag=False)
-        self.displaySelectedTOFandUpdateTable(mode='manual')
-        self.displayPlot(row=self.current_table_row_selected, yi_plot=False)
-        self.fileHasBeenModified()
+    def displaySelectedTOFandUpdateTable(self, mode='auto'):
+        _list_nxsdata_sorted = self.list_nxsdata_sorted
+        _nxdata  = _list_nxsdata_sorted[self.current_table_row_selected]
+        if mode == 'auto':
+            [tof1, tof2] = _nxdata.tof_range_auto
+        else:
+            [tof1, tof2] = _nxdata.tof_range
+        tof1 = float(tof1) * 1e-3
+        tof2 = float(tof2) * 1e-3
+
+        self.updateTableWithTOFinfos(tof1, tof2)
+        self.TOFmanualFromValue.setText("%.2f"%tof1)
+        self.TOFmanualToValue.setText("%.2f"%tof2)
 
     def loadingConfiguration(self):
         print "loadingConfiguration not implemented"
@@ -419,7 +449,7 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         _list_nxsdata_sorted[self.current_table_row_selected] = _nxdata
         self.list_nxsdata_sorted = _list_nxsdata_sorted
         if with_plot_update:
-            self.displayPlot(row=cls.current_table_row_selected, yi_plot=False)
+            self.displayPlot(row = self.current_table_row_selected, yi_plot=False)
         self.fileHasBeenModified()
 
     def updateTableWithTOFinfos(self, tof1_ms, tof2_ms):
@@ -1102,6 +1132,6 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         self.dataTOFautoMode.setChecked(tof_auto_switch)
         self.dataTOFmanualMode.setChecked(not tof_auto_switch)
         self.manualTOFWidgetsEnabled(not tof_auto_switch)
-        self.TOFmanualFromValue.setText("%.2f"%tof1)
-        self.TOFmanualToValue.setText("%.2f"%tof2)
+        self.TOFmanualFromValue.setText("%.2f" %tof1)
+        self.TOFmanualToValue.setText("%.2f" %tof2)
         self.manualTOFtextFieldValidated(with_plot_update = with_plot_update)
