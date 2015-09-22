@@ -404,7 +404,6 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         tof1 = 1000 * tof_min
         tof2 = 1000 * tof_max
         _nxdata.tof_range = [tof1, tof2]
-        _nxdata.tof_auto_flag = True
         _list_nxsdata_sorted[self.current_table_row_selected] = _nxdata
         self.list_nxsdata_sorted = _list_nxsdata_sorted
 
@@ -439,17 +438,17 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
     def manualTOFtextFieldValidated(self, with_plot_update = True):
         tof1 = float(self.TOFmanualFromValue.text())
         tof2 = float(self.TOFmanualToValue.text())
-        self.updateTableWithTOFinfos(tof1, tof2)
-    
         tof_min = min([tof1, tof2]) * 1000
         tof_max = max([tof1, tof2]) * 1000
         _list_nxsdata_sorted = self.list_nxsdata_sorted
         _nxdata  = _list_nxsdata_sorted[self.current_table_row_selected]
         _nxdata.tof_range = [tof_min, tof_max]
+        _nxdata.tof_auto_flag = False
         _list_nxsdata_sorted[self.current_table_row_selected] = _nxdata
         self.list_nxsdata_sorted = _list_nxsdata_sorted
         if with_plot_update:
             self.displayPlot(row = self.current_table_row_selected, yi_plot=False)
+        self.updateTableWithTOFinfos(tof1, tof2)
         self.fileHasBeenModified()
 
     def updateTableWithTOFinfos(self, tof1_ms, tof2_ms):
@@ -641,8 +640,11 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         if back2 == '' or back2 == 'N/A':
             back2 = 255
         self.dataBackToValue.setValue(int(back2))
-
-        [tof1, tof2] = _nxsdata_row.tof_range_auto
+        
+        if _nxsdata_row.tof_auto_flag:
+            [tof1, tof2] = _nxsdata_row.tof_range_auto
+        else:
+            [tof1, tof2] = _nxsdata_row.tof_range
         [tof1ms, tof2ms] = convertTOF([tof1, tof2])
         self.TOFmanualFromValue.setText("%.2f" % float(tof1ms))
         self.TOFmanualToValue.setText("%.2f" % float(tof2ms))
@@ -782,23 +784,26 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
             self.loadSelectedNxsRuns(row)
             
     def savePeakBackTofToBigTable(self, row):
+        _list_nxsdata_sorted = self.list_nxsdata_sorted
+        _nxdata = _list_nxsdata_sorted[row]
+
         peak1 = self.tableWidget.item(row, 10).text()
         peak2 = self.tableWidget.item(row, 11).text()
         back1 = self.tableWidget.item(row, 12).text()
         back2 = self.tableWidget.item(row, 13).text()
-        tof1 = self.tableWidget.item(row, 14).text()
-        tof2 = self.tableWidget.item(row, 15).text()
         peak = [peak1, peak2]
         back = [back1, back2]
-        if float(tof1) < 1000:
-            tof1 = str(float(tof1) * 1000)
-            tof2 = str(float(tof2) * 1000)
-        tof = [tof1, tof2]
-        _list_nxsdata_sorted = self.list_nxsdata_sorted
-        _nxdata = _list_nxsdata_sorted[row]
         _nxdata.peak = peak
         _nxdata.back = back
-        _nxdata.tof_range = tof
+
+        if not _nxdata.tof_auto_flag:
+            tof1 = self.tableWidget.item(row, 14).text()
+            tof2 = self.tableWidget.item(row, 15).text()
+            if float(tof1) < 1000:
+                tof1 = str(float(tof1) * 1000)
+                tof2 = str(float(tof2) * 1000)
+                tof = [tof1, tof2]
+            _nxdata.tof_range = tof
 
         _big_table = self.big_table
         tof_auto_flag = str2bool(_big_table[row, 16])
