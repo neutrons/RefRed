@@ -8,6 +8,7 @@ from RefRed.configuration.populate_reduction_table_from_lconfigdataset import Po
 from RefRed.configuration.load_reduction_table_from_lconfigdataset import LoadReductionTableFromLConfigDataSet as LoadReductionTable
 from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidgetsHandler
 
+
 class LoadingConfiguration(object):
 	
 	parent = None
@@ -82,9 +83,6 @@ class LoadingConfiguration(object):
 		o_scaling_factor_widget = ScalingFactorWidgetsHandler(parent = self.parent)
 		o_scaling_factor_widget.fill_incident_medium_list(scaling_factor_file)
 		
-		
-		
-
 	def getMetadataObject(parent, node):
 		iMetadata = LConfigDataset()
 		

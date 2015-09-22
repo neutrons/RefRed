@@ -3,7 +3,7 @@ from PyQt4.QtGui import QApplication
 import time
 
 
-class ReductionProgressBarHandler(object):
+class TopProgressBarHandler(object):
 
     nbr_reduction = 0
     current_step = 0
@@ -11,13 +11,14 @@ class ReductionProgressBarHandler(object):
     def __init__(self, parent=None):
         self.parent = parent
         
-    def setup(self, nbr_reduction=0):
+    def setup(self, nbr_reduction=0, label='Reduction Process'):
         self.nbr_reduction = nbr_reduction
         
         self.parent.ui.reductionProcessProgressBar.setMinimum(0)
         self.parent.ui.reductionProcessProgressBar.setMaximum(nbr_reduction)
         self.parent.ui.reductionProcessProgressBar.setValue(0)
         self.parent.ui.frame_reduction.setVisible(True)
+        self.parent.ui.mainProgressBarLabel.setText(label)
         QApplication.processEvents()
     
     def next_step(self):

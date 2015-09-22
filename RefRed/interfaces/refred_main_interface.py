@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Tue Sep 22 14:47:45 2015
+# Created: Tue Sep 22 14:50:28 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -13,7 +13,7 @@ from PyQt4 import QtCore, QtGui
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1558, 1103)
+        MainWindow.resize(1558, 1174)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/General/logo_refl.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -82,9 +82,9 @@ class Ui_MainWindow(object):
         self.frame_reduction.setObjectName("frame_reduction")
         self.horizontalLayout_12 = QtGui.QHBoxLayout(self.frame_reduction)
         self.horizontalLayout_12.setObjectName("horizontalLayout_12")
-        self.label_5 = QtGui.QLabel(self.frame_reduction)
-        self.label_5.setObjectName("label_5")
-        self.horizontalLayout_12.addWidget(self.label_5)
+        self.mainProgressBarLabel = QtGui.QLabel(self.frame_reduction)
+        self.mainProgressBarLabel.setObjectName("mainProgressBarLabel")
+        self.horizontalLayout_12.addWidget(self.mainProgressBarLabel)
         self.reductionProcessProgressBar = QtGui.QProgressBar(self.frame_reduction)
         self.reductionProcessProgressBar.setAutoFillBackground(False)
         self.reductionProcessProgressBar.setProperty("value", 0)
@@ -1787,7 +1787,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Liquids Reflectometer Reduction", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("MainWindow", "Reduction Process:", None, QtGui.QApplication.UnicodeUTF8))
+        self.mainProgressBarLabel.setText(QtGui.QApplication.translate("MainWindow", "Reduction Process:", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_3.setTitle(QtGui.QApplication.translate("MainWindow", "Run Numbers", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Data:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Normalization:", None, QtGui.QApplication.UnicodeUTF8))

@@ -1,8 +1,9 @@
+from PyQt4 import QtGui
 from RefRed.calculations.add_list_nexus import AddListNexus
 from RefRed.calculations.lr_data import LRData
 from RefRed.calculations.locate_list_run import LocateListRun
 from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
-from PyQt4 import QtGui
+from RefRed.gui_handling.top_progressbar_handler import TopProgressBarHandler
 
 
 class LoadReductionTableFromLConfigDataSet(object):
@@ -11,11 +12,17 @@ class LoadReductionTableFromLConfigDataSet(object):
     
     def __init__(self, parent=None):
         self.parent = parent
-        
+
+
+        nbr_lconfig = self.get_nbr_lconfig()
         big_table_data = self.parent.big_table_data
+        o_load_config_progressbar_handler = TopProgressBarHandler(parent = parent)
+        o_load_config_progressbar_handler.setup(nbr_reduction = nbr_lconfig,
+                                                label = 'Loading Config.')
         
         for index_row, lconfig in enumerate(big_table_data[:,2]):
             if lconfig is None:
+                o_load_config_progressbar_handler.end()
                 return
             
             list_data_run = lconfig.data_sets
@@ -48,6 +55,17 @@ class LoadReductionTableFromLConfigDataSet(object):
                                type = 'norm',
                                row = index_row)
             
+            o_load_config_progressbar_handler.next_step()
+                    
+    def get_nbr_lconfig(self):
+        big_table_data = self.parent.big_table_data
+        nbr_row = 0
+        for index_row, lconfig in enumerate(big_table_data[:,2]):
+            if lconfig is None:
+                return nbr_row
+            nbr_row += 1
+        return nbr_row
+
     def update_lrdata(self, lrdata=None, lconfig=None, type='data', row=0):
         big_table_data = self.parent.big_table_data
         
