@@ -3,7 +3,7 @@ from RefRed.calculations.add_list_nexus import AddListNexus
 from RefRed.calculations.lr_data import LRData
 from RefRed.calculations.locate_list_run import LocateListRun
 from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
-from RefRed.gui_handling.top_progressbar_handler import TopProgressBarHandler
+from RefRed.gui_handling.progressbar_handler import ProgressBarHandler
 
 
 class LoadReductionTableFromLConfigDataSet(object):
@@ -16,7 +16,7 @@ class LoadReductionTableFromLConfigDataSet(object):
 
         nbr_lconfig = self.get_nbr_lconfig()
         big_table_data = self.parent.big_table_data
-        o_load_config_progressbar_handler = TopProgressBarHandler(parent = parent)
+        o_load_config_progressbar_handler = ProgressBarHandler(parent = parent)
         o_load_config_progressbar_handler.setup(nbr_reduction = nbr_lconfig,
                                                 label = 'Loading Config.')
         

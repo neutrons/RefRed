@@ -24,12 +24,13 @@ class Gui(object):
                        u'Qmax (1/\u00c5)',
                        'Comments']
     column_widths = [60, 200, 200, 65, 85, 85, 95, 95, 400]	
-
+    gui_size_coeff = 2./3.
+    
     def __init__(self, parent):
 
         self.parent = parent
-
         self.set_gui_title()
+        self.set_gui_size()
         self.set_statusbar()
         self.set_main_table()
         #self.set_context_menu()
@@ -95,6 +96,11 @@ class Gui(object):
         title = window_title
         parent.setWindowTitle(u'%s   %s'%(title, str_version))
         parent.setWindowTitle(u'%s%s' %(window_title, '~/tmp.xml'))
+
+    def set_gui_size(self):
+        screen = QtGui.QDesktopWidget().screenGeometry()
+        self.parent.setGeometry(50, 50, self.gui_size_coeff*screen.width(), self.gui_size_coeff*screen.height())
+
 
     def set_statusbar(self):
         ''' Add the statusbar widgets '''

@@ -3,7 +3,7 @@ from PyQt4.QtGui import QApplication
 import time
 
 
-class TopProgressBarHandler(object):
+class ProgressBarHandler(object):
 
     nbr_reduction = 0
     current_step = 0
@@ -22,6 +22,7 @@ class TopProgressBarHandler(object):
 
         self.parent.eventProgress.setMinimum(0)
         self.parent.eventProgress.setMaximum(nbr_reduction)
+        self.parent.eventProgress.setValue(0)
         self.parent.eventProgress.setVisible(True)
 
         QApplication.processEvents()

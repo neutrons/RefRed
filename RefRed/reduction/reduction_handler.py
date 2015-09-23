@@ -1,7 +1,7 @@
 from RefRed.mantid_utility import MantidUtility
 from RefRed.lconfigdataset import LConfigDataset
 from RefRed.reduction.calculate_sf import CalculateSF
-from RefRed.gui_handling.top_progressbar_handler import TopProgressBarHandler
+from RefRed.gui_handling.progressbar_handler import ProgressBarHandler
 from mantid.simpleapi import *
 import mantid
 
@@ -27,7 +27,7 @@ class ReductionHandler(object):
         self.cleanup()
 
         o_general_settings = GlobalReductionSettingsHandler(parent = self.parent)
-        o_reduction_progressbar_handler = TopProgressBarHandler(parent=self.parent)
+        o_reduction_progressbar_handler = ProgressBarHandler(parent=self.parent)
         o_reduction_progressbar_handler.setup(nbr_reduction = self.nbr_reduction_process,
                                               label = 'Reduction Process ')
         
