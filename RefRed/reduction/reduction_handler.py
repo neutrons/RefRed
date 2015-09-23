@@ -2,6 +2,9 @@ from RefRed.mantid_utility import MantidUtility
 from RefRed.lconfigdataset import LConfigDataset
 from RefRed.reduction.calculate_sf import CalculateSF
 from RefRed.gui_handling.progressbar_handler import ProgressBarHandler
+from RefRed.reduction.export_data_reduction_script import ExportDataReductionScript
+from RefRed.reduction.individual_reduction_settings_handler import IndividualReductionSettingsHandler
+from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
 from mantid.simpleapi import *
 import mantid
 
@@ -51,6 +54,7 @@ class ReductionHandler(object):
         o_export_script = ExportDataReductionScript(parent = self.parent)
         o_export_script.define_export_filename()
         o_export_script.make_script()
+        o_export_script.create_file()
         
     def stitch(self):
         o_calculate_sf = CalculateSF(parent = self.parent,
@@ -83,7 +87,7 @@ class ReductionHandler(object):
             self.print_message('AngleOffset', o_general.angle_offset)
             self.print_message('AngleOffsetError', o_general.angle_offset_error)
             self.print_message('ScalingFactorFile', o_general.scaling_factor_file)
-            self.print_message('CropFirstAndLastPoints', False)
+            self.print_message('CropFirstAndLastPoints', True)
             self.print_message('SlitsWidthFlag', o_general.slits_width_flag)
             self.print_message('OutputWorkspace', o_individual._output_workspace_name)       
         
@@ -162,206 +166,4 @@ class ReductionHandler(object):
         o_mantid_utility.cleanup_workspaces()
 
 
-class IndividualReductionSettingsHandler(object):
-    
-    data = None
-    norm = None
-    output_workspace = ''
-    
-    def __init__(self, parent=None, row_index=-1):
-        self.parent = parent
-        self.row_index = row_index
-        big_table_data = self.parent.big_table_data
-        self.data = big_table_data[row_index, 0]
-        self.norm = big_table_data[row_index, 1]
-        self.retrieve()
-        
-    def retrieve(self):
-        self._data_run_numbers = self.get_data_run_numbers()
-        self._data_peak_range = self.get_data_peak_range()
-        self._data_back_flag = self.get_data_back_flag()
-        self._data_back_range = self.get_data_back_range()
-        self._data_low_res_flag = self.get_data_low_res_flag()
-        self._data_low_res_range = self.get_data_low_res_range()
 
-        self._norm_flag = self.get_norm_flag()
-        self._norm_run_numbers = self.get_norm_run_numbers()
-        self._norm_peak_range = self.get_norm_peak_range()
-        self._norm_back_flag = self.get_norm_back_flag()
-        self._norm_back_range = self.get_norm_back_range()
-        self._norm_low_res_flag = self.get_norm_low_res_flag()
-        self._norm_low_res_range = self.get_norm_low_res_range()
-        
-        self._tof_range = self.get_tof_range()
-        self._output_workspace_name = self.define_output_workspace_name(run_numbers = 
-                                                                        self._data_run_numbers)
-        
-    def define_output_workspace_name(self, run_numbers = None):
-        str_run_numbers = run_numbers
-        return "reflectivity_%s" % str_run_numbers
-        
-    def get_tof_range(self):
-        is_auto_tof_range_selected = self.is_auto_tof_range_selected()
-        if is_auto_tof_range_selected:
-            tof_range = self.get_auto_tof_range()
-        else:
-            tof_range = self.get_manual_tof_range()
-        tof_range_micros = self.convert_tof_range_to_micros(tof_range = tof_range)
-        return tof_range_micros
-        
-    def convert_tof_range_to_micros(self, tof_range = None):
-        tof1 = float(tof_range[0])
-        if tof1 < 100:
-            tof1_micros = tof1 * 1000.
-            tof2_micros = float(tof_range[1]) * 1000.
-        else:
-            tof1_micros = tof1
-            tof2_micros = float(tof_range[1])
-        return [tof1_micros, tof2_micros]
-        
-    def get_auto_tof_range(self):
-        _data = self.data
-        return _data.tof_range_auto
-        
-    def get_manual_tof_range(self):
-        _data = self.data
-        return _data.tof_range_manual
-
-    def is_auto_tof_range_selected(self):
-        _data = self.data
-        return bool(_data.tof_range_auto_flag)
-        
-    def get_data_low_res_flag(self):
-        _data = self.data
-        return self.get_low_res_flag(data = _data)
-        
-    def get_norm_low_res_flag(self):
-        _norm = self.norm
-        return self.get_low_res_flag(data = _norm)
-        
-    def get_low_res_flag(self, data = None):
-        return bool(data.low_res_flag)
-        
-    def get_data_low_res_range(self):
-        _data = self.data
-        return self.get_low_res_range(data = _data)
-    
-    def get_norm_low_res_range(self):
-        _norm = self.norm
-        return self.get_low_res_range(data = _norm)
-
-    def get_low_res_range(self, data = None):
-        low_res1 = int(data.low_res[0])
-        low_res2 = int(data.low_res[1])
-        low_res_min = min([low_res1, low_res2])
-        low_res_max = max([low_res1, low_res2])
-        return [low_res_min, low_res_max]
-        
-    def get_norm_flag(self):
-        _norm = self.norm
-        return _norm.use_it_flag
-        
-    def get_data_back_range(self):
-        _data = self.data
-        return self.get_back_range(data = _data)
-    
-    def get_norm_back_range(self):
-        _norm = self.norm
-        return self.get_back_range(data = _norm)
-    
-    def get_back_range(self, data = None):
-        back1 = int(data.back[0])
-        back2 = int(data.back[1])
-        back_min = min([back1, back2])
-        back_max = max([back1, back2])
-        return [back_min, back_max]
-    
-    def get_data_back_flag(self):
-        _data = self.data
-        return self.get_back_flag(data = _data)
-    
-    def get_norm_back_flag(self):
-        _norm = self.norm
-        return self.get_back_flag(data = _norm)
-    
-    def get_back_flag(self, data = None):
-        return bool(data.back_flag)
-        
-    def get_data_peak_range(self):
-        _data = self.data
-        return self.get_peak_range(data=_data)
-    
-    def get_norm_peak_range(self):
-        _norm = self.norm
-        return self.get_peak_range(data=_norm)
-    
-    def get_peak_range(self, data=None):
-        peak1 = int(data.peak[0])
-        peak2 = int(data.peak[1])
-        peak_min = min([peak1, peak2])
-        peak_max = max([peak1, peak2])
-        return [peak_min, peak_max]
-        
-    def get_norm_run_numbers(self):
-        return self.get_run_numbers(column_index = 2)
-        
-    def get_data_run_numbers(self):
-        return self.get_run_numbers(column_index = 1)
-
-    def get_run_numbers(self, column_index = 1):
-        run_numbers = self.parent.ui.reductionTable.item(self.row_index, column_index).text()
-        return str(run_numbers)
-
-class GlobalReductionSettingsHandler(object):
-    
-    incident_medium_selected = ''
-    geometry_correction_flag = False
-    q_min = 0.005
-    q_step = 50
-    scaling_factor_file = ''
-    scaling_factor_flag = True
-    slits_width_flag = True
-    angle_offset = 0.0
-    angle_offset_error = 0.0
-    tof_steps = 40 # microS
-    
-    def __init__(self, parent=None):
-        self.parent = parent
-        self.retrieve()
-        
-    def retrieve(self):
-        self.incident_medium_selected = self.get_incident_medium_selected()
-        self.q_step = self.get_q_step()
-        self.scaling_factor_flag = self.get_scaling_factor_flag()
-        self.scaling_factor_file = self.get_scaling_factor_file()
-        self.angle_offset = self.get_angle_offset()
-        self.angle_offset_error = self.get_angle_offset_error()
-        self.tof_steps = self.get_tof_steps()
-        
-    def get_tof_steps(self):
-        return float(self.parent.ui.eventTofBins.text())
-        
-    def get_angle_offset(self):
-        return float(self.parent.ui.angleOffsetValue.text())
-
-    def get_angle_offset_error(self):
-        return float(self.parent.ui.angleOffsetError.text())
-        
-    def get_scaling_factor_flag(self):
-        return self.parent.ui.scalingFactorFlag.isChecked()
-        
-    def get_scaling_factor_file(self):
-        return str(self.parent.full_scaling_factor_file_name)
-        
-    def get_q_step(self):
-        _q_step = self.parent.ui.qStep.text()
-        return float(_q_step)
-        
-    def get_incident_medium_selected(self):
-        _medium_selected = str(self.parent.ui.selectIncidentMediumList.currentText()).strip()
-        return str(_medium_selected)
-        
-        
-        
-        
-        
