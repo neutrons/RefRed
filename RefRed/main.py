@@ -18,6 +18,7 @@ from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConne
 from RefRed.interfaces.refred_main_interface import Ui_MainWindow
 from RefRed.plot.single_click_plot import SingleClickPlot
 from RefRed.reduction.reduction_handler import ReductionHandler
+from RefRed.reduction.live_reduction_handler import LiveReductionHandler
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
 from RefRed.reduction_table_handling.reduction_table_check_box import ReductionTableCheckBox
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
@@ -327,13 +328,16 @@ class MainGui(QtGui.QMainWindow):
         o_scaling_factor.browse()
         
     def run_reduction_button(self):
-        o_reduction = ReductionHandler(parent = self)
-        o_reduction.run()
-        o_reduction.stitch()
+        o_live_reduction = LiveReductionHandler(parent = self)
+        o_live_reduction.run()
+
+        #o_reduction = ReductionHandler(parent = self)
+        #o_reduction.run()
+        #o_reduction.stitch()
         
-        o_reduced_plot = ReducedDataHandler(parent = self)
-        o_reduced_plot.populate_table()
-        o_reduced_plot.plot()
+        #o_reduced_plot = ReducedDataHandler(parent = self)
+        #o_reduced_plot.populate_table()
+        #o_reduced_plot.plot()
 
     def export_reduction_script_button(self):
         o_reduction = ReductionHandler(parent = self)
