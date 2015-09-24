@@ -175,7 +175,7 @@
                          <item row="0" column="1">
                           <widget class="QLineEdit" name="data_sequence_lineEdit">
                            <property name="text">
-                            <string>130766-130772</string>
+                            <string>130766-130768</string>
                            </property>
                           </widget>
                          </item>
@@ -3984,9 +3984,9 @@ p, li { white-space: pre-wrap; }
            </spacer>
           </item>
           <item>
-           <widget class="QRadioButton" name="RvsQ_2">
+           <widget class="QRadioButton" name="RvsQ">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>R vs Q</string>
@@ -3997,9 +3997,9 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="RQ4vsQ_2">
+           <widget class="QRadioButton" name="RQ4vsQ">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>RQ^4 vs Q</string>
@@ -4007,9 +4007,9 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="LogRvsQ_2">
+           <widget class="QRadioButton" name="LogRvsQ">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>LogR vs Q</string>
@@ -4893,6 +4893,54 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>RvsQ</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>stitching_yscale_options_radio_button_1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1299</x>
+     <y>1121</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>586</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>RQ4vsQ</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>stitching_yscale_options_radio_button_2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1390</x>
+     <y>1121</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>586</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>LogRvsQ</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>stitching_yscale_options_radio_button_3()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1492</x>
+     <y>1121</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>586</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -4921,5 +4969,8 @@ p, li { white-space: pre-wrap; }
   <slot>stitching_sf_radio_button()</slot>
   <slot>export_reduction_script_button()</slot>
   <slot>data_norm_sequence_event()</slot>
+  <slot>stitching_yscale_options_radio_button_1()</slot>
+  <slot>stitching_yscale_options_radio_button_2()</slot>
+  <slot>stitching_yscale_options_radio_button_3()</slot>
  </slots>
 </ui>

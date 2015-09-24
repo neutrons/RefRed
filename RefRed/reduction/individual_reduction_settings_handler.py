@@ -19,14 +19,17 @@ class IndividualReductionSettingsHandler(object):
         self._data_back_range = self.get_data_back_range()
         self._data_low_res_flag = self.get_data_low_res_flag()
         self._data_low_res_range = self.get_data_low_res_range()
-
-        self._norm_flag = self.get_norm_flag()
-        self._norm_run_numbers = self.get_norm_run_numbers()
-        self._norm_peak_range = self.get_norm_peak_range()
-        self._norm_back_flag = self.get_norm_back_flag()
-        self._norm_back_range = self.get_norm_back_range()
-        self._norm_low_res_flag = self.get_norm_low_res_flag()
-        self._norm_low_res_range = self.get_norm_low_res_range()
+        
+        if self.norm is None:
+            self._norm_flag = False
+        else:
+            self._norm_flag = self.get_norm_flag()
+            self._norm_run_numbers = self.get_norm_run_numbers()
+            self._norm_peak_range = self.get_norm_peak_range()
+            self._norm_back_flag = self.get_norm_back_flag()
+            self._norm_back_range = self.get_norm_back_range()
+            self._norm_low_res_flag = self.get_norm_low_res_flag()
+            self._norm_low_res_range = self.get_norm_low_res_range()
         
         self._tof_range = self.get_tof_range()
         self._output_workspace_name = self.define_output_workspace_name(run_numbers = 

@@ -161,8 +161,8 @@ class ProducedSelectedOutputScaled(object):
         
     def get_selected_scale_type(self):
         self.axis_type = 'RvsQ'
-        if self.parent.ui.RQ4vsQ_2.isChecked():
+        if self.parent.ui.RQ4vsQ.isChecked():
             self.axis_type = 'RQ4vsQ'
-        elif self.parent.ui.LogRvsQ_2.isChecked():
+        elif self.parent.ui.LogRvsQ.isChecked():
             self.axis_type = 'LogRvsQ'
         

@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Thu Sep 24 10:41:57 2015
+# Created: Thu Sep 24 13:41:47 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1631,19 +1631,19 @@ class Ui_MainWindow(object):
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
         spacerItem19 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_7.addItem(spacerItem19)
-        self.RvsQ_2 = QtGui.QRadioButton(self.data_stitching_Tab)
-        self.RvsQ_2.setEnabled(False)
-        self.RvsQ_2.setChecked(True)
-        self.RvsQ_2.setObjectName("RvsQ_2")
-        self.horizontalLayout_7.addWidget(self.RvsQ_2)
-        self.RQ4vsQ_2 = QtGui.QRadioButton(self.data_stitching_Tab)
-        self.RQ4vsQ_2.setEnabled(False)
-        self.RQ4vsQ_2.setObjectName("RQ4vsQ_2")
-        self.horizontalLayout_7.addWidget(self.RQ4vsQ_2)
-        self.LogRvsQ_2 = QtGui.QRadioButton(self.data_stitching_Tab)
-        self.LogRvsQ_2.setEnabled(False)
-        self.LogRvsQ_2.setObjectName("LogRvsQ_2")
-        self.horizontalLayout_7.addWidget(self.LogRvsQ_2)
+        self.RvsQ = QtGui.QRadioButton(self.data_stitching_Tab)
+        self.RvsQ.setEnabled(True)
+        self.RvsQ.setChecked(True)
+        self.RvsQ.setObjectName("RvsQ")
+        self.horizontalLayout_7.addWidget(self.RvsQ)
+        self.RQ4vsQ = QtGui.QRadioButton(self.data_stitching_Tab)
+        self.RQ4vsQ.setEnabled(True)
+        self.RQ4vsQ.setObjectName("RQ4vsQ")
+        self.horizontalLayout_7.addWidget(self.RQ4vsQ)
+        self.LogRvsQ = QtGui.QRadioButton(self.data_stitching_Tab)
+        self.LogRvsQ.setEnabled(True)
+        self.LogRvsQ.setObjectName("LogRvsQ")
+        self.horizontalLayout_7.addWidget(self.LogRvsQ)
         self.verticalLayout_3.addLayout(self.horizontalLayout_7)
         self.plotTab.addTab(self.data_stitching_Tab, "")
         self.verticalLayout.addWidget(self.plotTab)
@@ -1782,6 +1782,9 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.manualSF, QtCore.SIGNAL("clicked()"), MainWindow.stitching_sf_radio_button)
         QtCore.QObject.connect(self.oneSF, QtCore.SIGNAL("clicked()"), MainWindow.stitching_sf_radio_button)
         QtCore.QObject.connect(self.actionExportScript, QtCore.SIGNAL("triggered()"), MainWindow.export_reduction_script_button)
+        QtCore.QObject.connect(self.RvsQ, QtCore.SIGNAL("clicked()"), MainWindow.stitching_yscale_options_radio_button_1)
+        QtCore.QObject.connect(self.RQ4vsQ, QtCore.SIGNAL("clicked()"), MainWindow.stitching_yscale_options_radio_button_2)
+        QtCore.QObject.connect(self.LogRvsQ, QtCore.SIGNAL("clicked()"), MainWindow.stitching_yscale_options_radio_button_3)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1789,7 +1792,7 @@ class Ui_MainWindow(object):
         self.mainProgressBarLabel.setText(QtGui.QApplication.translate("MainWindow", "Reduction Process:", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_3.setTitle(QtGui.QApplication.translate("MainWindow", "Run Numbers", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Data:", None, QtGui.QApplication.UnicodeUTF8))
-        self.data_sequence_lineEdit.setText(QtGui.QApplication.translate("MainWindow", "130766-130772", None, QtGui.QApplication.UnicodeUTF8))
+        self.data_sequence_lineEdit.setText(QtGui.QApplication.translate("MainWindow", "130766-130768", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Normalization:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_check1.setText(QtGui.QApplication.translate("MainWindow", "Locate Runs", None, QtGui.QApplication.UnicodeUTF8))
         self.label_check2.setText(QtGui.QApplication.translate("MainWindow", "Load NeXus (light)", None, QtGui.QApplication.UnicodeUTF8))
@@ -1981,9 +1984,9 @@ class Ui_MainWindow(object):
         self.reducedAsciiDataSetTable.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
         self.reducedAsciiDataSetTable.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
         self.refreshStitchingAsciiPlot.setText(QtGui.QApplication.translate("MainWindow", "Refresh Plot", None, QtGui.QApplication.UnicodeUTF8))
-        self.RvsQ_2.setText(QtGui.QApplication.translate("MainWindow", "R vs Q", None, QtGui.QApplication.UnicodeUTF8))
-        self.RQ4vsQ_2.setText(QtGui.QApplication.translate("MainWindow", "RQ^4 vs Q", None, QtGui.QApplication.UnicodeUTF8))
-        self.LogRvsQ_2.setText(QtGui.QApplication.translate("MainWindow", "LogR vs Q", None, QtGui.QApplication.UnicodeUTF8))
+        self.RvsQ.setText(QtGui.QApplication.translate("MainWindow", "R vs Q", None, QtGui.QApplication.UnicodeUTF8))
+        self.RQ4vsQ.setText(QtGui.QApplication.translate("MainWindow", "RQ^4 vs Q", None, QtGui.QApplication.UnicodeUTF8))
+        self.LogRvsQ.setText(QtGui.QApplication.translate("MainWindow", "LogR vs Q", None, QtGui.QApplication.UnicodeUTF8))
         self.plotTab.setTabText(self.plotTab.indexOf(self.data_stitching_Tab), QtGui.QApplication.translate("MainWindow", "Data Stitching", None, QtGui.QApplication.UnicodeUTF8))
         self.menuHelp.setTitle(QtGui.QApplication.translate("MainWindow", "Help", None, QtGui.QApplication.UnicodeUTF8))
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "Configuration", None, QtGui.QApplication.UnicodeUTF8))

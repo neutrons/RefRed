@@ -13,6 +13,7 @@ from RefRed.gui_handling.data_norm_spinboxes import DataLowResSpinbox, NormLowRe
 from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidgetsHandler
 from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
 from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.gui_handling.stitching_yscale_options_radio_button_handler import StitchingYScaleOptionsRadioButtonHandler
 from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
 from RefRed.interfaces.refred_main_interface import Ui_MainWindow
@@ -384,4 +385,23 @@ class MainGui(QtGui.QMainWindow):
         o_reduced_plot = ReducedDataHandler(parent = self)
         o_reduced_plot.plot()
         
-   
+    def stitching_yscale_options_radio_button_1(self):
+        '''R vs Q'''
+        o_button_handler = StitchingYScaleOptionsRadioButtonHandler(parent = self)
+        o_button_handler.set_index_button_clicked(index = 0)
+        self.stitching_sf_radio_button()
+        
+    def stitching_yscale_options_radio_button_2(self):
+        '''RQ^4 vs Q'''
+        o_button_handler = StitchingYScaleOptionsRadioButtonHandler(parent = self)
+        o_button_handler.set_index_button_clicked(index = 1)
+        self.stitching_sf_radio_button()
+
+    def stitching_yscale_options_radio_button_3(self):
+        '''LogR vs Q'''
+        o_button_handler = StitchingYScaleOptionsRadioButtonHandler(parent = self)
+        o_button_handler.set_index_button_clicked(index = 2)
+        self.stitching_sf_radio_button()
+
+        
+        

@@ -16,6 +16,7 @@ class LiveReductionHandler(object):
     list_reduced_workspace = []
     nbr_reduction_process = -1
     debug = False
+    error = False
     
     def __init__(self, parent=None):
         self.parent = parent
@@ -26,6 +27,8 @@ class LiveReductionHandler(object):
         _data_0_0 = _big_table_data[0,0]
         if _data_0_0 is None:
             return
+        
+        self.parent.ui.reduceButton.setEnabled(False)
         
         self.nbr_reduction_process = self.calculate_nbr_reduction_process()
         self.cleanup()
@@ -44,6 +47,9 @@ class LiveReductionHandler(object):
             self.launch_reduction(o_general = o_general_settings,
                                   o_individual = o_individual_settings,
                                   debug = self.debug)
+            if self.error:
+                break
+            
             self.save_reduction(row = row_index,
                                 workspace = o_individual_settings._output_workspace_name)
             
@@ -63,6 +69,7 @@ class LiveReductionHandler(object):
 
         self.parent.big_table_data = self.big_table_data
         o_reduction_progressbar_handler.end()
+        self.parent.ui.reduceButton.setEnabled(True)
 
     def export(self):
         o_export_script = ExportDataReductionScript(parent = self.parent)
@@ -105,34 +112,39 @@ class LiveReductionHandler(object):
             self.print_message('SlitsWidthFlag', o_general.slits_width_flag)
             self.print_message('OutputWorkspace', o_individual._output_workspace_name)       
         
-        LiquidsReflectometryReduction( RunNumbers = o_individual._data_run_numbers,
-                                       NormalizationRunNumber = o_individual._norm_run_numbers,
-                                       SignalPeakPixelRange = o_individual._data_peak_range,
-                                       SubtractSignalBackground = o_individual._data_back_flag, 
-                                       SignalBackgroundPixelRange = o_individual._data_back_range,
-                                       NormFlag = o_individual._norm_flag,
-                                       NormPeakPixelRange = o_individual._norm_peak_range,
-                                       NormBackgroundPixelRange = o_individual._norm_back_range,
-                                       SubtractNormBackground = o_individual._norm_back_flag,
-                                       LowResDataAxisPixelRangeFlag = o_individual._data_low_res_flag,
-                                       LowResDataAxisPixelRange = o_individual._data_low_res_range,
-                                       LowResNormAxisPixelRangeFlag = o_individual._norm_low_res_flag,
-                                       LowResNormAxisPixelRange = o_individual._norm_low_res_range,
-                                       TOFRange = o_individual._tof_range,
-                                       IncidentMediumSelected = o_general.incident_medium_selected,
-                                       GeometryCorrectionFlag = o_general.geometry_correction_flag,
-                                       QMin = o_general.q_min,
-                                       QStep = o_general.q_step,
-                                       TOFSteps = o_general.tof_steps,
-                                       AngleOffset = o_general.angle_offset,
-                                       AngleOffsetError = o_general.angle_offset_error,
-                                       ScalingFactorFile = o_general.scaling_factor_file,
-                                       CropFirstAndLastPoints = True,
-                                       SlitsWidthFlag = o_general.slits_width_flag,
-                                       OutputWorkspace = o_individual._output_workspace_name)
-        self.list_reduced_workspace.append(o_individual._output_workspace_name)
-        self.remove_tmp_workspaces()
+        try:
         
+            LiquidsReflectometryReduction( RunNumbers = o_individual._data_run_numbers,
+                                           NormalizationRunNumber = o_individual._norm_run_numbers,
+                                           SignalPeakPixelRange = o_individual._data_peak_range,
+                                           SubtractSignalBackground = o_individual._data_back_flag, 
+                                           SignalBackgroundPixelRange = o_individual._data_back_range,
+                                           NormFlag = o_individual._norm_flag,
+                                           NormPeakPixelRange = o_individual._norm_peak_range,
+                                           NormBackgroundPixelRange = o_individual._norm_back_range,
+                                           SubtractNormBackground = o_individual._norm_back_flag,
+                                           LowResDataAxisPixelRangeFlag = o_individual._data_low_res_flag,
+                                           LowResDataAxisPixelRange = o_individual._data_low_res_range,
+                                           LowResNormAxisPixelRangeFlag = o_individual._norm_low_res_flag,
+                                           LowResNormAxisPixelRange = o_individual._norm_low_res_range,
+                                           TOFRange = o_individual._tof_range,
+                                           IncidentMediumSelected = o_general.incident_medium_selected,
+                                           GeometryCorrectionFlag = o_general.geometry_correction_flag,
+                                           QMin = o_general.q_min,
+                                           QStep = o_general.q_step,
+                                           TOFSteps = o_general.tof_steps,
+                                           AngleOffset = o_general.angle_offset,
+                                           AngleOffsetError = o_general.angle_offset_error,
+                                           ScalingFactorFile = o_general.scaling_factor_file,
+                                           CropFirstAndLastPoints = True,
+                                           SlitsWidthFlag = o_general.slits_width_flag,
+                                           OutputWorkspace = o_individual._output_workspace_name)
+            self.list_reduced_workspace.append(o_individual._output_workspace_name)
+            self.remove_tmp_workspaces()
+        
+        except:
+            self.error = True
+            
     def save_reduction(self, 
                        row = -1,
                        workspace = None):
