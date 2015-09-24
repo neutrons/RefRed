@@ -6,6 +6,7 @@ from RefRed.autopopulatemaintable.reductiontable_auto_fill import ReductionTable
 from RefRed.config_file_launcher import ConfigFileLauncher
 from RefRed.configuration.loading_configuration import LoadingConfiguration
 from RefRed.configuration.saving_configuration import SavingConfiguration
+from RefRed.configuration.user_configuration_handler import RetrieveUserConfiguration, SaveUserConfiguration
 from RefRed.export.export_plot_ascii import ExportPlotAscii
 from RefRed.gui_handling.data_norm_spinboxes import DataPeakSpinbox, NormPeakSpinbox
 from RefRed.gui_handling.data_norm_spinboxes import DataBackSpinbox, NormBackSpinbox
@@ -57,9 +58,7 @@ class MainGui(QtGui.QMainWindow):
     time_click1 = 0 #use by double click of plots
     o_stitching_ascii_widget = None
 
-#    delay_closing_thread = None
-
-    #[data, norm, metadata]
+    #[data, norm, lconfig]
     big_table_data = np.empty((nbr_row_table_reduction, 3), dtype=object)
 
     def __init__(self, argv=[], parent=None):
@@ -73,6 +72,7 @@ class MainGui(QtGui.QMainWindow):
         InitializeGui(self)
         self.ui.reductionTable.setUI(self)   
         MakeGuiConnections(parent = self)
+        RetrieveUserConfiguration(parent = self)
 
     # config files from menu
     def launch_config_file1(self):
@@ -404,6 +404,9 @@ class MainGui(QtGui.QMainWindow):
         o_button_handler = StitchingYScaleOptionsRadioButtonHandler(parent = self)
         o_button_handler.set_index_button_clicked(index = 2)
         self.stitching_sf_radio_button()
-
+        
+    def closeEvent(self, event=None):
+        SaveUserConfiguration(parent = self)
+        
         
         
