@@ -111,6 +111,45 @@ class LiveReducedDataHandler(object):
             self.parent.ui.data_stitching_plot.draw()
             QApplication.processEvents()
         
+    def live_plot(self):
+        
+        if self.row_index == 0:
+            self.parent.ui.data_stitching_plot.clear()
+            self.parent.ui.data_stitching_plot.draw()
+        
+        big_table_data = self.big_table_data
+
+        _lconfig = big_table_data[self.row_index, 2]
+        if _lconfig is None:
+            return        
+        
+        _q_axis = _lconfig.q_axis_for_display.copy()
+        _y_axis = _lconfig.y_axis_for_display.copy()
+        _e_axis = _lconfig.e_axis_for_display.copy()
+        sf = self.generate_selected_sf(lconfig = _lconfig)
+        
+        _y_axis = np.array(_y_axis, dtype = np.float)
+        _e_axis = np.array(_e_axis, dtype = np.float)
+        
+        _y_axis = _y_axis * sf
+        _e_axis = _e_axis *sf
+
+        o_produce_output = ProducedSelectedOutputScaled(parent = self.parent, 
+                                                        q_axis = _q_axis,
+                                                        y_axis = _y_axis,
+                                                        e_axis = _e_axis)
+        o_produce_output.calculate()
+        y_axis = o_produce_output.output_y_axis
+        e_axis = o_produce_output.output_e_axis
+
+        self.parent.ui.data_stitching_plot.errorbar(_q_axis,
+                                                    y_axis,
+                                                    yerr = e_axis, 
+                                                    color = self.get_current_color_plot(self.row_index))
+        self.parent.ui.data_stitching_plot.set_yscale('log')
+        self.parent.ui.data_stitching_plot.draw()
+        QApplication.processEvents()
+
     def generate_selected_sf(self, lconfig=None):
         if self.parent.ui.autoSF.isChecked():
             return lconfig.sf_auto

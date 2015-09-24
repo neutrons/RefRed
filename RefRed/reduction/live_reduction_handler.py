@@ -56,7 +56,7 @@ class LiveReductionHandler(object):
             o_reduced_plot = LiveReducedDataHandler(parent = self.parent,
                                                     row_index = row_index)
             o_reduced_plot.populate_table()
-            o_reduced_plot.plot()
+            o_reduced_plot.live_plot()
 
             o_reduction_progressbar_handler.next_step()
 
