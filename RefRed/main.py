@@ -345,7 +345,9 @@ class MainGui(QtGui.QMainWindow):
         o_reduction.export()
 
     def data_stitching_table_manual_spin_box(self):
-        pass
+        o_reduction = ReducedDataHandler(parent = self)
+        o_reduction.save_manual_sf()
+        self.stitching_sf_radio_button()
     
     def export_stitching_data(self):
         o_export_plot = ExportPlotAscii(parent = self,

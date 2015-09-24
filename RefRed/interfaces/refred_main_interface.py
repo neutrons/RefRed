@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Thu Sep 24 13:41:47 2015
+# Created: Thu Sep 24 13:56:51 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -103,6 +103,7 @@ class Ui_MainWindow(object):
         self.label.setObjectName("label")
         self.gridLayout_2.addWidget(self.label, 0, 0, 1, 1)
         self.data_sequence_lineEdit = QtGui.QLineEdit(self.groupBox_3)
+        self.data_sequence_lineEdit.setText("")
         self.data_sequence_lineEdit.setObjectName("data_sequence_lineEdit")
         self.gridLayout_2.addWidget(self.data_sequence_lineEdit, 0, 1, 1, 1)
         self.label_2 = QtGui.QLabel(self.groupBox_3)
@@ -1792,7 +1793,6 @@ class Ui_MainWindow(object):
         self.mainProgressBarLabel.setText(QtGui.QApplication.translate("MainWindow", "Reduction Process:", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_3.setTitle(QtGui.QApplication.translate("MainWindow", "Run Numbers", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Data:", None, QtGui.QApplication.UnicodeUTF8))
-        self.data_sequence_lineEdit.setText(QtGui.QApplication.translate("MainWindow", "130766-130768", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Normalization:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_check1.setText(QtGui.QApplication.translate("MainWindow", "Locate Runs", None, QtGui.QApplication.UnicodeUTF8))
         self.label_check2.setText(QtGui.QApplication.translate("MainWindow", "Load NeXus (light)", None, QtGui.QApplication.UnicodeUTF8))

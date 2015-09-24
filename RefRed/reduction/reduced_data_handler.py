@@ -60,6 +60,19 @@ class ReducedDataHandler(object):
             _item_1.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             self.parent.ui.dataStitchingTable.setItem(index_row, 3, _item_1)
 
+    def save_manual_sf(self):
+        big_table_data = self.big_table_data
+        for index_row, _lconfig in enumerate(big_table_data[:,2]):
+            if _lconfig is None:
+                break
+            
+            sf_manual_value = self.parent.ui.dataStitchingTable.cellWidget(index_row, 2).value()
+            _lconfig.sf_manual = sf_manual_value
+            big_table_data[index_row, 2] = _lconfig
+        
+        self.big_table_data = big_table_data
+        self.parent.big_table_data = big_table_data
+
     def clear_stiching_table(self):
         o_gui_utility = GuiUtility(parent = self.parent)
         o_gui_utility.clear_table(self.parent.ui.dataStitchingTable)
@@ -84,7 +97,7 @@ class ReducedDataHandler(object):
             _e_axis = np.array(_e_axis, dtype = np.float)
             
             _y_axis = _y_axis * sf
-            _e_axis = _e_axis *sf
+            _e_axis = _e_axis * sf
 
             o_produce_output = ProducedSelectedOutputScaled(parent = self.parent, 
                                                             q_axis = _q_axis,

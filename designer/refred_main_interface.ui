@@ -175,7 +175,7 @@
                          <item row="0" column="1">
                           <widget class="QLineEdit" name="data_sequence_lineEdit">
                            <property name="text">
-                            <string>130766-130768</string>
+                            <string/>
                            </property>
                           </widget>
                          </item>
