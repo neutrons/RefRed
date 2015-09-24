@@ -35,9 +35,9 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
         self.lrdata = None
         
     def run(self):
-        runs_are_compatible = True
+        runs_are_compatible = False
         wks = []
-        
+    
         if (len(self.list_run) > 1):
             o_check_runs = CheckListRunCompatibility(list_nexus = self.list_nexus,
                                                      list_run = self.list_run)
@@ -52,22 +52,22 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
         self.parent.ui.reductionTable.item(self.row, 
                                            self.col).setForeground(_color)
         
-        if runs_are_compatible:
-            o_add_list_nexus = AddListNexus(list_nexus = self.list_nexus,
-                                            list_run = self.list_run,
-                                            metadata_only = False,
-                                            check_nexus_compatibility = False)
-            wks = o_add_list_nexus.wks
-            
+        #if runs_are_compatible:
+        o_add_list_nexus = AddListNexus(list_nexus = self.list_nexus,
+                                        list_run = self.list_run,
+                                        metadata_only = False,
+                                        check_nexus_compatibility = False)
+        wks = o_add_list_nexus.wks
+
         self.wks = wks
         self.runs_are_compatible = runs_are_compatible
         self.update_lconfigdataset()
         
-        if runs_are_compatible:
-            self.loading_lr_data()
-            self.updating_reductionTable_metadata()
-            if self.is_display_requested:
-                self.display_plots()
+#        if runs_are_compatible:
+        self.loading_lr_data()
+        self.updating_reductionTable_metadata()
+        if self.is_display_requested:
+            self.display_plots()
 
         QApplication.processEvents()
             

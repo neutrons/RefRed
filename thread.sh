@@ -1,1 +1,1 @@
-export OPM_NUM_THREADS=8
+export OPM_NUM_THREADS=16
