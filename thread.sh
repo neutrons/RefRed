@@ -1,0 +1,1 @@
+export OPM_NUM_THREADS=8

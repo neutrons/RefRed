@@ -115,6 +115,30 @@ class ReductionTableAutoFill(object):
         o_mantid_utility = MantidUtility(parent = self.parent)
         o_mantid_utility.cleanup_workspaces()
         
+    def loading_full_reductionTable_thread(self):
+        _list_nexus_sorted = self.list_nexus_sorted
+        _list_runs_sorted = self.list_runs_sorted
+        _data_type_selected = self.data_type_selected
+        _is_working_with_data_column = True if self.data_type_selected == 'data' else False
+        _list_runs_sorted = format_to_list(_list_runs_sorted)
+        _list_nexus_sorted = format_to_list(_list_nexus_sorted)
+
+        for index in range(len(_list_nexus_sorted)):
+            _thread = CheckListRunCompatibilityAndDisplayThread()
+            self.parent.loading_nxs_thread[index] = _thread
+        
+        for index, nexus in enumerate(_list_nexus_sorted):
+            _is_display_requested = self.display_of_this_row_checked(index)
+            _list_run = format_to_list(_list_runs_sorted[index])
+            _nexus = format_to_list(nexus)
+            self.parent.loading_nxs_thread[index].setup(parent = self.parent,
+                                                        list_run = _list_run,
+                                                        list_nexus = _nexus,
+                                                        row = index,
+                                                        is_working_with_data_column = _is_working_with_data_column,
+                                                        is_display_requested = _is_display_requested)
+            self.parent.loading_nxs_thread[index].start()
+ 
     def loading_full_reductionTable(self):
         _list_nexus_sorted = self.list_nexus_sorted
         _list_runs_sorted = self.list_runs_sorted

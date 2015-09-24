@@ -1,5 +1,6 @@
 import RefRed.colors
 from PyQt4 import QtCore, QtGui
+from PyQt4.QtGui import QApplication
 
 from RefRed.reduction_table_handling.check_list_run_compatibility import CheckListRunCompatibility
 from RefRed.calculations.add_list_nexus import AddListNexus
@@ -9,6 +10,7 @@ from RefRed.plot.display_plots import DisplayPlots
 from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
 
 
+
 class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
     
     runs_are_compatible = False
@@ -16,12 +18,12 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
     lrdata = None
     
     def setup(self, parent=None,
-                 list_run=None,
-                 list_nexus=None,
-                 row=-1,
-#                 col=-1,
-                 is_working_with_data_column=True,
-                 is_display_requested=False):
+              list_run=None,
+              list_nexus=None,
+              row=-1,
+              is_working_with_data_column=True,
+              is_display_requested=False):
+ 
         self.parent = parent
         self.list_run = list_run
         self.list_nexus = list_nexus
@@ -66,6 +68,8 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
             self.updating_reductionTable_metadata()
             if self.is_display_requested:
                 self.display_plots()
+
+        QApplication.processEvents()
             
     def updating_reductionTable_metadata(self):
         is_working_with_data_column = self.is_working_with_data_column
