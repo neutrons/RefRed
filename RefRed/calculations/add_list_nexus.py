@@ -32,9 +32,9 @@ class AddListNexus(object):
             self.wks = _ws_name
             
         else:
-            load_list_object = LoadListNexus(list_nexus=list_nexus, 
-                                             list_run=list_run,
-                                             metadata_only=metadata_only,
+            load_list_object = LoadListNexus(list_nexus = list_nexus, 
+                                             list_run = list_run,
+                                             metadata_only = metadata_only,
                                              prefix = self.prefix)
             _list_wks = load_list_object.list_wks_loaded
             if len(_list_wks) > 1:

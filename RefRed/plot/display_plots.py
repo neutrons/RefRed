@@ -174,9 +174,9 @@ class DisplayPlots(object):
             parent.ui.metadataS2HValue.setText('%.2f'%d.S2H)
         nexus = d.filename
         if self.is_data:
-            parent.ui.dataNameOfFile.setText(nexus)
+            parent.ui.dataNameOfFile.setText('%s'%d.run_number)
         else:
-            parent.ui.normNameOfFile.setText(nexus)
+            parent.ui.normNameOfFile.setText('%s'%d.run_number)
 
     def clearMetadataWidgets(self):
         parent = self.parent

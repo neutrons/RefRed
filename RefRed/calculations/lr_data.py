@@ -77,7 +77,7 @@ class LRData(object):
         self.date = mt_run.getProperty('run_start').value
         
         #self.full_file_name = mt_run.getProperty('Filename').value[0]
-        self.filename = os.path.basename(str(self.full_file_name))
+        #self.filename = ','.join([os.path.basename(_file) for _file in self.full_file_name])
 
         sample = self.workspace.getInstrument().getSample()
         source = self.workspace.getInstrument().getSource()
