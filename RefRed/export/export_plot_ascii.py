@@ -4,6 +4,8 @@ import os
 import RefRed.utilities
 from RefRed.export.output_reduced_data import OutputReducedData
 from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.utilities import makeSureFileHasExtension
+
 
 class ExportPlotAscii(object):
 	
@@ -45,6 +47,7 @@ class ExportPlotAscii(object):
 			return
 		  
 		parent.path_ascii = os.path.dirname(filename)
+		filename = makeSureFileHasExtension(filename, default_ext=".txt")
 		image = _data.ytofdata
 		RefRed.utilities.output_2d_ascii_file(filename, image)
 
@@ -66,6 +69,7 @@ class ExportPlotAscii(object):
 			return
 		
 		parent.path_ascii = os.path.dirname(filename)
+		filename = makeSureFileHasExtension(filename, default_ext=".txt")
 		countsxdata = _data.countsxdata
 		pixelaxis = range(len(countsxdata))
 		
@@ -95,6 +99,7 @@ class ExportPlotAscii(object):
 		
 		parent.path_ascii = os.path.dirname(filename)
 		countstofdata = _data.countstofdata
+		filename = makeSureFileHasExtension(filename, default_ext=".txt")
 		tof = _data.tof_axis_auto_with_margin
 		if tof[-1] > 1000:
 			tof /= 1000.
@@ -125,6 +130,7 @@ class ExportPlotAscii(object):
 			return
 		
 		parent.path_ascii = os.path.dirname(filename)
+		filename = makeSureFileHasExtension(filename, default_ext=".txt")
 		ycountsdata = _data.ycountsdata
 		pixelaxis = range(len(ycountsdata))
 		
