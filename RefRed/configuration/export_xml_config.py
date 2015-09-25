@@ -173,7 +173,7 @@ class ExportXMLConfig(object):
             # incident medium
             allItems = [self.parent.ui.selectIncidentMediumList.itemText(i) for i in range(self.parent.ui.selectIncidentMediumList.count())] 
             finalList = allItems[1:]
-            strFinalList = ",".join(finalList)
+            strFinalList = ",".join(str(finalList))
             str_array.append('   <incident_medium_list>' + strFinalList + '</incident_medium_list>\n')
 
             imIndex = self.parent.ui.selectIncidentMediumList.currentIndex()

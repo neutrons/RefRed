@@ -1,6 +1,8 @@
 from PyQt4 import QtGui
 import os
 from RefRed.configuration.export_xml_config import ExportXMLConfig
+from RefRed.utilities import makeSureFileHasExtension
+
 
 class SavingConfiguration(object):
     
@@ -21,6 +23,7 @@ class SavingConfiguration(object):
                 return
 
             self.parent.path_config = os.path.dirname(self.filename)
+            self.filename = makeSureFileHasExtension(self.filename)
             o_export = ExportXMLConfig(parent = self.parent,
                                        filename = self.filename)
             
