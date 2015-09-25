@@ -8,6 +8,7 @@ class DisplayPlots(object):
 
     parent = None
     _data = None
+    is_data = True
 
     row = -1
     col = -1
@@ -29,6 +30,7 @@ class DisplayPlots(object):
 
         self.parent = parent
         is_norm = not is_data
+        self.is_data = is_data
 
         if is_data:
             col = 0
@@ -159,6 +161,7 @@ class DisplayPlots(object):
         parent.ui.metadatatthdUnits.setText('%s'%d.tthd_units)
         parent.ui.metadataS1WValue.setText('%.2f'%d.S1W)
         parent.ui.metadataS1HValue.setText('%.2f'%d.S1H)
+        parent.ui.metadataRunNumber.setText('%s'%d.run_number)
         if d.isSiThere:
             parent.ui.S2SiWlabel.setText('SiW')
             parent.ui.S2SiHlabel.setText('SiH')
@@ -169,6 +172,11 @@ class DisplayPlots(object):
             parent.ui.S2SiHlabel.setText('S2H')
             parent.ui.metadataS2WValue.setText('%.2f'%d.S2W)
             parent.ui.metadataS2HValue.setText('%.2f'%d.S2H)
+        nexus = d.filename
+        if self.is_data:
+            parent.ui.dataNameOfFile.setText(nexus)
+        else:
+            parent.ui.normNameOfFile.setText(nexus)
 
     def clearMetadataWidgets(self):
         parent = self.parent
@@ -180,6 +188,8 @@ class DisplayPlots(object):
         parent.ui.metadataS2WValue.setText('N/A')
         parent.ui.metadatathiValue.setText('N/A')
         parent.ui.metadatatthdValue.setText('N/A')
+        parent.ui.dataNameOfFile.setText('')
+        parent.ui.normNameOfFile.setText('')
 
     def plot_ix(self):
         _countsxdata = self.countsxdata

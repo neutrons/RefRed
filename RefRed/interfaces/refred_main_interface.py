@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Thu Sep 24 13:56:51 2015
+# Created: Fri Sep 25 16:46:18 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -355,9 +355,9 @@ class Ui_MainWindow(object):
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
         self.horizontalLayout_5.addWidget(self.label_3)
-        self.label_4 = QtGui.QLabel(self.frame)
-        self.label_4.setObjectName("label_4")
-        self.horizontalLayout_5.addWidget(self.label_4)
+        self.metadataRunNumber = QtGui.QLabel(self.frame)
+        self.metadataRunNumber.setObjectName("metadataRunNumber")
+        self.horizontalLayout_5.addWidget(self.metadataRunNumber)
         self.verticalLayout_5.addLayout(self.horizontalLayout_5)
         self.gridLayout_4 = QtGui.QGridLayout()
         self.gridLayout_4.setObjectName("gridLayout_4")
@@ -1827,7 +1827,7 @@ class Ui_MainWindow(object):
         self.sfBrowseButton.setText(QtGui.QApplication.translate("MainWindow", "Browse ...", None, QtGui.QApplication.UnicodeUTF8))
         self.selectIncidentMediumList.setItemText(0, QtGui.QApplication.translate("MainWindow", "Select Incident Medium ...", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("MainWindow", "Run(s):", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("MainWindow", "N/A", None, QtGui.QApplication.UnicodeUTF8))
+        self.metadataRunNumber.setText(QtGui.QApplication.translate("MainWindow", "N/A", None, QtGui.QApplication.UnicodeUTF8))
         self.label_146.setText(QtGui.QApplication.translate("MainWindow", "Proton Charge:", None, QtGui.QApplication.UnicodeUTF8))
         self.metadataProtonChargeValue.setText(QtGui.QApplication.translate("MainWindow", "N/A", None, QtGui.QApplication.UnicodeUTF8))
         self.metadataProtonChargeUnits.setText(QtGui.QApplication.translate("MainWindow", "units", None, QtGui.QApplication.UnicodeUTF8))

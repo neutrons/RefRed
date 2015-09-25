@@ -48,7 +48,6 @@ class ReductionTableCheckBox(object):
             self.parent.reduction_table_check_box_state = _reduction_table_check_box_state
             
             self.parent.prev_table_reduction_row_selected = self.row_selected
-
         
     def launch_update_of_plot(self):
         _row_selected = self.row_selected

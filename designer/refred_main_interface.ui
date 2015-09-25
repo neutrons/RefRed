@@ -777,7 +777,7 @@ p, li { white-space: pre-wrap; }
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLabel" name="label_4">
+                     <widget class="QLabel" name="metadataRunNumber">
                       <property name="text">
                        <string>N/A</string>
                       </property>
