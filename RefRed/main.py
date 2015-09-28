@@ -166,66 +166,9 @@ class MainGui(QtGui.QMainWindow):
     def logy_toggle_data_stitching(self, checked):
         LogPlotToggle(self,checked,'stitching',is_y_log=True)
 
-    def reduction_table_visibility_changed_0(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=0)
-    def reduction_table_visibility_changed_1(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=1)
-    def reduction_table_visibility_changed_2(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=2)
-    def reduction_table_visibility_changed_3(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=3)
-    def reduction_table_visibility_changed_4(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=4)
-    def reduction_table_visibility_changed_5(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=5)
-    def reduction_table_visibility_changed_6(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=6)
-    def reduction_table_visibility_changed_7(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=7)
-    def reduction_table_visibility_changed_8(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=8)
-    def reduction_table_visibility_changed_9(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=9)
-    def reduction_table_visibility_changed_10(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=10)
-    def reduction_table_visibility_changed_11(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=11)
-    def reduction_table_visibility_changed_12(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=12)
-    def reduction_table_visibility_changed_13(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=13)
-    def reduction_table_visibility_changed_14(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=14)
-    def reduction_table_visibility_changed_15(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=15)
-    def reduction_table_visibility_changed_16(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=16)
-    def reduction_table_visibility_changed_17(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=17)
-    def reduction_table_visibility_changed_18(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=18)
-    def reduction_table_visibility_changed_19(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=19)
-    def reduction_table_visibility_changed_20(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=20)
-    def reduction_table_visibility_changed_21(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=21)
-    def reduction_table_visibility_changed_22(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=22)
-    def reduction_table_visibility_changed_23(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=23)
-    def reduction_table_visibility_changed_24(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=24)
-    def reduction_table_visibility_changed_25(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=25)
-    def reduction_table_visibility_changed_26(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=26)
-    def reduction_table_visibility_changed_27(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=27)
-    def reduction_table_visibility_changed_28(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=28)
-    def reduction_table_visibility_changed_29(self, state):
-        ReductionTableCheckBox(parent=self, row_selected=29)
+    # display row checkbox
+    def reduction_table_visibility_changed_test(self, state, row):
+        ReductionTableCheckBox(parent=self, row_selected = row)
 
     def table_reduction_cell_enter_pressed(self):
         row = self.ui.reductionTable.currentRow()
