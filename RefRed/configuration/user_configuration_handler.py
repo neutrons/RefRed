@@ -9,7 +9,7 @@ class RetrieveUserConfiguration(object):
         settings = QSettings()
         self.parent.path_ascii = str(settings.value("path_ascii", 
                                                     os.path.expanduser('~')).toString())
-        self.parent.path_acsii = str(settings.value("path_config", 
+        self.parent.path_config = str(settings.value("path_config", 
                                                     os.path.expanduser('~')).toString())
         
 class SaveUserConfiguration(object):

@@ -72,6 +72,7 @@ class LRData(object):
         except:
             self.S2W = mt_run.getProperty('S2HWidth').value[0]
             self.S2H = mt_run.getProperty('S2VHeight').value[0]
+            self.isSiThere = False
 
         self.attenuatorNbr = mt_run.getProperty('vATT').value[0] - 1
         self.date = mt_run.getProperty('run_start').value
