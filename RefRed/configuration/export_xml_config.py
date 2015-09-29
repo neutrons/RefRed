@@ -164,6 +164,9 @@ class ExportXMLConfig(object):
             angleError = self.parent.ui.angleOffsetError.text()
             str_array.append('   <angle_offset>' + angleValue + '</angle_offset>\n')
             str_array.append('   <angle_offset_error>' + angleError + '</angle_offset_error>\n')
+	    
+	    q_step = self.parent.ui.qStep.text()
+	    str_array.append('   <q_step>' + q_step + '</q_step>\n')
 
             scalingFactorFlag = self.parent.ui.scalingFactorFlag.isChecked()
             str_array.append('   <scaling_factor_flag>' + str(scalingFactorFlag) + '</scaling_factor_flag>\n')

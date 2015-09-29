@@ -68,6 +68,8 @@ class LoadingConfiguration(object):
 		node_0 = RefLData[0]
 		
 		q_step = self.getNodeValue(node_0, 'q_step')
+		if q_step == '':
+			q_step = '0.001'
 		self.parent.ui.qStep.setText(q_step)
 		
 		angle_offset = self.getNodeValue(node_0, 'angle_offset')

@@ -41,7 +41,11 @@ class GlobalReductionSettingsHandler(object):
         
     def get_q_step(self):
         _q_step = self.parent.ui.qStep.text()
-        return float(_q_step)
+        try:
+            _q_value = float(_q_step)
+        except:
+            _q_value = 0.01
+        return _q_value
         
     def get_incident_medium_selected(self):
         _medium_selected = str(self.parent.ui.selectIncidentMediumList.currentText()).strip()
