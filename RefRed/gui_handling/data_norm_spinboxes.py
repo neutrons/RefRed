@@ -16,53 +16,56 @@ class SpinBox(object):
         big_table_data = parent.big_table_data
         gui_utility = GuiUtility(self.parent)
         row = gui_utility.get_current_table_reduction_check_box_checked()
-        
         if row == -1:
             return
-        
-        if is_data:
-            index = 0
-        else:
-            index = 1
-        data = big_table_data[row, index]
-        
-        val1 = value_min
-        val2 = value_max
 
-        if (val1 > val2):
-            val_min = val2
-            val_max = val1
-        else:
-            val_min = val1
-            val_max = val2
+        all_rows = gui_utility.get_other_row_with_same_run_number_as_row(row = row)
+        for _row in all_rows:
         
-        is_plot_yt = True
-        is_plot_yi = True
-        is_plot_it = False
-        is_plot_ix = False
-        if entry_type == 'peak':
-            data.peak = [str(val_min), str(val_max)]
-        elif entry_type == 'back':
-            data.back = [str(val_min), str(val_max)]
-            data.back_flag = flag
-        else:
-            is_plot_yt = False
-            is_plot_yi = False
-            is_plot_ix = True
-            data.low_res = [str(val_min), str(val_max)]
-            data.low_res_flag = flag
+            if is_data:
+                index = 0
+            else:
+                index = 1
+            data = big_table_data[_row, index]
             
-        big_table_data[row, index] = data
-        self.parent.big_table_data = big_table_data
+            val1 = value_min
+            val2 = value_max
+    
+            if (val1 > val2):
+                val_min = val2
+                val_max = val1
+            else:
+                val_min = val1
+                val_max = val2
+            
+            is_plot_yt = True
+            is_plot_yi = True
+            is_plot_it = False
+            is_plot_ix = False
+            if entry_type == 'peak':
+                data.peak = [str(val_min), str(val_max)]
+            elif entry_type == 'back':
+                data.back = [str(val_min), str(val_max)]
+                data.back_flag = flag
+            else:
+                is_plot_yt = False
+                is_plot_yi = False
+                is_plot_ix = True
+                data.low_res = [str(val_min), str(val_max)]
+                data.low_res_flag = flag
                 
-        DisplayPlots(parent = self.parent,
-                     row = row,
-                     is_data = is_data,
-                     plot_yt = is_plot_yt,
-                     plot_yi = is_plot_yi,
-                     plot_it = is_plot_it,
-                     plot_ix = is_plot_ix,
-                     refresh_reduction_table = False)
+            big_table_data[_row, index] = data
+            self.parent.big_table_data = big_table_data
+
+            if row == _row:
+                DisplayPlots(parent = self.parent,
+                             row = row,
+                             is_data = is_data,
+                             plot_yt = is_plot_yt,
+                             plot_yi = is_plot_yi,
+                             plot_it = is_plot_it,
+                             plot_ix = is_plot_ix,
+                             refresh_reduction_table = False)
 
 class DataSpinbox(object):
 

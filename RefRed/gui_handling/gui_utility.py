@@ -23,6 +23,19 @@ class GuiUtility(object):
                 return row
         return -1
     
+    def get_other_row_with_same_run_number_as_row(self, row = 0):
+        all_rows = [row]
+        nbr_row = self.parent.ui.reductionTable.rowCount()
+        ref_run_number = str(self.parent.ui.reductionTable.item(row, 2).text())
+        for _row in range(nbr_row):
+            if _row == row:
+                continue
+            _item = str(self.parent.ui.reductionTable.item(_row,2).text())
+            if _item == ref_run_number:
+                all_rows.append(_row)
+        all_rows.sort()
+        return all_rows
+    
     def get_data_norm_tab_selected(self):
         return self.parent.ui.dataNormTabWidget.currentIndex()
     
