@@ -4,6 +4,7 @@ from RefRed.plot.display_plots import DisplayPlots
 class AutoTofRangeRadioButtonHandler(object):
 
     parent = None
+    all_rows = []
     row = -1
     col = -1
     is_data = True
@@ -14,6 +15,7 @@ class AutoTofRangeRadioButtonHandler(object):
         self.parent = parent
         o_gui_utility = GuiUtility(parent = self.parent)
         self.row = o_gui_utility.get_current_table_reduction_check_box_checked()
+        self.all_rows = o_gui_utility.get_other_row_with_same_run_number_as_row(row = self.row)
         self.col = o_gui_utility.get_data_norm_tab_selected()
         self.is_data = True if self.col == 0 else False
 
@@ -26,25 +28,27 @@ class AutoTofRangeRadioButtonHandler(object):
         o_gui_utility.set_auto_tof_range_widgets(status = is_auto_tof_selected)
         
         big_table_data = self.parent.big_table_data
-        _data = big_table_data[self.row, self.col]
+        for _row in self.all_rows:
+            _data = big_table_data[_row, self.col]
         
-        if _data is None:
-            return
-        
-        if is_auto_tof_selected:
-            self.new_tof_range = _data.tof_range_auto
-            _data.tof_range_auto_flag = True
-            #self.save_manual_tof_range()            
-        else:
-            self.new_tof_range = _data.tof_range_manual
-            _data.tof_range_auto_flag = False
-            #self.save_auto_tof_range()
-        
-        big_table_data[self.row, self.col] = _data
-        self.parent.big_table_data = big_table_data
-        
-        self.replace_tof_range_displayed()
-        self.refresh_plot()
+            if _data is None:
+                return
+            
+            if is_auto_tof_selected:
+                self.new_tof_range = _data.tof_range_auto
+                _data.tof_range_auto_flag = True
+                #self.save_manual_tof_range()            
+            else:
+                self.new_tof_range = _data.tof_range_manual
+                _data.tof_range_auto_flag = False
+                #self.save_auto_tof_range()
+            
+            big_table_data[_row, self.col] = _data
+            self.parent.big_table_data = big_table_data
+            
+            self.replace_tof_range_displayed()
+            if _row == self.row:
+                self.refresh_plot()
         
     def line_edit_validation(self):
         if self.row == -1:
@@ -65,9 +69,11 @@ class AutoTofRangeRadioButtonHandler(object):
         
     def save_current_manual_tof_range(self):
         big_table_data = self.parent.big_table_data
-        _data = big_table_data[self.row, self.col]
-        _data.tof_range_manual = self.retrieve_tof_range_defined_by_user()
-        big_table_data[self.row, self.col] = _data
+        _tof_range_manual = self.retrieve_tof_range_defined_by_user()
+        for _row in self.all_rows:
+            _data = big_table_data[_row, self.col]
+            _data.tof_range_manual = _tof_range_manual 
+            big_table_data[_row, self.col] = _data
         self.parent.big_table_data = big_table_data
 
     def save_manual_tof_range(self):
