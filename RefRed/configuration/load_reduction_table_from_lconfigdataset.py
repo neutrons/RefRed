@@ -4,6 +4,8 @@ from RefRed.calculations.lr_data import LRData
 from RefRed.calculations.locate_list_run import LocateListRun
 from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
 from RefRed.gui_handling.progressbar_handler import ProgressBarHandler
+from RefRed.plot.display_plots import DisplayPlots
+from RefRed.gui_handling.gui_utility import GuiUtility
 
 
 class LoadReductionTableFromLConfigDataSet(object):
@@ -42,20 +44,37 @@ class LoadReductionTableFromLConfigDataSet(object):
             list_norm_run = lconfig.norm_sets
             o_list_norm_nexus = LocateListRun(list_run = list_norm_run)
             list_norm_nexus = o_list_norm_nexus.list_run_found
-            if list_norm_nexus == []:
-                continue
-            _add_norm_nexus = AddListNexus(list_nexus = list_norm_nexus,
-                                           list_run = list_norm_run,
-                                           metadata_only = False,
-                                           check_nexus_compatibility = False,
-                                           prefix = 'norm')
-            norm_lrdata = LRData(_add_norm_nexus.wks)
-            self.update_lrdata(lrdata = norm_lrdata, 
-                               lconfig = lconfig, 
-                               type = 'norm',
-                               row = index_row)
-            
+            if list_norm_nexus != []:
+                _add_norm_nexus = AddListNexus(list_nexus = list_norm_nexus,
+                                               list_run = list_norm_run,
+                                               metadata_only = False,
+                                               check_nexus_compatibility = False,
+                                               prefix = 'norm')
+                norm_lrdata = LRData(_add_norm_nexus.wks)
+                self.update_lrdata(lrdata = norm_lrdata, 
+                                   lconfig = lconfig, 
+                                   type = 'norm',
+                                   row = index_row)
+
+            is_display_requested = self.display_of_this_row_checked(index_row)
+            if is_display_requested:
+                self.display_plots(row = index_row)
+                
             o_load_config_progressbar_handler.next_step()
+
+    def display_plots(self, row=0):
+        o_gui_utility = GuiUtility(parent = self.parent)
+        is_data = o_gui_utility.is_data_tab_selected()
+        
+        DisplayPlots(parent = self.parent,
+                     row = row,
+                     is_data = is_data)
+        
+    def display_of_this_row_checked(self, row):
+        _button_status = self.parent.ui.reductionTable.cellWidget(row, 0).checkState()
+        if _button_status == 2:
+            return True
+        return False
                     
     def get_nbr_lconfig(self):
         big_table_data = self.parent.big_table_data

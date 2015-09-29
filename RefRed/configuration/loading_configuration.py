@@ -7,6 +7,7 @@ from RefRed.lconfigdataset import LConfigDataset
 from RefRed.configuration.populate_reduction_table_from_lconfigdataset import PopulateReductionTableFromLConfigDataSet as PopulateReductionTable
 from RefRed.configuration.load_reduction_table_from_lconfigdataset import LoadReductionTableFromLConfigDataSet as LoadReductionTable
 from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidgetsHandler
+from RefRed.plot.clear_plots import ClearPlots
 
 
 class LoadingConfiguration(object):
@@ -33,6 +34,7 @@ class LoadingConfiguration(object):
 	def loading(self):
 		self.parent.path_config = os.path.dirname(self.filename)
 		self.clear_reductionTable()
+		self.clear_display()
 		self.load_config_in_big_table_data()
 		self.populate_reduction_table_from_lconfigdataset()
 		self.load_reduction_table_from_lconfigdataset()
@@ -180,6 +182,12 @@ class LoadingConfiguration(object):
 		except:
 			_value = ''
 		return _value
+
+	def clear_display(self):
+		o_clear_plots = ClearPlots(parent= self.parent,
+		                           is_data = True,
+		                           is_norm = True,
+		                           all_plots = True)
 	
 	def clear_reductionTable(self):
 		nbr_row = self.parent.ui.reductionTable.rowCount()

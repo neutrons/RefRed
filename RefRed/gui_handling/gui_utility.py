@@ -26,6 +26,11 @@ class GuiUtility(object):
     def get_data_norm_tab_selected(self):
         return self.parent.ui.dataNormTabWidget.currentIndex()
     
+    def is_data_tab_selected(self):
+        if self.get_data_norm_tab_selected() == 0:
+            return True
+        return False
+    
     def is_auto_tof_range_radio_button_selected(self):
         return self.parent.ui.dataTOFautoMode.isChecked()
     
