@@ -14,7 +14,7 @@ class ScalingFactorWidgetsHandler(object):
         self.parent.ui.scalingFactorConfigFrame.setEnabled(status)
         
     def browse(self):
-        _path = self.parent.path_config
+        _path = self.parent.path_ascii
         filename = str(QtGui.QFileDialog.getOpenFileName(self.parent, 
                                                      'Open scaling factor file', 
                                                      _path,
@@ -23,7 +23,7 @@ class ScalingFactorWidgetsHandler(object):
         if filename == "":
             return
         
-        self.parent.path_config = os.path.dirname(filename)
+        self.parent.path_ascii = os.path.dirname(filename)
         self.fill_incident_medium_list(filename)
         
     def fill_incident_medium_list(self, filename):

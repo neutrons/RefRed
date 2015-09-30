@@ -92,6 +92,7 @@ class LoadingConfiguration(object):
 		self.parent.ui.scalingFactorFile.setText(short_scaling_factor_file)
 		o_scaling_factor_widget = ScalingFactorWidgetsHandler(parent = self.parent)
 		o_scaling_factor_widget.fill_incident_medium_list(scaling_factor_file)
+		self.parent.path_ascii = os.path.dirname(scaling_factor_file)
 		
 	def getMetadataObject(parent, node):
 		iMetadata = LConfigDataset()
