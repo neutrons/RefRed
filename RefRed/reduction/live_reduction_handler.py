@@ -77,11 +77,6 @@ class LiveReductionHandler(object):
         o_export_script.make_script()
         o_export_script.create_file()
         
-    def stitch(self):
-        o_calculate_sf = CalculateSF(parent = self.parent,
-                                     nbr_process = self.nbr_reduction_process)
-        o_calculate_sf.run()
-
     def launch_reduction(self, o_general = None, o_individual = None, debug = False):
         
         if debug:

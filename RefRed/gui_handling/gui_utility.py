@@ -1,4 +1,5 @@
 from PyQt4.QtCore import Qt
+from PyQt4 import QtGui
 import RefRed.version
 
 
@@ -65,11 +66,9 @@ class GuiUtility(object):
         nbr_row = table_ui.rowCount()
         nbr_col = table_ui.columnCount()
         for _row in range(nbr_row):
-            for _col in range(0, nbr_col):
-                _item = table_ui.item(_row, _col)
-                if _item is not None:
-                    _item.setText("")
-    
+            table_ui.removeRow(_row)
+            table_ui.insertRow(_row)
+
     def clear_reductionTable(self):
         nbr_row = self.parent.ui.reductionTable.rowCount()
         nbr_col = self.parent.ui.reductionTable.columnCount()
