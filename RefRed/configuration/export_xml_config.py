@@ -1,4 +1,6 @@
 from RefRed.configuration.export_stitching_ascii_settings import ExportStitchingAsciiSettings
+from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
+
 
 class ExportXMLConfig(object):
     
@@ -51,6 +53,8 @@ class ExportXMLConfig(object):
 	str_array = self.str_array
         _big_table_data = self.parent.big_table_data
 	nbr_row = self.parent.nbr_row_table_reduction
+	o_general_settings = GlobalReductionSettingsHandler(parent = self.parent)
+	
         for row in range(nbr_row):
 
             _data = _big_table_data[row,0]
@@ -152,9 +156,6 @@ class ExportXMLConfig(object):
                 #norm_full_file_name = ','.join(norm_full_file_name)
             #str_array.append('   <norm_full_file_name>' + norm_full_file_name + '</norm_full_file_name>\n')
 
-            q_min = '0'   #FIXME
-            q_max = '0'   #FIXME
-
             str_array.append('   <auto_q_binning>False</auto_q_binning>\n')
             _exportStitchingAsciiSettings = ExportStitchingAsciiSettings()
             _overlap_lowest_error = _exportStitchingAsciiSettings.use_lowest_error_value_flag
@@ -167,16 +168,18 @@ class ExportXMLConfig(object):
 	    
 	    q_step = self.parent.ui.qStep.text()
 	    str_array.append('   <q_step>' + q_step + '</q_step>\n')
-
+	    q_min = '0.001'
+	    str_array.append('   <q_min>' + q_min + '</q_min>\n')
+	    
             scalingFactorFlag = self.parent.ui.scalingFactorFlag.isChecked()
             str_array.append('   <scaling_factor_flag>' + str(scalingFactorFlag) + '</scaling_factor_flag>\n')
-            scalingFactorFile = self.parent.ui.scalingFactorFile.text()
+            scalingFactorFile = o_general_settings.scaling_factor_file
             str_array.append('   <scaling_factor_file>' + scalingFactorFile + '</scaling_factor_file>\n')
 
             # incident medium
-            allItems = [self.parent.ui.selectIncidentMediumList.itemText(i) for i in range(self.parent.ui.selectIncidentMediumList.count())] 
+            allItems = [str(self.parent.ui.selectIncidentMediumList.itemText(i)) for i in range(self.parent.ui.selectIncidentMediumList.count())] 
             finalList = allItems[1:]
-            strFinalList = ",".join(str(finalList))
+            strFinalList = ",".join(finalList)
             str_array.append('   <incident_medium_list>' + strFinalList + '</incident_medium_list>\n')
 
             imIndex = self.parent.ui.selectIncidentMediumList.currentIndex()

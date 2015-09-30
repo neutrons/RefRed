@@ -42,6 +42,7 @@ class MainGui(QtGui.QMainWindow):
     path_config = '/home/j35/sandbox' # config files
     
     full_scaling_factor_file_name = ''
+    current_loaded_file = '~/tmp.xml'
     
     nbr_row_table_reduction = 30
     prev_table_reduction_row_selected = -1
@@ -74,27 +75,27 @@ class MainGui(QtGui.QMainWindow):
         MakeGuiConnections(parent = self)
         RetrieveUserConfiguration(parent = self)
 
-    # config files from menu
-    def launch_config_file1(self):
-        ConfigFileLauncher(self, 0)
-    def launch_config_file2(self):
-        ConfigFileLauncher(self, 1)
-    def launch_config_file3(self):
-        ConfigFileLauncher(self, 2)
-    def launch_config_file4(self):
-        ConfigFileLauncher(self, 3)
-    def launch_config_file5(self):
-        ConfigFileLauncher(self, 4)
-    def launch_config_file6(self):
-        ConfigFileLauncher(self, 5)
-    def launch_config_file7(self):
-        ConfigFileLauncher(self, 6)
-    def launch_config_file8(self):
-        ConfigFileLauncher(self, 7)
-    def launch_config_file9(self):
-        ConfigFileLauncher(self, 8)
-    def launch_config_file10(self):
-        ConfigFileLauncher(self, 9)
+    ## config files from menu
+    #def launch_config_file1(self):
+        #ConfigFileLauncher(self, 0)
+    #def launch_config_file2(self):
+        #ConfigFileLauncher(self, 1)
+    #def launch_config_file3(self):
+        #ConfigFileLauncher(self, 2)
+    #def launch_config_file4(self):
+        #ConfigFileLauncher(self, 3)
+    #def launch_config_file5(self):
+        #ConfigFileLauncher(self, 4)
+    #def launch_config_file6(self):
+        #ConfigFileLauncher(self, 5)
+    #def launch_config_file7(self):
+        #ConfigFileLauncher(self, 6)
+    #def launch_config_file8(self):
+        #ConfigFileLauncher(self, 7)
+    #def launch_config_file9(self):
+        #ConfigFileLauncher(self, 8)
+    #def launch_config_file10(self):
+        #ConfigFileLauncher(self, 9)
     
     # export plot into ascii files
     def export_ix(self):

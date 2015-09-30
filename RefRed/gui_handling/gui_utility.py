@@ -1,4 +1,5 @@
 from PyQt4.QtCore import Qt
+import RefRed.version
 
 
 class GuiUtility(object):
@@ -82,6 +83,16 @@ class GuiUtility(object):
             if _ldata is None:
                 return _index_row
         return _index_row
+
+    def new_config_file_loaded(self, config_file_name = None):
+        self.parent.current_loaded_file = config_file_name
+        dialog_title = RefRed.version.window_title + self.parent.current_loaded_file
+        self.parent.setWindowTitle(dialog_title)
+
+    def gui_has_been_modified(self):
+        dialog_title = RefRed.version.window_title + self.parent.current_loaded_file
+        new_dialog_title = dialog_title + '*'
+        self.parent.setWindowTitle(new_dialog_title)
 
     #def data_peak_and_back_validation(self, with_plot_update = True):
         #self.data_peak_spinbox_validation(with_plot_update = with_plot_update)

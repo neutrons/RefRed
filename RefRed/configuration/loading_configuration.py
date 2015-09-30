@@ -8,6 +8,7 @@ from RefRed.configuration.populate_reduction_table_from_lconfigdataset import Po
 from RefRed.configuration.load_reduction_table_from_lconfigdataset import LoadReductionTableFromLConfigDataSet as LoadReductionTable
 from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidgetsHandler
 from RefRed.plot.clear_plots import ClearPlots
+from RefRed.gui_handling.gui_utility import GuiUtility
 
 
 class LoadingConfiguration(object):
@@ -35,9 +36,14 @@ class LoadingConfiguration(object):
 		self.parent.path_config = os.path.dirname(self.filename)
 		self.clear_reductionTable()
 		self.clear_display()
+		self.display_name_config_file()
 		self.load_config_in_big_table_data()
 		self.populate_reduction_table_from_lconfigdataset()
 		self.load_reduction_table_from_lconfigdataset()
+		
+	def display_name_config_file(self):
+		o_gui = GuiUtility(parent = self.parent)
+		o_gui.new_config_file_loaded(config_file_name = self.filename)
 		
 	def load_config_in_big_table_data(self):
 		filename = self.filename

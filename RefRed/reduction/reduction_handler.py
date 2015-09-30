@@ -89,7 +89,8 @@ class ReductionHandler(object):
             self.print_message('ScalingFactorFile', o_general.scaling_factor_file)
             self.print_message('CropFirstAndLastPoints', True)
             self.print_message('SlitsWidthFlag', o_general.slits_width_flag)
-            self.print_message('OutputWorkspace', o_individual._output_workspace_name)       
+            self.print_message('OutputWorkspace', o_individual._output_workspace_name)
+            return
         
         LiquidsReflectometryReduction( RunNumbers = o_individual._data_run_numbers,
                                        NormalizationRunNumber = o_individual._norm_run_numbers,
