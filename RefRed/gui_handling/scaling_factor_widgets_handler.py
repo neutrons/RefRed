@@ -13,6 +13,9 @@ class ScalingFactorWidgetsHandler(object):
     def checkbox(self, status = True):
         self.parent.ui.scalingFactorConfigFrame.setEnabled(status)
         
+    def set_enabled(self, status = True):
+        self.parent.ui.scalingFactorFlag.setChecked(status)
+
     def browse(self):
         _path = self.parent.path_ascii
         filename = str(QtGui.QFileDialog.getOpenFileName(self.parent, 

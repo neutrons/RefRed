@@ -9,6 +9,7 @@ from RefRed.configuration.load_reduction_table_from_lconfigdataset import LoadRe
 from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidgetsHandler
 from RefRed.plot.clear_plots import ClearPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.utilities import str2bool
 
 
 class LoadingConfiguration(object):
@@ -93,6 +94,9 @@ class LoadingConfiguration(object):
 		o_scaling_factor_widget = ScalingFactorWidgetsHandler(parent = self.parent)
 		o_scaling_factor_widget.fill_incident_medium_list(scaling_factor_file)
 		self.parent.path_ascii = os.path.dirname(scaling_factor_file)
+		scaling_factor_flag = str2bool(self.getNodeValue(node_0, 'scaling_factor_flag'))
+		o_scaling_factor_widget.checkbox(status = scaling_factor_flag)
+		o_scaling_factor_widget.set_enabled(status = scaling_factor_flag)
 		
 	def getMetadataObject(parent, node):
 		iMetadata = LConfigDataset()
