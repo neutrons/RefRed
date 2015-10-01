@@ -27,6 +27,7 @@ from RefRed.reduction_table_handling.update_reduction_table import UpdateReducti
 from RefRed.reduction_table_handling.reduction_table_right_click import ReductionTableRightClick
 from RefRed.update_data_norm_tab import UpdateDataNormTab
 from RefRed.sf_calculator.sf_calculator import SFCalculator
+from RefRed.sf_preview.sf_preview import SFPreview
 
 #from RefRed.export_plot_ascii import ExportPlotAscii
 #from RefRed.home_plot_button_clicked import HomePlotButtonClicked
@@ -271,6 +272,10 @@ class MainGui(QtGui.QMainWindow):
     def browse_scaling_factor_button(self):
         o_scaling_factor = ScalingFactorWidgetsHandler(parent = self)
         o_scaling_factor.browse()
+        
+    def preview_scaling_factor_button(self):
+        o_sf_preview = SFPreview(parent=self)
+        o_sf_preview.show()
         
     def run_reduction_button(self):
         o_live_reduction = LiveReductionHandler(parent = self)

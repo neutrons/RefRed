@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Fri Sep 25 16:46:18 2015
+# Created: Thu Oct  1 10:05:34 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -325,10 +325,16 @@ class Ui_MainWindow(object):
         self.sfBrowseButton.setEnabled(True)
         self.sfBrowseButton.setObjectName("sfBrowseButton")
         self.verticalLayout_21.addWidget(self.sfBrowseButton)
+        self.horizontalLayout_13 = QtGui.QHBoxLayout()
+        self.horizontalLayout_13.setObjectName("horizontalLayout_13")
         self.scalingFactorFile = QtGui.QLineEdit(self.scalingFactorConfigFrame)
         self.scalingFactorFile.setEnabled(True)
         self.scalingFactorFile.setObjectName("scalingFactorFile")
-        self.verticalLayout_21.addWidget(self.scalingFactorFile)
+        self.horizontalLayout_13.addWidget(self.scalingFactorFile)
+        self.previewScalingFactorFile = QtGui.QPushButton(self.scalingFactorConfigFrame)
+        self.previewScalingFactorFile.setObjectName("previewScalingFactorFile")
+        self.horizontalLayout_13.addWidget(self.previewScalingFactorFile)
+        self.verticalLayout_21.addLayout(self.horizontalLayout_13)
         self.selectIncidentMediumList = QtGui.QComboBox(self.scalingFactorConfigFrame)
         self.selectIncidentMediumList.setEnabled(True)
         self.selectIncidentMediumList.setObjectName("selectIncidentMediumList")
@@ -1786,6 +1792,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.RvsQ, QtCore.SIGNAL("clicked()"), MainWindow.stitching_yscale_options_radio_button_1)
         QtCore.QObject.connect(self.RQ4vsQ, QtCore.SIGNAL("clicked()"), MainWindow.stitching_yscale_options_radio_button_2)
         QtCore.QObject.connect(self.LogRvsQ, QtCore.SIGNAL("clicked()"), MainWindow.stitching_yscale_options_radio_button_3)
+        QtCore.QObject.connect(self.previewScalingFactorFile, QtCore.SIGNAL("clicked()"), MainWindow.preview_scaling_factor_button)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1825,6 +1832,7 @@ class Ui_MainWindow(object):
         self.label_sf_precision.setText(QtGui.QApplication.translate("MainWindow", "Precision:", None, QtGui.QApplication.UnicodeUTF8))
         self.sfPrecision.setText(QtGui.QApplication.translate("MainWindow", "0.010", None, QtGui.QApplication.UnicodeUTF8))
         self.sfBrowseButton.setText(QtGui.QApplication.translate("MainWindow", "Browse ...", None, QtGui.QApplication.UnicodeUTF8))
+        self.previewScalingFactorFile.setText(QtGui.QApplication.translate("MainWindow", "Preview ...", None, QtGui.QApplication.UnicodeUTF8))
         self.selectIncidentMediumList.setItemText(0, QtGui.QApplication.translate("MainWindow", "Select Incident Medium ...", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("MainWindow", "Run(s):", None, QtGui.QApplication.UnicodeUTF8))
         self.metadataRunNumber.setText(QtGui.QApplication.translate("MainWindow", "N/A", None, QtGui.QApplication.UnicodeUTF8))
