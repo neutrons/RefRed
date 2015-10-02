@@ -352,3 +352,11 @@ def format_to_list(values):
     else:
         return [values]
     
+def get_index_free_thread(parent=None):
+    nbr_max_thread = len(parent.loading_nxs_thread)
+    index_free_thread = parent.index_free_thread
+    new_index = index_free_thread + 1
+    if new_index == nbr_max_thread:
+        new_index = 0
+    parent.index_free_thread = new_index
+    return new_index

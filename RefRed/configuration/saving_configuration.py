@@ -2,6 +2,7 @@ from PyQt4 import QtGui
 import os
 from RefRed.configuration.export_xml_config import ExportXMLConfig
 from RefRed.utilities import makeSureFileHasExtension
+from RefRed.status_message_handler import StatusMessageHandler
 
 
 class SavingConfiguration(object):
@@ -11,6 +12,10 @@ class SavingConfiguration(object):
     def __init__(self, parent=None, filename=''):
         self.parent = parent
         self.filename = filename
+
+        StatusMessageHandler(parent = self.parent, 
+                             message = 'Saving config ...', 
+                             is_threaded = False)
         
     def run(self):
         if self.filename == '':
@@ -27,6 +32,9 @@ class SavingConfiguration(object):
             o_export = ExportXMLConfig(parent = self.parent,
                                        filename = self.filename)
             
+            StatusMessageHandler(parent = self.parent, 
+                                 message = 'Done!', 
+                                 is_threaded = True)
             
         
             

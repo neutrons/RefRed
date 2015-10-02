@@ -10,6 +10,7 @@ from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidg
 from RefRed.plot.clear_plots import ClearPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.utilities import str2bool
+from RefRed.status_message_handler import StatusMessageHandler
 
 
 class LoadingConfiguration(object):
@@ -23,6 +24,10 @@ class LoadingConfiguration(object):
 		self.parent = parent
 		self.filename = ''
 		
+		StatusMessageHandler(parent = self.parent, 
+			             message = 'Loading config ...', 
+			             is_threaded = False)
+		
 	def run(self):
 		_path = self.parent.path_config
 		filename = QtGui.QFileDialog.getOpenFileName(self.parent, 
@@ -31,8 +36,15 @@ class LoadingConfiguration(object):
 		QtGui.QApplication.processEvents()
 		if not (filename == ""):
 			self.filename = str(filename)
-			self.loading()
-			
+			try:
+				self.loading()
+			except:
+				print('error loading the configuration file')
+		
+		StatusMessageHandler(parent = self.parent, 
+	                             message = 'Done!', 
+	                             is_threaded = True)
+		
 	def loading(self):
 		self.parent.path_config = os.path.dirname(self.filename)
 		self.clear_reductionTable()

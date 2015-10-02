@@ -1,4 +1,5 @@
 from PyQt4 import QtGui
+import logging
 import numpy as np
 import os
 
@@ -56,6 +57,7 @@ class MainGui(QtGui.QMainWindow):
                           'thread17': None, 'thread18': None, 'thread19': None, 'thread20': None,
                           'thread21': None, 'thread22': None, 'thread23': None, 'thread24': None,
                           'thread25': None, 'thread26': None, 'thread27': None, 'thread28': None}
+    index_free_thread = 0
 
     time_click1 = 0 #use by double click of plots
     o_stitching_ascii_widget = None
@@ -75,6 +77,9 @@ class MainGui(QtGui.QMainWindow):
         self.ui.reductionTable.setUI(self)   
         MakeGuiConnections(parent = self)
         RetrieveUserConfiguration(parent = self)
+
+        log_file = os.path.expanduser("~") + '/.refred.log'
+        logging.basicConfig(filename=log_file, level=logging.DEBUG)
 
     ## config files from menu
     #def launch_config_file1(self):
@@ -356,6 +361,5 @@ class MainGui(QtGui.QMainWindow):
         
     def closeEvent(self, event=None):
         SaveUserConfiguration(parent = self)
-        
         
         
