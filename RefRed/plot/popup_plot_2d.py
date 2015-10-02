@@ -8,7 +8,8 @@ from RefRed.plot.display_plots import DisplayPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.colors
 import RefRed.utilities
-#from logging import info
+from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
+
 
 class PopupPlot2d(QDialog):
 
@@ -452,9 +453,9 @@ class PopupPlot2d(QDialog):
         _data.back_flag = backFlag
 
         if tof_auto_switch:
-            _data.tof_range_auto = [tof1, tof2]
+            _data.tof_range_auto = [tof1*1000, tof2*1000]
         else:
-            _data.tof_range_manual = [tof1, tof2]
+            _data.tof_range_manual = [tof1*1000, tof2*1000]
         _data.tof_range_auto_flag = tof_auto_switch
 
         _data.low_res = [str(lowres1), str(lowres2)]
@@ -512,3 +513,8 @@ class PopupPlot2d(QDialog):
                      plot_it = True,
                      plot_ix = True,
                      refresh_reduction_table = False)
+        
+        if not tof_auto_switch:
+            o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent = self.parent)
+            o_auto_tof_range.line_edit_validation()
+            
