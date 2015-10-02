@@ -20,9 +20,11 @@ class UpdateReductionTableMetadata(object):
         incident_angle = lrdata.incident_angle
         
         [qmin, qmax] = q_range
-        _item_min = QtGui.QTableWidgetItem(str(qmin))
+        str_qmin = "%.4f" % qmin
+        _item_min = QtGui.QTableWidgetItem(str_qmin)
         _item_min.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)      
-        _item_max = QtGui.QTableWidgetItem(str(qmax))
+        str_qmax = "%.4f" % qmax
+        _item_max = QtGui.QTableWidgetItem(str_qmax)
         _item_max.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)      
 
         [lmin, lmax] = lambda_range
