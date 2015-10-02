@@ -131,7 +131,7 @@ class LRData(object):
         self.binning = [tmin, self.read_options['bins'], tmax]
         self.calculate_lambda_range()
         self.incident_angle = 2.*self.calculate_theta(with_offset = False) # 2.theta
-        self.q_range = self.calculate_q_range()
+        self.calculate_q_range()
         # self.lambda_range = self.calculate_lambda_range()
 
         # Proton charge
@@ -224,7 +224,7 @@ class LRData(object):
         q_min = _const_theta / float(lambda_max)
         q_max = _const_theta / float(lambda_min)
         
-        return [q_min, q_max]
+        self.q_range = [q_min, q_max]
       
         #theta_rad = self.theta
         #dMD = self.dMD
@@ -242,20 +242,23 @@ class LRData(object):
 
         #return [q_min, q_max]
         
-    def calculate_lambda_range(self):
+    def calculate_lambda_range(self, tof_range=None):
         '''
         calculate lambda range
         '''
         _const = PLANCK_CONSTANT / (NEUTRON_MASS * self.dMD)
 
         # retrieve tof from GUI
-        [tof_min, tof_max] = self.tof_range
+        if tof_range is None:
+            [tof_min, tof_max] = self.tof_range
+        else:
+            [tof_min, tof_max] = tof_range
 
         lambda_min = _const * (tof_min * 1e-6) / float(1e-10)
         lambda_max = _const * (tof_max * 1e-6) / float(1e-10)
 
         lambda_min = "%.2f" % lambda_min
-        lambda_max = "%2.f" % lambda_max
+        lambda_max = "%.2f" % lambda_max
 
         self.lambda_range = [lambda_min, lambda_max]
 
