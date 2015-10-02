@@ -10,6 +10,7 @@ from RefRed.peakfinderalgorithms.peakfinderderivation import PeakFinderDerivatio
 from RefRed.peakfinderalgorithms.lowresfinderderivation import LowResFinderDerivation
 import RefRed.constants as constants
 from RefRed.plot.all_plot_axis import AllPlotAxis
+from RefRed.utilities import convert_angle
 
 NEUTRON_MASS = 1.675e-27  # kg
 PLANCK_CONSTANT = 6.626e-34  # m^2 kg s^-1
@@ -129,9 +130,9 @@ class LRData(object):
 
         self.binning = [tmin, self.read_options['bins'], tmax]
         self.calculate_lambda_range()
+        self.incident_angle = 2.*self.calculate_theta(with_offset = False) # 2.theta
         self.q_range = self.calculate_q_range()
         # self.lambda_range = self.calculate_lambda_range()
-        self.incident_angle = 2.*self.calculate_theta(with_offset = False) # 2.theta
 
         # Proton charge
         _proton_charge = float(mt_run.getProperty('gd_prtn_chrg').value)
@@ -215,21 +216,31 @@ class LRData(object):
         '''
         calculate q range
         '''
-        theta_rad = self.theta
-        dMD = self.dMD
-
-        _const = float(4) * math.pi * dMD / H_OVER_M_NEUTRON
-
-        # retrieve tof from GUI
-        [tof_min, tof_max] = self.tof_range
-
-        q_min = _const * math.sin(theta_rad) / (float(tof_max) * 1e-6) * float(1e-10)
-        q_max = _const * math.sin(theta_rad) / (float(tof_min) * 1e-6) * float(1e-10)
-
-        q_min = "%.5f" % q_min
-        q_max = "%.5f" % q_max
-
+        [lambda_min, lambda_max] = self.lambda_range        
+        _const = float(4) * math.pi
+        theta_rad = convert_angle(angle = self.incident_angle)
+        
+        _const_theta = _const * math.sin(float(theta_rad)/2.)
+        q_min = _const_theta / float(lambda_max)
+        q_max = _const_theta / float(lambda_min)
+        
         return [q_min, q_max]
+      
+        #theta_rad = self.theta
+        #dMD = self.dMD
+
+        #_const = float(4) * math.pi * dMD / H_OVER_M_NEUTRON
+
+        ## retrieve tof from GUI
+        #[tof_min, tof_max] = self.tof_range
+
+        #q_min = _const * math.sin(theta_rad) / (float(tof_max) * 1e-6) * float(1e-10)
+        #q_max = _const * math.sin(theta_rad) / (float(tof_min) * 1e-6) * float(1e-10)
+
+        #q_min = "%.5f" % q_min
+        #q_max = "%.5f" % q_max
+
+        #return [q_min, q_max]
         
     def calculate_lambda_range(self):
         '''
