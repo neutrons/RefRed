@@ -6,6 +6,7 @@ from RefRed.calculations.update_reduction_table_metadata import UpdateReductionT
 from RefRed.gui_handling.progressbar_handler import ProgressBarHandler
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
+import RefRed.colors
 
 
 class LoadReductionTableFromLConfigDataSet(object):
@@ -40,7 +41,7 @@ class LoadReductionTableFromLConfigDataSet(object):
                                lconfig = lconfig, 
                                type = 'data',
                                row = index_row)
-            
+                        
             list_norm_run = lconfig.norm_sets
             o_list_norm_nexus = LocateListRun(list_run = list_norm_run)
             list_norm_nexus = o_list_norm_nexus.list_run_found
@@ -124,6 +125,7 @@ class LoadReductionTableFromLConfigDataSet(object):
         lrdata.full_file_name = full_file_name
         
         index_col = 0 if type == 'data' else 1
+        reduction_table_index_col = index_col + 1
         big_table_data[row, index_col] = lrdata
         self.parent.big_table_data = big_table_data
         
@@ -133,6 +135,9 @@ class LoadReductionTableFromLConfigDataSet(object):
                                          row = row)
             QtGui.QApplication.processEvents()                                             
         
+        # change color of data/norm field to inform data have been loaded
+        _color = QtGui.QColor(RefRed.colors.VALUE_OK)
+        self.parent.ui.reductionTable.item(row, reduction_table_index_col).setForeground(_color)
         
         
         
