@@ -91,6 +91,7 @@ class AutoTofRangeRadioButtonHandler(object):
         for _row in self.all_rows:
             _data = big_table_data[_row, self.col]
             _data.tof_range_manual = _tof_range_manual 
+            _data.tof_range = _tof_range_manual
             self.new_tof_range = _tof_range_manual
             big_table_data[_row, self.col] = _data
         self.parent.big_table_data = big_table_data

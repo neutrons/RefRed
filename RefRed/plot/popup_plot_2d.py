@@ -457,11 +457,15 @@ class PopupPlot2d(QDialog):
         _data.back = [str(back1), str(back2)]
         _data.back_flag = backFlag
 
-        if tof_auto_switch:
-            _data.tof_range_auto = [tof1*1000, tof2*1000]
-        else:
-            _data.tof_range_manual = [tof1*1000, tof2*1000]
+        #if tof_auto_switch:
+            #_data.tof_range_auto = [tof1*1000, tof2*1000]
+        #else:
+            #_data.tof_range_manual = [tof1*1000, tof2*1000]
+        _data.tof_range_auto = [self.auto_min_tof * 1000, self.auto_max_tof * 1000]
+        _data.tof_range = [self.manual_min_tof * 1000, self.manual_max_tof * 1000]
+        _data.tof_range_manual = _data.tof_range
         _data.tof_range_auto_flag = tof_auto_switch
+        _data.tof_auto_flag = tof_auto_switch
 
         _data.low_res = [str(lowres1), str(lowres2)]
         _data.low_res_flag = lowresFlag
