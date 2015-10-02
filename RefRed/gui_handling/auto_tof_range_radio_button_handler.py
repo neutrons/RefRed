@@ -47,6 +47,7 @@ class AutoTofRangeRadioButtonHandler(object):
                 _data.tof_range_auto_flag = False
                 #self.save_auto_tof_range()
             
+            _data.tof_auto_flag = is_auto_tof_selected
             big_table_data[_row, self.col] = _data
             self.parent.big_table_data = big_table_data
             
@@ -56,7 +57,6 @@ class AutoTofRangeRadioButtonHandler(object):
                 self.recalculate_reduction_table_metadata()
                 
     def recalculate_reduction_table_metadata(self):
-        print('self.new_tof_range: ', self.new_tof_range)
         big_table_data = self.parent.big_table_data
         _lrdata = big_table_data[self.row, self.col]
         _lrdata.calculate_lambda_range(self.new_tof_range)

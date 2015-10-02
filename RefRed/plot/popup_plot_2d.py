@@ -285,6 +285,7 @@ class PopupPlot2d(QDialog):
         low_res = _data.low_res
         low_res_flag = RefRed.utilities.str2bool(_data.low_res_flag)
         tof_auto_flag = RefRed.utilities.str2bool(_data.tof_auto_flag)
+
         tof_range_auto = _data.tof_range_auto
         tof_range = _data.tof_range
 
@@ -304,6 +305,10 @@ class PopupPlot2d(QDialog):
             tof_range_manual_max /= 1000.
         self.manual_max_tof = tof_range_manual_max
         self.manual_min_tof = tof_range_manual_min
+
+        if not tof_auto_flag:
+            self.ui.tof_auto_flag.setChecked(False)
+            self.ui.tof_manual_flag.setChecked(True)
         self.manual_auto_tof_clicked()
 
         self.ui.peak1.setValue(int(peak[0]))
