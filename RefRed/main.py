@@ -22,6 +22,7 @@ from RefRed.interfaces.refred_main_interface import Ui_MainWindow
 from RefRed.plot.single_click_plot import SingleClickPlot
 from RefRed.plot.home_plot_button_clicked import HomePlotButtonClicked
 from RefRed.plot.mouse_leave_plot import MouseLeavePlot
+from RefRed.plot.log_plot_toggle import LogPlotToggle
 from RefRed.reduction.reduction_handler import ReductionHandler
 from RefRed.reduction.live_reduction_handler import LiveReductionHandler
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
@@ -159,17 +160,35 @@ class MainGui(QtGui.QMainWindow):
 
     # toggle log
     def logy_toggle_yt_plot(self, checked):
-        LogPlotToggle(self,checked,'yt',is_y_log=True)
+        LogPlotToggle(parent = self,
+                      status = checked,
+                      plot_type = 'yt',
+                      is_y_log = True)
     def logy_toggle_it_plot(self, checked):
-        LogPlotToggle(self,checked,'it',is_y_log=True)
+        LogPlotToggle(parnt = self,
+                      status = checked,
+                      plot_type = 'it',
+                      is_y_log = True)
     def logy_toggle_ix_plot(self, checked):
-        LogPlotToggle(self,checked,'ix',is_y_log=True)
+        LogPlotToggle(parent = self,
+                      status = checked,
+                      plot_type = 'ix',
+                      is_y_log = True)
     def logx_toggle_yi_plot(self, checked):
-        LogPlotToggle(self,checked,'yi',is_y_log=False)
+        LogPlotToggle(parent = self,
+                      status = checked,
+                      plot_type = 'yi',
+                      is_y_log = False)
     def logx_toggle_data_stitching(self, checked):
-        LogPlotToggle(self,checked,'stitching',is_y_log=False)
+        LogPlotToggle(parent = self,
+                      status = checked,
+                      plot_type = 'stitching',
+                      is_y_log = False)
     def logy_toggle_data_stitching(self, checked):
-        LogPlotToggle(self,checked,'stitching',is_y_log=True)
+        LogPlotToggle(parent = self,
+                      status = checked,
+                      plot_type = 'stitching',
+                      is_y_log = True)
 
     # display row checkbox
     def reduction_table_visibility_changed_test(self, state, row):

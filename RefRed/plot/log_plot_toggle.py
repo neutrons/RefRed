@@ -1,19 +1,25 @@
+from RefRed.gui_handling.gui_utility import GuiUtility
+
+
 class LogPlotToggle(object):
 	
-	def __init__(cls, self, button_status, plot_type, is_y_log=True):
+	def __init__(self, parent=None, status='log', plot_type=None, is_y_log=True):
 		
-		if button_status == 'log':
+		if status == 'log':
 			isLog = True
 		else:
 			isLog = False
 		
 		if plot_type=='stitching':
-			[r,c] = [0,0]
+			[row, column] = [0,0]
 		else:
-			[r,c] = self.getCurrentRowColumnSelected()
+			o_gui_utility = GuiUtility(parent = parent)
+			row = o_gui_utility.get_current_table_reduction_check_box_checked()
+			column = 0 if o_gui_utility.is_data_tab_selected() else 1
 		
-		_data = self.bigTableData[r,c]
-		data = _data.active_data
+		data = parent.big_table_data[row, column]
+		if data is None:
+			return
 		   
 		if plot_type=='stitching':
 			if is_y_log:
@@ -41,6 +47,5 @@ class LogPlotToggle(object):
 			else:
 				data.all_plot_axis.is_ix_xlog = isLog
 				
-		_data.active_data = data
-		self.bigTableData[r,c] = _data
+		parent.big_table_data[row, column] = data
 	

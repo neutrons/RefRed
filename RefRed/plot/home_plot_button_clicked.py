@@ -22,7 +22,7 @@ class HomePlotButtonClicked(object):
 		if data.all_plot_axis.yi_data_interval is None:
 			return
 		
-		if plot_type =='yi':
+		if plot_type == 'yi':
 			[xmin,xmax,ymin,ymax] = data.all_plot_axis.yi_data_interval
 			data.all_plot_axis.yi_view_interval = [xmin,xmax,ymin,ymax]
 			if column == 0:
