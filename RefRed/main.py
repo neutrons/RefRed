@@ -20,6 +20,8 @@ from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
 from RefRed.interfaces.refred_main_interface import Ui_MainWindow
 from RefRed.plot.single_click_plot import SingleClickPlot
+from RefRed.plot.home_plot_button_clicked import HomePlotButtonClicked
+from RefRed.plot.mouse_leave_plot import MouseLeavePlot
 from RefRed.reduction.reduction_handler import ReductionHandler
 from RefRed.reduction.live_reduction_handler import LiveReductionHandler
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
@@ -30,11 +32,6 @@ from RefRed.update_data_norm_tab import UpdateDataNormTab
 from RefRed.sf_calculator.sf_calculator import SFCalculator
 from RefRed.sf_preview.sf_preview import SFPreview
 from RefRed.decorators import config_file_has_been_modified, config_file_modification_reset
-
-#from RefRed.export_plot_ascii import ExportPlotAscii
-#from RefRed.home_plot_button_clicked import HomePlotButtonClicked
-#from RefRed.mouse_leave_plot import MouseLeavePlot
-#from RefRed.single_plot_click import SinglePlotClick
 #from RefRed.log_plot_toggle import LogPlotToggle
 
 class MainGui(QtGui.QMainWindow):
@@ -118,27 +115,27 @@ class MainGui(QtGui.QMainWindow):
 
     # home button of plots
     def home_clicked_yi_plot(self):
-        HomePlotButtonClicked(self, type='yi')
+        HomePlotButtonClicked(parent = self, plot_type = 'yi')
     def home_clicked_yt_plot(self):
-        HomePlotButtonClicked(self, type='yt')
+        HomePlotButtonClicked(parent = self, plot_type = 'yt')
     def home_clicked_it_plot(self):
-        HomePlotButtonClicked(self, type='it')
+        HomePlotButtonClicked(parent = self, plot_type = 'it')
     def home_clicked_ix_plot(self):
-        HomePlotButtonClicked(self, type='ix')
+        HomePlotButtonClicked(parent = self, plot_type = 'ix')
     def home_clicked_data_stitching_plot(self):
-        HomePlotButtonClicked(self, type='stitching')
+        HomePlotButtonClicked(parent = self, plot_type = 'stitching')
 
     # leave figure 
     def leave_figure_yi_plot(self):
-        MouseLeavePlot(self, type='yi', retain_all=self.retain_all)
+        MouseLeavePlot(parent = self, plot_type = 'yi')
     def leave_figure_yt_plot(self):
-        MouseLeavePlot(self, type='yt', retain_all=self.retain_all)
+        MouseLeavePlot(parent = self, plot_type = 'yt')
     def leave_figure_it_plot(self):
-        MouseLeavePlot(self, type='it', retain_all=self.retain_all)
+        MouseLeavePlot(parent = self, plot_type = 'it')
     def leave_figure_ix_plot(self):
-        MouseLeavePlot(self, type='ix', retain_all=self.retain_all)
+        MouseLeavePlot(parent = self, plot_type = 'ix')
     def leave_figure_data_stitching_plot(self):
-        MouseLeavePlot(self, type='stitching')
+        MouseLeavePlot(parent = self, plot_type = 'stitching')
 
     # single click
     def single_click_data_yi_plot(self, isPanOrZoomActivated):
