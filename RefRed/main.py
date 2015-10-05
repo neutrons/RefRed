@@ -29,6 +29,7 @@ from RefRed.reduction_table_handling.reduction_table_right_click import Reductio
 from RefRed.update_data_norm_tab import UpdateDataNormTab
 from RefRed.sf_calculator.sf_calculator import SFCalculator
 from RefRed.sf_preview.sf_preview import SFPreview
+from RefRed.decorators import config_file_has_been_modified
 
 #from RefRed.export_plot_ascii import ExportPlotAscii
 #from RefRed.home_plot_button_clicked import HomePlotButtonClicked
@@ -202,48 +203,62 @@ class MainGui(QtGui.QMainWindow):
         ReductionTableCheckBox(parent = self,
                                row_selected = _current_table_reduction_row_selected)
         
+    @config_file_has_been_modified
     def data_back_spinbox_validation(self):
         DataBackSpinbox(parent = self)
     
+    @config_file_has_been_modified
     def data_back_checkbox(self):
         DataBackSpinbox(parent = self)
     
+    @config_file_has_been_modified
     def data_peak_spinbox_validation(self):
         DataPeakSpinbox(parent = self)
     
+    @config_file_has_been_modified
     def norm_back_spinbox_validation(self):
         NormBackSpinbox(parent = self)
         
+    @config_file_has_been_modified
     def norm_back_checkbox(self):
         NormBackSpinbox(parent = self)
     
+    @config_file_has_been_modified
     def norm_peak_spinbox_validation(self):
         NormPeakSpinbox(parent = self)
 
+    @config_file_has_been_modified
     def data_low_res_validation(self):
         DataLowResSpinbox(parent = self)
         
+    @config_file_has_been_modified
     def norm_low_res_validation(self):
         NormLowResSpinbox(parent = self)
         
+    @config_file_has_been_modified
     def data_low_res_checkbox(self):
         DataLowResSpinbox(parent = self)
         
+    @config_file_has_been_modified
     def norm_low_res_checkbox(self):
         NormLowResSpinbox(parent = self)
 
+    @config_file_has_been_modified
     def auto_tof_range_radio_button(self):
         o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent = self)
         o_auto_tof_range.radio_button_handler()
 
+    @config_file_has_been_modified
     def manual_tof_range_line_edit_validation(self):
         o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent = self)
         o_auto_tof_range.line_edit_validation()
         
+    @config_file_has_been_modified
     def data_norm_sequence_event(self):
         self.data_sequence_event()
         self.norm_sequence_event()
 
+    @config_file_has_been_modified
     def data_sequence_event(self):
         str_data_input = self.ui.data_sequence_lineEdit.text()
         ReductionTableAutoFill(parent = self,
@@ -252,6 +267,7 @@ class MainGui(QtGui.QMainWindow):
         self.ui.data_sequence_lineEdit.setText('')
         self.norm_sequence_event()
         
+    @config_file_has_been_modified
     def norm_sequence_event(self):
         str_norm_input = self.ui.norm_sequence_lineEdit.text()
         ReductionTableAutoFill(parent = self,
@@ -270,10 +286,12 @@ class MainGui(QtGui.QMainWindow):
         o_save_config = SavingConfiguration(parent = self)
         o_save_config.run()
         
+    @config_file_has_been_modified
     def use_scaling_factor_checkbox(self, status):
         o_scaling_factor = ScalingFactorWidgetsHandler(parent = self)
         o_scaling_factor.checkbox(status = status)
         
+    @config_file_has_been_modified
     def browse_scaling_factor_button(self):
         o_scaling_factor = ScalingFactorWidgetsHandler(parent = self)
         o_scaling_factor.browse()
@@ -328,6 +346,7 @@ class MainGui(QtGui.QMainWindow):
                                         data_type = 'yt')
         o_export_plot.export()
         
+    @config_file_has_been_modified
     def reduction_table_right_click(self, position):
         o_reduction_table_right_click = ReductionTableRightClick(parent = self,
                                                                  position = position)

@@ -8,11 +8,19 @@ import logging
 from time import time
 from StringIO import StringIO
 from PyQt4 import QtGui, QtCore
-
+from RefRed.version import window_title
 #
 # Help functions adopted from Michele Simionato's decorator module 
 # http://www.phyast.pitt.edu/~micheles/python/decorator.zip
 #
+
+def config_file_has_been_modified(function):
+    def new_function(self, *args, **kw):
+        current_loaded_file = self.current_loaded_file
+        str_new_window_title = (u"%s%s*" %(window_title, current_loaded_file))
+        self.setWindowTitle(str_new_window_title)
+        function(self, *args, **kw)
+    return new_function
 
 def waiting_effects(function):
     def new_function(self, *args, **kw):

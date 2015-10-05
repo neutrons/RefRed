@@ -94,7 +94,6 @@ class Gui(object):
         parent = self.parent
 
         title = window_title
-        parent.setWindowTitle(u'%s   %s'%(title, str_version))
         parent.setWindowTitle(u'%s%s' %(window_title, '~/tmp.xml'))
 
     def set_gui_size(self):
