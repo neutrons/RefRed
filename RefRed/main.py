@@ -29,7 +29,7 @@ from RefRed.reduction_table_handling.reduction_table_right_click import Reductio
 from RefRed.update_data_norm_tab import UpdateDataNormTab
 from RefRed.sf_calculator.sf_calculator import SFCalculator
 from RefRed.sf_preview.sf_preview import SFPreview
-from RefRed.decorators import config_file_has_been_modified
+from RefRed.decorators import config_file_has_been_modified, config_file_modification_reset
 
 #from RefRed.export_plot_ascii import ExportPlotAscii
 #from RefRed.home_plot_button_clicked import HomePlotButtonClicked
@@ -204,6 +204,10 @@ class MainGui(QtGui.QMainWindow):
                                row_selected = _current_table_reduction_row_selected)
         
     @config_file_has_been_modified
+    def widget_modified(self, value_changed):
+        pass
+
+    @config_file_has_been_modified
     def data_back_spinbox_validation(self):
         DataBackSpinbox(parent = self)
     
@@ -279,8 +283,11 @@ class MainGui(QtGui.QMainWindow):
         o_load_config = LoadingConfiguration(parent = self)
         o_load_config.run()
         
+    @config_file_modification_reset
     def save_configuration(self):
-        print('here')
+        o_save_config = SavingConfiguration(parent = self,
+                                            filename = self.current_loaded_file)
+        o_save_config.run()
         
     def save_as_configuration(self):
         o_save_config = SavingConfiguration(parent = self)

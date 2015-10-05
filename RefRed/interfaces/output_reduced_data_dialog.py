@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//output_reduced_data_dialog.ui'
 #
-# Created: Thu Oct  1 13:29:28 2015
+# Created: Mon Oct  5 10:06:51 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!

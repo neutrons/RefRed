@@ -53,6 +53,11 @@ class LoadingConfiguration(object):
 		self.load_config_in_big_table_data()
 		self.populate_reduction_table_from_lconfigdataset()
 		self.load_reduction_table_from_lconfigdataset()
+		self.reset_gui_modified_status()
+		
+	def reset_gui_modified_status(self):
+		o_gui_utility = GuiUtility(parent = self.parent)
+		o_gui_utility.gui_not_modified()
 		
 	def display_name_config_file(self):
 		o_gui = GuiUtility(parent = self.parent)

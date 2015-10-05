@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Thu Oct  1 13:29:28 2015
+# Created: Mon Oct  5 10:06:51 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1728,7 +1728,7 @@ class Ui_MainWindow(object):
         self.actionMetadataFinder.setEnabled(False)
         self.actionMetadataFinder.setObjectName("actionMetadataFinder")
         self.action_save_configuration = QtGui.QAction(MainWindow)
-        self.action_save_configuration.setEnabled(False)
+        self.action_save_configuration.setEnabled(True)
         self.action_save_configuration.setObjectName("action_save_configuration")
         self.actionRunReduction = QtGui.QAction(MainWindow)
         self.actionRunReduction.setObjectName("actionRunReduction")
@@ -1793,6 +1793,12 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.RQ4vsQ, QtCore.SIGNAL("clicked()"), MainWindow.stitching_yscale_options_radio_button_2)
         QtCore.QObject.connect(self.LogRvsQ, QtCore.SIGNAL("clicked()"), MainWindow.stitching_yscale_options_radio_button_3)
         QtCore.QObject.connect(self.previewScalingFactorFile, QtCore.SIGNAL("clicked()"), MainWindow.preview_scaling_factor_button)
+        QtCore.QObject.connect(self.eventTofBins, QtCore.SIGNAL("valueChanged(QString)"), MainWindow.widget_modified)
+        QtCore.QObject.connect(self.qStep, QtCore.SIGNAL("textChanged(QString)"), MainWindow.widget_modified)
+        QtCore.QObject.connect(self.angleOffsetValue, QtCore.SIGNAL("textChanged(QString)"), MainWindow.widget_modified)
+        QtCore.QObject.connect(self.angleOffsetError, QtCore.SIGNAL("textChanged(QString)"), MainWindow.widget_modified)
+        QtCore.QObject.connect(self.sfPrecision, QtCore.SIGNAL("textChanged(QString)"), MainWindow.widget_modified)
+        QtCore.QObject.connect(self.selectIncidentMediumList, QtCore.SIGNAL("currentIndexChanged(QString)"), MainWindow.widget_modified)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

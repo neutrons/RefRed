@@ -93,6 +93,13 @@ class GuiUtility(object):
         new_dialog_title = dialog_title + '*'
         self.parent.setWindowTitle(new_dialog_title)
 
+    def gui_not_modified(self):
+        dialog_title = RefRed.version.window_title + self.parent.current_loaded_file
+        new_dialog_title = dialog_title
+        self.parent.setWindowTitle(new_dialog_title)
+
+
+
     #def data_peak_and_back_validation(self, with_plot_update = True):
         #self.data_peak_spinbox_validation(with_plot_update = with_plot_update)
         #self.data_back_spinbox_validation(with_plot_update = with_plot_update)

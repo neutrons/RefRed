@@ -4270,7 +4270,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="action_save_configuration">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Save</string>
@@ -4968,6 +4968,102 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>eventTofBins</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>widget_modified()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>273</x>
+     <y>486</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>586</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>qStep</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>widget_modified()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>273</x>
+     <y>519</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>586</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>angleOffsetValue</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>widget_modified()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>125</x>
+     <y>625</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>586</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>angleOffsetError</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>widget_modified()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>289</x>
+     <y>625</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>586</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sfPrecision</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>widget_modified()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>207</x>
+     <y>754</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>586</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>selectIncidentMediumList</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>widget_modified()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>256</x>
+     <y>856</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>586</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -5000,5 +5096,6 @@ p, li { white-space: pre-wrap; }
   <slot>stitching_yscale_options_radio_button_2()</slot>
   <slot>stitching_yscale_options_radio_button_3()</slot>
   <slot>preview_scaling_factor_button()</slot>
+  <slot>widget_modified()</slot>
  </slots>
 </ui>

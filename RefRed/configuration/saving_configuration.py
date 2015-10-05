@@ -3,6 +3,7 @@ import os
 from RefRed.configuration.export_xml_config import ExportXMLConfig
 from RefRed.utilities import makeSureFileHasExtension
 from RefRed.status_message_handler import StatusMessageHandler
+from RefRed.gui_handling.gui_utility import GuiUtility
 
 
 class SavingConfiguration(object):
@@ -35,6 +36,11 @@ class SavingConfiguration(object):
             StatusMessageHandler(parent = self.parent, 
                                  message = 'Done!', 
                                  is_threaded = True)
+            
+            o_gui_utility = GuiUtility(parent = self.parent)
+            o_gui_utility.gui_not_modified()
+
+    
             
         
             
