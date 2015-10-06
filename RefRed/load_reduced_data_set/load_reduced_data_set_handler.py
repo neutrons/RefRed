@@ -29,6 +29,16 @@ class LoadReducedDataSetHandler(object):
             else:
                 self.parent.o_stitched_ascii.addData(o_loaded_ascii)
                 
-                
+            self.plot()
+            
+    def plot(self):
+        big_table_data = self.parent.big_table_data
+        data = big_table_data[0,0]
+        _isylog = data.all_plot_axis.is_reduced_plot_stitching_tab_ylog
+        _isxlog = data.all_plot_axis.is_reduced_plot_stitching_tab_xlog
+        
+        self.parent.o_stitched_ascii.updateDisplay(isxlog = _isxlog,
+                                                   isylog = _isylog)
+        
             
         

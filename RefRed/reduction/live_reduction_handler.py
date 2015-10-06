@@ -6,6 +6,7 @@ from RefRed.gui_handling.progressbar_handler import ProgressBarHandler
 from RefRed.reduction.export_data_reduction_script import ExportDataReductionScript
 from RefRed.reduction.individual_reduction_settings_handler import IndividualReductionSettingsHandler
 from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
+from RefRed.status_message_handler import StatusMessageHandler
 from mantid.simpleapi import *
 import mantid
 
@@ -27,6 +28,10 @@ class LiveReductionHandler(object):
         _data_0_0 = _big_table_data[0,0]
         if _data_0_0 is None:
             return
+        
+        StatusMessageHandler(parent = self.parent, 
+                             message = 'Running reduction ...', 
+                             is_threaded = False)
         
         self.parent.ui.reduceButton.setEnabled(False)
         
@@ -66,10 +71,13 @@ class LiveReductionHandler(object):
 
             o_reduction_progressbar_handler.next_step()
 
-
         self.parent.big_table_data = self.big_table_data
         o_reduction_progressbar_handler.end()
         self.parent.ui.reduceButton.setEnabled(True)
+        
+        StatusMessageHandler(parent = self.parent, 
+                             message = 'Done!', 
+                             is_threaded = True)
 
     def export(self):
         o_export_script = ExportDataReductionScript(parent = self.parent)

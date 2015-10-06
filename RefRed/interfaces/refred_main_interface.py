@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Tue Oct  6 09:07:42 2015
+# Created: Tue Oct  6 10:58:06 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1606,7 +1606,7 @@ class Ui_MainWindow(object):
         self.loadReducedAsciiDataSet.setObjectName("loadReducedAsciiDataSet")
         self.verticalLayout_7.addWidget(self.loadReducedAsciiDataSet)
         self.reducedAsciiDataSetTable = QtGui.QTableWidget(self.data_stitching_Tab)
-        self.reducedAsciiDataSetTable.setEnabled(False)
+        self.reducedAsciiDataSetTable.setEnabled(True)
         self.reducedAsciiDataSetTable.setMinimumSize(QtCore.QSize(300, 0))
         self.reducedAsciiDataSetTable.setMaximumSize(QtCore.QSize(300, 16777215))
         self.reducedAsciiDataSetTable.setObjectName("reducedAsciiDataSetTable")
@@ -1618,7 +1618,7 @@ class Ui_MainWindow(object):
         self.reducedAsciiDataSetTable.setHorizontalHeaderItem(1, item)
         self.verticalLayout_7.addWidget(self.reducedAsciiDataSetTable)
         self.refreshStitchingAsciiPlot = QtGui.QPushButton(self.data_stitching_Tab)
-        self.refreshStitchingAsciiPlot.setEnabled(False)
+        self.refreshStitchingAsciiPlot.setEnabled(True)
         self.refreshStitchingAsciiPlot.setMaximumSize(QtCore.QSize(300, 16777215))
         self.refreshStitchingAsciiPlot.setObjectName("refreshStitchingAsciiPlot")
         self.verticalLayout_7.addWidget(self.refreshStitchingAsciiPlot)

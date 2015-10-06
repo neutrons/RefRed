@@ -76,7 +76,7 @@ class StitchedAsciiHandler(object):
 
 			self.tableUi.insertRow(i)
 
-			_item = QtGui.QTableWidgetItem(str(_data_object.shortAsciiFilename))
+			_item = QtGui.QTableWidgetItem(str(_data_object.short_ascii_file_name))
 			self.tableUi.setItem(i,0,_item)
 			
 			_widget = QtGui.QCheckBox()
@@ -89,7 +89,7 @@ class StitchedAsciiHandler(object):
 			
 			if _data_object.isEnabled:
 				
-				if _data_object.isLiveReduced:
+				if _data_object.is_live_reduction:
 					self.displayLiveData(_data_object)
 				else:
 					#self.displayloaded_ascii(_data_object)
