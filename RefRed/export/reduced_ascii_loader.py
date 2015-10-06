@@ -1,6 +1,7 @@
 import os
 from RefRed.export.ascii_loader import AsciiLoader
 
+
 class ReducedAsciiLoader(object):
 	
 	parent = None

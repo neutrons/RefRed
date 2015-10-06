@@ -19,6 +19,7 @@ from RefRed.gui_handling.stitching_yscale_options_radio_button_handler import St
 from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
 from RefRed.interfaces.refred_main_interface import Ui_MainWindow
+from RefRed.load_reduced_data_set.load_reduced_data_set_handler import LoadReducedDataSetHandler
 from RefRed.plot.single_click_plot import SingleClickPlot
 from RefRed.plot.home_plot_button_clicked import HomePlotButtonClicked
 from RefRed.plot.mouse_leave_plot import MouseLeavePlot
@@ -63,6 +64,9 @@ class MainGui(QtGui.QMainWindow):
 
     #[data, norm, lconfig]
     big_table_data = np.empty((nbr_row_table_reduction, 3), dtype=object)
+
+    #Reduced ascii data sets
+    o_stitched_ascii = None
 
     def __init__(self, argv=[], parent=None):
         if parent is None:
@@ -400,6 +404,10 @@ class MainGui(QtGui.QMainWindow):
         o_button_handler = StitchingYScaleOptionsRadioButtonHandler(parent = self)
         o_button_handler.set_index_button_clicked(index = 2)
         self.stitching_sf_radio_button()
+        
+    def load_reduced_data_set_button(self):
+        o_load_reduced_set = LoadReducedDataSetHandler(parent = self)
+        o_load_reduced_set.run()
         
     def closeEvent(self, event=None):
         SaveUserConfiguration(parent = self)

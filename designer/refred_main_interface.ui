@@ -3896,7 +3896,7 @@ p, li { white-space: pre-wrap; }
               <item>
                <widget class="QPushButton" name="loadReducedAsciiDataSet">
                 <property name="enabled">
-                 <bool>false</bool>
+                 <bool>true</bool>
                 </property>
                 <property name="minimumSize">
                  <size>
@@ -5064,6 +5064,22 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>loadReducedAsciiDataSet</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>load_reduced_data_set_button()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>170</x>
+     <y>657</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>586</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -5097,5 +5113,6 @@ p, li { white-space: pre-wrap; }
   <slot>stitching_yscale_options_radio_button_3()</slot>
   <slot>preview_scaling_factor_button()</slot>
   <slot>widget_modified()</slot>
+  <slot>load_reduced_data_set_button()</slot>
  </slots>
 </ui>

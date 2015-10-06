@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Mon Oct  5 10:06:51 2015
+# Created: Tue Oct  6 09:07:42 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1600,7 +1600,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_7 = QtGui.QVBoxLayout()
         self.verticalLayout_7.setObjectName("verticalLayout_7")
         self.loadReducedAsciiDataSet = QtGui.QPushButton(self.data_stitching_Tab)
-        self.loadReducedAsciiDataSet.setEnabled(False)
+        self.loadReducedAsciiDataSet.setEnabled(True)
         self.loadReducedAsciiDataSet.setMinimumSize(QtCore.QSize(300, 0))
         self.loadReducedAsciiDataSet.setMaximumSize(QtCore.QSize(300, 16777215))
         self.loadReducedAsciiDataSet.setObjectName("loadReducedAsciiDataSet")
@@ -1799,6 +1799,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.angleOffsetError, QtCore.SIGNAL("textChanged(QString)"), MainWindow.widget_modified)
         QtCore.QObject.connect(self.sfPrecision, QtCore.SIGNAL("textChanged(QString)"), MainWindow.widget_modified)
         QtCore.QObject.connect(self.selectIncidentMediumList, QtCore.SIGNAL("currentIndexChanged(QString)"), MainWindow.widget_modified)
+        QtCore.QObject.connect(self.loadReducedAsciiDataSet, QtCore.SIGNAL("clicked()"), MainWindow.load_reduced_data_set_button)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
