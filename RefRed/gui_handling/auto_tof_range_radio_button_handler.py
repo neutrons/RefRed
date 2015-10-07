@@ -16,9 +16,13 @@ class AutoTofRangeRadioButtonHandler(object):
     def __init__(self, parent = None):
         self.parent = parent
         o_gui_utility = GuiUtility(parent = self.parent)
+        is_auto_tof_selected = o_gui_utility.is_auto_tof_range_radio_button_selected()
+        o_gui_utility.set_auto_tof_range_widgets(status = is_auto_tof_selected)
+        
         self.row = o_gui_utility.get_current_table_reduction_check_box_checked()
         if self.row == -1:
             return
+
         self.all_rows = o_gui_utility.get_other_row_with_same_run_number_as_row(row = self.row)
         self.col = o_gui_utility.get_data_norm_tab_selected()
         self.is_data = True if self.col == 0 else False
@@ -27,10 +31,9 @@ class AutoTofRangeRadioButtonHandler(object):
         if self.row == -1:
             return
         
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent = self.parent)        
         is_auto_tof_selected = o_gui_utility.is_auto_tof_range_radio_button_selected()
-        o_gui_utility.set_auto_tof_range_widgets(status = is_auto_tof_selected)
-        
+
         big_table_data = self.parent.big_table_data
         for _row in self.all_rows:
             _data = big_table_data[_row, self.col]

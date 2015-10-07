@@ -88,9 +88,12 @@ class OutputReducedData(QDialog):
 		
 		self.filename = filename
 		self.parent.path_ascii = os.path.dirname(filename)
-		self.write_ascii()
-		self.close()
-		self.save_back_widget_parameters_used()
+		try:
+			self.write_ascii()
+			self.close()
+			self.save_back_widget_parameters_used()
+		except:
+			pass
 		
 	def save_back_widget_parameters_used(self):
 		_is_with_4th_column_flag = self.ui.output4thColumnFlag.isChecked()
