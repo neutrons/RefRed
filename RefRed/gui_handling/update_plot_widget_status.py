@@ -49,11 +49,17 @@ class UpdatePlotWidgetStatus(object):
         parent.ui.dataPeakFromValue.setEnabled(status)
         parent.ui.dataBackgroundFlag.setEnabled(status)
 
-        
         self.parent.ui.dataTOFmanualLabel.setEnabled(status)
         self.parent.ui.dataTOFautoMode.setEnabled(status)
         self.parent.ui.dataTOFmanualMode.setEnabled(status)
-        
+        o_gui_utility = GuiUtility(parent = self.parent)
+        if status:
+            is_auto_tof_selected = o_gui_utility.is_auto_tof_range_radio_button_selected()
+            o_gui_utility.set_auto_tof_range_widgets(status = is_auto_tof_selected)
+        else:
+            o_gui_utility.set_auto_tof_range_widgets(status = True)
+            
+
     def norm_tab_widgets(self, status=False):
         parent = self.parent
         parent.ui.dataNormTabWidget.setEnabled(status)

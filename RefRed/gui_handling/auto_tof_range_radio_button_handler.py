@@ -36,7 +36,6 @@ class AutoTofRangeRadioButtonHandler(object):
         self.is_data = True if self.col == 0 else False
 
     def radio_button_handler(self):
-
         if self.row == -1:
             return
         
