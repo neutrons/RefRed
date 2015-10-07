@@ -270,11 +270,13 @@ class MainGui(QtGui.QMainWindow):
     @config_file_has_been_modified
     def auto_tof_range_radio_button(self):
         o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent = self)
+        o_auto_tof_range.setup()
         o_auto_tof_range.radio_button_handler()
 
     @config_file_has_been_modified
     def manual_tof_range_line_edit_validation(self):
         o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent = self)
+        o_auto_tof_range.setup()
         o_auto_tof_range.line_edit_validation()
         
     @config_file_has_been_modified

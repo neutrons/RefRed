@@ -1,4 +1,4 @@
-from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
+
 
 class ClearPlots(object):
 	
@@ -34,20 +34,16 @@ class ClearPlots(object):
 			self.plot_ix = True
 			self.stitched = True
 		
-#		update_obj = UpdatePlotWidgetStatus(parent = parent)
 		if is_data:
 			self.clear_data_plots()
 			parent.ui.dataNameOfFile.setText('')
-#			update_obj.disable_data()
 			
 		if is_norm:
 			self.clear_norm_plots()
 			parent.ui.normNameOfFile.setText('')
-#			update_obj.disable_norm()
 			
 		if self.stitched:
 			self.clear_stitched()
-#			update_obj.disable_stitched()
 
 		if self.plot_yt and self.plot_yi and self.plot_it and self.plot_ix:
 			self.clear_metadata()

@@ -11,6 +11,7 @@ from RefRed.plot.all_plot_axis import AllPlotAxis
 import RefRed.colors
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
 
+
 class Gui(object):
 
     parent = None
@@ -45,8 +46,7 @@ class Gui(object):
 
         #enabled all widgets
         o_update_plot = UpdatePlotWidgetStatus(parent=parent)
-        o_update_plot.enable_data()
-        o_update_plot.enable_norm()
+        o_update_plot.disable_all()
 
         ## start a separate thread for delayed actions
         #parent.trigger=DelayedTrigger()
@@ -57,6 +57,7 @@ class Gui(object):
         parent.ui.reductionTable.setFocus()	
         
         self.init_autopopulate_widgets()
+        
         
     def init_autopopulate_widgets(self):
         pixmap = QtGui.QPixmap(u':/General/check_icon.png')

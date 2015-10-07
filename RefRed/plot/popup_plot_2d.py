@@ -525,5 +525,6 @@ class PopupPlot2d(QDialog):
         
         if not tof_auto_switch:
             o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent = self.parent)
+            o_auto_tof_range.setup()
             o_auto_tof_range.line_edit_validation()
             

@@ -4,6 +4,8 @@ from PyQt4.QtCore import Qt
 
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.plot.clear_plots import ClearPlots
+from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
+
 
 class ReductionTableCheckBox(object):
 
@@ -57,6 +59,8 @@ class ReductionTableCheckBox(object):
                          row = self.row_selected,
                          is_data = self.is_data_tab_selected())
         else:
+            update_obj = UpdatePlotWidgetStatus(parent = self.parent)
+	    update_obj.disable_all()
             ClearPlots(self.parent,
                        is_data = _is_data_selected,
                        is_norm = not(_is_data_selected),

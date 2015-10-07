@@ -13,8 +13,16 @@ class AutoTofRangeRadioButtonHandler(object):
     
     new_tof_range = []
 
-    def __init__(self, parent = None):
+    def __init__(self, parent=None, enable=True):
         self.parent = parent
+
+        self.parent.ui.dataTOFmanualLabel.setEnabled(enable)
+        self.parent.ui.dataTOFautoMode.setEnabled(enable)
+        self.parent.ui.dataTOFmanualMode.setEnabled(enable)
+        if not enable:
+            return
+
+    def setup(self):
         o_gui_utility = GuiUtility(parent = self.parent)
         is_auto_tof_selected = o_gui_utility.is_auto_tof_range_radio_button_selected()
         o_gui_utility.set_auto_tof_range_widgets(status = is_auto_tof_selected)
@@ -28,6 +36,7 @@ class AutoTofRangeRadioButtonHandler(object):
         self.is_data = True if self.col == 0 else False
 
     def radio_button_handler(self):
+
         if self.row == -1:
             return
         

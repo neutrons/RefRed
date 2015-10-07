@@ -1404,14 +1404,14 @@ p, li { white-space: pre-wrap; }
                 <item>
                  <widget class="QTabWidget" name="dataNormTabWidget">
                   <property name="enabled">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </property>
                   <property name="currentIndex">
                    <number>0</number>
                   </property>
                   <widget class="QWidget" name="tab">
                    <property name="enabled">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </property>
                    <attribute name="title">
                     <string>  D A T A  </string>
@@ -1455,7 +1455,7 @@ p, li { white-space: pre-wrap; }
                          <item>
                           <widget class="MPLWidgetXLog" name="data_yi_plot" native="true">
                            <property name="enabled">
-                            <bool>false</bool>
+                            <bool>true</bool>
                            </property>
                            <property name="sizePolicy">
                             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -1523,7 +1523,7 @@ p, li { white-space: pre-wrap; }
                                 <item>
                                  <widget class="QSpinBox" name="dataPrimToValue">
                                   <property name="enabled">
-                                   <bool>false</bool>
+                                   <bool>true</bool>
                                   </property>
                                   <property name="palette">
                                    <palette>
@@ -1597,7 +1597,7 @@ p, li { white-space: pre-wrap; }
                                 <item>
                                  <widget class="QLabel" name="dataBackFromLabel">
                                   <property name="enabled">
-                                   <bool>false</bool>
+                                   <bool>true</bool>
                                   </property>
                                   <property name="text">
                                    <string>Back2</string>
@@ -1685,7 +1685,7 @@ p, li { white-space: pre-wrap; }
                                 <item>
                                  <widget class="QSpinBox" name="dataPeakToValue">
                                   <property name="enabled">
-                                   <bool>false</bool>
+                                   <bool>true</bool>
                                   </property>
                                   <property name="palette">
                                    <palette>
@@ -1759,7 +1759,7 @@ p, li { white-space: pre-wrap; }
                                 <item>
                                  <widget class="QLabel" name="dataPeakToLabel">
                                   <property name="enabled">
-                                   <bool>false</bool>
+                                   <bool>true</bool>
                                   </property>
                                   <property name="text">
                                    <string>Peak1</string>
@@ -1769,7 +1769,7 @@ p, li { white-space: pre-wrap; }
                                 <item>
                                  <widget class="QSpinBox" name="dataPeakFromValue">
                                   <property name="enabled">
-                                   <bool>false</bool>
+                                   <bool>true</bool>
                                   </property>
                                   <property name="palette">
                                    <palette>
@@ -2287,7 +2287,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                   <widget class="QWidget" name="tab_2">
                    <property name="enabled">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </property>
                    <attribute name="title">
                     <string>  N O R M A L I Z A T I O N  </string>

@@ -1,5 +1,6 @@
 from RefRed.gui_handling.gui_utility import GuiUtility
 
+
 class UpdatePlotWidgetStatus(object):
     '''
     This class will check if the plot widgets can be enabled according to
@@ -10,26 +11,28 @@ class UpdatePlotWidgetStatus(object):
     def __init__(self, parent=None):
         self.parent = parent
 
+    def disable_all(self):
+        self.data_tab_widgets(status = False)
+        self.norm_tab_widgets(status = False)
+        
     def disable_data(self):
-        self.data_tab_widgets(status=False)
+        self.data_tab_widgets(status = False)
 
     def enable_data(self):
-        self.data_tab_widgets(status=True)
+        self.data_tab_widgets(status = True)
         
     def disable_norm(self):
-        self.norm_tab_widgets(status=False)
+        self.norm_tab_widgets(status = False)
 
     def enable_norm(self):
-        self.norm_tab_widgets(status=True)
+        self.norm_tab_widgets(status = True)
         
     def disable_reduced(self):
         parent = self.parent
         
-    def disable_stitched(self):
-        parent = self.parent
-   
     def data_tab_widgets(self, status=False):
         parent = self.parent
+        parent.ui.dataNormTabWidget.setEnabled(status)
         parent.ui.data_yt_plot.setEnabled(status)
         parent.ui.dataNameOfFile.setEnabled(status)
         parent.ui.data_yi_plot.setEnabled(status)
@@ -46,8 +49,14 @@ class UpdatePlotWidgetStatus(object):
         parent.ui.dataPeakFromValue.setEnabled(status)
         parent.ui.dataBackgroundFlag.setEnabled(status)
 
+        
+        self.parent.ui.dataTOFmanualLabel.setEnabled(status)
+        self.parent.ui.dataTOFautoMode.setEnabled(status)
+        self.parent.ui.dataTOFmanualMode.setEnabled(status)
+        
     def norm_tab_widgets(self, status=False):
         parent = self.parent
+        parent.ui.dataNormTabWidget.setEnabled(status)
         parent.ui.norm_yt_plot.setEnabled(status)
         parent.ui.normNameOfFile.setEnabled(status)
         parent.ui.norm_yi_plot.setEnabled(status)
