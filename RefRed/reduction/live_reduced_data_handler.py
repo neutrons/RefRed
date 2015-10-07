@@ -42,16 +42,16 @@ class LiveReducedDataHandler(object):
         self.parent.ui.dataStitchingTable.setItem(row_index, 0, _run_item)
         
         #auto SF
-        #_brush = QtGui.QBrush()
-        #if strtobool(_lconfig.sf_auto_found_match):
-        #_brush.setColor(QtCore.Qt.green)
-        #else:
-        #_brush.setColor(QtCore.Qt.red)
+        _brush = QtGui.QBrush()
+        if strtobool(_lconfig.sf_auto_found_match):
+            _brush.setColor(QtCore.Qt.green)
+        else:
+            _brush.setColor(QtCore.Qt.red)
 
         sf_auto = "%.4f" %_lconfig.sf_auto
         _auto_item = QtGui.QTableWidgetItem(sf_auto)
         _auto_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-        #_auto_item.setForeground(_brush)
+        _auto_item.setForeground(_brush)
         self.parent.ui.dataStitchingTable.setItem(row_index, 1, _auto_item)
         
         #manual SF
