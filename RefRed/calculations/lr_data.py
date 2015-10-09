@@ -35,6 +35,7 @@ class LRData(object):
     use_it_flag = True
     full_file_name = ['']
     filename = ''
+    ipts = 'N/A'
     
     def __init__(self, workspace):
         
@@ -56,6 +57,7 @@ class LRData(object):
 
         mt_run = self.workspace.getRun()
 
+        self.ipts = mt_run.getProperty('experiment_identifier').value
         self.run_number = mt_run.getProperty('run_number').value
         self.lambda_requested = float(mt_run.getProperty('LambdaRequest').value[0])
         self.lambda_requested_units = mt_run.getProperty('LambdaRequest').units

@@ -1,4 +1,4 @@
-from PyQt4 import QtGui
+from PyQt4 import QtGui, QtCore
 from logging import info
 import os
 from xml.dom import minidom
@@ -220,9 +220,13 @@ class LoadingConfiguration(object):
 	def clear_reductionTable(self):
 		nbr_row = self.parent.ui.reductionTable.rowCount()
 		nbr_col = self.parent.ui.reductionTable.columnCount()
+		_brush_color = QtGui.QBrush()
+		_brush_color.setColor(QtCore.Qt.black)
 		for _row in range(nbr_row):
 			for _col in range(1, nbr_col):
 				self.parent.ui.reductionTable.item(_row, _col).setText("")
+				
+				self.parent.ui.reductionTable.item(_row, _col).setForeground(_brush_color)
 
 	def populate_reduction_table_from_lconfigdataset(self):
 		o_pop_reduction_table = PopulateReductionTable(parent = self.parent)

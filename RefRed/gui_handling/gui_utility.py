@@ -10,6 +10,12 @@ class GuiUtility(object):
     def __init__(self, parent=None):
         self.parent = parent
         
+    def get_ipts(self):
+        _data0 = self.parent.big_table_data
+        if _data0 is None:
+            return 'N/A'
+        return _data0.ipts
+
     def data_norm_tab_widget_row_to_display(self):
         return self.parent.current_table_reduction_row_selected
 

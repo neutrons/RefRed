@@ -3,6 +3,7 @@ from PyQt4.QtCore import Qt
 from mantid.simpleapi import *
 import os
 import numpy as np
+import time
 
 from RefRed.interfaces.output_reduced_data_dialog import Ui_Dialog as UiDialog
 from RefRed.export.stitching_ascii_widget import StitchingAsciiWidget
@@ -112,6 +113,7 @@ class OutputReducedData(QDialog):
 		return os.access(filename,os.W_OK)
 	
 	def write_ascii(self):
+		text = self.retrieve_metadata()
 		self.is_with_4th_column_flag = self.ui.output4thColumnFlag.isChecked()
 		dq_over_q = self.ui.dQoverQvalue.text()
 		self.dq_over_q = float(dq_over_q)
@@ -121,17 +123,45 @@ class OutputReducedData(QDialog):
 			line1 = '#dQ0[1/Angstroms]= ' + dq0
 			line2 = '#dQ/Q= ' + dq_over_q
 			line3 = '#Q[1/Angstroms] R delta_R Precision'
-			text = [line1, line2, line3]
+			text.append(line1)
+			text.append(line2)
+			text.append(line3)
 		else:
-			text = ['#Q[1/Angstroms] R delta_R']
+			text.append('#Q[1/Angstroms] R delta_R')
 			
 		self.use_lowest_error_value_flag = self.ui.usingLessErrorValueFlag.isChecked()
-		
 		self.text_data = text
 		self.produce_data_with_common_q_axis()
 		self.format_data()
 		self.create_file()
 		
+	def retrieve_metadata(self):
+		reduction_table = self.parent.ui.reductionTable
+		text = []
+		
+		o_gui_utility = GuiUtility(parent = self.parent)
+		_date = time.strftime("%d_%m_%Y")
+		_reduction_method = '# Reduction method: manual'
+		_reduction_engine = '# Reduction engine: RefRed'
+		_reduction_date = 'Reduction date: %s' %_date
+		_ipts = o_gui_utility.get_ipts()
+		for _entry in [_date, _reduction_method, _reduction_engine, _reduction_date]:
+			text.append(_entry)
+		
+		nbr_row = o_gui_utility.reductionTable_nbr_row()
+		_legend = "# DataRun\tNormRun\t2theta(degrees)\tLambdaMin(A)\tLambdaMax(A)\tQmin(1/A)\tQmax(1/A)"
+		text.append(_legend)
+		for _row in range(nbr_row):
+			_data_run = str(reduction_table.item(_row, 1).text())
+			_norm_run = str(reduction_table.item(_row, 2).text())
+			_2_theta  = str(reduction_table.item(_row, 3).text())
+			_lambda_min = str(reduction_table.item(_row, 4).text())
+			_lambda_max = str(reduction_table.item(_row, 5).text())
+			_q_min = str(reduction_table.item(_row, 6).text())
+			_q_max = str(reduction_table.item(_row, 7).text())
+			_value = "# %s\t%s\t%s\t%s\t%s\t%s\t%s"
+			text.append(_value)
+	
 	def create_file(self):
 		RefRed.utilities.write_ascii_file(self.filename, self.text_data)
 		
