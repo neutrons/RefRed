@@ -34,8 +34,10 @@ class GuiUtility(object):
                 return row
         return -1
     
-    def get_other_row_with_same_run_number_as_row(self, row = 0):
+    def get_other_row_with_same_run_number_as_row(self, row=0, is_data=False):
         all_rows = [row]
+        if is_data:
+            return all_rows
         nbr_row = self.parent.ui.reductionTable.rowCount()
         ref_run_number = str(self.parent.ui.reductionTable.item(row, 2).text())
         for _row in range(nbr_row):

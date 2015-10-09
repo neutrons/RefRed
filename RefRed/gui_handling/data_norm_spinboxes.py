@@ -19,7 +19,8 @@ class SpinBox(object):
         if row == -1:
             return
 
-        all_rows = gui_utility.get_other_row_with_same_run_number_as_row(row = row)
+        all_rows = gui_utility.get_other_row_with_same_run_number_as_row(row = row,
+                                                                         is_data = is_data)
         for _row in all_rows:
         
             if is_data:
