@@ -10,9 +10,12 @@ class GuiUtility(object):
     def __init__(self, parent=None):
         self.parent = parent
         
-    def get_ipts(self):
-        _data0 = self.parent.big_table_data
+    def get_ipts(self, row=-1):
+        big_table_data = self.parent.big_table_data
+        _data0 = big_table_data[row, 0]
         if _data0 is None:
+            return 'N/A'
+        if row == -1:
             return 'N/A'
         return _data0.ipts
 

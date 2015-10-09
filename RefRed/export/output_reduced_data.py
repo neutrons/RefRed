@@ -10,6 +10,7 @@ from RefRed.export.stitching_ascii_widget import StitchingAsciiWidget
 from RefRed.configuration.export_stitching_ascii_settings import ExportStitchingAsciiSettings
 from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
 from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.reduction.reduced_data_handler import ReducedDataHandler
 import RefRed.utilities
 
 class OutputReducedData(QDialog):
@@ -75,10 +76,12 @@ class OutputReducedData(QDialog):
 		default_filename = 'REFL_' + run_number + '_reduced_stitched_data.txt'
 		path = self.parent.path_ascii
 		default_filename = path + '/' + default_filename
-		
+		directory = path
+		_filter = u"Reduced Ascii (*.txt);; All (*.*)"
 		filename = str(QFileDialog.getSaveFileName(self, 
 		                                           'Select Location and Name', 
-		                                           default_filename))
+		                                           directory = default_filename,
+		                                           filter = (_filter)))
 		if filename.strip() == '':
 			return
 		
@@ -89,12 +92,13 @@ class OutputReducedData(QDialog):
 		
 		self.filename = filename
 		self.parent.path_ascii = os.path.dirname(filename)
-		try:
-			self.write_ascii()
-			self.close()
-			self.save_back_widget_parameters_used()
-		except:
-			pass
+
+		#try:
+		self.write_ascii()
+		self.close()
+		self.save_back_widget_parameters_used()
+		#except:
+		#     pass
 		
 	def save_back_widget_parameters_used(self):
 		_is_with_4th_column_flag = self.ui.output4thColumnFlag.isChecked()
@@ -120,14 +124,15 @@ class OutputReducedData(QDialog):
 		if self.is_with_4th_column_flag:
 			dq0 = self.ui.dq0Value.text()
 			self.dq0 = float(dq0)
-			line1 = '#dQ0[1/Angstroms]= ' + dq0
-			line2 = '#dQ/Q= ' + dq_over_q
-			line3 = '#Q[1/Angstroms] R delta_R Precision'
+			line1 = '# dQ0[1/Angstroms]= ' + dq0
+			line2 = '# dQ/Q= ' + dq_over_q
+			line3 = '# Q[1/Angstroms] R delta_R Precision'
 			text.append(line1)
 			text.append(line2)
+			text.append("#")
 			text.append(line3)
 		else:
-			text.append('#Q[1/Angstroms] R delta_R')
+			text.append('# Q[1/Angstroms] R delta_R')
 			
 		self.use_lowest_error_value_flag = self.ui.usingLessErrorValueFlag.isChecked()
 		self.text_data = text
@@ -140,16 +145,17 @@ class OutputReducedData(QDialog):
 		text = []
 		
 		o_gui_utility = GuiUtility(parent = self.parent)
-		_date = time.strftime("%d_%m_%Y")
+		_date = time.strftime("# Date: %d_%m_%Y")
 		_reduction_method = '# Reduction method: manual'
 		_reduction_engine = '# Reduction engine: RefRed'
-		_reduction_date = 'Reduction date: %s' %_date
-		_ipts = o_gui_utility.get_ipts()
+		_reduction_date = '# %s' %_date
+		_ipts = o_gui_utility.get_ipts(row = 0)
 		for _entry in [_date, _reduction_method, _reduction_engine, _reduction_date]:
 			text.append(_entry)
+		text.append("#")
 		
 		nbr_row = o_gui_utility.reductionTable_nbr_row()
-		_legend = "# DataRun\tNormRun\t2theta(degrees)\tLambdaMin(A)\tLambdaMax(A)\tQmin(1/A)\tQmax(1/A)"
+		_legend = "# DataRun\tNormRun\t2theta(degrees)\tLambdaMin(A)\tLambdaMax(A)\tQmin(1/A)\tQmax(1/A)\tScalingFactor"
 		text.append(_legend)
 		for _row in range(nbr_row):
 			_data_run = str(reduction_table.item(_row, 1).text())
@@ -159,9 +165,25 @@ class OutputReducedData(QDialog):
 			_lambda_max = str(reduction_table.item(_row, 5).text())
 			_q_min = str(reduction_table.item(_row, 6).text())
 			_q_max = str(reduction_table.item(_row, 7).text())
-			_value = "# %s\t%s\t%s\t%s\t%s\t%s\t%s"
+			_scaling_factor = self.retrieve_scaling_factor(row = _row)
+			_value = "# %s\t%s\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s" %(_data_run,
+			                                              _norm_run,
+			                                              _2_theta,
+			                                              _lambda_min,
+			                                              _lambda_max,
+			                                              _q_min,
+			                                              _q_max,
+			                                              _scaling_factor)
 			text.append(_value)
+		return text
 	
+	def retrieve_scaling_factor(self, row=-1):
+		o_reduced_data_hanlder = ReducedDataHandler(parent = self.parent)
+		big_table_data = self.parent.big_table_data
+		_lconfig = big_table_data[row, 2]
+		sf = o_reduced_data_hanlder.generate_selected_sf(lconfig = _lconfig)
+		return str(sf)
+
 	def create_file(self):
 		RefRed.utilities.write_ascii_file(self.filename, self.text_data)
 		
