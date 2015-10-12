@@ -1,6 +1,6 @@
 import unittest
-from peakfinderderivation import PeakFinderDerivation
-from file_loading_utility import loadCsvFile
+from RefRed.peakfinderalgorithms.peakfinderderivation import PeakFinderDerivation
+from RefRed.file_loading_utility import loadCsvFile
 
 class TestPeakFinderDerivation(unittest.TestCase):
     
