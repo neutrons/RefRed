@@ -7,7 +7,7 @@ import gc
 from mantid.simpleapi import *
 #from RefRed.sort_nxsdata import SortNXSData
 from RefRed.peakfinderalgorithms.peakfinderderivation import PeakFinderDerivation
-from RefRed.peakfinderalgorithms.lowresfinderderivation import LowResFinderDerivation
+from RefRed.low_res_finder_algorithms.low_res_finder import LowResFinder
 import RefRed.constants as constants
 from RefRed.plot.all_plot_axis import AllPlotAxis
 from RefRed.utilities import convert_angle
@@ -163,8 +163,8 @@ class LRData(object):
             back2 = int(peak2 + backOffsetFromPeak)
             self.back = [str(back1), str(back2)]
             
-            lw_pf = LowResFinderDerivation(range(len(self.countsxdata)), self.countsxdata)
-            [lowres1, lowres2] = lw_pf.getRange()
+            lw_pf = LowResFinder(range(len(self.countsxdata)), self.countsxdata)
+            [lowres1, lowres2] = lw_pf.get_low_res()
             self.low_res = [str(lowres1), str(lowres2)]
 
     ################## Properties for easy data access ##########################
