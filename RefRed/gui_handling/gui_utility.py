@@ -24,6 +24,12 @@ class GuiUtility(object):
 
     #def data_norm_tab_widget_tab_selected(self):
         #return self.parent.ui.dataNormTabWidget.currentIndex()
+    
+    def get_current_table_reduction_row_selected(self):
+        return int(self.parent.ui.reductionTable.currentRow())
+    
+    def get_current_table_reduction_column_selected(self):
+        return int(self.parent.ui.reductionTable.currentColumn())
 
     def get_current_table_reduction_check_box_checked(self):
         nbr_row_table_reduction = self.parent.nbr_row_table_reduction

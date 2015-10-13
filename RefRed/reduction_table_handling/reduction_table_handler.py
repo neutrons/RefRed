@@ -91,35 +91,6 @@ class ReductionTableHandler(object):
     def __get_checkbox_signal_function(self, row_index):
         root_function_name = 'self.parent.reduction_table_visibility_changed_' + str(row_index)
         return root_function_name
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-        
-        
-        
         
     def __clear_rows_big_table_data(self):
         big_table_data = self.parent.big_table_data

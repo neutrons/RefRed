@@ -1,6 +1,8 @@
 from PyQt4 import QtGui
 
 from RefRed.reduction_table_handling.reduction_table_handler import ReductionTableHandler
+from RefRed.metadata.display_metadata import DisplayMetadata
+
 
 class ReductionTableRightClick(object):
     
@@ -32,4 +34,5 @@ class ReductionTableRightClick(object):
         o_reduction_table_handler.clear_rows_selected()
         
     def display_metadata(self):
-        print('display metadata')
+        o_display_metadata = DisplayMetadata(parent = self.parent)
+        o_display_metadata.show()

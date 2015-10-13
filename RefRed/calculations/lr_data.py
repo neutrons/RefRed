@@ -51,7 +51,6 @@ class LRData(object):
         self.countxdata = []
         self.ycountsdata = []
         
-        
         self.workspace = mtd[workspace]
         self.workspace_name = workspace
 
