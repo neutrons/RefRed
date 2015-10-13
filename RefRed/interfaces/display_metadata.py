@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//display_metadata.ui'
 #
-# Created: Wed Oct  7 16:19:26 2015
+# Created: Tue Oct 13 14:42:46 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!

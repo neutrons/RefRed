@@ -1,17 +1,17 @@
-from PyQt4.QtGui import QDialog, QPalette, QCheckBox, QTableWidgetItem, QFileDialog, QPixmap, QIcon
+from PyQt4.QtGui import QMainWindow, QPalette, QCheckBox, QTableWidgetItem, QFileDialog, QPixmap, QIcon
 from PyQt4.QtCore import QSize, QSettings, QVariant
 from xml.dom import minidom
 import numpy as np
 import os
 import time
 
-from RefRed.interfaces.display_metadata_interface import Ui_Dialog as UiDialog
+from RefRed.interfaces.display_metadata_interface import Ui_MainWindow as MainWindow
 from RefRed.gui_handling.gui_utility import GuiUtility
 from mantid.simpleapi import *
 import RefRed.utilities
 
 
-class DisplayMetadata(QDialog):
+class DisplayMetadata(QMainWindow):
 	
 	parent = None
 	lrdata = None
@@ -31,9 +31,9 @@ class DisplayMetadata(QDialog):
 	def __init__(self, parent=None):
 		self.parent = parent
 
-		QDialog.__init__(self, parent = parent)
+		QMainWindow.__init__(self, parent = parent)
 		self.setWindowModality(False)
-		self.ui = UiDialog()
+		self.ui = MainWindow()
 		self.ui.setupUi(self)
 		self.ui.metadataTable.setColumnWidth(0, 300)
 		self.ui.metadataTable.setColumnWidth(1, 200)
