@@ -4281,7 +4281,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionMetadataFinder">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Metadata Finder ...</string>
@@ -5102,6 +5102,22 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionMetadataFinder</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>launch_metadata_finder()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>587</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -5136,5 +5152,6 @@ p, li { white-space: pre-wrap; }
   <slot>preview_scaling_factor_button()</slot>
   <slot>widget_modified()</slot>
   <slot>load_reduced_data_set_button()</slot>
+  <slot>launch_metadata_finder()</slot>
  </slots>
 </ui>

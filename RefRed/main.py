@@ -20,6 +20,7 @@ from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
 from RefRed.interfaces.refred_main_interface import Ui_MainWindow
 from RefRed.load_reduced_data_set.load_reduced_data_set_handler import LoadReducedDataSetHandler
+from RefRed.metadata.metadata_finder import MetadataFinder
 from RefRed.plot.single_click_plot import SingleClickPlot
 from RefRed.plot.home_plot_button_clicked import HomePlotButtonClicked
 from RefRed.plot.mouse_leave_plot import MouseLeavePlot
@@ -380,6 +381,10 @@ class MainGui(QtGui.QMainWindow):
         o_reduction_table_right_click = ReductionTableRightClick(parent = self,
                                                                  position = position)
         o_reduction_table_right_click.run()
+        
+    def launch_metadata_finder(self):
+        _meta_finder = MetadataFinder(parent = self)
+        _meta_finder.show()        
         
     def launch_sf_calculator(self):
         o_sf_calculator = SFCalculator()

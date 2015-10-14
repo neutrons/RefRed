@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Tue Oct 13 14:42:47 2015
+# Created: Wed Oct 14 11:04:08 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1736,7 +1736,7 @@ class Ui_MainWindow(object):
         self.actionSF_Calculator = QtGui.QAction(MainWindow)
         self.actionSF_Calculator.setObjectName("actionSF_Calculator")
         self.actionMetadataFinder = QtGui.QAction(MainWindow)
-        self.actionMetadataFinder.setEnabled(False)
+        self.actionMetadataFinder.setEnabled(True)
         self.actionMetadataFinder.setObjectName("actionMetadataFinder")
         self.action_save_configuration = QtGui.QAction(MainWindow)
         self.action_save_configuration.setEnabled(True)
@@ -1811,6 +1811,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.eventTofBins, QtCore.SIGNAL("valueChanged(QString)"), MainWindow.widget_modified)
         QtCore.QObject.connect(self.angleOffsetError, QtCore.SIGNAL("textChanged(QString)"), MainWindow.widget_modified)
         QtCore.QObject.connect(self.previewScalingFactorFile, QtCore.SIGNAL("clicked()"), MainWindow.preview_scaling_factor_button)
+        QtCore.QObject.connect(self.actionMetadataFinder, QtCore.SIGNAL("triggered()"), MainWindow.launch_metadata_finder)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
