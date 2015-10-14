@@ -1,18 +1,18 @@
-from PyQt4.QtGui import QDialog, QPalette, QTableWidgetItem, QCheckBox, QFileDialog, QMessageBox, QPushButton, QPixmap, QIcon
+from PyQt4.QtGui import QMainWindow, QPalette, QTableWidgetItem, QCheckBox, QFileDialog, QMessageBox, QPushButton, QPixmap, QIcon
 from PyQt4.QtCore import Qt, QSize, QSettings, QVariant
 from mantid.simpleapi import *
 import os
 import time
 import numpy as np
 
-from RefRed.interfaces.metadata_finder_interface import Ui_Dialog as UiDialog
+from RefRed.interfaces.metadata_finder_interface import Ui_MainWindow as UiMainWindow
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.decorators import waiting_effects
 import RefRed.utilities
 import RefRed.nexus_utilities
 
 
-class MetadataFinder(QDialog):
+class MetadataFinder(QMainWindow):
 	
 	_open_instances = []
 	parent = None
@@ -32,10 +32,10 @@ class MetadataFinder(QDialog):
 	def __init__(self, parent=None):
 		self.parent = parent
 		
-		QDialog.__init__(self, parent = parent)
+		QMainWindow.__init__(self, parent = parent)
 		self.setWindowModality(False)
 		self._open_instances.append(self)
-		self.ui = UiDialog()
+		self.ui = UiMainWindow()
 		self.ui.setupUi(self)
 		
 		self.initGui()
