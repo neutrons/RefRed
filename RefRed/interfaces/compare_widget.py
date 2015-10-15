@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//compare_widget.ui'
 #
-# Created: Thu Oct 15 10:38:25 2015
+# Created: Thu Oct 15 14:44:14 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!

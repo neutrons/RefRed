@@ -3,8 +3,11 @@ import os
 from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
 from RefRed.load_reduced_data_set.stitching_ascii_widget import StitchingAsciiWidget
 
+
 class LoadReducedDataSetHandler(object):
     
+    last_row_loaded = -1
+
     def __init__(self, parent=None):
         self.parent = parent
         
@@ -29,6 +32,7 @@ class LoadReducedDataSetHandler(object):
             else:
                 self.parent.o_stitching_ascii_widget.add_data(o_loaded_ascii)
                 
+            self.last_row_loaded = self.parent.o_stitching_ascii_widget.row_of_this_file
             self.plot()
             
     def plot(self):
@@ -46,7 +50,8 @@ class LoadReducedDataSetHandler(object):
             return
         
         self.parent.o_stitching_ascii_widget.update_display(isxlog = _isxlog,
-                                                            isylog = _isylog)
+                                                            isylog = _isylog,
+                                                            force_row = self.last_row_loaded)
         
             
         

@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Thu Oct 15 10:38:26 2015
+# Created: Thu Oct 15 14:44:15 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1648,11 +1648,6 @@ class Ui_MainWindow(object):
         self.reducedAsciiDataSetTable.horizontalHeader().setCascadingSectionResizes(False)
         self.reducedAsciiDataSetTable.verticalHeader().setVisible(False)
         self.verticalLayout_7.addWidget(self.reducedAsciiDataSetTable)
-        self.refreshStitchingAsciiPlot = QtGui.QPushButton(self.data_stitching_Tab)
-        self.refreshStitchingAsciiPlot.setEnabled(True)
-        self.refreshStitchingAsciiPlot.setMaximumSize(QtCore.QSize(300, 16777215))
-        self.refreshStitchingAsciiPlot.setObjectName("refreshStitchingAsciiPlot")
-        self.verticalLayout_7.addWidget(self.refreshStitchingAsciiPlot)
         self.verticalLayout_4.addLayout(self.verticalLayout_7)
         self.horizontalLayout_2.addLayout(self.verticalLayout_4)
         self.data_stitching_plot = MPLWidgetXLogYLog(self.data_stitching_Tab)
@@ -1784,7 +1779,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.plotTab.setCurrentIndex(1)
+        self.plotTab.setCurrentIndex(0)
         self.dataNormTabWidget.setCurrentIndex(0)
         QtCore.QObject.connect(self.action_load_configuration, QtCore.SIGNAL("triggered()"), MainWindow.load_configuration)
         QtCore.QObject.connect(self.action_save_as_configuration, QtCore.SIGNAL("triggered()"), MainWindow.save_as_configuration)
@@ -2040,7 +2035,6 @@ class Ui_MainWindow(object):
         self.reducedAsciiDataSetTable.verticalHeaderItem(7).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))
         self.reducedAsciiDataSetTable.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
         self.reducedAsciiDataSetTable.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
-        self.refreshStitchingAsciiPlot.setText(QtGui.QApplication.translate("MainWindow", "Refresh Plot", None, QtGui.QApplication.UnicodeUTF8))
         self.RvsQ.setText(QtGui.QApplication.translate("MainWindow", "R vs Q", None, QtGui.QApplication.UnicodeUTF8))
         self.RQ4vsQ.setText(QtGui.QApplication.translate("MainWindow", "RQ^4 vs Q", None, QtGui.QApplication.UnicodeUTF8))
         self.LogRvsQ.setText(QtGui.QApplication.translate("MainWindow", "LogR vs Q", None, QtGui.QApplication.UnicodeUTF8))

@@ -6,7 +6,9 @@ from RefRed.gui_handling.progressbar_handler import ProgressBarHandler
 from RefRed.reduction.export_data_reduction_script import ExportDataReductionScript
 from RefRed.reduction.individual_reduction_settings_handler import IndividualReductionSettingsHandler
 from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
+from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
 from RefRed.status_message_handler import StatusMessageHandler
+from RefRed.load_reduced_data_set.stitching_ascii_widget import StitchingAsciiWidget
 from mantid.simpleapi import *
 import mantid
 
@@ -75,9 +77,22 @@ class LiveReductionHandler(object):
         o_reduction_progressbar_handler.end()
         self.parent.ui.reduceButton.setEnabled(True)
         
+        # save reduced data
+        self.save_reduced_for_ascii_loaded()
+        
         StatusMessageHandler(parent = self.parent, 
                              message = 'Done!', 
                              is_threaded = True)
+
+    def save_reduced_for_ascii_loaded(self):
+        o_loaded_ascii = ReducedAsciiLoader(parent = self.parent,
+                                            is_live_reduction = True)
+        if self.parent.o_stitching_ascii_widget is None:
+            self.parent.o_stitching_ascii_widget = StitchingAsciiWidget(parent = self.parent,
+                                                                loaded_ascii = o_loaded_ascii)
+        else:
+            self.parent.o_stitching_ascii_widget.add_data(o_loaded_ascii)
+        self.parent.o_stitching_ascii_widget.update_display()
 
     def export(self):
         o_export_script = ExportDataReductionScript(parent = self.parent)

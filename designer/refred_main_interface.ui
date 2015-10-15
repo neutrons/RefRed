@@ -52,7 +52,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <property name="documentMode">
            <bool>true</bool>
@@ -4027,22 +4027,6 @@ p, li { white-space: pre-wrap; }
                       <string>New Column</string>
                      </property>
                     </column>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="refreshStitchingAsciiPlot">
-                    <property name="enabled">
-                     <bool>true</bool>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>300</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>Refresh Plot</string>
-                    </property>
                    </widget>
                   </item>
                  </layout>
