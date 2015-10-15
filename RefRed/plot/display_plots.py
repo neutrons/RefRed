@@ -190,6 +190,7 @@ class DisplayPlots(object):
         parent.ui.metadatatthdValue.setText('N/A')
         parent.ui.dataNameOfFile.setText('')
         parent.ui.normNameOfFile.setText('')
+	parent.ui.metadataRunNumber.setText('N/A')
 
     def plot_ix(self):
         _countsxdata = self.countsxdata

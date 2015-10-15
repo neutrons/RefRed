@@ -62,6 +62,7 @@ class ClearPlots(object):
 		parent.ui.metadataS1HValue.setText('N/A')
 		parent.ui.metadataS2WValue.setText('N/A')
 		parent.ui.metadataS2HValue.setText('N/A')
+		parent.ui.metadataRunNumber.setText('N/A')
 
 	def clear_data_plots(self):
 		parent = self.parent
