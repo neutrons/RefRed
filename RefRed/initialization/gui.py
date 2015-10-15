@@ -125,7 +125,7 @@ class Gui(object):
         for index, width in enumerate(column_widths):
             parent.ui.reductionTable.setColumnWidth(index, width)
 
-        for row_index in range(30):
+        for row_index in range(self.parent.nbr_row_table_reduction):
             for col_index in range(len(self.column_widths)):
                 if col_index == 0:
                     _widget = QtGui.QCheckBox()
@@ -180,9 +180,19 @@ class Gui(object):
         parent = self.parent
 
         vertical_header = ["ASCII files", "Active"]
+        parent.ui.reducedAsciiDataSetTable.horizontalHeader().setVisible(True)
         parent.ui.reducedAsciiDataSetTable.setHorizontalHeaderLabels(vertical_header)
         parent.ui.reducedAsciiDataSetTable.setColumnWidth(0,240)
         parent.ui.reducedAsciiDataSetTable.setColumnWidth(1,50)
+        
+        for row_index in range(self.parent.nbr_row_table_ascii):
+            _widget = QtGui.QCheckBox()
+            _widget.setChecked(False)
+            _widget.setEnabled(True)
+            
+            QtCore.QObject.connect(_widget, QtCore.SIGNAL("stateChanged(int)"),
+                                   self.parent.reduced_ascii_data_set_table_visibility_changed)
+            parent.ui.reducedAsciiDataSetTable.setCellWidget(row_index, 1, _widget)
 
     def set_export_stitching_settings(self):
         ''' set up the export stitching settings '''

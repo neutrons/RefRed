@@ -84,7 +84,7 @@ class StitchingAsciiWidget(object):
 			self.tableUi.setItem(i,0,_item)
 			
 			_widget = QtGui.QCheckBox()
-			if _data_object.isEnabled:
+			if _data_object.isEnabled():
 				_status = QtCore.Qt.Checked
 			else:
 				_status = QtCore.Qt.Unchecked

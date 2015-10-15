@@ -51,6 +51,7 @@ class MainGui(QtGui.QMainWindow):
     o_stitching_ascii_widget = None # used when loading ascii files in reduced tab
 
     nbr_row_table_reduction = 30
+    nbr_row_table_ascii = 8
     prev_table_reduction_row_selected = -1
     current_table_reduction_row_selected = -1
     reduction_table_check_box_state = np.zeros((nbr_row_table_reduction), dtype=bool)
@@ -69,7 +70,7 @@ class MainGui(QtGui.QMainWindow):
     big_table_data = np.empty((nbr_row_table_reduction, 3), dtype=object)
 
     #Reduced ascii data sets
-    o_stitched_ascii = None
+    #o_stitched_ascii = None
 
     def __init__(self, argv=[], parent=None):
         if parent is None:
@@ -199,7 +200,12 @@ class MainGui(QtGui.QMainWindow):
 
     # display row checkbox
     def reduction_table_visibility_changed_test(self, state, row):
-        ReductionTableCheckBox(parent=self, row_selected = row)
+        ReductionTableCheckBox(parent = self, row_selected = row)
+        
+    # display row of reduced ascii table
+    def reduced_ascii_data_set_table_visibility_changed(self, state):
+        o_load_reduced = LoadReducedDataSetHandler(parent = self)
+        o_load_reduced.plot()
 
     def table_reduction_cell_enter_pressed(self):
         row = self.ui.reductionTable.currentRow()

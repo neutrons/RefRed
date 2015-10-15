@@ -1,7 +1,7 @@
 from PyQt4 import QtGui
 import os
 from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
-from RefRed.load_reduced_data_set.stitched_ascii_handler import StitchedAsciiHandler
+from RefRed.load_reduced_data_set.stitching_ascii_widget import StitchingAsciiWidget
 
 class LoadReducedDataSetHandler(object):
     
@@ -23,11 +23,11 @@ class LoadReducedDataSetHandler(object):
             
             o_loaded_ascii = ReducedAsciiLoader(parent = self.parent,
                                                 ascii_file_name = filename)
-            if self.parent.o_stitched_ascii is None:
-                self.parent.o_stitched_ascii = StitchedAsciiHandler(parent = self.parent,
+            if self.parent.o_stitching_ascii_widget is None:
+                self.parent.o_stitching_ascii_widget = StitchingAsciiWidget(parent = self.parent,
                                                                     loaded_ascii = o_loaded_ascii)
             else:
-                self.parent.o_stitched_ascii.addData(o_loaded_ascii)
+                self.parent.o_stitching_ascii_widget.add_data(o_loaded_ascii)
                 
             self.plot()
             
@@ -42,8 +42,11 @@ class LoadReducedDataSetHandler(object):
             _isylog = data.all_plot_axis.is_reduced_plot_stitching_tab_ylog
             _isxlog = data.all_plot_axis.is_reduced_plot_stitching_tab_xlog
         
-        self.parent.o_stitched_ascii.updateDisplay(isxlog = _isxlog,
-                                                   isylog = _isylog)
+        if self.parent.o_stitching_ascii_widget is None:
+            return
+        
+        self.parent.o_stitching_ascii_widget.update_display(isxlog = _isxlog,
+                                                            isylog = _isylog)
         
             
         
