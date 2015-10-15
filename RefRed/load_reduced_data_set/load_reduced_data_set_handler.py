@@ -34,8 +34,13 @@ class LoadReducedDataSetHandler(object):
     def plot(self):
         big_table_data = self.parent.big_table_data
         data = big_table_data[0,0]
-        _isylog = data.all_plot_axis.is_reduced_plot_stitching_tab_ylog
-        _isxlog = data.all_plot_axis.is_reduced_plot_stitching_tab_xlog
+        if data is None:
+            o_user_configuration = self.parent.o_user_configuration
+            _isylog = o_user_configuration.is_reduced_plot_stitching_tab_ylog
+            _isxlog = o_user_configuration.is_reduced_plot_stitching_tab_xlog
+        else:
+            _isylog = data.all_plot_axis.is_reduced_plot_stitching_tab_ylog
+            _isxlog = data.all_plot_axis.is_reduced_plot_stitching_tab_xlog
         
         self.parent.o_stitched_ascii.updateDisplay(isxlog = _isxlog,
                                                    isylog = _isylog)

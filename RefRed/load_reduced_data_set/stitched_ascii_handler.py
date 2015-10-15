@@ -30,12 +30,12 @@ class StitchedAsciiHandler(object):
 			self.loaded_asciiArray[rowOfThisFile] = newloaded_ascii
 		
 	def getRowOfThisFile(self, loaded_ascii):
-		newFilename = loaded_ascii.asciiFilename
+		newFilename = loaded_ascii.ascii_file_name
 
 		nbrRow = len(self.loaded_asciiArray)
 		for i in range(nbrRow):
 			_tmpObject = self.loaded_asciiArray[i]
-			_name = _tmpObject.asciiFilename
+			_name = _tmpObject.ascii_file_name
 			
 			if _name == newFilename:
 				return i

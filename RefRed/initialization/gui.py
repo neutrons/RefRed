@@ -181,8 +181,8 @@ class Gui(object):
 
         vertical_header = ["ASCII files", "Active"]
         parent.ui.reducedAsciiDataSetTable.setHorizontalHeaderLabels(vertical_header)
-        parent.ui.reducedAsciiDataSetTable.setColumnWidth(0,249)
-        parent.ui.reducedAsciiDataSetTable.setColumnWidth(1,49)
+        parent.ui.reducedAsciiDataSetTable.setColumnWidth(0,240)
+        parent.ui.reducedAsciiDataSetTable.setColumnWidth(1,50)
 
     def set_export_stitching_settings(self):
         ''' set up the export stitching settings '''

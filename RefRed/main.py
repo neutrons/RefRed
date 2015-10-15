@@ -47,6 +47,9 @@ class MainGui(QtGui.QMainWindow):
     full_scaling_factor_file_name = ''
     current_loaded_file = '~/tmp.xml'
     
+    o_user_configuration = None # will record the various settings of the GUI defined by the user
+    o_stitching_ascii_widget = None # used when loading ascii files in reduced tab
+
     nbr_row_table_reduction = 30
     prev_table_reduction_row_selected = -1
     current_table_reduction_row_selected = -1
@@ -61,7 +64,6 @@ class MainGui(QtGui.QMainWindow):
     index_free_thread = 0
 
     time_click1 = 0 #use by double click of plots
-    o_stitching_ascii_widget = None
 
     #[data, norm, lconfig]
     big_table_data = np.empty((nbr_row_table_reduction, 3), dtype=object)
