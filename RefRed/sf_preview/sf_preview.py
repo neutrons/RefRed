@@ -28,13 +28,17 @@ class SFPreview(QtGui.QMainWindow):
         self.init_gui()
         
     def init_gui(self):
-        o_sf_file_handler = SFFileHandler(filename = self.filename)
-        o_sf_file_handler.retrieve_contain()
-        self.labels = o_sf_file_handler.full_sf_factor_labels
-        self.init_table_labels()
-        self.big_table = o_sf_file_handler.full_sf_factor_table
-        self.init_table_contain()
-        self.init_name_of_file()
+        o_sf_file_handler = SFFileHandler(parent = self.parent,
+                                          filename = self.filename)
+        try:
+            o_sf_file_handler.retrieve_contain()
+            self.labels = o_sf_file_handler.full_sf_factor_labels
+            self.init_table_labels()
+            self.big_table = o_sf_file_handler.full_sf_factor_table
+            self.init_table_contain()
+            self.init_name_of_file()
+        except:
+            pass
         
     def init_name_of_file(self):
         self.ui.full_name_of_sf_file.setText(self.filename)

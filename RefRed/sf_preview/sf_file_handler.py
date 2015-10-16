@@ -1,4 +1,5 @@
 import numpy as np
+from RefRed.status_message_handler import StatusMessageHandler
 
 
 class SFFileHandler(object):
@@ -8,7 +9,8 @@ class SFFileHandler(object):
     nbr_row = -1
     nbr_column = -1
     
-    def __init__(self, filename=''):
+    def __init__(self, parent=None, filename=''):
+        self.parent = parent
         self.filename = filename
         
     def retrieve_contain(self):
@@ -18,13 +20,20 @@ class SFFileHandler(object):
     def parse_file(self):
         _filename = self.filename
         
-        f = open(_filename, 'r')
-        sf_factor_table = []
-        for line in f.read().split('\n'):
-            if (len(line) > 0) and (line[0] != '#'):
-                sf_factor_table.append(line.split(' '))
-        f.close()
-        self.sf_factor_table = sf_factor_table
+        try:
+            f = open(_filename, 'r')
+            sf_factor_table = []
+            for line in f.read().split('\n'):
+                if (len(line) > 0) and (line[0] != '#'):
+                    sf_factor_table.append(line.split(' '))
+            f.close()
+            self.sf_factor_table = sf_factor_table
+        except:
+            StatusMessageHandler(parent = self.parent, 
+                                 message = 'File Does Not Exist!', 
+                                 is_threaded = True,
+                                 severity = 'bad')
+            raise ImportError
 
     def parse_lines(self):
         _sf_factor_table = self.sf_factor_table
