@@ -1,5 +1,4 @@
-from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QApplication
+from PyQt4 import QtGui, QtCore
 
 
 class ReducedAsciiTableHandler(object):
@@ -30,8 +29,13 @@ class ReducedAsciiTableHandler(object):
             _row_file_name = str(self.parent.ui.reducedAsciiDataSetTable.item(row, 0).text())
             if _row_file_name in self.list_filename_to_remove:
                 self.parent.ui.reducedAsciiDataSetTable.removeRow(index_row_to_remove)
-                #self.parent.ui.reducedAsciiDataSetTable.item(row, 0).setText("")
-                #self.parent.ui.reducedAsciiDataSetTable.cellWidget(row, 1).setCheckState(Qt.Unchecked)
+                self.parent.ui.reducedAsciiDataSetTable.insertRow(self.total_number_of_rows_in_table-1)
+                _widget = QtGui.QCheckBox()
+                _widget.setChecked(False)
+                _widget.setEnabled(True)
+                QtCore.QObject.connect(_widget, QtCore.SIGNAL("stateChanged(int)"),
+                                       self.parent.reduced_ascii_data_set_table_visibility_changed)
+                self.parent.ui.reducedAsciiDataSetTable.setCellWidget(self.total_number_of_rows_in_table-1, 1, _widget)
             else:
                 index_row_to_remove += 1
     
