@@ -28,7 +28,7 @@ class LoadReducedDataSetHandler(object):
                                                 ascii_file_name = filename)
             if self.parent.o_stitching_ascii_widget is None:
                 self.parent.o_stitching_ascii_widget = StitchingAsciiWidget(parent = self.parent,
-                                                                    loaded_ascii = o_loaded_ascii)
+                                                                            loaded_ascii = o_loaded_ascii)
             else:
                 self.parent.o_stitching_ascii_widget.add_data(o_loaded_ascii)
                 

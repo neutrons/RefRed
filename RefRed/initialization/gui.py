@@ -152,12 +152,12 @@ class Gui(object):
                     _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
                     parent.ui.reductionTable.setItem(row_index, col_index, _item)
 
-    def set_context_menu(self):
-        ''' Define the context menu of the main table'''
-        parent = self.parent
+    #def set_context_menu(self):
+        #''' Define the context menu of the main table'''
+        #parent = self.parent
 
-        parent.ui.reductionTable.horizontalHeader().setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        parent.ui.reductionTable.horizontalHeader().customContextMenuRequested.connect(parent.handleReductionTableMenu)
+        #parent.ui.reductionTable.horizontalHeader().setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        #parent.ui.reductionTable.horizontalHeader().customContextMenuRequested.connect(parent.handleReductionTableMenu)
 
     def set_stiching_table(self):
         ''' initialize the stiching table (labels, size...)'''

@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Thu Oct 15 14:44:15 2015
+# Created: Thu Oct 15 16:37:17 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1618,7 +1618,10 @@ class Ui_MainWindow(object):
         self.reducedAsciiDataSetTable.setEnabled(True)
         self.reducedAsciiDataSetTable.setMinimumSize(QtCore.QSize(300, 0))
         self.reducedAsciiDataSetTable.setMaximumSize(QtCore.QSize(300, 16777215))
+        self.reducedAsciiDataSetTable.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.reducedAsciiDataSetTable.setEditTriggers(QtGui.QAbstractItemView.SelectedClicked)
         self.reducedAsciiDataSetTable.setAlternatingRowColors(True)
+        self.reducedAsciiDataSetTable.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
         self.reducedAsciiDataSetTable.setWordWrap(False)
         self.reducedAsciiDataSetTable.setColumnCount(2)
         self.reducedAsciiDataSetTable.setObjectName("reducedAsciiDataSetTable")
@@ -1779,7 +1782,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.plotTab.setCurrentIndex(0)
+        self.plotTab.setCurrentIndex(1)
         self.dataNormTabWidget.setCurrentIndex(0)
         QtCore.QObject.connect(self.action_load_configuration, QtCore.SIGNAL("triggered()"), MainWindow.load_configuration)
         QtCore.QObject.connect(self.action_save_as_configuration, QtCore.SIGNAL("triggered()"), MainWindow.save_as_configuration)
@@ -1809,7 +1812,6 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.dataPeakFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.data_peak_spinbox_validation)
         QtCore.QObject.connect(self.normPeakFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.norm_peak_spinbox_validation)
         QtCore.QObject.connect(self.dataLowResFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.data_low_res_validation)
-        QtCore.QObject.connect(self.reductionTable, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), MainWindow.reduction_table_right_click)
         QtCore.QObject.connect(self.reduceButton, QtCore.SIGNAL("pressed()"), MainWindow.run_reduction_button)
         QtCore.QObject.connect(self.normBackToValue, QtCore.SIGNAL("editingFinished()"), MainWindow.norm_back_spinbox_validation)
         QtCore.QObject.connect(self.dataBackFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.data_back_spinbox_validation)
@@ -1829,6 +1831,8 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.angleOffsetError, QtCore.SIGNAL("textChanged(QString)"), MainWindow.widget_modified)
         QtCore.QObject.connect(self.previewScalingFactorFile, QtCore.SIGNAL("clicked()"), MainWindow.preview_scaling_factor_button)
         QtCore.QObject.connect(self.actionMetadataFinder, QtCore.SIGNAL("triggered()"), MainWindow.launch_metadata_finder)
+        QtCore.QObject.connect(self.reducedAsciiDataSetTable, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), MainWindow.reduced_ascii_data_set_table_right_click)
+        QtCore.QObject.connect(self.reductionTable, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), MainWindow.reduction_table_right_click)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

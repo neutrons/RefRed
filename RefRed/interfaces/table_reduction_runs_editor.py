@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//table_reduction_runs_editor.ui'
 #
-# Created: Thu Oct 15 14:44:16 2015
+# Created: Thu Oct 15 16:37:18 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!

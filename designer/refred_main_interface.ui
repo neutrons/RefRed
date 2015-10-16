@@ -52,7 +52,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <property name="documentMode">
            <bool>true</bool>
@@ -3950,8 +3950,17 @@ p, li { white-space: pre-wrap; }
                       <height>16777215</height>
                      </size>
                     </property>
+                    <property name="contextMenuPolicy">
+                     <enum>Qt::CustomContextMenu</enum>
+                    </property>
+                    <property name="editTriggers">
+                     <set>QAbstractItemView::SelectedClicked</set>
+                    </property>
                     <property name="alternatingRowColors">
                      <bool>true</bool>
+                    </property>
+                    <property name="selectionMode">
+                     <enum>QAbstractItemView::ExtendedSelection</enum>
                     </property>
                     <property name="wordWrap">
                      <bool>false</bool>
@@ -4850,22 +4859,6 @@ p, li { white-space: pre-wrap; }
    </hints>
   </connection>
   <connection>
-   <sender>reductionTable</sender>
-   <signal>customContextMenuRequested(QPoint)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>reduction_table_right_click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1016</x>
-     <y>878</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>reduceButton</sender>
    <signal>pressed()</signal>
    <receiver>MainWindow</receiver>
@@ -5169,6 +5162,38 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>reducedAsciiDataSetTable</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>reduced_ascii_data_set_table_right_click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>180</x>
+     <y>900</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>587</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>reductionTable</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>reduction_table_right_click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1016</x>
+     <y>878</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -5204,5 +5229,6 @@ p, li { white-space: pre-wrap; }
   <slot>widget_modified()</slot>
   <slot>load_reduced_data_set_button()</slot>
   <slot>launch_metadata_finder()</slot>
+  <slot>reduced_ascii_data_set_table_right_click()</slot>
  </slots>
 </ui>

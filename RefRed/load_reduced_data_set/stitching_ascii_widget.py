@@ -34,6 +34,19 @@ class StitchingAsciiWidget(object):
             # replace
             self.loaded_ascii_array[row_of_this_file] = newloaded_ascii
         self.row_of_this_file = row_of_this_file
+        
+    def remove_data(self, list_file_to_remove = None):
+        if list_file_to_remove is None:
+            return
+        _loaded_ascii_array = self.loaded_ascii_array
+        _new_loaded_ascii_array = []
+        for _loaded_ascii in _loaded_ascii_array:
+            _name = _loaded_ascii.short_ascii_file_name
+            if _name in list_file_to_remove:
+                continue
+            _new_loaded_ascii_array.append(_loaded_ascii)
+        
+        self.loaded_ascii_array = _new_loaded_ascii_array
 
     def get_row_of_this_file(self, loaded_ascii):
 

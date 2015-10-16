@@ -22,7 +22,7 @@ class ReductionTableHandler(object):
         
     def clear_rows_selected(self):
         self.__get_range_row_selected()
-        if self.__is_row_displayed_in_range_selected:
+        if self.__is_row_displayed_in_range_selected():
             self.__clear_metadata()
             self.__clear_plots()
         self.__clear_rows_big_table_data()

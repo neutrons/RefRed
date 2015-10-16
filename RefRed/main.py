@@ -20,6 +20,7 @@ from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
 from RefRed.interfaces.refred_main_interface import Ui_MainWindow
 from RefRed.load_reduced_data_set.load_reduced_data_set_handler import LoadReducedDataSetHandler
+from RefRed.load_reduced_data_set.reduced_ascii_data_right_click import ReducedAsciiDataRightClick
 from RefRed.metadata.metadata_finder import MetadataFinder
 from RefRed.plot.single_click_plot import SingleClickPlot
 from RefRed.plot.home_plot_button_clicked import HomePlotButtonClicked
@@ -202,11 +203,6 @@ class MainGui(QtGui.QMainWindow):
     def reduction_table_visibility_changed_test(self, state, row):
         ReductionTableCheckBox(parent = self, row_selected = row)
         
-    # display row of reduced ascii table
-    def reduced_ascii_data_set_table_visibility_changed(self, state):
-        o_load_reduced = LoadReducedDataSetHandler(parent = self)
-        o_load_reduced.plot()
-
     def table_reduction_cell_enter_pressed(self):
         row = self.ui.reductionTable.currentRow()
         col = self.ui.reductionTable.currentColumn()
@@ -423,6 +419,16 @@ class MainGui(QtGui.QMainWindow):
     def load_reduced_data_set_button(self):
         o_load_reduced_set = LoadReducedDataSetHandler(parent = self)
         o_load_reduced_set.run()
+        
+    # display row of reduced ascii table
+    def reduced_ascii_data_set_table_visibility_changed(self, state):
+        o_load_reduced = LoadReducedDataSetHandler(parent = self)
+        o_load_reduced.plot()
+
+    def reduced_ascii_data_set_table_right_click(self, position):
+        o_reduced_ascii_right_click = ReducedAsciiDataRightClick(parent = self,
+                                                                 position = position)
+        o_reduced_ascii_right_click.run()
         
     def closeEvent(self, event=None):
         SaveUserConfiguration(parent = self)
