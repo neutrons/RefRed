@@ -115,7 +115,13 @@ class GuiUtility(object):
         new_dialog_title = dialog_title
         self.parent.setWindowTitle(new_dialog_title)
 
-
+    def get_reduced_yaxis_type(self):
+        if self.parent.ui.RvsQ.isChecked():
+            return 'RvsQ'
+        elif self.parent.ui.RQ4vsQ.isChecked():
+            return 'RQ4vsQ'
+        else:
+            return 'LogRvsQ'
 
     #def data_peak_and_back_validation(self, with_plot_update = True):
         #self.data_peak_spinbox_validation(with_plot_update = with_plot_update)

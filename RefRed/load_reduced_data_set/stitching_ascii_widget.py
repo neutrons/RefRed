@@ -3,6 +3,7 @@ from PyQt4.QtCore import Qt
 import numpy as np
 
 from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
+from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.colors
 
 class StitchingAsciiWidget(object):
@@ -79,25 +80,26 @@ class StitchingAsciiWidget(object):
 
             self.loaded_ascii_array[i] = _data_object
 
-    def update_display(self, isylog=True, isxlog=True, yaxistype='RvsQ', force_row=-1):
+    def update_display(self, isylog=True, 
+                       isxlog=True, 
+                       force_row=-1, 
+                       display_live_reduced_flag=True):
 
+        if self.loaded_ascii_array == []:
+            return
+        
         self.isylog = isylog
         self.isxlog = isxlog
-        self.yaxistype = yaxistype
+        self.yaxistype = self.get_selected_reduced_output()
 
-#		self.tableUi.clearContents()
-        self.stitchingPlot.clear()
-        self.stitchingPlot.draw()
+        if display_live_reduced_flag:
+            self.stitchingPlot.clear()
+            self.stitchingPlot.draw()
 
         nbrRow = len(self.loaded_ascii_array)
-        #for i in range(nbrRow):
-            #self.tableUi.removeRow(i)
-
         for i in range(nbrRow):
 
             _data_object = self.loaded_ascii_array[i]
-
-#			self.tableUi.insertRow(i)
 
             _item = QtGui.QTableWidgetItem(str(_data_object.short_ascii_file_name))
             self.tableUi.setItem(i,0,_item)
@@ -116,10 +118,9 @@ class StitchingAsciiWidget(object):
 
             if _status:
 
-                if _data_object.is_live_reduction:
+                if _data_object.is_live_reduction and display_live_reduced_flag:
                     self.__display_live_data(_data_object)
                 else:
-                    #self.display_loaded_ascii(_data_object)
                     _q_axis = _data_object.col1
                     _y_axis = _data_object.col2
                     _e_axis = _data_object.col3
@@ -235,7 +236,8 @@ class StitchingAsciiWidget(object):
         return [_final_y_axis, _final_e_axis]
 
     def get_selected_reduced_output(self):
-        return self.yaxistype
+        o_gui_utility = GuiUtility(parent = self.parent)
+        return o_gui_utility.get_reduced_yaxis_type()
 
     def display_loaded_ascii(self, _data_object):
         '''

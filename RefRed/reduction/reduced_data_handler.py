@@ -78,6 +78,10 @@ class ReducedDataHandler(object):
         o_gui_utility.clear_table(self.parent.ui.dataStitchingTable)
         
     def plot(self):
+        self.plot_live_reduced_data()
+        self.plot_reduced_ascii_files()
+        
+    def plot_live_reduced_data(self):
         
         self.parent.ui.data_stitching_plot.clear()
         self.parent.ui.data_stitching_plot.draw()
@@ -113,7 +117,25 @@ class ReducedDataHandler(object):
                                                         color = self.get_current_color_plot(index_row))
             self.parent.ui.data_stitching_plot.set_yscale('log')
             self.parent.ui.data_stitching_plot.draw()
+
+    def plot_reduced_ascii_files(self):
+        big_table_data = self.parent.big_table_data
+        data = big_table_data[0,0]
+        if data is None:
+            o_user_configuration = self.parent.o_user_configuration
+            _isylog = o_user_configuration.is_reduced_plot_stitching_tab_ylog
+            _isxlog = o_user_configuration.is_reduced_plot_stitching_tab_xlog
+        else:
+            _isylog = data.all_plot_axis.is_reduced_plot_stitching_tab_ylog
+            _isxlog = data.all_plot_axis.is_reduced_plot_stitching_tab_xlog
         
+        if self.parent.o_stitching_ascii_widget is None:
+            return
+        
+        self.parent.o_stitching_ascii_widget.update_display(isxlog = _isxlog,
+                                                            isylog = _isylog,
+                                                            display_live_reduced_flag = False)
+            
     def generate_selected_sf(self, lconfig=None):
         if self.parent.ui.autoSF.isChecked():
             return lconfig.sf_auto

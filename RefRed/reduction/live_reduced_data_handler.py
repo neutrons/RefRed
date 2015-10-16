@@ -164,7 +164,6 @@ class LiveReducedDataHandler(object):
         return _color_list[_modulo_index]
         
 class ProducedSelectedOutputScaled(object):
-
     parent = None
     axis_type = 'RvsQ'
     
@@ -208,9 +207,5 @@ class ProducedSelectedOutputScaled(object):
         self.output_e_axis = input_e_axis  ## FIXME
         
     def get_selected_scale_type(self):
-        self.axis_type = 'RvsQ'
-        if self.parent.ui.RQ4vsQ.isChecked():
-            self.axis_type = 'RQ4vsQ'
-        elif self.parent.ui.LogRvsQ.isChecked():
-            self.axis_type = 'LogRvsQ'
-        
+        o_gui_utility = GuiUtility(parent = self.parent)
+        self.axis_type = o_gui_utility.get_reduced_yaxis_type()
