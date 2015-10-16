@@ -16,7 +16,23 @@ class ReducedAsciiTableHandler(object):
         self.__clear_table_rows()
     
     def clear_table(self):
-        pass
+        self.__full_clear_o_stitching_ascii_widget()
+        self.__clear_table()
+        
+    def __clear_table(self):
+        _item = self.parent.ui.reducedAsciiDataSetTable.item(0, 0)
+        row = 0
+        while(_item is not None):
+            if self.parent.ui.reducedAsciiDataSetTable.item(row, 0) is None:
+                break
+            self.parent.ui.reducedAsciiDataSetTable.removeRow(row)
+            self.parent.ui.reducedAsciiDataSetTable.insertRow(self.total_number_of_rows_in_table-1)
+            _widget = QtGui.QCheckBox()
+            _widget.setChecked(False)
+            _widget.setEnabled(True)
+            QtCore.QObject.connect(_widget, QtCore.SIGNAL("stateChanged(int)"),
+                                   self.parent.reduced_ascii_data_set_table_visibility_changed)
+            self.parent.ui.reducedAsciiDataSetTable.setCellWidget(self.total_number_of_rows_in_table-1, 1, _widget)
     
     def __clear_table_rows(self):
         if self.list_filename_to_remove == []:
@@ -57,4 +73,9 @@ class ReducedAsciiTableHandler(object):
         o_stitching_ascii_widget = self.parent.o_stitching_ascii_widget
         o_stitching_ascii_widget.remove_data(list_file_to_remove = 
                                              self.list_filename_to_remove)
+        self.parent.o_stitching_ascii_widget = o_stitching_ascii_widget
+
+    def __full_clear_o_stitching_ascii_widget(self):
+        o_stitching_ascii_widget = self.parent.o_stitching_ascii_widget
+        o_stitching_ascii_widget.remove_all_data()
         self.parent.o_stitching_ascii_widget = o_stitching_ascii_widget

@@ -18,7 +18,7 @@ class ReducedAsciiDataRightClick(object):
         if action == remove_rows:
             self.remove_rows()
         elif action == clear_table:
-            self.clear_table
+            self.clear_table()
             
     def remove_rows(self):
         o_reduced_ascii_table_handler = ReducedAsciiTableHandler(parent = self.parent)
