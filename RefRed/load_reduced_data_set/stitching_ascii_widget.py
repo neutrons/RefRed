@@ -212,27 +212,32 @@ class StitchingAsciiWidget(object):
 
     def format_data_from_ymode_selected(self, q_axis, y_axis, e_axis):
 
-        type = self.get_selected_reduced_output()
-        [final_y_axis, final_e_axis] = self.get_formated_output(type, q_axis, y_axis, e_axis)
+        data_type = self.get_selected_reduced_output()
+        [final_y_axis, final_e_axis] = self.get_formated_output(data_type, q_axis, y_axis, e_axis)
         return [final_y_axis, final_e_axis]
 
-    def get_formated_output(self, type, _q_axis, _y_axis, _e_axis):
+    def get_formated_output(self, data_type, _q_axis, _y_axis, _e_axis):
 
-        # R vs Q selected
-        if type == 'RvsQ':
-            return [_y_axis, _e_axis]
-
-        # RQ4 vs Q selected
-        if type == 'RQ4vsQ':
-            _q_axis_4 = _q_axis ** 4
-            _final_y_axis = _y_axis * _q_axis_4
-            _final_e_axis = _e_axis * _q_axis_4
-            return [_final_y_axis, _final_e_axis]
-
-        # Log(R) vs Q
-        _final_y_axis = np.log(_y_axis)
-        # _final_e_axis = np.log(_e_axis)
-        _final_e_axis = _e_axis  ## FIXME
+        try:
+            # R vs Q selected
+            if data_type == 'RvsQ':
+                return [_y_axis, _e_axis]
+    
+            # RQ4 vs Q selected
+            if data_type == 'RQ4vsQ':
+                _q_axis_4 = _q_axis ** 4
+                _final_y_axis = _y_axis * _q_axis_4
+                _final_e_axis = _e_axis * _q_axis_4
+                return [_final_y_axis, _final_e_axis]
+    
+            # Log(R) vs Q
+            _final_y_axis = np.log(_y_axis)
+            # _final_e_axis = np.log(_e_axis)
+            _final_e_axis = _e_axis  ## FIXME
+        except:
+            _final_e_axis = _e_axis
+            _final_y_axis = _y_axis
+            
         return [_final_y_axis, _final_e_axis]
 
     def get_selected_reduced_output(self):

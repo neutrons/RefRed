@@ -92,9 +92,9 @@ class ReducedDataHandler(object):
             if _lconfig is None:
                 return        
         
-            _q_axis = _lconfig.q_axis_for_display.copy()
-            _y_axis = _lconfig.y_axis_for_display.copy()
-            _e_axis = _lconfig.e_axis_for_display.copy()
+            _q_axis = _lconfig.q_axis_for_display
+            _y_axis = _lconfig.y_axis_for_display
+            _e_axis = _lconfig.e_axis_for_display
             sf = self.generate_selected_sf(lconfig = _lconfig)
             
             _y_axis = np.array(_y_axis, dtype = np.float)
