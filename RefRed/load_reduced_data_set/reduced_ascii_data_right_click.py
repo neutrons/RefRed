@@ -1,5 +1,6 @@
 from PyQt4 import QtGui
 from RefRed.load_reduced_data_set.reduced_ascii_table_handler import ReducedAsciiTableHandler
+from RefRed.load_reduced_data_set.load_reduced_data_set_handler import LoadReducedDataSetHandler
 
 
 class ReducedAsciiDataRightClick(object):
@@ -22,8 +23,14 @@ class ReducedAsciiDataRightClick(object):
     def remove_rows(self):
         o_reduced_ascii_table_handler = ReducedAsciiTableHandler(parent = self.parent)
         o_reduced_ascii_table_handler.remove_rows()
-
+        self.refresh_plot()
+        
     def clear_table(self):
         o_reduced_ascii_table_handler = ReducedAsciiTableHandler(parent = self.parent)
         o_reduced_ascii_table_handler.clear_table()
+        self.refresh_plot()
+        
+    def refresh_plot(self):
+        o_load_reduced = LoadReducedDataSetHandler(parent = self.parent)
+        o_load_reduced.plot()
         
