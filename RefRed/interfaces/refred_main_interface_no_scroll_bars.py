@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface_no_scroll_bars.ui'
 #
-# Created: Thu Oct 15 16:37:18 2015
+# Created: Fri Oct 16 10:50:46 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!

@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Thu Oct 15 16:37:17 2015
+# Created: Fri Oct 16 10:50:45 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1782,7 +1782,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.plotTab.setCurrentIndex(1)
+        self.plotTab.setCurrentIndex(0)
         self.dataNormTabWidget.setCurrentIndex(0)
         QtCore.QObject.connect(self.action_load_configuration, QtCore.SIGNAL("triggered()"), MainWindow.load_configuration)
         QtCore.QObject.connect(self.action_save_as_configuration, QtCore.SIGNAL("triggered()"), MainWindow.save_as_configuration)
