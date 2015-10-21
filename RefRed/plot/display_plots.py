@@ -40,7 +40,7 @@ class DisplayPlots(object):
         self.col = col
 
         _data = self.parent.big_table_data[row, col]
-        
+
         if _data is None:
             ClearPlots(self.parent,
                        is_data = is_data,
@@ -77,7 +77,7 @@ class DisplayPlots(object):
             self.tofRangeAuto = self.getTOFrangeInMs(_data.tof_range_manual)
         self.displayTOFrange(self.tofRangeAuto[0], self.tofRangeAuto[1], 'ms')
         #print(self.tofRangeAuto)
-        
+
 #        o_gui_utility = GuiUtility(parent = self.parent)
 #        o_gui_utility.set_auto_tof_range_widgets(status = _data.tof_range_auto_flag)
 
@@ -92,7 +92,7 @@ class DisplayPlots(object):
 
         self.peak = self.sortIntArray(_data.peak)
         self.back = self.sortIntArray(_data.back)
-        
+
         self.lowRes = self.sortIntArray(_data.low_res)
         self.backFlag = bool(_data.back_flag)
         self.lowResFlag = bool(_data.low_res_flag)
@@ -100,15 +100,11 @@ class DisplayPlots(object):
         o_update_plot_widgets = UpdatePlotWidgetStatus(parent = parent)
 
         if is_data:
-            #self.qRange = _data.q_range
-            #self.incidentAngle = _data.incident_angle
-            #self.lambdaRange = _data.lambda_range
             self.workWithData(update_reduction_table = refresh_reduction_table)
             o_update_plot_widgets.enable_data()
         else:
-#			self.useItFlag = _data.use_it_flag
             self.workWithNorm(update_reduction_table = refresh_reduction_table)
-	    o_update_plot_widgets.enable_norm()
+            o_update_plot_widgets.enable_norm()
 
         if plot_yt:
             ClearPlots(self.parent, 
@@ -190,7 +186,7 @@ class DisplayPlots(object):
         parent.ui.metadatatthdValue.setText('N/A')
         parent.ui.dataNameOfFile.setText('')
         parent.ui.normNameOfFile.setText('')
-	parent.ui.metadataRunNumber.setText('N/A')
+        parent.ui.metadataRunNumber.setText('N/A')
 
     def plot_ix(self):
         _countsxdata = self.countsxdata
@@ -408,7 +404,7 @@ class DisplayPlots(object):
             parent.ui.dataLowResFromValue.setValue(lowRes1)
             parent.ui.dataLowResToValue.setValue(lowRes2)
             parent.ui.dataLowResFlag.setChecked(self.lowResFlag)
-        
+
     def isDataSelected(self):
         if self.parent.ui.dataNormTabWidget.currentIndex() == 0:
             return True

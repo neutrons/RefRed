@@ -1516,7 +1516,7 @@ p, li { white-space: pre-wrap; }
                                 <item>
                                  <widget class="QLabel" name="dataPrimToLabel">
                                   <property name="text">
-                                   <string>Prim2</string>
+                                   <string>clock2</string>
                                   </property>
                                  </widget>
                                 </item>
@@ -1566,7 +1566,7 @@ p, li { white-space: pre-wrap; }
                                    <number>255</number>
                                   </property>
                                   <property name="value">
-                                   <number>0</number>
+                                   <number>255</number>
                                   </property>
                                  </widget>
                                 </item>
@@ -1921,7 +1921,7 @@ p, li { white-space: pre-wrap; }
                                 <item>
                                  <widget class="QLabel" name="dataPrimFromLabel">
                                   <property name="text">
-                                   <string>Prim1</string>
+                                   <string>clock1</string>
                                   </property>
                                  </widget>
                                 </item>
@@ -2001,13 +2001,6 @@ p, li { white-space: pre-wrap; }
                                 </property>
                                 <property name="checked">
                                  <bool>true</bool>
-                                </property>
-                               </widget>
-                              </item>
-                              <item>
-                               <widget class="QCheckBox" name="dataPrimaryFractionFlag">
-                                <property name="text">
-                                 <string>with Primary Fraction</string>
                                 </property>
                                </widget>
                               </item>
@@ -4619,102 +4612,6 @@ p, li { white-space: pre-wrap; }
    </hints>
   </connection>
   <connection>
-   <sender>dataNormTabWidget</sender>
-   <signal>currentChanged(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>data_norm_tab_changed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1016</x>
-     <y>373</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dataBackToValue</sender>
-   <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>data_back_spinbox_validation()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1437</x>
-     <y>294</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dataLowResToValue</sender>
-   <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>data_low_res_validation()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1308</x>
-     <y>636</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>normLowResFromValue</sender>
-   <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>norm_low_res_validation()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1318</x>
-     <y>635</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>normLowResToValue</sender>
-   <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>norm_low_res_validation()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1441</x>
-     <y>635</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>normLowResFlag</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>norm_low_res_checkbox()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1141</x>
-     <y>634</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>sfBrowseButton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
@@ -4763,102 +4660,6 @@ p, li { white-space: pre-wrap; }
    </hints>
   </connection>
   <connection>
-   <sender>normPeakToValue</sender>
-   <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>norm_peak_spinbox_validation()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1453</x>
-     <y>349</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>normBackFromValue</sender>
-   <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>norm_back_spinbox_validation()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1453</x>
-     <y>429</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dataPeakToValue</sender>
-   <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>data_peak_spinbox_validation()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1437</x>
-     <y>334</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dataPeakFromValue</sender>
-   <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>data_peak_spinbox_validation()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1437</x>
-     <y>374</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>normPeakFromValue</sender>
-   <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>norm_peak_spinbox_validation()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1453</x>
-     <y>389</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dataLowResFromValue</sender>
-   <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>data_low_res_validation()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1021</x>
-     <y>636</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>reduceButton</sender>
    <signal>pressed()</signal>
    <receiver>MainWindow</receiver>
@@ -4867,38 +4668,6 @@ p, li { white-space: pre-wrap; }
     <hint type="sourcelabel">
      <x>1016</x>
      <y>1048</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>normBackToValue</sender>
-   <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>norm_back_spinbox_validation()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1453</x>
-     <y>309</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dataBackFromValue</sender>
-   <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>data_back_spinbox_validation()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1437</x>
-     <y>414</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -4931,54 +4700,6 @@ p, li { white-space: pre-wrap; }
     <hint type="sourcelabel">
      <x>1087</x>
      <y>700</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dataLowResFlag</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>data_low_res_checkbox()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>734</x>
-     <y>635</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dataBackgroundFlag</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>data_back_checkbox()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1436</x>
-     <y>490</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>normBackgroundFlag</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>norm_back_checkbox()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1446</x>
-     <y>476</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5187,6 +4908,278 @@ p, li { white-space: pre-wrap; }
     <hint type="sourcelabel">
      <x>1016</x>
      <y>878</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normBackFromValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_back_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1453</x>
+     <y>429</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataBackFromValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_back_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1437</x>
+     <y>414</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normLowResFlag</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_low_res_checkbox()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1141</x>
+     <y>634</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normBackToValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_back_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1453</x>
+     <y>309</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataPeakFromValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_peak_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1437</x>
+     <y>374</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataNormTabWidget</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_norm_tab_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1016</x>
+     <y>373</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataBackToValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_back_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1437</x>
+     <y>294</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataLowResToValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_low_res_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1308</x>
+     <y>636</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normLowResFromValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_low_res_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1318</x>
+     <y>635</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normLowResToValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_low_res_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1441</x>
+     <y>635</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normPeakToValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_peak_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1453</x>
+     <y>349</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normPeakFromValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_peak_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1453</x>
+     <y>389</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataPeakToValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_peak_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1437</x>
+     <y>334</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normBackgroundFlag</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_back_checkbox()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1446</x>
+     <y>476</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataLowResFromValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_low_res_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1021</x>
+     <y>636</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataBackgroundFlag</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_back_checkbox()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1436</x>
+     <y>490</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataLowResFlag</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_low_res_checkbox()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>734</x>
+     <y>635</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
