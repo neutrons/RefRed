@@ -43,7 +43,7 @@ class UpdatePlotWidgetStatus(object):
             else:
                 status_enable = True
         else:
-            status_visible = False
+            status_visible = True #always visible
             status_enable = False
 
         self.parent.ui.dataPrimFromLabel.setVisible(status_visible)

@@ -25,7 +25,6 @@ class ExportXMLConfig(object):
 	big_table_data = self.parent.big_table_data
 	o_gui_utility = GuiUtility(parent = self.parent)
 	row_highest_q = o_gui_utility.get_row_with_highest_q()
-	print(row_highest_q)
 
 	_ref_lrdata = big_table_data[row_highest_q, 0]
 	_ref_clocking = _ref_lrdata.clocking

@@ -326,6 +326,12 @@ class DisplayPlots(object):
         self.yt_plot_ui.canvas.ax.axhline(self.peak[1], 
                                           color = colors.PEAK_SELECTION_COLOR)
 
+        if self.is_data:
+            self.yi_plot_ui.canvas.ax.axhline(self.clocking[0], 
+                                              color = colors.CLOCKING_SELECTION_COLOR)
+            self.yi_plot_ui.canvas.ax.axhline(self.clocking[1], 
+                                              color = colors.CLOCKING_SELECTION_COLOR)
+
         if self.backFlag:
             self.yt_plot_ui.canvas.ax.axhline(self.back[0], 
                                               color = colors.BACK_SELECTION_COLOR)
