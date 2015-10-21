@@ -26,7 +26,7 @@ class GuiUtility(object):
         while (_lrdata is not None):
             _lrdata = big_table_data[index + 1, 2]
             index += 1
-        return index
+        return (index - 1)
 
     def is_row_with_highest_q(self):
         row_selected = self.get_current_table_reduction_check_box_checked()

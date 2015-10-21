@@ -42,7 +42,6 @@ class Gui(object):
         #self.init_file_menu()
         self.init_error_label_widgets()
         parent.allPlotAxis = AllPlotAxis()
-        self.init_primary_fraction_range_widgets() # NEW FEATURE COMING SOON
 
         #enabled all widgets
         o_update_plot = UpdatePlotWidgetStatus(parent=parent)
@@ -99,7 +98,8 @@ class Gui(object):
 
     def set_gui_size(self):
         screen = QtGui.QDesktopWidget().screenGeometry()
-        self.parent.setGeometry(50, 50, self.gui_size_coeff*screen.width(), self.gui_size_coeff*screen.height())
+        self.parent.setGeometry(50, 50, self.gui_size_coeff*screen.width(), 
+                                self.gui_size_coeff*screen.height())
 
 
     def set_statusbar(self):
@@ -245,17 +245,3 @@ class Gui(object):
         parent.ui.data_selection_error_label.setPalette(palette)
         parent.ui.norm_selection_error_label.setVisible(False)
         parent.ui.norm_selection_error_label.setPalette(palette)
-
-
-    # NEW FEATURE COMING SOON !!!!
-    def init_primary_fraction_range_widgets(self):
-        ''' init the status of the new Prim1 and Prim2 widgets '''
-        parent = self.parent
-
-        parent.ui.dataPrimaryFractionFlag.setVisible(False)
-        parent.ui.dataPrimToLabel.setVisible(False)
-        parent.ui.dataPrimFromLabel.setVisible(False)
-        parent.ui.dataPrimToValue.setVisible(False)
-        parent.ui.dataPrimFromValue.setVisible(False)
-        parent.ui.dataPrimToError.setVisible(False)
-        parent.ui.dataPrimFromError.setVisible(False)
