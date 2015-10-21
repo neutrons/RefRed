@@ -17,6 +17,8 @@ class LConfigDataset(object):
     data_low_res_flag = True
     data_lambda_requested = -1
 
+    data_clocking = ['0','0']
+
     tof_range = ['0','0'] 
     tof_units = 'ms'
     tof_auto_flag = True

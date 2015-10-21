@@ -19,6 +19,15 @@ class GuiUtility(object):
             return 'N/A'
         return _data0.ipts
 
+    def get_row_with_highest_q(self):
+        big_table_data =  self.parent.big_table_data
+        index = 0
+        _lrdata = big_table_data[0, 2]
+        while (_lrdata is not None):
+            _lrdata = big_table_data[index + 1, 2]
+            index += 1
+        return index
+
     def is_row_with_highest_q(self):
         row_selected = self.get_current_table_reduction_check_box_checked()
         big_table_data =  self.parent.big_table_data

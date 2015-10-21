@@ -86,7 +86,23 @@ class LoadingConfiguration(object):
 			big_table_data[_row, 2] = _metadataObject
 			_row += 1
 		
+		big_table_data = self.globalize_clocking_parameters(big_table_data)
 		self.parent.big_table_data = big_table_data
+
+	def globalize_clocking_parameters(self, big_table_data):
+		'''
+		the clocking settings of all the data should only use the 
+		ones calculated for the last data file loaded
+		'''
+		o_gui_utility = GuiUtility(parent = self.parent)
+		last_data_row = o_gui_utility.get_row_with_highest_q()
+		_lconfig = big_table_data[last_data_row, 2]
+		data_clocking = _lconfig.data_clocking
+		for i in range(last_data_row):
+			_lconfig = big_table_data[i, 2]
+			_lconfig.data_clocking = data_clocking
+			big_table_data[i, 2] = _lconfig
+		return big_table_data
 			
 	def populate_main_gui_general_settings(self):
 		dom = self.dom
@@ -135,6 +151,10 @@ class LoadingConfiguration(object):
 		
 		_low_res_flag = parent.getNodeValue(node, 'x_range_flag')
 		iMetadata.data_low_res_flag = _low_res_flag
+		
+		_clocking_min = parent.getNodeValue(node, 'clocking_from')
+		_clocking_max = parent.getNodeValue(node, 'clocking_to')
+		iMetadata.data_clocking = [_clocking_min, _clocking_max]
 		
 		_tof_min = parent.getNodeValue(node, 'from_tof_range')
 		_tof_max = parent.getNodeValue(node, 'to_tof_range')

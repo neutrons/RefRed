@@ -145,6 +145,7 @@ class LRData(object):
 
         self.peak = [0, 0]
         self.back = [0, 0]
+        self.clocking = [0, 0]
         self.back_flag = True
         self.all_plot_axis = AllPlotAxis()
         self.tof_auto_flag = True
@@ -165,6 +166,10 @@ class LRData(object):
             lw_pf = LowResFinder(range(len(self.countsxdata)), self.countsxdata)
             [lowres1, lowres2] = lw_pf.get_low_res()
             self.low_res = [str(lowres1), str(lowres2)]
+            
+            clocking_pf = LowResFinder(range(len(self.ycountsdata)), self.ycountsdata)
+            [clocking1, clocking2] = clocking_pf.get_low_res()
+            self.clocking  = [str(clocking1), str(clocking2)]
 
     ################## Properties for easy data access ##########################
     # return the size of the data stored in memory for this dataset

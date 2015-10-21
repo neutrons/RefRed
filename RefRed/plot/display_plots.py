@@ -92,6 +92,7 @@ class DisplayPlots(object):
 
         self.peak = self.sortIntArray(_data.peak)
         self.back = self.sortIntArray(_data.back)
+        self.clocking = self.sortIntArray(_data.clocking)
 
         self.lowRes = self.sortIntArray(_data.low_res)
         self.backFlag = bool(_data.back_flag)
@@ -246,6 +247,12 @@ class DisplayPlots(object):
         else:
             self.yi_plot_ui.canvas.ax.set_xscale('linear')
 
+        if self.is_data:
+            self.yi_plot_ui.canvas.ax.axhline(self.clocking[0], 
+                                              color = colors.CLOCKING_SELECTION_COLOR)
+            self.yi_plot_ui.canvas.ax.axhline(self.clocking[1], 
+                                              color = colors.CLOCKING_SELECTION_COLOR)
+
         if self._data.all_plot_axis.yi_data_interval is None:
             self.yi_plot_ui.canvas.draw()
             [xmin, xmax] = self.yi_plot_ui.canvas.ax.xaxis.get_view_interval()
@@ -280,8 +287,6 @@ class DisplayPlots(object):
         else:
             self.it_plot_ui.canvas.ax.set_yscale('linear')
         self.it_plot_ui.canvas.draw()
-
-#		return
 
         if self._data.all_plot_axis.it_data_interval is None:
             self.it_plot_ui.canvas.draw()
@@ -404,6 +409,10 @@ class DisplayPlots(object):
             parent.ui.dataLowResFromValue.setValue(lowRes1)
             parent.ui.dataLowResToValue.setValue(lowRes2)
             parent.ui.dataLowResFlag.setChecked(self.lowResFlag)
+            
+            [clocking1, clocking2] = self.clocking
+            parent.ui.dataPrimFromValue.setValue(clocking1)
+            parent.ui.dataPrimToValue.setValue(clocking2)
 
     def isDataSelected(self):
         if self.parent.ui.dataNormTabWidget.currentIndex() == 0:

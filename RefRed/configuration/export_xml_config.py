@@ -1,6 +1,6 @@
 from RefRed.configuration.export_stitching_ascii_settings import ExportStitchingAsciiSettings
 from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
-
+from RefRed.gui_handling.gui_utility import GuiUtility
 
 class ExportXMLConfig(object):
     
@@ -73,6 +73,7 @@ class ExportXMLConfig(object):
 	    data_back_flag = _data.back_flag
 	    data_low_res_flag = bool(_data.low_res_flag)
 	    data_lambda_requested = _data.lambda_requested
+	    clocking = _data.clocking
 	    tof = _data.tof_range
 #	    tof_units = _data.tof_units
 	    tof_auto_flag = _data.tof_auto_flag
@@ -110,6 +111,8 @@ class ExportXMLConfig(object):
             str_array.append('   <back_roi1_to>' + str(data_back[1]) + '</back_roi1_to>\n')
             str_array.append('   <back_roi2_from>0</back_roi2_from>\n')
             str_array.append('   <back_roi2_to>0</back_roi2_to>\n')
+	    str_array.append('   <clocking_from>' + str(clocking[0]) + '</clocking_from>\n')
+	    str_array.append('   <clocking_to>' + str(clocking[1]) + '</clocking_to>\n')
             str_array.append('   <tof_range_flag>True</tof_range_flag>\n')
             str_array.append('   <from_tof_range>' + str(tof[0]) + '</from_tof_range>\n')
             str_array.append('   <to_tof_range>' + str(tof[1]) + '</to_tof_range>\n')
