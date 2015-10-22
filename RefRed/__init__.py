@@ -16,5 +16,5 @@ __all__=['gui_handlging',
          'qcalc', 
          'qio', 
          'config', 
-         'peakfinderalgorithms',
+         'peak_finder_algorithms',
          'autopopulatemaintable']

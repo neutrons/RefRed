@@ -40,7 +40,7 @@ import constants
 import psutil
 #from peakfinder import PeakFinder
 #from reflpeakfinder import ReflPeakFinder
-from peakfinderalgorithms.peakfinderderivation import PeakFinderDerivation
+from peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
 from all_plot_axis import AllPlotAxis
 
 ### Parameters needed for some calculations.

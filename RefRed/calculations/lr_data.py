@@ -6,7 +6,7 @@ import gc
 
 from mantid.simpleapi import *
 #from RefRed.sort_nxsdata import SortNXSData
-from RefRed.peakfinderalgorithms.peakfinderderivation import PeakFinderDerivation
+from RefRed.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
 from RefRed.low_res_finder_algorithms.low_res_finder import LowResFinder
 import RefRed.constants as constants
 from RefRed.plot.all_plot_axis import AllPlotAxis
