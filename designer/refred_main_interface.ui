@@ -673,49 +673,6 @@ p, li { white-space: pre-wrap; }
                              </property>
                              <layout class="QVBoxLayout" name="verticalLayout_21">
                               <item>
-                               <layout class="QHBoxLayout" name="horizontalLayout_16">
-                                <item>
-                                 <widget class="QLabel" name="label_sf_precision">
-                                  <property name="enabled">
-                                   <bool>true</bool>
-                                  </property>
-                                  <property name="layoutDirection">
-                                   <enum>Qt::LeftToRight</enum>
-                                  </property>
-                                  <property name="text">
-                                   <string>Precision:</string>
-                                  </property>
-                                  <property name="alignment">
-                                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <widget class="QLineEdit" name="sfPrecision">
-                                  <property name="enabled">
-                                   <bool>true</bool>
-                                  </property>
-                                  <property name="text">
-                                   <string>0.010</string>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <spacer name="horizontalSpacer_6">
-                                  <property name="orientation">
-                                   <enum>Qt::Horizontal</enum>
-                                  </property>
-                                  <property name="sizeHint" stdset="0">
-                                   <size>
-                                    <width>40</width>
-                                    <height>20</height>
-                                   </size>
-                                  </property>
-                                 </spacer>
-                                </item>
-                               </layout>
-                              </item>
-                              <item>
                                <widget class="QPushButton" name="sfBrowseButton">
                                 <property name="enabled">
                                  <bool>true</bool>
@@ -4516,22 +4473,6 @@ p, li { white-space: pre-wrap; }
     <hint type="sourcelabel">
      <x>256</x>
      <y>856</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>586</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>sfPrecision</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>widget_modified()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>207</x>
-     <y>754</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
