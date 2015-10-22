@@ -3293,7 +3293,7 @@ p, li { white-space: pre-wrap; }
                    <number>30</number>
                   </property>
                   <attribute name="horizontalHeaderVisible">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </attribute>
                   <attribute name="horizontalHeaderDefaultSectionSize">
                    <number>50</number>
@@ -3329,7 +3329,7 @@ p, li { white-space: pre-wrap; }
                    <number>20</number>
                   </attribute>
                   <attribute name="horizontalHeaderVisible">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </attribute>
                   <attribute name="verticalHeaderCascadingSectionResizes">
                    <bool>false</bool>

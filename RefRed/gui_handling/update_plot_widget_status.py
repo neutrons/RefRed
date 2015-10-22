@@ -108,3 +108,14 @@ class UpdatePlotWidgetStatus(object):
         parent.ui.normPeakFromValue.setEnabled(status)
         parent.ui.normBackgroundFlag.setEnabled(status)
             
+        self.parent.ui.dataTOFmanualLabel.setEnabled(status)
+        self.parent.ui.dataTOFautoMode.setEnabled(status)
+        self.parent.ui.dataTOFmanualMode.setEnabled(status)
+
+        o_gui_utility = GuiUtility(parent = self.parent)
+        if status:
+            is_auto_tof_selected = o_gui_utility.is_auto_tof_range_radio_button_selected()
+            o_gui_utility.set_auto_tof_range_widgets(status = is_auto_tof_selected)
+        else:
+            o_gui_utility.set_auto_tof_range_widgets(status = True)
+            

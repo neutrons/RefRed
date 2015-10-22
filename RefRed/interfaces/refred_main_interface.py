@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Wed Oct 21 17:32:50 2015
+# Created: Thu Oct 22 13:36:16 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1442,7 +1442,7 @@ class Ui_MainWindow(object):
         self.reductionTable.setHorizontalHeaderItem(7, item)
         item = QtGui.QTableWidgetItem()
         self.reductionTable.setHorizontalHeaderItem(8, item)
-        self.reductionTable.horizontalHeader().setVisible(False)
+        self.reductionTable.horizontalHeader().setVisible(True)
         self.reductionTable.horizontalHeader().setDefaultSectionSize(50)
         self.reductionTable.horizontalHeader().setMinimumSectionSize(25)
         self.reductionTable.horizontalHeader().setSortIndicatorShown(False)
