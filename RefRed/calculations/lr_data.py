@@ -132,6 +132,7 @@ class LRData(object):
         self.binning = [tmin, self.read_options['bins'], tmax]
         self.calculate_lambda_range()
         self.incident_angle = 2.*self.calculate_theta(with_offset = False) # 2.theta
+        print('incident_angle is %f' %self.incident_angle)
         self.calculate_q_range()
         # self.lambda_range = self.calculate_lambda_range()
 
