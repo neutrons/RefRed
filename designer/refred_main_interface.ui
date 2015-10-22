@@ -567,7 +567,7 @@ p, li { white-space: pre-wrap; }
                            </size>
                           </property>
                           <property name="title">
-                           <string>Geometry Correction</string>
+                           <string>Angle Offset</string>
                           </property>
                           <layout class="QHBoxLayout" name="horizontalLayout_10">
                            <item>
