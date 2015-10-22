@@ -603,7 +603,7 @@ p, li { white-space: pre-wrap; }
                                  </size>
                                 </property>
                                 <property name="text">
-                                 <string>0.008</string>
+                                 <string>0.016</string>
                                 </property>
                                </widget>
                               </item>
