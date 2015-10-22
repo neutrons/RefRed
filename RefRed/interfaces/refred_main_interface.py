@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Thu Oct 22 16:01:22 2015
+# Created: Thu Oct 22 16:01:59 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -314,19 +314,19 @@ class Ui_MainWindow(object):
         self.scalingFactorConfigFrame.setObjectName("scalingFactorConfigFrame")
         self.verticalLayout_21 = QtGui.QVBoxLayout(self.scalingFactorConfigFrame)
         self.verticalLayout_21.setObjectName("verticalLayout_21")
-        self.sfBrowseButton = QtGui.QPushButton(self.scalingFactorConfigFrame)
-        self.sfBrowseButton.setEnabled(True)
-        self.sfBrowseButton.setObjectName("sfBrowseButton")
-        self.verticalLayout_21.addWidget(self.sfBrowseButton)
+        self.previewScalingFactorFile = QtGui.QPushButton(self.scalingFactorConfigFrame)
+        self.previewScalingFactorFile.setObjectName("previewScalingFactorFile")
+        self.verticalLayout_21.addWidget(self.previewScalingFactorFile)
         self.horizontalLayout_13 = QtGui.QHBoxLayout()
         self.horizontalLayout_13.setObjectName("horizontalLayout_13")
         self.scalingFactorFile = QtGui.QLineEdit(self.scalingFactorConfigFrame)
         self.scalingFactorFile.setEnabled(True)
         self.scalingFactorFile.setObjectName("scalingFactorFile")
         self.horizontalLayout_13.addWidget(self.scalingFactorFile)
-        self.previewScalingFactorFile = QtGui.QPushButton(self.scalingFactorConfigFrame)
-        self.previewScalingFactorFile.setObjectName("previewScalingFactorFile")
-        self.horizontalLayout_13.addWidget(self.previewScalingFactorFile)
+        self.sfBrowseButton = QtGui.QPushButton(self.scalingFactorConfigFrame)
+        self.sfBrowseButton.setEnabled(True)
+        self.sfBrowseButton.setObjectName("sfBrowseButton")
+        self.horizontalLayout_13.addWidget(self.sfBrowseButton)
         self.verticalLayout_21.addLayout(self.horizontalLayout_13)
         self.selectIncidentMediumList = QtGui.QComboBox(self.scalingFactorConfigFrame)
         self.selectIncidentMediumList.setEnabled(True)
@@ -1830,8 +1830,8 @@ class Ui_MainWindow(object):
         self.label_21.setText(QtGui.QApplication.translate("MainWindow", "degrees", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_5.setTitle(QtGui.QApplication.translate("MainWindow", "Scaling Factor", None, QtGui.QApplication.UnicodeUTF8))
         self.scalingFactorFlag.setText(QtGui.QApplication.translate("MainWindow", "Use Scaling Factor Config.", None, QtGui.QApplication.UnicodeUTF8))
-        self.sfBrowseButton.setText(QtGui.QApplication.translate("MainWindow", "Browse ...", None, QtGui.QApplication.UnicodeUTF8))
         self.previewScalingFactorFile.setText(QtGui.QApplication.translate("MainWindow", "Preview ...", None, QtGui.QApplication.UnicodeUTF8))
+        self.sfBrowseButton.setText(QtGui.QApplication.translate("MainWindow", "Browse ...", None, QtGui.QApplication.UnicodeUTF8))
         self.selectIncidentMediumList.setItemText(0, QtGui.QApplication.translate("MainWindow", "Select Incident Medium ...", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("MainWindow", "Run(s):", None, QtGui.QApplication.UnicodeUTF8))
         self.metadataRunNumber.setText(QtGui.QApplication.translate("MainWindow", "N/A", None, QtGui.QApplication.UnicodeUTF8))

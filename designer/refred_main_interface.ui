@@ -673,12 +673,9 @@ p, li { white-space: pre-wrap; }
                              </property>
                              <layout class="QVBoxLayout" name="verticalLayout_21">
                               <item>
-                               <widget class="QPushButton" name="sfBrowseButton">
-                                <property name="enabled">
-                                 <bool>true</bool>
-                                </property>
+                               <widget class="QPushButton" name="previewScalingFactorFile">
                                 <property name="text">
-                                 <string>Browse ...</string>
+                                 <string>Preview ...</string>
                                 </property>
                                </widget>
                               </item>
@@ -692,9 +689,12 @@ p, li { white-space: pre-wrap; }
                                  </widget>
                                 </item>
                                 <item>
-                                 <widget class="QPushButton" name="previewScalingFactorFile">
+                                 <widget class="QPushButton" name="sfBrowseButton">
+                                  <property name="enabled">
+                                   <bool>true</bool>
+                                  </property>
                                   <property name="text">
-                                   <string>Preview ...</string>
+                                   <string>Browse ...</string>
                                   </property>
                                  </widget>
                                 </item>
