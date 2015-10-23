@@ -892,7 +892,7 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
             self.saveNXSdata(nxsdata, row)
         else:
             [xmin, xmax, ymin, ymax] = nxsdata.all_plot_axis.yt_view_interval
-            self.yt_plot.canvas.ax.set_xlim([xmin, xmax])
+#            self.yt_plot.canvas.ax.set_xlim([xmin, xmax])
             self.yt_plot.canvas.ax.set_ylim([ymin, ymax])
             self.yt_plot.canvas.draw()
     
