@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//plot2d_dialog_refl_interface.ui'
 #
-# Created: Mon Oct 26 13:30:28 2015
+# Created: Mon Oct 26 14:13:59 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -391,6 +391,8 @@ class Ui_Dialog(object):
         QtCore.QObject.connect(self.low_res1, QtCore.SIGNAL("editingFinished()"), Dialog.manual_input_of_low_res_field)
         QtCore.QObject.connect(self.tof_to, QtCore.SIGNAL("editingFinished()"), Dialog.manual_input_of_tof_field)
         QtCore.QObject.connect(self.tof_auto_flag, QtCore.SIGNAL("clicked()"), Dialog.manual_auto_tof_clicked)
+        QtCore.QObject.connect(self.clock1, QtCore.SIGNAL("editingFinished()"), Dialog.clock_spinbox)
+        QtCore.QObject.connect(self.clock2, QtCore.SIGNAL("editingFinished()"), Dialog.clock_spinbox)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):

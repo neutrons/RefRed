@@ -36,6 +36,7 @@ class PopupPlot2d(QDialog):
         self.row = row
         self.col = 0 if data_type == 'data' else 1
         self.is_data = True if data_type == 'data' else False
+        self.is_row_with_highest_q = self.is_row_with_higest_q()
 
         QDialog.__init__(self, parent=parent)
         self.setWindowModality(False)
@@ -57,6 +58,10 @@ class PopupPlot2d(QDialog):
         self.ui.detector_plot.leaveFigure.connect(self.leave_figure_detector_plot)
         self.ui.detector_plot.toolbar.homeClicked.connect(self.home_clicked_detector_plot)
         self.ui.detector_plot.toolbar.exportClicked.connect(self.export_detector_view)
+
+    def is_row_with_higest_q(self):
+        o_gui_utility = GuiUtility(parent = self.parent)
+        return o_gui_utility.is_row_with_highest_q()
 
     def export_yt(self):
         _active_data = self.data
@@ -381,7 +386,7 @@ class PopupPlot2d(QDialog):
         self.sort_peak_back_input()
         self.check_peak_back_input_validity()
 
-    def clock_checkbox(self):
+    def clock_spinbox(self):
         self.update_plots()
 
     def check_peak_back_input_validity(self):
@@ -451,7 +456,6 @@ class PopupPlot2d(QDialog):
         self.update_pixel_vs_tof_tab_plot()
 
     def closeEvent(self, event = None):
-        # collect values
         [lowres1, lowres2, lowresFlag] = self.retrieveLowRes()
         [tof1, tof2, peak1, peak2, back1, back2, backFlag]= self.retrieveTofPeakBack()
         tof_auto_switch = self.ui.tof_auto_flag.isChecked()	
@@ -463,10 +467,6 @@ class PopupPlot2d(QDialog):
         _data.back = [str(back1), str(back2)]
         _data.back_flag = backFlag
 
-        #if tof_auto_switch:
-            #_data.tof_range_auto = [tof1*1000, tof2*1000]
-        #else:
-            #_data.tof_range_manual = [tof1*1000, tof2*1000]
         _data.tof_range_auto = [self.auto_min_tof * 1000, self.auto_max_tof * 1000]
         _data.tof_range = [self.manual_min_tof * 1000, self.manual_max_tof * 1000]
         _data.tof_range_manual = _data.tof_range
@@ -477,6 +477,20 @@ class PopupPlot2d(QDialog):
         _data.low_res_flag = lowresFlag
 
         big_table_data[self.row, self.col] = _data
+        if self.is_row_with_highest_q:
+            _clock1 = self.ui.clock1.value()
+            _clock2 = self.ui.clock2.value()
+            _clocking = [str(_clock1), str(_clock2)]
+            _data = big_table_data[0, 0]
+            index = 0
+            while (_data is not None):
+                _data.clocking = _clocking
+                big_table_data[index, 0] = _data
+                _data = big_table_data[index+1, 0]
+                index += 1
+            self.parent.ui.dataPrimFromValue.setValue(_clock1)
+            self.parent.ui.dataPrimToValue.setValue(_clock2)
+
         self.parent.big_table_data = big_table_data
         
         # tof

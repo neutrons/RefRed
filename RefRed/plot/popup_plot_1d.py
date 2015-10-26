@@ -655,6 +655,9 @@ class PopupPlot1d(QDialog):
 				big_table_data[index, 0] = _data
 				_data = big_table_data[index+1, 0]
 				index += 1
+			self.parent.ui.dataPrimFromValue.setValue(_clock1)
+			self.parent.ui.dataPrimToValue.setValue(_clock2)
+			
 
 		self.parent.big_table_data = big_table_data
 		
