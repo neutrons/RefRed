@@ -235,7 +235,6 @@ class PopupPlot1d(QDialog):
 		else:
 			enable_status = False
 		
-		print(enable_status)
 		self.ui.jim_clock1.setEnabled(enable_status)
 		self.ui.jim_clock2.setEnabled(enable_status)
 		self.ui.john_clock1.setEnabled(enable_status)
@@ -644,6 +643,19 @@ class PopupPlot1d(QDialog):
 		_data.back_flag = backFlag
 		
 		big_table_data[self.row, self.col] = _data
+
+		if self.is_row_with_highest_q:
+			_clock1 = self.ui.jim_clock1.value()
+			_clock2 = self.ui.jim_clock2.value()
+			_clocking = [str(_clock1), str(_clock2)]
+			_data = big_table_data[0, 0]
+			index = 0
+			while (_data is not None):
+				_data.clocking = _clocking
+				big_table_data[index, 0] = _data
+				_data = big_table_data[index+1, 0]
+				index += 1
+
 		self.parent.big_table_data = big_table_data
 		
 		if self.data_type == 'data':
