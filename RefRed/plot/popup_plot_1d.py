@@ -71,6 +71,7 @@ class PopupPlot1d(QDialog):
 			self.nbr_pixel_y_axis = 256 #TODO MAGIC NUMBER
 		
 		self.init_plot()
+		self.widgets_to_show()
 
 	def is_row_with_higest_q(self):
 		o_gui_utility = GuiUtility(parent = self.parent)
@@ -214,28 +215,31 @@ class PopupPlot1d(QDialog):
 				
 		self.ui.invalid_selection_label.setVisible(_show_widgets_1 or _show_widgets_2)
 				
-	def widgets_to_show(self, widget, status):
-		if widget == 'peak1':
-			self.ui.jim_peak1_label.setVisible(status)
-			self.ui.john_peak1_label.setVisible(status)
-		if widget == 'peak2':
-			self.ui.jim_peak2_label.setVisible(status)
-			self.ui.john_peak2_label.setVisible(status)
-		if widget == 'back1':
-			self.ui.jim_back1_label.setVisible(status)
-			self.ui.john_back1_label.setVisible(status)
-		if widget == 'back2':
-			self.ui.jim_back2_label.setVisible(status)
-			self.ui.john_back2_label.setVisible(status)
+	#def widgets_to_show(self, widget, status):
+	def widgets_to_show(self):
+		#if widget == 'peak1':
+			#self.ui.jim_peak1_label.setVisible(status)
+			#self.ui.john_peak1_label.setVisible(status)
+		#if widget == 'peak2':
+			#self.ui.jim_peak2_label.setVisible(status)
+			#self.ui.john_peak2_label.setVisible(status)
+		#if widget == 'back1':
+			#self.ui.jim_back1_label.setVisible(status)
+			#self.ui.john_back1_label.setVisible(status)
+		#if widget == 'back2':
+			#self.ui.jim_back2_label.setVisible(status)
+			#self.ui.john_back2_label.setVisible(status)
+		
 		if self.is_row_with_highest_q:
 			enable_status = True
 		else:
 			enable_status = False
 		
-		self.ui.jim_clocking_1.setEnabled(enable_status)
-		self.ui.jim_clocking_2.setEnabled(enable_status)
-		self.ui.john_clocking_1.setEnabled(enable_status)
-		self.ui.john_clocking_2.setEnabled(enable_status)
+		print(enable_status)
+		self.ui.jim_clock1.setEnabled(enable_status)
+		self.ui.jim_clock2.setEnabled(enable_status)
+		self.ui.john_clock1.setEnabled(enable_status)
+		self.ui.john_clock2.setEnabled(enable_status)
 		
 	def reset_max_ui_value(self):
 		self.ui.john_peak1.setMaximum(255)
