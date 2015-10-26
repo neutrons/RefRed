@@ -5088,6 +5088,38 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>dataPrimToValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>clock_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1454</x>
+     <y>331</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>587</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dataPrimFromValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>clock_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1454</x>
+     <y>526</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>587</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -5124,5 +5156,7 @@ p, li { white-space: pre-wrap; }
   <slot>load_reduced_data_set_button()</slot>
   <slot>launch_metadata_finder()</slot>
   <slot>reduced_ascii_data_set_table_right_click()</slot>
+  <slot>clock_validation()</slot>
+  <slot>clock_checkbox()</slot>
  </slots>
 </ui>

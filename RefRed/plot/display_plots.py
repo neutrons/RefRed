@@ -338,6 +338,12 @@ class DisplayPlots(object):
             self.yt_plot_ui.canvas.ax.axhline(self.back[1], 
                                               color = colors.BACK_SELECTION_COLOR)
 
+        if self.is_data:
+            self.yt_plot_ui.canvas.ax.axhline(self.clocking[0], 
+                                              color = colors.CLOCKING_SELECTION_COLOR)
+            self.yt_plot_ui.canvas.ax.axhline(self.clocking[1], 
+                                              color = colors.CLOCKING_SELECTION_COLOR)
+
         if self._data.all_plot_axis.is_yt_ylog:
             self.yt_plot_ui.canvas.ax.set_yscale('log')
         else:

@@ -19,10 +19,13 @@ class SpinBox(object):
         if row == -1:
             return
 
-        all_rows = gui_utility.get_other_row_with_same_run_number_as_row(row = row,
-                                                                         is_data = is_data)
+        if entry_type == 'clocking':
+            all_rows = gui_utility.get_all_rows()
+        else:
+            all_rows = gui_utility.get_other_row_with_same_run_number_as_row(row = row,
+                                                                             is_data = is_data)
         for _row in all_rows:
-        
+            
             if is_data:
                 index = 0
             else:
@@ -48,12 +51,14 @@ class SpinBox(object):
             elif entry_type == 'back':
                 data.back = [str(val_min), str(val_max)]
                 data.back_flag = flag
-            else:
+            elif entry_type == 'low_res':
                 is_plot_yt = False
                 is_plot_yi = False
                 is_plot_ix = True
                 data.low_res = [str(val_min), str(val_max)]
                 data.low_res_flag = flag
+            else:
+                data.clocking = [str(val_min), str(val_max)]
                 
             big_table_data[_row, index] = data
             self.parent.big_table_data = big_table_data
@@ -173,4 +178,16 @@ class NormLowResSpinbox(object):
                     value_min = lowres1,
                     value_max = lowres2,
                     flag = flag)
+
+class DataClockingSpinbox(object):
+    
+    def __init__(self, parent=None):
+        clock1 = parent.ui.dataPrimFromValue.value()
+        clock2 = parent.ui.dataPrimToValue.value()
+        SpinBox(parent = parent, 
+                is_data = True,
+                entry_type = 'clocking',
+                value_min = clock1,
+                value_max = clock2)
+        
         

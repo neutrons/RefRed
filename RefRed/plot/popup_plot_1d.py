@@ -231,6 +231,7 @@ class PopupPlot1d(QDialog):
 			enable_status = True
 		else:
 			enable_status = False
+		
 		self.ui.jim_clocking_1.setEnabled(enable_status)
 		self.ui.jim_clocking_2.setEnabled(enable_status)
 		self.ui.john_clocking_1.setEnabled(enable_status)

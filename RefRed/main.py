@@ -12,6 +12,7 @@ from RefRed.export.export_plot_ascii import ExportPlotAscii
 from RefRed.gui_handling.data_norm_spinboxes import DataPeakSpinbox, NormPeakSpinbox
 from RefRed.gui_handling.data_norm_spinboxes import DataBackSpinbox, NormBackSpinbox
 from RefRed.gui_handling.data_norm_spinboxes import DataLowResSpinbox, NormLowResSpinbox
+from RefRed.gui_handling.data_norm_spinboxes import DataClockingSpinbox
 from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidgetsHandler
 from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
 from RefRed.gui_handling.gui_utility import GuiUtility
@@ -271,7 +272,11 @@ class MainGui(QtGui.QMainWindow):
     @config_file_has_been_modified
     def norm_low_res_checkbox(self):
         NormLowResSpinbox(parent = self)
-
+    
+    @config_file_has_been_modified
+    def clock_validation(self):
+        DataClockingSpinbox(parent = self)
+    
     @config_file_has_been_modified
     def auto_tof_range_radio_button(self):
         o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent = self)
