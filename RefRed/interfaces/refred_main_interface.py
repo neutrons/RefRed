@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Mon Oct 26 11:23:34 2015
+# Created: Mon Oct 26 13:30:29 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtGui.QWidget(self.scrollArea)
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 1520, 1116))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 1538, 1096))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.horizontalLayout_68 = QtGui.QHBoxLayout(self.scrollAreaWidgetContents_2)
         self.horizontalLayout_68.setObjectName("horizontalLayout_68")

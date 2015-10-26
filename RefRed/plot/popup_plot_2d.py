@@ -117,6 +117,11 @@ class PopupPlot2d(QDialog):
         self.ui.detector_plot.canvas.ax.set_xlim([xmin,xmax])
         self.ui.detector_plot.canvas.ax.set_ylim([ymin,ymax])
         self.ui.detector_plot.draw()
+        
+    def get_clocking_values(self):
+        clock1 = self.ui.clock1.value()
+        clock2 = self.ui.clock2.value()
+        return [clock1, clock2]
 
     def update_detector_tab_plot(self):
         self.ui.detector_plot.clear()
@@ -130,6 +135,7 @@ class PopupPlot2d(QDialog):
         self.ui.detector_plot.set_ylabel(u'y (pixel)')
 
         [lowres1, lowres2, lowresFlag, peak1, peak2, back1, back2, backFlag] = self.retrieveLowResPeakBack()
+        [clock1, clock2] = self.get_clocking_values()
 
         if lowresFlag:
             lr1 = self.ui.detector_plot.canvas.ax.axvline(lowres1, 
@@ -141,6 +147,11 @@ class PopupPlot2d(QDialog):
                                                      color = RefRed.colors.PEAK_SELECTION_COLOR)
         p2 = self.ui.detector_plot.canvas.ax.axhline(peak2, 
                                                      color = RefRed.colors.PEAK_SELECTION_COLOR)
+
+        c1 = self.ui.detector_plot.canvas.ax.axhline(clock1, 
+                                                           color = RefRed.colors.CLOCKING_SELECTION_COLOR)
+        c1 = self.ui.detector_plot.canvas.ax.axhline(clock2, 
+                                                           color = RefRed.colors.CLOCKING_SELECTION_COLOR)
 
         if backFlag:
             b1 = self.ui.detector_plot.canvas.ax.axhline(back1, 
@@ -179,6 +190,7 @@ class PopupPlot2d(QDialog):
         self.ui.y_pixel_vs_tof_plot.set_ylabel(u'y (pixel)')
 
         [tmin,tmax,peak1,peak2,back1,back2,backFlag] = self.retrieveTofPeakBack()
+        [clock1, clock2] = self.get_clocking_values()
 
         t1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmin, 
                                                            color = RefRed.colors.TOF_SELECTION_COLOR)
@@ -189,6 +201,11 @@ class PopupPlot2d(QDialog):
                                                            color = RefRed.colors.PEAK_SELECTION_COLOR)
         p2 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak2, 
                                                            color = RefRed.colors.PEAK_SELECTION_COLOR)
+
+        c1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(clock1, 
+                                                           color = RefRed.colors.CLOCKING_SELECTION_COLOR)
+        c1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(clock2, 
+                                                           color = RefRed.colors.CLOCKING_SELECTION_COLOR)
 
         if backFlag:
             b1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back1, 
@@ -257,25 +274,7 @@ class PopupPlot2d(QDialog):
         self.ui.back1_label.setPalette(palette)
         self.ui.back2_label.setVisible(False)
         self.ui.back2_label.setPalette(palette)
-
-        # peak
-        self.ui.peak1.setMinimum(yrange[0])
-        self.ui.peak1.setMaximum(yrange[1])
-        self.ui.peak2.setMinimum(yrange[0])
-        self.ui.peak2.setMaximum(yrange[1])
-
-        # back
-        self.ui.back1.setMinimum(yrange[0])
-        self.ui.back1.setMaximum(yrange[1])
-        self.ui.back2.setMinimum(yrange[0])
-        self.ui.back2.setMaximum(yrange[1])
-
-        # low res
-        self.ui.low_res1.setMinimum(xrange[0])
-        self.ui.low_res1.setMaximum(xrange[1])
-        self.ui.low_res2.setMinimum(xrange[0])
-        self.ui.low_res2.setMaximum(xrange[1])
-
+       
     def populate_widgets(self):
         _data = self.data
 
@@ -285,6 +284,7 @@ class PopupPlot2d(QDialog):
         low_res = _data.low_res
         low_res_flag = RefRed.utilities.str2bool(_data.low_res_flag)
         tof_auto_flag = RefRed.utilities.str2bool(_data.tof_auto_flag)
+        clock = _data.clocking
 
         tof_range_auto = _data.tof_range_auto
         tof_range = _data.tof_range
@@ -322,6 +322,9 @@ class PopupPlot2d(QDialog):
         self.ui.low_res1.setValue(int(low_res[0]))
         self.ui.low_res2.setValue(int(low_res[1]))
         self.activate_or_not_low_res_widgets(low_res_flag)
+
+        self.ui.clock1.setValue(int(clock[0]))
+        self.ui.clock2.setValue(int(clock[1]))
 
     def activate_or_not_back_widgets(self, back_flag):
         self.ui.back_flag.setChecked(back_flag)
@@ -377,6 +380,9 @@ class PopupPlot2d(QDialog):
     def sort_and_check_widgets(self):
         self.sort_peak_back_input()
         self.check_peak_back_input_validity()
+
+    def clock_checkbox(self):
+        self.update_plots()
 
     def check_peak_back_input_validity(self):
         peak1 = self.ui.peak1.value()

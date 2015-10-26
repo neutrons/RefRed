@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//plot2d_dialog_refl_interface.ui'
 #
-# Created: Mon Oct 26 11:23:34 2015
+# Created: Mon Oct 26 13:30:28 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -329,6 +329,45 @@ class Ui_Dialog(object):
         self.verticalLayout_7.addLayout(self.horizontalLayout_14)
         self.verticalLayout_8.addWidget(self.frame_2)
         self.horizontalLayout_4.addWidget(self.groupBox_3)
+        self.groupBox_6 = QtGui.QGroupBox(Dialog)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.groupBox_6.sizePolicy().hasHeightForWidth())
+        self.groupBox_6.setSizePolicy(sizePolicy)
+        self.groupBox_6.setObjectName("groupBox_6")
+        self.verticalLayout_15 = QtGui.QVBoxLayout(self.groupBox_6)
+        self.verticalLayout_15.setObjectName("verticalLayout_15")
+        self.frame_6 = QtGui.QFrame(self.groupBox_6)
+        self.frame_6.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.frame_6.setFrameShadow(QtGui.QFrame.Raised)
+        self.frame_6.setObjectName("frame_6")
+        self.verticalLayout_16 = QtGui.QVBoxLayout(self.frame_6)
+        self.verticalLayout_16.setObjectName("verticalLayout_16")
+        self.horizontalLayout_17 = QtGui.QHBoxLayout()
+        self.horizontalLayout_17.setObjectName("horizontalLayout_17")
+        self.verticalLayout_17 = QtGui.QVBoxLayout()
+        self.verticalLayout_17.setObjectName("verticalLayout_17")
+        self.clock2 = QtGui.QSpinBox(self.frame_6)
+        self.clock2.setMaximum(303)
+        self.clock2.setObjectName("clock2")
+        self.verticalLayout_17.addWidget(self.clock2)
+        self.horizontalLayout_17.addLayout(self.verticalLayout_17)
+        self.verticalLayout_16.addLayout(self.horizontalLayout_17)
+        self.horizontalLayout_18 = QtGui.QHBoxLayout()
+        self.horizontalLayout_18.setObjectName("horizontalLayout_18")
+        self.verticalLayout_18 = QtGui.QVBoxLayout()
+        self.verticalLayout_18.setObjectName("verticalLayout_18")
+        spacerItem15 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_18.addItem(spacerItem15)
+        self.clock1 = QtGui.QSpinBox(self.frame_6)
+        self.clock1.setMaximum(303)
+        self.clock1.setObjectName("clock1")
+        self.verticalLayout_18.addWidget(self.clock1)
+        self.horizontalLayout_18.addLayout(self.verticalLayout_18)
+        self.verticalLayout_16.addLayout(self.horizontalLayout_18)
+        self.verticalLayout_15.addWidget(self.frame_6)
+        self.horizontalLayout_4.addWidget(self.groupBox_6)
         self.verticalLayout_3.addLayout(self.horizontalLayout_4)
         self.error_label = QtGui.QLabel(Dialog)
         self.error_label.setLayoutDirection(QtCore.Qt.LeftToRight)
@@ -339,7 +378,7 @@ class Ui_Dialog(object):
         self.verticalLayout_4.addLayout(self.horizontalLayout_6)
 
         self.retranslateUi(Dialog)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QObject.connect(self.back_flag, QtCore.SIGNAL("clicked(bool)"), Dialog.activate_or_not_back_widgets)
         QtCore.QObject.connect(self.peak1, QtCore.SIGNAL("editingFinished()"), Dialog.manual_input_peak1)
         QtCore.QObject.connect(self.peak2, QtCore.SIGNAL("editingFinished()"), Dialog.manual_input_peak2)
@@ -377,6 +416,7 @@ class Ui_Dialog(object):
         self.back_flag.setText(QtGui.QApplication.translate("Dialog", "with Back.", None, QtGui.QApplication.UnicodeUTF8))
         self.back2_label.setText(QtGui.QApplication.translate("Dialog", "*", None, QtGui.QApplication.UnicodeUTF8))
         self.back1_label.setText(QtGui.QApplication.translate("Dialog", "*", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_6.setTitle(QtGui.QApplication.translate("Dialog", "CLOCKING", None, QtGui.QApplication.UnicodeUTF8))
         self.error_label.setText(QtGui.QApplication.translate("Dialog", "(*) INVALID SELECTION", None, QtGui.QApplication.UnicodeUTF8))
 
 from mplwidgetnolog import MPLWidgetNoLog
