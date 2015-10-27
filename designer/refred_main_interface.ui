@@ -3809,7 +3809,7 @@ p, li { white-space: pre-wrap; }
                       <bool>true</bool>
                      </property>
                      <property name="text">
-                      <string>1</string>
+                      <string>Clocking</string>
                      </property>
                      <property name="checked">
                       <bool>true</bool>

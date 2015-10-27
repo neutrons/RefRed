@@ -55,6 +55,7 @@ class ReducedDataHandler(object):
             _widget_manual.valueChanged.connect(self.parent.data_stitching_table_manual_spin_box)
             self.parent.ui.dataStitchingTable.setCellWidget(index_row, 2, _widget_manual)
             
+            # FIXME
             #1 SF
             _item_1 = QtGui.QTableWidgetItem(str(1))
             _item_1.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)

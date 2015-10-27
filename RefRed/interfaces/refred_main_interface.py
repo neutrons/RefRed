@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Mon Oct 26 14:14:00 2015
+# Created: Tue Oct 27 15:51:12 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1985,7 +1985,7 @@ class Ui_MainWindow(object):
         self.groupBox.setTitle(QtGui.QApplication.translate("MainWindow", "   Scaling Factor (SF)", None, QtGui.QApplication.UnicodeUTF8))
         self.autoSF.setText(QtGui.QApplication.translate("MainWindow", "auto", None, QtGui.QApplication.UnicodeUTF8))
         self.manualSF.setText(QtGui.QApplication.translate("MainWindow", "manual", None, QtGui.QApplication.UnicodeUTF8))
-        self.oneSF.setText(QtGui.QApplication.translate("MainWindow", "1", None, QtGui.QApplication.UnicodeUTF8))
+        self.oneSF.setText(QtGui.QApplication.translate("MainWindow", "Clocking", None, QtGui.QApplication.UnicodeUTF8))
         self.loadReducedAsciiDataSet.setText(QtGui.QApplication.translate("MainWindow", "Load Reduced Data Set ...", None, QtGui.QApplication.UnicodeUTF8))
         self.reducedAsciiDataSetTable.verticalHeaderItem(0).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))
         self.reducedAsciiDataSetTable.verticalHeaderItem(1).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))

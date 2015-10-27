@@ -304,8 +304,8 @@ class OutputReducedData(QDialog):
 		
 		y_array = np.array(y_array, dtype=np.float)
 		e_array = np.array(e_array, dtype=np.float)
-		y_array /= _sf
-		e_array /= _sf
+		y_array *= _sf
+		e_array *== _sf
 		
 		return [y_array, e_array]
 

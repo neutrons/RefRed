@@ -163,7 +163,7 @@ class Gui(object):
         ''' initialize the stiching table (labels, size...)'''
         parent = self.parent
 
-        vertical_header = ["Data Run #","SF: auto","SF: manual","SF: 1"]
+        vertical_header = ["Data Run #","SF: auto","SF: manual","Clock."]
         parent.ui.dataStitchingTable.setHorizontalHeaderLabels(vertical_header)
         parent.ui.dataStitchingTable.resizeColumnsToContents()
 
