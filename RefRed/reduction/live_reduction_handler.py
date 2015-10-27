@@ -127,40 +127,44 @@ class LiveReductionHandler(object):
             self.print_message('AngleOffsetError', o_general.angle_offset_error)
             self.print_message('ScalingFactorFile', o_general.scaling_factor_file)
             self.print_message('CropFirstAndLastPoints', True)
+            self.print_message('ApplyPrimaryFraction', True)
+            self.print_message('PrimaryFractionRange', o_individual._data_clocking_range)
             self.print_message('SlitsWidthFlag', o_general.slits_width_flag)
             self.print_message('OutputWorkspace', o_individual._output_workspace_name)       
         
-        try:
-            LiquidsReflectometryReduction( RunNumbers = o_individual._data_run_numbers,
-                                           NormalizationRunNumber = o_individual._norm_run_numbers,
-                                           SignalPeakPixelRange = o_individual._data_peak_range,
-                                           SubtractSignalBackground = o_individual._data_back_flag, 
-                                           SignalBackgroundPixelRange = o_individual._data_back_range,
-                                           NormFlag = o_individual._norm_flag,
-                                           NormPeakPixelRange = o_individual._norm_peak_range,
-                                           NormBackgroundPixelRange = o_individual._norm_back_range,
-                                           SubtractNormBackground = o_individual._norm_back_flag,
-                                           LowResDataAxisPixelRangeFlag = o_individual._data_low_res_flag,
-                                           LowResDataAxisPixelRange = o_individual._data_low_res_range,
-                                           LowResNormAxisPixelRangeFlag = o_individual._norm_low_res_flag,
-                                           LowResNormAxisPixelRange = o_individual._norm_low_res_range,
-                                           TOFRange = o_individual._tof_range,
-                                           IncidentMediumSelected = o_general.incident_medium_selected,
-                                           GeometryCorrectionFlag = o_general.geometry_correction_flag,
-                                           QMin = o_general.q_min,
-                                           QStep = o_general.q_step,
-                                           TOFSteps = o_general.tof_steps,
-                                           AngleOffset = o_general.angle_offset,
-                                           AngleOffsetError = o_general.angle_offset_error,
-                                           ScalingFactorFile = o_general.scaling_factor_file,
-                                           CropFirstAndLastPoints = True,
-                                           SlitsWidthFlag = o_general.slits_width_flag,
-                                           OutputWorkspace = o_individual._output_workspace_name)
-            self.list_reduced_workspace.append(o_individual._output_workspace_name)
-            self.remove_tmp_workspaces()
+#        try:
+        LiquidsReflectometryReduction( RunNumbers = o_individual._data_run_numbers,
+                                       NormalizationRunNumber = o_individual._norm_run_numbers,
+                                       SignalPeakPixelRange = o_individual._data_peak_range,
+                                       SubtractSignalBackground = o_individual._data_back_flag, 
+                                       SignalBackgroundPixelRange = o_individual._data_back_range,
+                                       NormFlag = o_individual._norm_flag,
+                                       NormPeakPixelRange = o_individual._norm_peak_range,
+                                       NormBackgroundPixelRange = o_individual._norm_back_range,
+                                       SubtractNormBackground = o_individual._norm_back_flag,
+                                       LowResDataAxisPixelRangeFlag = o_individual._data_low_res_flag,
+                                       LowResDataAxisPixelRange = o_individual._data_low_res_range,
+                                       LowResNormAxisPixelRangeFlag = o_individual._norm_low_res_flag,
+                                       LowResNormAxisPixelRange = o_individual._norm_low_res_range,
+                                       TOFRange = o_individual._tof_range,
+                                       IncidentMediumSelected = o_general.incident_medium_selected,
+                                       GeometryCorrectionFlag = o_general.geometry_correction_flag,
+                                       QMin = o_general.q_min,
+                                       QStep = o_general.q_step,
+                                       TOFSteps = o_general.tof_steps,
+                                       AngleOffset = o_general.angle_offset,
+                                       AngleOffsetError = o_general.angle_offset_error,
+                                       ScalingFactorFile = o_general.scaling_factor_file,
+                                       CropFirstAndLastPoints = True,
+                                       ApplyPrimaryFraction = True,
+                                       PrimaryFractionRange = o_individual._data_clocking_range,
+                                       SlitsWidthFlag = o_general.slits_width_flag,
+                                       OutputWorkspace = o_individual._output_workspace_name)
+        self.list_reduced_workspace.append(o_individual._output_workspace_name)
+        self.remove_tmp_workspaces()
         
-        except:
-            self.error = True
+        #except:
+            #self.error = True
             
     def save_reduction(self, 
                        row = -1,

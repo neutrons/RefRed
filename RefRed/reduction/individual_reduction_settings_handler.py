@@ -1,3 +1,6 @@
+from RefRed.gui_handling.gui_utility import GuiUtility
+
+
 class IndividualReductionSettingsHandler(object):
     
     data = None
@@ -7,9 +10,9 @@ class IndividualReductionSettingsHandler(object):
     def __init__(self, parent=None, row_index=-1):
         self.parent = parent
         self.row_index = row_index
-        big_table_data = self.parent.big_table_data
-        self.data = big_table_data[row_index, 0]
-        self.norm = big_table_data[row_index, 1]
+        self.big_table_data = self.parent.big_table_data
+        self.data = self.big_table_data[row_index, 0]
+        self.norm = self.big_table_data[row_index, 1]
         self.retrieve()
         
     def retrieve(self):
@@ -19,6 +22,7 @@ class IndividualReductionSettingsHandler(object):
         self._data_back_range = self.get_data_back_range()
         self._data_low_res_flag = self.get_data_low_res_flag()
         self._data_low_res_range = self.get_data_low_res_range()
+        self._data_clocking_range = self.get_data_clocking_range()
         
         if self.norm is None:
             self._norm_flag = False
@@ -84,6 +88,13 @@ class IndividualReductionSettingsHandler(object):
     def get_data_low_res_range(self):
         _data = self.data
         return self.get_low_res_range(data = _data)
+
+    def get_data_clocking_range(self):
+        big_table_data = self.big_table_data
+        o_gui_utility = GuiUtility(parent = self.parent)
+        _last_row = o_gui_utility.get_row_with_highest_q()
+        _data = big_table_data[_last_row, 0]
+        return _data.clocking
     
     def get_norm_low_res_range(self):
         _norm = self.norm

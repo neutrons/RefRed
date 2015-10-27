@@ -175,6 +175,17 @@ class OutputReducedData(QDialog):
 			                                              _q_max,
 			                                              _scaling_factor)
 			text.append(_value)
+
+		# clocking settings
+		text.append('#')
+		text.append('# Clocking Correction used')
+		o_gui_utility = GuiUtility(parent = self.parent)
+		last_row = o_gui_utility.get_row_with_highest_q()
+		big_table_data = self.parent.big_table_data
+		clocking = big_table_data[last_row, 0].clocking
+		text.append('# clock1: %s' %clocking[0])
+		text.append('# clock2: %s' %clocking[1])
+
 		return text
 	
 	def retrieve_scaling_factor(self, row=-1):
