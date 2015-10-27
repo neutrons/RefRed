@@ -94,7 +94,9 @@ class IndividualReductionSettingsHandler(object):
         o_gui_utility = GuiUtility(parent = self.parent)
         _last_row = o_gui_utility.get_row_with_highest_q()
         _data = big_table_data[_last_row, 0]
-        return _data.clocking
+        clock1 = int(_data.clocking[0])
+        clock2 = int(_data.clocking[1])
+        return [clock1, clock2]
     
     def get_norm_low_res_range(self):
         _norm = self.norm
