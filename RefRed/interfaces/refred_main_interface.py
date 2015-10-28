@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Tue Oct 27 15:51:12 2015
+# Created: Wed Oct 28 10:38:25 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1548,6 +1548,18 @@ class Ui_MainWindow(object):
         self.sf_not_found_label.setObjectName("sf_not_found_label")
         self.horizontalLayout_8.addWidget(self.sf_not_found_label)
         self.verticalLayout_4.addLayout(self.horizontalLayout_8)
+        self.horizontalLayout_6 = QtGui.QHBoxLayout()
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.clocking_found_label = QtGui.QLabel(self.data_stitching_Tab)
+        self.clocking_found_label.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.clocking_found_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.clocking_found_label.setObjectName("clocking_found_label")
+        self.horizontalLayout_6.addWidget(self.clocking_found_label)
+        self.clocking_not_found_label = QtGui.QLabel(self.data_stitching_Tab)
+        self.clocking_not_found_label.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.clocking_not_found_label.setObjectName("clocking_not_found_label")
+        self.horizontalLayout_6.addWidget(self.clocking_not_found_label)
+        self.verticalLayout_4.addLayout(self.horizontalLayout_6)
         self.groupBox = QtGui.QGroupBox(self.data_stitching_Tab)
         self.groupBox.setObjectName("groupBox")
         self.horizontalLayout = QtGui.QHBoxLayout(self.groupBox)
@@ -1982,6 +1994,8 @@ class Ui_MainWindow(object):
         self.dataStitchingTable.horizontalHeaderItem(3).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
         self.sf_found_label.setText(QtGui.QApplication.translate("MainWindow", "auto SF found", None, QtGui.QApplication.UnicodeUTF8))
         self.sf_not_found_label.setText(QtGui.QApplication.translate("MainWindow", "auto SF not found", None, QtGui.QApplication.UnicodeUTF8))
+        self.clocking_found_label.setText(QtGui.QApplication.translate("MainWindow", "clocking not used", None, QtGui.QApplication.UnicodeUTF8))
+        self.clocking_not_found_label.setText(QtGui.QApplication.translate("MainWindow", "clocking used", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox.setTitle(QtGui.QApplication.translate("MainWindow", "   Scaling Factor (SF)", None, QtGui.QApplication.UnicodeUTF8))
         self.autoSF.setText(QtGui.QApplication.translate("MainWindow", "auto", None, QtGui.QApplication.UnicodeUTF8))
         self.manualSF.setText(QtGui.QApplication.translate("MainWindow", "manual", None, QtGui.QApplication.UnicodeUTF8))

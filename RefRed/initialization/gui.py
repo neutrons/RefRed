@@ -175,6 +175,14 @@ class Gui(object):
         palette_red.setColor(QtGui.QPalette.Foreground, QtCore.Qt.red)
         parent.ui.sf_not_found_label.setPalette(palette_red)
 
+        palette_green = QtGui.QPalette()
+        palette_green.setColor(QtGui.QPalette.Foreground, QtCore.Qt.green)
+        parent.ui.clocking_found_label.setPalette(palette_green)
+    
+        palette_red = QtGui.QPalette()
+        palette_red.setColor(QtGui.QPalette.Foreground, QtCore.Qt.red)
+        parent.ui.clocking_not_found_label.setPalette(palette_red)
+
     def set_reduced_table(self):
         ''' initialize the reduced table from the stitching tabe '''
         parent = self.parent
