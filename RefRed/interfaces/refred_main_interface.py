@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Wed Oct 28 10:38:25 2015
+# Created: Wed Oct 28 12:25:59 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1427,7 +1427,7 @@ class Ui_MainWindow(object):
         self.reductionTable.setHorizontalHeaderItem(7, item)
         item = QtGui.QTableWidgetItem()
         self.reductionTable.setHorizontalHeaderItem(8, item)
-        self.reductionTable.horizontalHeader().setVisible(True)
+        self.reductionTable.horizontalHeader().setVisible(False)
         self.reductionTable.horizontalHeader().setDefaultSectionSize(50)
         self.reductionTable.horizontalHeader().setMinimumSectionSize(25)
         self.reductionTable.horizontalHeader().setSortIndicatorShown(False)
@@ -1551,12 +1551,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6 = QtGui.QHBoxLayout()
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
         self.clocking_found_label = QtGui.QLabel(self.data_stitching_Tab)
-        self.clocking_found_label.setLayoutDirection(QtCore.Qt.RightToLeft)
-        self.clocking_found_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.clocking_found_label.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.clocking_found_label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.clocking_found_label.setObjectName("clocking_found_label")
         self.horizontalLayout_6.addWidget(self.clocking_found_label)
         self.clocking_not_found_label = QtGui.QLabel(self.data_stitching_Tab)
-        self.clocking_not_found_label.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.clocking_not_found_label.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.clocking_not_found_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.clocking_not_found_label.setObjectName("clocking_not_found_label")
         self.horizontalLayout_6.addWidget(self.clocking_not_found_label)
         self.verticalLayout_4.addLayout(self.horizontalLayout_6)
@@ -1756,7 +1757,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.plotTab.setCurrentIndex(0)
+        self.plotTab.setCurrentIndex(1)
         self.dataNormTabWidget.setCurrentIndex(0)
         QtCore.QObject.connect(self.action_load_configuration, QtCore.SIGNAL("triggered()"), MainWindow.load_configuration)
         QtCore.QObject.connect(self.action_save_as_configuration, QtCore.SIGNAL("triggered()"), MainWindow.save_as_configuration)
@@ -1994,8 +1995,8 @@ class Ui_MainWindow(object):
         self.dataStitchingTable.horizontalHeaderItem(3).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
         self.sf_found_label.setText(QtGui.QApplication.translate("MainWindow", "auto SF found", None, QtGui.QApplication.UnicodeUTF8))
         self.sf_not_found_label.setText(QtGui.QApplication.translate("MainWindow", "auto SF not found", None, QtGui.QApplication.UnicodeUTF8))
-        self.clocking_found_label.setText(QtGui.QApplication.translate("MainWindow", "clocking not used", None, QtGui.QApplication.UnicodeUTF8))
-        self.clocking_not_found_label.setText(QtGui.QApplication.translate("MainWindow", "clocking used", None, QtGui.QApplication.UnicodeUTF8))
+        self.clocking_found_label.setText(QtGui.QApplication.translate("MainWindow", "clocking used", None, QtGui.QApplication.UnicodeUTF8))
+        self.clocking_not_found_label.setText(QtGui.QApplication.translate("MainWindow", "clocking not used", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox.setTitle(QtGui.QApplication.translate("MainWindow", "   Scaling Factor (SF)", None, QtGui.QApplication.UnicodeUTF8))
         self.autoSF.setText(QtGui.QApplication.translate("MainWindow", "auto", None, QtGui.QApplication.UnicodeUTF8))
         self.manualSF.setText(QtGui.QApplication.translate("MainWindow", "manual", None, QtGui.QApplication.UnicodeUTF8))
