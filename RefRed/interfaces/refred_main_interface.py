@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Wed Oct 28 12:25:59 2015
+# Created: Wed Oct 28 12:37:28 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1427,7 +1427,7 @@ class Ui_MainWindow(object):
         self.reductionTable.setHorizontalHeaderItem(7, item)
         item = QtGui.QTableWidgetItem()
         self.reductionTable.setHorizontalHeaderItem(8, item)
-        self.reductionTable.horizontalHeader().setVisible(False)
+        self.reductionTable.horizontalHeader().setVisible(True)
         self.reductionTable.horizontalHeader().setDefaultSectionSize(50)
         self.reductionTable.horizontalHeader().setMinimumSectionSize(25)
         self.reductionTable.horizontalHeader().setSortIndicatorShown(False)
@@ -1757,7 +1757,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.plotTab.setCurrentIndex(1)
+        self.plotTab.setCurrentIndex(0)
         self.dataNormTabWidget.setCurrentIndex(0)
         QtCore.QObject.connect(self.action_load_configuration, QtCore.SIGNAL("triggered()"), MainWindow.load_configuration)
         QtCore.QObject.connect(self.action_save_as_configuration, QtCore.SIGNAL("triggered()"), MainWindow.save_as_configuration)
