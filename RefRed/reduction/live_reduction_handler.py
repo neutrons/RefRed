@@ -183,7 +183,11 @@ class LiveReductionHandler(object):
         _config.y_axis_for_display = mtd_workspace.readY(0)[:]
         _config.e_axis_for_display = mtd_workspace.readE(0)[:]
         _config.sf_auto_found_match = mtd_workspace.getRun().getProperty('isSFfound').value
-        
+        try:
+            _config.sf_clocking = float(mtd_workspace.getRun().getProperty('primary_fraction').value)
+            _config.is_sf_clocking_used = True
+        except:
+            pass
         big_table_data[row, 2] = _config
         self.big_table_data = big_table_data
         

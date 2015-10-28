@@ -18,6 +18,8 @@ class LConfigDataset(object):
     data_lambda_requested = -1
 
     data_clocking = ['0','0']
+    sf_clocking = 1
+    is_sf_clocking_used = False
 
     tof_range = ['0','0'] 
     tof_units = 'ms'

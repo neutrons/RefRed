@@ -63,9 +63,16 @@ class LiveReducedDataHandler(object):
         self.parent.ui.dataStitchingTable.setCellWidget(row_index, 2, _widget_manual)
         
         #1 SF
-        _item_1 = QtGui.QTableWidgetItem(str(1))
-        _item_1.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-        self.parent.ui.dataStitchingTable.setItem(row_index, 3, _item_1)
+        sf_clock = "%.4f" %_lconfig.sf_clocking
+        _item_clock = QtGui.QTableWidgetItem(sf_clock)
+        _item_clock.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+        _brush = QtGui.QBrush()
+        if _lconfig.is_sf_clocking_used:
+            _brush.setColor(QtCore.Qt.green)
+        else:
+            _brush.setColor(QtCore.Qt.red)
+        _item_clock.setForeground(_brush)
+        self.parent.ui.dataStitchingTable.setItem(row_index, 3, _item_clock)
 
     def clear_stiching_table(self):
         if self.row_index == 0:
