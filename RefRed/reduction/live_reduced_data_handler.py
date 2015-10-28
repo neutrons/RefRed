@@ -56,10 +56,10 @@ class LiveReducedDataHandler(object):
         
         #manual SF
         _widget_manual = QtGui.QDoubleSpinBox()
-        _widget_manual.setMinimum(0)
+        _widget_manual.setMinimum(0.)
         sf_manual = _lconfig.sf_clocking
         _widget_manual.setValue(sf_manual)
-        _widget_manual.setSingleStep(0.01)
+        _widget_manual.setSingleStep(0.001)
         _widget_manual.valueChanged.connect(self.parent.data_stitching_table_manual_spin_box)
         self.parent.ui.dataStitchingTable.setCellWidget(row_index, 2, _widget_manual)
         
