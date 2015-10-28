@@ -44,7 +44,7 @@ class LiveReducedDataHandler(object):
         #auto SF
         _brush = QtGui.QBrush()
         if strtobool(_lconfig.sf_auto_found_match):
-            _brush.setColor(QtCore.Qt.green)
+            _brush.setColor(QtCore.Qt.darkGreen)
         else:
             _brush.setColor(QtCore.Qt.red)
 
@@ -68,7 +68,7 @@ class LiveReducedDataHandler(object):
         _item_clock.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
         _brush = QtGui.QBrush()
         if _lconfig.is_sf_clocking_used:
-            _brush.setColor(QtCore.Qt.green)
+            _brush.setColor(QtCore.Qt.darkGreen)
         else:
             _brush.setColor(QtCore.Qt.red)
         _item_clock.setForeground(_brush)

@@ -168,7 +168,7 @@ class Gui(object):
         parent.ui.dataStitchingTable.resizeColumnsToContents()
 
         palette_green = QtGui.QPalette()
-        palette_green.setColor(QtGui.QPalette.Foreground, QtCore.Qt.green)
+        palette_green.setColor(QtGui.QPalette.Foreground, QtCore.Qt.darkGreen)
         parent.ui.sf_found_label.setPalette(palette_green)
 
         palette_red = QtGui.QPalette()
@@ -176,7 +176,7 @@ class Gui(object):
         parent.ui.sf_not_found_label.setPalette(palette_red)
 
         palette_green = QtGui.QPalette()
-        palette_green.setColor(QtGui.QPalette.Foreground, QtCore.Qt.green)
+        palette_green.setColor(QtGui.QPalette.Foreground, QtCore.Qt.darkGreen)
         parent.ui.clocking_found_label.setPalette(palette_green)
     
         palette_red = QtGui.QPalette()

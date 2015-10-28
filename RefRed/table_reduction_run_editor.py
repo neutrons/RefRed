@@ -47,7 +47,7 @@ class TableReductionRunEditor(QtGui.QMainWindow):
 		cls.ui.lambdaUnits.setText(u'\u00c5')
 		
 		palette_green = QtGui.QPalette()
-		palette_green.setColor(QtGui.QPalette.Foreground, QtCore.Qt.green)
+		palette_green.setColor(QtGui.QPalette.Foreground, QtCore.Qt.darkGreen)
 		cls.ui.validRunLabel.setPalette(palette_green)
 		
 		palette_red = QtGui.QPalette()
