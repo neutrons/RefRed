@@ -87,23 +87,6 @@ class LoadingConfiguration(object):
 			_row += 1
 		
 		self.parent.big_table_data = big_table_data
-		big_table_data = self.globalize_clocking_parameters()
-
-	def globalize_clocking_parameters(self):
-		'''
-		the clocking settings of all the data should only use the 
-		ones calculated for the last data file loaded
-		'''
-		o_gui_utility = GuiUtility(parent = self.parent)
-		last_data_row = o_gui_utility.get_row_with_highest_q()
-		big_table_data = self.parent.big_table_data
-		_lconfig = big_table_data[last_data_row, 2]
-		data_clocking = _lconfig.data_clocking
-		for i in range(last_data_row):
-			_lconfig = big_table_data[i, 2]
-			_lconfig.data_clocking = data_clocking
-			big_table_data[i, 2] = _lconfig
-		self.parent.big_table_data = big_table_data
 			
 	def populate_main_gui_general_settings(self):
 		dom = self.dom

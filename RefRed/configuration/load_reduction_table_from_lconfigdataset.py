@@ -23,10 +23,11 @@ class LoadReductionTableFromLConfigDataSet(object):
         o_load_config_progressbar_handler.setup(nbr_reduction = nbr_lconfig,
                                                 label = 'Loading Config.')
         
+        b_refresh_display_after_full_loading = False #only if no clocking info of plot displayed
         for index_row, lconfig in enumerate(big_table_data[:,2]):
             if lconfig is None:
                 o_load_config_progressbar_handler.end()
-                return
+                break
             
             list_data_run = lconfig.data_sets
             o_list_data_nexus = LocateListRun(list_run = list_data_run)
@@ -36,7 +37,9 @@ class LoadReductionTableFromLConfigDataSet(object):
                                            metadata_only = False,
                                            check_nexus_compatibility = False,
                                            prefix = 'data')
-            data_lrdata = LRData(_add_data_nexus.wks)
+            data_lrdata = LRData(_add_data_nexus.wks, 
+                                 lconfig = lconfig, 
+                                 is_data = True)
             self.update_lrdata(lrdata = data_lrdata, 
                                lconfig = lconfig, 
                                type = 'data',
@@ -51,7 +54,8 @@ class LoadReductionTableFromLConfigDataSet(object):
                                                metadata_only = False,
                                                check_nexus_compatibility = False,
                                                prefix = 'norm')
-                norm_lrdata = LRData(_add_norm_nexus.wks)
+                norm_lrdata = LRData(_add_norm_nexus.wks, 
+                                     is_data = False)
                 self.update_lrdata(lrdata = norm_lrdata, 
                                    lconfig = lconfig, 
                                    type = 'norm',
@@ -61,7 +65,39 @@ class LoadReductionTableFromLConfigDataSet(object):
             if is_display_requested:
                 self.display_plots(row = index_row)
                 
+            if is_display_requested and data_lrdata.clocking == ['', '']:
+                b_refresh_display_after_full_loading = True
+                
             o_load_config_progressbar_handler.next_step()
+            
+        self.globalize_clocking_parameters()
+        big_table_data = self.parent.big_table_data
+        if b_refresh_display_after_full_loading:
+            for index_row, lconfig in enumerate(big_table_data[:,2]):
+                if lconfig is None:
+                    return
+                is_display_requested = self.display_of_this_row_checked(index_row)
+                if is_display_requested:
+                    self.display_plots(row = index_row)
+                
+    def globalize_clocking_parameters(self):
+        '''
+        the clocking settings of all the data should only use the 
+        ones calculated for the last data file loaded
+        '''
+        o_gui_utility = GuiUtility(parent = self.parent)
+        last_data_row = o_gui_utility.get_row_with_highest_q()
+        big_table_data = self.parent.big_table_data
+        lrdata = big_table_data[last_data_row, 0]
+        clocking = lrdata.clocking
+        for i in range(last_data_row + 1):
+            if i == last_data_row:
+                continue
+            _lrdata = big_table_data[i, 0]
+            _lrdata.clocking = clocking
+            big_table_data[i, 0] = _lrdata
+            
+        self.parent.big_table_data = big_table_data
 
     def display_plots(self, row=0):
         o_gui_utility = GuiUtility(parent = self.parent)
