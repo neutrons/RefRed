@@ -6,7 +6,7 @@ import numpy as np
 import time
 
 from RefRed.interfaces.output_reduced_data_dialog import Ui_Dialog as UiDialog
-from RefRed.export.stitching_ascii_widget import StitchingAsciiWidget
+from RefRed.load_reduced_data_set.stitching_ascii_widget import StitchingAsciiWidget
 from RefRed.configuration.export_stitching_ascii_settings import ExportStitchingAsciiSettings
 from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
 from RefRed.gui_handling.gui_utility import GuiUtility

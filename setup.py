@@ -1,16 +1,17 @@
 from distutils.core import setup
 from RefRed.version import str_version
 
-__package_name__ = "RefRed"
+__package_name__ = 'RefRed'
 __version__ = str_version
-__description__ = "Liquids Reflectrometer Data Reduction Software"
+__description__ = 'Liquids Reflectrometer Data Reduction Software'
 __author__ = 'Jean Bilheux'
-__author_email__ = "bilheuxjm@ornl.gov"
-__license__ = "Copyright 2015-2016"
-__url__ = "http://"
-__scripts__ = 'scripts/RefRed'
+__author_email__ = 'bilheuxjm@ornl.gov'
+__license__ = 'Copyright 2015-2016'
+__url__ = 'http://'
+__scripts__ = ['scripts/RefRed']
 __packages__ = ['RefRed',
                 'RefRed.autopopulatemaintable',
+                'RefRed.configuration',
                 'RefRed.calculations',
                 'RefRed.config',
                 'RefRed.export',
