@@ -4308,7 +4308,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionExportScript">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Export Script ...</string>

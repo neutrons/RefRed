@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Wed Oct 28 12:37:28 2015
+# Created: Tue Nov  3 13:09:19 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1739,7 +1739,7 @@ class Ui_MainWindow(object):
         self.actionRunReduction = QtGui.QAction(MainWindow)
         self.actionRunReduction.setObjectName("actionRunReduction")
         self.actionExportScript = QtGui.QAction(MainWindow)
-        self.actionExportScript.setEnabled(False)
+        self.actionExportScript.setEnabled(True)
         self.actionExportScript.setObjectName("actionExportScript")
         self.menuHelp.addSeparator()
         self.menuHelp.addAction(self.actionAbout)
