@@ -144,8 +144,6 @@ class ReductionTableAutoFill(object):
         _list_runs_sorted = self.list_runs_sorted
         _data_type_selected = self.data_type_selected
         _is_working_with_data_column = True if self.data_type_selected == 'data' else False
-        _list_runs_sorted = format_to_list(_list_runs_sorted)
-        _list_nexus_sorted = format_to_list(_list_nexus_sorted)
         
         self.parent.ui.progressBar_check5.setMinimum(0)
         self.parent.ui.progressBar_check5.setValue(0)
@@ -220,7 +218,7 @@ class ReductionTableAutoFill(object):
             self.parent.ui.progressBar_check2.setValue(index+1)
             QApplication.processEvents()
         self.list_lrdata = _list_lrdata
-        
+
         self.o_auto_fill_widgets_handler.step2()
 
     def sorting_runs(self):
@@ -236,7 +234,6 @@ class ReductionTableAutoFill(object):
         self.list_runs_sorted = o_wks_sorted.list_runs_sorted
         self.list_wks_sorted = o_wks_sorted.list_wks_sorted
         self.list_nexus_sorted = o_wks_sorted.list_nexus_sorted
-        
         self.o_auto_fill_widgets_handler.step3()
         
     def updating_reductionTable(self):
@@ -256,7 +253,7 @@ class ReductionTableAutoFill(object):
             self.list_lrdata_sorted = o_pop_reduction_table.list_lrdata_sorted
             self.list_wks_sorted = o_pop_reduction_table.list_wks_sorted
             self.list_nexus_sorted = o_pop_reduction_table.list_nexus_sorted
-        
+
         self.o_auto_fill_widgets_handler.step4()
 
     def init_filename_thread_array(self, sz):

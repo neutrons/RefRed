@@ -158,7 +158,7 @@ class LRData(object):
             back1 = int(peak1 - backOffsetFromPeak)
             back2 = int(peak2 + backOffsetFromPeak)
             self.back = [str(back1), str(back2)]
-            
+
             lw_pf = LowResFinder(range(len(self.countsxdata)), self.countsxdata)
             [lowres1, lowres2] = lw_pf.get_low_res()
             self.low_res = [str(lowres1), str(lowres2)]
@@ -166,7 +166,7 @@ class LRData(object):
             clocking_pf = LowResFinder(range(len(self.ycountsdata)), self.ycountsdata)
             [clocking1, clocking2] = clocking_pf.get_low_res()
             self.clocking  = [str(clocking1), str(clocking2)]
-            
+
         else:
             
             # if we loaded a config that does not have the clocking info, we will have to retrieve once
