@@ -170,10 +170,10 @@ class ExportXMLConfig(object):
             str_array.append('   <norm_lambda_requested>' + str(norm_lambda_requested) + '</norm_lambda_requested>\n')
 
             _norm_run_number_cell = self.parent.ui.reductionTable.item(row,2)
-            if _norm_run_number_cell is not None:
+            if str(_norm_run_number_cell.text()) != '':
                 _norm_run_number = _norm_run_number_cell.text()
             else:
-                _norm_run_number = ''
+                _norm_run_number = '0'
             str_array.append('   <norm_dataset>' + _norm_run_number + '</norm_dataset>\n')
             #if type(norm_full_file_name) == type([]):
                 #norm_full_file_name = ','.join(norm_full_file_name)
