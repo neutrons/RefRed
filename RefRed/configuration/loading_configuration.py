@@ -108,8 +108,13 @@ class LoadingConfiguration(object):
 		self.parent.full_scaling_factor_file_name = scaling_factor_file
 		short_scaling_factor_file = os.path.basename(scaling_factor_file)
 		self.parent.ui.scalingFactorFile.setText(short_scaling_factor_file)
+
 		o_scaling_factor_widget = ScalingFactorWidgetsHandler(parent = self.parent)
 		o_scaling_factor_widget.fill_incident_medium_list(scaling_factor_file)
+		#+1 to make mantid friendly
+		index_selected = int(self.getNodeValue(node_0, 'incident_medium_index_selected'))+1 
+		o_scaling_factor_widget.set_index_selected(index_selected)
+
 		self.parent.path_ascii = os.path.dirname(scaling_factor_file)
 		scaling_factor_flag = str2bool(self.getNodeValue(node_0, 'scaling_factor_flag'))
 		o_scaling_factor_widget.checkbox(status = scaling_factor_flag)

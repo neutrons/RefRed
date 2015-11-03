@@ -43,6 +43,9 @@ class ScalingFactorWidgetsHandler(object):
             index = 0
         self.parent.ui.selectIncidentMediumList.setCurrentIndex(index)
         
+    def set_index_selected(self, index):
+        self.parent.ui.selectIncidentMediumList.setCurrentIndex(index)
+        
     def parse_scaling_factor_file(self, filename):
         '''
         will parse the scaling factor file

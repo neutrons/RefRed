@@ -206,7 +206,7 @@ class ExportXMLConfig(object):
             str_array.append('   <incident_medium_list>' + strFinalList + '</incident_medium_list>\n')
 
             imIndex = self.parent.ui.selectIncidentMediumList.currentIndex()
-            str_array.append('   <incident_medium_index_selected>' + str(imIndex) + '</incident_medium_index_selected>\n')
+            str_array.append('   <incident_medium_index_selected>' + str(imIndex-1) + '</incident_medium_index_selected>\n')
 
             # output
             fcFlag = _exportStitchingAsciiSettings.fourth_column_flag
@@ -218,6 +218,7 @@ class ExportXMLConfig(object):
             fcdqoverq = _exportStitchingAsciiSettings.fourth_column_dq_over_q
             str_array.append('   <fourth_column_dq_over_q>' + str(fcdqoverq) + '</fourth_column_dq_over_q>\n')
 
+	    str_array.append('   <slits_width_flag>True</slits_width_flag>\n')
             str_array.append('  </RefLData>\n')
 
         str_array.append('  </DataSeries>\n')
