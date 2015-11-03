@@ -1,0 +1,5 @@
+include MANIFEST.in
+include README
+include scripts/RefREd
+include RefRed/*
+include compile_gui.pl
