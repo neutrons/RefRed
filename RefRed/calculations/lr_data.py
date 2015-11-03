@@ -5,12 +5,13 @@ import os
 import gc
 
 from mantid.simpleapi import *
-#from RefRed.sort_nxsdata import SortNXSData
 from RefRed.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
 from RefRed.low_res_finder_algorithms.low_res_finder import LowResFinder
+from RefRed.clocking_algorithms.clocking_finder import ClockingFinder
 import RefRed.constants as constants
 from RefRed.plot.all_plot_axis import AllPlotAxis
 from RefRed.utilities import convert_angle
+
 
 NEUTRON_MASS = 1.675e-27  # kg
 PLANCK_CONSTANT = 6.626e-34  # m^2 kg s^-1
@@ -163,8 +164,8 @@ class LRData(object):
             [lowres1, lowres2] = lw_pf.get_low_res()
             self.low_res = [str(lowres1), str(lowres2)]
             
-            clocking_pf = LowResFinder(range(len(self.ycountsdata)), self.ycountsdata)
-            [clocking1, clocking2] = clocking_pf.get_low_res()
+            clocking_pf = ClockingFinder(range(len(self.ycountsdata)), self.ycountsdata)
+            [clocking1, clocking2] = clocking_pf.clocking
             self.clocking  = [str(clocking1), str(clocking2)]
 
         else:
