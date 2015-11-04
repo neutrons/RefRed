@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//plot_dialog_refl_interface.ui'
 #
-# Created: Wed Nov  4 10:19:18 2015
+# Created: Wed Nov  4 10:29:20 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -154,16 +154,16 @@ class Ui_Dialog(object):
         self.verticalLayout_7.addLayout(self.horizontalLayout_14)
         self.verticalLayout_8.addWidget(self.frame_2)
         self.horizontalLayout.addWidget(self.groupBox_3)
-        self.groupBox_6 = QtGui.QGroupBox(self.tab)
+        self.john_clocking_box = QtGui.QGroupBox(self.tab)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.groupBox_6.sizePolicy().hasHeightForWidth())
-        self.groupBox_6.setSizePolicy(sizePolicy)
-        self.groupBox_6.setObjectName("groupBox_6")
-        self.verticalLayout_15 = QtGui.QVBoxLayout(self.groupBox_6)
+        sizePolicy.setHeightForWidth(self.john_clocking_box.sizePolicy().hasHeightForWidth())
+        self.john_clocking_box.setSizePolicy(sizePolicy)
+        self.john_clocking_box.setObjectName("john_clocking_box")
+        self.verticalLayout_15 = QtGui.QVBoxLayout(self.john_clocking_box)
         self.verticalLayout_15.setObjectName("verticalLayout_15")
-        self.frame_6 = QtGui.QFrame(self.groupBox_6)
+        self.frame_6 = QtGui.QFrame(self.john_clocking_box)
         self.frame_6.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame_6.setFrameShadow(QtGui.QFrame.Raised)
         self.frame_6.setObjectName("frame_6")
@@ -192,7 +192,7 @@ class Ui_Dialog(object):
         self.horizontalLayout_18.addLayout(self.verticalLayout_18)
         self.verticalLayout_16.addLayout(self.horizontalLayout_18)
         self.verticalLayout_15.addWidget(self.frame_6)
-        self.horizontalLayout.addWidget(self.groupBox_6)
+        self.horizontalLayout.addWidget(self.john_clocking_box)
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QtGui.QWidget()
         self.tab_2.setObjectName("tab_2")
@@ -301,11 +301,11 @@ class Ui_Dialog(object):
         self.horizontalLayout_5.addItem(spacerItem11)
         self.horizontalLayout_6.addWidget(self.frame_4)
         self.verticalLayout.addWidget(self.groupBox_2)
-        self.groupBox_5 = QtGui.QGroupBox(self.tab_2)
-        self.groupBox_5.setObjectName("groupBox_5")
-        self.horizontalLayout_7 = QtGui.QHBoxLayout(self.groupBox_5)
+        self.jim_clocking_box = QtGui.QGroupBox(self.tab_2)
+        self.jim_clocking_box.setObjectName("jim_clocking_box")
+        self.horizontalLayout_7 = QtGui.QHBoxLayout(self.jim_clocking_box)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        self.frame_5 = QtGui.QFrame(self.groupBox_5)
+        self.frame_5 = QtGui.QFrame(self.jim_clocking_box)
         self.frame_5.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame_5.setFrameShadow(QtGui.QFrame.Raised)
         self.frame_5.setObjectName("frame_5")
@@ -328,7 +328,7 @@ class Ui_Dialog(object):
         self.verticalLayout_4.addLayout(self.horizontalLayout_8)
         self.horizontalLayout_10.addLayout(self.verticalLayout_4)
         self.horizontalLayout_7.addWidget(self.frame_5)
-        self.verticalLayout.addWidget(self.groupBox_5)
+        self.verticalLayout.addWidget(self.jim_clocking_box)
         self.tabWidget.addTab(self.tab_2, "")
         self.verticalLayout_3.addWidget(self.tabWidget)
         self.invalid_selection_label = QtGui.QLabel(Dialog)
@@ -363,7 +363,7 @@ class Ui_Dialog(object):
         self.john_back_flag.setText(QtGui.QApplication.translate("Dialog", "with Back.", None, QtGui.QApplication.UnicodeUTF8))
         self.john_back2_label.setText(QtGui.QApplication.translate("Dialog", "*", None, QtGui.QApplication.UnicodeUTF8))
         self.john_back1_label.setText(QtGui.QApplication.translate("Dialog", "*", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_6.setTitle(QtGui.QApplication.translate("Dialog", "CLOCKING", None, QtGui.QApplication.UnicodeUTF8))
+        self.john_clocking_box.setTitle(QtGui.QApplication.translate("Dialog", "CLOCKING", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("Dialog", "John", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox.setTitle(QtGui.QApplication.translate("Dialog", "PEAK", None, QtGui.QApplication.UnicodeUTF8))
         self.jim_peak1_label.setText(QtGui.QApplication.translate("Dialog", "*", None, QtGui.QApplication.UnicodeUTF8))
@@ -372,7 +372,7 @@ class Ui_Dialog(object):
         self.jim_back_flag.setText(QtGui.QApplication.translate("Dialog", "with Background", None, QtGui.QApplication.UnicodeUTF8))
         self.jim_back1_label.setText(QtGui.QApplication.translate("Dialog", "*", None, QtGui.QApplication.UnicodeUTF8))
         self.jim_back2_label.setText(QtGui.QApplication.translate("Dialog", "*", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_5.setTitle(QtGui.QApplication.translate("Dialog", "CLOCKING", None, QtGui.QApplication.UnicodeUTF8))
+        self.jim_clocking_box.setTitle(QtGui.QApplication.translate("Dialog", "CLOCKING", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("Dialog", "Jim", None, QtGui.QApplication.UnicodeUTF8))
         self.invalid_selection_label.setText(QtGui.QApplication.translate("Dialog", "(*)    INVALID SELECTION", None, QtGui.QApplication.UnicodeUTF8))
 

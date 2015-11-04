@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//plot2d_dialog_refl_interface.ui'
 #
-# Created: Wed Nov  4 10:19:17 2015
+# Created: Wed Nov  4 10:29:20 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -348,10 +348,6 @@ class Ui_Dialog(object):
         self.horizontalLayout_17.setObjectName("horizontalLayout_17")
         self.verticalLayout_17 = QtGui.QVBoxLayout()
         self.verticalLayout_17.setObjectName("verticalLayout_17")
-        self.clock2 = QtGui.QSpinBox(self.frame_6)
-        self.clock2.setMaximum(303)
-        self.clock2.setObjectName("clock2")
-        self.verticalLayout_17.addWidget(self.clock2)
         self.horizontalLayout_17.addLayout(self.verticalLayout_17)
         self.verticalLayout_16.addLayout(self.horizontalLayout_17)
         self.horizontalLayout_18 = QtGui.QHBoxLayout()
@@ -392,7 +388,6 @@ class Ui_Dialog(object):
         QtCore.QObject.connect(self.tof_to, QtCore.SIGNAL("editingFinished()"), Dialog.manual_input_of_tof_field)
         QtCore.QObject.connect(self.tof_auto_flag, QtCore.SIGNAL("clicked()"), Dialog.manual_auto_tof_clicked)
         QtCore.QObject.connect(self.clock1, QtCore.SIGNAL("editingFinished()"), Dialog.clock_spinbox)
-        QtCore.QObject.connect(self.clock2, QtCore.SIGNAL("editingFinished()"), Dialog.clock_spinbox)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
