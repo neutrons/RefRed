@@ -59,6 +59,19 @@ class PopupPlot2d(QDialog):
         self.ui.detector_plot.toolbar.homeClicked.connect(self.home_clicked_detector_plot)
         self.ui.detector_plot.toolbar.exportClicked.connect(self.export_detector_view)
 
+        self.widgets_to_show()
+
+    def widgets_to_show(self):
+        if self.is_row_with_highest_q:
+            enable_status = True
+        else:
+            enable_status = False
+
+        if not self.is_data:
+            return
+        
+        self.ui.clocking_box.setEnabled(enable_status)
+
     def is_row_with_higest_q(self):
         o_gui_utility = GuiUtility(parent = self.parent)
         return o_gui_utility.is_row_with_highest_q()
@@ -153,10 +166,11 @@ class PopupPlot2d(QDialog):
         p2 = self.ui.detector_plot.canvas.ax.axhline(peak2, 
                                                      color = RefRed.colors.PEAK_SELECTION_COLOR)
 
-        c1 = self.ui.detector_plot.canvas.ax.axhline(clock1, 
-                                                           color = RefRed.colors.CLOCKING_SELECTION_COLOR)
-        c1 = self.ui.detector_plot.canvas.ax.axhline(clock2, 
-                                                           color = RefRed.colors.CLOCKING_SELECTION_COLOR)
+        if self.is_data:
+            c1 = self.ui.detector_plot.canvas.ax.axhline(clock1, 
+                                                         color = RefRed.colors.CLOCKING_SELECTION_COLOR)
+            c1 = self.ui.detector_plot.canvas.ax.axhline(clock2, 
+                                                         color = RefRed.colors.CLOCKING_SELECTION_COLOR)
 
         if backFlag:
             b1 = self.ui.detector_plot.canvas.ax.axhline(back1, 
@@ -207,10 +221,11 @@ class PopupPlot2d(QDialog):
         p2 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak2, 
                                                            color = RefRed.colors.PEAK_SELECTION_COLOR)
 
-        c1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(clock1, 
-                                                           color = RefRed.colors.CLOCKING_SELECTION_COLOR)
-        c1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(clock2, 
-                                                           color = RefRed.colors.CLOCKING_SELECTION_COLOR)
+        if self.is_data:
+            c1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(clock1, 
+                                                               color = RefRed.colors.CLOCKING_SELECTION_COLOR)
+            c1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(clock2, 
+                                                               color = RefRed.colors.CLOCKING_SELECTION_COLOR)
 
         if backFlag:
             b1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back1, 
@@ -328,6 +343,9 @@ class PopupPlot2d(QDialog):
         self.ui.low_res2.setValue(int(low_res[1]))
         self.activate_or_not_low_res_widgets(low_res_flag)
 
+        if not self.is_data:
+            self.ui.clocking_box.setVisible(False)
+            
         self.ui.clock1.setValue(int(clock[0]))
         self.ui.clock2.setValue(int(clock[1]))
 

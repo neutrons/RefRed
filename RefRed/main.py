@@ -90,28 +90,6 @@ class MainGui(QtGui.QMainWindow):
         log_file = os.path.expanduser("~") + '/.refred.log'
         logging.basicConfig(filename=log_file, level=logging.DEBUG)
 
-    ## config files from menu
-    #def launch_config_file1(self):
-        #ConfigFileLauncher(self, 0)
-    #def launch_config_file2(self):
-        #ConfigFileLauncher(self, 1)
-    #def launch_config_file3(self):
-        #ConfigFileLauncher(self, 2)
-    #def launch_config_file4(self):
-        #ConfigFileLauncher(self, 3)
-    #def launch_config_file5(self):
-        #ConfigFileLauncher(self, 4)
-    #def launch_config_file6(self):
-        #ConfigFileLauncher(self, 5)
-    #def launch_config_file7(self):
-        #ConfigFileLauncher(self, 6)
-    #def launch_config_file8(self):
-        #ConfigFileLauncher(self, 7)
-    #def launch_config_file9(self):
-        #ConfigFileLauncher(self, 8)
-    #def launch_config_file10(self):
-        #ConfigFileLauncher(self, 9)
-    
     # export plot into ascii files
     def export_ix(self):
         ExportPlotAscii(self, type='ix')

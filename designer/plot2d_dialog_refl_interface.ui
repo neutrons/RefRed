@@ -19,7 +19,7 @@
      <item>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -792,7 +792,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_6">
+          <widget class="QGroupBox" name="clocking_box">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -815,15 +815,7 @@
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_17">
                  <item>
-                  <layout class="QVBoxLayout" name="verticalLayout_17">
-                   <item>
-                    <widget class="QSpinBox" name="clock2">
-                     <property name="maximum">
-                      <number>303</number>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
+                  <layout class="QVBoxLayout" name="verticalLayout_17"/>
                  </item>
                 </layout>
                </item>
@@ -1095,22 +1087,6 @@
     <hint type="sourcelabel">
      <x>1318</x>
      <y>1116</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>689</x>
-     <y>593</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>clock2</sender>
-   <signal>editingFinished()</signal>
-   <receiver>Dialog</receiver>
-   <slot>clock_spinbox()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1318</x>
-     <y>62</y>
     </hint>
     <hint type="destinationlabel">
      <x>689</x>

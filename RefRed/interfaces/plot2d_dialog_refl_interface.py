@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//plot2d_dialog_refl_interface.ui'
 #
-# Created: Tue Nov  3 13:09:19 2015
+# Created: Wed Nov  4 10:19:17 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -329,16 +329,16 @@ class Ui_Dialog(object):
         self.verticalLayout_7.addLayout(self.horizontalLayout_14)
         self.verticalLayout_8.addWidget(self.frame_2)
         self.horizontalLayout_4.addWidget(self.groupBox_3)
-        self.groupBox_6 = QtGui.QGroupBox(Dialog)
+        self.clocking_box = QtGui.QGroupBox(Dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.groupBox_6.sizePolicy().hasHeightForWidth())
-        self.groupBox_6.setSizePolicy(sizePolicy)
-        self.groupBox_6.setObjectName("groupBox_6")
-        self.verticalLayout_15 = QtGui.QVBoxLayout(self.groupBox_6)
+        sizePolicy.setHeightForWidth(self.clocking_box.sizePolicy().hasHeightForWidth())
+        self.clocking_box.setSizePolicy(sizePolicy)
+        self.clocking_box.setObjectName("clocking_box")
+        self.verticalLayout_15 = QtGui.QVBoxLayout(self.clocking_box)
         self.verticalLayout_15.setObjectName("verticalLayout_15")
-        self.frame_6 = QtGui.QFrame(self.groupBox_6)
+        self.frame_6 = QtGui.QFrame(self.clocking_box)
         self.frame_6.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame_6.setFrameShadow(QtGui.QFrame.Raised)
         self.frame_6.setObjectName("frame_6")
@@ -367,7 +367,7 @@ class Ui_Dialog(object):
         self.horizontalLayout_18.addLayout(self.verticalLayout_18)
         self.verticalLayout_16.addLayout(self.horizontalLayout_18)
         self.verticalLayout_15.addWidget(self.frame_6)
-        self.horizontalLayout_4.addWidget(self.groupBox_6)
+        self.horizontalLayout_4.addWidget(self.clocking_box)
         self.verticalLayout_3.addLayout(self.horizontalLayout_4)
         self.error_label = QtGui.QLabel(Dialog)
         self.error_label.setLayoutDirection(QtCore.Qt.LeftToRight)
@@ -378,7 +378,7 @@ class Ui_Dialog(object):
         self.verticalLayout_4.addLayout(self.horizontalLayout_6)
 
         self.retranslateUi(Dialog)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QObject.connect(self.back_flag, QtCore.SIGNAL("clicked(bool)"), Dialog.activate_or_not_back_widgets)
         QtCore.QObject.connect(self.peak1, QtCore.SIGNAL("editingFinished()"), Dialog.manual_input_peak1)
         QtCore.QObject.connect(self.peak2, QtCore.SIGNAL("editingFinished()"), Dialog.manual_input_peak2)
@@ -418,7 +418,7 @@ class Ui_Dialog(object):
         self.back_flag.setText(QtGui.QApplication.translate("Dialog", "with Back.", None, QtGui.QApplication.UnicodeUTF8))
         self.back2_label.setText(QtGui.QApplication.translate("Dialog", "*", None, QtGui.QApplication.UnicodeUTF8))
         self.back1_label.setText(QtGui.QApplication.translate("Dialog", "*", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_6.setTitle(QtGui.QApplication.translate("Dialog", "CLOCKING", None, QtGui.QApplication.UnicodeUTF8))
+        self.clocking_box.setTitle(QtGui.QApplication.translate("Dialog", "CLOCKING", None, QtGui.QApplication.UnicodeUTF8))
         self.error_label.setText(QtGui.QApplication.translate("Dialog", "(*) INVALID SELECTION", None, QtGui.QApplication.UnicodeUTF8))
 
 from mplwidgetnolog import MPLWidgetNoLog
