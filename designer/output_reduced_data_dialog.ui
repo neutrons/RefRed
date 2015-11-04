@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>406</width>
-    <height>360</height>
+    <width>544</width>
+    <height>541</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>500</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Export ASCII</string>
@@ -101,41 +107,127 @@ p, li { white-space: pre-wrap; }
        <property name="title">
         <string>  How to treat overlap values</string>
        </property>
-       <widget class="QRadioButton" name="usingLessErrorValueFlag">
-        <property name="geometry">
-         <rect>
-          <x>25</x>
-          <y>24</y>
-          <width>199</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>use lowest error value</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QRadioButton" name="usingMeanValueFalg">
-        <property name="geometry">
-         <rect>
-          <x>25</x>
-          <y>51</y>
-          <width>199</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>use mean value</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QRadioButton" name="usingLessErrorValueFlag">
+          <property name="text">
+           <string>use lowest error value</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="usingMeanValueFalg">
+          <property name="text">
+           <string>use mean value</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="title">
+        <string>  Output format</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QRadioButton" name="one_ascii_format">
+          <property name="text">
+           <string>1 Ascii File for All Reduced Data Set</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="n_ascii_format">
+          <property name="text">
+           <string>n Ascii Files (one for Each Reduced Data Set)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="base_name_label">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Base Filenames:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="prefix_name_value">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
+            <property name="text">
+             <string>REF_L_</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="run_name_label">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>_###_</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="suffix_name_value">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>reduced_data</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="ext_name_label">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>.txt</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="createAsciiButton">
        <property name="text">
-        <string>Create Reduce ASCII ...</string>
+        <string>Create Ascii File ...</string>
        </property>
       </widget>
      </item>
@@ -174,17 +266,50 @@ p, li { white-space: pre-wrap; }
    <slot>create_reduce_ascii_button_event()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>150</x>
-     <y>290</y>
+     <x>245</x>
+     <y>445</y>
     </hint>
     <hint type="destinationlabel">
-     <x>150</x>
-     <y>156</y>
+     <x>245</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>one_ascii_format</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>output_format_radio_buttons_event()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>275</x>
+     <y>381</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>271</x>
+     <y>270</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>n_ascii_format</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>output_format_radio_buttons_event()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>275</x>
+     <y>409</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>271</x>
+     <y>270</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>create_reduce_ascii_button_event()</slot>
+  <slot>output_format_radio_buttons_event()</slot>
  </slots>
 </ui>

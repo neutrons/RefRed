@@ -66,12 +66,35 @@ class OutputReducedData(QDialog):
 		self.ui.output4thColumnFlag.setChecked(self.is_with_4th_column_flag)
 		self.ui.usingLessErrorValueFlag.setChecked(self.use_lowest_error_value_flag)
 		self.ui.usingMeanValueFalg.setChecked(not self.use_lowest_error_value_flag)
+
+	def output_format_radio_buttons_event(self):
+		if self.ui.one_ascii_format.isChecked():
+			status = False
+		else:
+			status = True
+			
+		self.ui.base_name_label.setEnabled(status)
+		self.ui.prefix_name_value.setEnabled(status)
+		self.ui.run_name_label.setEnabled(status)
+		self.ui.suffix_name_value.setEnabled(status)
+		self.ui.ext_name_label.setEnabled(status)
 		
 	def create_reduce_ascii_button_event(self):
 		self.ui.folder_error.setVisible(False)
 		if self.parent.o_stitching_ascii_widget is None:
 			return
 		
+		if self.ui.one_ascii_format.isChecked():
+			self.create_1_common_file()
+		else:
+			self.create_n_files()
+		return
+
+	def create_n_files(self):
+		pass
+
+	def create_1_common_file(self):
+
 		run_number = self.parent.ui.reductionTable.item(0,1).text()
 		default_filename = 'REFL_' + run_number + '_reduced_stitched_data.txt'
 		path = self.parent.path_ascii
