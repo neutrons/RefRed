@@ -19,6 +19,7 @@ class OutputReducedData(QDialog):
 	o_stitching_ascii_widget = None
 	parent = None
 	filename = ''
+	folder = ''
 	
 	q_axis = None
 	y_axis = None
@@ -88,10 +89,20 @@ class OutputReducedData(QDialog):
 			self.create_1_common_file()
 		else:
 			self.create_n_files()
-		return
+		self.close()
 
 	def create_n_files(self):
-		pass
+		path = self.parent.path_ascii
+		folder = str(QFileDialog.getExistingDirectory(self,
+		                                              'Select Location',
+		                                              directory = path))
+		if folder == '':
+			return
+		
+		self.folder = folder
+		self.parent.path_ascii = folder
+		self.write_n_ascii()
+		self.save_back_widget_parameters_used()
 
 	def create_1_common_file(self):
 
@@ -117,8 +128,8 @@ class OutputReducedData(QDialog):
 		self.parent.path_ascii = os.path.dirname(filename)
 
 		#try:
-		self.write_ascii()
-		self.close()
+		self.write_1_common_ascii()
+#		self.close()
 		self.save_back_widget_parameters_used()
 		#except:
 		#     pass
@@ -139,7 +150,47 @@ class OutputReducedData(QDialog):
 	def is_folder_access_granted(self, filename):
 		return os.access(filename,os.W_OK)
 	
-	def write_ascii(self):
+	def write_n_ascii(self):
+		o_gui_utility = GuiUtility(parent = self.parent)
+		nbr_row = o_gui_utility.reductionTable_nbr_row()
+
+		self.is_with_4th_column_flag = self.ui.output4thColumnFlag.isChecked()
+		dq_over_q = self.ui.dQoverQvalue.text()
+		self.dq_over_q = float(dq_over_q)
+		self.use_lowest_error_value_flag = self.ui.usingLessErrorValueFlag.isChecked()
+
+		for _row in range(nbr_row):
+			self.filename = self.format_n_filename(row = _row)
+			text = self.retrieve_individual_metadata(row = _row)
+			
+			if self.is_with_4th_column_flag:
+				dq0 = self.ui.dq0Value.text()
+				self.dq0 = float(dq0)
+				line1 = '# dQ0[1/Angstroms]= ' + dq0
+				line2 = '# dQ/Q= ' + dq_over_q
+				line3 = '# Q[1/Angstroms] R delta_R Precision'
+				text.append(line1)
+				text.append(line2)
+				text.append("#")
+				text.append(line3)
+			else:
+				text.append('# Q[1/Angstroms] R delta_R')
+			
+			self.text_data = text
+			self.produce_data_without_common_q_axis(row = _row)
+			self.format_data()
+			self.create_file()
+			
+	def format_n_filename(self, row=-1):
+		folder = self.folder
+		prefix = self.ui.prefix_name_value.text()
+		suffix = self.ui.suffix_name_value.text()
+		ext = 'txt'
+		run_number = self.parent.ui.reductionTable.item(row, 1).text()
+		filename = "%s/%s_%s_%s.%s" %(folder, prefix, run_number, suffix, ext)
+		return filename
+	
+	def write_1_common_ascii(self):
 		text = self.retrieve_metadata()
 		self.is_with_4th_column_flag = self.ui.output4thColumnFlag.isChecked()
 		dq_over_q = self.ui.dQoverQvalue.text()
@@ -162,7 +213,53 @@ class OutputReducedData(QDialog):
 		self.produce_data_with_common_q_axis()
 		self.format_data()
 		self.create_file()
-		
+	
+	def retrieve_individual_metadata(self, row=-1):
+		reduction_table = self.parent.ui.reductionTable
+		text = []
+	
+		o_gui_utility = GuiUtility(parent = self.parent)
+		_date = time.strftime("# Date: %d_%m_%Y")
+		_reduction_method = '# Reduction method: manual'
+		_reduction_engine = '# Reduction engine: RefRed'
+		_reduction_date = '# %s' %_date
+		_ipts = o_gui_utility.get_ipts(row = 0)
+		for _entry in [_date, _reduction_method, _reduction_engine, _reduction_date]:
+			text.append(_entry)
+		text.append("#")
+	
+		_legend = "# DataRun\tNormRun\t2theta(degrees)\tLambdaMin(A)\tLambdaMax(A)\tQmin(1/A)\tQmax(1/A)\tScalingFactor"
+		text.append(_legend)
+		_data_run = str(reduction_table.item(row, 1).text())
+		_norm_run = str(reduction_table.item(row, 2).text())
+		_2_theta  = str(reduction_table.item(row, 3).text())
+		_lambda_min = str(reduction_table.item(row, 4).text())
+		_lambda_max = str(reduction_table.item(row, 5).text())
+		_q_min = str(reduction_table.item(row, 6).text())
+		_q_max = str(reduction_table.item(row, 7).text())
+		_scaling_factor = self.retrieve_scaling_factor(row = row)
+		_value = "# %s\t%s\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s" %(_data_run,
+		                                                        _norm_run,
+		                                                        _2_theta,
+		                                                        _lambda_min,
+		                                                        _lambda_max,
+		                                                        _q_min,
+		                                                        _q_max,
+		                                                        _scaling_factor)
+		text.append(_value)
+	
+		# clocking settings
+		text.append('#')
+		text.append('# Clocking Correction used')
+		o_gui_utility = GuiUtility(parent = self.parent)
+		last_row = o_gui_utility.get_row_with_highest_q()
+		big_table_data = self.parent.big_table_data
+		clocking = big_table_data[last_row, 0].clocking
+		text.append('# clock1: %s' %clocking[0])
+		text.append('# clock2: %s' %clocking[1])
+	
+		return text
+			
 	def retrieve_metadata(self):
 		reduction_table = self.parent.ui.reductionTable
 		text = []
@@ -220,6 +317,19 @@ class OutputReducedData(QDialog):
 
 	def create_file(self):
 		RefRed.utilities.write_ascii_file(self.filename, self.text_data)
+		
+	def produce_data_without_common_q_axis(self, row=-1):
+		_dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
+		_big_table_data = _dataObject.big_table_data
+		_data = _big_table_data[row, 2]
+		_q_axis = _data.reduce_q_axis
+		_y_axis = _data.reduce_y_axis[:-1]
+		_e_axis = _data.reduce_e_axis[:-1]
+		[_y_axis, _e_axis] = self.applySF(_data, _y_axis, _e_axis)
+		
+		self.q_axis = _q_axis
+		self.y_axis = _y_axis
+		self.e_axis = _e_axis
 		
 	def produce_data_with_common_q_axis(self):
 		o_gui_utility = GuiUtility(parent = self.parent)
