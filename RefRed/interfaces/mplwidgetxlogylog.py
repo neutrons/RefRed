@@ -355,7 +355,7 @@ class NavigationToolbar(NavigationToolbar2QT):
 
 class MplCanvas(FigureCanvas):
 
-  trigger_click = QtCore.pyqtSignal()
+  trigger_click = QtCore.pyqtSignal(bool, bool)
   trigger_figure_left = QtCore.pyqtSignal()
 
   def __init__(self, parent=None, width=3, height=3, dpi=100, sharex=None, sharey=None, adjust={}):
@@ -383,7 +383,20 @@ class MplCanvas(FigureCanvas):
 
   def button_pressed(self, event):
     _axis = self.ax.axis()
-    self.trigger_click.emit()
+    is_x_axis_manual_zoom_requested = False
+    is_manual_zoom_requested = False
+    
+    if event.button == 3:
+      is_manual_zoom_requested = True
+      if event.xdata is None:
+        x = event.x
+        y = event.y
+        if x > y:
+          is_x_axis_manual_zoom_requested = True
+        else:
+          is_x_axis_manual_zoom_requested = False
+      
+    self.trigger_click.emit(is_manual_zoom_requested, is_x_axis_manual_zoom_requested) #button pressed
  
   def figure_leave(self, event):
     self.trigger_figure_left.emit()
@@ -420,7 +433,7 @@ class MPLWidgetXLogYLog(QtGui.QWidget):
 
   logtogx = QtCore.pyqtSignal(str)
   logtogy = QtCore.pyqtSignal(str)
-  singleClick = QtCore.pyqtSignal(bool)
+  singleClick = QtCore.pyqtSignal(bool, int, bool)
   leaveFigure = QtCore.pyqtSignal()
 
   def __init__(self, parent=None, with_toolbar=True, coordinates=False):
@@ -443,9 +456,9 @@ class MPLWidgetXLogYLog(QtGui.QWidget):
     self.canvas.trigger_click.connect(self._singleClick)
     self.canvas.trigger_figure_left.connect(self._leaveFigure)
 
-  def _singleClick(self):
+  def _singleClick(self, is_manual_zoom_requested, is_x_axis_manual_zoom_requested):
     status = self.toolbar.isPanActivated or self.toolbar.isZoomActivated
-    self.singleClick.emit(status)
+    self.singleClick.emit(status, is_manual_zoom_requested, is_x_axis_manual_zoom_requested)
 
   def _leaveFigure(self):
     self.leaveFigure.emit()

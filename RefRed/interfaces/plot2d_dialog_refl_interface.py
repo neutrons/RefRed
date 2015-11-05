@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//plot2d_dialog_refl_interface.ui'
 #
-# Created: Wed Nov  4 13:11:54 2015
+# Created: Thu Nov  5 10:21:37 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -344,16 +344,13 @@ class Ui_Dialog(object):
         self.frame_6.setObjectName("frame_6")
         self.verticalLayout_16 = QtGui.QVBoxLayout(self.frame_6)
         self.verticalLayout_16.setObjectName("verticalLayout_16")
-        self.horizontalLayout_17 = QtGui.QHBoxLayout()
-        self.horizontalLayout_17.setObjectName("horizontalLayout_17")
-        self.verticalLayout_17 = QtGui.QVBoxLayout()
-        self.verticalLayout_17.setObjectName("verticalLayout_17")
-        self.horizontalLayout_17.addLayout(self.verticalLayout_17)
-        self.verticalLayout_16.addLayout(self.horizontalLayout_17)
         self.horizontalLayout_18 = QtGui.QHBoxLayout()
         self.horizontalLayout_18.setObjectName("horizontalLayout_18")
         self.verticalLayout_18 = QtGui.QVBoxLayout()
         self.verticalLayout_18.setObjectName("verticalLayout_18")
+        self.clock2 = QtGui.QSpinBox(self.frame_6)
+        self.clock2.setObjectName("clock2")
+        self.verticalLayout_18.addWidget(self.clock2)
         spacerItem15 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout_18.addItem(spacerItem15)
         self.clock1 = QtGui.QSpinBox(self.frame_6)

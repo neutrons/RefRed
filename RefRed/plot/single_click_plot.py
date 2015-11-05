@@ -15,8 +15,10 @@ class SingleClickPlot(object):
 	def __init__(self, parent, 
 	             data_type = 'data', 
 	             plot_type = 'yi', 
-	             is_pan_or_zoom_activated = False):
-
+	             is_pan_or_zoom_activated = False,
+	             is_manual_zoom_requested = False,
+	             is_x_axis_manual_zoom_requested = False):
+		
 		self.parent = parent
 		o_gui_utility = GuiUtility(parent = self.parent)
 		row = o_gui_utility.get_current_table_reduction_check_box_checked()

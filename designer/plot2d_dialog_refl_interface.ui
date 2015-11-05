@@ -813,16 +813,12 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_16">
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_17">
-                 <item>
-                  <layout class="QVBoxLayout" name="verticalLayout_17"/>
-                 </item>
-                </layout>
-               </item>
-               <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_18">
                  <item>
                   <layout class="QVBoxLayout" name="verticalLayout_18">
+                   <item>
+                    <widget class="QSpinBox" name="clock2"/>
+                   </item>
                    <item>
                     <spacer name="verticalSpacer_8">
                      <property name="orientation">
