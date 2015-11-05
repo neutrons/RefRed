@@ -39,9 +39,10 @@ class ReductionTableHandler(object):
                     _widget = QtGui.QCheckBox()
                     _widget.setChecked(False)
                     _widget.setEnabled(True)
-                    signal_function = self.__get_checkbox_signal_function(row_index)
+#                    signal_function = self.__get_checkbox_signal_function(row_index)
                     QtCore.QObject.connect(_widget, QtCore.SIGNAL("stateChanged(int)"), 
-                                           eval(signal_function))
+                                           lambda state=0, row=row_index: self.parent.reduction_table_visibility_changed_test(state, row))
+#                                           eval(signal_function))
                     self.parent.ui.reductionTable.setCellWidget(row_index, col_index, _widget)
     
                 elif (col_index == 1) or (col_index == 2):
