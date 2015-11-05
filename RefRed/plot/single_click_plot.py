@@ -3,6 +3,8 @@ import time
 import RefRed.constants
 from RefRed.plot.popup_plot_1d import PopupPlot1d
 from RefRed.plot.popup_plot_2d import PopupPlot2d
+from RefRed.plot.launch_stitching_manual_axis import LaunchStitchingManualXAxis
+from RefRed.plot.launch_stitching_manual_axis import LaunchStitchingManualYAxis
 from RefRed.gui_handling.gui_utility import GuiUtility
 
 
@@ -27,7 +29,6 @@ class SingleClickPlot(object):
 		self.row = row
 		col = o_gui_utility.get_data_norm_tab_selected()
 
-
 		self.data = parent.big_table_data[row, col]
 		
 		if plot_type == 'ix':
@@ -37,15 +38,28 @@ class SingleClickPlot(object):
 			return
 		
 		if plot_type == 'stitching':
+			if is_manual_zoom_requested:
+				self.right_click_stitching_plot(is_x_axis_manual_zoom_requested)
 			return
 		
 		if plot_type == 'yi':
 			self.single_yi_plot_click(data_type = data_type)
 			                          
-		
 		if plot_type == 'yt':
 			self.single_yt_plot_click(data_type = data_type)
 		
+	def right_click_stitching_plot(self, is_x_axis_manual_zoom_requested):
+		if is_x_axis_manual_zoom_requested:
+			if self.parent.manual_x_axis_dialog is None:
+				manual_axis = LaunchStitchingManualXAxis(parent = self.parent)
+				self.parent.manual_x_axis_dialog = manual_axis
+				manual_axis.show()
+		else:
+			if self.parent.manual_y_axis_dialog is None:
+				manual_axis = LaunchStitchingManualYAxis(parent = self.parent)
+				self.parent.manual_y_axis_dialog = manual_axis
+				manual_axis.show()
+				
 	def single_yi_plot_click(self, data_type = 'data'):
 		parent = self.parent
 		

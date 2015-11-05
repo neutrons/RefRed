@@ -52,6 +52,9 @@ class MainGui(QtGui.QMainWindow):
     o_user_configuration = None # will record the various settings of the GUI defined by the user
     o_stitching_ascii_widget = None # used when loading ascii files in reduced tab
 
+    manual_x_axis_dialog = None
+    manual_y_axis_dialog = None
+
     nbr_row_table_reduction = 30
     nbr_row_table_ascii = 8
     prev_table_reduction_row_selected = -1
