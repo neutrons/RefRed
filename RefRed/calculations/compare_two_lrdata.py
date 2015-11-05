@@ -1,3 +1,5 @@
+import RefRed.constants
+
 class CompareTwoLRData(object):
     
     def __init__(self,
@@ -43,12 +45,13 @@ class CompareTwoLRData(object):
         value_1 = _lrdata_1.theta
         value_2 = _lrdata_2.theta
         
-        if value_1 < value_2:
-            return 1
-        elif value_1 > value_2:
-            return -1
-        else:
+        if abs(value_1 - value_2) < RefRed.constants.precision_in_theta_when_matching_lrdata:
             return 0
-        
+        else:
+            if value_1 < value_2:
+                return 1
+            elif value_1 > value_2:
+                return -1
+                
         
         

@@ -91,6 +91,7 @@ class SortLRDataList(object):
                     
                 o_compare_lrdata = CompareTwoLRData(lrdata_1 = lrdata_fix,
                                                     lrdata_2 = lrdata_mov)
+
                 if o_compare_lrdata.result_comparison < 0:
                     list_lrdata_sorted.insert(index_lrdata_fix, lrdata_mov)
                     list_runs_sorted.insert(index_lrdata_fix, runs_mov)
