@@ -103,6 +103,8 @@ class AutoTofRangeRadioButtonHandler(object):
         _tof_range_manual = self.retrieve_tof_range_defined_by_user()
         for _row in self.all_rows:
             _data = big_table_data[_row, self.col]
+            if _data is None:
+                break
             _data.tof_range_manual = _tof_range_manual 
             _data.tof_range = _tof_range_manual
             self.new_tof_range = _tof_range_manual
