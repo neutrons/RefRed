@@ -4,8 +4,15 @@ class SFCalculatorTableHandler(object):
         self.parent = parent
         
     def full_clear(self):
+        self.__clear_variables()
         self.__clear_sf_calculator_table()
         self.__clear_plots()
+        
+    def __clear_variables(self):
+        self.parent.data_list = []
+        self.parent.big_table_nxdata = []
+        self.parent.loaded_list_of_runs = []
+        self.parent.list_nxsdata_sorted = []
         
     def __clear_sf_calculator_table(self):
         parent = self.parent
