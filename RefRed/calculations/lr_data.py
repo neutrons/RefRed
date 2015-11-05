@@ -102,20 +102,25 @@ class LRData(object):
 
         # calculate theta
         self.theta = self.calculate_theta()
+        self.frequency = float(mt_run.getProperty('Speed1').value[0])
+
+        tof_coeff_narrow = 1.7 * 60 / self.frequency
+        tof_coeff_large = 2.5 * 60 / self.frequency
 
         if lconfig is not None:
             autotmin = np.float(lconfig.tof_range[0])
             autotmax = np.float(lconfig.tof_range[1])
         else:
-            autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 - 1.7) * 1e-4
-            autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 1.7) * 1e-4
+            autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + \
+                                                      0.5 - tof_coeff_narrow) * 1e-4
+            autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + \
+                                                      tof_coeff_narrow) * 1e-4
 
         # automatically calcualte the TOF range for display
-        if mt_run.getProperty('Speed1').value[0] == 60:
-            tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 2.5) * 1e-4
-            tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 - 2.5) * 1e-4
-        else:
-            tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 4.5) * 1e-4
+        tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + tof_coeff_large) * 1e-4
+        tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 - tof_coeff_large) * 1e-4
+
+        if tmin < 0:
             tmin = 0
 
         self.tof_range_auto = [autotmin, autotmax]  # microS
