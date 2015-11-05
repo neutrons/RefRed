@@ -22,7 +22,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="y_min_value"/>
+    <widget class="QLineEdit" name="x_min_value"/>
    </item>
    <item>
     <spacer name="horizontalSpacer">
@@ -45,10 +45,47 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="y_max_value"/>
+    <widget class="QLineEdit" name="x_max_value"/>
    </item>
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>x_min_value</sender>
+   <signal>returnPressed()</signal>
+   <receiver>Dialog</receiver>
+   <slot>x_min_event()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>125</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>248</x>
+     <y>22</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>x_max_value</sender>
+   <signal>returnPressed()</signal>
+   <receiver>Dialog</receiver>
+   <slot>x_max_event()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>415</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>248</x>
+     <y>22</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>x_min_event()</slot>
+  <slot>x_max_event()</slot>
+ </slots>
 </ui>

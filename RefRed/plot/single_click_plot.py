@@ -19,7 +19,9 @@ class SingleClickPlot(object):
 	             plot_type = 'yi', 
 	             is_pan_or_zoom_activated = False,
 	             is_manual_zoom_requested = False,
-	             is_x_axis_manual_zoom_requested = False):
+	             is_x_axis_manual_zoom_requested = False,
+	             mouse_x = 0,
+	             mouse_y = 0):
 		
 		self.parent = parent
 		o_gui_utility = GuiUtility(parent = self.parent)
@@ -39,7 +41,9 @@ class SingleClickPlot(object):
 		
 		if plot_type == 'stitching':
 			if is_manual_zoom_requested:
-				self.right_click_stitching_plot(is_x_axis_manual_zoom_requested)
+				self.right_click_stitching_plot(is_x_axis_manual_zoom_requested,
+				                                mouse_x, 
+				                                mouse_y)
 			return
 		
 		if plot_type == 'yi':
@@ -48,15 +52,21 @@ class SingleClickPlot(object):
 		if plot_type == 'yt':
 			self.single_yt_plot_click(data_type = data_type)
 		
-	def right_click_stitching_plot(self, is_x_axis_manual_zoom_requested):
+	def right_click_stitching_plot(self, is_x_axis_manual_zoom_requested,
+	                               mouse_x,
+	                               mouse_y):
 		if is_x_axis_manual_zoom_requested:
 			if self.parent.manual_x_axis_dialog is None:
-				manual_axis = LaunchStitchingManualXAxis(parent = self.parent)
+				manual_axis = LaunchStitchingManualXAxis(parent = self.parent,
+				                                         mouse_x = mouse_x,
+				                                         mouse_y = mouse_y)
 				self.parent.manual_x_axis_dialog = manual_axis
 				manual_axis.show()
 		else:
 			if self.parent.manual_y_axis_dialog is None:
-				manual_axis = LaunchStitchingManualYAxis(parent = self.parent)
+				manual_axis = LaunchStitchingManualYAxis(parent = self.parent,
+				                                         mouse_x = mouse_x,
+				                                         mouse_y = mouse_y)
 				self.parent.manual_y_axis_dialog = manual_axis
 				manual_axis.show()
 				

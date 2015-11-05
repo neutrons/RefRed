@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//manual_y_axis_interface.ui'
 #
-# Created: Thu Nov  5 10:48:06 2015
+# Created: Thu Nov  5 16:50:08 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -33,6 +33,8 @@ class Ui_Dialog(object):
         self.verticalLayout.addLayout(self.gridLayout)
 
         self.retranslateUi(Dialog)
+        QtCore.QObject.connect(self.y_min_value, QtCore.SIGNAL("returnPressed()"), Dialog.y_min_event)
+        QtCore.QObject.connect(self.y_max_value, QtCore.SIGNAL("returnPressed()"), Dialog.y_max_event)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):

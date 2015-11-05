@@ -41,5 +41,42 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>y_min_value</sender>
+   <signal>returnPressed()</signal>
+   <receiver>Dialog</receiver>
+   <slot>y_min_event()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>172</x>
+     <y>62</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>148</x>
+     <y>44</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>y_max_value</sender>
+   <signal>returnPressed()</signal>
+   <receiver>Dialog</receiver>
+   <slot>y_max_event()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>172</x>
+     <y>26</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>148</x>
+     <y>44</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>y_min_event()</slot>
+  <slot>y_max_event()</slot>
+ </slots>
 </ui>

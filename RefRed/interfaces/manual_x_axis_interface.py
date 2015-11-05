@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//manual_x_axis_interface.ui'
 #
-# Created: Thu Nov  5 10:48:06 2015
+# Created: Thu Nov  5 16:50:08 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -19,19 +19,21 @@ class Ui_Dialog(object):
         self.label_3 = QtGui.QLabel(Dialog)
         self.label_3.setObjectName("label_3")
         self.horizontalLayout.addWidget(self.label_3)
-        self.y_min_value = QtGui.QLineEdit(Dialog)
-        self.y_min_value.setObjectName("y_min_value")
-        self.horizontalLayout.addWidget(self.y_min_value)
+        self.x_min_value = QtGui.QLineEdit(Dialog)
+        self.x_min_value.setObjectName("x_min_value")
+        self.horizontalLayout.addWidget(self.x_min_value)
         spacerItem = QtGui.QSpacerItem(81, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.label = QtGui.QLabel(Dialog)
         self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label)
-        self.y_max_value = QtGui.QLineEdit(Dialog)
-        self.y_max_value.setObjectName("y_max_value")
-        self.horizontalLayout.addWidget(self.y_max_value)
+        self.x_max_value = QtGui.QLineEdit(Dialog)
+        self.x_max_value.setObjectName("x_max_value")
+        self.horizontalLayout.addWidget(self.x_max_value)
 
         self.retranslateUi(Dialog)
+        QtCore.QObject.connect(self.x_min_value, QtCore.SIGNAL("returnPressed()"), Dialog.x_min_event)
+        QtCore.QObject.connect(self.x_max_value, QtCore.SIGNAL("returnPressed()"), Dialog.x_max_event)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
