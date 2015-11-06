@@ -88,6 +88,7 @@ class ReducedDataHandler(object):
         self.parent.ui.data_stitching_plot.draw()
         
         big_table_data = self.big_table_data
+        _data = big_table_data[0, 0]
 
         for index_row, _lconfig in enumerate(big_table_data[:,2]):
             if _lconfig is None:
@@ -116,8 +117,26 @@ class ReducedDataHandler(object):
                                                         y_axis,
                                                         yerr = e_axis, 
                                                         color = self.get_current_color_plot(index_row))
+
+            if _data.all_plot_axis.reduced_plot_stitching_tab_view_interval is None:
+#                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim(0, self.ylim)
+                self.parent.ui.data_stitching_plot.canvas.draw()
+                [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+                [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+                _data.all_plot_axis.reduced_plot_stitching_tab_view_interval = [xmin, xmax, ymin, ymax]
+                _data.all_plot_axis.reduced_plot_stitching_tab_view_interval = [xmin, xmax, ymin, ymax]
+                self.parent.ui.data_stitching_plot.toolbar.home_settings = [xmin, xmax, ymin, ymax]
+            else:
+                [xmin,xmax,ymin,ymax] = _data.all_plot_axis.reduced_plot_stitching_tab_view_interval
+                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
+                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                self.parent.ui.data_stitching_plot.canvas.draw()
+            
             self.parent.ui.data_stitching_plot.set_yscale('log')
             self.parent.ui.data_stitching_plot.draw()
+            
+        big_table_data[0, 0] = _data
+        self.parent.big_table_data = big_table_data
 
     def plot_reduced_ascii_files(self):
         big_table_data = self.parent.big_table_data

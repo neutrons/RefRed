@@ -24,6 +24,13 @@ class SingleClickPlot(object):
 	             mouse_y = 0):
 		
 		self.parent = parent
+		if plot_type == 'stitching':
+			if is_manual_zoom_requested:
+				self.right_click_stitching_plot(is_x_axis_manual_zoom_requested,
+					                        mouse_x, 
+					                        mouse_y)
+			return
+
 		o_gui_utility = GuiUtility(parent = self.parent)
 		row = o_gui_utility.get_current_table_reduction_check_box_checked()
 		if row == -1:
@@ -38,14 +45,7 @@ class SingleClickPlot(object):
 		
 		if plot_type == 'it':
 			return
-		
-		if plot_type == 'stitching':
-			if is_manual_zoom_requested:
-				self.right_click_stitching_plot(is_x_axis_manual_zoom_requested,
-				                                mouse_x, 
-				                                mouse_y)
-			return
-		
+				
 		if plot_type == 'yi':
 			self.single_yi_plot_click(data_type = data_type)
 			                          

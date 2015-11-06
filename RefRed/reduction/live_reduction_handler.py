@@ -80,9 +80,21 @@ class LiveReductionHandler(object):
         # save reduced data
         self.save_reduced_for_ascii_loaded()
         
+        # save size of view for home button
+        self.save_stitching_plot_view()
+        
         StatusMessageHandler(parent = self.parent, 
                              message = 'Done!', 
                              is_threaded = True)
+
+    def save_stitching_plot_view(self):
+        big_table_data = self.parent.big_table_data
+        data = big_table_data[0, 0]
+        [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+        [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+        data.all_plot_axis.reduced_plot_stitching_tab_data_interval = [xmin, xmax, ymin, ymax]
+        big_table_data[0, 0] = data
+        self.parent.big_table_data = big_table_data
 
     def save_reduced_for_ascii_loaded(self):
         o_loaded_ascii = ReducedAsciiLoader(parent = self.parent,
@@ -93,7 +105,7 @@ class LiveReductionHandler(object):
         else:
             self.parent.o_stitching_ascii_widget.add_data(o_loaded_ascii)
         self.parent.o_stitching_ascii_widget.update_display()
-
+        
     def export(self):
         o_export_script = ExportDataReductionScript(parent = self.parent)
         o_export_script.define_export_filename()

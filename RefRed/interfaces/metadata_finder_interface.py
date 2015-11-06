@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//metadata_finder_interface.ui'
 #
-# Created: Thu Nov  5 16:50:08 2015
+# Created: Fri Nov  6 15:19:44 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,6 +26,7 @@ class Ui_MainWindow(object):
         self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label)
         self.runNumberEdit = QtGui.QLineEdit(self.centralwidget)
+        self.runNumberEdit.setText("")
         self.runNumberEdit.setObjectName("runNumberEdit")
         self.horizontalLayout.addWidget(self.runNumberEdit)
         self.inputErrorLabel = QtGui.QLabel(self.centralwidget)
@@ -139,7 +140,6 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "MainWindow", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Run(s) number:", None, QtGui.QApplication.UnicodeUTF8))
         self.runNumberEdit.setToolTip(QtGui.QApplication.translate("MainWindow", "1234 or 1234,1236 or 1234-1238", None, QtGui.QApplication.UnicodeUTF8))
-        self.runNumberEdit.setText(QtGui.QApplication.translate("MainWindow", "124622", None, QtGui.QApplication.UnicodeUTF8))
         self.inputErrorLabel.setText(QtGui.QApplication.translate("MainWindow", "ERROR WHILE PARSING ! CHECK YOUR INPUT  ", None, QtGui.QApplication.UnicodeUTF8))
         self.searchLabel.setText(QtGui.QApplication.translate("MainWindow", "loop", None, QtGui.QApplication.UnicodeUTF8))
         self.metadataTable.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("MainWindow", "Run #", None, QtGui.QApplication.UnicodeUTF8))
