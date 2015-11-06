@@ -16,7 +16,9 @@ class HomePlotButtonClicked(object):
 				return
 			[xmin, xmax, ymin, ymax] = data.all_plot_axis.reduced_plot_stitching_tab_data_interval
 			_plot_ui = parent.ui.data_stitching_plot.canvas
-			[row, column] = [0,0]		
+			[row, column] = [0,0]	
+			
+			self.update_manual_axis_input_dialog(xmin, xmax, ymin, ymax)
 
 		else:
 
@@ -70,5 +72,18 @@ class HomePlotButtonClicked(object):
 		_plot_ui.ax.set_ylim([ymin, ymax])
 		_plot_ui.draw()
 
-			
+	def update_manual_axis_input_dialog(self, xmin, xmax, ymin, ymax):
+		
+		if self.parent.manual_x_axis_dialog is not None:
+			_xmin = "%.4f" %xmin
+			_xmax = "%.4f" %xmax
+			self.parent.manual_x_axis_dialog.ui.x_min_value.setText(_xmin)
+			self.parent.manual_x_axis_dialog.ui.x_max_value.setText(_xmax)
+		
+		if self.parent.manual_y_axis_dialog is not None:
+			_ymin = "%.4f" %ymin
+			_ymax = "%.4f" %ymax
+			self.parent.manual_y_axis_dialog.ui.y_min_value.setText(_ymin)
+			self.parent.manual_y_axis_dialog.ui.y_max_value.setText(_ymax)
+		
 			
