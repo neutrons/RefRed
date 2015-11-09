@@ -8,7 +8,7 @@ from RefRed.lconfigdataset import LConfigDataset
 from RefRed.calculations.lr_data import LRData
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
-
+from RefRed.calculations.angle_offset_calculation import AngleOffsetCalculation
 
 
 class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
@@ -81,6 +81,9 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
         UpdateReductionTableMetadata(parent = self.parent, 
                                      lrdata = lrdata,
                                      row = row)
+        
+        o_angle_offset_calculation = AngleOffsetCalculation(parent = self.parent,
+                                                            row = row)
             
     def update_lconfigdataset(self):
         runs_are_compatible = self.runs_are_compatible

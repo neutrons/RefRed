@@ -8,6 +8,8 @@ from RefRed.plot.display_plots import DisplayPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.colors
 import RefRed.utilities
+from RefRed.calculations.angle_offset_calculation import AngleOffsetCalculation
+
 
 class PopupPlot1d(QDialog):
 	
@@ -665,6 +667,9 @@ class PopupPlot1d(QDialog):
 			self.parent.ui.dataBackFromValue.setEnabled(backFlag)
 			self.parent.ui.dataBackToLabel.setEnabled(backFlag)
 			self.parent.ui.dataBackToValue.setEnabled(backFlag)
+			o_angle_offset = AngleOffsetCalculation(parent = self.parent,
+					                        row = self.row)
+			
 		else:
 			self.parent.ui.normPeakFromValue.setValue(peak1)
 			self.parent.ui.normPeakToValue.setValue(peak2)

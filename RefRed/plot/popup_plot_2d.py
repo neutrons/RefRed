@@ -9,6 +9,7 @@ from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.colors
 import RefRed.utilities
 from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
+from RefRed.calculations.angle_offset_calculation import AngleOffsetCalculation
 
 
 class PopupPlot2d(QDialog):
@@ -534,6 +535,8 @@ class PopupPlot2d(QDialog):
             self.parent.ui.dataLowResFromValue.setEnabled(lowresFlag)
             self.parent.ui.dataLowResToLabel.setEnabled(lowresFlag)
             self.parent.ui.dataLowResToValue.setEnabled(lowresFlag)
+            o_angle_offset = AngleOffsetCalculation(parent = self.parent,
+                                                    row = self.row)
         else:
             self.parent.ui.normPeakFromValue.setValue(peak1)
             self.parent.ui.normPeakToValue.setValue(peak2)

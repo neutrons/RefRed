@@ -1,5 +1,7 @@
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.calculations.angle_offset_calculation import AngleOffsetCalculation
+
 
 class SpinBox(object):
     
@@ -72,6 +74,9 @@ class SpinBox(object):
                              plot_it = is_plot_it,
                              plot_ix = is_plot_ix,
                              refresh_reduction_table = False)
+                
+            o_angle_offset = AngleOffsetCalculation(parent = self.parent,
+                                                    row = row)
 
 class DataSpinbox(object):
 
