@@ -12,6 +12,7 @@ __scripts__ = ['scripts/RefRed']
 __packages__ = ['RefRed',
                 'RefRed.autopopulatemaintable',
                 'RefRed.configuration',
+                'RefRed.clocking_algorithms',
                 'RefRed.calculations',
                 'RefRed.config',
                 'RefRed.export',
