@@ -11,7 +11,10 @@ from PyQt4.QtCore import Qt
 #sys.path.append("/opt/Mantid/bin")
 #sys.path.append("/opt/Mantid/plugins")
 import subprocess
-subprocess.call('/opt/mantidnightly/etc/mantid.sh')
+try:
+    subprocess.call('/opt/mantidnightly/etc/mantid.sh')
+except:
+    pass
 
 # if script was run from commandline
 try:

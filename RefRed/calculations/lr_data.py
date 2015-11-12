@@ -63,6 +63,8 @@ class LRData(object):
         self.lambda_requested_units = mt_run.getProperty('LambdaRequest').units
         self.thi = mt_run.getProperty('thi').value[0]
         self.thi_units = mt_run.getProperty('thi').units
+        self.ths = mt_run.getProperty('ths').value[0]
+        self.ths_units = mt_run.getProperty('ths').units
         self.tthd = mt_run.getProperty('tthd').value[0]
         self.tthd_units = mt_run.getProperty('tthd').units
         self.S1W = mt_run.getProperty('S1HWidth').value[0]
