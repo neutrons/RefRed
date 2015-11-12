@@ -8,13 +8,8 @@ import sys
 from PyQt4.QtGui import QApplication, QSplashScreen, QPixmap
 from PyQt4.QtCore import Qt
 
-#sys.path.append("/opt/Mantid/bin")
-#sys.path.append("/opt/Mantid/plugins")
-import subprocess
-try:
-    subprocess.call('/opt/mantidnightly/etc/mantid.sh')
-except:
-    pass
+sys.path.append("/opt/mantidnightly/bin")
+sys.path.append("/opt/mantidghtly/plugins")
 
 # if script was run from commandline
 try:
