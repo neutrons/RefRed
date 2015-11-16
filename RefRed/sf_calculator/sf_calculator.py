@@ -443,13 +443,38 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         _list_nxsdata_sorted = self.list_nxsdata_sorted
         _nxdata  = _list_nxsdata_sorted[self.current_table_row_selected]
         _nxdata.tof_range = [tof_min, tof_max]
+        _nxdata.calculate_lambda_range()
         _nxdata.tof_auto_flag = False
         _list_nxsdata_sorted[self.current_table_row_selected] = _nxdata
         self.list_nxsdata_sorted = _list_nxsdata_sorted
         if with_plot_update:
             self.displayPlot(row = self.current_table_row_selected, yi_plot=False)
         self.updateTableWithTOFinfos(tof1, tof2)
+        self.updateTableWithLambdaInfos(_nxdata)
         self.fileHasBeenModified()
+
+    def updateTableWithLambdaInfos(self, nxdata):
+        list_row = self.getListRowWithSameLambda()
+        lambda_range = nxdata.lambda_range
+        for index, _row in enumerate(list_row):
+            if index == 0:
+                color = self.tableWidget.item(_row, 0).backgroundColor()
+
+            _item = QtGui.QTableWidgetItem("%s" %lambda_range[0])
+            _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+#            _brush_OK = QtGui.QBrush()
+#            _brush_OK.setColor(RefRed.colors.VALUE_OK)			
+#            _item.setForeground(_brush_OK)
+            _item.setBackgroundColor(color)
+            self.tableWidget.setItem(_row, 2, _item)
+
+            _item = QtGui.QTableWidgetItem("%s" %lambda_range[1])
+            _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+#            _brush_OK = QtGui.QBrush()
+#            _brush_OK.setColor(RefRed.colors.VALUE_OK)			
+#            _item.setForeground(_brush_OK)
+            _item.setBackgroundColor(color)
+            self.tableWidget.setItem(_row, 3, _item)
 
     def updateTableWithTOFinfos(self, tof1_ms, tof2_ms):
         '''update all the rows that have the same lambda requested 
