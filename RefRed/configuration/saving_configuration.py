@@ -38,6 +38,7 @@ class SavingConfiguration(object):
                                  is_threaded = True)
             
             o_gui_utility = GuiUtility(parent = self.parent)
+            o_gui_utility.new_config_file_loaded(config_file_name = self.filename)
             o_gui_utility.gui_not_modified()
 
     
