@@ -31,13 +31,17 @@ class AngleOffsetCalculation(object):
         self.__get_angle_offset()
         
     def __get_angle_offset(self):
-        peak1 = float(str(self.parent.ui.dataPeakFromValue.text()))
-        peak2 = float(str(self.parent.ui.dataPeakToValue.text()))
+        big_table_data = self.parent.big_table_data
+        lrdata = big_table_data[0,0]
+        [peak1, peak2] = lrdata.peak
+        peak1 = float(peak1)
+        peak2 = float(peak2)
         
         central_peak = (peak1 + peak2) / 2.
         ideal_central_offset = RefRed.constants.central_pixel
         
         delta_pixel = central_peak - ideal_central_offset
+
         size_pixel = RefRed.constants.pixel_size_mm
         delta_mm = delta_pixel * size_pixel
         
