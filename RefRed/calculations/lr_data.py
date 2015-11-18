@@ -173,6 +173,10 @@ class LRData(object):
             
             clocking_pf = ClockingFinder(range(len(self.ycountsdata)), self.ycountsdata)
             [clocking1, clocking2] = clocking_pf.clocking
+            
+            clock_array = [clocking1, clocking2]
+            clock_array.sort()
+
             self.clocking  = [str(clocking1), str(clocking2)]
 
         else:
