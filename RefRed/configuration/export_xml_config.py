@@ -1,6 +1,8 @@
 from RefRed.configuration.export_stitching_ascii_settings import ExportStitchingAsciiSettings
 from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
 from RefRed.gui_handling.gui_utility import GuiUtility
+import os
+
 
 class ExportXMLConfig(object):
     
@@ -9,14 +11,20 @@ class ExportXMLConfig(object):
     str_array = []
     
     def __init__(self, parent=None, filename=''):
+	self.init_variables()
+
         self.parent = parent
         self.filename = filename
-        
+
         self.prepare_big_table_data()
         self.header_part()
         self.main_part()
 	self.save_xml()
         
+    def init_variables(self):
+	self.filename = ''
+	self.str_array = []
+    
     def	prepare_big_table_data(self):
 	'''
 	all data files used last data clocking values
@@ -142,7 +150,7 @@ class ExportXMLConfig(object):
             str_array.append('   <to_lambda_range>' + str(lambda_range[1]) + '</to_lambda_range>\n')
             str_array.append('   <incident_angle>' + str(incident_angle) + '</incident_angle>\n')
 
-            _data_run_number = self.parent.ui.reductionTable.item(row,1).text()
+            _data_run_number = str(self.parent.ui.reductionTable.item(row,1).text())
             str_array.append('   <data_sets>' + _data_run_number + '</data_sets>\n')
             #if type(data_full_file_name) == type([]):
                 #data_full_file_name = ','.join(data_full_file_name)
@@ -152,9 +160,9 @@ class ExportXMLConfig(object):
             str_array.append('   <x_max_pixel>' + str(data_low_res[1]) + '</x_max_pixel>\n')
             str_array.append('   <x_range_flag>' + str(data_low_res_flag) + '</x_range_flag>\n')
 
-            tthd = self.parent.ui.metadatatthdValue.text()
+            tthd = str(self.parent.ui.metadatatthdValue.text())
             str_array.append('   <tthd_value>' + tthd + '</tthd_value>\n')
-            ths = self.parent.ui.metadatathiValue.text()
+            ths = str(self.parent.ui.metadatathiValue.text())
             str_array.append('   <ths_value>' + ths + '</ths_value>\n')
             str_array.append('   <data_lambda_requested>' + str(data_lambda_requested) + '</data_lambda_requested>\n')
 
@@ -169,9 +177,9 @@ class ExportXMLConfig(object):
             str_array.append('   <norm_to_back_pixels>' + str(norm_back[1]) + '</norm_to_back_pixels>\n')
             str_array.append('   <norm_lambda_requested>' + str(norm_lambda_requested) + '</norm_lambda_requested>\n')
 
-            _norm_run_number_cell = self.parent.ui.reductionTable.item(row,2)
-            if str(_norm_run_number_cell.text()) != '':
-                _norm_run_number = _norm_run_number_cell.text()
+            _norm_run_number_cell = self.parent.ui.reductionTable.item(row,2).text()
+            if str(_norm_run_number_cell) != '':
+                _norm_run_number = str(_norm_run_number_cell)
             else:
                 _norm_run_number = '0'
             str_array.append('   <norm_dataset>' + _norm_run_number + '</norm_dataset>\n')
@@ -184,12 +192,12 @@ class ExportXMLConfig(object):
             _overlap_lowest_error = _exportStitchingAsciiSettings.use_lowest_error_value_flag
             str_array.append('   <overlap_lowest_error>' + str(_overlap_lowest_error) + '</overlap_lowest_error>\n')
 
-            angleValue = self.parent.ui.angleOffsetValue.text()
-            angleError = self.parent.ui.angleOffsetError.text()
+            angleValue = str(self.parent.ui.angleOffsetValue.text())
+            angleError = str(self.parent.ui.angleOffsetError.text())
             str_array.append('   <angle_offset>' + angleValue + '</angle_offset>\n')
             str_array.append('   <angle_offset_error>' + angleError + '</angle_offset_error>\n')
 	    
-	    q_step = self.parent.ui.qStep.text()
+	    q_step = str(self.parent.ui.qStep.text())
 	    str_array.append('   <q_step>' + q_step + '</q_step>\n')
 	    q_min = '0.001'
 	    str_array.append('   <q_min>' + q_min + '</q_min>\n')
@@ -230,6 +238,9 @@ class ExportXMLConfig(object):
 	str_array = self.str_array
 	
         # write out XML file
+	if os.path.isfile(filename):
+	    os.remove(filename)
+
         f = open(filename, 'w')
         f.writelines(str_array)
         f.close()

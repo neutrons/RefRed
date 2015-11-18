@@ -89,11 +89,15 @@ class LoadReductionTableFromLConfigDataSet(object):
         last_data_row = o_gui_utility.get_row_with_highest_q()
         big_table_data = self.parent.big_table_data
         lrdata = big_table_data[last_data_row, 0]
+        if lrdata is None:
+            return
         clocking = lrdata.clocking
         for i in range(last_data_row + 1):
             if i == last_data_row:
                 continue
             _lrdata = big_table_data[i, 0]
+            if _lrdata is None:
+                break
             _lrdata.clocking = clocking
             big_table_data[i, 0] = _lrdata
             

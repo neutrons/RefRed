@@ -36,10 +36,10 @@ class LoadingConfiguration(object):
 		QtGui.QApplication.processEvents()
 		if not (filename == ""):
 			self.filename = str(filename)
-			try:
-				self.loading()
-			except:
-				print('error loading the configuration file')
+			#try:
+			self.loading()
+			#except:
+			#	print('error loading the configuration file')
 		
 		StatusMessageHandler(parent = self.parent, 
 	                             message = 'Done!', 
@@ -65,12 +65,12 @@ class LoadingConfiguration(object):
 		
 	def load_config_in_big_table_data(self):
 		filename = self.filename
-		try:
-			self.dom = minidom.parse(filename)
-		except:
-			info('No configuration file loaded')
-			self.load_config_worked = False
-			return
+		#try:
+		self.dom = minidom.parse(filename)
+		#except:
+		#	info('No configuration file loaded')
+		#	self.load_config_worked = False
+		#	return
 		self.populate_big_table_data_with_lconfig()
 		self.populate_main_gui_general_settings()
 		
