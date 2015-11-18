@@ -4013,6 +4013,32 @@ p, li { white-space: pre-wrap; }
                </spacer>
               </item>
               <item>
+               <spacer name="horizontalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
                <widget class="QRadioButton" name="RvsQ">
                 <property name="enabled">
                  <bool>true</bool>
@@ -4036,14 +4062,17 @@ p, li { white-space: pre-wrap; }
                </widget>
               </item>
               <item>
-               <widget class="QRadioButton" name="LogRvsQ">
-                <property name="enabled">
-                 <bool>true</bool>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
                 </property>
-                <property name="text">
-                 <string>LogR vs Q</string>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
                 </property>
-               </widget>
+               </spacer>
               </item>
              </layout>
             </item>
@@ -4726,22 +4755,6 @@ p, li { white-space: pre-wrap; }
    <hints>
     <hint type="sourcelabel">
      <x>1390</x>
-     <y>1121</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>586</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>LogRvsQ</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>stitching_yscale_options_radio_button_3()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1492</x>
      <y>1121</y>
     </hint>
     <hint type="destinationlabel">

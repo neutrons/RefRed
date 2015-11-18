@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Wed Nov 18 16:46:34 2015
+# Created: Wed Nov 18 17:39:46 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1642,6 +1642,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
         spacerItem18 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_7.addItem(spacerItem18)
+        spacerItem19 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_7.addItem(spacerItem19)
+        spacerItem20 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_7.addItem(spacerItem20)
         self.RvsQ = QtGui.QRadioButton(self.data_stitching_Tab)
         self.RvsQ.setEnabled(True)
         self.RvsQ.setChecked(True)
@@ -1651,10 +1655,8 @@ class Ui_MainWindow(object):
         self.RQ4vsQ.setEnabled(True)
         self.RQ4vsQ.setObjectName("RQ4vsQ")
         self.horizontalLayout_7.addWidget(self.RQ4vsQ)
-        self.LogRvsQ = QtGui.QRadioButton(self.data_stitching_Tab)
-        self.LogRvsQ.setEnabled(True)
-        self.LogRvsQ.setObjectName("LogRvsQ")
-        self.horizontalLayout_7.addWidget(self.LogRvsQ)
+        spacerItem21 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_7.addItem(spacerItem21)
         self.verticalLayout_3.addLayout(self.horizontalLayout_7)
         self.plotTab.addTab(self.data_stitching_Tab, "")
         self.horizontalLayout_68.addWidget(self.plotTab)
@@ -1783,7 +1785,6 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.RvsQ, QtCore.SIGNAL("clicked()"), MainWindow.stitching_yscale_options_radio_button_1)
         QtCore.QObject.connect(self.oneSF, QtCore.SIGNAL("clicked()"), MainWindow.stitching_sf_radio_button)
         QtCore.QObject.connect(self.RQ4vsQ, QtCore.SIGNAL("clicked()"), MainWindow.stitching_yscale_options_radio_button_2)
-        QtCore.QObject.connect(self.LogRvsQ, QtCore.SIGNAL("clicked()"), MainWindow.stitching_yscale_options_radio_button_3)
         QtCore.QObject.connect(self.eventTofBins, QtCore.SIGNAL("valueChanged(QString)"), MainWindow.widget_modified)
         QtCore.QObject.connect(self.angleOffsetError, QtCore.SIGNAL("textChanged(QString)"), MainWindow.widget_modified)
         QtCore.QObject.connect(self.previewScalingFactorFile, QtCore.SIGNAL("clicked()"), MainWindow.preview_scaling_factor_button)
@@ -2014,7 +2015,6 @@ class Ui_MainWindow(object):
         self.reducedAsciiDataSetTable.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
         self.RvsQ.setText(QtGui.QApplication.translate("MainWindow", "R vs Q", None, QtGui.QApplication.UnicodeUTF8))
         self.RQ4vsQ.setText(QtGui.QApplication.translate("MainWindow", "RQ^4 vs Q", None, QtGui.QApplication.UnicodeUTF8))
-        self.LogRvsQ.setText(QtGui.QApplication.translate("MainWindow", "LogR vs Q", None, QtGui.QApplication.UnicodeUTF8))
         self.plotTab.setTabText(self.plotTab.indexOf(self.data_stitching_Tab), QtGui.QApplication.translate("MainWindow", "Data Stitching", None, QtGui.QApplication.UnicodeUTF8))
         self.menuHelp.setTitle(QtGui.QApplication.translate("MainWindow", "Help", None, QtGui.QApplication.UnicodeUTF8))
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "Configuration", None, QtGui.QApplication.UnicodeUTF8))

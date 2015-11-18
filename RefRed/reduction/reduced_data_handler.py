@@ -79,8 +79,11 @@ class ReducedDataHandler(object):
         o_gui_utility.clear_table(self.parent.ui.dataStitchingTable)
         
     def plot(self):
-        self.plot_live_reduced_data()
-        self.plot_reduced_ascii_files()
+        try:
+            self.plot_live_reduced_data()
+            self.plot_reduced_ascii_files()
+        except:
+            pass
         
     def plot_live_reduced_data(self):
         
