@@ -23,16 +23,17 @@ class LoadingConfiguration(object):
 	def __init__(self, parent = None):
 		self.parent = parent
 		self.filename = ''
-		
 		StatusMessageHandler(parent = self.parent, 
 			             message = 'Loading config ...', 
 			             is_threaded = False)
 		
 	def run(self):
 		_path = self.parent.path_config
+		_filter = ("XML (*.xml);; All Files (*.*)")
 		filename = QtGui.QFileDialog.getOpenFileName(self.parent, 
 		                                             'Open Configuration File', 
-		                                             _path)
+		                                             _path,
+		                                             _filter)
 		QtGui.QApplication.processEvents()
 		if not (filename == ""):
 			self.filename = str(filename)

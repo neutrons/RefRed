@@ -21,9 +21,11 @@ class SavingConfiguration(object):
     def run(self):
         if self.filename == '':
             _path = self.parent.path_config
+            _filter = ("XML (*.xml);; All Files (*.*)")            
             self.filename = str(QtGui.QFileDialog.getSaveFileName(self.parent,
                                                          'Save Configuration File',
-                                                         _path))
+                                                         _path,
+                                                         _filter))
             
             if self.filename == '':
                 return
