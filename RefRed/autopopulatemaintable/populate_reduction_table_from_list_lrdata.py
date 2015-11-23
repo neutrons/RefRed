@@ -117,7 +117,9 @@ class PopulateReductionTableFromListLRData(object):
                 str_run = str(_run)
             self.parent.ui.reductionTable.item(_index, self.reductionTable_col).setText(str_run)
             if _index == 0:
+                lrdata = self.list_lrdata
                 o_calculation = AngleOffsetCalculation(parent = self.parent,
+                                                       lrdata = lrdata[0],
                                                        row = 0)
             
     def clear_reductionTable(self):

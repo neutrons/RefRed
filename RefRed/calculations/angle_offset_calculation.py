@@ -7,9 +7,10 @@ class AngleOffsetCalculation(object):
     parent = None
     angle_offset = None
     
-    def __init__(self, parent=None, row=-1):
+    def __init__(self, parent=None, lrdata=None, row=-1):
         
         self.parent = parent
+        self.lrdata = lrdata
         self.row = row
         self.calculate_angle_offset()
         self.set_new_angle_offset()
@@ -31,8 +32,12 @@ class AngleOffsetCalculation(object):
         self.__get_angle_offset()
         
     def __get_angle_offset(self):
-        big_table_data = self.parent.big_table_data
-        lrdata = big_table_data[0,0]
+        if self.lrdata is None:
+            big_table_data = self.parent.big_table_data
+            lrdata = big_table_data[0, 0]
+        else:
+            lrdata = self.lrdata
+
         [peak1, peak2] = lrdata.peak
         peak1 = float(peak1)
         peak2 = float(peak2)
