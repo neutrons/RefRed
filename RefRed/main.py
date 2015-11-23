@@ -37,6 +37,7 @@ from RefRed.update_data_norm_tab import UpdateDataNormTab
 from RefRed.sf_calculator.sf_calculator import SFCalculator
 from RefRed.sf_preview.sf_preview import SFPreview
 from RefRed.decorators import config_file_has_been_modified, config_file_modification_reset
+from RefRed.about_dialog import AboutDialog
 #from RefRed.log_plot_toggle import LogPlotToggle
 
 class MainGui(QtGui.QMainWindow):
@@ -424,6 +425,10 @@ class MainGui(QtGui.QMainWindow):
         o_reduced_ascii_right_click = ReducedAsciiDataRightClick(parent = self,
                                                                  position = position)
         o_reduced_ascii_right_click.run()
+    
+    def aboutMessage(self):
+        o_about_message = AboutDialog(parent = self)
+        o_about_message.display()
         
     def closeEvent(self, event=None):
         SaveUserConfiguration(parent = self)
