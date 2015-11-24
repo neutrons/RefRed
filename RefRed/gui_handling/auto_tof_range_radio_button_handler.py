@@ -45,22 +45,26 @@ class AutoTofRangeRadioButtonHandler(object):
         big_table_data = self.parent.big_table_data
         for _row in self.all_rows:
             _data = big_table_data[_row, 0]
-#            _data = big_table_data[_row, self.col]
-        
+            _norm = big_table_data[_row, 1]
+
             if _data is None:
                 return
             
             if is_auto_tof_selected:
                 self.new_tof_range = _data.tof_range_auto
                 _data.tof_range_auto_flag = True
+                if _norm is not None:
+                    _norm.tof_range_auto_flag = True
                 #self.save_manual_tof_range()            
             else:
                 self.new_tof_range = _data.tof_range_manual
                 _data.tof_range_auto_flag = False
+                if _norm is not None:
+                    _norm.tof_range_auto_flag = False
                 #self.save_auto_tof_range()
             
             _data.tof_auto_flag = is_auto_tof_selected
-#            big_table_data[_row, self.col] = _data
+            big_table_data[_row, 1] = _norm
             big_table_data[_row, 0] = _data
             self.parent.big_table_data = big_table_data
             
@@ -101,29 +105,32 @@ class AutoTofRangeRadioButtonHandler(object):
     def save_current_manual_tof_range(self):
         big_table_data = self.parent.big_table_data
         _tof_range_manual = self.retrieve_tof_range_defined_by_user()
-        for _row in self.all_rows:
-            _data = big_table_data[_row, self.col]
-            if _data is None:
-                break
-            _data.tof_range_manual = _tof_range_manual 
-            _data.tof_range = _tof_range_manual
-            self.new_tof_range = _tof_range_manual
-            big_table_data[_row, self.col] = _data
+        for _col in range(2):
+            for _row in self.all_rows:
+                _data = big_table_data[_row, _col]
+                if _data is None:
+                    break
+                _data.tof_range_manual = _tof_range_manual 
+                _data.tof_range = _tof_range_manual
+                self.new_tof_range = _tof_range_manual
+                big_table_data[_row, _col] = _data
         self.parent.big_table_data = big_table_data
 
     def save_manual_tof_range(self):
         big_table_data = self.parent.big_table_data
-        _data = big_table_data[self.row, self.col]
-        _data.tof_range_auto_flag = False
-        _data.tof_range_manual = self.new_tof_range
-        big_table_data[self.row, self.col] = _data
+        for _col in range(2):
+            _data = big_table_data[self.row, _col]
+            _data.tof_range_auto_flag = False
+            _data.tof_range_manual = self.new_tof_range
+            big_table_data[self.row, _col] = _data
         self.parent.big_table_data = big_table_data
         
     def save_auto_tof_range(self):
         big_table_data = self.parent.big_table_data
-        _data = big_table_data[self.row, self.col]
-        _data.tof_range_auto_flag = True
-        big_table_data[self.row, self.col] = _data
+        for _col in range(2):
+            _data = big_table_data[self.row, _col]
+            _data.tof_range_auto_flag = True
+            big_table_data[self.row, _col] = _data
         self.parent.big_table_data = big_table_data
 
     def retrieve_tof_range_defined_by_user(self):
