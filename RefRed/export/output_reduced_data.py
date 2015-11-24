@@ -107,7 +107,7 @@ class OutputReducedData(QDialog):
 	def create_1_common_file(self):
 
 		run_number = self.parent.ui.reductionTable.item(0,1).text()
-		default_filename = 'REFL_' + run_number + '_reduced_stitched_data.txt'
+		default_filename = 'REFL_' + run_number + '_reduced_data.txt'
 		path = self.parent.path_ascii
 		default_filename = path + '/' + default_filename
 		directory = path
