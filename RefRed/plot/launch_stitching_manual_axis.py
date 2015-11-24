@@ -70,14 +70,17 @@ class LaunchStitchingManualXAxis(QDialog):
         self.parent.manual_x_axis_dialog = None
         
     def x_min_event(self):
-        self.x_min = float(str(self.ui.x_min_value.text()))
         self.validate_changes()
         
     def x_max_event(self):
-        self.x_max = float(str(self.ui.x_max_value.text()))
         self.validate_changes()
 
+    def x_auto_rescale_event(self):
+        print('x_auto_scale_event')
+
     def validate_changes(self):
+        self.x_min = float(str(self.ui.x_min_value.text()))
+        self.x_max = float(str(self.ui.x_max_value.text()))
         o_changes = ChangeStitchingDataInterval( parent= self.parent,
                                                  x_min = self.x_min,
                                                  x_max = self.x_max)
@@ -122,14 +125,17 @@ class LaunchStitchingManualYAxis(QDialog):
         self.parent.manual_y_axis_dialog = None
 
     def y_min_event(self):
-        self.y_min = float(str(self.ui.y_min_value.text()))
         self.validate_changes()
         
     def y_max_event(self):
-        self.y_max = float(str(self.ui.y_max_value.text()))
         self.validate_changes()
 
+    def y_auto_rescale_event(self):
+        print('y_auto_scale_event')
+
     def validate_changes(self):
+        self.y_min = float(str(self.ui.y_min_value.text()))
+        self.y_max = float(str(self.ui.y_max_value.text()))
         o_changes = ChangeStitchingDataInterval( parent= self.parent,
                                                  y_min = self.y_min,
                                                  y_max = self.y_max)

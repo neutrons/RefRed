@@ -6,14 +6,54 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>498</width>
-    <height>46</height>
+    <width>584</width>
+    <height>45</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Manual X Axis</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QPushButton" name="auto_rescale">
+     <property name="text">
+      <string>AUTO RESCALE</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>OR</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="horizontalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
    <item>
     <widget class="QLabel" name="label_3">
      <property name="text">
@@ -83,9 +123,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>auto_rescale</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>x_auto_rescale_event()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>67</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>291</x>
+     <y>22</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>x_min_event()</slot>
   <slot>x_max_event()</slot>
+  <slot>x_auto_rescale_event()</slot>
  </slots>
 </ui>
