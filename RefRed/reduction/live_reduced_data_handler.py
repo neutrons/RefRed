@@ -158,6 +158,19 @@ class LiveReducedDataHandler(object):
         self.parent.ui.data_stitching_plot.draw()
         QApplication.processEvents()
 
+    def save_xy_axis(self):
+        big_table_data = self.big_table_data
+        _data = big_table_data[0, 0]
+        [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+        [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+
+        _data.all_plot_axis.save_all_reduced_view(xmin=xmin, xmax=xmax,
+                                              ymin=ymin, ymax=ymax)
+
+#        self.parent.ui.data_stitching_plot.toolbar.home_settings = [xmin, xmax, ymin, ymax]
+        big_table_data[0, 0] = _data
+        self.parent.big_table_data = big_table_data
+
     def generate_selected_sf(self, lconfig=None):
         if self.parent.ui.autoSF.isChecked():
             return lconfig.sf_auto

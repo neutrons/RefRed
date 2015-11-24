@@ -405,12 +405,6 @@ class MainGui(QtGui.QMainWindow):
         o_button_handler = StitchingYScaleOptionsRadioButtonHandler(parent = self)
         o_button_handler.set_index_button_clicked(index = 1)
         self.stitching_sf_radio_button()
-
-    def stitching_yscale_options_radio_button_3(self):
-        '''LogR vs Q'''
-        o_button_handler = StitchingYScaleOptionsRadioButtonHandler(parent = self)
-        o_button_handler.set_index_button_clicked(index = 2)
-        self.stitching_sf_radio_button()
         
     def load_reduced_data_set_button(self):
         o_load_reduced_set = LoadReducedDataSetHandler(parent = self)
@@ -426,7 +420,7 @@ class MainGui(QtGui.QMainWindow):
                                                                  position = position)
         o_reduced_ascii_right_click.run()
     
-    def aboutMessage(self):
+    def about_message(self):
         o_about_message = AboutDialog(parent = self)
         o_about_message.display()
         

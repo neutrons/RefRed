@@ -73,6 +73,7 @@ class LiveReductionHandler(object):
 
             o_reduction_progressbar_handler.next_step()
 
+        o_reduced_plot.save_xy_axis()
         self.parent.big_table_data = self.big_table_data
         o_reduction_progressbar_handler.end()
         self.parent.ui.reduceButton.setEnabled(True)

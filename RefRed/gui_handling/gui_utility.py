@@ -146,7 +146,5 @@ class GuiUtility(object):
     def get_reduced_yaxis_type(self):
         if self.parent.ui.RvsQ.isChecked():
             return 'RvsQ'
-        elif self.parent.ui.RQ4vsQ.isChecked():
-            return 'RQ4vsQ'
         else:
-            return 'LogRvsQ'
+            return 'RQ4vsQ'

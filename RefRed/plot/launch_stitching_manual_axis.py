@@ -2,6 +2,7 @@ from PyQt4.QtGui import QDialog
 from RefRed.interfaces.manual_x_axis_interface import Ui_Dialog as UiDialogXaxis
 from RefRed.interfaces.manual_y_axis_interface import Ui_Dialog as UiDialogYaxis
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
+from RefRed.gui_handling.gui_utility import GuiUtility
 
 class ChangeStitchingDataInterval(object):
     
@@ -34,6 +35,7 @@ class LaunchStitchingManualXAxis(QDialog):
 
     x_min = None
     x_max = None
+    _lrdata = None
 
     def __init__(self, parent = None, mouse_x=0, mouse_y=0):
         QDialog.__init__(self, parent = parent)
@@ -42,6 +44,9 @@ class LaunchStitchingManualXAxis(QDialog):
         self.ui = UiDialogXaxis()
         self.ui.setupUi(self)
         self.parent = parent
+        
+        big_table_data = self.parent.big_table_data
+        self._lrdata = big_table_data[0, 0]
         
         width = self.width()
         height = self.height()
@@ -56,7 +61,15 @@ class LaunchStitchingManualXAxis(QDialog):
         self.init_widgets()
         
     def init_widgets(self):
-        [_x_min, _x_max] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+        
+        o_gui_utility = GuiUtility(parent = self.parent)
+        axis_type = o_gui_utility.get_reduced_yaxis_type()
+        
+        if axis_type == 'RvsQ':
+            [_x_min, _x_max, _y_min, _y_max] = self._lrdata.all_plot_axis.get_user_reduced_RQ_view()
+        else:
+            [_x_min, _x_max, _y_min, _y_max] = self._lrdata.all_plot_axis.get_user_reduced_RQ4Q_view()
+
         self.x_min = _x_min
         self.x_max = _x_max
         
@@ -90,13 +103,17 @@ class LaunchStitchingManualYAxis(QDialog):
 
     y_min = None
     y_max = None
-
+    _lrdata = None
+    
     def __init__(self, parent=None, mouse_x=0, mouse_y=0):
         QDialog.__init__(self, parent = parent)
         self.setWindowModality(False)
         self.ui = UiDialogYaxis()
         self.ui.setupUi(self)
         self.parent = parent
+
+        big_table_data = self.parent.big_table_data
+        self._lrdata = big_table_data[0, 0]
 
         width = self.width()
         height = self.height()
@@ -111,7 +128,14 @@ class LaunchStitchingManualYAxis(QDialog):
         self.init_widgets()
         
     def init_widgets(self):
-        [_y_min, _y_max] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+        o_gui_utility = GuiUtility(parent = self.parent)
+        axis_type = o_gui_utility.get_reduced_yaxis_type()
+        
+        if axis_type == 'RvsQ':
+            [_x_min, _x_max, _y_min, _y_max] = self._lrdata.all_plot_axis.get_user_reduced_RQ_view()
+        else:
+            [_x_min, _x_max, _y_min, _y_max] = self._lrdata.all_plot_axis.get_user_reduced_RQ4Q_view()
+
         self.y_min = _y_min
         self.y_max = _y_max
         

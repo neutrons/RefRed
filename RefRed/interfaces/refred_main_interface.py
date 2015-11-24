@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Tue Nov 24 13:27:49 2015
+# Created: Tue Nov 24 14:26:14 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1810,6 +1810,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.dataLowResFlag, QtCore.SIGNAL("clicked()"), MainWindow.data_low_res_checkbox)
         QtCore.QObject.connect(self.dataPrimToValue, QtCore.SIGNAL("editingFinished()"), MainWindow.clock_validation)
         QtCore.QObject.connect(self.dataPrimFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.clock_validation)
+        QtCore.QObject.connect(self.actionAbout, QtCore.SIGNAL("triggered()"), MainWindow.about_message)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

@@ -5163,6 +5163,22 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionAbout</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>about_message()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>587</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -5201,5 +5217,6 @@ p, li { white-space: pre-wrap; }
   <slot>reduced_ascii_data_set_table_right_click()</slot>
   <slot>clock_validation()</slot>
   <slot>clock_checkbox()</slot>
+  <slot>about_message()</slot>
  </slots>
 </ui>
