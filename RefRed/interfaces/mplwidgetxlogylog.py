@@ -58,10 +58,10 @@ class NavigationToolbar(NavigationToolbar2QT):
             self._actions={}
         self.basedir=os.path.join(matplotlib.rcParams[ 'datapath' ], 'images')
 
-        icon=QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/go-home.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        a=self.addAction(icon, 'Home', self.home)
-        a.setToolTip('Reset original view')
+#        icon=QtGui.QIcon()
+#        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/go-home.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+#        a=self.addAction(icon, 'Home', self.home)
+#        a.setToolTip('Reset original view')
         icon=QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/zoom-previous.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         a=self.addAction(icon, 'Back', self.back)

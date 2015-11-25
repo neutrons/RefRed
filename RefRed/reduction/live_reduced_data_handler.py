@@ -159,15 +159,37 @@ class LiveReducedDataHandler(object):
         QApplication.processEvents()
 
     def save_xy_axis(self):
-        big_table_data = self.big_table_data
+        o_gui_utility = GuiUtility(parent = self.parent)
+        yaxis_type = o_gui_utility.get_reduced_yaxis_type()
+        
+        big_table_data = self.parent.big_table_data
         _data = big_table_data[0, 0]
-        [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
-        [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
 
-        _data.all_plot_axis.save_all_reduced_view(xmin=xmin, xmax=xmax,
-                                              ymin=ymin, ymax=ymax)
+        if yaxis_type == 'RvsQ':
+            if _data.all_plot_axis.reduced_plot_RQuserView is None:
+                self.parent.ui.data_stitching_plot.canvas.draw()
+                [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+                [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+                _data.all_plot_axis.reduced_plot_RQuserView = [xmin, xmax, ymin, ymax]
+                _data.all_plot_axis.reduced_plot_RQautoView = [xmin, xmax, ymin, ymax]
+            else:
+                [xmin, xmax, ymin, ymax] = _data.all_plot_axis.reduced_plot_RQuserView
+                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
+                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                self.parent.ui.data_stitching_plot.canvas.draw()
+        else:            
+            if _data.all_plot_axis.reduced_plot_RQ4QuserView is None:
+                self.parent.ui.data_stitching_plot.canvas.draw()
+                [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+                [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+                _data.all_plot_axis.reduced_plot_RQ4QuserView = [xmin, xmax, ymin, ymax]
+                _data.all_plot_axis.reduced_plot_RQ4QautoView = [xmin, xmax, ymin, ymax]
+            else:
+                [xmin, xmax, ymin, ymax] = _data.all_plot_axis.reduced_plot_RQ4QuserView
+                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
+                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                self.parent.ui.data_stitching_plot.canvas.draw()
 
-#        self.parent.ui.data_stitching_plot.toolbar.home_settings = [xmin, xmax, ymin, ymax]
         big_table_data[0, 0] = _data
         self.parent.big_table_data = big_table_data
 

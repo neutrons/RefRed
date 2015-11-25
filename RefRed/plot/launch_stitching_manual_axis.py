@@ -7,26 +7,35 @@ from RefRed.gui_handling.gui_utility import GuiUtility
 class ChangeStitchingDataInterval(object):
     
     def __init__(self, parent=None,
+                 yaxis_type='RvsQ',
                  x_min=None, x_max=None,
                  y_min=None, y_max=None):
         self.parent = parent
         
-        _data = self.parent.big_table_data[0,0]
+        self._lrdata = self.parent.big_table_data[0,0]
         
-        [_x_min_view, _x_max_view] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
-        if (x_min is None) and (x_max is None):
-            x_min = _x_min_view
-            x_max = _x_max_view
-            
-        [_y_min, _y_max] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
-        if (y_min is None) and (y_max is None):
-            y_min = _y_min
-            y_max = _y_max
-    
-        _data.all_plot_axis.reduced_plot_stitching_tab_view_interval = [x_min, x_max, y_min, y_max]
-#        _data.all_plot_axis.reduced_plot_stitching_tab_data_interval = [x_min, x_max, y_min, y_max]
-        
-        self.parent.big_table_data[0, 0] = _data
+        if yaxis_type == 'RvsQ':
+            [xmin_user, xmax_user, ymin_user, ymax_user] = \
+                self._lrdata.all_plot_axis.reduced_plot_RQuserView
+            if (x_min is None) and (x_max is None):
+                self._lrdata.all_plot_axis.reduced_plot_RQuserView = \
+                    [xmin_user, xmax_user, y_min, y_max]
+            else:
+                self._lrdata.all_plot_axis.reduced_plot_RQuserView = \
+                    [x_min, x_max, ymin_user, ymax_user]
+        else:
+            [xmin_user, xmax_user, ymin_user, ymax_user] = \
+                self._lrdata.all_plot_axis.reduced_plot_RQ4QuserView
+            if (x_min is None) and (x_max is None):
+                self._lrdata.all_plot_axis.reduced_plot_RQ4QuserView = \
+                    [xmin_user, xmax_user, y_min, y_max]
+            else:
+                self._lrdata.all_plot_axis.reduced_plot_RQ4QuserView = \
+                    [x_min, x_max, ymin_user, ymax_user]
+
+        big_table_data = self.parent.big_table_data
+        big_table_data[0, 0] = self._lrdata
+        self.parent.big_table_data = big_table_data
 
         o_reduced_handler = ReducedDataHandler(parent=self.parent)
         o_reduced_handler.plot()
@@ -36,6 +45,7 @@ class LaunchStitchingManualXAxis(QDialog):
     x_min = None
     x_max = None
     _lrdata = None
+    yaxis_type = 'RvsQ'
 
     def __init__(self, parent = None, mouse_x=0, mouse_y=0):
         QDialog.__init__(self, parent = parent)
@@ -44,6 +54,9 @@ class LaunchStitchingManualXAxis(QDialog):
         self.ui = UiDialogXaxis()
         self.ui.setupUi(self)
         self.parent = parent
+        
+        o_gui_utility = GuiUtility(parent = self.parent)
+        self.yaxis_type = o_gui_utility.get_reduced_yaxis_type()
         
         big_table_data = self.parent.big_table_data
         self._lrdata = big_table_data[0, 0]
@@ -64,6 +77,8 @@ class LaunchStitchingManualXAxis(QDialog):
         
         o_gui_utility = GuiUtility(parent = self.parent)
         axis_type = o_gui_utility.get_reduced_yaxis_type()
+        
+        print(self._lrdata)
         
         if axis_type == 'RvsQ':
             [_x_min, _x_max, _y_min, _y_max] = self._lrdata.all_plot_axis.get_user_reduced_RQ_view()
@@ -89,12 +104,24 @@ class LaunchStitchingManualXAxis(QDialog):
         self.validate_changes()
 
     def x_auto_rescale_event(self):
-        print('x_auto_scale_event')
+        if self.yaxis_type == 'RvsQ':
+            [xmin_user, xmax_user, ymin_user, ymax_user] = self._lrdata.all_plot_axis.reduced_plot_RQuserView
+            [xmin_auto, xmax_auto, ymin_auto, ymax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQautoView
+            self._lrdata.all_plot_axis.reduced_plot_RQuserView = [xmin_auto, xmax_auto, ymin_user, ymax_user]
+        else:
+            [xmin_user, xmax_user, ymin_user, ymax_user] = self._lrdata.all_plot_axis.reduced_plot_RQ4QuserView
+            [xmin_auto, xmax_auto, ymin_auto, ymax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQ4QautoView
+            self._lrdata.all_plot_axis.reduced_plot_RQ4QuserView = [xmin_auto, xmax_auto, ymin_user, ymax_user]
+
+        big_table_data = self.parent.big_table_data
+        big_table_data[0, 0] = self._lrdata
+        self.parent.big_table_data = big_table_data
 
     def validate_changes(self):
         self.x_min = float(str(self.ui.x_min_value.text()))
         self.x_max = float(str(self.ui.x_max_value.text()))
         o_changes = ChangeStitchingDataInterval( parent= self.parent,
+                                                 yaxis_type = self.yaxis_type,
                                                  x_min = self.x_min,
                                                  x_max = self.x_max)
     
@@ -104,6 +131,7 @@ class LaunchStitchingManualYAxis(QDialog):
     y_min = None
     y_max = None
     _lrdata = None
+    yaxis_type = 'RvsQ'
     
     def __init__(self, parent=None, mouse_x=0, mouse_y=0):
         QDialog.__init__(self, parent = parent)
@@ -111,6 +139,9 @@ class LaunchStitchingManualYAxis(QDialog):
         self.ui = UiDialogYaxis()
         self.ui.setupUi(self)
         self.parent = parent
+
+        o_gui_utility = GuiUtility(parent = self.parent)
+        self.yaxis_type = o_gui_utility.get_reduced_yaxis_type()
 
         big_table_data = self.parent.big_table_data
         self._lrdata = big_table_data[0, 0]
@@ -155,12 +186,24 @@ class LaunchStitchingManualYAxis(QDialog):
         self.validate_changes()
 
     def y_auto_rescale_event(self):
-        print('y_auto_scale_event')
+        if self.yaxis_type == 'RvsQ':
+            [xmin_user, xmax_user, ymin_user, ymax_user] = self._lrdata.all_plot_axis.reduced_plot_RQuserView
+            [xmin_auto, xmax_auto, ymin_auto, ymax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQautoView
+            self._lrdata.all_plot_axis.reduced_plot_RQuserView = [xmin_user, xmax_user, ymin_auto, ymax_auto]
+        else:
+            [xmin_user, xmax_user, ymin_user, ymax_user] = self._lrdata.all_plot_axis.reduced_plot_RQ4QuserView
+            [xmin_auto, xmax_auto, ymin_auto, ymax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQ4QautoView
+            self._lrdata.all_plot_axis.reduced_plot_RQ4QuserView = [xmin_user, xmax_user, ymin_auto, ymax_auto]
+
+        big_table_data = self.parent.big_table_data
+        big_table_data[0, 0] = self._lrdata
+        self.parent.big_table_data = big_table_data
 
     def validate_changes(self):
         self.y_min = float(str(self.ui.y_min_value.text()))
         self.y_max = float(str(self.ui.y_max_value.text()))
         o_changes = ChangeStitchingDataInterval( parent= self.parent,
+                                                 yaxis_type = self.yaxis_type,
                                                  y_min = self.y_min,
                                                  y_max = self.y_max)
         

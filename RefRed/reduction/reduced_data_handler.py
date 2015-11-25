@@ -79,11 +79,11 @@ class ReducedDataHandler(object):
         o_gui_utility.clear_table(self.parent.ui.dataStitchingTable)
         
     def plot(self):
-        try:
-            self.plot_live_reduced_data()
-            self.plot_reduced_ascii_files()
-        except:
-            pass
+        #try:
+        self.plot_live_reduced_data()
+#            self.plot_reduced_ascii_files()
+        #except:
+        #    pass
         
     def plot_live_reduced_data(self):
         
@@ -95,7 +95,7 @@ class ReducedDataHandler(object):
 
         for index_row, _lconfig in enumerate(big_table_data[:,2]):
             if _lconfig is None:
-                return        
+                break       
         
             _q_axis = _lconfig.q_axis_for_display
             _y_axis = _lconfig.y_axis_for_display
@@ -120,24 +120,51 @@ class ReducedDataHandler(object):
                                                         y_axis,
                                                         yerr = e_axis, 
                                                         color = self.get_current_color_plot(index_row))
-
-            if _data.all_plot_axis.reduced_plot_stitching_tab_view_interval is None:
-#                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim(0, self.ylim)
-                self.parent.ui.data_stitching_plot.canvas.draw()
-                [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
-                [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
-                _data.all_plot_axis.reduced_plot_stitching_tab_view_interval = [xmin, xmax, ymin, ymax]
-                _data.all_plot_axis.reduced_plot_stitching_tab_view_interval = [xmin, xmax, ymin, ymax]
-                self.parent.ui.data_stitching_plot.toolbar.home_settings = [xmin, xmax, ymin, ymax]
-            else:
-                [xmin,xmax,ymin,ymax] = _data.all_plot_axis.reduced_plot_stitching_tab_view_interval
-                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
-                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
-                self.parent.ui.data_stitching_plot.canvas.draw()
+            
+            #if _data.all_plot_axis.reduced_plot_stitching_tab_view_interval is None:
+##                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim(0, self.ylim)
+                #self.parent.ui.data_stitching_plot.canvas.draw()
+                #[xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+                #[ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+                #_data.all_plot_axis.reduced_plot_stitching_tab_view_interval = [xmin, xmax, ymin, ymax]
+                #_data.all_plot_axis.reduced_plot_stitching_tab_view_interval = [xmin, xmax, ymin, ymax]
+                #self.parent.ui.data_stitching_plot.toolbar.home_settings = [xmin, xmax, ymin, ymax]
+            #else:
+                #[xmin,xmax,ymin,ymax] = _data.all_plot_axis.reduced_plot_stitching_tab_view_interval
+                #self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
+                #self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                #self.parent.ui.data_stitching_plot.canvas.draw()
             
             self.parent.ui.data_stitching_plot.set_yscale('log')
             self.parent.ui.data_stitching_plot.draw()
             
+        o_gui_utility = GuiUtility(parent = self.parent)
+        yaxis_type = o_gui_utility.get_reduced_yaxis_type()
+        if yaxis_type == 'RvsQ':
+            if _data.all_plot_axis.reduced_plot_RQuserView is None:
+                self.parent.ui.data_stitching_plot.canvas.draw()
+                [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+                [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+                _data.all_plot_axis.reduced_plot_RQuserView = [xmin, xmax, ymin, ymax]
+                _data.all_plot_axis.reduced_plot_RQautoView = [xmin, xmax, ymin, ymax]
+            else:
+                [xmin, xmax, ymin, ymax] = _data.all_plot_axis.reduced_plot_RQuserView
+                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
+                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                self.parent.ui.data_stitching_plot.canvas.draw()
+        else:            
+            if _data.all_plot_axis.reduced_plot_RQ4QuserView is None:
+                self.parent.ui.data_stitching_plot.canvas.draw()
+                [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+                [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+                _data.all_plot_axis.reduced_plot_RQ4QuserView = [xmin, xmax, ymin, ymax]
+                _data.all_plot_axis.reduced_plot_RQ4QautoView = [xmin, xmax, ymin, ymax]
+            else:
+                [xmin, xmax, ymin, ymax] = _data.all_plot_axis.reduced_plot_RQ4QuserView
+                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
+                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                self.parent.ui.data_stitching_plot.canvas.draw()
+
         big_table_data[0, 0] = _data
         self.parent.big_table_data = big_table_data
 
@@ -191,7 +218,8 @@ class ProducedSelectedOutputScaled(object):
         self.output_e_axis = None
         
     def calculate(self):
-        self.get_selected_scale_type()
+        o_gui_utility = GuiUtility(parent = self.parent)
+        self.axis_type = o_gui_utility.get_reduced_yaxis_type()
         
         input_q_axis = self.input_q_axis
         input_y_axis = self.input_y_axis
@@ -217,10 +245,4 @@ class ProducedSelectedOutputScaled(object):
     #    _final_e_axis = np.log(_e_axis)
         self.output_e_axis = input_e_axis  ## FIXME
         
-    def get_selected_scale_type(self):
-        self.axis_type = 'RvsQ'
-        if self.parent.ui.RQ4vsQ.isChecked():
-            self.axis_type = 'RQ4vsQ'
-        elif self.parent.ui.LogRvsQ.isChecked():
-            self.axis_type = 'LogRvsQ'
         
