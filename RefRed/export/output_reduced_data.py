@@ -167,7 +167,7 @@ class OutputReducedData(QDialog):
 				dq0 = self.ui.dq0Value.text()
 				self.dq0 = float(dq0)
 				line1 = '# dQ0[1/Angstroms]= ' + dq0
-				line2 = '# dQ/Q= ' + dq_over_q
+				line2 = '# dQ1/Q= ' + dq_over_q
 				line3 = '# Q[1/Angstroms] R delta_R Precision'
 				text.append(line1)
 				text.append(line2)
@@ -199,7 +199,7 @@ class OutputReducedData(QDialog):
 			dq0 = self.ui.dq0Value.text()
 			self.dq0 = float(dq0)
 			line1 = '# dQ0[1/Angstroms]= ' + dq0
-			line2 = '# dQ/Q= ' + dq_over_q
+			line2 = '# dQ1/Q= ' + dq_over_q
 			line3 = '# Q[1/Angstroms] R delta_R Precision'
 			text.append(line1)
 			text.append(line2)
@@ -364,7 +364,7 @@ class OutputReducedData(QDialog):
 			tmp_wks_name.setDistribution(True)
 			    
 			# rebin everyting using the same Q binning parameters  
-		binQ = self.dq_over_q
+		binQ = self.parent.ui.qStep.text()
 		bin_parameters = str(minQ) + ',-' + str(binQ) + ',' + str(maxQ)
 		for i in range(nbr_row):  
 				
