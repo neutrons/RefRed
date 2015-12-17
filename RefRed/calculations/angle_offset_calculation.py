@@ -38,6 +38,9 @@ class AngleOffsetCalculation(object):
         else:
             lrdata = self.lrdata
 
+        if isinstance(lrdata, list):
+            lrdata = lrdata[0]
+
         [peak1, peak2] = lrdata.peak
         peak1 = float(peak1)
         peak2 = float(peak2)

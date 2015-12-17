@@ -159,7 +159,6 @@ class MainGui(QtGui.QMainWindow):
                         mouse_x = mouse_x,
                         mouse_y = mouse_y)
 
-
     # toggle log
     def logy_toggle_yt_plot(self, checked):
         LogPlotToggle(parent = self,

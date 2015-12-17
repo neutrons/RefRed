@@ -108,19 +108,19 @@ class LRData(object):
 
         tof_coeff_narrow = 1.7 * 60 / self.frequency
         tof_coeff_large = 2.5 * 60 / self.frequency
+        tof_coeff = 0.5 * 60 / self.frequency
 
         if lconfig is not None:
             autotmin = np.float(lconfig.tof_range[0])
             autotmax = np.float(lconfig.tof_range[1])
         else:
-            autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + \
-                                                      0.5 - tof_coeff_narrow) * 1e-4
-            autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + \
+            autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff - tof_coeff_narrow) * 1e-4
+            autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff + \
                                                       tof_coeff_narrow) * 1e-4
 
         # automatically calcualte the TOF range for display
-        tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + tof_coeff_large) * 1e-4
-        tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 - tof_coeff_large) * 1e-4
+        tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff + tof_coeff_large) * 1e-4
+        tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff - tof_coeff_large) * 1e-4
 
         if tmin < 0:
             tmin = 0
