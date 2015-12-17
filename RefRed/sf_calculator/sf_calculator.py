@@ -400,22 +400,32 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         tof_min = min([tof1, tof2])
         tof_max = max([tof1, tof2])
         _list_nxsdata_sorted = self.list_nxsdata_sorted
-        _nxdata  = _list_nxsdata_sorted[self.current_table_row_selected]
+        list_row = self.getListRowWithSameLambda()
         tof1 = 1000 * tof_min
         tof2 = 1000 * tof_max
-        _nxdata.tof_range = [tof1, tof2]
-        _list_nxsdata_sorted[self.current_table_row_selected] = _nxdata
+#        auto_flag_value = 0
+        for index, _row in enumerate(list_row):
+            _nxdata  = _list_nxsdata_sorted[_row]
+            _nxdata.tof_range = [tof1, tof2]
+            _list_nxsdata_sorted[_row] = _nxdata
+
         self.list_nxsdata_sorted = _list_nxsdata_sorted
 
     def saveTOFautoFlag(self, auto_flag=False):
         _list_nxsdata_sorted = self.list_nxsdata_sorted
-        _nxdata = _list_nxsdata_sorted[self.current_table_row_selected]
-        _nxdata.tof_auto_flag = auto_flag
-        _list_nxsdata_sorted[self.current_table_row_selected] = _nxdata
-        self.list_nxsdata_sorted = _list_nxsdata_sorted
-        _big_table = self.big_table
+        # save status for all row from same categorie 
+        list_row = self.getListRowWithSameLambda()
+
         auto_flag_value = 1 if auto_flag else 0
-        _big_table[self.current_table_row_selected, 16] = auto_flag_value
+        _big_table = self.big_table
+        for index, _row in enumerate(list_row):
+            _nxdata = _list_nxsdata_sorted[_row]
+            _nxdata.tof_auto_flag = auto_flag
+            _list_nxsdata_sorted[_row] = _nxdata
+            _big_table[_row, 16] = auto_flag_value
+
+        self.list_nxsdata_sorted = _list_nxsdata_sorted
+
         self.big_table = _big_table
     
     def displaySelectedTOFandUpdateTable(self, mode='auto'):
