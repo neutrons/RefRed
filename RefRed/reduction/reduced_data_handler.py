@@ -135,7 +135,12 @@ class ReducedDataHandler(object):
                 #self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
                 #self.parent.ui.data_stitching_plot.canvas.draw()
             
-            self.parent.ui.data_stitching_plot.set_yscale('log')
+            if _data.all_plot_axis.is_reduced_plot_stitching_tab_ylog:
+                self.parent.ui.data_stitching_plot.set_yscale('log')
+            
+            if _data.all_plot_axis.is_reduced_plot_stitching_tab_xlog:
+                self.parent.ui.data_stitching_plot.set_xscale('log')
+                
             self.parent.ui.data_stitching_plot.draw()
             
         o_gui_utility = GuiUtility(parent = self.parent)
