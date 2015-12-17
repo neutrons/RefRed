@@ -69,6 +69,7 @@ class LRData(object):
 
         # calculate theta
         self.theta = self.calculate_theta()
+        self.frequency = float(mt_run.getProperty('Speed1').value[0])
 
         if self.read_options['is_auto_tof_finder'] or self.tof_range == None:
             autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 - 1.7) * 1e-4
@@ -77,9 +78,13 @@ class LRData(object):
             autotmin = np.float(self.tof_range[0])
             autotmax = np.float(self.tof_range[1])
 
-        if mt_run.getProperty('Speed1').value[0] == 60:
-            tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 2.5) * 1e-4
-            tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 - 2.5) * 1e-4
+        tof_coeff_narrow = 1.7 * 60 / self.frequency
+        tof_coeff_large = 2.5 * 60 / self.frequency
+        tof_coeff = 0.5 * 60 / self.frequency
+
+        if self.frequency:
+            tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff + tof_coeff_large) * 1e-4
+            tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff - tof_coeff_large) * 1e-4
         else:
             tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 4.5) * 1e-4
             tmin = 0
@@ -90,7 +95,7 @@ class LRData(object):
         self.binning = [tmin, self.read_options['bins'], tmax]
         self.calculate_lambda_range()
         self.q_range = self.calculate_q_range()
-        # self.lambda_range = self.calculate_lambda_range()
+        #self.lambda_range = self.calculate_lambda_range()
         self.incident_angle = self.calculate_theta(False)
 
         # Proton charge
@@ -187,20 +192,23 @@ class LRData(object):
 
         return [q_min, q_max]
         
-    def calculate_lambda_range(self):
+    def calculate_lambda_range(self, tof_range=None):
         '''
         calculate lambda range
         '''
         _const = PLANCK_CONSTANT / (NEUTRON_MASS * self.dMD)
 
         # retrieve tof from GUI
-        [tof_min, tof_max] = self.tof_range
-
+        if tof_range is None:
+            [tof_min, tof_max] = self.tof_range
+        else:
+            [tof_min, tof_max] = tof_range
+        
         lambda_min = _const * (tof_min * 1e-6) / float(1e-10)
         lambda_max = _const * (tof_max * 1e-6) / float(1e-10)
 
         lambda_min = "%.2f" % lambda_min
-        lambda_max = "%2.f" % lambda_max
+        lambda_max = "%.2f" % lambda_max
 
         self.lambda_range = [lambda_min, lambda_max]
 

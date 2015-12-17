@@ -375,7 +375,7 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
             self.update_config_file(file_name)
 
     def savingAsConfiguration(self):
-        print "savingAsConfiguration not implemented"
+        pass
 
     def selectManualTOF(self):
         self.manualTOFWidgetsEnabled(True)
@@ -383,7 +383,19 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         self.displaySelectedTOFandUpdateTable(mode = 'manual')
         self.displayPlot(row = self.current_table_row_selected, 
                          yi_plot = False)
+        self.updateTableWithTOFandLambda()
         self.fileHasBeenModified()
+
+    def updateTableWithTOFandLambda(self):
+        tof1 = float(self.TOFmanualFromValue.text())
+        tof2 = float(self.TOFmanualToValue.text())
+        tof_min = min([tof1, tof2])
+        tof_max = max([tof1, tof2])
+        self.updateTableWithTOFinfos(tof_min, tof_max)
+        _list_nxsdata_sorted = self.list_nxsdata_sorted
+        _nxdata  = _list_nxsdata_sorted[self.current_table_row_selected]
+        _nxdata.calculate_lambda_range([tof_min*1000., tof_max*1000.])
+        self.updateTableWithLambdaInfos(_nxdata)
 
     def selectAutoTOF(self):
         self.manualTOFWidgetsEnabled(False)
@@ -392,6 +404,7 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         self.displaySelectedTOFandUpdateTable(mode = 'auto')
         self.displayPlot(row = self.current_table_row_selected, 
                          yi_plot = False)
+        self.updateTableWithTOFandLambda()
         self.fileHasBeenModified()
     
     def saveManualTOFmode(self):
@@ -401,9 +414,8 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         tof_max = max([tof1, tof2])
         _list_nxsdata_sorted = self.list_nxsdata_sorted
         list_row = self.getListRowWithSameLambda()
-        tof1 = 1000 * tof_min
-        tof2 = 1000 * tof_max
-#        auto_flag_value = 0
+        tof1 = 1000. * tof_min
+        tof2 = 1000. * tof_max
         for index, _row in enumerate(list_row):
             _nxdata  = _list_nxsdata_sorted[_row]
             _nxdata.tof_range = [tof1, tof2]
@@ -425,7 +437,6 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
             _big_table[_row, 16] = auto_flag_value
 
         self.list_nxsdata_sorted = _list_nxsdata_sorted
-
         self.big_table = _big_table
     
     def displaySelectedTOFandUpdateTable(self, mode='auto'):
@@ -439,8 +450,10 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         tof2 = float(tof2) * 1e-3
 
         self.updateTableWithTOFinfos(tof1, tof2)
-        self.TOFmanualFromValue.setText("%.2f"%tof1)
-        self.TOFmanualToValue.setText("%.2f"%tof2)
+        self.TOFmanualFromValue.setText("%.2f" %tof1)
+        self.TOFmanualToValue.setText("%.2f" %tof2)
+       
+        #self.updateTableWithLambdaInfos(_nxdata)
 
     def loadingConfiguration(self):
         print "loadingConfiguration not implemented"
@@ -464,8 +477,10 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         self.fileHasBeenModified()
 
     def updateTableWithLambdaInfos(self, nxdata):
+
         list_row = self.getListRowWithSameLambda()
         lambda_range = nxdata.lambda_range
+        
         for index, _row in enumerate(list_row):
             if index == 0:
                 color = self.tableWidget.item(_row, 0).backgroundColor()
