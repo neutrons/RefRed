@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Thu Dec 17 14:07:51 2015
+# Created: Fri Dec 18 09:44:54 2015
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1584,13 +1584,13 @@ class Ui_MainWindow(object):
         self.verticalLayout_7 = QtGui.QVBoxLayout()
         self.verticalLayout_7.setObjectName("verticalLayout_7")
         self.loadReducedAsciiDataSet = QtGui.QPushButton(self.data_stitching_Tab)
-        self.loadReducedAsciiDataSet.setEnabled(True)
+        self.loadReducedAsciiDataSet.setEnabled(False)
         self.loadReducedAsciiDataSet.setMinimumSize(QtCore.QSize(300, 0))
         self.loadReducedAsciiDataSet.setMaximumSize(QtCore.QSize(300, 16777215))
         self.loadReducedAsciiDataSet.setObjectName("loadReducedAsciiDataSet")
         self.verticalLayout_7.addWidget(self.loadReducedAsciiDataSet)
         self.reducedAsciiDataSetTable = QtGui.QTableWidget(self.data_stitching_Tab)
-        self.reducedAsciiDataSetTable.setEnabled(True)
+        self.reducedAsciiDataSetTable.setEnabled(False)
         self.reducedAsciiDataSetTable.setMinimumSize(QtCore.QSize(300, 0))
         self.reducedAsciiDataSetTable.setMaximumSize(QtCore.QSize(300, 16777215))
         self.reducedAsciiDataSetTable.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)

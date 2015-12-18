@@ -3854,7 +3854,7 @@ p, li { white-space: pre-wrap; }
                   <item>
                    <widget class="QPushButton" name="loadReducedAsciiDataSet">
                     <property name="enabled">
-                     <bool>true</bool>
+                     <bool>false</bool>
                     </property>
                     <property name="minimumSize">
                      <size>
@@ -3876,7 +3876,7 @@ p, li { white-space: pre-wrap; }
                   <item>
                    <widget class="QTableWidget" name="reducedAsciiDataSetTable">
                     <property name="enabled">
-                     <bool>true</bool>
+                     <bool>false</bool>
                     </property>
                     <property name="minimumSize">
                      <size>

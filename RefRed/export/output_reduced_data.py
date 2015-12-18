@@ -443,16 +443,19 @@ class OutputReducedData(QDialog):
 		return [y_array, e_array]
 
 	def format_data(self):
+		self.cleanup_data()
+		self.centering_q_axis()
+
 		_q_axis = self.q_axis
 		_y_axis = self.y_axis
 		_e_axis = self.e_axis
 		text = self.text_data
-		
+				
 		if self.is_with_4th_column_flag:
 			dq0 = self.dq0
 			dq_over_q = self.dq_over_q
 		
-		sz = len(_q_axis) - 1
+		sz = len(_q_axis)
 		for i in range(sz):
 			if _y_axis[i] > self.R_THRESHOLD:
 				_line = str(_q_axis[i])
@@ -464,3 +467,46 @@ class OutputReducedData(QDialog):
 				text.append(_line)
 		
 		self.text_data = text
+		
+	def centering_q_axis(self):
+		_q_axis = self.q_axis
+		
+		new_q_axis = []
+		sz = len(_q_axis)
+		for index in range(1, sz):
+			_value = (_q_axis[index-1] + _q_axis[index])/2.
+			new_q_axis.append(_value)
+		
+		self.q_axis = new_q_axis
+
+	def cleanup_data(self):
+		'''Remove data where error bar is bigger than value'''
+		_q_axis = self.q_axis
+		_y_axis = self.y_axis
+		_e_axis = self.e_axis
+		
+		new_q_axis = []
+		new_y_axis = []
+		new_e_axis = []
+		
+		for i in range(len(_y_axis)):
+			
+			q = _q_axis[i]
+			y = _y_axis[i]
+			e = _e_axis[i]
+			
+			if abs(e) > abs(y):
+				continue
+			
+			if y < 0:
+				continue
+			
+			new_q_axis.append(q)
+			new_y_axis.append(y)
+			new_e_axis.append(e)
+			
+		self.q_axis = new_q_axis
+		self.y_axis = new_y_axis
+		self.e_axis = new_e_axis
+		
+		
