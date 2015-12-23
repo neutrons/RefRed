@@ -3832,7 +3832,7 @@ p, li { white-space: pre-wrap; }
                          <item>
                           <layout class="QHBoxLayout" name="horizontalLayout_15">
                            <item>
-                            <widget class="QRadioButton" name="radioButton">
+                            <widget class="QRadioButton" name="sf_calculated_button">
                              <property name="text">
                               <string/>
                              </property>
@@ -3842,7 +3842,7 @@ p, li { white-space: pre-wrap; }
                             </widget>
                            </item>
                            <item>
-                            <widget class="QLineEdit" name="lineEdit_3">
+                            <widget class="QLineEdit" name="sf_calculated_edit">
                              <property name="maximumSize">
                               <size>
                                <width>80</width>
@@ -3869,7 +3869,7 @@ p, li { white-space: pre-wrap; }
                          <item>
                           <layout class="QVBoxLayout" name="verticalLayout_16">
                            <item>
-                            <widget class="QRadioButton" name="radioButton_2">
+                            <widget class="QRadioButton" name="sf_auto_calculated_button">
                              <property name="text">
                               <string>Auto</string>
                              </property>
@@ -3904,41 +3904,6 @@ p, li { white-space: pre-wrap; }
                          </property>
                          <layout class="QVBoxLayout" name="verticalLayout_19">
                           <item>
-                           <layout class="QHBoxLayout" name="horizontalLayout_16">
-                            <item>
-                             <widget class="QLabel" name="label_6">
-                              <property name="text">
-                               <string>Qmax</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <widget class="QLineEdit" name="lineEdit_2">
-                              <property name="maximumSize">
-                               <size>
-                                <width>80</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="text">
-                               <string>0.01</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <widget class="QLabel" name="label_7">
-                              <property name="text">
-                               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Lucida Grande'; font-size:9pt;&quot;&gt;1/Å&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                              </property>
-                             </widget>
-                            </item>
-                           </layout>
-                          </item>
-                          <item>
                            <layout class="QHBoxLayout" name="horizontalLayout_18">
                             <item>
                              <widget class="QLabel" name="label_4">
@@ -3948,7 +3913,7 @@ p, li { white-space: pre-wrap; }
                              </widget>
                             </item>
                             <item>
-                             <widget class="QLineEdit" name="lineEdit">
+                             <widget class="QLineEdit" name="sf_qmin_edit">
                               <property name="maximumSize">
                                <size>
                                 <width>80</width>
@@ -3979,13 +3944,48 @@ p, li { white-space: pre-wrap; }
                             </item>
                            </layout>
                           </item>
+                          <item>
+                           <layout class="QHBoxLayout" name="horizontalLayout_16">
+                            <item>
+                             <widget class="QLabel" name="label_6">
+                              <property name="text">
+                               <string>Qmax</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QLineEdit" name="sf_qmax_edit">
+                              <property name="maximumSize">
+                               <size>
+                                <width>80</width>
+                                <height>16777215</height>
+                               </size>
+                              </property>
+                              <property name="text">
+                               <string>0.01</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QLabel" name="label_7">
+                              <property name="text">
+                               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Lucida Grande'; font-size:9pt;&quot;&gt;1/Å&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </item>
                          </layout>
                         </widget>
                        </item>
                       </layout>
                      </item>
                      <item>
-                      <widget class="QRadioButton" name="radioButton_3">
+                      <widget class="QRadioButton" name="sf_manual_button">
                        <property name="text">
                         <string>Manual</string>
                        </property>
@@ -5374,6 +5374,54 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>sf_calculated_button</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sf_calculated_button()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>65</x>
+     <y>555</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>587</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sf_auto_calculated_button</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sf_auto_calculated_button()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>123</x>
+     <y>607</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>587</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sf_manual_button</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sf_manual_calculated_button()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>208</x>
+     <y>649</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
+     <y>587</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -5413,5 +5461,8 @@ p, li { white-space: pre-wrap; }
   <slot>clock_validation()</slot>
   <slot>clock_checkbox()</slot>
   <slot>about_message()</slot>
+  <slot>sf_calculated_button()</slot>
+  <slot>sf_auto_calculated_button()</slot>
+  <slot>sf_manual_calculated_button()</slot>
  </slots>
 </ui>

@@ -17,6 +17,7 @@ from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidg
 from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.stitching_yscale_options_radio_button_handler import StitchingYScaleOptionsRadioButtonHandler
+from RefRed.gui_handling.sf_widgets_handler import SfWidgetsHandler
 from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
 from RefRed.interfaces.refred_main_interface import Ui_MainWindow
@@ -422,6 +423,18 @@ class MainGui(QtGui.QMainWindow):
         o_reduced_ascii_right_click = ReducedAsciiDataRightClick(parent = self,
                                                                  position = position)
         o_reduced_ascii_right_click.run()
+ 
+    def sf_calculated_button(self):
+        sf_handler = SfWidgetsHandler(parent = self, button = 'calculated')
+        
+        
+    def sf_auto_calculated_button(self):
+        sf_handler = SfWidgetsHandler(parent = self, button = 'auto')
+
+ 
+    def sf_manual_calculated_button(self):
+        sf_handler = SfWidgetsHandler(parent = self, button = 'manual')
+
     
     def about_message(self):
         o_about_message = AboutDialog(parent = self)
