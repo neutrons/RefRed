@@ -25,6 +25,7 @@ class Gui(object):
                        u'Qmax (1/\u00c5)',
                        'Comments']
     column_widths = [60, 200, 200, 65, 85, 85, 95, 95, 400]	
+    stitching_column_widths = [150, 60, 60]
     gui_size_coeff = 2./3.
     
     def __init__(self, parent):
@@ -163,9 +164,12 @@ class Gui(object):
         ''' initialize the stiching table (labels, size...)'''
         parent = self.parent
 
-        vertical_header = ["Data Run #","SF: auto","SF: manual","Clock."]
+        vertical_header = ["Data Run #", "SF", "Clock."]
         parent.ui.dataStitchingTable.setHorizontalHeaderLabels(vertical_header)
-        parent.ui.dataStitchingTable.resizeColumnsToContents()
+        #parent.ui.dataStitchingTable.resizeColumnsToContents()
+        column_widths = self.stitching_column_widths
+        for index, width in enumerate(column_widths):
+            parent.ui.dataStitchingTable.setColumnWidth(index, width)
 
         palette_green = QtGui.QPalette()
         palette_green.setColor(QtGui.QPalette.Foreground, QtCore.Qt.darkGreen)
@@ -182,7 +186,7 @@ class Gui(object):
         palette_red = QtGui.QPalette()
         palette_red.setColor(QtGui.QPalette.Foreground, QtCore.Qt.red)
         parent.ui.clocking_not_found_label.setPalette(palette_red)
-
+        
     def set_reduced_table(self):
         ''' initialize the reduced table from the stitching tabe '''
         parent = self.parent
