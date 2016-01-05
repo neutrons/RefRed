@@ -18,6 +18,7 @@ from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRange
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.stitching_yscale_options_radio_button_handler import StitchingYScaleOptionsRadioButtonHandler
 from RefRed.gui_handling.sf_widgets_handler import SfWidgetsHandler
+from RefRed.gui_handling.first_angle_range_gui_handler import FirstAngleRangeGuiHandler
 from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
 from RefRed.interfaces.refred_main_interface import Ui_MainWindow
@@ -434,6 +435,34 @@ class MainGui(QtGui.QMainWindow):
  
     def sf_manual_calculated_button(self):
         sf_handler = SfWidgetsHandler(parent = self, button = 'manual')
+
+
+    def sf_absolute_normalization_button(self):
+        print('sf_absolute_normalization')
+    
+    def sf_auto_stitching_button(self):
+        print('sf_auto_stitching_button')
+        
+    def sf_manual_stitching_button(self):
+        print('sf_manual_stitching_button')
+    
+    def sf_button(self):
+        first_angle_handler = FirstAngleRangeGuiHandler(parent=self)
+        first_angle_handler.setWidgets(is_sf_button_clicked = True)
+        print("sf_button")
+        
+    def sf_value(self):
+        print("sf_value")
+        
+    def first_angle_range_button(self):
+        first_angle_handler = FirstAngleRangeGuiHandler(parent=self)
+        first_angle_handler.setWidgets(is_sf_button_clicked = False)
+    
+    def sf_qmin_value_field(self):
+        print('sf_qmin_value_field')
+        
+    def sf_qmax_value_field(self):
+        print('sf_qmax_value_field')
 
     
     def about_message(self):

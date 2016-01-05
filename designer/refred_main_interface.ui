@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1558</width>
-    <height>1176</height>
+    <width>1569</width>
+    <height>1128</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,8 +38,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1538</width>
-         <height>1096</height>
+         <width>1531</width>
+         <height>1081</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_68">
@@ -3534,6 +3534,9 @@ p, li { white-space: pre-wrap; }
              <layout class="QHBoxLayout" name="horizontalLayout_2">
               <item>
                <layout class="QVBoxLayout" name="verticalLayout_4">
+                <property name="sizeConstraint">
+                 <enum>QLayout::SetMinimumSize</enum>
+                </property>
                 <item>
                  <widget class="QTableWidget" name="dataStitchingTable">
                   <property name="enabled">
@@ -3755,12 +3758,28 @@ p, li { white-space: pre-wrap; }
                    </widget>
                   </item>
                   <item>
+                   <spacer name="horizontalSpacer_16">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>75</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
                    <widget class="QLabel" name="sf_not_found_label">
                     <property name="text">
                      <string>auto SF not found</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -3782,6 +3801,22 @@ p, li { white-space: pre-wrap; }
                    </widget>
                   </item>
                   <item>
+                   <spacer name="horizontalSpacer_20">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>75</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
                    <widget class="QLabel" name="clocking_not_found_label">
                     <property name="layoutDirection">
                      <enum>Qt::LeftToRight</enum>
@@ -3790,204 +3825,63 @@ p, li { white-space: pre-wrap; }
                      <string>clocking not used</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                     </property>
                    </widget>
                   </item>
                  </layout>
                 </item>
                 <item>
-                 <widget class="QGroupBox" name="groupBox_2">
-                  <property name="minimumSize">
+                 <spacer name="verticalSpacer_2">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
                    <size>
-                    <width>350</width>
-                    <height>0</height>
+                    <width>20</width>
+                    <height>10</height>
                    </size>
                   </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QGroupBox" name="groupBox_2">
                   <property name="maximumSize">
                    <size>
-                    <width>350</width>
+                    <width>300</width>
                     <height>16777215</height>
                    </size>
                   </property>
-                  <property name="baseSize">
-                   <size>
-                    <width>1</width>
-                    <height>1</height>
-                   </size>
-                  </property>
-                  <property name="autoFillBackground">
-                   <bool>false</bool>
-                  </property>
                   <property name="title">
-                   <string>Scaling Factor</string>
+                   <string/>
                   </property>
-                  <layout class="QVBoxLayout" name="verticalLayout_9">
+                  <layout class="QHBoxLayout" name="horizontalLayout_15">
                    <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_10">
+                    <layout class="QVBoxLayout" name="verticalLayout_22">
                      <item>
-                      <layout class="QHBoxLayout" name="horizontalLayout_14">
-                       <item>
-                        <layout class="QVBoxLayout" name="verticalLayout_13">
-                         <item>
-                          <layout class="QHBoxLayout" name="horizontalLayout_15">
-                           <item>
-                            <widget class="QRadioButton" name="sf_calculated_button">
-                             <property name="text">
-                              <string/>
-                             </property>
-                             <property name="checked">
-                              <bool>true</bool>
-                             </property>
-                            </widget>
-                           </item>
-                           <item>
-                            <widget class="QLineEdit" name="sf_calculated_edit">
-                             <property name="maximumSize">
-                              <size>
-                               <width>80</width>
-                               <height>16777215</height>
-                              </size>
-                             </property>
-                            </widget>
-                           </item>
-                           <item>
-                            <spacer name="horizontalSpacer_6">
-                             <property name="orientation">
-                              <enum>Qt::Horizontal</enum>
-                             </property>
-                             <property name="sizeHint" stdset="0">
-                              <size>
-                               <width>40</width>
-                               <height>20</height>
-                              </size>
-                             </property>
-                            </spacer>
-                           </item>
-                          </layout>
-                         </item>
-                         <item>
-                          <layout class="QVBoxLayout" name="verticalLayout_16">
-                           <item>
-                            <widget class="QRadioButton" name="sf_auto_calculated_button">
-                             <property name="text">
-                              <string>Auto</string>
-                             </property>
-                            </widget>
-                           </item>
-                          </layout>
-                         </item>
-                        </layout>
-                       </item>
-                       <item>
-                        <widget class="QGroupBox" name="first_angle_groupbox">
-                         <property name="sizeIncrement">
-                          <size>
-                           <width>0</width>
-                           <height>0</height>
-                          </size>
-                         </property>
-                         <property name="baseSize">
-                          <size>
-                           <width>0</width>
-                           <height>0</height>
-                          </size>
-                         </property>
-                         <property name="title">
-                          <string>First Angle</string>
-                         </property>
-                         <property name="flat">
-                          <bool>false</bool>
-                         </property>
-                         <property name="checkable">
-                          <bool>false</bool>
-                         </property>
-                         <layout class="QVBoxLayout" name="verticalLayout_19">
-                          <item>
-                           <layout class="QHBoxLayout" name="horizontalLayout_18">
-                            <item>
-                             <widget class="QLabel" name="label_4">
-                              <property name="text">
-                               <string>Qmin</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <widget class="QLineEdit" name="sf_qmin_edit">
-                              <property name="maximumSize">
-                               <size>
-                                <width>80</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="text">
-                               <string>0.00</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <widget class="QLabel" name="label_5">
-                              <property name="font">
-                               <font>
-                                <family>Abyssinica SIL</family>
-                                <pointsize>8</pointsize>
-                               </font>
-                              </property>
-                              <property name="text">
-                               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Lucida Grande'; font-size:9pt;&quot;&gt;1/Å&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                              </property>
-                             </widget>
-                            </item>
-                           </layout>
-                          </item>
-                          <item>
-                           <layout class="QHBoxLayout" name="horizontalLayout_16">
-                            <item>
-                             <widget class="QLabel" name="label_6">
-                              <property name="text">
-                               <string>Qmax</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <widget class="QLineEdit" name="sf_qmax_edit">
-                              <property name="maximumSize">
-                               <size>
-                                <width>80</width>
-                                <height>16777215</height>
-                               </size>
-                              </property>
-                              <property name="text">
-                               <string>0.01</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <widget class="QLabel" name="label_7">
-                              <property name="text">
-                               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Lucida Grande'; font-size:9pt;&quot;&gt;1/Å&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                              </property>
-                             </widget>
-                            </item>
-                           </layout>
-                          </item>
-                         </layout>
-                        </widget>
-                       </item>
-                      </layout>
+                      <widget class="QRadioButton" name="absolute_normalization_button">
+                       <property name="text">
+                        <string>Absolute Normalization</string>
+                       </property>
+                       <property name="checked">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
                      </item>
                      <item>
-                      <widget class="QRadioButton" name="sf_manual_button">
+                      <widget class="QRadioButton" name="auto_stitching_button">
                        <property name="text">
-                        <string>Manual</string>
+                        <string>Auto. Stitching</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QRadioButton" name="manual_stitching_button">
+                       <property name="text">
+                        <string>Manual Stitching</string>
                        </property>
                       </widget>
                      </item>
@@ -3997,7 +3891,202 @@ p, li { white-space: pre-wrap; }
                  </widget>
                 </item>
                 <item>
+                 <widget class="QGroupBox" name="groupBox_7">
+                  <property name="maximumSize">
+                   <size>
+                    <width>300</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="title">
+                   <string/>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_14">
+                   <item>
+                    <layout class="QVBoxLayout" name="verticalLayout_23">
+                     <property name="sizeConstraint">
+                      <enum>QLayout::SetMinimumSize</enum>
+                     </property>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_20">
+                       <property name="sizeConstraint">
+                        <enum>QLayout::SetFixedSize</enum>
+                       </property>
+                       <item>
+                        <widget class="QRadioButton" name="sf_button">
+                         <property name="text">
+                          <string>SF</string>
+                         </property>
+                         <property name="checked">
+                          <bool>true</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLineEdit" name="sf_value">
+                         <property name="maximumSize">
+                          <size>
+                           <width>80</width>
+                           <height>16777215</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <spacer name="horizontalSpacer_4">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeType">
+                          <enum>QSizePolicy::Expanding</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <widget class="QRadioButton" name="first_angle_range_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>200</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>First Angle Range</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_21">
+                       <item>
+                        <layout class="QVBoxLayout" name="verticalLayout_24">
+                         <property name="sizeConstraint">
+                          <enum>QLayout::SetFixedSize</enum>
+                         </property>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_22">
+                           <property name="sizeConstraint">
+                            <enum>QLayout::SetMinimumSize</enum>
+                           </property>
+                           <item>
+                            <widget class="QLabel" name="qmin_label">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="text">
+                              <string>Qmin</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLineEdit" name="sf_qmin_value">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>80</width>
+                               <height>16777215</height>
+                              </size>
+                             </property>
+                             <property name="text">
+                              <string>0.00</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLabel" name="qmin_units">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="font">
+                              <font>
+                               <family>Abyssinica SIL</family>
+                               <pointsize>8</pointsize>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Lucida Grande'; font-size:9pt;&quot;&gt;1/Å&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_23">
+                           <property name="sizeConstraint">
+                            <enum>QLayout::SetMinimumSize</enum>
+                           </property>
+                           <item>
+                            <widget class="QLabel" name="qmax_label">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="text">
+                              <string>Qmax</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLineEdit" name="sf_qmax_value">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>80</width>
+                               <height>16777215</height>
+                              </size>
+                             </property>
+                             <property name="text">
+                              <string>0.01</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLabel" name="qmax_units">
+                             <property name="enabled">
+                              <bool>false</bool>
+                             </property>
+                             <property name="text">
+                              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Lucida Grande'; font-size:9pt;&quot;&gt;1/Å&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                        </layout>
+                       </item>
+                      </layout>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QGroupBox" name="groupBox">
+                  <property name="maximumSize">
+                   <size>
+                    <width>300</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
                   <property name="title">
                    <string>   Scaling Factor (SF)</string>
                   </property>
@@ -4188,6 +4277,7 @@ p, li { white-space: pre-wrap; }
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <zorder></zorder>
                </widget>
               </item>
              </layout>
@@ -4286,7 +4376,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1558</width>
+     <width>1569</width>
      <height>25</height>
     </rect>
    </property>
@@ -4879,38 +4969,6 @@ p, li { white-space: pre-wrap; }
    </hints>
   </connection>
   <connection>
-   <sender>manualSF</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>stitching_sf_radio_button()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>400</x>
-     <y>574</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>autoSF</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>stitching_sf_radio_button()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>155</x>
-     <y>574</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>RvsQ</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
@@ -4923,22 +4981,6 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>778</x>
      <y>586</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>oneSF</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>stitching_sf_radio_button()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>644</x>
-     <y>574</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
     </hint>
    </hints>
   </connection>
@@ -5375,50 +5417,178 @@ p, li { white-space: pre-wrap; }
    </hints>
   </connection>
   <connection>
-   <sender>sf_calculated_button</sender>
+   <sender>autoSF</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>sf_calculated_button()</slot>
+   <slot>stitching_sf_radio_button()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>65</x>
-     <y>555</y>
+     <x>155</x>
+     <y>574</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
-     <y>587</y>
+     <y>551</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>sf_auto_calculated_button</sender>
+   <sender>oneSF</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>sf_auto_calculated_button()</slot>
+   <slot>stitching_sf_radio_button()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>123</x>
-     <y>607</y>
+     <x>644</x>
+     <y>574</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
-     <y>587</y>
+     <y>551</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>sf_manual_button</sender>
+   <sender>manualSF</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>sf_manual_calculated_button()</slot>
+   <slot>stitching_sf_radio_button()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>208</x>
-     <y>649</y>
+     <x>400</x>
+     <y>574</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
-     <y>587</y>
+     <y>551</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>absolute_normalization_button</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sf_absolute_normalization_button()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>183</x>
+     <y>483</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>784</x>
+     <y>563</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>auto_stitching_button</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sf_auto_stitching_button()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>183</x>
+     <y>511</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>784</x>
+     <y>563</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>manual_stitching_button</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sf_manual_stitching_button()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>183</x>
+     <y>539</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>784</x>
+     <y>563</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sf_button</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sf_button()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>70</x>
+     <y>608</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>784</x>
+     <y>563</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sf_value</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sf_value()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>137</x>
+     <y>609</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>784</x>
+     <y>563</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>first_angle_range_button</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>first_angle_range_button()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>147</x>
+     <y>640</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>784</x>
+     <y>563</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sf_qmin_value</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sf_qmin_value_field()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>189</x>
+     <y>674</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>784</x>
+     <y>563</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sf_qmax_value</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sf_qmax_value_field()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>191</x>
+     <y>709</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>784</x>
+     <y>563</y>
     </hint>
    </hints>
   </connection>
@@ -5464,5 +5634,13 @@ p, li { white-space: pre-wrap; }
   <slot>sf_calculated_button()</slot>
   <slot>sf_auto_calculated_button()</slot>
   <slot>sf_manual_calculated_button()</slot>
+  <slot>sf_absolute_normalization_button()</slot>
+  <slot>sf_auto_stitching_button()</slot>
+  <slot>sf_manual_stitching_button()</slot>
+  <slot>sf_button()</slot>
+  <slot>first_angle_range_button()</slot>
+  <slot>sf_qmin_value_field()</slot>
+  <slot>sf_qmax_value_field()</slot>
+  <slot>sf_value()</slot>
  </slots>
 </ui>
