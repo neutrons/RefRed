@@ -2,6 +2,11 @@ import math
 from mantid.simpleapi import *
 import numpy as np
 
+from RefRed.reduction.normalization_stitching import AbsoluteNormalization
+from RefRed.reduction.normalization_stitching import AutomaticStitching
+from RefRed.reduction.normalization_stitching import ManualStitching
+
+
 class LiveCalculateSF(object):
     '''
     This class will determine the best scaling factor (SF) to apply to the data to stitch them
@@ -20,11 +25,40 @@ class LiveCalculateSF(object):
         '''
         main part of the program that will calculate the various SF
         '''
-        if self.row_index == 0:
-            self.autoSFofFirstDataSet()
+        
+        if self.parent.ui.absolute_normalization_button.isChecked():
+            self.absolute_normalization_calculation(row_index = self.row_index)
+        elif self.parent.ui.auto_stitching_button():
+            self.auto_stitching_calculation(row_index = self.row_index)
         else:
-            self.autoSFOtherDataSet()
-        self.parent.big_table_data = self.big_table_data
+            self.manual_stitching_calculation(row_index = self.row_index)
+
+        #if self.row_index == 0:
+            #self.autoSFofFirstDataSet()
+        #else:
+            #self.autoSFOtherDataSet()
+        #self.parent.big_table_data = self.big_table_data
+
+    def absolute_normalization_calculation(self, row_index = row_index):
+        '''
+        will perform the absolute normalization
+        '''
+        o_abs_norm = AbsoluteNormalization(parent = self.parent, row_index = row_index)
+        o_abs_norm.run()
+
+    def auto_stitching_calculation(self, row_index = row_index):
+        '''
+        will perform the auto stitching normalization
+        '''
+        o_auto_stit = AutomaticStitching(parent = self.parent, row_index = row_index)
+        o_auto_stit.run()
+    
+    def manual_stitching_calculation(self, row_index = row_index):
+        '''
+        will perform the manual stitching normalization
+        '''
+        o_manual_stit = ManualStitching(parent = self.parent, row_index = row_index)
+        o_manual_stit.run()
 
     def autoSFofFirstDataSet(self):
         '''
@@ -34,11 +68,11 @@ class LiveCalculateSF(object):
 
         _y_axis = dataSet.reduce_y_axis
         _e_axis = dataSet.reduce_e_axis
-#		error_0 = 1./configObject.proton_charge
+	#error_0 = 1./configObject.proton_charge
         error_0 = 1./dataSet.proton_charge
         [data_mean, mean_error] = self.weighted_mean(_y_axis, _e_axis, error_0)
         _sf = 1./data_mean 
-#		data_CE = self.big_table_data[0,0]
+	#data_CE = self.big_table_data[0,0]
         dataSet.sf_auto = _sf
         self.big_table_data[0,2] = dataSet
 

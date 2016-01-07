@@ -44,9 +44,11 @@ class LConfigDataset(object):
     reduce_y_axis = []
     reduce_e_axis = []
 
-    sf_auto = 1 # auto scaling calculated by program
+    sf_auto = 1 # auto scaling calculated by program (auto stitching)
+    sf_manual = 1 # manual scaling (manual stitching)
+    sf_abs_normalization = 1 # absolute normalization
+    
     sf_auto_found_match = False 
-    sf_manual = 1 # manual scaling defined by user
     sf = 1 #scaling factor apply to data (will be either the auto, manual or 1)
 
     q_axis_for_display = []

@@ -425,14 +425,14 @@ class MainGui(QtGui.QMainWindow):
                                                                  position = position)
         o_reduced_ascii_right_click.run()
  
-    def sf_calculated_button(self):
-        sf_handler = SfWidgetsHandler(parent = self, button = 'calculated')
+    #def sf_calculated_button(self):
+        #sf_handler = SfWidgetsHandler(parent = self, button = 'calculated')
                 
-    def sf_auto_calculated_button(self):
-        sf_handler = SfWidgetsHandler(parent = self, button = 'auto')
+    #def sf_auto_calculated_button(self):
+        #sf_handler = SfWidgetsHandler(parent = self, button = 'auto')
 
-    def sf_manual_calculated_button(self):
-        sf_handler = SfWidgetsHandler(parent = self, button = 'manual')
+    #def sf_manual_calculated_button(self):
+        #sf_handler = SfWidgetsHandler(parent = self, button = 'manual')
 
     def sf_absolute_normalization_button(self):
         norm_or_stitching_object = NormalizationOrStitchingButtonStatus(parent=self)
