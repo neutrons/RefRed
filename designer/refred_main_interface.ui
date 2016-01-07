@@ -3891,7 +3891,7 @@ p, li { white-space: pre-wrap; }
                  </widget>
                 </item>
                 <item>
-                 <widget class="QGroupBox" name="groupBox_7">
+                 <widget class="QGroupBox" name="sf_first_angle_range_group">
                   <property name="maximumSize">
                    <size>
                     <width>300</width>
