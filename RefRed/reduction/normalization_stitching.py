@@ -8,19 +8,36 @@ class ParentHandler(object):
         self.parent = parent
         self.row_index = row_index
 
-    def calculateSFCE(self):
+    def calculateSFCE(self, type='absolute'):
         '''
         Scaling factor calculation of Ctritical Edge (CE)
         '''
         _q_min = float(str(self.parent.ui.sf_qmin_value.text()))
         _q_max = float(str(self.parent.ui.sf_qmax_value.text()))
-        big_table_data = self.parent.big_table_data
-        data_set = big_table_data[0, 2]
+        data_set = self.getLConfig(0)
         calculate_sf = CalculateSFCE([_q_min, _q_max], data_set)
         _sf = 1./calculate_sf.getSF()
-        data_set.sf_auto = _sf
-        big_table_data[0, 2] = data_set
+        data_set = self.saveSFinLConfig(data_set, _sf, type=type)
+        self.saveLConfig(data_set, 0)
+        
+    def saveSFinLConfig(self, lconfig, sf, type='absolute'):
+        if type == 'absolute':
+            lconfig.sf_abs_normalization = sf
+        elif type == 'auto':
+            lconfig.sf_auto = sf
+        else:
+            lconfig.sf_manual = sf
+        return lconfig
+        
+    def saveLConfig(self, lconfig, row_index):
+        big_table_data = self.parent.big_table_data
+        big_table_data[row_index, 2] = lconfig
         self.parent.big_table_data = big_table_data
+
+    def getLConfig(self, row_index):
+        big_table_data = self.parent.big_table_data
+        data_set = big_table_data[row_index, 2]
+        return data_set
 
 class AbsoluteNormalization(ParentHandler):
     '''
@@ -32,30 +49,26 @@ class AbsoluteNormalization(ParentHandler):
                                                     row_index = row_index)
         
     def run(self):
-        if self.parent.ui.sf_button.isChecked():
-            self.useManuallyDefineSF()
+        if self.row_index == 0:
+            if self.parent.ui.sf_button.isChecked():
+                self.useManuallyDefineSF()
+            else:
+                self.calculateSFCE(self, type = 'absolute')
         else:
-            self.useFirstAngleRange()
+            self.copySFtoOtherAngles()
     
     def useManuallyDefineSF(self):
         _sf = float(str(self.parent.ui.sf_value.text()))
-        big_table_data = self.parent.big_table_data
-        data_set = big_table_data[0, 2]
+        data_set = self.getLConfig(0)
         data_set.sf_abs_normalization = _sf
-        big_table_data[0, 2] = data_set
-        self.parent.big_table_data = big_table_data
+        self.saveLConfig(data_set, 0)
         
-    def useFirstAngleRange(self):
-        self.calculateSFCE(self)
-        
-        
-        
-        
-        
-        
-        
-        
-
+    def copySFtoOtherAngles(self):
+        ce_lconfig = self.getLConfig(0)
+        _sf = ce_lconfig.sf_abs_normalization
+        lconfig = self.getLConfig(self.row_index)
+        lconfig = self.saveSFinLConfig(lconfig, _sf, type = 'absolute')
+        self.saveLConfig = lconfig
 
 class AutomaticStitching(ParentHandler):
     '''
@@ -71,25 +84,22 @@ class AutomaticStitching(ParentHandler):
     
     def use_first_angle_range(self):
         if self.row_index == 0:
-            self.calculateSFCE(self)
+            self.calculateSFCE(self, type = 'auto')
         else:
             self.calcualteSFOtherAngles(self)
-    
     
     def calculateSFOtherAngles(self):
         '''
         Scaling factor calculation of other angles
         '''
         _row_index = self.row_index
-        left_lconfig = self.big_table_data[ _row_index-1, 2]
-        right_lconfig = self.big_table_data[_row_index, 2]
+        left_lconfig = self.getLConfig(_row_index - 1)
+        right_lconfig = self.getLConfig(row_index)
         
         calculate_sf = CalculateSFoverlapRange(left_lconfig, right_lconfig)
         _sf = 1./calculate_sf.getSF()
         right_lconfig.sf_auto = _sf
-        self.big_table_data[_row_index, 2] = right_lconfig
-        self.parent.big_table_data = big_table_data
-    
+        self.saveLConfig(right_lconfig, _row_index)
     
 class ManualStitching(ParentHandler):
     '''
@@ -102,5 +112,9 @@ class ManualStitching(ParentHandler):
                                               row_index = row_index)
     
     def run(self):
-        pass
+        _sf = 1.
+        lconfig = self.getLConfig(self.row_index)
+        lconfig = self.saveSFinLConfig(lconfig, _sf, type = 'manual')
+        self.saveLConfig = lconfig
+
 
