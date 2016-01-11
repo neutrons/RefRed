@@ -115,7 +115,8 @@ class ManualStitching(ParentHandler):
                                               row_index = row_index)
     
     def run(self):
-        _sf = 1.
+        ce_lconfig = self.getLConfig(self.row_index)
+        _sf = ce_lconfig.sf_manual
         lconfig = self.getLConfig(self.row_index)
         lconfig = self.saveSFinLConfig(lconfig, _sf, data_type = 'manual')
         self.saveLConfig = lconfig
