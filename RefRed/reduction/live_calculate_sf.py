@@ -5,6 +5,7 @@ import numpy as np
 from RefRed.reduction.normalization_stitching import AbsoluteNormalization
 from RefRed.reduction.normalization_stitching import AutomaticStitching
 from RefRed.reduction.normalization_stitching import ManualStitching
+from RefRed.gui_handling.gui_utility import GuiUtility
 
 
 class LiveCalculateSF(object):
@@ -26,9 +27,12 @@ class LiveCalculateSF(object):
         main part of the program that will calculate the various SF
         '''
         
-        if self.parent.ui.absolute_normalization_button.isChecked():
+        o_gui = GuiUtility(parent = self.parent)
+        stitching_type = o_gui.getStitchingType()
+        
+        if stitching_type is 'absolute':
             self.absolute_normalization_calculation(row_index = self.row_index)
-        elif self.parent.ui.auto_stitching_button():
+        elif stitching_type is 'auto':
             self.auto_stitching_calculation(row_index = self.row_index)
         else:
             self.manual_stitching_calculation(row_index = self.row_index)

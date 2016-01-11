@@ -1,9 +1,11 @@
 from PyQt4 import QtGui, QtCore
 from PyQt4.QtGui import QApplication
-from RefRed.gui_handling.gui_utility import GuiUtility
-from distutils.util import strtobool
-import RefRed.colors
 import numpy as np
+from distutils.util import strtobool
+
+from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.gui_handling.fill_stitching_table import FillStitchingTable
+import RefRed.colors
 
 
 class LiveReducedDataHandler(object):
@@ -20,7 +22,10 @@ class LiveReducedDataHandler(object):
 
     def populate_table(self):
         self.clear_stiching_table()
-        self.fill_cell()
+        o_fill_table = FillStitchingTable(parent = self.parent)
+        o_fill_table.fillRow(row_index = self.row_index)
+        
+        #fself.fill_cell()
         if self.row_index == 0:
             self.activate_stitching_tab()        
         

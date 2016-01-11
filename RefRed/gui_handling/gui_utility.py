@@ -148,3 +148,16 @@ class GuiUtility(object):
             return 'RvsQ'
         else:
             return 'RQ4vsQ'
+
+    def getStitchingType(self):
+        '''
+        return the type of stitching selected
+        can be either 'auto', 'manual' or 'absolute'
+        '''
+        if self.parent.ui.absolute_normalization_button.isChecked():
+            return 'absolute'
+        elif self.parent.ui.auto_stitching_button():
+            return 'auto'
+        else:
+            return 'manual'
+    

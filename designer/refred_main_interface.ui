@@ -52,7 +52,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <property name="documentMode">
            <bool>true</bool>
@@ -3250,7 +3250,7 @@ p, li { white-space: pre-wrap; }
                    <number>30</number>
                   </property>
                   <attribute name="horizontalHeaderVisible">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </attribute>
                   <attribute name="horizontalHeaderDefaultSectionSize">
                    <number>50</number>
@@ -3286,7 +3286,7 @@ p, li { white-space: pre-wrap; }
                    <number>20</number>
                   </attribute>
                   <attribute name="horizontalHeaderVisible">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </attribute>
                   <attribute name="verticalHeaderCascadingSectionResizes">
                    <bool>false</bool>
@@ -3918,7 +3918,7 @@ p, li { white-space: pre-wrap; }
                           <string>SF</string>
                          </property>
                          <property name="checked">
-                          <bool>true</bool>
+                          <bool>false</bool>
                          </property>
                         </widget>
                        </item>
@@ -3929,6 +3929,9 @@ p, li { white-space: pre-wrap; }
                            <width>80</width>
                            <height>16777215</height>
                           </size>
+                         </property>
+                         <property name="text">
+                          <string>1</string>
                          </property>
                         </widget>
                        </item>
@@ -3961,6 +3964,9 @@ p, li { white-space: pre-wrap; }
                        <property name="text">
                         <string>First Angle Range</string>
                        </property>
+                       <property name="checked">
+                        <bool>true</bool>
+                       </property>
                       </widget>
                      </item>
                      <item>
@@ -3978,7 +3984,7 @@ p, li { white-space: pre-wrap; }
                            <item>
                             <widget class="QLabel" name="qmin_label">
                              <property name="enabled">
-                              <bool>false</bool>
+                              <bool>true</bool>
                              </property>
                              <property name="text">
                               <string>Qmin</string>
@@ -3988,7 +3994,7 @@ p, li { white-space: pre-wrap; }
                            <item>
                             <widget class="QLineEdit" name="sf_qmin_value">
                              <property name="enabled">
-                              <bool>false</bool>
+                              <bool>true</bool>
                              </property>
                              <property name="maximumSize">
                               <size>
@@ -4004,7 +4010,7 @@ p, li { white-space: pre-wrap; }
                            <item>
                             <widget class="QLabel" name="qmin_units">
                              <property name="enabled">
-                              <bool>false</bool>
+                              <bool>true</bool>
                              </property>
                              <property name="font">
                               <font>
@@ -4031,7 +4037,7 @@ p, li { white-space: pre-wrap; }
                            <item>
                             <widget class="QLabel" name="qmax_label">
                              <property name="enabled">
-                              <bool>false</bool>
+                              <bool>true</bool>
                              </property>
                              <property name="text">
                               <string>Qmax</string>
@@ -4041,7 +4047,7 @@ p, li { white-space: pre-wrap; }
                            <item>
                             <widget class="QLineEdit" name="sf_qmax_value">
                              <property name="enabled">
-                              <bool>false</bool>
+                              <bool>true</bool>
                              </property>
                              <property name="maximumSize">
                               <size>
@@ -4057,7 +4063,7 @@ p, li { white-space: pre-wrap; }
                            <item>
                             <widget class="QLabel" name="qmax_units">
                              <property name="enabled">
-                              <bool>false</bool>
+                              <bool>true</bool>
                              </property>
                              <property name="text">
                               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;

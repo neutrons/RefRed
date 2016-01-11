@@ -8,32 +8,35 @@ class ParentHandler(object):
         self.parent = parent
         self.row_index = row_index
 
-    def calculateSFCE(self, type='absolute'):
+    def _calculateSFCE(self, data_type="absolute"):
         '''
         Scaling factor calculation of Ctritical Edge (CE)
         '''
         _q_min = float(str(self.parent.ui.sf_qmin_value.text()))
         _q_max = float(str(self.parent.ui.sf_qmax_value.text()))
-        data_set = self.getLConfig(0)
-        calculate_sf = CalculateSFCE([_q_min, _q_max], data_set)
-        _sf = 1./calculate_sf.getSF()
-        data_set = self.saveSFinLConfig(data_set, _sf, type=type)
-        self.saveLConfig(data_set, 0)
         
-    def saveSFinLConfig(self, lconfig, sf, type='absolute'):
-        if type == 'absolute':
+        data_set = self.getLConfig(0)
+        q_range = [_q_min, _q_max]
+        calculate_sf = CalculateSFCE(q_range, data_set)
+        _sf = calculate_sf.getSF()
+        new_data_set = self.saveSFinLConfig(data_set, _sf, data_type=data_type)
+        self.saveLConfig(new_data_set, 0)
+        
+    def saveSFinLConfig(self, lconfig, sf, data_type='absolute'):
+        if data_type == 'absolute':
             lconfig.sf_abs_normalization = sf
-        elif type == 'auto':
+        elif data_type == 'auto':
             lconfig.sf_auto = sf
         else:
             lconfig.sf_manual = sf
+
         return lconfig
         
     def saveLConfig(self, lconfig, row_index):
         big_table_data = self.parent.big_table_data
         big_table_data[row_index, 2] = lconfig
         self.parent.big_table_data = big_table_data
-
+        
     def getLConfig(self, row_index):
         big_table_data = self.parent.big_table_data
         data_set = big_table_data[row_index, 2]
@@ -53,7 +56,7 @@ class AbsoluteNormalization(ParentHandler):
             if self.parent.ui.sf_button.isChecked():
                 self.useManuallyDefineSF()
             else:
-                self.calculateSFCE(self, type = 'absolute')
+                self._calculateSFCE()
         else:
             self.copySFtoOtherAngles()
     
@@ -67,7 +70,7 @@ class AbsoluteNormalization(ParentHandler):
         ce_lconfig = self.getLConfig(0)
         _sf = ce_lconfig.sf_abs_normalization
         lconfig = self.getLConfig(self.row_index)
-        lconfig = self.saveSFinLConfig(lconfig, _sf, type = 'absolute')
+        lconfig = self.saveSFinLConfig(lconfig, _sf, data_type = 'absolute')
         self.saveLConfig = lconfig
 
 class AutomaticStitching(ParentHandler):
@@ -84,11 +87,11 @@ class AutomaticStitching(ParentHandler):
     
     def use_first_angle_range(self):
         if self.row_index == 0:
-            self.calculateSFCE(self, type = 'auto')
+            self._calculateSFCE(data_type = 'auto')
         else:
-            self.calcualteSFOtherAngles(self)
+            self._calculateSFOtherAngles()
     
-    def calculateSFOtherAngles(self):
+    def _calculateSFOtherAngles(self):
         '''
         Scaling factor calculation of other angles
         '''
@@ -114,7 +117,7 @@ class ManualStitching(ParentHandler):
     def run(self):
         _sf = 1.
         lconfig = self.getLConfig(self.row_index)
-        lconfig = self.saveSFinLConfig(lconfig, _sf, type = 'manual')
+        lconfig = self.saveSFinLConfig(lconfig, _sf, data_type = 'manual')
         self.saveLConfig = lconfig
 
 
