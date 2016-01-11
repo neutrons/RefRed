@@ -32,53 +32,53 @@ class LiveReducedDataHandler(object):
     def activate_stitching_tab(self):
         self.parent.ui.plotTab.setCurrentIndex(1)
         
-    def fill_cell(self):
-        big_table_data = self.big_table_data
-        row_index = self.row_index
+    #def fill_cell(self):
+        #big_table_data = self.big_table_data
+        #row_index = self.row_index
         
-        _lconfig = big_table_data[row_index, 2]
-        if _lconfig is None:
-            return
+        #_lconfig = big_table_data[row_index, 2]
+        #if _lconfig is None:
+            #return
             
-        #run number
-        _run_number = self.parent.ui.reductionTable.item(row_index, 1).text()
-        _run_item = QtGui.QTableWidgetItem(_run_number)
-        _run_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-        self.parent.ui.dataStitchingTable.setItem(row_index, 0, _run_item)
+        ##run number
+        #_run_number = self.parent.ui.reductionTable.item(row_index, 1).text()
+        #_run_item = QtGui.QTableWidgetItem(_run_number)
+        #_run_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+        #self.parent.ui.dataStitchingTable.setItem(row_index, 0, _run_item)
         
-        #auto SF
-        _brush = QtGui.QBrush()
-        if strtobool(_lconfig.sf_auto_found_match):
-            _brush.setColor(QtCore.Qt.darkGreen)
-        else:
-            _brush.setColor(QtCore.Qt.red)
+        ##auto SF
+        #_brush = QtGui.QBrush()
+        #if strtobool(_lconfig.sf_auto_found_match):
+            #_brush.setColor(QtCore.Qt.darkGreen)
+        #else:
+            #_brush.setColor(QtCore.Qt.red)
 
-        sf_auto = "%.4f" %_lconfig.sf_auto
-        _auto_item = QtGui.QTableWidgetItem(sf_auto)
-        _auto_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-        _auto_item.setForeground(_brush)
-        self.parent.ui.dataStitchingTable.setItem(row_index, 1, _auto_item)
+        #sf_auto = "%.4f" %_lconfig.sf_auto
+        #_auto_item = QtGui.QTableWidgetItem(sf_auto)
+        #_auto_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+        #_auto_item.setForeground(_brush)
+        #self.parent.ui.dataStitchingTable.setItem(row_index, 1, _auto_item)
         
-        #manual SF
-        _widget_manual = QtGui.QDoubleSpinBox()
-        _widget_manual.setMinimum(0.)
-        sf_manual = _lconfig.sf_clocking
-        _widget_manual.setValue(sf_manual)
-        _widget_manual.setSingleStep(0.001)
-        _widget_manual.valueChanged.connect(self.parent.data_stitching_table_manual_spin_box)
-        self.parent.ui.dataStitchingTable.setCellWidget(row_index, 2, _widget_manual)
+        ##manual SF
+        #_widget_manual = QtGui.QDoubleSpinBox()
+        #_widget_manual.setMinimum(0.)
+        #sf_manual = _lconfig.sf_clocking
+        #_widget_manual.setValue(sf_manual)
+        #_widget_manual.setSingleStep(0.001)
+        #_widget_manual.valueChanged.connect(self.parent.data_stitching_table_manual_spin_box)
+        #self.parent.ui.dataStitchingTable.setCellWidget(row_index, 2, _widget_manual)
         
-        #1 SF
-        sf_clock = "%.4f" %_lconfig.sf_clocking
-        _item_clock = QtGui.QTableWidgetItem(sf_clock)
-        _item_clock.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-        _brush = QtGui.QBrush()
-        if _lconfig.is_sf_clocking_used:
-            _brush.setColor(QtCore.Qt.darkGreen)
-        else:
-            _brush.setColor(QtCore.Qt.red)
-        _item_clock.setForeground(_brush)
-        self.parent.ui.dataStitchingTable.setItem(row_index, 3, _item_clock)
+        ##1 SF
+        #sf_clock = "%.4f" %_lconfig.sf_clocking
+        #_item_clock = QtGui.QTableWidgetItem(sf_clock)
+        #_item_clock.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+        #_brush = QtGui.QBrush()
+        #if _lconfig.is_sf_clocking_used:
+            #_brush.setColor(QtCore.Qt.darkGreen)
+        #else:
+            #_brush.setColor(QtCore.Qt.red)
+        #_item_clock.setForeground(_brush)
+        #self.parent.ui.dataStitchingTable.setItem(row_index, 3, _item_clock)
 
     def clear_stiching_table(self):
         if self.row_index == 0:

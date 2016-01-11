@@ -24,7 +24,21 @@ class LiveReductionHandler(object):
     def __init__(self, parent=None):
         self.parent = parent
         self.big_table_data = self.parent.big_table_data
+        self.nbr_reduction_process = self.calculate_nbr_reduction_process()
         
+    def recalculate(self):
+        for row_index in range(self.nbr_reduction_process):
+            # scale
+            o_calculate_sf = LiveCalculateSF(parent = self.parent,
+                                             row_index = row_index)
+            o_calculate_sf.run()
+            
+            # plot
+            o_reduced_plot = LiveReducedDataHandler(parent = self.parent,
+                                                    row_index = row_index)
+            o_reduced_plot.populate_table()
+            o_reduced_plot.live_plot()
+                
     def run(self):
         _big_table_data = self.big_table_data
         _data_0_0 = _big_table_data[0,0]
@@ -37,7 +51,6 @@ class LiveReductionHandler(object):
         
         self.parent.ui.reduceButton.setEnabled(False)
         
-        self.nbr_reduction_process = self.calculate_nbr_reduction_process()
         self.cleanup()
 
         o_general_settings = GlobalReductionSettingsHandler(parent = self.parent)

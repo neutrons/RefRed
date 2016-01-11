@@ -156,7 +156,7 @@ class GuiUtility(object):
         '''
         if self.parent.ui.absolute_normalization_button.isChecked():
             return 'absolute'
-        elif self.parent.ui.auto_stitching_button():
+        elif self.parent.ui.auto_stitching_button.isChecked():
             return 'auto'
         else:
             return 'manual'

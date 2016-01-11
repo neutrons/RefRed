@@ -97,7 +97,7 @@ class AutomaticStitching(ParentHandler):
         '''
         _row_index = self.row_index
         left_lconfig = self.getLConfig(_row_index - 1)
-        right_lconfig = self.getLConfig(row_index)
+        right_lconfig = self.getLConfig(_row_index)
         
         calculate_sf = CalculateSFoverlapRange(left_lconfig, right_lconfig)
         _sf = 1./calculate_sf.getSF()

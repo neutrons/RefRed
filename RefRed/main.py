@@ -437,14 +437,20 @@ class MainGui(QtGui.QMainWindow):
     def sf_absolute_normalization_button(self):
         norm_or_stitching_object = NormalizationOrStitchingButtonStatus(parent=self)
         norm_or_stitching_object.setWidget(activated_button = 0)
+        live_reduction = LiveReductionHandler(parent = self)
+        live_reduction.recalculate()
     
     def sf_auto_stitching_button(self):
         norm_or_stitching_object = NormalizationOrStitchingButtonStatus(parent=self)
         norm_or_stitching_object.setWidget(activated_button = 1)
+        live_reduction = LiveReductionHandler(parent = self)
+        live_reduction.recalculate()
         
     def sf_manual_stitching_button(self):
         norm_or_stitching_object = NormalizationOrStitchingButtonStatus(parent=self)
         norm_or_stitching_object.setWidget(activated_button = 2)
+        live_reduction = LiveReductionHandler(parent = self)
+        live_reduction.recalculate()
     
     def sf_button(self):
         first_angle_handler = FirstAngleRangeGuiHandler(parent=self)
