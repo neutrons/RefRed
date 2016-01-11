@@ -206,7 +206,7 @@ class LiveReducedDataHandler(object):
         elif stitching_type is "auto":
             return lconfig.sf_auto
         else:
-            return lconfig.is_manual
+            return lconfig.sf_manual
             
     def get_current_color_plot(self, index_color):
         _color_list = self.colors

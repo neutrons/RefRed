@@ -73,7 +73,7 @@ class FillStitchingTable(ParentHandler):
         _widget_manual.setValue(sf_manual)
         _widget_manual.setSingleStep(0.001)
         _widget_manual.valueChanged.connect(self.parent.data_stitching_table_manual_spin_box)
-        self.parent.ui.dataStitchingTable.setCellWidget(self.row_index, 1, _widget_manual)
+        self.parent.ui.dataStitchingTable.setCellWidget(self._row_index, 1, _widget_manual)
     
     def fillTableForClocking(self):
         sf_clock = "%.4f" % self._lconfig.sf_clocking
