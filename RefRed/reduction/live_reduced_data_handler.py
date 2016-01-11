@@ -199,12 +199,14 @@ class LiveReducedDataHandler(object):
         self.parent.big_table_data = big_table_data
 
     def generate_selected_sf(self, lconfig=None):
-        if self.parent.ui.autoSF.isChecked():
+        o_gui = GuiUtility(parent = self.parent)
+        stitching_type = o_gui.getStitchingType()
+        if stitching_type is "absolute":
+            return lconfig.sf_abs_normalization
+        elif stitching_type is "auto":
             return lconfig.sf_auto
-        elif self.parent.ui.manualSF.isChecked():
-            return lconfig.sf_manual
         else:
-            return 1
+            return lconfig.is_manual
             
     def get_current_color_plot(self, index_color):
         _color_list = self.colors

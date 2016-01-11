@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Mon Jan 11 10:32:47 2016
+# Created: Mon Jan 11 11:02:16 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1661,27 +1661,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_23.addLayout(self.horizontalLayout_21)
         self.horizontalLayout_14.addLayout(self.verticalLayout_23)
         self.verticalLayout_4.addWidget(self.sf_first_angle_range_group)
-        self.groupBox = QtGui.QGroupBox(self.data_stitching_Tab)
-        self.groupBox.setMaximumSize(QtCore.QSize(300, 16777215))
-        self.groupBox.setObjectName("groupBox")
-        self.horizontalLayout = QtGui.QHBoxLayout(self.groupBox)
-        self.horizontalLayout.setContentsMargins(15, -1, -1, -1)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.autoSF = QtGui.QRadioButton(self.groupBox)
-        self.autoSF.setEnabled(True)
-        self.autoSF.setChecked(False)
-        self.autoSF.setObjectName("autoSF")
-        self.horizontalLayout.addWidget(self.autoSF)
-        self.manualSF = QtGui.QRadioButton(self.groupBox)
-        self.manualSF.setEnabled(True)
-        self.manualSF.setObjectName("manualSF")
-        self.horizontalLayout.addWidget(self.manualSF)
-        self.oneSF = QtGui.QRadioButton(self.groupBox)
-        self.oneSF.setEnabled(True)
-        self.oneSF.setChecked(True)
-        self.oneSF.setObjectName("oneSF")
-        self.horizontalLayout.addWidget(self.oneSF)
-        self.verticalLayout_4.addWidget(self.groupBox)
         self.verticalLayout_7 = QtGui.QVBoxLayout()
         self.verticalLayout_7.setObjectName("verticalLayout_7")
         self.loadReducedAsciiDataSet = QtGui.QPushButton(self.data_stitching_Tab)
@@ -1909,9 +1888,6 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.dataPrimToValue, QtCore.SIGNAL("editingFinished()"), MainWindow.clock_validation)
         QtCore.QObject.connect(self.dataPrimFromValue, QtCore.SIGNAL("editingFinished()"), MainWindow.clock_validation)
         QtCore.QObject.connect(self.actionAbout, QtCore.SIGNAL("triggered()"), MainWindow.about_message)
-        QtCore.QObject.connect(self.autoSF, QtCore.SIGNAL("clicked()"), MainWindow.stitching_sf_radio_button)
-        QtCore.QObject.connect(self.oneSF, QtCore.SIGNAL("clicked()"), MainWindow.stitching_sf_radio_button)
-        QtCore.QObject.connect(self.manualSF, QtCore.SIGNAL("clicked()"), MainWindow.stitching_sf_radio_button)
         QtCore.QObject.connect(self.absolute_normalization_button, QtCore.SIGNAL("clicked()"), MainWindow.sf_absolute_normalization_button)
         QtCore.QObject.connect(self.auto_stitching_button, QtCore.SIGNAL("clicked()"), MainWindow.sf_auto_stitching_button)
         QtCore.QObject.connect(self.manual_stitching_button, QtCore.SIGNAL("clicked()"), MainWindow.sf_manual_stitching_button)
@@ -2127,10 +2103,6 @@ class Ui_MainWindow(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Lucida Grande\'; font-size:9pt;\">1/Å</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox.setTitle(QtGui.QApplication.translate("MainWindow", "   Scaling Factor (SF)", None, QtGui.QApplication.UnicodeUTF8))
-        self.autoSF.setText(QtGui.QApplication.translate("MainWindow", "auto", None, QtGui.QApplication.UnicodeUTF8))
-        self.manualSF.setText(QtGui.QApplication.translate("MainWindow", "manual", None, QtGui.QApplication.UnicodeUTF8))
-        self.oneSF.setText(QtGui.QApplication.translate("MainWindow", "Clocking", None, QtGui.QApplication.UnicodeUTF8))
         self.loadReducedAsciiDataSet.setText(QtGui.QApplication.translate("MainWindow", "Load Reduced Data Set ...", None, QtGui.QApplication.UnicodeUTF8))
         self.reducedAsciiDataSetTable.verticalHeaderItem(0).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))
         self.reducedAsciiDataSetTable.verticalHeaderItem(1).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))
