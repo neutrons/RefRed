@@ -455,19 +455,26 @@ class MainGui(QtGui.QMainWindow):
     def sf_button(self):
         first_angle_handler = FirstAngleRangeGuiHandler(parent=self)
         first_angle_handler.setWidgets(is_sf_button_clicked = True)
-        
-    def sf_value(self):
-        print("sf_value")
+        live_reduction = LiveReductionHandler(parent = self)
+        live_reduction.recalculate()
         
     def first_angle_range_button(self):
         first_angle_handler = FirstAngleRangeGuiHandler(parent=self)
         first_angle_handler.setWidgets(is_sf_button_clicked = False)
+        live_reduction = LiveReductionHandler(parent = self)
+        live_reduction.recalculate()
     
     def sf_qmin_value_field(self):
-        print('sf_qmin_value_field')
+        norm_or_stitching_object = NormalizationOrStitchingButtonStatus(parent=self)
+        norm_or_stitching_object.setWidget(activated_button = 0)
+        live_reduction = LiveReductionHandler(parent = self)
+        live_reduction.recalculate()
         
     def sf_qmax_value_field(self):
-        print('sf_qmax_value_field')
+        norm_or_stitching_object = NormalizationOrStitchingButtonStatus(parent=self)
+        norm_or_stitching_object.setWidget(activated_button = 0)
+        live_reduction = LiveReductionHandler(parent = self)
+        live_reduction.recalculate()
     
     def about_message(self):
         o_about_message = AboutDialog(parent = self)

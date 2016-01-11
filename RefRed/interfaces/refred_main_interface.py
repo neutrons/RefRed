@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Mon Jan 11 11:02:16 2016
+# Created: Mon Jan 11 12:57:25 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1892,7 +1892,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.auto_stitching_button, QtCore.SIGNAL("clicked()"), MainWindow.sf_auto_stitching_button)
         QtCore.QObject.connect(self.manual_stitching_button, QtCore.SIGNAL("clicked()"), MainWindow.sf_manual_stitching_button)
         QtCore.QObject.connect(self.sf_button, QtCore.SIGNAL("clicked()"), MainWindow.sf_button)
-        QtCore.QObject.connect(self.sf_value, QtCore.SIGNAL("editingFinished()"), MainWindow.sf_value)
+        QtCore.QObject.connect(self.sf_value, QtCore.SIGNAL("editingFinished()"), MainWindow.sf_absolute_normalization_button)
         QtCore.QObject.connect(self.first_angle_range_button, QtCore.SIGNAL("clicked()"), MainWindow.first_angle_range_button)
         QtCore.QObject.connect(self.sf_qmin_value, QtCore.SIGNAL("editingFinished()"), MainWindow.sf_qmin_value_field)
         QtCore.QObject.connect(self.sf_qmax_value, QtCore.SIGNAL("editingFinished()"), MainWindow.sf_qmax_value_field)

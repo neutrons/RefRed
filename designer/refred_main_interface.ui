@@ -5436,7 +5436,7 @@ p, li { white-space: pre-wrap; }
    <sender>sf_value</sender>
    <signal>editingFinished()</signal>
    <receiver>MainWindow</receiver>
-   <slot>sf_value()</slot>
+   <slot>sf_absolute_normalization_button()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>137</x>
@@ -5545,6 +5545,5 @@ p, li { white-space: pre-wrap; }
   <slot>first_angle_range_button()</slot>
   <slot>sf_qmin_value_field()</slot>
   <slot>sf_qmax_value_field()</slot>
-  <slot>sf_value()</slot>
  </slots>
 </ui>
