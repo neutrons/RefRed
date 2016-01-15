@@ -68,6 +68,9 @@ class OutputReducedData(QDialog):
 		self.ui.usingLessErrorValueFlag.setChecked(self.use_lowest_error_value_flag)
 		self.ui.usingMeanValueFalg.setChecked(not self.use_lowest_error_value_flag)
 
+	def auto_qmin_button(self, state):
+		self.ui.manual_qmin_frame.setEnabled(not state)
+		
 	def output_format_radio_buttons_event(self):
 		if self.ui.one_ascii_format.isChecked():
 			status = False
@@ -338,7 +341,12 @@ class OutputReducedData(QDialog):
 		_dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
 		_big_table_data = _dataObject.big_table_data
 		
-		minQ = 100
+		_auto_qmin_flag = self.ui.auto_qmin_button.isChecked()
+		if _auto_qmin_flag:
+			minQ = 100
+		else:
+			minQ = float(self.ui.manual_qmin_value.text())
+		
 		maxQ = 0
 		
 		for i in range(nbr_row):
@@ -352,7 +360,8 @@ class OutputReducedData(QDialog):
 			
 			[_y_axis, _e_axis] = self.applySF(_data, _y_axis, _e_axis)
 			
-			minQ = min([_q_axis[0], minQ])
+			if _auto_qmin_flag:
+				minQ = min([_q_axis[0], minQ])
 			maxQ = max([_q_axis[-1], maxQ])
 			
 			tmp_wks_name = CreateWorkspace(DataX = _q_axis,
@@ -428,12 +437,12 @@ class OutputReducedData(QDialog):
 		self.e_axis = data_e
 		
 	def applySF(self, _data, y_array, e_array):
-		if self.parent.ui.autoSF.isChecked():
+		if self.parent.ui.absolute_normalization_button.isChecked():
+			_sf = _data.sf_abs_normalization
+		elif self.parent.ui.auto_switching_button.isChecked():
 			_sf = _data.sf_auto
-		elif self.parent.ui.manualSF.isChecked():
-			_sf = _data.sf_manual
 		else:
-			_sf = 1
+			_sf = _data.sf_manual
 		
 		y_array = np.array(y_array, dtype=np.float)
 		e_array = np.array(e_array, dtype=np.float)
