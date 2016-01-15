@@ -18,7 +18,7 @@ class ParentHandler(object):
         data_set = self.getLConfig(0)
         q_range = [_q_min, _q_max]
         calculate_sf = CalculateSFCE(q_range, data_set)
-        _sf = calculate_sf.getSF()
+        _sf = 1./calculate_sf.getSF()
         new_data_set = self.saveSFinLConfig(data_set, _sf, data_type=data_type)
         self.saveLConfig(new_data_set, 0)
         
