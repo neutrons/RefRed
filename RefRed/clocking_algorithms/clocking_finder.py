@@ -41,7 +41,6 @@ class ClockingAlgorithm(object):
         self.deri_max_pixel_value = -1
         self.mean_counts_firstderi = -1
         self.std_deviation_counts_firstderi = -1
-        self.clocking = [-1, -1]
 
     def calculate_first_derivative(self):
         xdata = self.xdata
@@ -90,12 +89,15 @@ class ClockingAlgorithm(object):
         px_offset = 0
         while abs(_counts[int(px_offset)]) < _std_deviation_counts_firstderi:
             px_offset += 1
-        _peak_min_final_value = _pixel[int(px_offset)]
+        _tmp_value = _pixel[int(px_offset)]
+        _peak_min_final_value = _tmp_value if _tmp_value > 5 else 5
             
         px_offset = len(_counts)-1
         while abs(_counts[int(round(px_offset))]) < _std_deviation_counts_firstderi:
             px_offset -= 1
-        _peak_max_final_value = _pixel[int(round(px_offset))]
+        _tmp_value = _pixel[int(round(px_offset))]
+        _peak_max_final_value = _tmp_value if _tmp_value < 250 else 250
+        
         
         self.clocking = [int(_peak_min_final_value), int(np.ceil(_peak_max_final_value))]
     
@@ -106,9 +108,9 @@ class ClockingFinder(object):
     def __init__(self, xdata=None, ydata=None, edata=None):
         self.clocking = [-1, -1]
         
-        o_clocking_algo = ClockingAlgorithm(xdata=xdata,
-                                            ydata=ydata,
-                                            edata=edata)
+        o_clocking_algo = ClockingAlgorithm(xdata = xdata,
+                                            ydata = ydata,
+                                            edata = edata)
         [left_max, right_min] = o_clocking_algo.clocking
         
         left_xdata = xdata[0: left_max]
