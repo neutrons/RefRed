@@ -15,23 +15,28 @@ class ChangeStitchingDataInterval(object):
         _lrdata = self.parent.big_table_data[0,0]
         
         if yaxis_type == 'RvsQ':
-            [xmin_user, xmax_user, ymin_user, ymax_user] = \
-                _lrdata.all_plot_axis.reduced_plot_RQuserView
+            [xmin_user, xmax_user] = _lrdata.all_plot_axis.reduced_plot_RQQ4userView_x
+            [ymin_user, ymax_user] = _lrdata.all_plot_axis.reduced_plot_RQuserView_y
+
             if (x_min is None) and (x_max is None):
-                _lrdata.all_plot_axis.reduced_plot_RQuserView = \
-                    [xmin_user, xmax_user, y_min, y_max]
+                _lrdata.all_plot_axis.reduced_plot_RQuserView_y = [y_min, y_max]
+                _lrdata.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin_user, xmax_user]
+
             else:
-                _lrdata.all_plot_axis.reduced_plot_RQuserView = \
-                    [x_min, x_max, ymin_user, ymax_user]
+                _lrdata.all_plot_axis.reduced_plot_RQuserView_y = [ymin_user, ymax_user]
+                _lrdata.all_plot_axis.reduced_plot_RQQ4userView_x = [x_min, x_max]
+
         else:
-            [xmin_user, xmax_user, ymin_user, ymax_user] = \
-                _lrdata.all_plot_axis.reduced_plot_RQ4QuserView
+            [xmin_user, xmax_user] = _lrdata.all_plot_axis.reduced_plot_RQQ4userView_x
+            [ymin_user, ymax_user] = _lrdata.all_plot_axis.reduced_plot_RQ4userView_y
+
             if (x_min is None) and (x_max is None):
-                _lrdata.all_plot_axis.reduced_plot_RQ4QuserView = \
-                    [xmin_user, xmax_user, y_min, y_max]
+                _lrdata.all_plot_axis.reduced_plot_RQ4userView_y = [y_min, y_max]
+                _lrdata.all_plot_axis.reduced_plot_RQQ4userView_x = [x_min_user, x_max_user]
+
             else:
-                _lrdata.all_plot_axis.reduced_plot_RQ4QuserView = \
-                    [x_min, x_max, ymin_user, ymax_user]
+                _lrdata.all_plot_axis.reduced_plot_RQ4userView_y = [ymin_user, ymax_user]
+                _lrdata.all_plot_axis.reduced_plot_RQQ4userView_x = [x_min, x_max]
 
         big_table_data = parent.big_table_data
         big_table_data[0, 0] = _lrdata
@@ -72,7 +77,7 @@ class LaunchStitchingManualXAxis(QMainWindow):
         plot_gui_pos = self.parent.ui.data_stitching_plot.pos()
         plot_gui_height = self.parent.ui.data_stitching_plot.frameGeometry().height()
         self.move(mouse_x + plot_gui_pos.x(),
-                  plot_gui_pos.y() + plot_gui_height + mouse_y)
+                  plot_gui_pos.y() + plot_gui_height + mouse_y - 50)
         
         self.init_widgets()
         
@@ -105,14 +110,13 @@ class LaunchStitchingManualXAxis(QMainWindow):
         self.validate_changes()
 
     def x_auto_rescale_event(self):
-        if self.yaxis_type == 'RvsQ':
-            [xmin_user, xmax_user, ymin_user, ymax_user] = self._lrdata.all_plot_axis.reduced_plot_RQuserView
-            [xmin_auto, xmax_auto, ymin_auto, ymax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQautoView
-            self._lrdata.all_plot_axis.reduced_plot_RQuserView = [xmin_auto, xmax_auto, ymin_user, ymax_user]
-        else:
-            [xmin_user, xmax_user, ymin_user, ymax_user] = self._lrdata.all_plot_axis.reduced_plot_RQ4QuserView
-            [xmin_auto, xmax_auto, ymin_auto, ymax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQ4QautoView
-            self._lrdata.all_plot_axis.reduced_plot_RQ4QuserView = [xmin_auto, xmax_auto, ymin_user, ymax_user]
+#        [xmin_user, xmax_user] = self._lrdata.all_plot_axis.reduced_plot_RQQ4userView_x
+        [xmin_auto, xmax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQQ4autoView_x
+        self._lrdata.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin_auto, xmax_auto]
+
+        #[xmin_user, xmax_user, ymin_user, ymax_user] = self._lrdata.all_plot_axis.reduced_plot_RQuserView
+        #[xmin_auto, xmax_auto, ymin_auto, ymax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQautoView
+        #self._lrdata.all_plot_axis.reduced_plot_RQuserView = [xmin_auto, xmax_auto, ymin_user, ymax_user]
 
         big_table_data = self.parent.big_table_data
         big_table_data[0, 0] = self._lrdata
@@ -191,15 +195,29 @@ class LaunchStitchingManualYAxis(QMainWindow):
 
     def y_auto_rescale_event(self):
         if self.yaxis_type == 'RvsQ':
-            [xmin_user, xmax_user, ymin_user, ymax_user] = self._lrdata.all_plot_axis.reduced_plot_RQuserView
-            [xmin_auto, xmax_auto, ymin_auto, ymax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQautoView
-            self._lrdata.all_plot_axis.reduced_plot_RQuserView = [xmin_user, xmax_user, ymin_auto, ymax_auto]
+            [xmin_user, xmax_user] = self._lrdata.all_plot_axis.reduced_plot_RQQ4userView_x
+            [ymin_user, ymax_user] = self._lrdata.all_plot_axis.reduced_plot_RQuserView_y
+            [xmin_auto, xmax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQQ4autoView_x
+            [ymin_auto, ymax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQautoView_y
+            self._lrdata.all_plot_axis.reduced_plot_RQuserView_y = [ymin_auto, ymax_auto]
             [xmin, xmax, ymin, ymax] = [xmin_user, xmax_user, ymin_auto, ymax_auto]
+
+            #self._lrdata.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin_user, xmax_user]
+            #[xmin_user, xmax_user, ymin_user, ymax_user] = self._lrdata.all_plot_axis.reduced_plot_RQuserView
+            #[xmin_auto, xmax_auto, ymin_auto, ymax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQautoView
+            #self._lrdata.all_plot_axis.reduced_plot_RQuserView = [xmin_user, xmax_user, ymin_auto, ymax_auto]
+
         else:
-            [xmin_user, xmax_user, ymin_user, ymax_user] = self._lrdata.all_plot_axis.reduced_plot_RQ4QuserView
-            [xmin_auto, xmax_auto, ymin_auto, ymax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQ4QautoView
-            self._lrdata.all_plot_axis.reduced_plot_RQ4QuserView = [xmin_user, xmax_user, ymin_auto, ymax_auto]
+            [xmin_user, xmax_user] = self._lrdata.all_plot_axis.reduced_plot_RQQ4userView_x
+            [ymin_user, ymax_user] = self._lrdata.all_plot_axis.reduced_plot_RQ4userView_y
+            [xmin_auto, xmax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQQ4autoView_x
+            [ymin_auto, ymax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQ4autoView_y
+            self._lrdata.all_plot_axis.reduced_plot_RQ4userView_y = [ymin_auto, ymax_auto]
             [xmin, xmax, ymin, ymax] = [xmin_user, xmax_user, ymin_auto, ymax_auto]
+
+            #[xmin_user, xmax_user, ymin_user, ymax_user] = self._lrdata.all_plot_axis.reduced_plot_RQ4QuserView
+            #[xmin_auto, xmax_auto, ymin_auto, ymax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQ4QautoView
+            #self._lrdata.all_plot_axis.reduced_plot_RQ4QuserView = [xmin_user, xmax_user, ymin_auto, ymax_auto]
             
         _ymin_str = "%.8f" %ymin
         _ymax_str = "%.8f" %ymax

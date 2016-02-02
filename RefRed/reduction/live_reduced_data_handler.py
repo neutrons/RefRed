@@ -171,26 +171,45 @@ class LiveReducedDataHandler(object):
         _data = big_table_data[0, 0]
 
         if yaxis_type == 'RvsQ':
-            if _data.all_plot_axis.reduced_plot_RQuserView is None:
+            if _data.all_plot_axis.reduced_plot_RQuserView_y is None:
                 self.parent.ui.data_stitching_plot.canvas.draw()
                 [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
                 [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
-                _data.all_plot_axis.reduced_plot_RQuserView = [xmin, xmax, ymin, ymax]
-                _data.all_plot_axis.reduced_plot_RQautoView = [xmin, xmax, ymin, ymax]
+                
+                _data.all_plot_axis.reduced_plot_RQuserView_y = [ymin, ymax]
+                _data.all_plot_axis.reduced_plot_RQautoView_y = [ymin, ymax]
+                _data.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin, xmax]
+                _data.all_plot_axis.reduced_plot_RQQ4autoView_x = [xmin, xmax]
+                
+#                _data.all_plot_axis.reduced_plot_RQuserView = [xmin, xmax, ymin, ymax]
+#                _data.all_plot_axis.reduced_plot_RQautoView = [xmin, xmax, ymin, ymax]
+
             else:
-                [xmin, xmax, ymin, ymax] = _data.all_plot_axis.reduced_plot_RQuserView
+#                [xmin, xmax, ymin, ymax] = _data.all_plot_axis.reduced_plot_RQuserView
+                [xmin, xmax] = _data.all_plot_axis.reduced_plot_RQQ4userView_x
+                [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQuserView_y
+
                 self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
                 self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
                 self.parent.ui.data_stitching_plot.canvas.draw()
         else:            
-            if _data.all_plot_axis.reduced_plot_RQ4QuserView is None:
+            if _data.all_plot_axis.reduced_plot_RQ4QuserView_y is None:
                 self.parent.ui.data_stitching_plot.canvas.draw()
                 [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
                 [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
-                _data.all_plot_axis.reduced_plot_RQ4QuserView = [xmin, xmax, ymin, ymax]
-                _data.all_plot_axis.reduced_plot_RQ4QautoView = [xmin, xmax, ymin, ymax]
+
+                _data.all_plot_axis.reduced_plot_RQ4userView_y = [ymin, ymax]
+                _data.all_plot_axis.reduced_plot_RQ4autoView_y = [ymin, ymax]
+                _data.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin, xmax]
+                _data.all_plot.axis.reduced_plot_RQQ4autoView_x = [xmin, xmax]
+
+#                _data.all_plot_axis.reduced_plot_RQ4QuserView = [xmin, xmax, ymin, ymax]
+#                _data.all_plot_axis.reduced_plot_RQ4QautoView = [xmin, xmax, ymin, ymax]
             else:
-                [xmin, xmax, ymin, ymax] = _data.all_plot_axis.reduced_plot_RQ4QuserView
+#                [xmin, xmax, ymin, ymax] = _data.all_plot_axis.reduced_plot_RQ4QuserView
+                [xmin, xmax] = _data.all_plot_axis.reduced_plot_RQQ4userView_x
+                [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQ4userView_y
+
                 self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
                 self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
                 self.parent.ui.data_stitching_plot.canvas.draw()

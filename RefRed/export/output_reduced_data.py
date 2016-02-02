@@ -213,6 +213,9 @@ class OutputReducedData(QDialog):
 			
 		self.use_lowest_error_value_flag = self.ui.usingLessErrorValueFlag.isChecked()
 		self.text_data = text
+
+		###FIXME
+		## old way to produce ascii data
 		self.produce_data_with_common_q_axis()
 		self.format_data()
 		self.create_file()

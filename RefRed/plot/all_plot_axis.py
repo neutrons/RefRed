@@ -28,29 +28,39 @@ class AllPlotAxis(object):
 	is_reduced_plot_stitching_tab_ylog = True
 	is_reduced_plot_stitching_tab_xlog = False
 	
-	reduced_plot_RQautoView = None
-	reduced_plot_RQ4QautoView = None
-	reduced_plot_RQuserView = None
-	reduced_plot_RQ4QuserView = None
+	reduced_plot_RQ4autoView_y = None
+	reduced_plot_RQautoView_y = None
+	reduced_plot_RQ4userView_y = None
+	reduced_plot_RQuserView_y = None
 	
+	reduced_plot_RQQ4autoView_x = None
+	reduced_plot_RQQ4userView_x = None
+
 	def __init__(self):
 		pass
 	
 	def save_all_reduced_view(self, xmin=-1, xmax=-1, ymin=-1, ymax=-1):
-		self.reduced_plot_RQ4QautoView = [xmin, xmax, ymin, ymax]
-		self.reduced_plot_RQautoView = [xmin, xmax, ymin, ymax]
-		self.reduced_plot_RQ4QuserView = [xmin, xmax, ymin, ymax]
-		self.reduced_plot_RQuserView = [xmin, xmax, ymin, ymax]
+		self.reduced_plot_RQ4autoView_y = [ymin, ymax]
+		self.reduced_plot_RQ4userView_y = [ymin, ymax]
+		self.reduced_plot_RQuserView_y = [ymin, ymax]
+		self.reduced_plot_RQautoView_y = [ymin, ymax]
+		self.reduced_plot_RQQ4userView_x = [xmin, xmax]
+		self.reduced_plot_RQQ4autoView_x = [xmi, xmax]
 		
 	def save_user_reduced_view(self, xmin=-1, xmax=-1, ymin=-1, ymax=-1):
-		self.reduced_plot_RQ4QuserView = [xmin, xmax, ymin, ymax]
-		self.reduced_plot_RQuserView = [xmin, xmax, ymin, ymax]
+		self.reduced_plot_RQ4userView_y = [ymin, ymax]
+		self.reduced_plot_RQuserView_y = [ymin, ymax]
+		self.reduced_plot_RQQ4userView_x = [xmin, xmax]
 		
 	def get_user_reduced_RQ_view(self):
-		return self.reduced_plot_RQuserView
+		[xmin, xmax] = self.reduced_plot_RQQ4userView_x
+		[ymin, ymax] = self.reduced_plot_RQuserView_y
+		return [xmin, xmax, ymin, ymax]
 	
 	def get_user_reduced_RQ4Q_view(self):
-		return self.reduced_plot_RQ4QuserView	
+		[xmin, xmax] = self.reduced_plot_RQQ4userView_x
+		[ymin, ymax] = self.reduced_plot_RQ4userView_y
+		return [xmin, xmax, ymin, ymax]
 	
 	
 	
