@@ -38,6 +38,7 @@ class LiveReductionHandler(object):
                                                     row_index = row_index)
             o_reduced_plot.populate_table()
             o_reduced_plot.live_plot()
+            o_reduced_plot.set_axis()
                 
     def run(self):
         _big_table_data = self.big_table_data
