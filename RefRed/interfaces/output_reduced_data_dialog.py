@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//output_reduced_data_dialog.ui'
 #
-# Created: Fri Jan 15 13:24:37 2016
+# Created: Tue Feb  2 17:21:23 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -179,7 +179,7 @@ class Ui_Dialog(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">ΔQ<span style=\" vertical-align:sub;\">1</span>/Q</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.dQoverQvalue.setText(QtGui.QApplication.translate("Dialog", "0.01", None, QtGui.QApplication.UnicodeUTF8))
+        self.dQoverQvalue.setText(QtGui.QApplication.translate("Dialog", "0.005", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_3.setTitle(QtGui.QApplication.translate("Dialog", "  How to treat overlap values", None, QtGui.QApplication.UnicodeUTF8))
         self.usingLessErrorValueFlag.setText(QtGui.QApplication.translate("Dialog", "use lowest error value", None, QtGui.QApplication.UnicodeUTF8))
         self.usingMeanValueFalg.setText(QtGui.QApplication.translate("Dialog", "use mean value", None, QtGui.QApplication.UnicodeUTF8))

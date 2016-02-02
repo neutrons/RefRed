@@ -191,7 +191,7 @@ p, li { white-space: pre-wrap; }
           <item>
            <widget class="QLineEdit" name="dQoverQvalue">
             <property name="text">
-             <string>0.01</string>
+             <string>0.005</string>
             </property>
            </widget>
           </item>
