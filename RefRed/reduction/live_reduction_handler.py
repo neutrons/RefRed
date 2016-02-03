@@ -1,3 +1,4 @@
+from PyQt4.QtGui import QApplication
 from RefRed.mantid_utility import MantidUtility
 from RefRed.lconfigdataset import LConfigDataset
 from RefRed.reduction.live_calculate_sf import LiveCalculateSF
@@ -84,6 +85,8 @@ class LiveReductionHandler(object):
                                                     row_index = row_index)
             o_reduced_plot.populate_table()
             o_reduced_plot.live_plot()
+            self.parent.ui.data_stitching_plot.draw()
+            QApplication.processEvents()
 
             o_reduction_progressbar_handler.next_step()
 
@@ -202,6 +205,7 @@ class LiveReductionHandler(object):
             _config = LConfigDataset()
         mtd_workspace = mtd[workspace]
         
+        _config.wks = workspace
         _config.proton_charge = float(mtd_workspace.getRun().getProperty('gd_prtn_chrg').value)
         _config.reduce_q_axis = mtd_workspace.readX(0)[:]
         _config.reduce_y_axis = mtd_workspace.readY(0)[:]

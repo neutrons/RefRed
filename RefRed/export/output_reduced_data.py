@@ -213,12 +213,102 @@ class OutputReducedData(QDialog):
 			
 		self.use_lowest_error_value_flag = self.ui.usingLessErrorValueFlag.isChecked()
 		self.text_data = text
+		
+		#using new outputScript from Mantid
+		self.apply_scaling_factor()
+		self.create_output_file()
 
-		###FIXME
-		## old way to produce ascii data
-		self.produce_data_with_common_q_axis()
-		self.format_data()
-		self.create_file()
+		####FIXME
+		### old way to produce ascii data
+		#self.produce_data_with_common_q_axis()
+		#self.format_data()
+		#self.create_file()
+
+	def create_output_file(self):
+		o_gui_utility = GuiUtility(parent = self.parent)
+		nbr_row = o_gui_utility.reductionTable_nbr_row()
+		_dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
+		_big_table_data = _dataObject.big_table_data
+		
+		#q min, q max
+		[_q_min, _q_max] = self.get_q_range()
+		#q bin
+		_q_bin = -1. * float(self.parent.ui.qStep.text())
+		_q_range = [_q_min, _q_bin, _q_max]
+
+		# collect list of workspaces
+		_list_wks = self.collect_list_wks()
+
+		LRReflectivityOutput(ReducedWorkspaces = _list_wks,
+		                     OutputBinning = _q_range,
+		                     DQConstant = float(self.ui.dq0Value.text()),
+		                     DQSlope = float(self.ui.dQoverQvalue.text()),
+		                     OutputFilename = self.filename,
+		                     Metadata = self.text_data)
+		
+
+	def collect_list_wks(self):
+		o_gui_utility = GuiUtility(parent = self.parent)
+		nbr_row = o_gui_utility.reductionTable_nbr_row()
+		_dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
+		_big_table_data = _dataObject.big_table_data
+		
+		_list_wks = []
+		for _row in range(nbr_row):
+			_data = _big_table_data[_row, 2]
+			_list_wks.append(_data.wks_scaled)
+			
+		return _list_wks
+		
+	def get_q_range(self):
+		o_gui_utility = GuiUtility(parent = self.parent)
+		nbr_row = o_gui_utility.reductionTable_nbr_row()
+
+		_auto_qmin_flag = self.ui.auto_qmin_button.isChecked()
+		if _auto_qmin_flag:
+			minQ = 100
+		else:
+			minQ = float(self.ui.manual_qmin_value.text())
+		
+		maxQ = 0
+		
+		_dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
+		_big_table_data = _dataObject.big_table_data
+				
+		for i in range(nbr_row):
+			_data = _big_table_data[i,2]
+			_q_axis = _data.reduce_q_axis
+			if _auto_qmin_flag:
+				minQ = min([_q_axis[0], minQ])		
+			maxQ = max([_q_axis[-1], maxQ])
+
+		return [minQ, maxQ]
+
+	def apply_scaling_factor(self):
+		o_gui_utility = GuiUtility(parent = self.parent)
+		nbr_row = o_gui_utility.reductionTable_nbr_row()
+		_dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
+		_big_table_data = _dataObject.big_table_data
+		
+		for _row in range(nbr_row):
+			_data = _big_table_data[_row, 2]
+			_wks = _data.wks
+			_sf = self.retrieve_sf(_data)
+			_wks_scaled = Scale(_wks, _sf, 'Multiply')
+			_data.wks_scaled = _wks_scaled
+			_big_table_data[_row, 2]
+			
+		_dataObject.big_table_data = _big_table_data
+			
+	def retrieve_sf(self, lconfigdataset):
+		o_gui = GuiUtility(parent = self.parent)
+		stitching_type = o_gui.getStitchingType()
+		if stitching_type == 'absolute':
+			return lconfigdataset.sf_abs_normalization
+		elif stitching_type == 'auto':
+			return lconfigdataset.sf_auto
+		else:
+			return lconfigdataset.sf_manual
 	
 	def retrieve_individual_metadata(self, row=-1):
 		reduction_table = self.parent.ui.reductionTable
