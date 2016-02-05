@@ -199,6 +199,7 @@ class LiveReductionHandler(object):
     def save_reduction(self, 
                        row = -1,
                        workspace = None):
+
         big_table_data = self.big_table_data
         _config = big_table_data[row, 2]
         if _config is None:
