@@ -239,13 +239,21 @@ class OutputReducedData(QDialog):
 		# collect list of workspaces
 		_list_wks = self.collect_list_wks()
 
+		_text_data = self.format_metadata()
+
 		LRReflectivityOutput(ReducedWorkspaces = _list_wks,
 		                     OutputBinning = _q_range,
 		                     DQConstant = float(self.ui.dq0Value.text()),
 		                     DQSlope = float(self.ui.dQoverQvalue.text()),
 		                     OutputFilename = self.filename,
-		                     Metadata = self.text_data)
+		                     Metadata = _text_data)
 		
+	def format_metadata(self):
+		_text_data = self.text_data
+		_text_data_str = [str(txt) for txt in _text_data]
+		sep = " \n"
+		_new_text_data = sep.join(_text_data_str)
+		return _new_text_data
 
 	def collect_list_wks(self):
 		o_gui_utility = GuiUtility(parent = self.parent)
