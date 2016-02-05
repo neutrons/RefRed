@@ -256,7 +256,7 @@ class OutputReducedData(QDialog):
 		_list_wks = []
 		for _row in range(nbr_row):
 			_data = _big_table_data[_row, 2]
-			_list_wks.append(_data.wks_scaled)
+			_list_wks.append(_data.wks)
 			
 		return _list_wks
 		

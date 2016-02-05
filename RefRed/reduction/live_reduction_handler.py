@@ -199,6 +199,7 @@ class LiveReductionHandler(object):
     def save_reduction(self, 
                        row = -1,
                        workspace = None):
+
         big_table_data = self.big_table_data
         _config = big_table_data[row, 2]
         if _config is None:
@@ -213,8 +214,8 @@ class LiveReductionHandler(object):
         _config.q_axis_for_display = mtd_workspace.readX(0)[:]
         _config.y_axis_for_display = mtd_workspace.readY(0)[:]
         _config.e_axis_for_display = mtd_workspace.readE(0)[:]
-        _config.sf_auto_found_match = mtd_workspace.getRun().getProperty('isSFfound').value
         try:
+            _config.sf_auto_found_match = mtd_workspace.getRun().getProperty('isSFfound').value
             _config.sf_clocking = float(mtd_workspace.getRun().getProperty('primary_fraction').value)
             _config.is_sf_clocking_used = True
         except:
