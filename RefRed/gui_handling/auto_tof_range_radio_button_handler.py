@@ -72,18 +72,18 @@ class AutoTofRangeRadioButtonHandler(object):
             self.replace_tof_range_displayed()
             if _row == self.row:
                 self.refresh_plot()
-                self.recalculate_reduction_table_metadata()
+            self.recalculate_reduction_table_metadata(row = _row)
                 
-    def recalculate_reduction_table_metadata(self):
+    def recalculate_reduction_table_metadata(self, row=0):
         big_table_data = self.parent.big_table_data
-        _lrdata = big_table_data[self.row, 0]
+        _lrdata = big_table_data[row, 0]
         _lrdata.calculate_lambda_range(self.new_tof_range)
         _lrdata.calculate_q_range()
-        big_table_data[self.row, 0] = _lrdata
+        big_table_data[row, 0] = _lrdata
         self.parent.big_table_data = big_table_data
         UpdateReductionTableMetadata(parent = self.parent, 
                                      lrdata = _lrdata,
-                                     row = self.row)
+                                     row = row)
         
     def line_edit_validation(self):
         if self.row == -1:
@@ -91,7 +91,8 @@ class AutoTofRangeRadioButtonHandler(object):
         
         self.save_current_manual_tof_range()
         self.refresh_plot()
-        self.recalculate_reduction_table_metadata()
+        for _row in self.all_rows:
+            self.recalculate_reduction_table_metadata(row = _row)
 	
     def refresh_plot(self):
         DisplayPlots(parent = self.parent,
