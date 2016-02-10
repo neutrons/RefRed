@@ -3197,6 +3197,16 @@ p, li { white-space: pre-wrap; }
                     </property>
                    </spacer>
                   </item>
+                  <item>
+                   <widget class="QCheckBox" name="TOFmanualApplyOnlyToRow">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="text">
+                     <string>Apply Only to this Row</string>
+                    </property>
+                   </widget>
+                  </item>
                  </layout>
                 </item>
                 <item>
@@ -4229,7 +4239,6 @@ p, li { white-space: pre-wrap; }
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <zorder></zorder>
                </widget>
               </item>
              </layout>

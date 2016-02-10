@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Tue Feb  2 17:21:24 2016
+# Created: Wed Feb 10 15:31:03 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1330,6 +1330,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout_37.addWidget(self.TOFmanualToUnitsValue)
         spacerItem17 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_37.addItem(spacerItem17)
+        self.TOFmanualApplyOnlyToRow = QtGui.QCheckBox(self.layoutWidget_2)
+        self.TOFmanualApplyOnlyToRow.setEnabled(False)
+        self.TOFmanualApplyOnlyToRow.setObjectName("TOFmanualApplyOnlyToRow")
+        self.horizontalLayout_37.addWidget(self.TOFmanualApplyOnlyToRow)
         self.verticalLayout_11.addLayout(self.horizontalLayout_37)
         self.reductionTable = MyTableWidget(self.layoutWidget_2)
         self.reductionTable.setEnabled(True)
@@ -2001,6 +2005,7 @@ class Ui_MainWindow(object):
         self.TOFmanualToLabel.setText(QtGui.QApplication.translate("MainWindow", "to", None, QtGui.QApplication.UnicodeUTF8))
         self.TOFmanualToValue.setText(QtGui.QApplication.translate("MainWindow", "200", None, QtGui.QApplication.UnicodeUTF8))
         self.TOFmanualToUnitsValue.setText(QtGui.QApplication.translate("MainWindow", "ms", None, QtGui.QApplication.UnicodeUTF8))
+        self.TOFmanualApplyOnlyToRow.setText(QtGui.QApplication.translate("MainWindow", "Apply Only to this Row", None, QtGui.QApplication.UnicodeUTF8))
         self.reductionTable.verticalHeaderItem(0).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))
         self.reductionTable.verticalHeaderItem(1).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))
         self.reductionTable.verticalHeaderItem(2).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))

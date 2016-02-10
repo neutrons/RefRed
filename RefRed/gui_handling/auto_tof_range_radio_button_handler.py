@@ -31,7 +31,8 @@ class AutoTofRangeRadioButtonHandler(object):
         if self.row == -1:
             return
 
-        self.all_rows = o_gui_utility.get_other_row_with_same_run_number_as_row(row = self.row)
+        self.all_rows = o_gui_utility.get_other_row_with_same_run_number_as_row(row = self.row, 
+                                                                                auto_mode = is_auto_tof_selected)
         self.col = o_gui_utility.get_data_norm_tab_selected()
         self.is_data = True if self.col == 0 else False
 
