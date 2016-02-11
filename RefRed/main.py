@@ -40,6 +40,7 @@ from RefRed.sf_calculator.sf_calculator import SFCalculator
 from RefRed.sf_preview.sf_preview import SFPreview
 from RefRed.decorators import config_file_has_been_modified, config_file_modification_reset
 from RefRed.about_dialog import AboutDialog
+from RefRed.browsing_runs import BrowsingRuns
 #from RefRed.log_plot_toggle import LogPlotToggle
 
 class MainGui(QtGui.QMainWindow):
@@ -51,6 +52,8 @@ class MainGui(QtGui.QMainWindow):
     
     full_scaling_factor_file_name = ''
     current_loaded_file = '~/tmp.xml'
+    browsed_files = {'data': None,
+                     'norm': None}
     
     o_user_configuration = None # will record the various settings of the GUI defined by the user
     o_stitching_ascii_widget = None # used when loading ascii files in reduced tab
@@ -297,10 +300,28 @@ class MainGui(QtGui.QMainWindow):
         self.norm_sequence_event()
         
     @config_file_has_been_modified
+    def data_browse_button(self):
+        o_browser = BrowsingRuns(parent = self, 
+                                 data_type = 'data')
+        ReductionTableAutoFill(parent = self,
+                               list_of_run_from_input = '',
+                               data_type_selected = 'data')
+        self.ui.data_sequence_lineEdit.setText('')
+        
+    @config_file_has_been_modified
     def norm_sequence_event(self):
         str_norm_input = self.ui.norm_sequence_lineEdit.text()
         ReductionTableAutoFill(parent = self,
                                list_of_run_from_input = str_norm_input,
+                               data_type_selected = 'norm')
+        self.ui.norm_sequence_lineEdit.setText('')
+
+    @config_file_has_been_modified
+    def norm_browse_button(self):
+        o_browser = BrowsingRuns(parent = self,
+                                 data_type = 'norm')
+        ReductionTableAutoFill(parent = self,
+                               list_of_run_from_input = '',
                                data_type_selected = 'norm')
         self.ui.norm_sequence_lineEdit.setText('')
         

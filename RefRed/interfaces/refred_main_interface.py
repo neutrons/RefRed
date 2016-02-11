@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Wed Feb 10 15:31:03 2016
+# Created: Thu Feb 11 14:52:00 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -121,6 +121,18 @@ class Ui_MainWindow(object):
         self.norm_sequence_lineEdit.setText("")
         self.norm_sequence_lineEdit.setObjectName("norm_sequence_lineEdit")
         self.gridLayout_2.addWidget(self.norm_sequence_lineEdit, 1, 1, 1, 1)
+        self.browse_data_files = QtGui.QPushButton(self.groupBox_3)
+        self.browse_data_files.setObjectName("browse_data_files")
+        self.gridLayout_2.addWidget(self.browse_data_files, 0, 3, 1, 1)
+        self.browse_norm_files = QtGui.QPushButton(self.groupBox_3)
+        self.browse_norm_files.setObjectName("browse_norm_files")
+        self.gridLayout_2.addWidget(self.browse_norm_files, 1, 3, 1, 1)
+        self.label_4 = QtGui.QLabel(self.groupBox_3)
+        self.label_4.setObjectName("label_4")
+        self.gridLayout_2.addWidget(self.label_4, 0, 2, 1, 1)
+        self.label_5 = QtGui.QLabel(self.groupBox_3)
+        self.label_5.setObjectName("label_5")
+        self.gridLayout_2.addWidget(self.label_5, 1, 2, 1, 1)
         self.verticalLayout_14.addLayout(self.gridLayout_2)
         self.frame_autofill_check_status = QtGui.QFrame(self.groupBox_3)
         self.frame_autofill_check_status.setFrameShape(QtGui.QFrame.StyledPanel)
@@ -1900,6 +1912,8 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.first_angle_range_button, QtCore.SIGNAL("clicked()"), MainWindow.first_angle_range_button)
         QtCore.QObject.connect(self.sf_qmin_value, QtCore.SIGNAL("editingFinished()"), MainWindow.sf_qmin_value_field)
         QtCore.QObject.connect(self.sf_qmax_value, QtCore.SIGNAL("editingFinished()"), MainWindow.sf_qmax_value_field)
+        QtCore.QObject.connect(self.browse_data_files, QtCore.SIGNAL("clicked()"), MainWindow.data_browse_button)
+        QtCore.QObject.connect(self.browse_norm_files, QtCore.SIGNAL("clicked()"), MainWindow.norm_browse_button)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1908,6 +1922,10 @@ class Ui_MainWindow(object):
         self.groupBox_3.setTitle(QtGui.QApplication.translate("MainWindow", "Run Numbers", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Data:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Normalization:", None, QtGui.QApplication.UnicodeUTF8))
+        self.browse_data_files.setText(QtGui.QApplication.translate("MainWindow", "Browse ...", None, QtGui.QApplication.UnicodeUTF8))
+        self.browse_norm_files.setText(QtGui.QApplication.translate("MainWindow", "Browse ...", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("MainWindow", "or", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("MainWindow", "or", None, QtGui.QApplication.UnicodeUTF8))
         self.label_check1.setText(QtGui.QApplication.translate("MainWindow", "Locate Runs", None, QtGui.QApplication.UnicodeUTF8))
         self.label_check2.setText(QtGui.QApplication.translate("MainWindow", "Load NeXus (light)", None, QtGui.QApplication.UnicodeUTF8))
         self.label_check3.setText(QtGui.QApplication.translate("MainWindow", "Sort Runs", None, QtGui.QApplication.UnicodeUTF8))

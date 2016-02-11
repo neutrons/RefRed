@@ -37,10 +37,10 @@ class LoadingConfiguration(object):
 		QtGui.QApplication.processEvents()
 		if not (filename == ""):
 			self.filename = str(filename)
-			#try:
-			self.loading()
-			#except:
-			#	print('error loading the configuration file')
+			try:
+				self.loading()
+			except:
+				print('error loading the configuration file')
 		
 		StatusMessageHandler(parent = self.parent, 
 	                             message = 'Done!', 

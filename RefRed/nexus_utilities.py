@@ -1,6 +1,5 @@
 from mantid.simpleapi import *
-from glob import glob
-import os
+import h5py
 
 def findNeXusFullPath(run_number):
     try:
@@ -8,3 +7,8 @@ def findNeXusFullPath(run_number):
     except RuntimeError:
         full_file_name = ''
     return full_file_name
+
+def get_run_number(nexus_full_path):
+    with h5py.File(nexus_full_path, 'r') as hf:
+        _run_number = hf.get('entry/run_number')
+        return _run_number[0]

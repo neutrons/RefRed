@@ -1,6 +1,7 @@
 import sys
 import time
 import numpy as np
+from itertools import chain
 from PyQt4.QtGui import QApplication
 from mantid.simpleapi import *
 
@@ -16,7 +17,7 @@ from RefRed.calculations.check_list_run_compatibility_and_display import CheckLi
 from RefRed.mantid_utility import MantidUtility
 from RefRed.utilities import format_to_list
 from RefRed.autopopulatemaintable.auto_fill_widgets_handler import AutoFillWidgetsHandler
-
+from RefRed.nexus_utilities import get_run_number
 
 class ReductionTableAutoFill(object):
 
@@ -37,20 +38,25 @@ class ReductionTableAutoFill(object):
                  data_type_selected='data', 
                  reset_table=False):
 
+        self.parent = parent
+
+        self.browsing_files_flag = False
+        if not (self.parent.browsed_files[data_type_selected] is None):
+            self.browsing_files_flag = True
+
         if list_of_run_from_input == '':
-            return
+            self.sorted_list_of_runs = []
+            if not self.browsing_files_flag:
+                return
 
         if data_type_selected != 'data':
             data_type_selected = 'norm'
         self.data_type_selected = data_type_selected
 
-        if list_of_run_from_input == '':
-            self.sorted_list_of_runs = []
-            return
-
         self.init_variable()
 
-        self.parent = parent
+        self.reset_table = reset_table
+        
         is_minimum_requirements = self.check_minimum_requirements()
         if is_minimum_requirements is False:
             return
@@ -58,27 +64,40 @@ class ReductionTableAutoFill(object):
         self.o_auto_fill_widgets_handler = AutoFillWidgetsHandler(parent=self.parent)
         self.o_auto_fill_widgets_handler.setup()
 
-        self.raw_run_from_input = list_of_run_from_input
+        if self.browsing_files_flag:
+            _full_list_of_runs = []
+            if self.list_of_run_from_lconfig is not None:
+                for _run in self.list_of_run_from_lconfig:
+                    _full_list_of_runs.append(int(_run))
+            self.full_list_of_runs = _full_list_of_runs
 
-        self.calculate_discrete_list_of_runs() # step1 -> list_new_runs
+        else:
+            self.merge_list_of_runs(new_runs = list_of_run_from_input)
+        
+        # start calculation
+        self.run()
+
+    def merge_list_of_runs(self, new_runs = None):
+    
+        #manual entry of the runs
+        self.raw_run_from_input = new_runs
+        self.calculate_discrete_list_of_runs() # step1 -> list_of_runs_from_input
 
         self.big_table_data = None
-        if (not reset_table) and (data_type_selected == 'data'):
-            self.retrieve_bigtable_list_data_loaded() # step2 -> list_old_runs
+        if (not self.reset_table) and (self.data_type_selected == 'data'):
+            self.retrieve_bigtable_list_data_loaded() # step2 -> list_of_runs_from_lconfig
 
         _full_list_of_runs = []
         if self.list_of_run_from_input is not None:
             for _run in self.list_of_run_from_input:
                 _full_list_of_runs.append(int(_run))
+
         if self.list_of_run_from_lconfig is not None:
             for _run in self.list_of_run_from_lconfig:
                 _full_list_of_runs.append(int(_run))
         self.full_list_of_runs = _full_list_of_runs
 
         self.remove_duplicate_runs()
-        
-        # start calculation
-        self.run()
 
     def init_variable(self):
         self.list_full_file_name = []
@@ -102,6 +121,8 @@ class ReductionTableAutoFill(object):
     def run(self):
         self.cleanup_workspaces()        
         self.locate_runs()
+        self.add_browsed_runs()
+        self.retrieve_list_of_runs_from_nexus_metadata()
         if self.runs_found == 0:
             return
         self.loading_runs()
@@ -110,6 +131,10 @@ class ReductionTableAutoFill(object):
         self.updating_reductionTable()
         self.loading_full_reductionTable()
         self.o_auto_fill_widgets_handler.end()
+        self.cleanup()
+        
+    def cleanup(self):
+        self.parent.browsed_files[self.data_type_selected] = None
         
     def cleanup_workspaces(self):
         o_mantid_utility = MantidUtility(parent = self.parent)
@@ -175,6 +200,7 @@ class ReductionTableAutoFill(object):
 
     def locate_runs(self):
         _list_of_runs = self.full_list_of_runs
+        
         self.number_of_runs = len(_list_of_runs)
         self.runs_found = 0
         self.init_filename_thread_array(len(_list_of_runs))
@@ -186,10 +212,32 @@ class ReductionTableAutoFill(object):
         while self.runs_found < self.number_of_runs:
             time.sleep(0.5)
             
-        if self.runs_found > 0:
+        if (self.runs_found > 0) or (self.browsing_files_flag):
             self.o_auto_fill_widgets_handler.step1()
         else:
             self.o_auto_fill_widgets_handler.error_step1()
+
+    def add_browsed_runs(self):
+        if self.parent.browsed_files[self.data_type_selected] is None:
+            return
+        
+        list_nxs_browsed = self.parent.browsed_files[self.data_type_selected]
+        list_nxs = self.list_nxs
+        
+        new_list_nxs = list(chain(list_nxs, list_nxs_browsed))
+        self.list_nxs = new_list_nxs
+        
+        _nbr_files = len(list_nxs_browsed)
+        self.runs_found += _nbr_files
+
+    def retrieve_list_of_runs_from_nexus_metadata(self):
+        _list_nxs = self.list_nxs
+        _list_runs = []
+        for _nxs in _list_nxs:
+            _run = get_run_number(_nxs)
+            _list_runs.append(_run)
+            
+        self.full_list_of_runs = _list_runs
 
     def loading_runs(self):
         _list_full_file_name = self.list_nxs
