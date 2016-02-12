@@ -99,7 +99,7 @@ class AutoTofRangeRadioButtonHandler(object):
                      row = self.row,
                      is_data = self.is_data,
                      plot_yt = True,
-                     plot_yi = False,
+                     plot_yi = True,
                      plot_it = True,
                      plot_ix = False,
                      refresh_reduction_table = False)

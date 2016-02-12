@@ -1,5 +1,6 @@
 from PyQt4 import QtGui, QtCore
 import RefRed.colors as colors
+import bisect
 from RefRed.plot.clear_plots import ClearPlots
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
 from RefRed.gui_handling.gui_utility import GuiUtility
@@ -220,8 +221,26 @@ class DisplayPlots(object):
             self.ix_plot_ui.canvas.ax.set_ylim([ymin,ymax])
             self.ix_plot_ui.canvas.draw()
 
+    def get_ycountsdata_of_tof_range_selected(self):
+        autotmin = float(self.tofRangeAuto[0])
+        autotmax = float(self.tofRangeAuto[1])
+
+        [tmin, tmax] = self.getTOFrangeInMs([autotmin, autotmax])
+        
+        ytof = self.ytof
+        tof = self.fullTofAxis
+
+        index_tof_left = bisect.bisect_left(tof,  tmin)
+        index_tof_right = bisect.bisect_right(tof, tmax)
+
+        _new_ytof = ytof[:, index_tof_left:index_tof_right]
+        _new_ycountsdata = _new_ytof.sum(axis=1)
+
+        return _new_ycountsdata
+        
     def plot_yi(self):
-        _ycountsdata = self.ycountsdata
+        _ycountsdata = self.get_ycountsdata_of_tof_range_selected()
+
         _xaxis = range(len(_ycountsdata))
         self.yi_plot_ui.canvas.ax.plot(_ycountsdata, _xaxis, 
                                        color = colors.COLOR_LIST[1])
