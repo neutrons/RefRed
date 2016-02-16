@@ -69,6 +69,7 @@ class PreviewConfig(QtGui.QMainWindow):
         QtGui.QMainWindow.__init__(self, parent=parent)
         self.ui = UiMainWindow()
         self.ui.setupUi(self)
+        self.setWindowTitle("Configuration File Preview")
         
         if not is_live:
             _file_name = self._browse_file_name()
@@ -96,7 +97,6 @@ class PreviewConfig(QtGui.QMainWindow):
     def init_table_label(self):
         self.ui.previewTableWidget.setRowCount(len(self.data_name))
         self.ui.previewTableWidget.setVerticalHeaderLabels(self.data_name)
-#        self.ui.previewTableWidget.resizeColumnsToContents()
         
     def _work_on_runs_data(self, _dom):
         self._retrieve_runs_data(_dom)
@@ -124,6 +124,7 @@ class PreviewConfig(QtGui.QMainWindow):
                     _brush.setColor(RefRed.colors.VALUE_OK)
                     _item.setForeground(_brush)
                 self.ui.previewTableWidget.setItem(_row, _column, _item)
+#        self.ui.previewTableWidget.resizeColumnsToContents()
         
     def get_node_value(self, node, flag):
         try:

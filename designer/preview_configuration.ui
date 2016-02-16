@@ -60,7 +60,7 @@
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
-        <string>Preview</string>
+        <string>Table</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
