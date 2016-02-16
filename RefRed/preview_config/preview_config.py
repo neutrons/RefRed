@@ -17,7 +17,14 @@ class PreviewConfig(QtGui.QMainWindow):
         else:
             _file_name = self.parent.current_loaded_file
             
-        print("_file_name: %s" %_file_name)
+        self.file_name = _file_name
+        self._display_raw_file()
+            
+    def _display_raw_file(self):
+        _file = open(self.file_name, 'r')
+        data = _file.read()
+        _file.close
+        self.ui.rawTextEdit.setText(data)
             
     def _browse_file_name(self):
         _path = self.parent.path_config
