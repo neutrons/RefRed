@@ -29,6 +29,7 @@ from RefRed.plot.single_click_plot import SingleClickPlot
 from RefRed.plot.home_plot_button_clicked import HomePlotButtonClicked
 from RefRed.plot.mouse_leave_plot import MouseLeavePlot
 from RefRed.plot.log_plot_toggle import LogPlotToggle
+from RefRed.preview_config.preview_config import PreviewConfig
 from RefRed.reduction.reduction_handler import ReductionHandler
 from RefRed.reduction.live_reduction_handler import LiveReductionHandler
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
@@ -328,7 +329,6 @@ class MainGui(QtGui.QMainWindow):
                                list_of_run_from_input = '',
                                data_type_selected = 'norm')
         self.ui.norm_sequence_lineEdit.setText('')
-        
 
     # Menu buttons
     def load_configuration(self):
@@ -346,11 +346,12 @@ class MainGui(QtGui.QMainWindow):
         o_save_config.run()
         
     def preview_live_config(self):
-        print("preview live config")
+        o_preview_config = PreviewConfig(parent = self, is_live = True)
+        o_preview_config.show()
     
     def preview_browse_config(self):
-        print("preview browse config")
-
+        o_preview_config = PreviewConfig(parent = self, is_live = False)
+        o_preview_config.show()
 
     @config_file_has_been_modified
     def use_scaling_factor_checkbox(self, status):

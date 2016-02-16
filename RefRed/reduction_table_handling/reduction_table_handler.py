@@ -25,6 +25,7 @@ class ReductionTableHandler(object):
     def __reset_default_config_file_name(self):
         str_new_window_title = (u"%s%s" %(window_title, self.parent.default_loaded_file))
         self.parent.setWindowTitle(str_new_window_title)
+        self.parent.ui.previewLive.setEnabled(False)
         
     def clear_rows_selected(self):
         self.__get_range_row_selected()
