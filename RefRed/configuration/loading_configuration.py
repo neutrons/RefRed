@@ -39,11 +39,15 @@ class LoadingConfiguration(object):
 			self.filename = str(filename)
 			try:
 				self.loading()
+				message = 'Done!'
 			except:
 				print('error loading the configuration file')
+				message = 'Error loading configuration!'
+		else:
+			message = 'User Canceled loading!'
 		
 		StatusMessageHandler(parent = self.parent, 
-	                             message = 'Done!', 
+	                             message = message,
 	                             is_threaded = True)
 		
 	def loading(self):
@@ -98,6 +102,13 @@ class LoadingConfiguration(object):
 		if q_step == '':
 			q_step = '0.001'
 		self.parent.ui.qStep.setText(q_step)
+
+		q_min = self.getNodeValue(node_0, 'q_min')
+		if q_min == '':
+			q_min = '0.005'
+		_gui_metadata = self.parent.gui_metadata
+		_gui_metadata['q_min'] = q_min
+		self.parent.gui_metadata = _gui_metadata
 		
 		angle_offset = self.getNodeValue(node_0, 'angle_offset')
 		self.parent.ui.angleOffsetValue.setText(angle_offset)

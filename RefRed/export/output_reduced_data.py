@@ -67,6 +67,10 @@ class OutputReducedData(QDialog):
 		self.ui.output4thColumnFlag.setChecked(self.is_with_4th_column_flag)
 		self.ui.usingLessErrorValueFlag.setChecked(self.use_lowest_error_value_flag)
 		self.ui.usingMeanValueFalg.setChecked(not self.use_lowest_error_value_flag)
+		
+		_gui_metadata = self.parent.gui_metadata
+		_q_min = _gui_metadata['q_min']
+		self.ui.manual_qmin_value.setText(_q_min)
 
 	def auto_qmin_button(self, state):
 		self.ui.manual_qmin_frame.setEnabled(not state)

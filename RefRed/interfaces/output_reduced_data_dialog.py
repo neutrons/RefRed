@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//output_reduced_data_dialog.ui'
 #
-# Created: Thu Feb 11 14:52:00 2016
+# Created: Tue Feb 16 12:53:36 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -164,7 +164,7 @@ class Ui_Dialog(object):
         self.output4thColumnFlag.setText(QtGui.QApplication.translate("Dialog", "with 4th column (precision)", None, QtGui.QApplication.UnicodeUTF8))
         self.auto_qmin_button.setText(QtGui.QApplication.translate("Dialog", "Auto Qmin", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("Dialog", "Qmin", None, QtGui.QApplication.UnicodeUTF8))
-        self.manual_qmin_value.setText(QtGui.QApplication.translate("Dialog", "0.01", None, QtGui.QApplication.UnicodeUTF8))
+        self.manual_qmin_value.setText(QtGui.QApplication.translate("Dialog", "0.005", None, QtGui.QApplication.UnicodeUTF8))
         self.label_6.setText(QtGui.QApplication.translate("Dialog", "1/Å", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox.setTitle(QtGui.QApplication.translate("Dialog", "Resolution", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"

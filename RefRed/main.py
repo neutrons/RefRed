@@ -79,6 +79,9 @@ class MainGui(QtGui.QMainWindow):
 
     #[data, norm, lconfig]
     big_table_data = np.empty((nbr_row_table_reduction, 3), dtype=object)
+    
+    # various metadata such as q_min (for output reduced ascii)
+    gui_metadata = {}
 
     #Reduced ascii data sets
     #o_stitched_ascii = None
