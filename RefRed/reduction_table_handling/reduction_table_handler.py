@@ -34,6 +34,13 @@ class ReductionTableHandler(object):
         self.__clear_rows_big_table_data()
         self.__clear_rows_reduction_table()
         self.__shifs_none_empty_rows_reduction_table()
+        self.__to_do_if_table_empty()
+        
+    def __to_do_if_table_empty(self):
+        """If the table is now empty, various reset algos"""
+        _cell_value = str(self.parent.ui.reductionTable.item(0, 1).text())
+        if _cell_value == '':
+            self.__reset_default_config_file_name()
 
     def __clear_rows_reduction_table(self):
         _from_row = self.from_row
