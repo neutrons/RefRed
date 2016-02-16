@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//preview_configuration.ui'
 #
-# Created: Tue Feb 16 15:03:16 2016
+# Created: Tue Feb 16 16:23:34 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -43,11 +43,30 @@ class Ui_MainWindow(object):
         self.tab.setObjectName("tab")
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.tab)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.label_2 = QtGui.QLabel(self.tab)
+        self.label_2.setObjectName("label_2")
+        self.verticalLayout_3.addWidget(self.label_2)
         self.previewTableWidget = QtGui.QTableWidget(self.tab)
+        self.previewTableWidget.setAlternatingRowColors(True)
         self.previewTableWidget.setObjectName("previewTableWidget")
         self.previewTableWidget.setColumnCount(0)
         self.previewTableWidget.setRowCount(0)
         self.verticalLayout_3.addWidget(self.previewTableWidget)
+        self.label_3 = QtGui.QLabel(self.tab)
+        self.label_3.setObjectName("label_3")
+        self.verticalLayout_3.addWidget(self.label_3)
+        self.tableWidget = QtGui.QTableWidget(self.tab)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tableWidget.sizePolicy().hasHeightForWidth())
+        self.tableWidget.setSizePolicy(sizePolicy)
+        self.tableWidget.setMaximumSize(QtCore.QSize(16777215, 150))
+        self.tableWidget.setAlternatingRowColors(True)
+        self.tableWidget.setObjectName("tableWidget")
+        self.tableWidget.setColumnCount(0)
+        self.tableWidget.setRowCount(0)
+        self.verticalLayout_3.addWidget(self.tableWidget)
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QtGui.QWidget()
         self.tab_2.setObjectName("tab_2")
@@ -82,6 +101,8 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "MainWindow", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Configuration File Name:", None, QtGui.QApplication.UnicodeUTF8))
         self.config_file_name.setText(QtGui.QApplication.translate("MainWindow", "N/A", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Runs", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("MainWindow", "System", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("MainWindow", "Raw", None, QtGui.QApplication.UnicodeUTF8))
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "File", None, QtGui.QApplication.UnicodeUTF8))
