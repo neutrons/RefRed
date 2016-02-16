@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//preview_configuration.ui'
 #
-# Created: Tue Feb 16 16:36:42 2016
+# Created: Tue Feb 16 16:57:56 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -52,21 +52,23 @@ class Ui_MainWindow(object):
         self.previewTableWidget.setColumnCount(0)
         self.previewTableWidget.setRowCount(0)
         self.verticalLayout_3.addWidget(self.previewTableWidget)
-        self.label_3 = QtGui.QLabel(self.tab)
-        self.label_3.setObjectName("label_3")
-        self.verticalLayout_3.addWidget(self.label_3)
-        self.tableWidget = QtGui.QTableWidget(self.tab)
+        self.systemTableWidget = QtGui.QTableWidget(self.tab)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.tableWidget.sizePolicy().hasHeightForWidth())
-        self.tableWidget.setSizePolicy(sizePolicy)
-        self.tableWidget.setMaximumSize(QtCore.QSize(16777215, 150))
-        self.tableWidget.setAlternatingRowColors(True)
-        self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(0)
-        self.tableWidget.setRowCount(0)
-        self.verticalLayout_3.addWidget(self.tableWidget)
+        sizePolicy.setHeightForWidth(self.systemTableWidget.sizePolicy().hasHeightForWidth())
+        self.systemTableWidget.setSizePolicy(sizePolicy)
+        self.systemTableWidget.setMaximumSize(QtCore.QSize(16777215, 150))
+        self.systemTableWidget.setAlternatingRowColors(True)
+        self.systemTableWidget.setObjectName("systemTableWidget")
+        self.systemTableWidget.setColumnCount(0)
+        self.systemTableWidget.setRowCount(0)
+        self.systemTableWidget.horizontalHeader().setVisible(False)
+        self.systemTableWidget.verticalHeader().setVisible(True)
+        self.verticalLayout_3.addWidget(self.systemTableWidget)
+        self.label_3 = QtGui.QLabel(self.tab)
+        self.label_3.setObjectName("label_3")
+        self.verticalLayout_3.addWidget(self.label_3)
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QtGui.QWidget()
         self.tab_2.setObjectName("tab_2")

@@ -98,6 +98,9 @@ class PreviewConfig(QtGui.QMainWindow):
         self.ui.previewTableWidget.setRowCount(len(self.data_name))
         self.ui.previewTableWidget.setVerticalHeaderLabels(self.data_name)
         
+        self.ui.systemTableWidget.setRowCount(len(self.system_name))
+        self.ui.systemTableWidget.setVerticalHeaderLabels(self.system_name)
+        
     def _work_on_runs_data(self, _dom):
         self._retrieve_runs_data(_dom)
         self._populate_runs_data()
@@ -135,7 +138,30 @@ class PreviewConfig(QtGui.QMainWindow):
         return _value
         
     def _work_on_system_data(self, _dom):
-        pass
+        self._retrieve_runs_system(_dom)
+        self._populate_runs_system()
+
+    def _retrieve_runs_system(self, _dom):
+        _system_table = empty((len(self.system_name)), dtype=object)
+        for _index, _name in enumerate(self.system_name):
+            _value = str(_dom.getElementsByTagName(_name)[0].childNodes[0].data)
+            _system_table[_index] = str(_value)
+
+        self._system_table = _system_table
+    
+    def _populate_runs_system(self):
+        _system_table = self._system_table
+        nbr_row = len(_system_table)
+        self.ui.systemTableWidget.setColumnCount(1)
+
+        for _row in range(nbr_row):
+            _item = QtGui.QTableWidgetItem(_system_table[_row])
+            #if _row in self._colored_row:
+                #_brush = QtGui.QBrush()
+                #_brush.setColor(RefRed.colors.VALUE_OK)
+                #_item.setForeground(_brush)
+            self.ui.systemTableWidget.setItem(_row, 0, _item)
+        self.ui.systemTableWidget.resizeColumnsToContents()
     
     def _browse_file_name(self):
         _path = self.parent.path_config
