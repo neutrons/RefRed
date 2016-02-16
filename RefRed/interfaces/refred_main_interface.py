@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Tue Feb 16 12:53:36 2016
+# Created: Tue Feb 16 13:05:00 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1766,6 +1766,8 @@ class Ui_MainWindow(object):
         self.menuHelp.setObjectName("menuHelp")
         self.menuFile = QtGui.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
+        self.menuPreview = QtGui.QMenu(self.menuFile)
+        self.menuPreview.setObjectName("menuPreview")
         self.menuAdvanced = QtGui.QMenu(self.menubar)
         self.menuAdvanced.setObjectName("menuAdvanced")
         self.menuReduction = QtGui.QMenu(self.menubar)
@@ -1839,11 +1841,20 @@ class Ui_MainWindow(object):
         self.actionExportScript = QtGui.QAction(MainWindow)
         self.actionExportScript.setEnabled(True)
         self.actionExportScript.setObjectName("actionExportScript")
+        self.previewLive = QtGui.QAction(MainWindow)
+        self.previewLive.setEnabled(False)
+        self.previewLive.setObjectName("previewLive")
+        self.previewBrowse = QtGui.QAction(MainWindow)
+        self.previewBrowse.setObjectName("previewBrowse")
         self.menuHelp.addSeparator()
         self.menuHelp.addAction(self.actionAbout)
+        self.menuPreview.addAction(self.previewLive)
+        self.menuPreview.addAction(self.previewBrowse)
         self.menuFile.addAction(self.action_load_configuration)
         self.menuFile.addAction(self.action_save_as_configuration)
         self.menuFile.addAction(self.action_save_configuration)
+        self.menuFile.addSeparator()
+        self.menuFile.addAction(self.menuPreview.menuAction())
         self.menuAdvanced.addAction(self.actionMetadataFinder)
         self.menuAdvanced.addAction(self.actionSF_Calculator)
         self.menuReduction.addAction(self.actionRunReduction)
@@ -1856,7 +1867,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.plotTab.setCurrentIndex(0)
-        self.dataNormTabWidget.setCurrentIndex(0)
+        self.dataNormTabWidget.setCurrentIndex(1)
         QtCore.QObject.connect(self.action_load_configuration, QtCore.SIGNAL("triggered()"), MainWindow.load_configuration)
         QtCore.QObject.connect(self.action_save_as_configuration, QtCore.SIGNAL("triggered()"), MainWindow.save_as_configuration)
         QtCore.QObject.connect(self.action_save_configuration, QtCore.SIGNAL("triggered()"), MainWindow.save_configuration)
@@ -1914,6 +1925,8 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.sf_qmax_value, QtCore.SIGNAL("editingFinished()"), MainWindow.sf_qmax_value_field)
         QtCore.QObject.connect(self.browse_data_files, QtCore.SIGNAL("clicked()"), MainWindow.data_browse_button)
         QtCore.QObject.connect(self.browse_norm_files, QtCore.SIGNAL("clicked()"), MainWindow.norm_browse_button)
+        QtCore.QObject.connect(self.previewLive, QtCore.SIGNAL("activated()"), MainWindow.preview_live_config)
+        QtCore.QObject.connect(self.previewBrowse, QtCore.SIGNAL("activated()"), MainWindow.preview_browse_config)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -2142,6 +2155,7 @@ class Ui_MainWindow(object):
         self.plotTab.setTabText(self.plotTab.indexOf(self.data_stitching_Tab), QtGui.QApplication.translate("MainWindow", "Data Stitching", None, QtGui.QApplication.UnicodeUTF8))
         self.menuHelp.setTitle(QtGui.QApplication.translate("MainWindow", "Help", None, QtGui.QApplication.UnicodeUTF8))
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "Configuration", None, QtGui.QApplication.UnicodeUTF8))
+        self.menuPreview.setTitle(QtGui.QApplication.translate("MainWindow", "Preview", None, QtGui.QApplication.UnicodeUTF8))
         self.menuAdvanced.setTitle(QtGui.QApplication.translate("MainWindow", "Tools", None, QtGui.QApplication.UnicodeUTF8))
         self.menuReduction.setTitle(QtGui.QApplication.translate("MainWindow", "Reduction", None, QtGui.QApplication.UnicodeUTF8))
         self.toolBar.setWindowTitle(QtGui.QApplication.translate("MainWindow", "toolBar", None, QtGui.QApplication.UnicodeUTF8))
@@ -2189,6 +2203,8 @@ class Ui_MainWindow(object):
         self.action_save_configuration.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+S", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRunReduction.setText(QtGui.QApplication.translate("MainWindow", "RUN", None, QtGui.QApplication.UnicodeUTF8))
         self.actionExportScript.setText(QtGui.QApplication.translate("MainWindow", "Export Script ...", None, QtGui.QApplication.UnicodeUTF8))
+        self.previewLive.setText(QtGui.QApplication.translate("MainWindow", "Current File", None, QtGui.QApplication.UnicodeUTF8))
+        self.previewBrowse.setText(QtGui.QApplication.translate("MainWindow", "Browse ...", None, QtGui.QApplication.UnicodeUTF8))
 
 from mplwidgetnolog import MPLWidgetNoLog
 from .mplwidget import MPLWidget

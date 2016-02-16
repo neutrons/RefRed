@@ -59,6 +59,10 @@ class LoadingConfiguration(object):
 		self.populate_reduction_table_from_lconfigdataset()
 		self.load_reduction_table_from_lconfigdataset()
 		self.reset_gui_modified_status()
+		self.live_preview_config_status()
+
+	def live_preview_config_status(self):
+		self.parent.ui.previewLive.setEnabled(True)
 		
 	def reset_gui_modified_status(self):
 		o_gui_utility = GuiUtility(parent = self.parent)

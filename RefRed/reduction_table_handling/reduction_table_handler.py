@@ -4,6 +4,7 @@ import numpy as np
 from RefRed.plot.clear_plots import ClearPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.colors
+from RefRed.version import window_title
 
 
 class ReductionTableHandler(object):
@@ -19,6 +20,11 @@ class ReductionTableHandler(object):
         self.__clear_reduction_table()
         self.__clear_metadata()
         self.__clear_plots()
+        self.__reset_default_config_file_name()
+        
+    def __reset_default_config_file_name(self):
+        str_new_window_title = (u"%s%s" %(window_title, self.parent.default_loaded_file))
+        self.parent.setWindowTitle(str_new_window_title)
         
     def clear_rows_selected(self):
         self.__get_range_row_selected()

@@ -51,6 +51,7 @@ class MainGui(QtGui.QMainWindow):
     path_config = '/home/j35/sandbox' # config file of RefRed
     
     full_scaling_factor_file_name = ''
+    default_loaded_file = '~/tmp.xml'
     current_loaded_file = '~/tmp.xml'
     browsed_files = {'data': None,
                      'norm': None}
@@ -328,6 +329,8 @@ class MainGui(QtGui.QMainWindow):
                                data_type_selected = 'norm')
         self.ui.norm_sequence_lineEdit.setText('')
         
+
+    # Menu buttons
     def load_configuration(self):
         o_load_config = LoadingConfiguration(parent = self)
         o_load_config.run()
@@ -342,6 +345,13 @@ class MainGui(QtGui.QMainWindow):
         o_save_config = SavingConfiguration(parent = self)
         o_save_config.run()
         
+    def preview_live_config(self):
+        print("preview live config")
+    
+    def preview_browse_config(self):
+        print("preview browse config")
+
+
     @config_file_has_been_modified
     def use_scaling_factor_checkbox(self, status):
         o_scaling_factor = ScalingFactorWidgetsHandler(parent = self)
