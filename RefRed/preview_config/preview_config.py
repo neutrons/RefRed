@@ -79,6 +79,17 @@ class PreviewConfig(QtGui.QMainWindow):
             _file_name = self.parent.current_loaded_file
             
         self.file_name = _file_name
+        self.ui.config_file_name.setText(_file_name)
+        self._display_raw_file()
+        self._display_table()
+
+    def action_browse_button(self):    
+        _file_name = self._browse_file_name()
+        if _file_name == "":
+            return
+        
+        self.file_name = _file_name
+        self.ui.config_file_name.setText(_file_name)
         self._display_raw_file()
         self._display_table()
             
@@ -162,7 +173,7 @@ class PreviewConfig(QtGui.QMainWindow):
                 #_item.setForeground(_brush)
             self.ui.systemTableWidget.setItem(_row, 0, _item)
         self.ui.systemTableWidget.resizeColumnsToContents()
-    
+        
     def _browse_file_name(self):
         _path = self.parent.path_config
         _title = "Select Configuration File"

@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//preview_configuration.ui'
 #
-# Created: Wed Feb 17 13:04:57 2016
+# Created: Wed Feb 17 13:14:15 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -90,13 +90,14 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
         self.actionBrowse = QtGui.QAction(MainWindow)
-        self.actionBrowse.setEnabled(False)
+        self.actionBrowse.setEnabled(True)
         self.actionBrowse.setObjectName("actionBrowse")
         self.menuFile.addAction(self.actionBrowse)
         self.menubar.addAction(self.menuFile.menuAction())
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
+        QtCore.QObject.connect(self.actionBrowse, QtCore.SIGNAL("activated()"), MainWindow.action_browse_button)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

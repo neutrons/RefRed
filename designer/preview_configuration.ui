@@ -151,7 +151,7 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionBrowse">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Browse ...</string>
@@ -159,5 +159,25 @@
   </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionBrowse</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>action_browse_button()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>610</x>
+     <y>539</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>action_browse_button()</slot>
+ </slots>
 </ui>
