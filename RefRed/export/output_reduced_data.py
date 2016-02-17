@@ -623,4 +623,8 @@ class OutputReducedData(QDialog):
 		self.y_axis = new_y_axis
 		self.e_axis = new_e_axis
 		
-		
+	def closeEvent(self, event=None):
+		_gui_metadata = self.parent.gui_metadata
+		_q_min = str(self.ui.manual_qmin_value.text())
+		_gui_metadata['q_min'] = _q_min
+		self.parent.gui_metadata = _gui_metadata
