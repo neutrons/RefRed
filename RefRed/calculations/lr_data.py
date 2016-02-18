@@ -17,6 +17,9 @@ NEUTRON_MASS = 1.675e-27  # kg
 PLANCK_CONSTANT = 6.626e-34  # m^2 kg s^-1
 H_OVER_M_NEUTRON = PLANCK_CONSTANT / NEUTRON_MASS
 
+#any run before, tmin and tmax will be used a different algorithm
+RUN_NUMBER_0_BETTER_CHOPPER_COVERAGE = 137261 
+
 class LRData(object):
 
     read_options = dict(is_auto_tof_finder = True,
@@ -37,6 +40,8 @@ class LRData(object):
     full_file_name = ['']
     filename = ''
     ipts = 'N/A'
+    
+    is_better_chopper_coverage = True
     
     def __init__(self, workspace, lconfig=None, is_data=True):
         
@@ -59,6 +64,10 @@ class LRData(object):
 
         self.ipts = mt_run.getProperty('experiment_identifier').value
         self.run_number = mt_run.getProperty('run_number').value
+        
+        if float(self.run_number) < RUN_NUMBER_0_BETTER_CHOPPER_COVERAGE:
+            self.is_better_chopper_coverage = False
+        
         self.lambda_requested = float(mt_run.getProperty('LambdaRequest').value[0])
         self.lambda_requested_units = mt_run.getProperty('LambdaRequest').units
         self.thi = mt_run.getProperty('thi').value[0]
@@ -114,13 +123,21 @@ class LRData(object):
             autotmin = np.float(lconfig.tof_range[0])
             autotmax = np.float(lconfig.tof_range[1])
         else:
-            autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff - tof_coeff_narrow) * 1e-4
-            autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff + \
-                                                      tof_coeff_narrow) * 1e-4
+            if self.is_better_chopper_coverage:
+                autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - tof_coeff_narrow) * 1e-4
+                autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff_narrow) * 1e-4
+            else:
+                autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff - tof_coeff_narrow) * 1e-4
+                autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff + \
+                tof_coeff_narrow) * 1e-4
 
         # automatically calcualte the TOF range for display
-        tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff + tof_coeff_large) * 1e-4
-        tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff - tof_coeff_large) * 1e-4
+        if self.is_better_chopper_coverage:
+            tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - tof_coeff_large) * 1e-4
+            tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff_large) * 1e-4
+        else:
+            tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff - tof_coeff_large) * 1e-4
+            tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff + tof_coeff_large) * 1e-4
 
         if tmin < 0:
             tmin = 0
