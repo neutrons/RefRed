@@ -54,7 +54,7 @@ class ExportDataReductionScript(object):
         filename = str(QtGui.QFileDialog.getSaveFileName(parent, 
                                                          'Python Script',
                                                          default_filename))
-        if filename.strip() == '':
+        if filename == '':
             return
         self.export_filename = filename
         self.parent.path_ascii = os.path.dirname(filename)
@@ -67,6 +67,8 @@ class ExportDataReductionScript(object):
         self.make_reduction_script()
         
     def create_file(self):
+        if self.export_filename == '':
+            return
         createAsciiFile(self.export_filename, self.full_script)
         
     def make_header_script(self):

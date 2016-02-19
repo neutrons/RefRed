@@ -63,6 +63,7 @@ class LoadingConfiguration(object):
 
 	def live_preview_config_status(self):
 		self.parent.ui.previewLive.setEnabled(True)
+		self.parent.ui.actionExportScript.setEnabled(True)
 		
 	def reset_gui_modified_status(self):
 		o_gui_utility = GuiUtility(parent = self.parent)
