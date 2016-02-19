@@ -108,7 +108,7 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
 
     def loading_lr_data(self):
         wks = self.wks
-        lrdata = LRData(wks)
+        lrdata = LRData(wks, parent = self.parent)
         self.lrdata = lrdata
         big_table_data = self.parent.big_table_data
         col_index = 0 if self.is_working_with_data_column else 1

@@ -84,7 +84,7 @@ class DisplayReductionTable(object):
                                         metadata_only = False,
                                         check_nexus_compatibility = False)
             wks = nexus_loader.wks
-            lrdata = LRData(wks)
+            lrdata = LRData(wks, parent= self.parent)
             col_index = 0 if is_data_displayed else 1
             big_table_data[row, col_index] = lrdata
             self.parent.big_table_data = big_table_data

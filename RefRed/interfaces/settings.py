@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//settings.ui'
 #
-# Created: Fri Feb 19 13:07:38 2016
+# Created: Fri Feb 19 16:21:06 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -19,10 +19,14 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName("verticalLayout")
+        self.label = QtGui.QLabel(self.centralwidget)
+        self.label.setObjectName("label")
+        self.verticalLayout.addWidget(self.label)
         self.tableWidget = QtGui.QTableWidget(self.centralwidget)
         self.tableWidget.setEnabled(False)
+        self.tableWidget.setAlternatingRowColors(True)
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(2)
+        self.tableWidget.setColumnCount(1)
         self.tableWidget.setRowCount(2)
         item = QtGui.QTableWidgetItem()
         self.tableWidget.setVerticalHeaderItem(0, item)
@@ -30,8 +34,6 @@ class Ui_MainWindow(object):
         self.tableWidget.setVerticalHeaderItem(1, item)
         item = QtGui.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, item)
-        item = QtGui.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(1, item)
         self.verticalLayout.addWidget(self.tableWidget)
         self.lockButton = QtGui.QPushButton(self.centralwidget)
         self.lockButton.setObjectName("lockButton")
@@ -64,10 +66,10 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Settings", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("MainWindow", "Default Values", None, QtGui.QApplication.UnicodeUTF8))
         self.tableWidget.verticalHeaderItem(0).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))
         self.tableWidget.verticalHeaderItem(1).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))
         self.tableWidget.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
-        self.tableWidget.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
         self.lockButton.setText(QtGui.QApplication.translate("MainWindow", "UNLOCK !", None, QtGui.QApplication.UnicodeUTF8))
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "File", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSave.setText(QtGui.QApplication.translate("MainWindow", "Save", None, QtGui.QApplication.UnicodeUTF8))

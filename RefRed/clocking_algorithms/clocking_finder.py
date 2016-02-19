@@ -105,12 +105,12 @@ class ClockingFinder(object):
 
     clocking = [-1, -1]
     
-    def __init__(self, xdata=None, ydata=None, edata=None):
+    def __init__(self, parent=None, xdata=None, ydata=None, edata=None):
         self.clocking = [-1, -1]
-        
+        self.parent = parent
         # make 121 and 197 the default pixel choices for the clocking correction, pending development
         # of a better peak-finding algorithm
-        self.clocking = [121, 197]
+        self.clocking = self.parent.gui_metadata['clocking_pixel']
         return
         
         o_clocking_algo = ClockingAlgorithm(xdata = xdata,

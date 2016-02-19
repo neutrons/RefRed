@@ -19,9 +19,19 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Default Values</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QTableWidget" name="tableWidget">
       <property name="enabled">
        <bool>false</bool>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>true</bool>
       </property>
       <row>
        <property name="text">
@@ -33,11 +43,6 @@
         <string>New Row</string>
        </property>
       </row>
-      <column>
-       <property name="text">
-        <string>New Column</string>
-       </property>
-      </column>
       <column>
        <property name="text">
         <string>New Column</string>

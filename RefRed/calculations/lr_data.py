@@ -43,8 +43,9 @@ class LRData(object):
     
     is_better_chopper_coverage = True
     
-    def __init__(self, workspace, lconfig=None, is_data=True):
+    def __init__(self, workspace, lconfig=None, is_data=True, parent=None):
         
+        self.parent = parent
         self._tof_axis = []
         self.Ixyt = []
         self.Exyt= []
@@ -188,7 +189,9 @@ class LRData(object):
             [lowres1, lowres2] = lw_pf.get_low_res()
             self.low_res = [str(lowres1), str(lowres2)]
             
-            clocking_pf = ClockingFinder(range(len(self.ycountsdata)), self.ycountsdata)
+            clocking_pf = ClockingFinder(parent = self.parent,
+                                         xdata = range(len(self.ycountsdata)), 
+                                         ydata = self.ycountsdata)
             [clocking1, clocking2] = clocking_pf.clocking
             
             clock_array = [clocking1, clocking2]

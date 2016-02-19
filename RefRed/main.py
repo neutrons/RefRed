@@ -37,6 +37,7 @@ from RefRed.reduction_table_handling.reduction_table_check_box import ReductionT
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
 from RefRed.reduction_table_handling.reduction_table_right_click import ReductionTableRightClick
 from RefRed.update_data_norm_tab import UpdateDataNormTab
+from RefRed.settings.initialize_settings import InitializeSettings
 from RefRed.settings.settings_editor import SettingsEditor
 from RefRed.sf_calculator.sf_calculator import SFCalculator
 from RefRed.sf_preview.sf_preview import SFPreview
@@ -97,6 +98,7 @@ class MainGui(QtGui.QMainWindow):
         self.ui=Ui_MainWindow()
         self.ui.setupUi(self)        
         
+        InitializeSettings(self)
         InitializeGui(self)
         self.ui.reductionTable.setUI(self)   
         MakeGuiConnections(parent = self)

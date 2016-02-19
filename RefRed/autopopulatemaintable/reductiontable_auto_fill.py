@@ -261,7 +261,7 @@ class ReductionTableAutoFill(object):
         QApplication.processEvents()
         
         for index in range(len(_list_wks_loaded)):
-            _lrdata = LRData(_list_wks_loaded[index])
+            _lrdata = LRData(_list_wks_loaded[index], parent = self.parent)
             _list_lrdata.append(_lrdata)
             self.parent.ui.progressBar_check2.setValue(index+1)
             QApplication.processEvents()

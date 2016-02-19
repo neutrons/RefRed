@@ -39,7 +39,8 @@ class LoadReductionTableFromLConfigDataSet(object):
                                            prefix = 'data')
             data_lrdata = LRData(_add_data_nexus.wks, 
                                  lconfig = lconfig, 
-                                 is_data = True)
+                                 is_data = True,
+                                 parent = self.parent)
             self.update_lrdata(lrdata = data_lrdata, 
                                lconfig = lconfig, 
                                type = 'data',
@@ -55,7 +56,8 @@ class LoadReductionTableFromLConfigDataSet(object):
                                                check_nexus_compatibility = False,
                                                prefix = 'norm')
                 norm_lrdata = LRData(_add_norm_nexus.wks, 
-                                     is_data = False)
+                                     is_data = False,
+                                     parent = self.parent)
                 self.update_lrdata(lrdata = norm_lrdata, 
                                    lconfig = lconfig, 
                                    type = 'norm',
