@@ -37,6 +37,7 @@ from RefRed.reduction_table_handling.reduction_table_check_box import ReductionT
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
 from RefRed.reduction_table_handling.reduction_table_right_click import ReductionTableRightClick
 from RefRed.update_data_norm_tab import UpdateDataNormTab
+from RefRed.settings.settings_editor import SettingsEditor
 from RefRed.sf_calculator.sf_calculator import SFCalculator
 from RefRed.sf_preview.sf_preview import SFPreview
 from RefRed.decorators import config_file_has_been_modified, config_file_modification_reset
@@ -514,6 +515,10 @@ class MainGui(QtGui.QMainWindow):
     def about_message(self):
         o_about_message = AboutDialog(parent = self)
         o_about_message.display()
+        
+    def settings_editor(self):
+        o_settings_editor = SettingsEditor(parent = self)
+        o_settings_editor.show()
         
     def closeEvent(self, event=None):
         SaveUserConfiguration(parent = self)
