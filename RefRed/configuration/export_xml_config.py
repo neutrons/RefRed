@@ -199,7 +199,7 @@ class ExportXMLConfig(object):
 	    
 	    q_step = str(self.parent.ui.qStep.text())
 	    str_array.append('   <q_step>' + q_step + '</q_step>\n')
-	    q_min = self.parent.gui_metadata['q_min']
+	    q_min = str(self.parent.gui_metadata['q_min'])
 	    str_array.append('   <q_min>' + q_min + '</q_min>\n')
 	    
             scalingFactorFlag = self.parent.ui.scalingFactorFlag.isChecked()
