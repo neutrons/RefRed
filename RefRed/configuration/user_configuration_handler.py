@@ -2,6 +2,7 @@ from PyQt4.QtCore import QSettings
 import os
 from RefRed.configuration.user_configuration import UserConfiguration
 from RefRed.utilities import str2bool
+from RefRed.settings.list_settings import ListSettings
 
 
 class RetrieveUserConfiguration(object):
@@ -40,4 +41,11 @@ class SaveUserConfiguration(object):
         settings.setValue('is_reduced_plot_stitching_tab_ylog', \
                           str(o_user_config.is_reduced_plot_stitching_tab_ylog))
         
+        _gui_metadata = self.parent.gui_metadata
+        for _key in _gui_metadata.keys():
+            if _key == 'clocking_pixel':
+                _value = "%d, %d" %(_gui_metadata[_key][0], _gui_metadata[_key][1])
+            else:
+                _value = str(_gui_metadata[_key])
+            settings.setValue(_key, _value)
         
