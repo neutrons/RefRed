@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//settings.ui'
 #
-# Created: Mon Feb 22 09:36:54 2016
+# Created: Mon Feb 22 12:58:57 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -55,16 +55,15 @@ class Ui_MainWindow(object):
         self.actionSave.setEnabled(False)
         self.actionSave.setObjectName("actionSave")
         self.actionReset = QtGui.QAction(MainWindow)
-        self.actionReset.setEnabled(False)
+        self.actionReset.setEnabled(True)
         self.actionReset.setObjectName("actionReset")
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionReset)
-        self.menuFile.addSeparator()
-        self.menuFile.addAction(self.actionSave)
         self.menubar.addAction(self.menuFile.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QObject.connect(self.lockButton, QtCore.SIGNAL("clicked()"), MainWindow.edit_button)
+        QtCore.QObject.connect(self.actionReset, QtCore.SIGNAL("activated()"), MainWindow.reset_button)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

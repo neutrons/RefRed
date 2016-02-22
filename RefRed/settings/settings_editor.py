@@ -3,6 +3,7 @@ from PyQt4.QtCore import QSettings
 from RefRed.interfaces.settings import Ui_MainWindow as UiMainWindow
 from RefRed.settings.settings_password_editor import SettingsPasswordEditor
 from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.settings.list_settings import ListSettings
 
 
 class SettingsEditor(QtGui.QMainWindow):
@@ -38,6 +39,23 @@ class SettingsEditor(QtGui.QMainWindow):
                 _value = str(_gui_metadata[_key])
             _item.setText(_value)
             self.ui.tableWidget.setItem(_index, 0, _item)
+        
+    def reset_button(self):
+        """ reset all the settings to default value hard coded in program """
+        o_list_settings = ListSettings()
+        _list_keys = o_list_settings.__dict__.keys()
+        
+        _settings = QSettings()
+        _gui_metadata = {}
+        for _key in _list_keys:
+            _value = str(_settings.value(_key).toString())
+            if _value == '':
+                _value = o_list_settings.__dict__[_key]
+                _gui_metadata[_key] = _value
+        self.parent.gui_metadata = _gui_metadata        
+
+        # refresh table
+        self.populate_table()
 
     def edit_button(self):
         if str(self.ui.lockButton.text()) == "LOCK !":

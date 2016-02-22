@@ -81,8 +81,6 @@
     </property>
     <addaction name="separator"/>
     <addaction name="actionReset"/>
-    <addaction name="separator"/>
-    <addaction name="actionSave"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -97,7 +95,7 @@
   </action>
   <action name="actionReset">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Reset</string>
@@ -122,8 +120,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionReset</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>reset_button()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>edit_button()</slot>
+  <slot>reset_button()</slot>
  </slots>
 </ui>
