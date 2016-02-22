@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//settings.ui'
 #
-# Created: Fri Feb 19 16:21:06 2016
+# Created: Mon Feb 22 09:36:54 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -35,6 +35,9 @@ class Ui_MainWindow(object):
         item = QtGui.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, item)
         self.verticalLayout.addWidget(self.tableWidget)
+        self.label_2 = QtGui.QLabel(self.centralwidget)
+        self.label_2.setObjectName("label_2")
+        self.verticalLayout.addWidget(self.label_2)
         self.lockButton = QtGui.QPushButton(self.centralwidget)
         self.lockButton.setObjectName("lockButton")
         self.verticalLayout.addWidget(self.lockButton)
@@ -70,6 +73,7 @@ class Ui_MainWindow(object):
         self.tableWidget.verticalHeaderItem(0).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))
         self.tableWidget.verticalHeaderItem(1).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))
         self.tableWidget.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("MainWindow", "NB: Hit ENTER to validate changes in each cell!", None, QtGui.QApplication.UnicodeUTF8))
         self.lockButton.setText(QtGui.QApplication.translate("MainWindow", "UNLOCK !", None, QtGui.QApplication.UnicodeUTF8))
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "File", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSave.setText(QtGui.QApplication.translate("MainWindow", "Save", None, QtGui.QApplication.UnicodeUTF8))

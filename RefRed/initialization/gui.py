@@ -7,7 +7,7 @@ from RefRed.configuration.export_stitching_ascii_settings import ExportStitching
 from file_menu import FileMenu as InitFileMenu
 from RefRed.reduced_config_files_handler import ReducedConfigFilesHandler
 from RefRed.plot.all_plot_axis import AllPlotAxis
-#from .gui_utils import DelayedTrigger
+from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.colors
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
 
@@ -57,26 +57,9 @@ class Gui(object):
         parent.ui.reductionTable.setFocus()	
         
         self.init_autopopulate_widgets()
-        self.init_widgets_value()
 
-    def init_widgets_value(self):
-        _gui_metadata = self.parent.gui_metadata
-        
-        #event tof bins
-        _tof_bin = _gui_metadata['tof_bin']
-        self.parent.ui.eventTofBins.setValue(_tof_bin)
-        
-        #q bin
-        _q_bin = _gui_metadata['q_min']
-        self.parent.ui.qStep.setText(str(_q_bin))
-        
-        #angle offset
-        _angle_offset = "%.3f" % _gui_metadata['angle_offset']
-        self.parent.ui.angleOffsetValue.setText(_angle_offset)
-        
-        #angle offset error
-        _angle_offset_error = "%.3f" % _gui_metadata['angle_offset_error']
-        self.parent.ui.angleOffsetError.setText(_angle_offset_error)
+        o_gui = GuiUtility(parent = self.parent)
+        o_gui.init_widgets_value()
         
     def init_autopopulate_widgets(self):
         pixmap = QtGui.QPixmap(u':/General/check_icon.png')

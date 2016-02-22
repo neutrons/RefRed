@@ -2,6 +2,7 @@ from PyQt4 import QtGui, QtCore
 from PyQt4.QtCore import QSettings
 from RefRed.interfaces.settings import Ui_MainWindow as UiMainWindow
 from RefRed.settings.settings_password_editor import SettingsPasswordEditor
+from RefRed.gui_handling.gui_utility import GuiUtility
 
 
 class SettingsEditor(QtGui.QMainWindow):
@@ -30,7 +31,11 @@ class SettingsEditor(QtGui.QMainWindow):
             _item.setFlags(QtCore.Qt.ItemIsSelectable | 
                            QtCore.Qt.ItemIsEnabled | 
                            QtCore.Qt.ItemIsEditable)
-            _value = str(_gui_metadata[_key])
+            if _key == 'clocking_pixel':
+                [_pixel1, _pixel2] = _gui_metadata[_key]
+                _value = "%d, %d" %(_pixel1, _pixel2)
+            else:
+                _value = str(_gui_metadata[_key])
             _item.setText(_value)
             self.ui.tableWidget.setItem(_index, 0, _item)
 
@@ -49,4 +54,21 @@ class SettingsEditor(QtGui.QMainWindow):
         self.ui.actionReset.setEnabled(self.is_super_user)
         self.ui.actionSave.setEnabled(self.is_super_user)
 
-            
+    def closeEvent(self, event=None):
+        # saving back all the settings
+        nbr_row = self.ui.tableWidget.rowCount()
+        _gui_metadata = {}
+        for _row in range(nbr_row):
+            _label = str(self.ui.tableWidget.verticalHeaderItem(_row).text())
+            if _label == 'clocking_pixel':
+                _value = str(self.ui.tableWidget.item(_row, 0).text())
+                [_pixel1, _pixel2] = _value.split(",")
+                _value = [int(_pixel1), int(_pixel2)]
+            else:
+                _value = float(self.ui.tableWidget.item(_row, 0).text())
+            _gui_metadata[_label] = _value
+        self.parent.gui_metadata = _gui_metadata
+        
+        #update GUI widgets
+        o_gui = GuiUtility(parent = self.parent)
+        o_gui.init_widgets_value()
