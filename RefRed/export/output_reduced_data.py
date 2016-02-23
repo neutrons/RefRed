@@ -245,6 +245,12 @@ class OutputReducedData(QDialog):
 
 		_text_data = self.format_metadata()
 
+		print("Creating output file")
+		print("====================")
+		print("OutputBinning: %r" %_q_range)
+		print("DQConstant: %r" %(float(self.ui.dq0Value.text())))
+		print("DQSlope: %r" %(float(self.ui.dQoverQvalue.text())))
+
 		LRReflectivityOutput(ReducedWorkspaces = _list_wks,
 		                     OutputBinning = _q_range,
 		                     DQConstant = float(self.ui.dq0Value.text()),
