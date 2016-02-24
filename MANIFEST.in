@@ -3,3 +3,5 @@ include README
 include scripts/RefREd
 include RefRed/*
 include compile_gui.pl
+recursive-include icons *.png *.svg *.ico
+
