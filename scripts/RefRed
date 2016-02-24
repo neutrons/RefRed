@@ -33,6 +33,7 @@ def _run(argv=[]):
                        </html>"""%version.str_version,
                                  alignment=Qt.AlignBottom|Qt.AlignHCenter)
     splash.show()
+    QApplication.processEvents()
 
     window=MainGui(argv)
     window.show()
