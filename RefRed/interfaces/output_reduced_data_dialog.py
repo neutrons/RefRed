@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//output_reduced_data_dialog.ui'
 #
-# Created: Mon Feb 22 12:58:55 2016
+# Created: Wed Feb 24 15:09:57 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -32,11 +32,11 @@ class Ui_Dialog(object):
         self.horizontalLayout_3.setContentsMargins(-1, 0, -1, 0)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.auto_qmin_button = QtGui.QRadioButton(self.frame_2)
-        self.auto_qmin_button.setChecked(True)
+        self.auto_qmin_button.setChecked(False)
         self.auto_qmin_button.setObjectName("auto_qmin_button")
         self.horizontalLayout_3.addWidget(self.auto_qmin_button)
         self.manual_qmin_frame = QtGui.QFrame(self.frame_2)
-        self.manual_qmin_frame.setEnabled(False)
+        self.manual_qmin_frame.setEnabled(True)
         self.manual_qmin_frame.setMaximumSize(QtCore.QSize(16777215, 50))
         self.manual_qmin_frame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.manual_qmin_frame.setFrameShadow(QtGui.QFrame.Raised)

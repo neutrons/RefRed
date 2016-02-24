@@ -69,7 +69,7 @@ class OutputReducedData(QDialog):
 		self.ui.usingMeanValueFalg.setChecked(not self.use_lowest_error_value_flag)
 		
 		_gui_metadata = self.parent.gui_metadata
-		_q_min = _gui_metadata['q_min']
+		_q_min = str(_gui_metadata['q_min'])
 		self.ui.manual_qmin_value.setText(_q_min)
 
 	def auto_qmin_button(self, state):
