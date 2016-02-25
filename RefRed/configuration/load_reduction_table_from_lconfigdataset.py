@@ -31,7 +31,8 @@ class LoadReductionTableFromLConfigDataSet(object):
             
             list_data_run = lconfig.data_sets
             o_list_data_nexus = LocateListRun(list_run = list_data_run)
-            list_data_nexus= o_list_data_nexus.list_run_found
+            list_data_nexus= o_list_data_nexus.list_nexus_found
+#            list_data_nexus= o_list_data_nexus.list_run_found
             _add_data_nexus = AddListNexus(list_nexus = list_data_nexus,
                                            list_run = list_data_run,
                                            metadata_only = False,
@@ -48,7 +49,7 @@ class LoadReductionTableFromLConfigDataSet(object):
                         
             list_norm_run = lconfig.norm_sets
             o_list_norm_nexus = LocateListRun(list_run = list_norm_run)
-            list_norm_nexus = o_list_norm_nexus.list_run_found
+            list_norm_nexus = o_list_norm_nexus.list_nexus_found
             if list_norm_nexus != []:
                 _add_norm_nexus = AddListNexus(list_nexus = list_norm_nexus,
                                                list_run = list_norm_run,
