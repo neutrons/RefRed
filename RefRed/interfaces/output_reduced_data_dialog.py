@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//output_reduced_data_dialog.ui'
 #
-# Created: Wed Feb 24 15:09:57 2016
+# Created: Mon Feb 29 09:29:20 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -87,18 +87,6 @@ class Ui_Dialog(object):
         self.horizontalLayout_2.addItem(spacerItem2)
         self.verticalLayout_5.addLayout(self.horizontalLayout_2)
         self.verticalLayout.addWidget(self.groupBox)
-        self.groupBox_3 = QtGui.QGroupBox(Dialog)
-        self.groupBox_3.setObjectName("groupBox_3")
-        self.verticalLayout_3 = QtGui.QVBoxLayout(self.groupBox_3)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.usingLessErrorValueFlag = QtGui.QRadioButton(self.groupBox_3)
-        self.usingLessErrorValueFlag.setChecked(True)
-        self.usingLessErrorValueFlag.setObjectName("usingLessErrorValueFlag")
-        self.verticalLayout_3.addWidget(self.usingLessErrorValueFlag)
-        self.usingMeanValueFalg = QtGui.QRadioButton(self.groupBox_3)
-        self.usingMeanValueFalg.setObjectName("usingMeanValueFalg")
-        self.verticalLayout_3.addWidget(self.usingMeanValueFalg)
-        self.verticalLayout.addWidget(self.groupBox_3)
         self.groupBox_2 = QtGui.QGroupBox(Dialog)
         self.groupBox_2.setObjectName("groupBox_2")
         self.verticalLayout_4 = QtGui.QVBoxLayout(self.groupBox_2)
@@ -180,9 +168,6 @@ class Ui_Dialog(object):
 "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">ΔQ<span style=\" vertical-align:sub;\">1</span>/Q</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.dQoverQvalue.setText(QtGui.QApplication.translate("Dialog", "0.005", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_3.setTitle(QtGui.QApplication.translate("Dialog", "  How to treat overlap values", None, QtGui.QApplication.UnicodeUTF8))
-        self.usingLessErrorValueFlag.setText(QtGui.QApplication.translate("Dialog", "use lowest error value", None, QtGui.QApplication.UnicodeUTF8))
-        self.usingMeanValueFalg.setText(QtGui.QApplication.translate("Dialog", "use mean value", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_2.setTitle(QtGui.QApplication.translate("Dialog", "  Output format", None, QtGui.QApplication.UnicodeUTF8))
         self.one_ascii_format.setText(QtGui.QApplication.translate("Dialog", "1 Ascii File for All Reduced Data Set", None, QtGui.QApplication.UnicodeUTF8))
         self.n_ascii_format.setText(QtGui.QApplication.translate("Dialog", "n Ascii Files (one for Each Reduced Data Set)", None, QtGui.QApplication.UnicodeUTF8))

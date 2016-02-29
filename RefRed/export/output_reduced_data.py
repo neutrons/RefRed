@@ -60,13 +60,13 @@ class OutputReducedData(QDialog):
 		self.dq0 = str(_export_stitching_ascii_settings.fourth_column_dq0)
 		self.dq_over_q = str(_export_stitching_ascii_settings.fourth_column_dq_over_q)
 		self.is_with_4th_column_flag = bool(_export_stitching_ascii_settings.fourth_column_flag)
-		self.use_lowest_error_value_flag = bool(_export_stitching_ascii_settings.use_lowest_error_value_flag)
+		#self.use_lowest_error_value_flag = bool(_export_stitching_ascii_settings.use_lowest_error_value_flag)
 		
 		self.ui.dq0Value.setText(self.dq0)
 		self.ui.dQoverQvalue.setText(self.dq_over_q)
 		self.ui.output4thColumnFlag.setChecked(self.is_with_4th_column_flag)
-		self.ui.usingLessErrorValueFlag.setChecked(self.use_lowest_error_value_flag)
-		self.ui.usingMeanValueFalg.setChecked(not self.use_lowest_error_value_flag)
+		#self.ui.usingLessErrorValueFlag.setChecked(self.use_lowest_error_value_flag)
+		#self.ui.usingMeanValueFalg.setChecked(not self.use_lowest_error_value_flag)
 		
 		_gui_metadata = self.parent.gui_metadata
 		_q_min = str(_gui_metadata['q_min'])
@@ -137,7 +137,7 @@ class OutputReducedData(QDialog):
 		#try:
 		self.write_1_common_ascii()
 #		self.close()
-		self.save_back_widget_parameters_used()
+		#self.save_back_widget_parameters_used()
 		#except:
 		#     pass
 		
@@ -145,7 +145,7 @@ class OutputReducedData(QDialog):
 		_is_with_4th_column_flag = self.ui.output4thColumnFlag.isChecked()
 		_dq0 = self.ui.dq0Value.text()
 		_dq_over_q = self.ui.dQoverQvalue.text()
-		_use_lowest_error_value_flag = self.ui.usingLessErrorValueFlag.isChecked()
+		#_use_lowest_error_value_flag = self.ui.usingLessErrorValueFlag.isChecked()
 		
 		_export_stitching_ascii_settings = ExportStitchingAsciiSettings()
 		_export_stitching_ascii_settings.fourth_column_dq0 = _dq0
@@ -164,7 +164,7 @@ class OutputReducedData(QDialog):
 		self.is_with_4th_column_flag = self.ui.output4thColumnFlag.isChecked()
 		dq_over_q = self.ui.dQoverQvalue.text()
 		self.dq_over_q = float(dq_over_q)
-		self.use_lowest_error_value_flag = self.ui.usingLessErrorValueFlag.isChecked()
+		#self.use_lowest_error_value_flag = self.ui.usingLessErrorValueFlag.isChecked()
 
 		for _row in range(nbr_row):
 			self.filename = self.format_n_filename(row = _row)
@@ -215,7 +215,7 @@ class OutputReducedData(QDialog):
 		else:
 			text.append('# Q[1/Angstroms] R delta_R')
 			
-		self.use_lowest_error_value_flag = self.ui.usingLessErrorValueFlag.isChecked()
+		#self.use_lowest_error_value_flag = self.ui.usingLessErrorValueFlag.isChecked()
 		self.text_data = text
 		
 		#using new outputScript from Mantid
