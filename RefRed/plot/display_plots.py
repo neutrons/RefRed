@@ -161,13 +161,13 @@ class DisplayPlots(object):
         parent.ui.metadataS1HValue.setText('%.2f'%d.S1H)
         parent.ui.metadataRunNumber.setText('%s'%d.run_number)
         if d.isSiThere:
-            parent.ui.S2SiWlabel.setText('SiW')
-            parent.ui.S2SiHlabel.setText('SiH')
+            parent.ui.S2SiWlabel.setText('SiW:')
+            parent.ui.S2SiHlabel.setText('SiH:')
             parent.ui.metadataS2WValue.setText('%.2f'%d.SiW)
             parent.ui.metadataS2HValue.setText('%.2f'%d.SiH)
         else:
-            parent.ui.S2SiWlabel.setText('S2W')
-            parent.ui.S2SiHlabel.setText('S2H')
+            parent.ui.S2SiWlabel.setText('S2W:')
+            parent.ui.S2SiHlabel.setText('S2H:')
             parent.ui.metadataS2WValue.setText('%.2f'%d.S2W)
             parent.ui.metadataS2HValue.setText('%.2f'%d.S2H)
         nexus = d.filename
