@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Mon Feb 29 09:52:12 2016
+# Created: Tue Mar  1 13:54:24 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -1848,12 +1848,16 @@ class Ui_MainWindow(object):
         self.previewBrowse.setObjectName("previewBrowse")
         self.actionSettings = QtGui.QAction(MainWindow)
         self.actionSettings.setObjectName("actionSettings")
+        self.actionNew = QtGui.QAction(MainWindow)
+        self.actionNew.setObjectName("actionNew")
         self.menuHelp.addSeparator()
         self.menuHelp.addAction(self.actionAbout)
         self.menuHelp.addSeparator()
         self.menuHelp.addAction(self.actionSettings)
         self.menuPreview.addAction(self.previewLive)
         self.menuPreview.addAction(self.previewBrowse)
+        self.menuFile.addAction(self.actionNew)
+        self.menuFile.addSeparator()
         self.menuFile.addAction(self.action_load_configuration)
         self.menuFile.addAction(self.action_save_as_configuration)
         self.menuFile.addAction(self.action_save_configuration)
@@ -1932,6 +1936,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.previewLive, QtCore.SIGNAL("activated()"), MainWindow.preview_live_config)
         QtCore.QObject.connect(self.previewBrowse, QtCore.SIGNAL("activated()"), MainWindow.preview_browse_config)
         QtCore.QObject.connect(self.actionSettings, QtCore.SIGNAL("activated()"), MainWindow.settings_editor)
+        QtCore.QObject.connect(self.actionNew, QtCore.SIGNAL("activated()"), MainWindow.action_new)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -2211,6 +2216,7 @@ class Ui_MainWindow(object):
         self.previewLive.setText(QtGui.QApplication.translate("MainWindow", "Current File", None, QtGui.QApplication.UnicodeUTF8))
         self.previewBrowse.setText(QtGui.QApplication.translate("MainWindow", "Browse ...", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSettings.setText(QtGui.QApplication.translate("MainWindow", "Settings ...", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionNew.setText(QtGui.QApplication.translate("MainWindow", "New", None, QtGui.QApplication.UnicodeUTF8))
 
 from mplwidgetnolog import MPLWidgetNoLog
 from .mplwidget import MPLWidget

@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//preview_configuration.ui'
 #
-# Created: Mon Feb 29 09:52:12 2016
+# Created: Tue Mar  1 13:54:24 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!

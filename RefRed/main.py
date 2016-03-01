@@ -19,6 +19,7 @@ from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.stitching_yscale_options_radio_button_handler import StitchingYScaleOptionsRadioButtonHandler
 from RefRed.gui_handling.sf_widgets_handler import SfWidgetsHandler
 from RefRed.gui_handling.first_angle_range_gui_handler import *
+from RefRed.gui_handling.refred_interface_handler import RefRedInterfaceHandler
 from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
 from RefRed.interfaces.refred_main_interface import Ui_MainWindow
@@ -36,6 +37,7 @@ from RefRed.reduction.reduced_data_handler import ReducedDataHandler
 from RefRed.reduction_table_handling.reduction_table_check_box import ReductionTableCheckBox
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
 from RefRed.reduction_table_handling.reduction_table_right_click import ReductionTableRightClick
+from RefRed.reduction_table_handling.reduction_table_handler import ReductionTableHandler
 from RefRed.update_data_norm_tab import UpdateDataNormTab
 from RefRed.settings.initialize_settings import InitializeSettings
 from RefRed.settings.settings_editor import SettingsEditor
@@ -334,6 +336,13 @@ class MainGui(QtGui.QMainWindow):
         self.ui.norm_sequence_lineEdit.setText('')
 
     # Menu buttons
+    def action_new(self):
+        o_reduction_table_handler = ReductionTableHandler(parent = self)
+        o_reduction_table_handler.full_clear()
+        
+        o_interface_handler = RefRedInterfaceHandler(parent = self)
+        o_interface_handler.full_reset()
+
     def load_configuration(self):
         o_load_config = LoadingConfiguration(parent = self)
         o_load_config.run()
