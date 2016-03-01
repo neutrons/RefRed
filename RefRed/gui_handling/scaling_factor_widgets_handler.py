@@ -33,11 +33,13 @@ class ScalingFactorWidgetsHandler(object):
     def fill_incident_medium_list(self, filename):
         try:
             _listMedium = self.parse_scaling_factor_file(filename)
+            self.parent.ui.selectIncidentMediumList.clear()
             self.parent.ui.selectIncidentMediumList.addItems(_listMedium)
             self.parent.ui.scalingFactorFile.setText(os.path.basename(filename))
             self.parent.full_scaling_factor_file_name = filename
         except:
             _listMedium = 'N/A'
+
         if self.parent.ui.selectIncidentMediumList.count() > 1:
             index = 1
         else:
@@ -69,6 +71,7 @@ class ScalingFactorWidgetsHandler(object):
             _line_split = table[i][0].split('=')
             first_column_only.append(_line_split[1])
 
-        return sorted(set(first_column_only))
-
+        _sorted_list = sorted(set(first_column_only))
+        _sorted_list.insert(0, 'Select Incident Medium ...')
+        return _sorted_list
         
