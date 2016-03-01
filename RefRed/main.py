@@ -8,6 +8,7 @@ from RefRed.config_file_launcher import ConfigFileLauncher
 from RefRed.configuration.loading_configuration import LoadingConfiguration
 from RefRed.configuration.saving_configuration import SavingConfiguration
 from RefRed.configuration.user_configuration_handler import RetrieveUserConfiguration, SaveUserConfiguration
+from RefRed.configuration.template_management import TemplateManagement
 from RefRed.export.export_plot_ascii import ExportPlotAscii
 from RefRed.gui_handling.data_norm_spinboxes import DataPeakSpinbox, NormPeakSpinbox
 from RefRed.gui_handling.data_norm_spinboxes import DataBackSpinbox, NormBackSpinbox
@@ -383,13 +384,9 @@ class MainGui(QtGui.QMainWindow):
         o_live_reduction = LiveReductionHandler(parent = self)
         o_live_reduction.run()
 
-        #o_reduction = ReductionHandler(parent = self)
-        #o_reduction.run()
-        #o_reduction.stitch()
-        
-        #o_reduced_plot = ReducedDataHandler(parent = self)
-        #o_reduced_plot.populate_table()
-        #o_reduced_plot.plot()
+    def launch_template_management(self):
+        o_template = TemplateManagement(parent = self)
+        o_template.show()
 
     def export_reduction_script_button(self):
         o_reduction = ReductionHandler(parent = self)
