@@ -388,6 +388,7 @@ class MainGui(QtGui.QMainWindow):
     def launch_template_management(self):
         o_template = TemplateManagement(parent = self)
         o_template.show()
+        o_template.load_default_directory()
 
     def export_reduction_script_button(self):
         o_reduction = ReductionHandler(parent = self)
