@@ -3,6 +3,7 @@ import os
 import numpy as np
 from PyQt4 import QtGui, QtCore
 from RefRed.interfaces.template_management import Ui_MainWindow
+from RefRed.interfaces.confirm_auto_reduce_dialog import Ui_Dialog
 from RefRed.preview_config.preview_config import PreviewConfig
 
 
@@ -67,6 +68,10 @@ class TemplateManagement(QtGui.QMainWindow):
         
         _default_selection = QtGui.QTableWidgetSelectionRange(0, 0, 0, 1)
         self.ui.tableWidget.setRangeSelected(_default_selection, True)
+        self.check_gui()
+        
+    def check_gui(self):
+        self.ui.template_file_button.setEnabled(True)
 
     def preview_button(self, _row):
         o_preview_config = PreviewConfig(parent = self, 
@@ -83,5 +88,37 @@ class TemplateManagement(QtGui.QMainWindow):
         self._filter = str(filter_string)
     
     def templateFileSelectedButton(self):
-        print('template')
+        _selected_row = self.ui.tableWidget.currentRow()
+        _filename = self._list_files[_selected_row]
+        o_confirm = ConfirmAutoReduceDialog(parent = self, 
+                                            filename = _filename)
+        o_confirm.show()
+
+    def closeEvent(self, event=None):
+        self.close()
+
+
+class ConfirmAutoReduceDialog(QtGui.QDialog):
     
+    def __init__(self, parent=None, filename=None):
+        self.parent = parent
+        
+        QtGui.QDialog.__init__(self, parent=parent)
+        self.ui = Ui_Dialog()
+        self.ui.setupUi(self)
+        
+        _short_file = os.path.basename(filename)
+        self.ui.file_name.setText(_short_file)
+        
+    
+    def closeEvent(self, event=None):
+        self.close()
+        
+    def accept(self):
+        # do some stuff before
+        self.parent.closeEvent()
+        self.closeEvent()
+        
+    def reject(self):
+        self.parent.closeEvent()
+        self.closeEvent()

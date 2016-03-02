@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//sf_preview_interface.ui'
 #
-# Created: Wed Mar  2 09:25:03 2016
+# Created: Wed Mar  2 12:45:48 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!

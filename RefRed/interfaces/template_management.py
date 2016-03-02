@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//template_management.ui'
 #
-# Created: Wed Mar  2 09:25:03 2016
+# Created: Wed Mar  2 12:45:48 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -53,9 +53,13 @@ class Ui_MainWindow(object):
         self.template_filter_button.setObjectName("template_filter_button")
         self.horizontalLayout.addWidget(self.template_filter_button)
         self.verticalLayout.addLayout(self.horizontalLayout)
+        self.horizontalLayout_3 = QtGui.QHBoxLayout()
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.template_file_button = QtGui.QPushButton(self.centralwidget)
+        self.template_file_button.setEnabled(False)
         self.template_file_button.setObjectName("template_file_button")
-        self.verticalLayout.addWidget(self.template_file_button)
+        self.horizontalLayout_3.addWidget(self.template_file_button)
+        self.verticalLayout.addLayout(self.horizontalLayout_3)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 965, 25))
@@ -77,5 +81,5 @@ class Ui_MainWindow(object):
         self.tableWidget.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
         self.tableWidget.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Filter:", None, QtGui.QApplication.UnicodeUTF8))
-        self.template_file_button.setText(QtGui.QApplication.translate("MainWindow", "Template File Selected Becomes AutoReduce Template", None, QtGui.QApplication.UnicodeUTF8))
+        self.template_file_button.setText(QtGui.QApplication.translate("MainWindow", "Template File Selected Becomes Automatic Reduction Template", None, QtGui.QApplication.UnicodeUTF8))
 

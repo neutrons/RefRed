@@ -114,11 +114,18 @@
      </layout>
     </item>
     <item>
-     <widget class="QPushButton" name="template_file_button">
-      <property name="text">
-       <string>Template File Selected Becomes AutoReduce Template</string>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QPushButton" name="template_file_button">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Template File Selected Becomes Automatic Reduction Template</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
@@ -176,7 +183,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>482</x>
-     <y>727</y>
+     <y>726</y>
     </hint>
     <hint type="destinationlabel">
      <x>482</x>
