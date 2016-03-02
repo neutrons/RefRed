@@ -64,8 +64,16 @@ class PreviewConfig(QtGui.QMainWindow):
     _title = "Configuration File Preview"
     _colored_row = [12, 27] #highlights data and norm rows
     
-    def __init__(self, parent=None, is_live=False, filename=None, geometry_parent=None, window_offset=[0,0]):
+    def __init__(self, parent=None, is_live=False, 
+                 filename=None, geometry_parent=None, 
+                 window_offset=[0,0], check_format=False):
         self.parent = parent
+
+        if check_format:
+            self.file_name = filename
+            self.check_format()
+            return
+        
         QtGui.QMainWindow.__init__(self, parent=parent)
         self.ui = UiMainWindow()
         self.ui.setupUi(self)
@@ -94,6 +102,24 @@ class PreviewConfig(QtGui.QMainWindow):
         self.ui.config_file_name.setText(_file_name)
         self._display_raw_file()
         self._display_table()
+
+    def check_format(self):
+        _dom = minidom.parse(self.file_name)
+        
+        # system data
+        _system_table = empty((len(self.system_name)), dtype=object)
+        for _index, _name in enumerate(self.system_name):
+            _value = str(_dom.getElementsByTagName(_name)[0].childNodes[0].data)
+            _system_table[_index] = str(_value)
+        
+            refl_data = _dom.getElementsByTagName('RefLData')
+            nbr_row = len(refl_data)
+            _data_table = empty((nbr_row, len(self.data_name)), dtype=object)
+            for _row_index, _run_node in enumerate(refl_data):
+                for _child_index, _child_name in enumerate(self.data_name):
+                    _value = self.get_node_value(_run_node, _child_name)
+                    _data_table[_row_index, _child_index] = str(_value)
+            self._data_table = _data_table
 
     def action_browse_button(self):    
         _file_name = self._browse_file_name()

@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//template_management.ui'
 #
-# Created: Wed Mar  2 13:30:38 2016
+# Created: Wed Mar  2 16:03:27 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -73,6 +73,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.select_folder_button, QtCore.SIGNAL("clicked()"), MainWindow.browseFolderButton)
         QtCore.QObject.connect(self.template_filter_button, QtCore.SIGNAL("currentIndexChanged(QString)"), MainWindow.filterTemplateButton)
         QtCore.QObject.connect(self.template_file_button, QtCore.SIGNAL("clicked()"), MainWindow.templateFileSelectedButton)
+        QtCore.QObject.connect(self.tableWidget, QtCore.SIGNAL("cellClicked(int,int)"), MainWindow.selectionChanged)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

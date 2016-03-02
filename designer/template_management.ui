@@ -191,10 +191,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tableWidget</sender>
+   <signal>cellClicked(int,int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>selectionChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>482</x>
+     <y>369</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>482</x>
+     <y>385</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>browseFolderButton()</slot>
   <slot>filterTemplateButton()</slot>
   <slot>templateFileSelectedButton()</slot>
+  <slot>selectionChanged()</slot>
  </slots>
 </ui>

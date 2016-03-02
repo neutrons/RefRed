@@ -2,6 +2,8 @@ import glob
 import os
 import numpy as np
 from PyQt4 import QtGui, QtCore
+from PyQt4.QtGui import QApplication
+
 from RefRed.interfaces.template_management import Ui_MainWindow
 from RefRed.interfaces.confirm_auto_reduce_dialog import Ui_Dialog
 from RefRed.preview_config.preview_config import PreviewConfig
@@ -70,6 +72,7 @@ class TemplateManagement(QtGui.QMainWindow):
         self._list_files = _list_files
         self.ui.tableWidget.setRowCount(len(_list_files))
 
+        _is_list_files_a_template = []
         for _row, _file in enumerate(_list_files):
             if _row == 0:
                 # put full path in window title
@@ -82,20 +85,45 @@ class TemplateManagement(QtGui.QMainWindow):
             self.ui.tableWidget.setItem(_row, 0, _item)
         
             # preview button
-            _button = QtGui.QPushButton("Preview")
+            _button_status = self.get_button_status(_file)
+            if _button_status:
+                message = "Preview"
+            else:
+                message = "Not a Template File"
+            _is_list_files_a_template.append(_button_status)
+            _button = QtGui.QPushButton(message)
+            _button.setEnabled(_button_status)
             QtCore.QObject.connect(_button, QtCore.SIGNAL("clicked()"),
                                    lambda row=_row: self.preview_button(row))
+            
             self.ui.tableWidget.setCellWidget(_row, 1, _button)
         
+        self._is_list_files_a_template = _is_list_files_a_template
         _default_selection = QtGui.QTableWidgetSelectionRange(0, 0, 0, 1)
         self.ui.tableWidget.setRangeSelected(_default_selection, True)
     
-        if len(_list_files) > 0:
-            self.check_gui(status = True)
-        else:
-            self.check_gui(status = False)
+        self.check_gui()
+
+    def get_button_status(self, _file):
+        status = True
+        try:
+            o_preview_config = PreviewConfig(parent = None, 
+                                             filename = _file,
+                                             check_format = True)
+        except:
+            status = False
+        return status
         
-    def check_gui(self, status=False):
+    def check_gui(self):
+        _is_list_files_a_template = self._is_list_files_a_template
+        if (_is_list_files_a_template == []):
+            status = False
+        else:
+            _row_selected = self.ui.tableWidget.currentRow()
+            if (_row_selected == -1):
+                status = False
+            else:
+                status = _is_list_files_a_template[_row_selected]
         self.ui.template_file_button.setEnabled(status)
 
     def preview_button(self, _row):
@@ -113,7 +141,7 @@ class TemplateManagement(QtGui.QMainWindow):
         except:
             _widget = self.ui.tableWidget.cellWidget(_row, 1)
             _widget.setEnabled(False)
-            _widget.setText("NOT A TEMPLATE!")
+            _widget.setText("Not a Template File")
         
     def _clear_table(self):
         self.ui.tableWidget.clear()
@@ -129,6 +157,9 @@ class TemplateManagement(QtGui.QMainWindow):
                                             filename = _filename,
                                             ipts = self._current_ipts)
         o_confirm.show()
+
+    def selectionChanged(self):
+        self.check_gui()
 
     def _replace_auto_template(self, full_file_name=''):
         _final_auto_reduce_template_folder = self._final_auto_reduce_template_folder

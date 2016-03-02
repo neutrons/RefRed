@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//sf_calculator_interface.ui'
 #
-# Created: Wed Mar  2 13:30:38 2016
+# Created: Wed Mar  2 16:03:27 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
