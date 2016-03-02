@@ -61,6 +61,7 @@ class MainGui(QtGui.QMainWindow):
     current_loaded_file = '~/tmp.xml'
     browsed_files = {'data': None,
                      'norm': None}
+    current_ipts = ""
     
     o_user_configuration = None # will record the various settings of the GUI defined by the user
     o_stitching_ascii_widget = None # used when loading ascii files in reduced tab

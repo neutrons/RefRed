@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//manual_x_axis_interface.ui'
 #
-# Created: Wed Mar  2 12:45:46 2016
+# Created: Wed Mar  2 13:30:36 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
