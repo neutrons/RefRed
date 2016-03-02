@@ -44,6 +44,12 @@
       <property name="alternatingRowColors">
        <bool>true</bool>
       </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SingleSelection</enum>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
+      </property>
       <attribute name="horizontalHeaderVisible">
        <bool>false</bool>
       </attribute>
@@ -68,41 +74,6 @@
       <attribute name="horizontalHeaderDefaultSectionSize">
        <number>700</number>
       </attribute>
-      <row>
-       <property name="text">
-        <string>New Row</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>New Row</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>New Row</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>New Row</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>New Row</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>New Row</string>
-       </property>
-      </row>
-      <row>
-       <property name="text">
-        <string>New Row</string>
-       </property>
-      </row>
       <column>
        <property name="text">
         <string>New Column</string>

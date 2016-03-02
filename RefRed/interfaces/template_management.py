@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//template_management.ui'
 #
-# Created: Tue Mar  1 16:56:19 2016
+# Created: Wed Mar  2 09:25:03 2016
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -28,23 +28,11 @@ class Ui_MainWindow(object):
         self.verticalLayout.addLayout(self.horizontalLayout_2)
         self.tableWidget = QtGui.QTableWidget(self.centralwidget)
         self.tableWidget.setAlternatingRowColors(True)
+        self.tableWidget.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
+        self.tableWidget.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(2)
-        self.tableWidget.setRowCount(7)
-        item = QtGui.QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(0, item)
-        item = QtGui.QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(1, item)
-        item = QtGui.QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(2, item)
-        item = QtGui.QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(3, item)
-        item = QtGui.QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(4, item)
-        item = QtGui.QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(5, item)
-        item = QtGui.QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(6, item)
+        self.tableWidget.setRowCount(0)
         item = QtGui.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, item)
         item = QtGui.QTableWidgetItem()
@@ -86,13 +74,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Template Management", None, QtGui.QApplication.UnicodeUTF8))
         self.select_folder_button.setText(QtGui.QApplication.translate("MainWindow", "Select Folder ...", None, QtGui.QApplication.UnicodeUTF8))
-        self.tableWidget.verticalHeaderItem(0).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))
-        self.tableWidget.verticalHeaderItem(1).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))
-        self.tableWidget.verticalHeaderItem(2).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))
-        self.tableWidget.verticalHeaderItem(3).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))
-        self.tableWidget.verticalHeaderItem(4).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))
-        self.tableWidget.verticalHeaderItem(5).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))
-        self.tableWidget.verticalHeaderItem(6).setText(QtGui.QApplication.translate("MainWindow", "New Row", None, QtGui.QApplication.UnicodeUTF8))
         self.tableWidget.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
         self.tableWidget.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Filter:", None, QtGui.QApplication.UnicodeUTF8))

@@ -317,7 +317,9 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
 
         _old_runs = self.loaded_list_of_runs
         _list_runs = np.unique(np.hstack([_old_runs, _new_runs]))
-        o_load_and_sort_nxsdata = LoadAndSortNXSDataForSFcalculator(_list_runs, parent=self, read_options=self.read_options)
+        o_load_and_sort_nxsdata = LoadAndSortNXSDataForSFcalculator(_list_runs, 
+                                                                    parent = self, 
+                                                                    read_options = self.read_options)
         self.update_table(o_load_and_sort_nxsdata)
         self.is_manual_edit_of_tableWidget = True
         
@@ -658,7 +660,9 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         self.fileHasBeenModified()            
 
     def fillGuiTable(self):
-        _fill_gui_object = FillSFGuiTable(parent=self, table=self.big_table, is_using_si_slits=self.is_using_si_slits)
+        _fill_gui_object = FillSFGuiTable(parent = self, 
+                                          table = self.big_table, 
+                                          is_using_si_slits = self.is_using_si_slits)
 
     def fileHasBeenModified(self):
         dialog_title = self.window_title + self.current_loaded_file

@@ -61,22 +61,34 @@ class PreviewConfig(QtGui.QMainWindow):
     
     _data_table = []
     _system_table = []
-    
+    _title = "Configuration File Preview"
     _colored_row = [12, 27] #highlights data and norm rows
     
-    def __init__(self, parent=None, is_live=False):
+    def __init__(self, parent=None, is_live=False, filename=None, geometry_parent=None, window_offset=[0,0]):
         self.parent = parent
         QtGui.QMainWindow.__init__(self, parent=parent)
         self.ui = UiMainWindow()
         self.ui.setupUi(self)
-        self.setWindowTitle("Configuration File Preview")
+        _title = self._title
+        self.setWindowTitle(_title)
         
-        if not is_live:
-            _file_name = self._browse_file_name()
-            if _file_name == "":
-                return
+        if geometry_parent:
+            current_geometry = self.geometry()
+            current_geometry.setLeft(geometry_parent.left() + geometry_parent.width() + window_offset[0])
+            current_geometry.setTop(geometry_parent.top() + window_offset[1])
+            self.setGeometry(current_geometry)
+        
+        if not filename:
+            if not is_live:
+                _file_name = self._browse_file_name()
+                if _file_name == "":
+                    return
+            else:
+                _file_name = self.parent.current_loaded_file
         else:
-            _file_name = self.parent.current_loaded_file
+            _file_name = filename
+            # disable browse button
+            self.ui.menuFile.setEnabled(False)
             
         self.file_name = _file_name
         self.ui.config_file_name.setText(_file_name)
