@@ -3,6 +3,6 @@
 # the minor version and change date gets automatically updated on a git commit
 window_title = 'Liquids Reflectometer Reduction - '
 
-version = (2, 32)
+version = (2, 33)
 last_changes = ""
 str_version = ".".join(map(str, version))
