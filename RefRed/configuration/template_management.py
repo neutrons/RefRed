@@ -62,10 +62,14 @@ class TemplateManagement(QtGui.QMainWindow):
         self._populate_table()
 
     def _populate_table(self):
+
+        QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
+
         self._clear_table()
         self.ui.tableWidget.setColumnCount(2)
 
         if self._folder is '':
+            QApplication.restoreOverrideCursor()
             return
         
         _folder = self._folder
@@ -108,6 +112,8 @@ class TemplateManagement(QtGui.QMainWindow):
         self.ui.tableWidget.setRangeSelected(_default_selection, True)
     
         self.check_gui(row_selected = 0)
+
+        QApplication.restoreOverrideCursor()
 
     def get_button_status(self, _file):
         status = True
