@@ -71,8 +71,10 @@ class TemplateManagement(QtGui.QMainWindow):
         if self._folder is '':
             QApplication.restoreOverrideCursor()
             return
-        
+                
         _folder = self._folder
+        self.setWindowTitle(self._window_title + _folder)
+
         _filter = self._filter
         _full_list_files = glob.glob(_folder + '/*')
         self.full_list_files = _full_list_files
@@ -83,10 +85,6 @@ class TemplateManagement(QtGui.QMainWindow):
 
         _is_list_files_a_template = []
         for _row, _file in enumerate(_list_files):
-            if _row == 0:
-                # put full path in window title
-                _path = os.path.dirname(_file)
-                self.setWindowTitle(self._window_title + _path)
 
             # name of file
             _short_file = os.path.basename(_file)
