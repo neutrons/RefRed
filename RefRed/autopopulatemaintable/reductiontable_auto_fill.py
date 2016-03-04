@@ -40,6 +40,17 @@ class ReductionTableAutoFill(object):
 
         self.parent = parent
 
+        if data_type_selected == 'data':
+            # add to norm box, previous loaded norm
+            _str_old_runs = self.retrieve_list_norm_previously_loaded()
+            if not _str_old_runs == "":
+                _live_norm_edit = str(self.parent.ui.norm_sequence_lineEdit.text())
+                if not (_live_norm_edit == ""):
+                    new_str = _live_norm_edit + "," + _str_old_runs
+                else:
+                    new_str = _str_old_runs
+                self.parent.ui.norm_sequence_lineEdit.setText(new_str)
+
         self.browsing_files_flag = False
         if not (self.parent.browsed_files[data_type_selected] is None):
             self.browsing_files_flag = True
@@ -326,6 +337,16 @@ class ReductionTableAutoFill(object):
         self.big_table_data = _big_table_data
         _extract_runs = ExtractLConfigDataSetRuns(_big_table_data[:, 2])
         self.list_of_run_from_lconfig = _extract_runs.list_runs()
+
+    def retrieve_list_norm_previously_loaded(self):
+        parent = self.parent
+        if parent is None:
+            return
+        _big_table_data = parent.big_table_data
+        _extract_runs = ExtractLConfigDataSetRuns(_big_table_data[:, 2], data_type = 'norm')
+        _runs = _extract_runs.list_runs()
+        _str_runs = ",".join([str(run) for run in _runs])
+        return _str_runs
 
     def remove_duplicate_runs(self):
         full_list_of_runs = self.full_list_of_runs
