@@ -54,7 +54,7 @@ class Gui(object):
         #parent.trigger.start()
 
         parent.ui.reductionTable.setCurrentCell(0,1)
-        parent.ui.reductionTable.setFocus()	
+        parent.ui.data_sequence_lineEdit.setFocus()	
         
         self.init_autopopulate_widgets()
 
