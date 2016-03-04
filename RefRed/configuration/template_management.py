@@ -24,7 +24,7 @@ class TemplateManagement(QtGui.QMainWindow):
     _folder = ''
     _current_ipts = ''
     
-    debug = True
+    debug = False
     _debug_dst_folder = '/home/j35/sandbox/template.xml'
     
     def __init__(self, parent=None):
