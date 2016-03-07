@@ -42,6 +42,7 @@ class LRData(object):
     ipts = 'N/A'
     
     is_better_chopper_coverage = True
+    total_counts = 0
     
     def __init__(self, workspace, lconfig=None, is_data=True, parent=None):
         
@@ -80,6 +81,7 @@ class LRData(object):
         self.S1W = mt_run.getProperty('S1HWidth').value[0]
         self.S1H = mt_run.getProperty('S1VHeight').value[0]
         self.parent.current_ipts = mt_run.getProperty('experiment_identifier').value
+        self.total_counts = self.workspace.getNumberEvents()
 
         try:
             self.SiW = mt_run.getProperty('SiHWidth').value[0]

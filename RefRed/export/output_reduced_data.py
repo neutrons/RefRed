@@ -389,7 +389,7 @@ class OutputReducedData(QDialog):
 		text.append("#")
 		
 		nbr_row = o_gui_utility.reductionTable_nbr_row()
-		_legend = "# DataRun\tNormRun\t2theta(degrees)\tLambdaMin(A)\tLambdaMax(A)\tQmin(1/A)\tQmax(1/A)\tScalingFactor"
+		_legend = "# DataRun\tNormRun\t2theta(degrees)\tLambdaMin(A)\tLambdaMax(A)\tQmin(1/A)\tQmax(1/A)\tScalingFactor\tTotal Counts"
 		text.append(_legend)
 		for _row in range(nbr_row):
 			_data_run = str(reduction_table.item(_row, 1).text())
@@ -400,14 +400,16 @@ class OutputReducedData(QDialog):
 			_q_min = str(reduction_table.item(_row, 6).text())
 			_q_max = str(reduction_table.item(_row, 7).text())
 			_scaling_factor = self.retrieve_scaling_factor(row = _row)
-			_value = "# %s\t%s\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s" %(_data_run,
+			_total_counts = self.retrieve_total_counts(_row)
+			_value = "# %s\t%s\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%f" %(_data_run,
 			                                              _norm_run,
 			                                              _2_theta,
 			                                              _lambda_min,
 			                                              _lambda_max,
 			                                              _q_min,
 			                                              _q_max,
-			                                              _scaling_factor)
+			                                              _scaling_factor,
+			                                              _total_counts)
 			text.append(_value)
 
 		# clocking settings
@@ -421,6 +423,13 @@ class OutputReducedData(QDialog):
 		text.append('# clock2: %s' %clocking[1])
 
 		return text
+	
+	def retrieve_total_counts(self, row):
+		parent = self.parent
+		_big_table_data = self.parent.big_table_data
+		_lrdata = _big_table_data[row, 0]
+		total_counts = _lrdata.total_counts
+		return total_counts
 	
 	def retrieve_scaling_factor(self, row=-1):
 		o_reduced_data_hanlder = ReducedDataHandler(parent = self.parent)
