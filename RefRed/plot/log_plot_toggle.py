@@ -5,6 +5,7 @@ class LogPlotToggle(object):
 	
 	def __init__(self, parent=None, status='log', plot_type=None, is_y_log=True):
 		
+		status = str(status)
 		if status == 'log':
 			isLog = True
 		else:

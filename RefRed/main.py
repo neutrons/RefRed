@@ -448,9 +448,6 @@ class MainGui(QtGui.QMainWindow):
         o_button_handler.set_index_button_clicked(index = 0)
         self.stitching_sf_radio_button()
         
-        big_table_data = self.big_table_data
-        _data = big_table_data[0, 0]
-        
     def stitching_yscale_options_radio_button_2(self):
         '''RQ^4 vs Q'''
         o_button_handler = StitchingYScaleOptionsRadioButtonHandler(parent = self)
