@@ -47,12 +47,14 @@ class AutoTofRangeRadioButtonHandler(object):
         for _row in self.all_rows:
             _data = big_table_data[_row, 0]
             _norm = big_table_data[_row, 1]
+            _lconfig = big_table_data[_row, 2]
 
             if _data is None:
                 return
             
             if is_auto_tof_selected:
                 self.new_tof_range = _data.tof_range_auto
+                _lconfig.tof_auto_flag = True
                 _data.tof_range_auto_flag = True
                 if _norm is not None:
                     _norm.tof_range_auto_flag = True
@@ -60,6 +62,7 @@ class AutoTofRangeRadioButtonHandler(object):
             else:
                 self.new_tof_range = _data.tof_range_manual
                 _data.tof_range_auto_flag = False
+                _lconfig.tof_auto_flag = False
                 if _norm is not None:
                     _norm.tof_range_auto_flag = False
                 #self.save_auto_tof_range()
