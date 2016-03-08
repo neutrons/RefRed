@@ -1,5 +1,6 @@
 import glob
 import os
+import stat
 import re
 import shutil
 import numpy as np
@@ -183,6 +184,13 @@ class TemplateManagement(QtGui.QMainWindow):
             _dst = self._debug_dst_folder
             
         shutil.copyfile(_src, _dst)
+        os.chmod(_dst, stat.S_IWUSR | 
+                 stat.S_IRUSR |
+                 stat.S_IXUSR |
+                 stat.S_IWGRP |
+                 stat.S_IRGRP |
+                 stat.S_IXGRP |
+                 stat.S_IWOTH)
 
     def closeEvent(self, event=None):
         self.close()
