@@ -3,16 +3,30 @@
 
 # Form implementation generated from reading ui file 'designer//confirm_auto_reduce_dialog.ui'
 #
-# Created: Wed Mar  2 16:03:25 2016
-#      by: PyQt4 UI code generator 4.7.4
+# Created: Mon Mar 14 12:19:06 2016
+#      by: PyQt4 UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
+try:
+    _fromUtf8 = QtCore.QString.fromUtf8
+except AttributeError:
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
+
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
+        Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.setWindowModality(QtCore.Qt.WindowModal)
         Dialog.resize(700, 180)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
@@ -26,9 +40,9 @@ class Ui_Dialog(object):
         font.setPointSize(4)
         Dialog.setFont(font)
         self.verticalLayout = QtGui.QVBoxLayout(Dialog)
-        self.verticalLayout.setObjectName("verticalLayout")
+        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.gridLayout = QtGui.QGridLayout()
-        self.gridLayout.setObjectName("gridLayout")
+        self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.label = QtGui.QLabel(Dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -36,47 +50,47 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
         self.label.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
-        font.setFamily("Abyssinica SIL")
+        font.setFamily(_fromUtf8("Abyssinica SIL"))
         font.setPointSize(12)
         self.label.setFont(font)
         self.label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.label.setObjectName("label")
+        self.label.setObjectName(_fromUtf8("label"))
         self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
         self.file_name = QtGui.QLabel(Dialog)
         self.file_name.setMinimumSize(QtCore.QSize(0, 30))
         self.file_name.setMaximumSize(QtCore.QSize(16777215, 30))
         font = QtGui.QFont()
-        font.setFamily("Abyssinica SIL")
+        font.setFamily(_fromUtf8("Abyssinica SIL"))
         font.setPointSize(12)
         self.file_name.setFont(font)
-        self.file_name.setObjectName("file_name")
+        self.file_name.setObjectName(_fromUtf8("file_name"))
         self.gridLayout.addWidget(self.file_name, 0, 1, 1, 1)
         self.label_2 = QtGui.QLabel(Dialog)
         font = QtGui.QFont()
-        font.setFamily("Abyssinica SIL")
+        font.setFamily(_fromUtf8("Abyssinica SIL"))
         font.setPointSize(12)
         self.label_2.setFont(font)
         self.label_2.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.label_2.setObjectName("label_2")
+        self.label_2.setObjectName(_fromUtf8("label_2"))
         self.gridLayout.addWidget(self.label_2, 1, 0, 1, 1)
         self.horizontalLayout = QtGui.QHBoxLayout()
-        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.ipts = QtGui.QLabel(Dialog)
         font = QtGui.QFont()
-        font.setFamily("Abyssinica SIL")
+        font.setFamily(_fromUtf8("Abyssinica SIL"))
         font.setPointSize(12)
         self.ipts.setFont(font)
-        self.ipts.setObjectName("ipts")
+        self.ipts.setObjectName(_fromUtf8("ipts"))
         self.horizontalLayout.addWidget(self.ipts)
         self.select_ipts_button = QtGui.QPushButton(Dialog)
         self.select_ipts_button.setEnabled(False)
         self.select_ipts_button.setMinimumSize(QtCore.QSize(0, 30))
         self.select_ipts_button.setMaximumSize(QtCore.QSize(100, 30))
         font = QtGui.QFont()
-        font.setFamily("Abyssinica SIL")
+        font.setFamily(_fromUtf8("Abyssinica SIL"))
         font.setPointSize(10)
         self.select_ipts_button.setFont(font)
-        self.select_ipts_button.setObjectName("select_ipts_button")
+        self.select_ipts_button.setObjectName(_fromUtf8("select_ipts_button"))
         self.horizontalLayout.addWidget(self.select_ipts_button)
         self.gridLayout.addLayout(self.horizontalLayout, 1, 1, 1, 1)
         self.verticalLayout.addLayout(self.gridLayout)
@@ -84,25 +98,25 @@ class Ui_Dialog(object):
         self.verticalLayout.addItem(spacerItem)
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
         font = QtGui.QFont()
-        font.setFamily("Abyssinica SIL")
+        font.setFamily(_fromUtf8("Abyssinica SIL"))
         font.setPointSize(10)
         self.buttonBox.setFont(font)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
-        self.buttonBox.setObjectName("buttonBox")
+        self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.verticalLayout.addWidget(self.buttonBox)
 
         self.retranslateUi(Dialog)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), Dialog.accept)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), Dialog.reject)
-        QtCore.QObject.connect(self.select_ipts_button, QtCore.SIGNAL("clicked()"), Dialog.browse_ipts)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), Dialog.accept)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), Dialog.reject)
+        QtCore.QObject.connect(self.select_ipts_button, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.browse_ipts)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "CONFIRM NEW AUTO. REDUCTION TEMPLATE", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("Dialog", "New Auto. Reduce Template:", None, QtGui.QApplication.UnicodeUTF8))
-        self.file_name.setText(QtGui.QApplication.translate("Dialog", "N/A", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Dialog", "in IPTS:", None, QtGui.QApplication.UnicodeUTF8))
-        self.ipts.setText(QtGui.QApplication.translate("Dialog", "N/A", None, QtGui.QApplication.UnicodeUTF8))
-        self.select_ipts_button.setText(QtGui.QApplication.translate("Dialog", "Select IPTS..", None, QtGui.QApplication.UnicodeUTF8))
+        Dialog.setWindowTitle(_translate("Dialog", "CONFIRM NEW AUTO. REDUCTION TEMPLATE", None))
+        self.label.setText(_translate("Dialog", "New Auto. Reduce Template:", None))
+        self.file_name.setText(_translate("Dialog", "N/A", None))
+        self.label_2.setText(_translate("Dialog", "in IPTS:", None))
+        self.ipts.setText(_translate("Dialog", "N/A", None))
+        self.select_ipts_button.setText(_translate("Dialog", "Select IPTS..", None))
 

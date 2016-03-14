@@ -3,30 +3,44 @@
 
 # Form implementation generated from reading ui file 'designer//sf_preview_interface.ui'
 #
-# Created: Wed Mar  2 16:03:27 2016
-#      by: PyQt4 UI code generator 4.7.4
+# Created: Mon Mar 14 12:19:09 2016
+#      by: PyQt4 UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
+try:
+    _fromUtf8 = QtCore.QString.fromUtf8
+except AttributeError:
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
+        MainWindow.setObjectName(_fromUtf8("MainWindow"))
         MainWindow.resize(1687, 531)
         self.centralwidget = QtGui.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
+        self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
-        self.verticalLayout.setObjectName("verticalLayout")
+        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.horizontalLayout = QtGui.QHBoxLayout()
-        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.full_name_of_sf_file = QtGui.QLabel(self.centralwidget)
-        self.full_name_of_sf_file.setObjectName("full_name_of_sf_file")
+        self.full_name_of_sf_file.setObjectName(_fromUtf8("full_name_of_sf_file"))
         self.horizontalLayout.addWidget(self.full_name_of_sf_file)
         self.verticalLayout.addLayout(self.horizontalLayout)
         self.table_widget = QtGui.QTableWidget(self.centralwidget)
         self.table_widget.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
-        self.table_widget.setObjectName("table_widget")
+        self.table_widget.setObjectName(_fromUtf8("table_widget"))
         self.table_widget.setColumnCount(10)
         self.table_widget.setRowCount(0)
         item = QtGui.QTableWidgetItem()
@@ -51,32 +65,42 @@ class Ui_MainWindow(object):
         self.table_widget.setHorizontalHeaderItem(9, item)
         self.verticalLayout.addWidget(self.table_widget)
         self.label = QtGui.QLabel(self.centralwidget)
-        self.label.setObjectName("label")
+        self.label.setObjectName(_fromUtf8("label"))
         self.verticalLayout.addWidget(self.label)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1687, 25))
-        self.menubar.setObjectName("menubar")
+        self.menubar.setObjectName(_fromUtf8("menubar"))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
+        self.statusbar.setObjectName(_fromUtf8("statusbar"))
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Scaling Factor File Preview", None, QtGui.QApplication.UnicodeUTF8))
-        self.full_name_of_sf_file.setText(QtGui.QApplication.translate("MainWindow", "No Scaling Factor File Selected !", None, QtGui.QApplication.UnicodeUTF8))
-        self.table_widget.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
-        self.table_widget.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
-        self.table_widget.horizontalHeaderItem(2).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
-        self.table_widget.horizontalHeaderItem(3).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
-        self.table_widget.horizontalHeaderItem(4).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
-        self.table_widget.horizontalHeaderItem(5).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
-        self.table_widget.horizontalHeaderItem(6).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
-        self.table_widget.horizontalHeaderItem(7).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
-        self.table_widget.horizontalHeaderItem(8).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
-        self.table_widget.horizontalHeaderItem(9).setText(QtGui.QApplication.translate("MainWindow", "New Column", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("MainWindow", "Fitting Equation: y = a + b * x", None, QtGui.QApplication.UnicodeUTF8))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Scaling Factor File Preview", None))
+        self.full_name_of_sf_file.setText(_translate("MainWindow", "No Scaling Factor File Selected !", None))
+        item = self.table_widget.horizontalHeaderItem(0)
+        item.setText(_translate("MainWindow", "New Column", None))
+        item = self.table_widget.horizontalHeaderItem(1)
+        item.setText(_translate("MainWindow", "New Column", None))
+        item = self.table_widget.horizontalHeaderItem(2)
+        item.setText(_translate("MainWindow", "New Column", None))
+        item = self.table_widget.horizontalHeaderItem(3)
+        item.setText(_translate("MainWindow", "New Column", None))
+        item = self.table_widget.horizontalHeaderItem(4)
+        item.setText(_translate("MainWindow", "New Column", None))
+        item = self.table_widget.horizontalHeaderItem(5)
+        item.setText(_translate("MainWindow", "New Column", None))
+        item = self.table_widget.horizontalHeaderItem(6)
+        item.setText(_translate("MainWindow", "New Column", None))
+        item = self.table_widget.horizontalHeaderItem(7)
+        item.setText(_translate("MainWindow", "New Column", None))
+        item = self.table_widget.horizontalHeaderItem(8)
+        item.setText(_translate("MainWindow", "New Column", None))
+        item = self.table_widget.horizontalHeaderItem(9)
+        item.setText(_translate("MainWindow", "New Column", None))
+        self.label.setText(_translate("MainWindow", "Fitting Equation: y = a + b * x", None))
 

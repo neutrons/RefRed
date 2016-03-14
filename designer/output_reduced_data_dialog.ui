@@ -270,7 +270,7 @@ p, li { white-space: pre-wrap; }
              <enum>Qt::RightToLeft</enum>
             </property>
             <property name="text">
-             <string>REF_L_</string>
+             <string>REF_L</string>
             </property>
            </widget>
           </item>

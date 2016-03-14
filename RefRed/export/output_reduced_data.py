@@ -151,7 +151,7 @@ class OutputReducedData(QDialog):
 		_export_stitching_ascii_settings.fourth_column_dq0 = _dq0
 		_export_stitching_ascii_settings.fourth_column_dq_over_q = _dq_over_q
 		_export_stitching_ascii_settings.fourth_column_flag = _is_with_4th_column_flag
-		_export_stitching_ascii_settings.use_lowest_error_value_flag = _use_lowest_error_value_flag
+		#_export_stitching_ascii_settings.use_lowest_error_value_flag = _use_lowest_error_value_flag
 		self.parent.exportStitchingAsciiSettings = _export_stitching_ascii_settings
 		
 	def is_folder_access_granted(self, filename):
@@ -341,7 +341,7 @@ class OutputReducedData(QDialog):
 		for _entry in [_date, _reduction_method, _reduction_engine, _reduction_date]:
 			text.append(_entry)
 		text.append("#")
-	
+		
 		_legend = "# DataRun\tNormRun\t2theta(degrees)\tLambdaMin(A)\tLambdaMax(A)\tQmin(1/A)\tQmax(1/A)\tScalingFactor\tTotal Counts\tpcCharge(mC)"
 		text.append(_legend)
 		_data_run = str(reduction_table.item(row, 1).text())
@@ -352,8 +352,8 @@ class OutputReducedData(QDialog):
 		_q_min = str(reduction_table.item(row, 6).text())
 		_q_max = str(reduction_table.item(row, 7).text())
 		_scaling_factor = self.retrieve_scaling_factor(row = row)
-		_total_counts = self.retrieve_total_counts(_row)
-		_pcCharge = self.retrieve_pcCharge(_row)
+		_total_counts = self.retrieve_total_counts(row)
+		_pcCharge = self.retrieve_pcCharge(row)
 		_value = "# %s\t%s\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%f\t\t%f" %(_data_run,
 		                                                                    _norm_run,
 		                                                                    _2_theta,
@@ -439,7 +439,7 @@ class OutputReducedData(QDialog):
 	
 	def retrieve_pcCharge(self, row):
 		parent = self.parent
-		_big_table_data = self.parent_big_table_data
+		_big_table_data = self.parent.big_table_data
 		_lrdata = _big_table_data[row, 0]
 		pcCharge = _lrdata.proton_charge
 		return pcCharge
