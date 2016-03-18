@@ -171,9 +171,17 @@ class TemplateManagement(QtGui.QMainWindow):
 
     def selectionChanged(self):
         self.check_gui()
+        
+    def retrieve_final_auto_reduce_template_folder(self):
+        _current_ipts = self._current_ipts
+        if _current_ipts == '':
+            return self._final_auto_reduce_template_folder
+        else:
+            _output = '/SNS/REF_L/' + _current_ipts + '/shared/autoreduce'
+            return _output
 
     def _replace_auto_template(self, full_file_name=''):
-        _final_auto_reduce_template_folder = self._final_auto_reduce_template_folder
+        _final_auto_reduce_template_folder = self.retrieve_final_auto_reduce_template_folder()
         _auto_reduce_name = self._auto_reduce_name
         _template_source_name = self._full_template_file_name_selected 
         
@@ -182,7 +190,7 @@ class TemplateManagement(QtGui.QMainWindow):
 
         if self.debug:
             _dst = self._debug_dst_folder
-            
+        
         shutil.copyfile(_src, _dst)
         os.chmod(_dst, stat.S_IWUSR | 
                  stat.S_IRUSR |
