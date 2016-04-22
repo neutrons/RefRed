@@ -105,7 +105,7 @@ class LoadingConfiguration(object):
 		
 		q_step = self.getNodeValue(node_0, 'q_step')
 		if q_step == '':
-			q_step = '0.001'
+			q_step = '0.01'
 		self.parent.ui.qStep.setText(q_step)
 
 		q_min = self.getNodeValue(node_0, 'q_min')

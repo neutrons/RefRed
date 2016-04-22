@@ -83,6 +83,7 @@ class SettingsEditor(QtGui.QMainWindow):
                 _value = float(self.ui.tableWidget.item(_row, 0).text())
             _gui_metadata[_label] = _value
         self.parent.gui_metadata = _gui_metadata
+        print(self.parent.gui_metadata)
         
         #update GUI widgets
         o_gui = GuiUtility(parent = self.parent)

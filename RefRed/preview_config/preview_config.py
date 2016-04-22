@@ -23,6 +23,8 @@ class PreviewConfig(QtGui.QMainWindow):
                 'back_roi1_to',
                 'back_roi2_from',
                 'back_roi2_to',
+                'clocking_from',
+                'clocking_to',
                 'tof_range_flag',
                 'from_tof_range',
                 'to_tof_range',
@@ -62,7 +64,7 @@ class PreviewConfig(QtGui.QMainWindow):
     _data_table = []
     _system_table = []
     _title = "Configuration File Preview"
-    _colored_row = [12, 27] #highlights data and norm rows
+    _colored_row = [14, 29] #highlights data and norm rows
     
     def __init__(self, parent=None, is_live=False, 
                  filename=None, geometry_parent=None, 
