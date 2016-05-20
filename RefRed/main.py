@@ -69,7 +69,7 @@ class MainGui(QtGui.QMainWindow):
     manual_x_axis_dialog = None
     manual_y_axis_dialog = None
 
-    nbr_row_table_reduction = 30
+    nbr_row_table_reduction = 39
     nbr_row_table_ascii = 8
     prev_table_reduction_row_selected = -1
     current_table_reduction_row_selected = -1

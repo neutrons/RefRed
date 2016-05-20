@@ -55,7 +55,7 @@ class FillStitchingTable(ParentHandler):
 
     def fillTableForAbsoluteAndAuto(self, _sf):
         _brush = QtGui.QBrush()
-        if strtobool(self._lconfig.sf_auto_found_match):
+        if strtobool(str(self._lconfig.sf_auto_found_match)):
             _brush.setColor(QtCore.Qt.darkGreen)
         else:
             _brush.setColor(QtCore.Qt.red)

@@ -3,7 +3,7 @@
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface.ui'
 #
-# Created: Mon Mar 14 12:19:08 2016
+# Created: Fri May 20 10:03:31 2016
 #      by: PyQt4 UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -42,7 +42,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents_2 = QtGui.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 1531, 1081))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 1547, 1052))
         self.scrollAreaWidgetContents_2.setObjectName(_fromUtf8("scrollAreaWidgetContents_2"))
         self.horizontalLayout_68 = QtGui.QHBoxLayout(self.scrollAreaWidgetContents_2)
         self.horizontalLayout_68.setObjectName(_fromUtf8("horizontalLayout_68"))
@@ -1383,7 +1383,7 @@ class Ui_MainWindow(object):
         self.reductionTable.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
         self.reductionTable.setHorizontalScrollMode(QtGui.QAbstractItemView.ScrollPerPixel)
         self.reductionTable.setWordWrap(False)
-        self.reductionTable.setRowCount(30)
+        self.reductionTable.setRowCount(39)
         self.reductionTable.setObjectName(_fromUtf8("reductionTable"))
         self.reductionTable.setColumnCount(9)
         item = QtGui.QTableWidgetItem()
@@ -1446,6 +1446,24 @@ class Ui_MainWindow(object):
         self.reductionTable.setVerticalHeaderItem(28, item)
         item = QtGui.QTableWidgetItem()
         self.reductionTable.setVerticalHeaderItem(29, item)
+        item = QtGui.QTableWidgetItem()
+        self.reductionTable.setVerticalHeaderItem(30, item)
+        item = QtGui.QTableWidgetItem()
+        self.reductionTable.setVerticalHeaderItem(31, item)
+        item = QtGui.QTableWidgetItem()
+        self.reductionTable.setVerticalHeaderItem(32, item)
+        item = QtGui.QTableWidgetItem()
+        self.reductionTable.setVerticalHeaderItem(33, item)
+        item = QtGui.QTableWidgetItem()
+        self.reductionTable.setVerticalHeaderItem(34, item)
+        item = QtGui.QTableWidgetItem()
+        self.reductionTable.setVerticalHeaderItem(35, item)
+        item = QtGui.QTableWidgetItem()
+        self.reductionTable.setVerticalHeaderItem(36, item)
+        item = QtGui.QTableWidgetItem()
+        self.reductionTable.setVerticalHeaderItem(37, item)
+        item = QtGui.QTableWidgetItem()
+        self.reductionTable.setVerticalHeaderItem(38, item)
         item = QtGui.QTableWidgetItem()
         self.reductionTable.setHorizontalHeaderItem(0, item)
         item = QtGui.QTableWidgetItem()
@@ -1780,7 +1798,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_67.addWidget(self.scrollArea)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1569, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1569, 20))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuHelp = QtGui.QMenu(self.menubar)
         self.menuHelp.setObjectName(_fromUtf8("menuHelp"))
@@ -2131,6 +2149,24 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "New Row", None))
         item = self.reductionTable.verticalHeaderItem(29)
         item.setText(_translate("MainWindow", "New Row", None))
+        item = self.reductionTable.verticalHeaderItem(30)
+        item.setText(_translate("MainWindow", "New Row", None))
+        item = self.reductionTable.verticalHeaderItem(31)
+        item.setText(_translate("MainWindow", "New Row", None))
+        item = self.reductionTable.verticalHeaderItem(32)
+        item.setText(_translate("MainWindow", "New Row", None))
+        item = self.reductionTable.verticalHeaderItem(33)
+        item.setText(_translate("MainWindow", "New Row", None))
+        item = self.reductionTable.verticalHeaderItem(34)
+        item.setText(_translate("MainWindow", "New Row", None))
+        item = self.reductionTable.verticalHeaderItem(35)
+        item.setText(_translate("MainWindow", "New Row", None))
+        item = self.reductionTable.verticalHeaderItem(36)
+        item.setText(_translate("MainWindow", "New Row", None))
+        item = self.reductionTable.verticalHeaderItem(37)
+        item.setText(_translate("MainWindow", "New Row", None))
+        item = self.reductionTable.verticalHeaderItem(38)
+        item.setText(_translate("MainWindow", "New Row", None))
         item = self.reductionTable.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "New Column", None))
         item = self.reductionTable.horizontalHeaderItem(1)
@@ -2329,7 +2365,7 @@ class Ui_MainWindow(object):
         self.actionTemplateManagement.setText(_translate("MainWindow", "Template Management ...", None))
 
 from mplwidgetnolog import MPLWidgetNoLog
-from .mplwidget import MPLWidget
+from mplwidget import MPLWidget
 from mytablewidget import MyTableWidget
 from mplwidgetxlogylog import MPLWidgetXLogYLog
 from .mplwidgetxlog import MPLWidgetXLog

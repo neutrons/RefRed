@@ -1,13 +1,15 @@
 import numpy as np
 from RefRed.calculations.angle_offset_calculation import AngleOffsetCalculation
 
-
 class PopulateReductionTableFromListLRData(object):
 
     list_lrdata_sorted = None
     list_wks_sorted = None
     list_runs_sorted = None
     list_nexus_sorted = None
+
+    LAMBDA_REQUESTED_TOLERANCE = 0.01
+    THI_TOLERANCE = 0.015
     
     def __init__(self, parent=None,
                  list_lrdata = None,
@@ -85,9 +87,14 @@ class PopulateReductionTableFromListLRData(object):
         _data_lrdata = _list_data_lrdata[_data_index]
         while (_data_lrdata is not None):
             _data_lambda_value = _data_lrdata.lambda_requested
+            _data_thi_value = _data_lrdata.thi
+            
             for _norm_index, _norm_lrdata in enumerate(_list_lrdata):
                 _norm_lambda_value = _norm_lrdata.lambda_requested
-                if (_norm_lambda_value == _data_lambda_value):
+                _norm_thi_value = _norm_lrdata.thi
+                
+                if (np.abs(_norm_lambda_value - _data_lambda_value) < self.LAMBDA_REQUESTED_TOLERANCE)  and \
+                   (np.abs(_norm_thi_value - _data_thi_value) < self.THI_TOLERANCE):
                     _run = _list_run[_norm_index]
                     _list_norm_lrdata_sorted.append(_norm_lrdata)
                     _list_norm_runs_sorted.append(_run)
