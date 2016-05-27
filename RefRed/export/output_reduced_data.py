@@ -256,6 +256,7 @@ class OutputReducedData(QDialog):
 		                     DQConstant = float(self.ui.dq0Value.text()),
 		                     DQSlope = float(self.ui.dQoverQvalue.text()),
 		                     OutputFilename = self.filename,
+		                     ScaleToUnity = False,
 		                     Metadata = _text_data)
 		
 	def format_metadata(self):
