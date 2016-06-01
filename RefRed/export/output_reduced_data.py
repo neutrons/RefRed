@@ -657,4 +657,3 @@ class OutputReducedData(QDialog):
 		_q_min = str(self.ui.manual_qmin_value.text())
 		_gui_metadata['q_min'] = _q_min
 		self.parent.gui_metadata = _gui_metadata
-
