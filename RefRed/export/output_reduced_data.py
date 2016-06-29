@@ -228,6 +228,28 @@ class OutputReducedData(QDialog):
 		#self.format_data()
 		#self.create_file()
 
+	def generate_selected_sf(self, lconfig=None):
+		o_gui = GuiUtility(parent = self.parent)
+		stitching_type = o_gui.getStitchingType()
+		if stitching_type is "absolute":
+			return lconfig.sf_abs_normalization
+		elif stitching_type is "auto":
+			return lconfig.sf_auto
+		else:
+			return lconfig.sf_manual
+
+	def apply_sf(self, list_wks):
+		
+		big_table_data = self.parent.big_table_data
+		
+		for _index, _wks in enumerate(list_wks):
+			_lconfig = big_table_data[_index, 2]
+			_sf = self.generate_selected_sf(_lconfig)
+			Scale(InputWorkspace=_wks, OutputWorkspace=_wks, Factor=_sf)
+			list_wks[_index] = _wks
+			
+		return list_wks
+
 	def create_output_file(self):
 		o_gui_utility = GuiUtility(parent = self.parent)
 		nbr_row = o_gui_utility.reductionTable_nbr_row()
@@ -242,6 +264,8 @@ class OutputReducedData(QDialog):
 
 		# collect list of workspaces
 		_list_wks = self.collect_list_wks()
+		
+		_list_wks = self.apply_sf(_list_wks)
 
 		_text_data = self.format_metadata()
 
