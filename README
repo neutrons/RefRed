@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/39512610.svg)](https://zenodo.org/badge/latestdoi/39512610)
+
 # to build ui
 > ./compile_gui.pl -i=designer/ -o=RefRed/interfaces/
 # to build icons
@@ -12,5 +14,3 @@ Move to top folder
 
 # to run all tests
 > paver
-
-[![DOI](https://zenodo.org/badge/39512610.svg)](https://zenodo.org/badge/latestdoi/39512610)
