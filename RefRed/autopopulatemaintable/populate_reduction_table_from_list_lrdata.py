@@ -1,5 +1,4 @@
 import numpy as np
-from RefRed.calculations.angle_offset_calculation import AngleOffsetCalculation
 
 class PopulateReductionTableFromListLRData(object):
 
@@ -123,12 +122,7 @@ class PopulateReductionTableFromListLRData(object):
             else:
                 str_run = str(_run)
             self.parent.ui.reductionTable.item(_index, self.reductionTable_col).setText(str_run)
-            if _index == 0:
-                lrdata = self.list_lrdata
-                o_calculation = AngleOffsetCalculation(parent = self.parent,
-                                                       lrdata = lrdata[0],
-                                                       row = 0)
-            
+
     def clear_reductionTable(self):
         nbr_row = self.parent.ui.reductionTable.rowCount()
         nbr_col = self.parent.ui.reductionTable.columnCount()
