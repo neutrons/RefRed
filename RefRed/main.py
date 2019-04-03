@@ -1,4 +1,5 @@
-from PyQt4 import QtGui
+import sys
+from PyQt4 import QtGui, QtCore
 import logging
 import numpy as np
 import os
@@ -51,7 +52,8 @@ from RefRed.browsing_runs import BrowsingRuns
 
 class MainGui(QtGui.QMainWindow):
     ''' Top class that handles the GUI '''
-    
+    file_loaded_signal = QtCore.pyqtSignal()
+
     # default location
     path_ascii = '.'  # ascii file such as scaling factor file
     path_config = '/home/j35/sandbox' # config file of RefRed
@@ -108,6 +110,7 @@ class MainGui(QtGui.QMainWindow):
         MakeGuiConnections(parent = self)
         RetrieveUserConfiguration(parent = self)
 
+        self.file_loaded_signal.connect(self.file_loaded)
         log_file = os.path.expanduser("~") + '/.refred.log'
         logging.basicConfig(filename=log_file, level=logging.DEBUG)
 
@@ -211,8 +214,13 @@ class MainGui(QtGui.QMainWindow):
     # display row checkbox
     def reduction_table_visibility_changed_test(self, state, row):
         ReductionTableCheckBox(parent = self, row_selected = row)
-        
+
+    def file_loaded(self):
+        """ Event call-back used to re-enable the reduction table after loading """
+        self.ui.reductionTable.setEnabled(True)
+
     def table_reduction_cell_enter_pressed(self):
+        """ Deal with enter being pressed in a cell of the reduction table """
         row = self.ui.reductionTable.currentRow()
         col = self.ui.reductionTable.currentColumn()
         item = self.ui.reductionTable.item(row, col)
@@ -220,8 +228,12 @@ class MainGui(QtGui.QMainWindow):
             return
         self.select_next_field(current_row=row, current_col=col)
         runs = self.ui.reductionTable.item(row, col).text()
+        # The application will dump core if it tries to load two files
+        # at the same time, so ensure that this doesn't happen by
+        # disabling the reduction table before loading.
+        self.ui.reductionTable.setEnabled(False)
         UpdateReductionTable(parent=self, row=row, col=col, runs=runs)
-        
+
     def select_next_field(self, current_row=-1, current_col=-1):
         # trick to be able to retrieve value in editing mode
         if current_row == self.ui.reductionTable.rowCount()-1:
@@ -230,13 +242,13 @@ class MainGui(QtGui.QMainWindow):
             self.ui.reductionTable.setCurrentCell(current_row, current_col+1)
         else:
             self.ui.reductionTable.setCurrentCell(current_row+1, current_col-1)
-        
+
     def data_norm_tab_changed(self, index):
         o_gui_utility = GuiUtility(parent = self)
         _current_table_reduction_row_selected = o_gui_utility.get_current_table_reduction_check_box_checked()
         ReductionTableCheckBox(parent = self,
                                row_selected = _current_table_reduction_row_selected)
-        
+
     @config_file_has_been_modified
     def widget_modified(self, value_changed):
         pass
@@ -272,19 +284,19 @@ class MainGui(QtGui.QMainWindow):
     @config_file_has_been_modified
     def norm_low_res_validation(self):
         NormLowResSpinbox(parent = self)
-        
+
     @config_file_has_been_modified
     def data_low_res_checkbox(self):
         DataLowResSpinbox(parent = self)
-        
+
     @config_file_has_been_modified
     def norm_low_res_checkbox(self):
         NormLowResSpinbox(parent = self)
-    
+
     @config_file_has_been_modified
     def clock_validation(self):
         DataClockingSpinbox(parent = self)
-    
+
     @config_file_has_been_modified
     def auto_tof_range_radio_button(self):
         o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent = self)
@@ -310,7 +322,7 @@ class MainGui(QtGui.QMainWindow):
                                data_type_selected = 'data')
         self.ui.data_sequence_lineEdit.setText('')
         self.norm_sequence_event()
-        
+
     @config_file_has_been_modified
     def data_browse_button(self):
         o_browser = BrowsingRuns(parent = self, 
@@ -319,7 +331,7 @@ class MainGui(QtGui.QMainWindow):
                                list_of_run_from_input = '',
                                data_type_selected = 'data')
         self.ui.data_sequence_lineEdit.setText('')
-        
+
     @config_file_has_been_modified
     def norm_sequence_event(self):
         str_norm_input = self.ui.norm_sequence_lineEdit.text()
@@ -348,13 +360,13 @@ class MainGui(QtGui.QMainWindow):
     def load_configuration(self):
         o_load_config = LoadingConfiguration(parent = self)
         o_load_config.run()
-        
+
     @config_file_modification_reset
     def save_configuration(self):
         o_save_config = SavingConfiguration(parent = self,
                                             filename = self.current_loaded_file)
         o_save_config.run()
-        
+
     def save_as_configuration(self):
         o_save_config = SavingConfiguration(parent = self)
         o_save_config.run()

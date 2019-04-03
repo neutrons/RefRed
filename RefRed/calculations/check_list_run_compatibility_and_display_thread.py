@@ -68,6 +68,7 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
         if self.is_display_requested:
             self.display_plots()
 
+        self.parent.file_loaded_signal.emit()
         QApplication.processEvents()
             
     def updating_reductionTable_metadata(self):

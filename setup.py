@@ -8,7 +8,7 @@ __author__ = 'Jean Bilheux'
 __author_email__ = 'bilheuxjm@ornl.gov'
 __license__ = 'Copyright 2015-2016'
 __url__ = 'http://'
-__scripts__ = ['scripts/RefRed']
+__scripts__ = ['scripts/RefRed', 'scripts/start_refred.py']
 __packages__ = ['RefRed',
                 'RefRed.autopopulatemaintable',
                 'RefRed.configuration',
