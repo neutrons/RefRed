@@ -23,26 +23,31 @@ class LoadingConfiguration(object):
 	def __init__(self, parent = None):
 		self.parent = parent
 		self.filename = ''
-		
 		StatusMessageHandler(parent = self.parent, 
 			             message = 'Loading config ...', 
 			             is_threaded = False)
 		
 	def run(self):
 		_path = self.parent.path_config
+		_filter = ("XML (*.xml);; All Files (*.*)")
 		filename = QtGui.QFileDialog.getOpenFileName(self.parent, 
 		                                             'Open Configuration File', 
-		                                             _path)
+		                                             _path,
+		                                             _filter)
 		QtGui.QApplication.processEvents()
 		if not (filename == ""):
 			self.filename = str(filename)
 			#try:
 			self.loading()
+			message = 'Done!'
 			#except:
-				#print('error loading the configuration file')
+			#print('error loading the configuration file')
+			#message = 'Error loading configuration!'
+		else:
+			message = 'User Canceled loading!'
 		
 		StatusMessageHandler(parent = self.parent, 
-	                             message = 'Done!', 
+	                             message = message,
 	                             is_threaded = True)
 		
 	def loading(self):
@@ -54,6 +59,11 @@ class LoadingConfiguration(object):
 		self.populate_reduction_table_from_lconfigdataset()
 		self.load_reduction_table_from_lconfigdataset()
 		self.reset_gui_modified_status()
+		self.live_preview_config_status()
+
+	def live_preview_config_status(self):
+		self.parent.ui.previewLive.setEnabled(True)
+		self.parent.ui.actionExportScript.setEnabled(True)
 		
 	def reset_gui_modified_status(self):
 		o_gui_utility = GuiUtility(parent = self.parent)
@@ -65,12 +75,12 @@ class LoadingConfiguration(object):
 		
 	def load_config_in_big_table_data(self):
 		filename = self.filename
-		try:
-			self.dom = minidom.parse(filename)
-		except:
-			info('No configuration file loaded')
-			self.load_config_worked = False
-			return
+		#try:
+		self.dom = minidom.parse(filename)
+		#except:
+		#	info('No configuration file loaded')
+		#	self.load_config_worked = False
+		#	return
 		self.populate_big_table_data_with_lconfig()
 		self.populate_main_gui_general_settings()
 		
@@ -87,23 +97,6 @@ class LoadingConfiguration(object):
 			_row += 1
 		
 		self.parent.big_table_data = big_table_data
-		big_table_data = self.globalize_clocking_parameters()
-
-	def globalize_clocking_parameters(self):
-		'''
-		the clocking settings of all the data should only use the 
-		ones calculated for the last data file loaded
-		'''
-		o_gui_utility = GuiUtility(parent = self.parent)
-		last_data_row = o_gui_utility.get_row_with_highest_q()
-		big_table_data = self.parent.big_table_data
-		_lconfig = big_table_data[last_data_row, 2]
-		data_clocking = _lconfig.data_clocking
-		for i in range(last_data_row):
-			_lconfig = big_table_data[i, 2]
-			_lconfig.data_clocking = data_clocking
-			big_table_data[i, 2] = _lconfig
-		self.parent.big_table_data = big_table_data
 			
 	def populate_main_gui_general_settings(self):
 		dom = self.dom
@@ -112,8 +105,15 @@ class LoadingConfiguration(object):
 		
 		q_step = self.getNodeValue(node_0, 'q_step')
 		if q_step == '':
-			q_step = '0.001'
+			q_step = '0.01'
 		self.parent.ui.qStep.setText(q_step)
+
+		q_min = self.getNodeValue(node_0, 'q_min')
+		if q_min == '':
+			q_min = '0.005'
+		_gui_metadata = self.parent.gui_metadata
+		_gui_metadata['q_min'] = q_min
+		self.parent.gui_metadata = _gui_metadata
 		
 		angle_offset = self.getNodeValue(node_0, 'angle_offset')
 		self.parent.ui.angleOffsetValue.setText(angle_offset)
@@ -125,8 +125,13 @@ class LoadingConfiguration(object):
 		self.parent.full_scaling_factor_file_name = scaling_factor_file
 		short_scaling_factor_file = os.path.basename(scaling_factor_file)
 		self.parent.ui.scalingFactorFile.setText(short_scaling_factor_file)
+
 		o_scaling_factor_widget = ScalingFactorWidgetsHandler(parent = self.parent)
 		o_scaling_factor_widget.fill_incident_medium_list(scaling_factor_file)
+		#+1 to make mantid friendly
+		index_selected = int(self.getNodeValue(node_0, 'incident_medium_index_selected'))+1 
+		o_scaling_factor_widget.set_index_selected(index_selected)
+
 		self.parent.path_ascii = os.path.dirname(scaling_factor_file)
 		scaling_factor_flag = str2bool(self.getNodeValue(node_0, 'scaling_factor_flag'))
 		o_scaling_factor_widget.checkbox(status = scaling_factor_flag)

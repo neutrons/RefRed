@@ -5,6 +5,7 @@ from PyQt4.QtCore import Qt
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.plot.clear_plots import ClearPlots
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
+from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
 
 
 class ReductionTableCheckBox(object):
@@ -26,6 +27,7 @@ class ReductionTableCheckBox(object):
         self.row_selected = row_selected
         self.handle_check_boxes_single_selection()
         self.launch_update_of_plot()
+	self.update_gui()
 
     def handle_check_boxes_single_selection(self):
                 
@@ -50,6 +52,23 @@ class ReductionTableCheckBox(object):
             self.parent.reduction_table_check_box_state = _reduction_table_check_box_state
             
             self.parent.prev_table_reduction_row_selected = self.row_selected
+
+    def update_gui(self):  
+	"""will update widgets such as TOF auto/manual"""
+	_row_selected = self.row_selected
+#	_is_data_selected = self.is_data_tab_selected()
+	if self.is_row_selected_checked(_row_selected):
+	    _big_table_data = self.parent.big_table_data
+	    _lconfig = _big_table_data[_row_selected, 2]
+	    if bool(_lconfig.tof_auto_flag):
+		self.parent.ui.dataTOFautoMode.setChecked(True)
+	    else:
+		self.parent.ui.dataTOFmanualMode.setChecked(True)
+	    o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent = self.parent)
+	    o_auto_tof_range.setup()
+	    o_auto_tof_range.radio_button_handler()
+	
+	    
         
     def launch_update_of_plot(self):
         _row_selected = self.row_selected

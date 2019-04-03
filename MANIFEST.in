@@ -1,24 +1,7 @@
-recursive-include icons *.png *.svg *.ico
-recursive-include doc *
-recursive-include designer *.ui
-include compile_gui.pl
 include MANIFEST.in
-include RefRed/genx_templates/*.gx 
-include RefRed/htmldoc/*
-include test_all.py tests/*.py tests/*
-include dist_data/*
-include RefRed/*.py
-include RefRed/autopopulatemaintable/*.py
-include RefRed/calculations/*.py
-include RefRed/config/*.py
-include RefRed/configuration/*.py
-include RefRed/export/*.py
-include RefRed/gui_handling/*.py
-include RefRed/initialization/*.py
-include RefRed/interfaces/*.py
-include RefRed/peakfinderalgorithms/*.py
-include RefRed/plot/*.py
-include RefRed/reduction/*.py
-include RefRed/reduction_table_handling/*.py
-include RefRed/sf_calculator/*.py
-include RefRed/thread/*.py
+include README
+include scripts/RefRed
+include RefRed/*
+include compile_gui.pl
+recursive-include icons *.png *.svg *.ico
+

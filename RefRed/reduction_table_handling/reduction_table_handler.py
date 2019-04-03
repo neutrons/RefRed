@@ -4,6 +4,7 @@ import numpy as np
 from RefRed.plot.clear_plots import ClearPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.colors
+from RefRed.version import window_title
 
 
 class ReductionTableHandler(object):
@@ -19,6 +20,13 @@ class ReductionTableHandler(object):
         self.__clear_reduction_table()
         self.__clear_metadata()
         self.__clear_plots()
+        self.__reset_default_config_file_name()
+        
+    def __reset_default_config_file_name(self):
+        str_new_window_title = (u"%s%s" %(window_title, self.parent.default_loaded_file))
+        self.parent.setWindowTitle(str_new_window_title)
+        self.parent.ui.previewLive.setEnabled(False)
+        self.parent.ui.actionExportScript.setEnabled(False)
         
     def clear_rows_selected(self):
         self.__get_range_row_selected()
@@ -28,6 +36,13 @@ class ReductionTableHandler(object):
         self.__clear_rows_big_table_data()
         self.__clear_rows_reduction_table()
         self.__shifs_none_empty_rows_reduction_table()
+        self.__to_do_if_table_empty()
+        
+    def __to_do_if_table_empty(self):
+        """If the table is now empty, various reset algos"""
+        _cell_value = str(self.parent.ui.reductionTable.item(0, 1).text())
+        if _cell_value == '':
+            self.__reset_default_config_file_name()
 
     def __clear_rows_reduction_table(self):
         _from_row = self.from_row
@@ -39,9 +54,10 @@ class ReductionTableHandler(object):
                     _widget = QtGui.QCheckBox()
                     _widget.setChecked(False)
                     _widget.setEnabled(True)
-                    signal_function = self.__get_checkbox_signal_function(row_index)
+#                    signal_function = self.__get_checkbox_signal_function(row_index)
                     QtCore.QObject.connect(_widget, QtCore.SIGNAL("stateChanged(int)"), 
-                                           eval(signal_function))
+                                           lambda state=0, row=row_index: self.parent.reduction_table_visibility_changed_test(state, row))
+#                                           eval(signal_function))
                     self.parent.ui.reductionTable.setCellWidget(row_index, col_index, _widget)
     
                 elif (col_index == 1) or (col_index == 2):

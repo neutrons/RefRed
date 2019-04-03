@@ -19,6 +19,25 @@ class GuiUtility(object):
             return 'N/A'
         return _data0.ipts
 
+    def init_widgets_value(self):
+        _gui_metadata = self.parent.gui_metadata
+        
+        #event tof bins
+        _tof_bin = _gui_metadata['tof_bin']
+        self.parent.ui.eventTofBins.setValue(_tof_bin)
+        
+        #q bin
+        _q_bin = _gui_metadata['q_min']
+        self.parent.ui.qStep.setText(str(_q_bin))
+        
+        #angle offset
+        _angle_offset = "%.3f" % _gui_metadata['angle_offset']
+        self.parent.ui.angleOffsetValue.setText(_angle_offset)
+        
+        #angle offset error
+        _angle_offset_error = "%.3f" % _gui_metadata['angle_offset_error']
+        self.parent.ui.angleOffsetError.setText(_angle_offset_error)
+
     def get_row_with_highest_q(self):
         big_table_data =  self.parent.big_table_data
         index = 0
@@ -67,11 +86,14 @@ class GuiUtility(object):
             all_rows.append(_row)
         return all_rows
 
-    def get_other_row_with_same_run_number_as_row(self, row=0, is_data=False):
+    def get_other_row_with_same_run_number_as_row(self, row=0, is_data=False, auto_mode=False):
         all_rows = [row]
         if is_data:
             return all_rows
         
+        if self.parent.ui.TOFmanualApplyOnlyToRow.isChecked() and (not auto_mode):
+            return all_rows
+
         nbr_row = self.parent.ui.reductionTable.rowCount()
         ref_run_number = str(self.parent.ui.reductionTable.item(row, 2).text())
         for _row in range(nbr_row):
@@ -106,6 +128,7 @@ class GuiUtility(object):
         self.parent.ui.TOFmanualToValue.setEnabled(not status)
         self.parent.ui.TOFmanualToLabel.setEnabled(not status)
         self.parent.ui.TOFmanualToUnitsValue.setEnabled(not status)
+        self.parent.ui.TOFmanualApplyOnlyToRow.setEnabled(not status)
     
     def clear_table(self, table_ui):
         nbr_row = table_ui.rowCount()
@@ -146,7 +169,18 @@ class GuiUtility(object):
     def get_reduced_yaxis_type(self):
         if self.parent.ui.RvsQ.isChecked():
             return 'RvsQ'
-        elif self.parent.ui.RQ4vsQ.isChecked():
-            return 'RQ4vsQ'
         else:
-            return 'LogRvsQ'
+            return 'RQ4vsQ'
+
+    def getStitchingType(self):
+        '''
+        return the type of stitching selected
+        can be either 'auto', 'manual' or 'absolute'
+        '''
+        if self.parent.ui.absolute_normalization_button.isChecked():
+            return 'absolute'
+        elif self.parent.ui.auto_stitching_button.isChecked():
+            return 'auto'
+        else:
+            return 'manual'
+    

@@ -26,6 +26,12 @@ class IndividualReductionSettingsHandler(object):
         
         if self.norm is None:
             self._norm_flag = False
+            self._norm_run_numbers = None
+            self._norm_peak_range = None
+            self._norm_back_flag = None
+            self._norm_back_range = None
+            self._norm_low_res_flag = None
+            self._norm_low_res_range = None
         else:
             self._norm_flag = self.get_norm_flag()
             self._norm_run_numbers = self.get_norm_run_numbers()

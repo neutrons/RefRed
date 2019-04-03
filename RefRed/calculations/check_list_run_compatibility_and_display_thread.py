@@ -10,7 +10,6 @@ from RefRed.plot.display_plots import DisplayPlots
 from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
 
 
-
 class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
     
     runs_are_compatible = False
@@ -69,6 +68,7 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
         if self.is_display_requested:
             self.display_plots()
 
+        self.parent.file_loaded_signal.emit()
         QApplication.processEvents()
             
     def updating_reductionTable_metadata(self):
@@ -81,7 +81,7 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
         UpdateReductionTableMetadata(parent = self.parent, 
                                      lrdata = lrdata,
                                      row = row)
-            
+
     def update_lconfigdataset(self):
         runs_are_compatible = self.runs_are_compatible
         big_table_data = self.parent.big_table_data
@@ -105,7 +105,7 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
 
     def loading_lr_data(self):
         wks = self.wks
-        lrdata = LRData(wks)
+        lrdata = LRData(wks, parent = self.parent)
         self.lrdata = lrdata
         big_table_data = self.parent.big_table_data
         col_index = 0 if self.is_working_with_data_column else 1

@@ -22,13 +22,13 @@ class AddListNexus(object):
         self.prefix = prefix
         
         if len(list_nexus) == 1:
-            _filename = str(list_nexus[0])
+            _filename = list_nexus[0]
             _run = list_run[0]
+
             _ws_name = "_%s_file_%s" %(self.prefix, _run)
             LoadNexus(filename=_filename,
                       output_wks = _ws_name,
                       metadata_only = metadata_only)
-            
             self.wks = _ws_name
             
         else:

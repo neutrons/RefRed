@@ -10,14 +10,11 @@ class StitchingYScaleOptionsRadioButtonHandler(object):
         
         self.parent.ui.RvsQ.setChecked(False)
         self.parent.ui.RQ4vsQ.setChecked(False)
-        self.parent.ui.LogRvsQ.setChecked(False)
         
         if index == 0:
             self.parent.ui.RvsQ.setChecked(True)
-        elif index == 1:
-            self.parent.ui.RQ4vsQ.setChecked(True)
         else:
-            self.parent.ui.LogRvsQ.setChecked(True)
+            self.parent.ui.RQ4vsQ.setChecked(True)
             
         QApplication.processEvents()
             

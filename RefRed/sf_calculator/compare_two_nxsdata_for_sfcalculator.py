@@ -10,11 +10,18 @@ class CompareTwoNXSDataForSFcalculator(object):
 	'''
 	nexusToCompareWithRun = None
 	nexusToPositionRun = None
+
+	mtdToCompareWith = None
+	mtdToPosition = None
+
 	resultComparison = 0
 	
 	def __init__(self, nxsdataToCompareWith, nxsdataToPosition):
 		self.nexusToCompareWithRun = nxsdataToCompareWith.workspace.getRun()
 		self.nexusToPositionRun = nxsdataToPosition.workspace.getRun()
+
+		self.mtdToCompareWith = nxsdataToCompareWith.workspace
+		self.mtdToPosition = nxsdataToPosition.workspace
 				
 		compare1 = self.compareParameter('LambdaRequest', 'descending')
 		if compare1 != 0:
@@ -26,25 +33,61 @@ class CompareTwoNXSDataForSFcalculator(object):
 			self.resultComparison = compare2
 			return
 		
-		compare3 = self.compareParameter('SiHWidth', 'ascending', param_backup='S2HWidth')
+		compare3 = self.comparepCharge('descending')
 		if compare3 != 0:
 			self.resultComparison = compare3
 			return
+
+		#compare3 = self.compareParameter('SiHWidth', 'ascending', param_backup='S2HWidth')
+		#if compare3 != 0:
+			#self.resultComparison = compare3
+			#return
 		
-		compare4 = self.compareParameter('SiVHeight', 'ascending', param_backup='S2VHeight')
-		if compare4 != 0:
-			self.resultComparison = compare4
-			return
+		#compare4 = self.compareParameter('SiVHeight', 'ascending', param_backup='S2VHeight')
+		#if compare4 != 0:
+			#self.resultComparison = compare4
+			#return
 		
-		compare5 = self.compareParameter('S1HWidth', 'ascending')
-		if compare5 != 0:
-			self.resultComparison = compare5
-			return
+		#compare5 = self.compareParameter('S1HWidth', 'ascending')
+		#if compare5 != 0:
+			#self.resultComparison = compare5
+			#return
 		
-		compare6 = self.compareParameter('S1VHeight', 'ascending')
-		if compare6 != 0:
-			self.resultComparison = compare6
-			return
+		#compare6 = self.compareParameter('S1VHeight', 'ascending')
+		#if compare6 != 0:
+			#self.resultComparison = compare6
+			#return
+
+	def comparepCharge(self, order):
+		_mtdToCompareWith = self.mtdToCompareWith
+		_mtdToPosition = self.mtdToPosition
+
+		_paramNexusToCompareWith = self.get_normalized_pcharge(_mtdToCompareWith)
+		_paramNexusToPosition = self.get_normalized_pcharge(_mtdToPosition)
+		
+		if order == 'ascending':
+			resultLessThan = -1
+			resultMoreThan = 1
+		else:
+			resultLessThan = 1
+			resultMoreThan = -1
+		
+		if (_paramNexusToPosition < _paramNexusToCompareWith):
+			return resultLessThan
+		elif (_paramNexusToPosition > _paramNexusToCompareWith):
+			return resultMoreThan
+		else:
+			return 0
+		
+	def get_normalized_pcharge(self, _mtd):
+		_run = _mtd.getRun()
+		pcharge = float(_run.getProperty('gd_prtn_chrg').value)
+
+		#FIXME get total counts and divide pcharge/total_counts
+		total_counts = float(_mtd.getNumberEvents())
+
+		normalized_pcharge = pcharge / total_counts
+		return normalized_pcharge
 		
 	def compareParameter(self, param, order, param_backup=None):
 		_nexusToCompareWithRun = self.nexusToCompareWithRun

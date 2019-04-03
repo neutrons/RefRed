@@ -7,7 +7,7 @@ from RefRed.configuration.export_stitching_ascii_settings import ExportStitching
 from file_menu import FileMenu as InitFileMenu
 from RefRed.reduced_config_files_handler import ReducedConfigFilesHandler
 from RefRed.plot.all_plot_axis import AllPlotAxis
-#from .gui_utils import DelayedTrigger
+from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.colors
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
 
@@ -25,6 +25,7 @@ class Gui(object):
                        u'Qmax (1/\u00c5)',
                        'Comments']
     column_widths = [60, 200, 200, 65, 85, 85, 95, 95, 400]	
+    stitching_column_widths = [150, 60, 60]
     gui_size_coeff = 2./3.
     
     def __init__(self, parent):
@@ -53,10 +54,12 @@ class Gui(object):
         #parent.trigger.start()
 
         parent.ui.reductionTable.setCurrentCell(0,1)
-        parent.ui.reductionTable.setFocus()	
+        parent.ui.data_sequence_lineEdit.setFocus()	
         
         self.init_autopopulate_widgets()
-        
+
+        o_gui = GuiUtility(parent = self.parent)
+        o_gui.init_widgets_value()
         
     def init_autopopulate_widgets(self):
         pixmap = QtGui.QPixmap(u':/General/check_icon.png')
@@ -163,18 +166,29 @@ class Gui(object):
         ''' initialize the stiching table (labels, size...)'''
         parent = self.parent
 
-        vertical_header = ["Data Run #","SF: auto","SF: manual","Clock."]
+        vertical_header = ["Data Run #", "SF", "Clock."]
         parent.ui.dataStitchingTable.setHorizontalHeaderLabels(vertical_header)
-        parent.ui.dataStitchingTable.resizeColumnsToContents()
+        #parent.ui.dataStitchingTable.resizeColumnsToContents()
+        column_widths = self.stitching_column_widths
+        for index, width in enumerate(column_widths):
+            parent.ui.dataStitchingTable.setColumnWidth(index, width)
 
         palette_green = QtGui.QPalette()
-        palette_green.setColor(QtGui.QPalette.Foreground, QtCore.Qt.green)
+        palette_green.setColor(QtGui.QPalette.Foreground, QtCore.Qt.darkGreen)
         parent.ui.sf_found_label.setPalette(palette_green)
 
         palette_red = QtGui.QPalette()
         palette_red.setColor(QtGui.QPalette.Foreground, QtCore.Qt.red)
         parent.ui.sf_not_found_label.setPalette(palette_red)
 
+        palette_green = QtGui.QPalette()
+        palette_green.setColor(QtGui.QPalette.Foreground, QtCore.Qt.darkGreen)
+        parent.ui.clocking_found_label.setPalette(palette_green)
+    
+        palette_red = QtGui.QPalette()
+        palette_red.setColor(QtGui.QPalette.Foreground, QtCore.Qt.red)
+        parent.ui.clocking_not_found_label.setPalette(palette_red)
+        
     def set_reduced_table(self):
         ''' initialize the reduced table from the stitching tabe '''
         parent = self.parent

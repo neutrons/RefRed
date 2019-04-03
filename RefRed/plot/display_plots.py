@@ -1,5 +1,6 @@
 from PyQt4 import QtGui, QtCore
 import RefRed.colors as colors
+import bisect
 from RefRed.plot.clear_plots import ClearPlots
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
 from RefRed.gui_handling.gui_utility import GuiUtility
@@ -152,21 +153,21 @@ class DisplayPlots(object):
         parent.ui.metadataProtonChargeUnits.setText('%s'%d.proton_charge_units)
         parent.ui.metadataLambdaRequestedValue.setText('%.2f'%d.lambda_requested)
         parent.ui.metadataLambdaRequestedUnits.setText('%s'%d.lambda_requested_units)
-        parent.ui.metadatathiValue.setText('%.2f'%d.thi)
-        parent.ui.metadatathiUnits.setText('%s'%d.thi_units)
+        parent.ui.metadatathiValue.setText('%.2f'%d.ths)
+        parent.ui.metadatathiUnits.setText('%s'%d.ths_units)
         parent.ui.metadatatthdValue.setText('%.2f'%d.tthd)
         parent.ui.metadatatthdUnits.setText('%s'%d.tthd_units)
         parent.ui.metadataS1WValue.setText('%.2f'%d.S1W)
         parent.ui.metadataS1HValue.setText('%.2f'%d.S1H)
         parent.ui.metadataRunNumber.setText('%s'%d.run_number)
         if d.isSiThere:
-            parent.ui.S2SiWlabel.setText('SiW')
-            parent.ui.S2SiHlabel.setText('SiH')
+            parent.ui.S2SiWlabel.setText('SiW:')
+            parent.ui.S2SiHlabel.setText('SiH:')
             parent.ui.metadataS2WValue.setText('%.2f'%d.SiW)
             parent.ui.metadataS2HValue.setText('%.2f'%d.SiH)
         else:
-            parent.ui.S2SiWlabel.setText('S2W')
-            parent.ui.S2SiHlabel.setText('S2H')
+            parent.ui.S2SiWlabel.setText('S2W:')
+            parent.ui.S2SiHlabel.setText('S2H:')
             parent.ui.metadataS2WValue.setText('%.2f'%d.S2W)
             parent.ui.metadataS2HValue.setText('%.2f'%d.S2H)
         nexus = d.filename
@@ -220,8 +221,26 @@ class DisplayPlots(object):
             self.ix_plot_ui.canvas.ax.set_ylim([ymin,ymax])
             self.ix_plot_ui.canvas.draw()
 
+    def get_ycountsdata_of_tof_range_selected(self):
+        autotmin = float(self.tofRangeAuto[0])
+        autotmax = float(self.tofRangeAuto[1])
+
+        [tmin, tmax] = self.getTOFrangeInMs([autotmin, autotmax])
+        
+        ytof = self.ytof
+        tof = self.fullTofAxis
+
+        index_tof_left = bisect.bisect_left(tof,  tmin)
+        index_tof_right = bisect.bisect_right(tof, tmax)
+
+        _new_ytof = ytof[:, index_tof_left:index_tof_right]
+        _new_ycountsdata = _new_ytof.sum(axis=1)
+
+        return _new_ycountsdata
+        
     def plot_yi(self):
-        _ycountsdata = self.ycountsdata
+        _ycountsdata = self.get_ycountsdata_of_tof_range_selected()
+
         _xaxis = range(len(_ycountsdata))
         self.yi_plot_ui.canvas.ax.plot(_ycountsdata, _xaxis, 
                                        color = colors.COLOR_LIST[1])

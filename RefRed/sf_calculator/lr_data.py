@@ -13,18 +13,24 @@ NEUTRON_MASS = 1.675e-27  # kg
 PLANCK_CONSTANT = 6.626e-34  # m^2 kg s^-1
 H_OVER_M_NEUTRON = PLANCK_CONSTANT / NEUTRON_MASS
 
-
+#any run before, tmin and tmax will be used a different algorithm
+RUN_NUMBER_0_BETTER_CHOPPER_COVERAGE = 137261 
         
 class LRData(object):
     tof_range = None
     low_res = ['0','255']
     low_res_flag = True    
+    is_better_chopper_coverage = True
+
     def __init__(self, workspace, read_options):
         self.workspace = workspace
         self.read_options = read_options
         mt_run = self.workspace.getRun()
 
         self.run_number = mt_run.getProperty('run_number').value
+        if float(self.run_number) < RUN_NUMBER_0_BETTER_CHOPPER_COVERAGE:
+            self.is_better_chopper_coverage = False
+        
         self.lambda_requested = float(mt_run.getProperty('LambdaRequest').value[0])
         self.lambda_requested_units = mt_run.getProperty('LambdaRequest').units
         self.thi = mt_run.getProperty('thi').value[0]
@@ -69,19 +75,36 @@ class LRData(object):
 
         # calculate theta
         self.theta = self.calculate_theta()
+        self.frequency = float(mt_run.getProperty('Speed1').value[0])
 
         if self.read_options['is_auto_tof_finder'] or self.tof_range == None:
-            autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 - 1.7) * 1e-4
-            autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 1.7) * 1e-4
+            if self.is_better_chopper_coverage:
+                autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - 1.7) * 1e-4
+                autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 1.7) * 1e-4
+            else:
+                autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 - 1.7) * 1e-4
+                autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 1.7) * 1e-4
         else:
             autotmin = np.float(self.tof_range[0])
             autotmax = np.float(self.tof_range[1])
 
-        if mt_run.getProperty('Speed1').value[0] == 60:
-            tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 2.5) * 1e-4
-            tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 - 2.5) * 1e-4
+        tof_coeff_narrow = 1.7 * 60 / self.frequency
+        tof_coeff_large = 2.5 * 60 / self.frequency
+        tof_coeff = 0.5 * 60 / self.frequency
+
+        if self.frequency:
+            if self.is_better_chopper_coverage:
+                tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff_large) * 1e-4
+                tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - tof_coeff_large) * 1e-4
+            else:
+                tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff + tof_coeff_large) * 1e-4
+                tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff - tof_coeff_large) * 1e-4
         else:
-            tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 4.5) * 1e-4
+            if self.is_better_chopper_coverage:
+                tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 4.5) * 1e-4
+            else:
+                tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 4.5) * 1e-4
+                
             tmin = 0
 
         self.tof_range_auto = [autotmin, autotmax]  # microS
@@ -90,7 +113,7 @@ class LRData(object):
         self.binning = [tmin, self.read_options['bins'], tmax]
         self.calculate_lambda_range()
         self.q_range = self.calculate_q_range()
-        # self.lambda_range = self.calculate_lambda_range()
+        #self.lambda_range = self.calculate_lambda_range()
         self.incident_angle = self.calculate_theta(False)
 
         # Proton charge
@@ -123,20 +146,6 @@ class LRData(object):
     ################## Properties for easy data access ##########################
     # return the size of the data stored in memory for this dataset
     @property
-    def nbytes(self): return (len(self._data_zipped) + 
-                              self.xydata.nbytes + self.xtofdata.nbytes)
-    @property
-    def rawbytes(self): return (self.data.nbytes + self.xydata.nbytes + self.xtofdata.nbytes)
-
-    USE_COMPRESSION = False
-    if USE_COMPRESSION:
-        @property
-        def nbytes(self): return (len(self._data_zipped) + 
-                                  self.xydata.nbytes + self.xtofdata.nbytes)
-    else:
-        nbytes = rawbytes
-
-    @property
     def xdata(self): return self.xydata.mean(axis=0)
 
     @property
@@ -161,12 +170,6 @@ class LRData(object):
     @property
     def xtof(self): return np.meshgrid(self.tof, self.x)
 
-    @property
-    def lamda(self):
-        v_n = self.dist_mod_det / self.tof * 1e6  # m/s
-        lamda_n = H_OVER_M_NEUTRON / v_n * 1e10  # A
-        return lamda_n
-
     def calculate_q_range(self):
         '''
         calculate q range
@@ -187,20 +190,23 @@ class LRData(object):
 
         return [q_min, q_max]
         
-    def calculate_lambda_range(self):
+    def calculate_lambda_range(self, tof_range=None):
         '''
         calculate lambda range
         '''
         _const = PLANCK_CONSTANT / (NEUTRON_MASS * self.dMD)
 
         # retrieve tof from GUI
-        [tof_min, tof_max] = self.tof_range
-
+        if tof_range is None:
+            [tof_min, tof_max] = self.tof_range
+        else:
+            [tof_min, tof_max] = tof_range
+        
         lambda_min = _const * (tof_min * 1e-6) / float(1e-10)
         lambda_max = _const * (tof_max * 1e-6) / float(1e-10)
 
         lambda_min = "%.2f" % lambda_min
-        lambda_max = "%2.f" % lambda_max
+        lambda_max = "%.2f" % lambda_max
 
         self.lambda_range = [lambda_min, lambda_max]
 

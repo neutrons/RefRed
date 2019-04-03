@@ -1,9 +1,11 @@
 from PyQt4 import QtGui, QtCore
 from PyQt4.QtGui import QApplication
-from RefRed.gui_handling.gui_utility import GuiUtility
-from distutils.util import strtobool
-import RefRed.colors
 import numpy as np
+from distutils.util import strtobool
+
+from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.gui_handling.fill_stitching_table import FillStitchingTable
+import RefRed.colors
 
 
 class LiveReducedDataHandler(object):
@@ -20,59 +22,15 @@ class LiveReducedDataHandler(object):
 
     def populate_table(self):
         self.clear_stiching_table()
-        self.fill_cell()
+        o_fill_table = FillStitchingTable(parent = self.parent)
+        o_fill_table.fillRow(row_index = self.row_index)
+        
+        #fself.fill_cell()
         if self.row_index == 0:
             self.activate_stitching_tab()        
         
     def activate_stitching_tab(self):
         self.parent.ui.plotTab.setCurrentIndex(1)
-        
-    def fill_cell(self):
-        big_table_data = self.big_table_data
-        row_index = self.row_index
-        
-        _lconfig = big_table_data[row_index, 2]
-        if _lconfig is None:
-            return
-            
-        #run number
-        _run_number = self.parent.ui.reductionTable.item(row_index, 1).text()
-        _run_item = QtGui.QTableWidgetItem(_run_number)
-        _run_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-        self.parent.ui.dataStitchingTable.setItem(row_index, 0, _run_item)
-        
-        #auto SF
-        _brush = QtGui.QBrush()
-        if strtobool(_lconfig.sf_auto_found_match):
-            _brush.setColor(QtCore.Qt.green)
-        else:
-            _brush.setColor(QtCore.Qt.red)
-
-        sf_auto = "%.4f" %_lconfig.sf_auto
-        _auto_item = QtGui.QTableWidgetItem(sf_auto)
-        _auto_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-        _auto_item.setForeground(_brush)
-        self.parent.ui.dataStitchingTable.setItem(row_index, 1, _auto_item)
-        
-        #manual SF
-        _widget_manual = QtGui.QDoubleSpinBox()
-        _widget_manual.setMinimum(0)
-        _widget_manual.setValue(_lconfig.sf_manual)
-        _widget_manual.setSingleStep(0.01)
-        _widget_manual.valueChanged.connect(self.parent.data_stitching_table_manual_spin_box)
-        self.parent.ui.dataStitchingTable.setCellWidget(row_index, 2, _widget_manual)
-        
-        #1 SF
-        sf_clock = "%.4f" %_lconfig.sf_clocking
-        _item_clock = QtGui.QTableWidgetItem(sf_clock)
-        _item_clock.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-        _brush = QtGui.QBrush()
-        if _lconfig.is_sf_clocking_used:
-            _brush.setColor(QtCore.Qt.green)
-        else:
-            _brush.setColor(QtCore.Qt.red)
-        _item_clock.setForeground(_brush)
-        self.parent.ui.dataStitchingTable.setItem(row_index, 3, _item_clock)
 
     def clear_stiching_table(self):
         if self.row_index == 0:
@@ -85,6 +43,7 @@ class LiveReducedDataHandler(object):
         self.parent.ui.data_stitching_plot.draw()
         
         big_table_data = self.big_table_data
+        _data = big_table_data[0, 0]
 
         for index_row in range(self.row_index + 1):
             _lconfig = big_table_data[index_row, 2]
@@ -114,8 +73,58 @@ class LiveReducedDataHandler(object):
                                                         y_axis,
                                                         yerr = e_axis, 
                                                         color = self.get_current_color_plot(index_row))
-            self.parent.ui.data_stitching_plot.set_yscale('log')
+
+            if _data.all_plot_axis.is_reduced_plot_stitching_tab_ylog:
+                self.parent.ui.data_stitching_plot.set_yscale('log')
+
+            if _data.all_plot_axis.is_reduced_plot_stitching_tab_xlog:
+                self.parent.ui.data_stitching_plot.set_xscale('log')
+            
             self.parent.ui.data_stitching_plot.draw()
+
+            o_gui_utility = GuiUtility(parent = self.parent)
+            yaxis_type = o_gui_utility.get_reduced_yaxis_type()
+            if yaxis_type == 'RvsQ':
+                if _data.all_plot_axis.reduced_plot_RQuserView_y is None:
+                    self.parent.ui.data_stitching_plot.canvas.draw()
+                    [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+                    [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+                    _data.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin, xmax]
+                    _data.all_plot_axis.reduced_plot_RQuserView_y = [ymin, ymax]
+                    _data.all_plot_axis.reduced_plot_RQQ4autoView_x = [xmin, xmax]
+                    _data.all_plot_axis.reduced_plot_RQautoView_y = [ymin, ymax]
+    
+                    #_data.all_plot_axis.reduced_plot_RQuserView = [xmin, xmax, ymin, ymax]
+                    #_data.all_plot_axis.reduced_plot_RQautoView = [xmin, xmax, ymin, ymax]
+                else:
+                    [xmin, xmax] = _data.all_plot_axis.reduced_plot_RQQ4userView_x
+                    [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQuserView_y
+                    #[xmin, xmax, ymin, ymax] = _data.all_plot_axis.reduced_plot_RQuserView
+                    self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
+                    self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                    self.parent.ui.data_stitching_plot.canvas.draw()
+            else:            
+                if _data.all_plot_axis.reduced_plot_RQ4userView_y is None:
+                    self.parent.ui.data_stitching_plot.canvas.draw()
+                    [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+                    [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+    
+                    _data.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin, xmax]
+                    _data.all_plot_axis.reduced_plot_RQ4userView_y = [ymin, ymax]
+                    _data.all_plot_axis.reduced_plot_RQQ4autoView_x= [xmin, xmax]
+                    _data.all_plot_axis.reduced_plot_RQ4autoView_y = [ymin, ymax]
+    
+                    #_data.all_plot_axis.reduced_plot_RQ4QuserView = [xmin, xmax, ymin, ymax]
+                    #_data.all_plot_axis.reduced_plot_RQ4QautoView = [xmin, xmax, ymin, ymax]
+                else:
+                    #[xmin, xmax, ymin, ymax] = _data.all_plot_axis.reduced_plot_RQ4QuserView
+                    [xmin, xmax] = _data.all_plot_axis.reduced_plot_RQQ4userView_x
+                    [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQ4userView_y
+    
+                    self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
+                    self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                    self.parent.ui.data_stitching_plot.canvas.draw()
+
             QApplication.processEvents()
         
     def live_plot(self):
@@ -125,6 +134,7 @@ class LiveReducedDataHandler(object):
             self.parent.ui.data_stitching_plot.draw()
         
         big_table_data = self.big_table_data
+        _data = big_table_data[0, 0]
 
         _lconfig = big_table_data[self.row_index, 2]
         if _lconfig is None:
@@ -153,17 +163,126 @@ class LiveReducedDataHandler(object):
                                                     y_axis,
                                                     yerr = e_axis, 
                                                     color = self.get_current_color_plot(self.row_index))
-        self.parent.ui.data_stitching_plot.set_yscale('log')
-        self.parent.ui.data_stitching_plot.draw()
+
+        if _data.all_plot_axis.is_reduced_plot_stitching_tab_ylog:
+            self.parent.ui.data_stitching_plot.set_yscale('log')
+
+        if _data.all_plot_axis.is_reduced_plot_stitching_tab_xlog:
+            self.parent.ui.data_stitching_plot.set_xscale('log')
+
         QApplication.processEvents()
 
+    def set_axis(self):
+        big_table_data = self.big_table_data
+        _data = big_table_data[0, 0]
+
+        o_gui_utility = GuiUtility(parent = self.parent)
+        yaxis_type = o_gui_utility.get_reduced_yaxis_type()
+        if yaxis_type == 'RvsQ':
+            if _data.all_plot_axis.reduced_plot_RQuserView_y is None:
+                self.parent.ui.data_stitching_plot.canvas.draw()
+                [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+                [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+                _data.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin, xmax]
+                _data.all_plot_axis.reduced_plot_RQuserView_y = [ymin, ymax]
+                _data.all_plot_axis.reduced_plot_RQQ4autoView_x = [xmin, xmax]
+                _data.all_plot_axis.reduced_plot_RQautoView_y = [ymin, ymax]
+
+                #_data.all_plot_axis.reduced_plot_RQuserView = [xmin, xmax, ymin, ymax]
+                #_data.all_plot_axis.reduced_plot_RQautoView = [xmin, xmax, ymin, ymax]
+            else:
+                [xmin, xmax] = _data.all_plot_axis.reduced_plot_RQQ4userView_x
+                [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQuserView_y
+                #[xmin, xmax, ymin, ymax] = _data.all_plot_axis.reduced_plot_RQuserView
+                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
+                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                self.parent.ui.data_stitching_plot.canvas.draw()
+        else:            
+            if _data.all_plot_axis.reduced_plot_RQ4userView_y is None:
+                self.parent.ui.data_stitching_plot.canvas.draw()
+                [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+                [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+                
+                _data.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin, xmax]
+                _data.all_plot_axis.reduced_plot_RQ4userView_y = [ymin, ymax]
+                _data.all_plot_axis.reduced_plot_RQQ4autoView_x= [xmin, xmax]
+                _data.all_plot_axis.reduced_plot_RQ4autoView_y = [ymin, ymax]
+
+                #_data.all_plot_axis.reduced_plot_RQ4QuserView = [xmin, xmax, ymin, ymax]
+                #_data.all_plot_axis.reduced_plot_RQ4QautoView = [xmin, xmax, ymin, ymax]
+            else:
+                #[xmin, xmax, ymin, ymax] = _data.all_plot_axis.reduced_plot_RQ4QuserView
+                [xmin, xmax] = _data.all_plot_axis.reduced_plot_RQQ4userView_x
+                [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQ4userView_y
+                
+                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
+                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                self.parent.ui.data_stitching_plot.canvas.draw()
+
+
+    def save_xy_axis(self):
+        o_gui_utility = GuiUtility(parent = self.parent)
+        yaxis_type = o_gui_utility.get_reduced_yaxis_type()
+        
+        big_table_data = self.parent.big_table_data
+        _data = big_table_data[0, 0]
+
+        if yaxis_type == 'RvsQ':
+            if _data.all_plot_axis.reduced_plot_RQuserView_y is None:
+                self.parent.ui.data_stitching_plot.canvas.draw()
+                [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+                [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+                
+                _data.all_plot_axis.reduced_plot_RQuserView_y = [ymin, ymax]
+                _data.all_plot_axis.reduced_plot_RQautoView_y = [ymin, ymax]
+                _data.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin, xmax]
+                _data.all_plot_axis.reduced_plot_RQQ4autoView_x = [xmin, xmax]
+                
+#                _data.all_plot_axis.reduced_plot_RQuserView = [xmin, xmax, ymin, ymax]
+#                _data.all_plot_axis.reduced_plot_RQautoView = [xmin, xmax, ymin, ymax]
+
+            else:
+#                [xmin, xmax, ymin, ymax] = _data.all_plot_axis.reduced_plot_RQuserView
+                [xmin, xmax] = _data.all_plot_axis.reduced_plot_RQQ4userView_x
+                [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQuserView_y
+
+                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
+                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                self.parent.ui.data_stitching_plot.canvas.draw()
+        else:            
+            if _data.all_plot_axis.reduced_plot_RQ4QuserView_y is None:
+                self.parent.ui.data_stitching_plot.canvas.draw()
+                [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+                [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+
+                _data.all_plot_axis.reduced_plot_RQ4userView_y = [ymin, ymax]
+                _data.all_plot_axis.reduced_plot_RQ4autoView_y = [ymin, ymax]
+                _data.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin, xmax]
+                _data.all_plot.axis.reduced_plot_RQQ4autoView_x = [xmin, xmax]
+
+#                _data.all_plot_axis.reduced_plot_RQ4QuserView = [xmin, xmax, ymin, ymax]
+#                _data.all_plot_axis.reduced_plot_RQ4QautoView = [xmin, xmax, ymin, ymax]
+            else:
+#                [xmin, xmax, ymin, ymax] = _data.all_plot_axis.reduced_plot_RQ4QuserView
+                [xmin, xmax] = _data.all_plot_axis.reduced_plot_RQQ4userView_x
+                [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQ4userView_y
+
+                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
+                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                self.parent.ui.data_stitching_plot.canvas.draw()
+
+        big_table_data[0, 0] = _data
+        self.parent.big_table_data = big_table_data
+
     def generate_selected_sf(self, lconfig=None):
-        if self.parent.ui.autoSF.isChecked():
+        o_gui = GuiUtility(parent = self.parent)
+        stitching_type = o_gui.getStitchingType()
+        if stitching_type is "absolute":
+            return lconfig.sf_abs_normalization
+        elif stitching_type is "auto":
             return lconfig.sf_auto
-        elif self.parent.ui.manualSF.isChecked():
-            return lconfig.sf_manual
         else:
-            return 1
+            return lconfig.sf_manual
             
     def get_current_color_plot(self, index_color):
         _color_list = self.colors

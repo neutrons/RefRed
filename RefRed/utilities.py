@@ -360,3 +360,33 @@ def get_index_free_thread(parent=None):
         new_index = 0
     parent.index_free_thread = new_index
     return new_index
+
+def weighted_mean_default(data_array, error_array, error_0):
+
+    sz = len(data_array)
+
+    # calculate the numerator of mean
+    dataNum = 0;
+    for i in range(sz):
+        if (error_array[i] == 0):
+            error_array[i] = error_0
+
+        tmpFactor = float(data_array[i]) / float((pow(error_array[i],2)))
+        dataNum += tmpFactor
+
+    # calculate denominator
+    dataDen = 0;
+    for i in range(sz):
+        if (error_array[i] == 0):
+            error_array[i] = error_0
+        tmpFactor = 1./float((pow(error_array[i],2)))
+        dataDen += tmpFactor
+
+    if dataDen == 0:
+        data_mean = np.nan
+        mean_error = np.nan
+    else:
+        data_mean = float(dataNum) / float(dataDen)
+        mean_error = math.sqrt(1/dataDen)
+
+    return [data_mean, mean_error]

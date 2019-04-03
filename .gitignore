@@ -1,5 +1,4 @@
 *.pyc
-<<<<<<< HEAD
-=======
-
->>>>>>> new_gui_design
+MANIFEST
+build
+dist

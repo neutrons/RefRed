@@ -6,6 +6,9 @@ class PopulateReductionTableFromListLRData(object):
     list_wks_sorted = None
     list_runs_sorted = None
     list_nexus_sorted = None
+
+    LAMBDA_REQUESTED_TOLERANCE = 0.01
+    THI_TOLERANCE = 0.015
     
     def __init__(self, parent=None,
                  list_lrdata = None,
@@ -55,8 +58,7 @@ class PopulateReductionTableFromListLRData(object):
                 pass
             else:
                 _lrdata = list_lrdata[_index]
-
-            big_table_data[_index, self.big_table_data_col] = _lrdata
+                big_table_data[_index, self.big_table_data_col] = _lrdata
         self.big_table_data = big_table_data
                                 
     def insert_runs_into_table(self):
@@ -84,9 +86,14 @@ class PopulateReductionTableFromListLRData(object):
         _data_lrdata = _list_data_lrdata[_data_index]
         while (_data_lrdata is not None):
             _data_lambda_value = _data_lrdata.lambda_requested
+            _data_thi_value = _data_lrdata.thi
+            
             for _norm_index, _norm_lrdata in enumerate(_list_lrdata):
                 _norm_lambda_value = _norm_lrdata.lambda_requested
-                if (_norm_lambda_value == _data_lambda_value):
+                _norm_thi_value = _norm_lrdata.thi
+                
+                if (np.abs(_norm_lambda_value - _data_lambda_value) < self.LAMBDA_REQUESTED_TOLERANCE)  and \
+                   (np.abs(_norm_thi_value - _data_thi_value) < self.THI_TOLERANCE):
                     _run = _list_run[_norm_index]
                     _list_norm_lrdata_sorted.append(_norm_lrdata)
                     _list_norm_runs_sorted.append(_run)
@@ -110,11 +117,12 @@ class PopulateReductionTableFromListLRData(object):
     def insert_data_runs_into_table(self):
         for _index, _run in enumerate(self.list_run):
             if type(_run) == type([]):
+                _run = map(str, _run) #to convert to list of string
                 str_run = ",".join(_run)
             else:
                 str_run = str(_run)
             self.parent.ui.reductionTable.item(_index, self.reductionTable_col).setText(str_run)
-            
+
     def clear_reductionTable(self):
         nbr_row = self.parent.ui.reductionTable.rowCount()
         nbr_col = self.parent.ui.reductionTable.columnCount()

@@ -1,6 +1,7 @@
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
 
+
 class SpinBox(object):
     
     parent = None

@@ -5,16 +5,20 @@ import os
 import gc
 
 from mantid.simpleapi import *
-#from RefRed.sort_nxsdata import SortNXSData
 from RefRed.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
 from RefRed.low_res_finder_algorithms.low_res_finder import LowResFinder
+from RefRed.clocking_algorithms.clocking_finder import ClockingFinder
 import RefRed.constants as constants
 from RefRed.plot.all_plot_axis import AllPlotAxis
 from RefRed.utilities import convert_angle
 
+
 NEUTRON_MASS = 1.675e-27  # kg
 PLANCK_CONSTANT = 6.626e-34  # m^2 kg s^-1
 H_OVER_M_NEUTRON = PLANCK_CONSTANT / NEUTRON_MASS
+
+#any run before, tmin and tmax will be used a different algorithm
+RUN_NUMBER_0_BETTER_CHOPPER_COVERAGE = 137261 
 
 class LRData(object):
 
@@ -37,8 +41,12 @@ class LRData(object):
     filename = ''
     ipts = 'N/A'
     
-    def __init__(self, workspace):
+    is_better_chopper_coverage = True
+    total_counts = 0
+    
+    def __init__(self, workspace, lconfig=None, is_data=True, parent=None):
         
+        self.parent = parent
         self._tof_axis = []
         self.Ixyt = []
         self.Exyt= []
@@ -58,14 +66,22 @@ class LRData(object):
 
         self.ipts = mt_run.getProperty('experiment_identifier').value
         self.run_number = mt_run.getProperty('run_number').value
+        
+        if float(self.run_number) < RUN_NUMBER_0_BETTER_CHOPPER_COVERAGE:
+            self.is_better_chopper_coverage = False
+        
         self.lambda_requested = float(mt_run.getProperty('LambdaRequest').value[0])
         self.lambda_requested_units = mt_run.getProperty('LambdaRequest').units
         self.thi = mt_run.getProperty('thi').value[0]
         self.thi_units = mt_run.getProperty('thi').units
+        self.ths = mt_run.getProperty('ths').value[0]
+        self.ths_units = mt_run.getProperty('ths').units
         self.tthd = mt_run.getProperty('tthd').value[0]
         self.tthd_units = mt_run.getProperty('tthd').units
         self.S1W = mt_run.getProperty('S1HWidth').value[0]
         self.S1H = mt_run.getProperty('S1VHeight').value[0]
+        self.parent.current_ipts = mt_run.getProperty('experiment_identifier').value
+        self.total_counts = self.workspace.getNumberEvents()
 
         try:
             self.SiW = mt_run.getProperty('SiHWidth').value[0]
@@ -79,9 +95,6 @@ class LRData(object):
         self.attenuatorNbr = mt_run.getProperty('vATT').value[0] - 1
         self.date = mt_run.getProperty('run_start').value
         
-        #self.full_file_name = mt_run.getProperty('Filename').value[0]
-        #self.filename = ','.join([os.path.basename(_file) for _file in self.full_file_name])
-
         sample = self.workspace.getInstrument().getSample()
         source = self.workspace.getInstrument().getSource()
         self.dMS = sample.getDistance(source) 
@@ -104,22 +117,33 @@ class LRData(object):
 
         # calculate theta
         self.theta = self.calculate_theta()
+        self.frequency = float(mt_run.getProperty('Speed1').value[0])
 
-        #if self.read_options['is_auto_tof_finder'] or self.tof_range == None:
-        
-        # automatically calculate the TOF range 
-        autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 - 1.7) * 1e-4
-        autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 1.7) * 1e-4
-        #else:
-            #autotmin = np.float(self.tof_range[0])
-            #autotmax = np.float(self.tof_range[1])
+        tof_coeff_narrow = 1.7 * 60 / self.frequency
+        tof_coeff_large = 2.5 * 60 / self.frequency
+        tof_coeff = 0.5 * 60 / self.frequency
+
+        if lconfig is not None:
+            autotmin = np.float(lconfig.tof_range[0])
+            autotmax = np.float(lconfig.tof_range[1])
+        else:
+            if self.is_better_chopper_coverage:
+                autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - tof_coeff_narrow) * 1e-4
+                autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff_narrow) * 1e-4
+            else:
+                autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff - tof_coeff_narrow) * 1e-4
+                autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff + \
+                tof_coeff_narrow) * 1e-4
 
         # automatically calcualte the TOF range for display
-        if mt_run.getProperty('Speed1').value[0] == 60:
-            tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 2.5) * 1e-4
-            tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 - 2.5) * 1e-4
+        if self.is_better_chopper_coverage:
+            tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - tof_coeff_large) * 1e-4
+            tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff_large) * 1e-4
         else:
-            tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 4.5) * 1e-4
+            tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff - tof_coeff_large) * 1e-4
+            tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff + tof_coeff_large) * 1e-4
+
+        if tmin < 0:
             tmin = 0
 
         self.tof_range_auto = [autotmin, autotmax]  # microS
@@ -153,7 +177,8 @@ class LRData(object):
         self.data_loaded = False
         self.read_data()
 
-        if self.read_options['is_auto_peak_finder']:
+        if lconfig is None:
+            
             pf = PeakFinderDerivation(range(len(self.ycountsdata)), self.ycountsdata)
             [peak1, peak2] = pf.getPeaks()
             self.peak = [str(peak1), str(peak2)]
@@ -162,31 +187,50 @@ class LRData(object):
             back1 = int(peak1 - backOffsetFromPeak)
             back2 = int(peak2 + backOffsetFromPeak)
             self.back = [str(back1), str(back2)]
-            
+
             lw_pf = LowResFinder(range(len(self.countsxdata)), self.countsxdata)
             [lowres1, lowres2] = lw_pf.get_low_res()
             self.low_res = [str(lowres1), str(lowres2)]
             
-            clocking_pf = LowResFinder(range(len(self.ycountsdata)), self.ycountsdata)
-            [clocking1, clocking2] = clocking_pf.get_low_res()
+            clocking_pf = ClockingFinder(parent = self.parent,
+                                         xdata = range(len(self.ycountsdata)), 
+                                         ydata = self.ycountsdata)
+            [clocking1, clocking2] = clocking_pf.clocking
+            
+            clock_array = [clocking1, clocking2]
+            clock_array.sort()
+
             self.clocking  = [str(clocking1), str(clocking2)]
+
+        else:
+            
+            # if we loaded a config that does not have the clocking info, we will have to retrieve once
+            # everything has been loaded (before display)
+            if lconfig.data_clocking[0] != '':
+                self.clocking = [np.float(lconfig.data_clocking[0]), np.float(lconfig.data_clocking[1])]
+            else:
+                clocking_pf = LowResFinder(range(len(self.ycountsdata)), self.ycountsdata)
+                [clocking1, clocking2] = clocking_pf.get_low_res()
+                self.clocking  = [str(clocking1), str(clocking2)]
+                
+            self.tof_auto_flag = np.bool(lconfig.tof_auto_flag)
+
+            if is_data:
+                self.peak = [np.int(lconfig.data_peak[0]), np.int(lconfig.data_peak[1])]
+                self.back = [np.int(lconfig.data_back[0]), np.int(lconfig.data_back[1])]
+                self.low_res = [np.int(lconfig.data_low_res[0]), np.int(lconfig.data_low_res[1])] 
+                self.low_res_flag = np.bool(lconfig.data_low_res_flag)
+                self.back_flag = np.bool(lconfig.data_back_flag)
+            else:
+                self.peak = [np.int(lconfig.norm_peak[0]), np.int(lconfig.norm_peak[1])]
+                self.back = [np.int(lconfig.norm_back[0]), np.int(lconfig.norm_back[1])]
+                self.low_res = [np.int(lconfig.norm_low_res[0]), np.int(lconfig.norm_low_res[1])] 
+                self.low_res_flag = np.bool(lconfig.norm_low_res_flag)
+                self.back_flag = np.bool(lconfig.norm_back_flag)
+
 
     ################## Properties for easy data access ##########################
     # return the size of the data stored in memory for this dataset
-    @property
-    def nbytes(self): return (len(self._data_zipped) + 
-                              self.xydata.nbytes + self.xtofdata.nbytes)
-    @property
-    def rawbytes(self): return (self.data.nbytes + self.xydata.nbytes + self.xtofdata.nbytes)
-
-    USE_COMPRESSION = False
-    if USE_COMPRESSION:
-        @property
-        def nbytes(self): return (len(self._data_zipped) + 
-                                  self.xydata.nbytes + self.xtofdata.nbytes)
-    else:
-        nbytes = rawbytes
-
     @property
     def xdata(self): return self.xydata.mean(axis=0)
 
@@ -212,12 +256,6 @@ class LRData(object):
     @property
     def xtof(self): return np.meshgrid(self.tof, self.x)
 
-    @property
-    def lamda(self):
-        v_n = self.dist_mod_det / self.tof * 1e6  # m/s
-        lamda_n = H_OVER_M_NEUTRON / v_n * 1e10  # A
-        return lamda_n
-
     def calculate_q_range(self):
         '''
         calculate q range
@@ -231,23 +269,7 @@ class LRData(object):
         q_max = _const_theta / float(lambda_min)
         
         self.q_range = [q_min, q_max]
-      
-        #theta_rad = self.theta
-        #dMD = self.dMD
-
-        #_const = float(4) * math.pi * dMD / H_OVER_M_NEUTRON
-
-        ## retrieve tof from GUI
-        #[tof_min, tof_max] = self.tof_range
-
-        #q_min = _const * math.sin(theta_rad) / (float(tof_max) * 1e-6) * float(1e-10)
-        #q_max = _const * math.sin(theta_rad) / (float(tof_min) * 1e-6) * float(1e-10)
-
-        #q_min = "%.5f" % q_min
-        #q_max = "%.5f" % q_max
-
-        #return [q_min, q_max]
-        
+              
     def calculate_lambda_range(self, tof_range=None):
         '''
         calculate lambda range
