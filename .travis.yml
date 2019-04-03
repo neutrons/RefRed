@@ -29,14 +29,14 @@ install:
   - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION pylint matplotlib numpy pyqt=4;
   - source activate test-environment
   - conda config --add channels conda-forge
-  - conda config --add channels mantid
-  - conda install --yes -c mantid/label/nightly mantid-framework
+  #- conda config --add channels mantid
+  #- conda install --yes -c mantid/label/nightly mantid-framework
   - pip install --upgrade codecov
   
 script:
   #- python setup.py install
   #- cd test; coverage run data_handling_test.py
-  - pylint -f parseable RefRed
+  - pylint -f parseable RefRed > pylint.log
 
 after_success:
   #- codecov
