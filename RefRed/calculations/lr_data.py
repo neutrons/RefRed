@@ -232,20 +232,6 @@ class LRData(object):
     ################## Properties for easy data access ##########################
     # return the size of the data stored in memory for this dataset
     @property
-    def nbytes(self): return (len(self._data_zipped) + 
-                              self.xydata.nbytes + self.xtofdata.nbytes)
-    @property
-    def rawbytes(self): return (self.data.nbytes + self.xydata.nbytes + self.xtofdata.nbytes)
-
-    USE_COMPRESSION = False
-    if USE_COMPRESSION:
-        @property
-        def nbytes(self): return (len(self._data_zipped) + 
-                                  self.xydata.nbytes + self.xtofdata.nbytes)
-    else:
-        nbytes = rawbytes
-
-    @property
     def xdata(self): return self.xydata.mean(axis=0)
 
     @property
@@ -269,12 +255,6 @@ class LRData(object):
 
     @property
     def xtof(self): return np.meshgrid(self.tof, self.x)
-
-    @property
-    def lamda(self):
-        v_n = self.dist_mod_det / self.tof * 1e6  # m/s
-        lamda_n = H_OVER_M_NEUTRON / v_n * 1e10  # A
-        return lamda_n
 
     def calculate_q_range(self):
         '''

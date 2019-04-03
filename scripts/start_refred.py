@@ -18,9 +18,6 @@ try:
 except NameError:
     pass
 
-## first thing to do is starting the logging system
-#from quicknxs.gui_logging import setup_system, check_runstate
-
 def _run(argv=[]):
     app=QApplication(argv)
     splash=QSplashScreen(QPixmap(u':/General/logo_refl_hq.png'))

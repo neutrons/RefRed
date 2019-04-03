@@ -5,7 +5,6 @@ import numpy as np
 import os
 
 from RefRed.autopopulatemaintable.reductiontable_auto_fill import ReductionTableAutoFill
-from RefRed.config_file_launcher import ConfigFileLauncher
 from RefRed.configuration.loading_configuration import LoadingConfiguration
 from RefRed.configuration.saving_configuration import SavingConfiguration
 from RefRed.configuration.user_configuration_handler import RetrieveUserConfiguration, SaveUserConfiguration
@@ -40,7 +39,6 @@ from RefRed.reduction_table_handling.reduction_table_check_box import ReductionT
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
 from RefRed.reduction_table_handling.reduction_table_right_click import ReductionTableRightClick
 from RefRed.reduction_table_handling.reduction_table_handler import ReductionTableHandler
-from RefRed.update_data_norm_tab import UpdateDataNormTab
 from RefRed.settings.initialize_settings import InitializeSettings
 from RefRed.settings.settings_editor import SettingsEditor
 from RefRed.sf_calculator.sf_calculator import SFCalculator
