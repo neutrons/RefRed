@@ -93,11 +93,11 @@ class IndividualReductionSettingsHandler(object):
 
     def get_data_low_res_range(self):
         _data = self.data
-        return self.get_low_res_range(data = _data)
+        return self.get_low_res_range(data=_data)
 
     def get_data_clocking_range(self):
         big_table_data = self.big_table_data
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent=self.parent)
         _last_row = o_gui_utility.get_row_with_highest_q()
         _data = big_table_data[_last_row, 0]
         clock1 = int(_data.clocking[0])
@@ -106,7 +106,7 @@ class IndividualReductionSettingsHandler(object):
     
     def get_norm_low_res_range(self):
         _norm = self.norm
-        return self.get_low_res_range(data = _norm)
+        return self.get_low_res_range(data=_norm)
 
     def get_low_res_range(self, data=None):
         low_res1 = int(data.low_res[0])
@@ -121,11 +121,11 @@ class IndividualReductionSettingsHandler(object):
         
     def get_data_back_range(self):
         _data = self.data
-        return self.get_back_range(data = _data)
+        return self.get_back_range(data=_data)
     
     def get_norm_back_range(self):
         _norm = self.norm
-        return self.get_back_range(data = _norm)
+        return self.get_back_range(data=_norm)
     
     def get_back_range(self, data=None):
         back1 = int(data.back[0])
@@ -136,11 +136,11 @@ class IndividualReductionSettingsHandler(object):
 
     def get_data_back_flag(self):
         _data = self.data
-        return self.get_back_flag(data = _data)
+        return self.get_back_flag(data=_data)
 
     def get_norm_back_flag(self):
         _norm = self.norm
-        return self.get_back_flag(data = _norm)
+        return self.get_back_flag(data=_norm)
 
     def get_back_flag(self, data=None):
         return bool(data.back_flag)
