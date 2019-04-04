@@ -1,15 +1,14 @@
 from PyQt4.QtCore import Qt
-from PyQt4 import QtGui
 import RefRed.version
 
 
 class GuiUtility(object):
-    
+
     parent = None
-    
+
     def __init__(self, parent=None):
         self.parent = parent
-        
+
     def get_ipts(self, row=-1):
         big_table_data = self.parent.big_table_data
         _data0 = big_table_data[row, 0]
@@ -21,19 +20,19 @@ class GuiUtility(object):
 
     def init_widgets_value(self):
         _gui_metadata = self.parent.gui_metadata
-        
+
         #event tof bins
         _tof_bin = _gui_metadata['tof_bin']
         self.parent.ui.eventTofBins.setValue(_tof_bin)
-        
+
         #q bin
         _q_bin = _gui_metadata['q_min']
         self.parent.ui.qStep.setText(str(_q_bin))
-        
+
         #angle offset
         _angle_offset = "%.3f" % _gui_metadata['angle_offset']
         self.parent.ui.angleOffsetValue.setText(_angle_offset)
-        
+
         #angle offset error
         _angle_offset_error = "%.3f" % _gui_metadata['angle_offset_error']
         self.parent.ui.angleOffsetError.setText(_angle_offset_error)
@@ -57,12 +56,9 @@ class GuiUtility(object):
     def data_norm_tab_widget_row_to_display(self):
         return self.parent.current_table_reduction_row_selected
 
-    #def data_norm_tab_widget_tab_selected(self):
-        #return self.parent.ui.dataNormTabWidget.currentIndex()
-    
     def get_current_table_reduction_row_selected(self):
         return int(self.parent.ui.reductionTable.currentRow())
-    
+
     def get_current_table_reduction_column_selected(self):
         return int(self.parent.ui.reductionTable.currentColumn())
 
@@ -74,7 +70,7 @@ class GuiUtility(object):
             if _state == Qt.Checked:
                 return row
         return -1
-    
+
     def get_all_rows(self):
         nbr_row = self.parent.ui.reductionTable.rowCount()
         all_rows = []
@@ -90,7 +86,7 @@ class GuiUtility(object):
         all_rows = [row]
         if is_data:
             return all_rows
-        
+
         if self.parent.ui.TOFmanualApplyOnlyToRow.isChecked() and (not auto_mode):
             return all_rows
 
@@ -104,24 +100,24 @@ class GuiUtility(object):
                 all_rows.append(_row)
         all_rows.sort()
         return all_rows
-    
+
     def get_data_norm_tab_selected(self):
         return self.parent.ui.dataNormTabWidget.currentIndex()
-    
+
     def is_data_tab_selected(self):
         if self.get_data_norm_tab_selected() == 0:
             return True
         return False
-    
+
     def is_auto_tof_range_radio_button_selected(self):
         return self.parent.ui.dataTOFautoMode.isChecked()
-    
+
     def set_auto_tof_range_radio_button(self, status = True):
         self.parent.ui.dataTOFautoMode.setChecked(status)
         self.parent.ui.dataTOFmanualMode.setChecked(not status)
         self.set_auto_tof_range_widgets(status = status)
-    
-    def set_auto_tof_range_widgets(self, status = True):    
+
+    def set_auto_tof_range_widgets(self, status = True):
         self.parent.ui.TOFmanualFromLabel.setEnabled(not status)
         self.parent.ui.TOFmanualFromValue.setEnabled(not status)
         self.parent.ui.TOFmanualFromUnitsValue.setEnabled(not status)
@@ -129,10 +125,9 @@ class GuiUtility(object):
         self.parent.ui.TOFmanualToLabel.setEnabled(not status)
         self.parent.ui.TOFmanualToUnitsValue.setEnabled(not status)
         self.parent.ui.TOFmanualApplyOnlyToRow.setEnabled(not status)
-    
+
     def clear_table(self, table_ui):
         nbr_row = table_ui.rowCount()
-        nbr_col = table_ui.columnCount()
         for _row in range(nbr_row):
             table_ui.removeRow(_row)
             table_ui.insertRow(_row)
@@ -183,4 +178,3 @@ class GuiUtility(object):
             return 'auto'
         else:
             return 'manual'
-    

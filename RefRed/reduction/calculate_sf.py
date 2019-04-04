@@ -2,6 +2,7 @@ import math
 from mantid.simpleapi import *
 import numpy as np
 
+
 class CalculateSF(object):
     '''
     This class will determine the best scaling factor (SF) to apply to the data to stitch them
@@ -11,7 +12,7 @@ class CalculateSF(object):
     parent = None
     nbr_process = -1
 
-    def __init__(self, parent=None, nbr_process = -1):
+    def __init__(self, parent=None, nbr_process=-1):
         self.parent = parent
         self.big_table_data = self.parent.big_table_data
         self.nbr_process = nbr_process
@@ -32,11 +33,9 @@ class CalculateSF(object):
 
         _y_axis = dataSet.reduce_y_axis
         _e_axis = dataSet.reduce_e_axis
-#		error_0 = 1./configObject.proton_charge
         error_0 = 1./dataSet.proton_charge
         [data_mean, mean_error] = self.weighted_mean(_y_axis, _e_axis, error_0)
         _sf = 1./data_mean 
-#		data_CE = self.big_table_data[0,0]
         dataSet.sf_auto = _sf
         self.big_table_data[0,2] = dataSet
 
@@ -76,21 +75,6 @@ class CalculateSF(object):
 
         return _sf
 
-
-    def calculate_ratio_of_left_right_mean(self, left_set, right_set):
-        '''
-        calculate ratio of left and right mean
-        '''
-        left_x_axis = left_set.reduce_q_axis
-        right_x_axis = right_set.reduce_q_axis
-        [min_x, max_x, no_overlap] = self.calculate_overlap_axis(left_x_axis, right_x_axis)
-        if no_overlap:
-            _sf = 1
-        else:
-            left_mean = self.calculate_left_weighted_mean(min_x, max_x, left_set.tmp_y_axis, tmp_e_axis)
-            right_mean = self.calculateRightweighted_mean(min_x, max_x, right_set.reduce_y_axis, right_set.reduce_e_axis)
-
-
     def apply_left_sf(self, left_set):
         '''
         In order to calculate the right SF, we must apply the previously calculated left SF
@@ -107,18 +91,10 @@ class CalculateSF(object):
 
         return left_set
 
-
-    def  calculate_left_weighted_mean(self, min_x, max_x, x_axis, y_axis, e_axis):
-        pass
-
-
     def fit_data(self, data_set, threshold_index, type='right'):
         '''
         will fit the data with linear fitting y=ax + b
         '''
-        a = 0
-        b = 0
-
         if type == 'left':
             x_axis = data_set.reduce_q_axis[threshold_index:]
             y_axis = data_set.tmp_y_axis[threshold_index:]
@@ -128,20 +104,19 @@ class CalculateSF(object):
             y_axis = data_set.reduce_y_axis[:threshold_index+1]
             e_axis = data_set.reduce_e_axis[:threshold_index+1]
 
+        dataToFit = CreateWorkspace(DataX=x_axis,
+                                    DataY=y_axis,
+                                    DataE=e_axis,
+                                    Nspec=1)
 
-        dataToFit = CreateWorkspace(DataX = x_axis,
-                                    DataY = y_axis,
-                                    DataE = e_axis,
-                                    Nspec = 1)
+        dataToFit = ReplaceSpecialValues(InputWorkspace=dataToFit, 
+                                         NaNValue=0,
+                                         NaNError=0,
+                                         InfinityValue=0,
+                                         InfinityError=0)
 
-        dataToFit = ReplaceSpecialValues(InputWorkspace = dataToFit, 
-                                         NaNValue = 0,
-                                         NaNError = 0,
-                                         InfinityValue = 0,
-                                         InfinityError = 0)
-
-        Fit(InputWorkspace = dataToFit, 
-            Function = "name=UserFunction, Formula=a+b*x, a=1, b=2",
+        Fit(InputWorkspace=dataToFit, 
+            Function="name=UserFunction, Formula=a+b*x, a=1, b=2",
             Output='res')
 
         res = mtd['res_Parameters']
@@ -150,7 +125,6 @@ class CalculateSF(object):
         a = res.cell(1,1)
 
         return [a,b]
-
 
     def scale_to_apply_for_best_overlap(self, fit_range_to_use, a_left, b_left, a_right, b_right):
         '''
@@ -165,14 +139,10 @@ class CalculateSF(object):
 
         return _sf
 
-
     def calculate_overlap_axis(self, left_axis, right_axis):
         '''
         calculate the overlap region of the two axis
         '''
-        global_min = min([left_axis[0], right_axis[0]])
-        global_max = max([left_axis[-1], right_axis[-1]])
-
         _min_x = -1
         _max_x = -1
         no_overlap = True
@@ -191,18 +161,15 @@ class CalculateSF(object):
 
         return [_min_x, _max_x, left_min_index, right_max_index, no_overlap]
 
-
     def find_nearest(self, array, value):
-        idx = (np.abs(array-value)).argmin()
+        idx = (np.abs(array - value)).argmin()
         return idx
-
 
     def git_fitting_overlap_range(self, min_x, max_x, nbr_points):
 
         step = (float(max_x) - float(min_x)) / float(nbr_points)
         _fit_range = np.arange(min_x, max_x + step, step)
         return _fit_range
-
 
     def calculate_mean_of_function_over_range(self, range_to_use, a, b):
         '''
@@ -220,7 +187,6 @@ class CalculateSF(object):
     def fct(self, a, b, x):
         _value = a * x + b
         return _value
-
 
     def weighted_mean(self, data_array, error_array, error_0):
 

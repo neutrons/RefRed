@@ -23,9 +23,9 @@ class AutoTofRangeRadioButtonHandler(object):
             return
 
     def setup(self):
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent=self.parent)
         is_auto_tof_selected = o_gui_utility.is_auto_tof_range_radio_button_selected()
-        o_gui_utility.set_auto_tof_range_widgets(status = is_auto_tof_selected)
+        o_gui_utility.set_auto_tof_range_widgets(status=is_auto_tof_selected)
 
         self.row = o_gui_utility.get_current_table_reduction_check_box_checked()
         if self.row == -1:
