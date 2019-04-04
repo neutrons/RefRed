@@ -37,8 +37,8 @@ class ExportPlotAscii(object):
         default_filename = 'REFL_' + run_number + '_2dPxVsTof.txt'
         path = parent.path_ascii
         default_filename = path + '/' + default_filename
-        filename = str(QtGui.QFileDialog.getSaveFileName(parent, 
-                                                         'Create 2D Pixel VS TOF', 
+        filename = str(QtGui.QFileDialog.getSaveFileName(parent,
+                                                         'Create 2D Pixel VS TOF',
                                                          default_filename))
 
         if filename.strip() == '':
@@ -58,8 +58,8 @@ class ExportPlotAscii(object):
         default_filename = 'REFL_' + run_number + '_ix.txt'
         path = parent.path_ascii
         default_filename = path + '/' + default_filename
-        filename = str(QtGui.QFileDialog.getSaveFileName(parent, 
-                                                         'Create Counts vs Pixel (low resolution range) ASCII File', 
+        filename = str(QtGui.QFileDialog.getSaveFileName(parent,
+                                                         'Create Counts vs Pixel (low resolution range) ASCII File',
                                                          default_filename))
 
         if filename.strip() == '':
@@ -86,8 +86,8 @@ class ExportPlotAscii(object):
         default_filename = 'REFL_' + run_number + '_yt.txt'
         path = parent.path_ascii
         default_filename = path + '/' + default_filename
-        filename = str(QtGui.QFileDialog.getSaveFileName(parent, 
-                                                         'Create Counts vs TOF ASCII File', 
+        filename = str(QtGui.QFileDialog.getSaveFileName(parent,
+                                                         'Create Counts vs TOF ASCII File',
                                                          default_filename))
 
         if filename.strip() == '':
@@ -107,7 +107,7 @@ class ExportPlotAscii(object):
             text.append(_line)
         text.append(str(tof[-1]))
         RefRed.utilities.write_ascii_file(filename, text)
-        
+
     def export_yi(self):
         parent = self.parent
         big_table_data = parent.big_table_data
@@ -117,8 +117,8 @@ class ExportPlotAscii(object):
         default_filename = 'REFL_' + run_number + '_rpx.txt'
         path = parent.path_ascii
         default_filename = path + '/' + default_filename
-        filename = str(QtGui.QFileDialog.getSaveFileName(parent, 
-                                                         'Create Counts vs Pixel ASCII File', 
+        filename = str(QtGui.QFileDialog.getSaveFileName(parent,
+                                                         'Create Counts vs Pixel ASCII File',
                                                          default_filename))
 
         if filename.strip() == '':
@@ -137,11 +137,11 @@ class ExportPlotAscii(object):
         RefRed.utilities.write_ascii_file(filename, text)
 
     def export_stitched(self):
-        _tmp = OutputReducedData(parent = self.parent)
+        _tmp = OutputReducedData(parent=self.parent)
         _tmp.show()
 
     def get_current_row_col_displayed(self):
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent=self.parent)
         row = o_gui_utility.get_current_table_reduction_check_box_checked()
         col = o_gui_utility.get_data_norm_tab_selected()
         return [row, col]

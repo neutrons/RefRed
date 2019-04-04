@@ -157,8 +157,8 @@ class OutputReducedData(QDialog):
         self.dq_over_q = float(dq_over_q)
 
         for _row in range(nbr_row):
-            self.filename = self.format_n_filename(row = _row)
-            text = self.retrieve_individual_metadata(row = _row)
+            self.filename = self.format_n_filename(row=_row)
+            text = self.retrieve_individual_metadata(row=_row)
 
             if self.is_with_4th_column_flag:
                 dq0 = self.ui.dq0Value.text()
@@ -174,7 +174,7 @@ class OutputReducedData(QDialog):
                 text.append('# Q[1/Angstroms] R delta_R')
 
             self.text_data = text
-            self.produce_data_without_common_q_axis(row = _row)
+            self.produce_data_without_common_q_axis(row=_row)
             self.format_data()
             self.create_file()
 
@@ -212,7 +212,7 @@ class OutputReducedData(QDialog):
         self.create_output_file()
 
     def generate_selected_sf(self, lconfig=None):
-        o_gui = GuiUtility(parent = self.parent)
+        o_gui = GuiUtility(parent=self.parent)
         stitching_type = o_gui.getStitchingType()
         if stitching_type is "absolute":
             return lconfig.sf_abs_normalization
@@ -231,7 +231,7 @@ class OutputReducedData(QDialog):
         return list_wks
 
     def create_output_file(self):
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent=self.parent)
         nbr_row = o_gui_utility.reductionTable_nbr_row()
         _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
         _big_table_data = _dataObject.big_table_data
@@ -255,13 +255,13 @@ class OutputReducedData(QDialog):
         print("DQConstant: %r" %(float(self.ui.dq0Value.text())))
         print("DQSlope: %r" %(float(self.ui.dQoverQvalue.text())))
 
-        LRReflectivityOutput(ReducedWorkspaces = _list_wks,
-                             OutputBinning = _q_range,
-                             DQConstant = float(self.ui.dq0Value.text()),
-                             DQSlope = float(self.ui.dQoverQvalue.text()),
-                             OutputFilename = self.filename,
-                             ScaleToUnity = False,
-                             Metadata = _text_data)
+        LRReflectivityOutput(ReducedWorkspaces=_list_wks,
+                             OutputBinning=_q_range,
+                             DQConstant=float(self.ui.dq0Value.text()),
+                             DQSlope=float(self.ui.dQoverQvalue.text()),
+                             OutputFilename=self.filename,
+                             ScaleToUnity=False,
+                             Metadata=_text_data)
 
     def format_metadata(self):
         _text_data = self.text_data
@@ -271,7 +271,7 @@ class OutputReducedData(QDialog):
         return _new_text_data
 
     def collect_list_wks(self):
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent=self.parent)
         nbr_row = o_gui_utility.reductionTable_nbr_row()
         _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
         _big_table_data = _dataObject.big_table_data
@@ -284,7 +284,7 @@ class OutputReducedData(QDialog):
         return _list_wks
 
     def get_q_range(self):
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent=self.parent)
         nbr_row = o_gui_utility.reductionTable_nbr_row()
 
         _auto_qmin_flag = self.ui.auto_qmin_button.isChecked()
@@ -308,7 +308,7 @@ class OutputReducedData(QDialog):
         return [minQ, maxQ]
 
     def apply_scaling_factor(self):
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent=self.parent)
         nbr_row = o_gui_utility.reductionTable_nbr_row()
         _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
         _big_table_data = _dataObject.big_table_data
@@ -324,7 +324,7 @@ class OutputReducedData(QDialog):
         _dataObject.big_table_data = _big_table_data
             
     def retrieve_sf(self, lconfigdataset):
-        o_gui = GuiUtility(parent = self.parent)
+        o_gui = GuiUtility(parent=self.parent)
         stitching_type = o_gui.getStitchingType()
         if stitching_type == 'absolute':
             return lconfigdataset.sf_abs_normalization
@@ -337,12 +337,12 @@ class OutputReducedData(QDialog):
         reduction_table = self.parent.ui.reductionTable
         text = []
     
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent=self.parent)
         _date = time.strftime("# Date: %d_%m_%Y")
         _reduction_method = '# Reduction method: manual'
         _reduction_engine = '# Reduction engine: RefRed'
         _reduction_date = '# %s' %_date
-        _ipts = o_gui_utility.get_ipts(row = 0)
+        _ipts = o_gui_utility.get_ipts(row=0)
         for _entry in [_date, _reduction_method, _reduction_engine, _reduction_date]:
             text.append(_entry)
         text.append("#")
@@ -356,7 +356,7 @@ class OutputReducedData(QDialog):
         _lambda_max = str(reduction_table.item(row, 5).text())
         _q_min = str(reduction_table.item(row, 6).text())
         _q_max = str(reduction_table.item(row, 7).text())
-        _scaling_factor = self.retrieve_scaling_factor(row = row)
+        _scaling_factor = self.retrieve_scaling_factor(row=row)
         _total_counts = self.retrieve_total_counts(row)
         _pcCharge = self.retrieve_pcCharge(row)
         _value = "# %s\t%s\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%f\t\t%f" %(_data_run,
@@ -374,7 +374,7 @@ class OutputReducedData(QDialog):
         # clocking settings
         text.append('#')
         text.append('# Clocking Correction used')
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent=self.parent)
         last_row = o_gui_utility.get_row_with_highest_q()
         big_table_data = self.parent.big_table_data
         clocking = big_table_data[last_row, 0].clocking
@@ -387,12 +387,12 @@ class OutputReducedData(QDialog):
         reduction_table = self.parent.ui.reductionTable
         text = []
         
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent=self.parent)
         _date = time.strftime("# Date: %d_%m_%Y")
         _reduction_method = '# Reduction method: manual'
         _reduction_engine = '# Reduction engine: RefRed'
         _reduction_date = '# %s' %_date
-        _ipts = o_gui_utility.get_ipts(row = 0)
+        _ipts = o_gui_utility.get_ipts(row=0)
         for _entry in [_date, _reduction_method, _reduction_engine, _reduction_date]:
             text.append(_entry)
         text.append("#")
@@ -408,7 +408,7 @@ class OutputReducedData(QDialog):
             _lambda_max = str(reduction_table.item(_row, 5).text())
             _q_min = str(reduction_table.item(_row, 6).text())
             _q_max = str(reduction_table.item(_row, 7).text())
-            _scaling_factor = self.retrieve_scaling_factor(row = _row)
+            _scaling_factor = self.retrieve_scaling_factor(row=_row)
             _total_counts = self.retrieve_total_counts(_row)
             _pcCharge = self.retrieve_pcCharge(_row)
             _value = "# %s\t%s\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%f\t\t%f" %(_data_run,
@@ -426,7 +426,7 @@ class OutputReducedData(QDialog):
         # clocking settings
         text.append('#')
         text.append('# Clocking Correction used')
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent=self.parent)
         last_row = o_gui_utility.get_row_with_highest_q()
         big_table_data = self.parent.big_table_data
         clocking = big_table_data[last_row, 0].clocking
@@ -450,10 +450,10 @@ class OutputReducedData(QDialog):
         return pcCharge
     
     def retrieve_scaling_factor(self, row=-1):
-        o_reduced_data_hanlder = ReducedDataHandler(parent = self.parent)
+        o_reduced_data_hanlder = ReducedDataHandler(parent=self.parent)
         big_table_data = self.parent.big_table_data
         _lconfig = big_table_data[row, 2]
-        sf = o_reduced_data_hanlder.generate_selected_sf(lconfig = _lconfig)
+        sf = o_reduced_data_hanlder.generate_selected_sf(lconfig=_lconfig)
         return str(sf)
 
     def create_file(self):
@@ -473,7 +473,7 @@ class OutputReducedData(QDialog):
         self.e_axis = _e_axis
         
     def produce_data_with_common_q_axis(self):
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent=self.parent)
         nbr_row = o_gui_utility.reductionTable_nbr_row()
 
         _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
@@ -502,12 +502,12 @@ class OutputReducedData(QDialog):
                 minQ = min([_q_axis[0], minQ])
             maxQ = max([_q_axis[-1], maxQ])
             
-            tmp_wks_name = CreateWorkspace(DataX = _q_axis,
-                                   DataY = _y_axis,
-                                   DataE = _e_axis,
-                                   Nspec = 1,
-                                   UnitX = "Wavelength",
-                                   OutputWorkspace = tmp_wks_name)
+            tmp_wks_name = CreateWorkspace(DataX=_q_axis,
+                                   DataY=_y_axis,
+                                   DataE=_e_axis,
+                                   Nspec=1,
+                                   UnitX="Wavelength",
+                                   OutputWorkspace=tmp_wks_name)
             tmp_wks_name.setDistribution(True)
                 
             # rebin everyting using the same Q binning parameters  
@@ -516,12 +516,12 @@ class OutputReducedData(QDialog):
         for i in range(nbr_row):  
                 
             tmp_wks_name = 'wks_' + str(i)
-            ConvertToHistogram(InputWorkspace = tmp_wks_name,
-                               OutputWorkspace = tmp_wks_name)
+            ConvertToHistogram(InputWorkspace=tmp_wks_name,
+                               OutputWorkspace=tmp_wks_name)
             
-            Rebin(InputWorkspace = tmp_wks_name, 
-                  Params = bin_parameters,
-                  OutputWorkspace = tmp_wks_name)
+            Rebin(InputWorkspace=tmp_wks_name, 
+                  Params=bin_parameters,
+                  OutputWorkspace=tmp_wks_name)
             
         # we use the first histo as output reference
         data_y = mtd['wks_0'].dataY(0).copy()
