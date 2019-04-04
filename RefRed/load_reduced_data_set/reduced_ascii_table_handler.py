@@ -2,23 +2,23 @@ from PyQt4 import QtGui, QtCore
 
 
 class ReducedAsciiTableHandler(object):
-    
+
     list_filename_to_remove = []
     total_number_of_rows_in_table = -1
-    
+
     def __init__(self, parent=None):
         self.parent = parent
         self.total_number_of_rows_in_table = self.parent.ui.reducedAsciiDataSetTable.rowCount()
-    
+
     def remove_rows(self):
         self.__get_range_row_selected()
         self.__clear_o_stitching_ascii_widget()
         self.__clear_table_rows()
-    
+
     def clear_table(self):
         self.__full_clear_o_stitching_ascii_widget()
         self.__clear_table()
-        
+
     def __clear_table(self):
         _item = self.parent.ui.reducedAsciiDataSetTable.item(0, 0)
         row = 0
@@ -33,11 +33,11 @@ class ReducedAsciiTableHandler(object):
             QtCore.QObject.connect(_widget, QtCore.SIGNAL("stateChanged(int)"),
                                    self.parent.reduced_ascii_data_set_table_visibility_changed)
             self.parent.ui.reducedAsciiDataSetTable.setCellWidget(self.total_number_of_rows_in_table-1, 1, _widget)
-    
+
     def __clear_table_rows(self):
         if self.list_filename_to_remove == []:
             return
-        
+
         _item = self.parent.ui.reducedAsciiDataSetTable.item(0, 0)
         row = 0
         while(_item is not None):
@@ -55,12 +55,12 @@ class ReducedAsciiTableHandler(object):
                 self.parent.ui.reducedAsciiDataSetTable.setCellWidget(self.total_number_of_rows_in_table-1, 1, _widget)
             else:
                 row += 1
-    
+
     def __get_range_row_selected(self):
         selected_range = self.parent.ui.reducedAsciiDataSetTable.selectedRanges()
         _to_row = selected_range[0].bottomRow()
         _from_row = selected_range[0].topRow()
-        
+
         # user can not remove row of live reduced data
         list_filename_to_remove = []
         for row in range(_from_row, _to_row+1):
@@ -71,8 +71,7 @@ class ReducedAsciiTableHandler(object):
 
     def __clear_o_stitching_ascii_widget(self):
         o_stitching_ascii_widget = self.parent.o_stitching_ascii_widget
-        o_stitching_ascii_widget.remove_data(list_file_to_remove = 
-                                             self.list_filename_to_remove)
+        o_stitching_ascii_widget.remove_data(list_file_to_remove=self.list_filename_to_remove)
         self.parent.o_stitching_ascii_widget = o_stitching_ascii_widget
 
     def __full_clear_o_stitching_ascii_widget(self):
