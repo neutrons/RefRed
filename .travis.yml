@@ -37,7 +37,7 @@ install:
 script:
   #- python setup.py install
   #- cd test; coverage run data_handling_test.py
-  - flake8 --statistics --config build_tools/flake8.cfg RefRed; exit 0
+  - flake8 --exit-zero --statistics --config build_tools/flake8.cfg RefRed
 
 after_success:
   #- codecov
