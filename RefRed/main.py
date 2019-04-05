@@ -54,14 +54,14 @@ class MainGui(QtGui.QMainWindow):
     # default location
     path_ascii = '.'  # ascii file such as scaling factor file
     path_config = '/home/j35/sandbox' # config file of RefRed
-    
+
     full_scaling_factor_file_name = ''
     default_loaded_file = '~/tmp.xml'
     current_loaded_file = '~/tmp.xml'
     browsed_files = {'data': None,
                      'norm': None}
     current_ipts = ""
-    
+
     o_user_configuration = None # will record the various settings of the GUI defined by the user
     o_stitching_ascii_widget = None # used when loading ascii files in reduced tab
 
@@ -99,13 +99,13 @@ class MainGui(QtGui.QMainWindow):
         else:
             QtGui.QMainWindow.__init__(self, parent, QtCore.Qt.Window)
         self.ui=Ui_MainWindow()
-        self.ui.setupUi(self)        
-        
+        self.ui.setupUi(self)
+
         InitializeSettings(self)
         InitializeGui(self)
-        self.ui.reductionTable.setUI(self)   
-        MakeGuiConnections(parent = self)
-        RetrieveUserConfiguration(parent = self)
+        self.ui.reductionTable.setUI(self)
+        MakeGuiConnections(parent=self)
+        RetrieveUserConfiguration(parent=self)
 
         self.file_loaded_signal.connect(self.file_loaded)
         log_file = os.path.expanduser("~") + '/.refred.log'
@@ -125,92 +125,97 @@ class MainGui(QtGui.QMainWindow):
 
     # home button of plots
     def home_clicked_yi_plot(self):
-        HomePlotButtonClicked(parent = self, plot_type = 'yi')
+        HomePlotButtonClicked(parent=self, plot_type='yi')
     def home_clicked_yt_plot(self):
-        HomePlotButtonClicked(parent = self, plot_type = 'yt')
+        HomePlotButtonClicked(parent=self, plot_type='yt')
     def home_clicked_it_plot(self):
-        HomePlotButtonClicked(parent = self, plot_type = 'it')
+        HomePlotButtonClicked(parent=self, plot_type='it')
     def home_clicked_ix_plot(self):
-        HomePlotButtonClicked(parent = self, plot_type = 'ix')
+        HomePlotButtonClicked(parent=self, plot_type='ix')
     def home_clicked_data_stitching_plot(self):
-        HomePlotButtonClicked(parent = self, plot_type = 'stitching')
+        HomePlotButtonClicked(parent=self, plot_type='stitching')
 
     # leave figure 
     def leave_figure_yi_plot(self):
-        MouseLeavePlot(parent = self, plot_type = 'yi')
+        MouseLeavePlot(parent=self, plot_type='yi')
     def leave_figure_yt_plot(self):
-        MouseLeavePlot(parent = self, plot_type = 'yt')
+        MouseLeavePlot(parent=self, plot_type='yt')
     def leave_figure_it_plot(self):
-        MouseLeavePlot(parent = self, plot_type = 'it')
+        MouseLeavePlot(parent=self, plot_type='it')
     def leave_figure_ix_plot(self):
-        MouseLeavePlot(parent = self, plot_type = 'ix')
+        MouseLeavePlot(parent=self, plot_type='ix')
     def leave_figure_data_stitching_plot(self):
-        MouseLeavePlot(parent = self, plot_type = 'stitching')
+        MouseLeavePlot(parent=self, plot_type='stitching')
 
     # single click
     def single_click_data_yi_plot(self, isPanOrZoomActivated):
-        SingleClickPlot(self, data_type = 'data', plot_type = 'yi')
+        SingleClickPlot(self, data_type='data', plot_type='yi')
     def single_click_norm_yi_plot(self, isPanOrZoomActivated):
-        SingleClickPlot(self, data_type = 'norm', plot_type = 'yi')
+        SingleClickPlot(self, data_type='norm', plot_type='yi')
     def single_click_norm_yt_plot(self, isPanOrZoomActivated):
-        SingleClickPlot(self, data_type = 'norm', plot_type = 'yt')
+        SingleClickPlot(self, data_type='norm', plot_type='yt')
     def single_click_data_yt_plot(self, isPanOrZoomActivated):
-        SingleClickPlot(self, data_type = 'data', plot_type = 'yt')
+        SingleClickPlot(self, data_type='data', plot_type='yt')
     def single_click_norm_it_plot(self, isPanOrZoomActivated):
-        SingleClickPlot(self, data_type = 'norm', plot_type = 'it')
+        SingleClickPlot(self, data_type='norm', plot_type='it')
     def single_click_data_it_plot(self, isPanOrZoomActivated):
-        SingleClickPlot(self, data_type = 'data', plot_type = 'it')
+        SingleClickPlot(self, data_type='data', plot_type='it')
     def single_click_norm_ix_plot(self, isPanOrZoomActivated):
-        SingleClickPlot(self, data_type = 'norm', plot_type = 'ix')
+        SingleClickPlot(self, data_type='norm', plot_type='ix')
     def single_click_data_ix_plot(self, isPanOrZoomActivated):
-        SingleClickPlot(self, data_type = 'data', plot_type = 'ix')
-    def single_click_data_stitching_plot(self, isPanOrZoomActivated, 
+        SingleClickPlot(self, data_type='data', plot_type='ix')
+    def single_click_data_stitching_plot(self, isPanOrZoomActivated,
                                          is_manual_zoom_requested,
                                          is_x_axis_manual_zoom_requested,
                                          mouse_x,
                                          mouse_y):
-        SingleClickPlot(self, data_type = 'data', 
-                        plot_type = 'stitching',
-                        is_manual_zoom_requested = is_manual_zoom_requested,
-                        is_x_axis_manual_zoom_requested = is_x_axis_manual_zoom_requested,
-                        mouse_x = mouse_x,
-                        mouse_y = mouse_y)
+        SingleClickPlot(self, data_type='data', 
+                        plot_type='stitching',
+                        is_manual_zoom_requested=is_manual_zoom_requested,
+                        is_x_axis_manual_zoom_requested=is_x_axis_manual_zoom_requested,
+                        mouse_x=mouse_x,
+                        mouse_y=mouse_y)
 
     # toggle log
     def logy_toggle_yt_plot(self, checked):
-        LogPlotToggle(parent = self,
-                      status = checked,
-                      plot_type = 'yt',
-                      is_y_log = True)
+        LogPlotToggle(parent=self,
+                      status=checked,
+                      plot_type='yt',
+                      is_y_log=True)
+
     def logy_toggle_it_plot(self, checked):
-        LogPlotToggle(parnt = self,
-                      status = checked,
-                      plot_type = 'it',
-                      is_y_log = True)
+        LogPlotToggle(parnt=self,
+                      status=checked,
+                      plot_type='it',
+                      is_y_log=True)
+
     def logy_toggle_ix_plot(self, checked):
-        LogPlotToggle(parent = self,
-                      status = checked,
-                      plot_type = 'ix',
-                      is_y_log = True)
+        LogPlotToggle(parent=self,
+                      status=checked,
+                      plot_type='ix',
+                      is_y_log=True)
+
     def logx_toggle_yi_plot(self, checked):
-        LogPlotToggle(parent = self,
-                      status = checked,
-                      plot_type = 'yi',
-                      is_y_log = False)
+        LogPlotToggle(parent=self,
+                      status=checked,
+                      plot_type='yi',
+                      is_y_log=False)
+
     def logx_toggle_data_stitching(self, checked):
-        LogPlotToggle(parent = self,
-                      status = checked,
-                      plot_type = 'stitching',
-                      is_y_log = False)
+        LogPlotToggle(parent=self,
+                      status=checked,
+                      plot_type='stitching',
+                      is_y_log=False)
+
     def logy_toggle_data_stitching(self, checked):
-        LogPlotToggle(parent = self,
-                      status = checked,
-                      plot_type = 'stitching',
-                      is_y_log = True)
+        LogPlotToggle(parent=self,
+                      status=checked,
+                      plot_type='stitching',
+                      is_y_log=True)
 
     # display row checkbox
     def reduction_table_visibility_changed_test(self, state, row):
-        ReductionTableCheckBox(parent = self, row_selected = row)
+        ReductionTableCheckBox(parent=self, row_selected=row)
 
     def file_loaded(self):
         """ Event call-back used to re-enable the reduction table after loading """
@@ -241,10 +246,10 @@ class MainGui(QtGui.QMainWindow):
             self.ui.reductionTable.setCurrentCell(current_row+1, current_col-1)
 
     def data_norm_tab_changed(self, index):
-        o_gui_utility = GuiUtility(parent = self)
+        o_gui_utility = GuiUtility(parent=self)
         _current_table_reduction_row_selected = o_gui_utility.get_current_table_reduction_check_box_checked()
-        ReductionTableCheckBox(parent = self,
-                               row_selected = _current_table_reduction_row_selected)
+        ReductionTableCheckBox(parent=self,
+                               row_selected=_current_table_reduction_row_selected)
 
     @config_file_has_been_modified
     def widget_modified(self, value_changed):
@@ -252,57 +257,57 @@ class MainGui(QtGui.QMainWindow):
 
     @config_file_has_been_modified
     def data_back_spinbox_validation(self):
-        DataBackSpinbox(parent = self)
-    
+        DataBackSpinbox(parent=self)
+
     @config_file_has_been_modified
     def data_back_checkbox(self):
-        DataBackSpinbox(parent = self)
-    
+        DataBackSpinbox(parent=self)
+
     @config_file_has_been_modified
     def data_peak_spinbox_validation(self):
-        DataPeakSpinbox(parent = self)
-    
+        DataPeakSpinbox(parent=self)
+
     @config_file_has_been_modified
     def norm_back_spinbox_validation(self):
-        NormBackSpinbox(parent = self)
-        
+        NormBackSpinbox(parent=self)
+
     @config_file_has_been_modified
     def norm_back_checkbox(self):
-        NormBackSpinbox(parent = self)
-    
+        NormBackSpinbox(parent=self)
+
     @config_file_has_been_modified
     def norm_peak_spinbox_validation(self):
-        NormPeakSpinbox(parent = self)
+        NormPeakSpinbox(parent=self)
 
     @config_file_has_been_modified
     def data_low_res_validation(self):
-        DataLowResSpinbox(parent = self)
-        
+        DataLowResSpinbox(parent=self)
+
     @config_file_has_been_modified
     def norm_low_res_validation(self):
-        NormLowResSpinbox(parent = self)
+        NormLowResSpinbox(parent=self)
 
     @config_file_has_been_modified
     def data_low_res_checkbox(self):
-        DataLowResSpinbox(parent = self)
+        DataLowResSpinbox(parent=self)
 
     @config_file_has_been_modified
     def norm_low_res_checkbox(self):
-        NormLowResSpinbox(parent = self)
+        NormLowResSpinbox(parent=self)
 
     @config_file_has_been_modified
     def clock_validation(self):
-        DataClockingSpinbox(parent = self)
+        DataClockingSpinbox(parent=self)
 
     @config_file_has_been_modified
     def auto_tof_range_radio_button(self):
-        o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent = self)
+        o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent=self)
         o_auto_tof_range.setup()
         o_auto_tof_range.radio_button_handler()
 
     @config_file_has_been_modified
     def manual_tof_range_line_edit_validation(self):
-        o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent = self)
+        o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent=self)
         o_auto_tof_range.setup()
         o_auto_tof_range.line_edit_validation()
         
@@ -314,220 +319,218 @@ class MainGui(QtGui.QMainWindow):
     @config_file_has_been_modified
     def data_sequence_event(self):
         str_data_input = self.ui.data_sequence_lineEdit.text()
-        ReductionTableAutoFill(parent = self,
-                               list_of_run_from_input = str_data_input,
-                               data_type_selected = 'data')
+        ReductionTableAutoFill(parent=self,
+                               list_of_run_from_input=str_data_input,
+                               data_type_selected='data')
         self.ui.data_sequence_lineEdit.setText('')
         self.norm_sequence_event()
 
     @config_file_has_been_modified
     def data_browse_button(self):
-        o_browser = BrowsingRuns(parent = self, 
-                                 data_type = 'data')
-        ReductionTableAutoFill(parent = self,
-                               list_of_run_from_input = '',
-                               data_type_selected = 'data')
+        o_browser = BrowsingRuns(parent=self, 
+                                 data_type='data')
+        ReductionTableAutoFill(parent=self,
+                               list_of_run_from_input='',
+                               data_type_selected='data')
         self.ui.data_sequence_lineEdit.setText('')
 
     @config_file_has_been_modified
     def norm_sequence_event(self):
         str_norm_input = self.ui.norm_sequence_lineEdit.text()
-        ReductionTableAutoFill(parent = self,
-                               list_of_run_from_input = str_norm_input,
-                               data_type_selected = 'norm')
+        ReductionTableAutoFill(parent=self,
+                               list_of_run_from_input=str_norm_input,
+                               data_type_selected='norm')
         self.ui.norm_sequence_lineEdit.setText('')
 
     @config_file_has_been_modified
     def norm_browse_button(self):
-        o_browser = BrowsingRuns(parent = self,
-                                 data_type = 'norm')
-        ReductionTableAutoFill(parent = self,
-                               list_of_run_from_input = '',
-                               data_type_selected = 'norm')
+        o_browser = BrowsingRuns(parent=self,
+                                 data_type='norm')
+        ReductionTableAutoFill(parent=self,
+                               list_of_run_from_input='',
+                               data_type_selected='norm')
         self.ui.norm_sequence_lineEdit.setText('')
 
     # Menu buttons
     def action_new(self):
-        o_reduction_table_handler = ReductionTableHandler(parent = self)
+        o_reduction_table_handler = ReductionTableHandler(parent=self)
         o_reduction_table_handler.full_clear()
         
-        o_interface_handler = RefRedInterfaceHandler(parent = self)
+        o_interface_handler = RefRedInterfaceHandler(parent=self)
         o_interface_handler.full_reset()
 
     def load_configuration(self):
-        o_load_config = LoadingConfiguration(parent = self)
+        o_load_config = LoadingConfiguration(parent=self)
         o_load_config.run()
 
     @config_file_modification_reset
     def save_configuration(self):
-        o_save_config = SavingConfiguration(parent = self,
-                                            filename = self.current_loaded_file)
+        o_save_config = SavingConfiguration(parent=self,
+                                            filename=self.current_loaded_file)
         o_save_config.run()
 
     def save_as_configuration(self):
-        o_save_config = SavingConfiguration(parent = self)
+        o_save_config = SavingConfiguration(parent=self)
         o_save_config.run()
-        
+
     def preview_live_config(self):
-        o_preview_config = PreviewConfig(parent = self, is_live = True)
+        o_preview_config = PreviewConfig(parent=self, is_live=True)
         o_preview_config.show()
-    
+
     def preview_browse_config(self):
-        o_preview_config = PreviewConfig(parent = self, is_live = False)
+        o_preview_config = PreviewConfig(parent=self, is_live=False)
         o_preview_config.show()
 
     @config_file_has_been_modified
     def use_scaling_factor_checkbox(self, status):
-        o_scaling_factor = ScalingFactorWidgetsHandler(parent = self)
-        o_scaling_factor.checkbox(status = status)
-        
+        o_scaling_factor = ScalingFactorWidgetsHandler(parent=self)
+        o_scaling_factor.checkbox(status=status)
+
     @config_file_has_been_modified
     def browse_scaling_factor_button(self):
-        o_scaling_factor = ScalingFactorWidgetsHandler(parent = self)
+        o_scaling_factor = ScalingFactorWidgetsHandler(parent=self)
         o_scaling_factor.browse()
-        
+
     def preview_scaling_factor_button(self):
         o_sf_preview = SFPreview(parent=self)
         o_sf_preview.show()
-        
+
     def run_reduction_button(self):
-        o_live_reduction = LiveReductionHandler(parent = self)
+        o_live_reduction = LiveReductionHandler(parent=self)
         o_live_reduction.run()
 
     def launch_template_management(self):
-        o_template = TemplateManagement(parent = self)
+        o_template = TemplateManagement(parent=self)
         o_template.show()
         o_template.load_default_directory()
 
     def export_reduction_script_button(self):
-        o_reduction = ReductionHandler(parent = self)
+        o_reduction = ReductionHandler(parent=self)
         o_reduction.export()
 
     def data_stitching_table_manual_spin_box(self):
-        o_reduction = ReducedDataHandler(parent = self)
+        o_reduction = ReducedDataHandler(parent=self)
         o_reduction.save_manual_sf()
         self.stitching_sf_radio_button()
-    
+
     def export_stitching_data(self):
-        o_export_plot = ExportPlotAscii(parent = self,
-                                        data_type = 'stitched')
+        o_export_plot = ExportPlotAscii(parent=self,
+                                        data_type='stitched')
         o_export_plot.export()
-        
+
     def export_it(self):
-        o_export_plot = ExportPlotAscii(parent = self,
-                                        data_type = 'it')
+        o_export_plot = ExportPlotAscii(parent=self,
+                                        data_type='it')
         o_export_plot.export()
-        
+
     def export_yi(self):
-        o_export_plot = ExportPlotAscii(parent = self,
-                                        data_type = 'yi')
+        o_export_plot = ExportPlotAscii(parent=self,
+                                        data_type='yi')
         o_export_plot.export()
-        
+
     def export_ix(self):
-        o_export_plot = ExportPlotAscii(parent = self,
-                                        data_type = 'ix')
+        o_export_plot = ExportPlotAscii(parent=self,
+                                        data_type='ix')
         o_export_plot.export()
-        
+
     def export_yt(self):
-        o_export_plot = ExportPlotAscii(parent = self,
-                                        data_type = 'yt')
+        o_export_plot = ExportPlotAscii(parent=self,
+                                        data_type='yt')
         o_export_plot.export()
-        
+
     @config_file_has_been_modified
     def reduction_table_right_click(self, position):
-        o_reduction_table_right_click = ReductionTableRightClick(parent = self,
-                                                                 position = position)
+        o_reduction_table_right_click = ReductionTableRightClick(parent=self,
+                                                                 position=position)
         o_reduction_table_right_click.run()
-        
+
     def launch_metadata_finder(self):
-        _meta_finder = MetadataFinder(parent = self)
-        _meta_finder.show()        
-        
+        _meta_finder = MetadataFinder(parent=self)
+        _meta_finder.show()
+
     def launch_sf_calculator(self):
         o_sf_calculator = SFCalculator()
         o_sf_calculator.show()
-        
+
     def stitching_sf_radio_button(self):
-        o_reduced_plot = ReducedDataHandler(parent = self)
+        o_reduced_plot = ReducedDataHandler(parent=self)
         o_reduced_plot.plot()
-        
+
     def stitching_yscale_options_radio_button_1(self):
         '''R vs Q'''
-        o_button_handler = StitchingYScaleOptionsRadioButtonHandler(parent = self)
-        o_button_handler.set_index_button_clicked(index = 0)
+        o_button_handler = StitchingYScaleOptionsRadioButtonHandler(parent=self)
+        o_button_handler.set_index_button_clicked(index=0)
         self.stitching_sf_radio_button()
-        
+
     def stitching_yscale_options_radio_button_2(self):
         '''RQ^4 vs Q'''
-        o_button_handler = StitchingYScaleOptionsRadioButtonHandler(parent = self)
-        o_button_handler.set_index_button_clicked(index = 1)
+        o_button_handler = StitchingYScaleOptionsRadioButtonHandler(parent=self)
+        o_button_handler.set_index_button_clicked(index=1)
         self.stitching_sf_radio_button()
-        
+
     def load_reduced_data_set_button(self):
-        o_load_reduced_set = LoadReducedDataSetHandler(parent = self)
+        o_load_reduced_set = LoadReducedDataSetHandler(parent=self)
         o_load_reduced_set.run()
-        
+
     # display row of reduced ascii table
     def reduced_ascii_data_set_table_visibility_changed(self, state):
-        o_load_reduced = LoadReducedDataSetHandler(parent = self)
+        o_load_reduced = LoadReducedDataSetHandler(parent=self)
         o_load_reduced.plot()
 
     def reduced_ascii_data_set_table_right_click(self, position):
-        o_reduced_ascii_right_click = ReducedAsciiDataRightClick(parent = self,
-                                                                 position = position)
+        o_reduced_ascii_right_click = ReducedAsciiDataRightClick(parent=self,
+                                                                 position=position)
         o_reduced_ascii_right_click.run()
- 
+
     def sf_absolute_normalization_button(self):
         norm_or_stitching_object = NormalizationOrStitchingButtonStatus(parent=self)
-        norm_or_stitching_object.setWidget(activated_button = 0)
-        live_reduction = LiveReductionHandler(parent = self)
+        norm_or_stitching_object.setWidget(activated_button=0)
+        live_reduction = LiveReductionHandler(parent=self)
         live_reduction.recalculate()
-    
+
     def sf_auto_stitching_button(self):
         norm_or_stitching_object = NormalizationOrStitchingButtonStatus(parent=self)
-        norm_or_stitching_object.setWidget(activated_button = 1)
-        live_reduction = LiveReductionHandler(parent = self)
+        norm_or_stitching_object.setWidget(activated_button=1)
+        live_reduction = LiveReductionHandler(parent=self)
         live_reduction.recalculate()
-        
+
     def sf_manual_stitching_button(self):
         norm_or_stitching_object = NormalizationOrStitchingButtonStatus(parent=self)
-        norm_or_stitching_object.setWidget(activated_button = 2)
-        live_reduction = LiveReductionHandler(parent = self)
+        norm_or_stitching_object.setWidget(activated_button=2)
+        live_reduction = LiveReductionHandler(parent=self)
         live_reduction.recalculate()
     
     def sf_button(self):
         first_angle_handler = FirstAngleRangeGuiHandler(parent=self)
-        first_angle_handler.setWidgets(is_sf_button_clicked = True)
-        live_reduction = LiveReductionHandler(parent = self)
+        first_angle_handler.setWidgets(is_sf_button_clicked=True)
+        live_reduction = LiveReductionHandler(parent=self)
         live_reduction.recalculate()
-        
+
     def first_angle_range_button(self):
         first_angle_handler = FirstAngleRangeGuiHandler(parent=self)
-        first_angle_handler.setWidgets(is_sf_button_clicked = False)
-        live_reduction = LiveReductionHandler(parent = self)
+        first_angle_handler.setWidgets(is_sf_button_clicked=False)
+        live_reduction = LiveReductionHandler(parent=self)
         live_reduction.recalculate()
-    
+
     def sf_qmin_value_field(self):
         norm_or_stitching_object = NormalizationOrStitchingButtonStatus(parent=self)
-        norm_or_stitching_object.setWidget(activated_button = 0)
-        live_reduction = LiveReductionHandler(parent = self)
+        norm_or_stitching_object.setWidget(activated_button=0)
+        live_reduction = LiveReductionHandler(parent=self)
         live_reduction.recalculate()
-        
+
     def sf_qmax_value_field(self):
         norm_or_stitching_object = NormalizationOrStitchingButtonStatus(parent=self)
-        norm_or_stitching_object.setWidget(activated_button = 0)
-        live_reduction = LiveReductionHandler(parent = self)
+        norm_or_stitching_object.setWidget(activated_button=0)
+        live_reduction = LiveReductionHandler(parent=self)
         live_reduction.recalculate()
-    
+
     def about_message(self):
-        o_about_message = AboutDialog(parent = self)
+        o_about_message = AboutDialog(parent=self)
         o_about_message.display()
-        
+
     def settings_editor(self):
-        o_settings_editor = SettingsEditor(parent = self)
+        o_settings_editor = SettingsEditor(parent=self)
         o_settings_editor.show()
-        
+
     def closeEvent(self, event=None):
-        SaveUserConfiguration(parent = self)
-        
-        
+        SaveUserConfiguration(parent=self)
