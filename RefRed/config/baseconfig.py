@@ -17,7 +17,6 @@ import atexit
 import re
 import sys
 from .configobj import ConfigObj, ConfigObjError
-from ..decorators import log_call, log_input
 
 
 class ConfigProxy(object):
@@ -48,7 +47,6 @@ class ConfigProxy(object):
     # store .ini files on interpreter exit
     atexit.register(self.store)
 
-  @log_input
   def add_config(self, name, items, storage=''):
     '''
     Crate a new dictionary connected to a storage config file.
@@ -90,7 +88,6 @@ class ConfigProxy(object):
     self.tmp_storages[storage][name]={}
     return self[name]
 
-  @log_input
   def add_path_config(self, name, items, cpath):
     '''
     Crate a new dictionary connected to a storage config file.
@@ -148,7 +145,6 @@ class ConfigProxy(object):
 
     return self[name]
 
-  @log_input
   def switch_path_config(self, cpath, cname):
     if not cpath in self.path_configs:
       if cpath in self.configs and self.configs[cpath] in self.path_configs:
@@ -199,7 +195,6 @@ class ConfigProxy(object):
         raise KeyError, 'Config path %s is not defined'%cpath
     return self.path_configs[cpath][0]['config_files']
 
-  @log_input
   def add_alias(self, config, alias):
     '''
     Crate an alias for another configuration item.
@@ -211,7 +206,6 @@ class ConfigProxy(object):
     self.aliases[alias]=config
     return self[config]
 
-  @log_call
   def store(self):
     """store configuration data into .ini files."""
     for item in self.storages.values():

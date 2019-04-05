@@ -29,20 +29,6 @@ class InitSFCalculatorFileMenu(object):
         return _action
 
     def initAction(self):
-        #list_config_file = [self.sf_gui.launchConfigFile1,
-                    #self.sf_gui.launchConfigFile2,
-                    #self.sf_gui.launchConfigFile3,
-                    #self.sf_gui.launchConfigFile4,
-                    #self.sf_gui.launchConfigFile5,
-                    #self.sf_gui.launchConfigFile6,
-                    #self.sf_gui.launchConfigFile7,
-                    #self.sf_gui.launchConfigFile8,
-                    #self.sf_gui.launchConfigFile9,
-                    #self.sf_gui.launchConfigFile10]
-        #for _config_file in list_config_file:
-            #_action = self.action(_config_file)
-            #self.sf_gui.menuFile.addAction(_action)
-            #self.sf_gui.file_menu_action_list.append(_action)
         _action1 = QtGui.QAction('', self.sf_gui)
         _action1.triggered.connect(self.sf_gui.launchConfigFile1)
         _action1.setCheckable(True)

@@ -1,11 +1,9 @@
 """
 """
+import os
 from PyQt4 import QtGui, QtCore
 import numpy as np
-#import logging
-#logging.getLogger().setLevel(logging.INFO)
-import sys
-import os
+import logging
 import time
 
 import RefRed.colors
@@ -102,34 +100,34 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         settings.setValue("xml_config_dir", value)
 
     def launchConfigFile1(self):
-        SFCalculatorConfigFileLauncher(self, 0)
+        logging.error("Access to dead code in sf_calculator.py")
 
     def launchConfigFile2(self):
-        SFCalculatorConfigFileLauncher(self, 1)
+        logging.error("Access to dead code in sf_calculator.py")
 
     def launchConfigFile3(self):
-        SFCalculatorConfigFileLauncher(self, 2)
+        logging.error("Access to dead code in sf_calculator.py")
 
     def launchConfigFile4(self):
-        SFCalculatorConfigFileLauncher(self, 3)
+        logging.error("Access to dead code in sf_calculator.py")
 
     def launchConfigFile5(self):
-        SFCalculatorConfigFileLauncher(self, 4)
+        logging.error("Access to dead code in sf_calculator.py")
 
     def launchConfigFile6(self):
-        SFCalculatorConfigFileLauncher(self, 5)
+        logging.error("Access to dead code in sf_calculator.py")
 
     def launchConfigFile7(self):
-        SFCalculatorConfigFileLauncher(self, 6)
+        logging.error("Access to dead code in sf_calculator.py")
 
     def launchConfigFile8(self):
-        SFCalculatorConfigFileLauncher(self, 7)
+        logging.error("Access to dead code in sf_calculator.py")
 
     def launchConfigFile9(self):
-        SFCalculatorConfigFileLauncher(self, 8)
+        logging.error("Access to dead code in sf_calculator.py")
 
     def launchConfigFile10(self):
-        SFCalculatorConfigFileLauncher(self, 9)
+        logging.error("Access to dead code in sf_calculator.py")
 
     def initConnections(self):
         self.yt_plot.singleClick.connect(self.singleYTPlot)

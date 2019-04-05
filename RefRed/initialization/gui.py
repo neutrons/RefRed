@@ -1,14 +1,10 @@
 from PyQt4 import QtGui, QtCore
 import socket
-import os
 
-from RefRed.version import str_version, window_title
+from RefRed.version import window_title
 from RefRed.configuration.export_stitching_ascii_settings import ExportStitchingAsciiSettings
-from file_menu import FileMenu as InitFileMenu
-from RefRed.reduced_config_files_handler import ReducedConfigFilesHandler
 from RefRed.plot.all_plot_axis import AllPlotAxis
 from RefRed.gui_handling.gui_utility import GuiUtility
-import RefRed.colors
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
 
 
@@ -35,23 +31,16 @@ class Gui(object):
         self.set_gui_size()
         self.set_statusbar()
         self.set_main_table()
-        #self.set_context_menu()
         self.set_stiching_table()
         self.set_reduced_table()
         self.set_export_stitching_settings()
         self.set_default_path()
-        #self.init_file_menu()
         self.init_error_label_widgets()
         parent.allPlotAxis = AllPlotAxis()
 
         #enabled all widgets
         o_update_plot = UpdatePlotWidgetStatus(parent=parent)
         o_update_plot.disable_all()
-
-        ## start a separate thread for delayed actions
-        #parent.trigger=DelayedTrigger()
-        #parent.trigger.activate.connect(parent.processDelayedTrigger)
-        #parent.trigger.start()
 
         parent.ui.reductionTable.setCurrentCell(0,1)
         parent.ui.data_sequence_lineEdit.setFocus()	
@@ -142,25 +131,12 @@ class Gui(object):
                 elif (col_index == 1) or (col_index == 2):
                     _item = QtGui.QTableWidgetItem()
                     _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
-                    #if (col_index == 1):
-                        #_color = QtGui.QColor(RefRed.colors.DATA_TABLE_BACKGROUND)
-                        #_item.setBackground(_color)
-                    #else:
-                        #_color = QtGui.QColor(RefRed.colors.NORM_TABLE_BACKGROUND)
-                        #_item.setBackground(_color)
                     parent.ui.reductionTable.setItem(row_index, col_index, _item)
 
                 else:
                     _item = QtGui.QTableWidgetItem()
                     _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
                     parent.ui.reductionTable.setItem(row_index, col_index, _item)
-
-    #def set_context_menu(self):
-        #''' Define the context menu of the main table'''
-        #parent = self.parent
-
-        #parent.ui.reductionTable.horizontalHeader().setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        #parent.ui.reductionTable.horizontalHeader().customContextMenuRequested.connect(parent.handleReductionTableMenu)
 
     def set_stiching_table(self):
         ''' initialize the stiching table (labels, size...)'''
@@ -224,15 +200,6 @@ class Gui(object):
         elif socket.gethostname() == 'mac83978':
             from ..config.instrument import local_data_base			
             parent.path_ascii = local_data_base
-
-    def init_file_menu(self):
-        self.parent.fileMenuObject = InitFileMenu(self.parent)
-        from ..config import refllastloadedfiles
-        refllastloadedfiles.switch_config('config_files')
-        if refllastloadedfiles.config_files_path != '':
-            self.parent.path_config =  refllastloadedfiles.config_files_path
-        self.parent.reducedFilesLoadedObject = ReducedConfigFilesHandler(self.parent)
-
 
     def init_error_label_widgets(self):
         ''' will hide the error label by default '''
