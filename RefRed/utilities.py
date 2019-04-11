@@ -5,7 +5,7 @@ from random import randint
 import nexus_utilities
 
 
-def convert_angle (angle=0, from_units='degree', to_units='rad'):
+def convert_angle(angle=0, from_units='degree', to_units='rad'):
     '''
     To convert angles from degree/rad to rad/degree
     '''
@@ -52,14 +52,14 @@ def convertTOF(TOFarray=None, from_units='micros', to_units='ms'):
 
 
 def output_2d_ascii_file(filename, image):
-    f=open(filename, 'w')
+    f = open(filename, 'w')
     sz = image.shape
     dim1 = sz[0]
     dim2 = sz[1]
     for px in range(dim1):
         _line = ''
         for t in range(dim2):
-            _line += str(image[px,t])
+            _line += str(image[px, t])
             _line += ' '
         _line += '\n'
         f.write(_line)
@@ -71,7 +71,7 @@ def output_big_ascii_file(file_name,
                           y_axis,
                           y_error_axis):
 
-    f=open(file_name, 'w')
+    f = open(file_name, 'w')
 
     sz = y_axis.shape  # (nbr_pixel, nbr_tof)
     nbr_tof = sz[1]
@@ -94,18 +94,18 @@ def output_ascii_file(file_name,
                       y_axis,
                       y_error_axis):
 
-    f=open(file_name, 'w')
+    f = open(file_name, 'w')
 
     sz_x_axis = len(x_axis)
     for i in range(sz_x_axis - 1):
-        f.write(str(x_axis[i]) + "," + str(y_axis[i]) + "," + str(y_error_axis[i]) + "\n");
+        f.write(str(x_axis[i]) + "," + str(y_axis[i]) + "," + str(y_error_axis[i]) + "\n")
 
     f.close
 
 
 def import_ascii_file(filename):
     try:
-        f=open(filename, 'r')
+        f = open(filename, 'r')
         data = f.read()
         f.close()
     except:
@@ -120,7 +120,7 @@ def output_big_Q_ascii_file(file_name,
 
     if os.path.isfile(file_name):
         os.remove(file_name)
-    f=open(file_name, 'w')
+    f = open(file_name, 'w')
 
     sz = y_axis.shape  # (nbr_pixel, nbr_tof)
     nbr_tof = sz[1]
@@ -129,7 +129,7 @@ def output_big_Q_ascii_file(file_name,
     for t in range(nbr_tof):
         _tmp_str = ''
         for x in range(nbr_pixel):
-            _tmp_str += str(x_axis[x,t]) + ',' + str(y_axis[x, t]) + " ," + str(y_error_axis[x, t]) + ',,'
+            _tmp_str += str(x_axis[x, t]) + ',' + str(y_axis[x, t]) + " ," + str(y_error_axis[x, t]) + ',,'
         _tmp_str += '\n'
         f.write(_tmp_str)
 
@@ -143,7 +143,7 @@ def createPickleFilename(filename):
     '''
     filename, _ = os.path.splitext(filename)
     new_fileExtension = '_quicknx.dat'
-    new_filename = filename +  new_fileExtension
+    new_filename = filename + new_fileExtension
     return new_filename
 
 
@@ -154,14 +154,14 @@ def weighted_mean(data_array, error_array):
     sz = len(data_array)
 
     # calculate the numerator of mean
-    dataNum = 0;
+    dataNum = 0
     for i in range(sz):
         if not (data_array[i] == 0):
             tmpFactor = float(data_array[i]) / float((pow(error_array[i], 2)))
             dataNum += tmpFactor
 
     # calculate denominator
-    dataDen = 0;
+    dataDen = 0
     for i in range(sz):
         if not (error_array[i] == 0):
             tmpFactor = 1. / float((pow(error_array[i], 2)))
@@ -180,7 +180,7 @@ def weighted_mean(data_array, error_array):
 def write_ascii_file(filename, text):
     '''
     produce the output ascii file
-    '''    
+    '''
     if os.path.isfile(filename):
         os.remove(filename)
     f = open(filename, 'w')
@@ -372,7 +372,7 @@ def weighted_mean_default(data_array, error_array, error_0):
     sz = len(data_array)
 
     # calculate the numerator of mean
-    dataNum = 0;
+    dataNum = 0
     for i in range(sz):
         if (error_array[i] == 0):
             error_array[i] = error_0
@@ -381,11 +381,11 @@ def weighted_mean_default(data_array, error_array, error_0):
         dataNum += tmpFactor
 
     # calculate denominator
-    dataDen = 0;
+    dataDen = 0
     for i in range(sz):
         if (error_array[i] == 0):
             error_array[i] = error_0
-        tmpFactor = 1./float((pow(error_array[i], 2)))
+        tmpFactor = 1. / float((pow(error_array[i], 2)))
         dataDen += tmpFactor
 
     if dataDen == 0:

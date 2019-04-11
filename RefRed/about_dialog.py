@@ -8,46 +8,41 @@ import mantid
 
 
 class AboutDialog(object):
-        
-        parent = None
-        
-        def __init__(self, parent=None):
-                self.parent = parent
 
-        def display(self):
-                RefRed_version = RefRed.version.str_version
-                python_version =  self.get_python_version()
-                numpy_version = numpy_version_str
-                mantid_version = mantid.__version__
-                matplotlib_version = matplotlib_version_str
-                qt_version = QtCore.QT_VERSION_STR
-                pyqt_version = pyqt_configuration().pyqt_version_str
+    parent = None
 
-                message = '''RefRed - Liquids Reflectrometry Reduction program
+    def __init__(self, parent=None):
+        self.parent = parent
 
-                version %s 
-                
-                Library versions:
-                  - Python: %s
-                  - Numpy: %s
-                  - Mantid:  %s
-                  - Matplotlib: %s
-                  - Qt: %s
-                  - PyQt: %s''' %(RefRed_version, 
-                                 python_version,
-                                 numpy_version,
-                                 mantid_version,
-                                 matplotlib_version,
-                                 qt_version,
-                                 pyqt_version)
-                
-                QtGui.QMessageBox.about(self.parent, 'About RefRed', message)
+    def display(self):
+        RefRed_version = RefRed.version.str_version
+        python_version = self.get_python_version()
+        numpy_version = numpy_version_str
+        mantid_version = mantid.__version__
+        matplotlib_version = matplotlib_version_str
+        qt_version = QtCore.QT_VERSION_STR
+        pyqt_version = pyqt_configuration().pyqt_version_str
 
+        message = '''RefRed - Liquids Reflectrometry Reduction program
 
-        def get_python_version(self):
-                str_version = sys.version_info
-                str_array = []
-                for value in str_version:
-                        str_array.append(str(value))
-                return ".".join(str_array[0:3])
-                
+        version %s
+
+        Library versions:
+          - Python: %s
+          - Numpy: %s
+          - Mantid:  %s
+          - Matplotlib: %s
+          - Qt: %s
+          - PyQt: %s''' % (RefRed_version, python_version,
+                           numpy_version, mantid_version,
+                           matplotlib_version, qt_version,
+                           pyqt_version)
+
+        QtGui.QMessageBox.about(self.parent, 'About RefRed', message)
+
+    def get_python_version(self):
+            str_version = sys.version_info
+            str_array = []
+            for value in str_version:
+                    str_array.append(str(value))
+            return ".".join(str_array[0:3])

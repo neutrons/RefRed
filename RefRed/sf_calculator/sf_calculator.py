@@ -10,9 +10,7 @@ import RefRed.colors
 from RefRed.interfaces.sf_calculator_interface import Ui_SFCalculatorInterface
 from RefRed.sf_calculator.fill_sf_gui_table import FillSFGuiTable
 from RefRed.sf_calculator.init_sfcalculator_file_menu import InitSFCalculatorFileMenu
-from RefRed.sf_calculator.reduced_sfcalculator_config_files_handler import ReducedSFCalculatorConfigFilesHandler
 from RefRed.sf_calculator.incident_medium_list_editor import IncidentMediumListEditor
-from RefRed.sf_calculator.create_sf_config_xml_file import CreateSFConfigXmlFile
 from RefRed.sf_calculator.load_and_sort_nxsdata_for_sf_calculator import LoadAndSortNXSDataForSFcalculator
 from RefRed.sf_calculator.check_sf_run_reduction_button_status import CheckSfRunReductionButtonStatus
 from RefRed.sf_calculator.reduction_sf_calculator import ReductionSfCalculator
@@ -150,7 +148,6 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         self.peak2_error.setPalette(palette)
         self.error_label.setPalette(palette)
         self.initFileMenu()
-        self.reduced_files_loaded_object = ReducedSFCalculatorConfigFilesHandler(self)
         self.initConfigGui()
         self.event_progressbar = QtGui.QProgressBar(self.statusbar)
         self.event_progressbar.setMinimumSize(20, 14)
@@ -453,6 +450,10 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         #self.updateTableWithLambdaInfos(_nxdata)
 
     def loadingConfiguration(self):
+        """
+            TODO: this is broken functionality that never worked and is not needed
+            This function is a UI slot.
+        """
         print "loadingConfiguration not implemented"
 
     def manualTOFtextFieldValidated(self, with_plot_update = True):
@@ -775,8 +776,8 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
             wdg_enabled = False
             self.setWindowTitle(self.window_title + self.current_loaded_file)
         self.testPeakBackErrorWidgets()
-        self.actionSavingAsConfiguration.setEnabled(wdg_enabled)
-        self.actionSavingConfiguration.setEnabled(wdg_enabled)
+        #self.actionSavingAsConfiguration.setEnabled(wdg_enabled)
+        #self.actionSavingConfiguration.setEnabled(wdg_enabled)
         self.tableWidget.setEnabled(wdg_enabled)
         self.checkRunReductionButton()
         self.enabledWidgets(wdg_enabled)
@@ -1146,40 +1147,26 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         return True
 
     def savingConfiguration(self):
-        filename = self.current_loaded_file
-        self.savingConfigurationFileDefined(filename)
+        """
+            TODO: this is broken functionality that never worked and is not needed
+            This function is a UI slot.
+        """
+        raise RuntimeError("Method SFCalculator.savingConfiguration is deprecated.")
 
     def savingAsConfiguration(self):
-        filename = QtGui.QFileDialog.getSaveFileName(self, 'Save SF Configuration File',
-                                                     self.xml_config_dir, "XML files (*.xml);;All files (*.*)")
-        filename = str(filename)        
-        if len(filename) > 0:
-            self.current_loaded_file = filename
-            self.savingConfigurationFileDefined(filename)
-
-    def savingConfigurationFileDefined(self, filename):
-        self.xml_config_dir = os.path.dirname(filename)
-        if not filename.endswith('.xml'):
-            filename += '.xml'
-        self.exportConfiguration(filename)
-        self.setWindowTitle(self.window_title + filename)
-        if self.reduced_files_loaded_object is None:
-            _reduced_files_loaded_object = ReducedSFCalculatorConfigFilesHandler(self)
-        else:
-            _reduced_files_loaded_object = self.reduced_files_loaded_object
-        _reduced_files_loaded_object.addFile(filename)
-        _reduced_files_loaded_object.updateGui()
-        self.reduced_files_loaded_object = _reduced_files_loaded_object
-        self.resetFileHasBeenModified()
-
-    def exportConfiguration(self, filename):
-        CreateSFConfigXmlFile(parent=self, filename=filename)
+        """
+            TODO: this is broken functionality that never worked and is not needed
+            This function is a UI slot.
+        """
+        raise RuntimeError("Method SFCalculator.savingAsConfiguration is deprecated.")
 
     def importConfiguration(self, filename):
-        from RefRed.load_sf_config_and_populate_gui import LoadSFConfigAndPopulateGUI
-        _configObject = LoadSFConfigAndPopulateGUI(parent=self, filename=filename)
-        return _configObject.getLoadingStatus()
-    
+        """
+            TODO: this is broken functionality that never worked and is not needed
+            As far as I know this function isn't called anywhere else in the code.
+        """
+        raise RuntimeError("Method SFCalculator.importConfiguration is deprecated.")
+
     def tof_validation(self, tof_auto_switch, tof1, tof2, with_plot_update=True):
         self.dataTOFautoMode.setChecked(tof_auto_switch)
         self.dataTOFmanualMode.setChecked(not tof_auto_switch)

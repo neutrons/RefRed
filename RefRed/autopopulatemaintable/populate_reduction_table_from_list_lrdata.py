@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class PopulateReductionTableFromListLRData(object):
 
     list_lrdata_sorted = None
@@ -9,14 +10,10 @@ class PopulateReductionTableFromListLRData(object):
 
     LAMBDA_REQUESTED_TOLERANCE = 0.01
     THI_TOLERANCE = 0.015
-    
-    def __init__(self, parent=None,
-                 list_lrdata = None,
-                 list_wks = None,
-                 list_run = None,
-                 list_nexus = None,
-                 is_data = True):
-        
+
+    def __init__(self, parent=None, list_lrdata=None, list_wks=None,
+                 list_run=None, list_nexus=None, is_data=True):
+
         self.parent = parent
         self.list_run = list_run
         self.list_lrdata = list_lrdata
@@ -43,13 +40,13 @@ class PopulateReductionTableFromListLRData(object):
             self.clear_reductionTable()
             
         self.insert_runs_into_table()    
-        
+
         if is_data:
             self.clear_big_table_data()
             self.update_big_table_data()
-                
+
         self.parent.big_table_data = self.big_table_data
-                
+
     def update_big_table_data(self):
         list_lrdata = self.list_lrdata
         big_table_data = self.big_table_data
