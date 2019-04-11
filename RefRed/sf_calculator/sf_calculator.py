@@ -374,9 +374,6 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
             file_name = str(fileSelector.selectedFiles()[0])
             self.update_config_file(file_name)
 
-    def savingAsConfiguration(self):
-        pass
-
     def selectManualTOF(self):
         self.manualTOFWidgetsEnabled(True)
         self.saveTOFautoFlag(auto_flag = False)
@@ -536,9 +533,6 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
 
     def incidentMediumComboBoxChanged(self):
         self.fileHasBeenModified()
-
-    def savingConfiguration(self):
-        print "savingConfiguration not implemented"
 
     def editIncidentMediumList(self):
         _incident_medium_object = IncidentMediumListEditor(parent=self)
@@ -1179,10 +1173,10 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         self.resetFileHasBeenModified()
 
     def exportConfiguration(self, filename):
-        from interfaces.create_sf_config_xml_file import CreateSFConfigXmlFile
         CreateSFConfigXmlFile(parent=self, filename=filename)
-        
+
     def importConfiguration(self, filename):
+        from RefRed.load_sf_config_and_populate_gui import LoadSFConfigAndPopulateGUI
         _configObject = LoadSFConfigAndPopulateGUI(parent=self, filename=filename)
         return _configObject.getLoadingStatus()
     

@@ -135,7 +135,7 @@ class MainGui(QtGui.QMainWindow):
     def home_clicked_data_stitching_plot(self):
         HomePlotButtonClicked(parent=self, plot_type='stitching')
 
-    # leave figure 
+    # leave figure
     def leave_figure_yi_plot(self):
         MouseLeavePlot(parent=self, plot_type='yi')
     def leave_figure_yt_plot(self):

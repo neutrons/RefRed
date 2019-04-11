@@ -59,7 +59,7 @@ class CreateSFConfigXmlFile(object):
 		cls.str_array = str_array
 	
 	def makeMainPart(cls):
-		data_table_ui = cls.sf_gui.ui.tableWidget
+		data_table_ui = cls.sf_gui.tableWidget
 		nbr_row = data_table_ui.rowCount()
 		if nbr_row == 0:
 			return []
@@ -73,7 +73,7 @@ class CreateSFConfigXmlFile(object):
 			str_array.append('  <incident_medium_list>' + _incident_medium_list + '</incident_medium_list>\n')
 			str_array.append('  <incident_medium_index_selected>' + str(_incident_medium_index) + '</incident_medium_index_selected>\n')
 			str_array.append('  <is_using_si_slits>' + str(cls.sf_gui.is_using_si_slits) + '</is_using_si_slits>\n')
-			str_array.append('  <scaling_factor_file>' + cls.sf_gui.ui.sfFileNameLabel.text() + '</scaling_factor_file>\n')
+			str_array.append('  <scaling_factor_file>' + cls.sf_gui.sfFileNameLabel.text() + '</scaling_factor_file>\n')
 
 			_current_table_row_selected = cls.sf_gui.current_table_row_selected
 			_list_nxsdata_sorted = cls.sf_gui.list_nxsdata_sorted
@@ -92,15 +92,15 @@ class CreateSFConfigXmlFile(object):
 		
 		cls.str_array = str_array
 
-	def 	builtItemString(cls, index=0, item=''):			
+	def builtItemString(cls, index=0, item=''):
 		_list_item = cls.list_item
 		_item_str = _list_item[index]
 		_str = '  <' + _list_item[index] + '>' + item +'</' + _list_item[index] + '>\n'
 		return _str
 		
 	def retrieveIncidentMediumListAndIndex(cls):
-		_list = [str(cls.sf_gui.ui.incidentMediumComboBox.itemText(i)) for i in range(1,cls.sf_gui.ui.incidentMediumComboBox.count())]
-		_current_index = cls.sf_gui.ui.incidentMediumComboBox.currentIndex()-1
+		_list = [str(cls.sf_gui.incidentMediumComboBox.itemText(i)) for i in range(1,cls.sf_gui.incidentMediumComboBox.count())]
+		_current_index = cls.sf_gui.incidentMediumComboBox.currentIndex()-1
 		[_list, current_index] = removeEmptyStrElementAndUpdateIndexSelected(_list, _current_index)
 		str_list = ",".join(_list)
 		return [str_list, current_index]
