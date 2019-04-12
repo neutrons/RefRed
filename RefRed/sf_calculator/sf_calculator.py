@@ -17,7 +17,6 @@ from RefRed.sf_calculator.load_and_sort_nxsdata_for_sf_calculator import LoadAnd
 from RefRed.sf_calculator.check_sf_run_reduction_button_status import CheckSfRunReductionButtonStatus
 from RefRed.sf_calculator.reduction_sf_calculator import ReductionSfCalculator
 from RefRed.sf_calculator.sf_calculator_right_click import SFCalculatorRightClick
-from RefRed.sf_calculator.sf_single_plot_click import SFSinglePlotClick
 
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.utilities import convertTOF
@@ -101,16 +100,8 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         settings.setValue("xml_config_dir", value)
 
     def initConnections(self):
-        self.yt_plot.singleClick.connect(self.singleYTPlot)
         self.yt_plot.toolbar.homeClicked.connect(self.homeYtPlot)
-        self.yt_plot.toolbar.exportClicked.connect(self.exportYtPlot)
-        self.yt_plot.leaveFigure.connect(self.leaveYtPlot)
-
-        self.yi_plot.singleClick.connect(self.singleYIPlot)
         self.yi_plot.toolbar.homeClicked.connect(self.homeYiPlot)
-        self.yi_plot.toolbar.exportClicked.connect(self.exportYiPlot)
-        self.yi_plot.leaveFigure.connect(self.leaveYiPlot)
-        self.yi_plot.logtogx.connect(self.logxToggleYiPlot)
 
     def initGui(self):
         palette = QtGui.QPalette()
@@ -128,110 +119,6 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         # The file menu is not currently used, since we can't load or save
         # configurations. Just remove the menu by giving it an empty title.
         self.menuFile.setTitle('')
-
-    def singleYTPlot(self, is_pan_or_zoom_activated):
-        SFSinglePlotClick(self, 'yt', is_pan_or_zoom_activated=is_pan_or_zoom_activated)
-
-    def singleYIPlot(self, is_pan_or_zoom_activated):
-        SFSinglePlotClick(self, 'yi', is_pan_or_zoom_activated=is_pan_or_zoom_activated)
-
-    def exportYtPlot(self):
-        row = self.current_table_row_selected
-        list_nxsdata_sorted = self.list_nxsdata_sorted
-        _data = list_nxsdata_sorted[row]
-        _active_data = _data.active_data
-        run_number = _active_data.run_number
-        default_filename = 'REFL_' + run_number + '_2dPxVsTof.txt'
-        path = self.main_gui.path_ascii
-        default_filename = path + '/' + default_filename
-        filename = QtGui.QFileDialog.getSaveFileName(self, 'Create 2D Pixel VS TOF', default_filename)
-
-        if str(filename).strip() == '':
-            #logging.info('User Canceled Outpout ASCII')
-            return
-
-        self.main_gui.path_ascii = os.path.dirname(filename)
-        image = _active_data.ytofdata
-        # TODO: the following function is not defined!
-        output_2d_ascii_file(filename, image)
-
-    def exportYiPlot(self):
-        row = self.current_table_row_selected
-        list_nxsdata = self.list_nxsdata_sorted
-        _data = list_nxsdata[row]
-        _active_data = _data.active_data
-        run_number = _active_data.run_number
-        default_filename = 'REFL_' + run_number + '_rpx.txt'
-        path = self.main_gui.path_ascii
-        default_filename = path + '/' + default_filename
-        filename = QtGui.QFileDialog.getSaveFileName(self, 'Create Counts vs Pixel ASCII File', default_filename)
-
-        if str(filename).strip() == '':
-            #logging.info('User Canceled Output ASCII')
-            return
-
-        self.main_gui.path_ascii = os.path.dirname(filename)
-
-        ycountsdata = _active_data.ycountsdata
-        pixelaxis = range(len(ycountsdata))
-
-        text = ['#Counts vs Pixels', '#Pixel - Counts']
-        sz = len(pixelaxis)
-        for i in range(sz):
-            _line = str(pixelaxis[i]) + ' ' + str(ycountsdata[i])
-            text.append(_line)
-        # TODO: the following function is not defined!
-        write_ascii_file(filename, text)
-
-    def logxToggleYiPlot(self, checked):
-        row = self.current_table_row_selected
-        list_nxsdata = self.list_nxsdata_sorted
-        if list_nxsdata == []:
-            return
-        data = list_nxsdata[row]
-        if checked == 'log':
-            isLog = True
-        else:
-            isLog = False
-        data.active_data.all_plot_axis.is_yi_xlog = isLog
-        list_nxsdata[row] = data
-        self.list_nxsdata_sorted = list_nxsdata
-
-    def leaveYtPlot(self):
-        try:
-            row = self.current_table_row_selected
-            list_nxsdata = self.list_nxsdata_sorted
-            if list_nxsdata == []:
-                return
-            data = list_nxsdata[row]
-            [xmin, xmax] = self.yt_plot.canvas.ax.xaxis.get_view_interval()
-            [ymin, ymax] = self.yt_plot.canvas.ax.yaxis.get_view_interval()
-            self.yt_plot.canvas.ax.xaxis.set_data_interval(xmin, xmax)
-            self.yt_plot.canvas.ax.yaxis.set_data_interval(ymin, ymax)
-            self.yt_plot.draw()
-            data.active_data.all_plot_axis.yt_view_interval = [xmin, xmax, ymin, ymax]
-            list_nxsdata[row] = data
-            self.list_nxsdata_sorted = list_nxsdata
-        except:
-            logging.error("Error in leaveYtPlot: %s", sys.exc_info()[1])
-
-    def leaveYiPlot(self):
-        try:
-            row = self.current_table_row_selected
-            list_nxsdata = self.list_nxsdata_sorted
-            if list_nxsdata == []:
-                return
-            data = list_nxsdata[row]
-            [xmin, xmax] = self.yi_plot.canvas.ax.xaxis.get_view_interval()
-            [ymin, ymax] = self.yi_plot.canvas.ax.yaxis.get_view_interval()
-            self.yi_plot.canvas.ax.xaxis.set_data_interval(xmin, xmax)
-            self.yi_plot.canvas.ax.yaxis.set_data_interval(ymin, ymax)
-            self.yi_plot.draw()
-            data.active_data.all_plot_axis.yi_view_interval = [xmin, xmax, ymin, ymax]
-            list_nxsdata[row] = data
-            self.list_nxsdata_sorted = list_nxsdata
-        except:
-            logging.error("Error in leaveYtPlot: %s", sys.exc_info()[1])
 
     def homeYtPlot(self):
         [xmin, xmax, ymin, ymax] = self.yt_plot.toolbar.home_settings

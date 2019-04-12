@@ -6,6 +6,7 @@ from mantid.simpleapi import *
 import numpy as np
 from RefRed.utilities import convertTOF
 
+
 def createAsciiFile(filename, str_list):
     if os.path.isfile(filename):
         os.remove(filename)
@@ -14,8 +15,11 @@ def createAsciiFile(filename, str_list):
         f.write(str(_line))
     f.close()
 
+
 class ReductionSfCalculator(object):
-    
+    """
+        Compute scaling factors
+    """
     sf_gui = None
     export_script_flag = False
     export_script_file = ''
@@ -25,11 +29,11 @@ class ReductionSfCalculator(object):
     nbr_row = -1
     nbr_scripts = 0
     new_sfcalculator_script = True
-    
+
     def __init__(self, parent=None, export_script_flag=False):
         self.sf_gui = parent
         self.export_script_flag = export_script_flag
-        
+
         if export_script_flag:
             #TODO: get last path from QSettings
             _path = os.path.expanduser('~')
@@ -43,13 +47,13 @@ class ReductionSfCalculator(object):
                 return
         self.collectTableSettings()
         self.createAndLaunchScripts()
-                
+
     def collectTableSettings(self):
         nbr_row = self.sf_gui.tableWidget.rowCount()
         self.nbr_row = nbr_row
         nbr_column = len(self.index_col)
         _table_settings = np.zeros((nbr_row, nbr_column))
-        
+
         for _row in range(nbr_row):
             for _col in range(nbr_column):
                 if _col == 1:
@@ -57,17 +61,17 @@ class ReductionSfCalculator(object):
                 else:
                     _value = str(self.sf_gui.tableWidget.item(_row, self.index_col[_col]).text())
                 _table_settings[_row, _col] = _value
-                
+
         self.table_settings = _table_settings
-        
+
     def createAndLaunchScripts(self):
         from_to_index_same_lambda = self.generateIndexSameLambda()
         nbr_scripts = self.nbr_scripts
-        
+
         incident_medium = self.getIncidentMedium()
         output_file_name = self.getOutputFileName()
         self.sf_gui.updateProgressBar(0.1)
-        
+
         for i in range(nbr_scripts):
             from_index = int(from_to_index_same_lambda[i,0])
             to_index = int(from_to_index_same_lambda[i,1])
@@ -78,29 +82,30 @@ class ReductionSfCalculator(object):
             string_runs = self.getStringRuns(from_index, to_index)
             list_peak_back = self.getListPeakBack(from_index, to_index)
             tof_range = self.getTofRange(from_index)
-            
+
             if not self.export_script:
-                self.launchScript(string_runs = string_runs,
-                             list_peak_back = list_peak_back,
-                             incident_medium = incident_medium,
-                             output_file_name = output_file_name,
-                             tof_range = tof_range)
-            
+                self.launchScript(string_runs=string_runs,
+                                  list_peak_back=list_peak_back,
+                                  incident_medium=incident_medium,
+                                  output_file_name=output_file_name,
+                                  tof_range=tof_range)
+
                 self.refreshOutputFileContainPreview(output_file_name)
             else:
-                self.exportScript(string_runs = string_runs,
-                             list_peak_back = list_peak_back,
-                             incident_medium = incident_medium,
-                             output_file_name = output_file_name,
-                             tof_range = tof_range)
-    
-            self.sf_gui.updateProgressBar(float(i+1)/float(nbr_scripts))
+                self.exportScript(string_runs=string_runs,
+                                  list_peak_back=list_peak_back,
+                                  incident_medium=incident_medium,
+                                  output_file_name=output_file_name,
+                                  tof_range=tof_range)
+
+            self.sf_gui.updateProgressBar(float(i + 1) / float(nbr_scripts))
             QtGui.QApplication.processEvents()
-        
+
         if self.export_script_flag:
             createAsciiFile(self.export_script_file, self.export_script)
 
-    def launchScript(self, string_runs = '', list_peak_back=[], incident_medium = '', output_file_name = '', tof_range = []):
+    def launchScript(self, string_runs='', list_peak_back=[], incident_medium='',
+                     output_file_name='', tof_range=[]):
         peak_ranges = []
         bck_ranges = []
         for item in list_peak_back:
@@ -108,7 +113,7 @@ class ReductionSfCalculator(object):
             peak_ranges.append(int(item[1]))
             bck_ranges.append(int(item[2]))
             bck_ranges.append(int(item[3]))
-        
+
         run_list = []
         att_list = []
         toks = string_runs.strip().split(',')
@@ -116,15 +121,14 @@ class ReductionSfCalculator(object):
             pair = item.strip().split(':')
             run_list.append(int(pair[0]))
             att_list.append(int(pair[1]))
-            
-        LRScalingFactors(DirectBeamRuns = run_list,
-                         Attenuators = att_list,
-                         IncidentMedium = str(incident_medium),
-                         TOFRange = tof_range, TOFSteps = 200,
-                         SignalPeakPixelRange = peak_ranges, 
-                         SignalBackgroundPixelRange = bck_ranges,
-                         ScalingFactorFile= str(output_file_name))
 
+        api.LRScalingFactors(DirectBeamRuns=run_list,
+                             Attenuators=att_list,
+                             IncidentMedium=str(incident_medium),
+                             TOFRange=tof_range, TOFSteps=200,
+                             SignalPeakPixelRange=peak_ranges, 
+                             SignalBackgroundPixelRange=bck_ranges,
+                             ScalingFactorFile=str(output_file_name))
 
     def prepareExportScript(self):
         script = []
@@ -137,7 +141,8 @@ class ReductionSfCalculator(object):
         script.append('from mantid.simpleapi import *\n')
         self.export_script = script
 
-    def exportScript(self, string_runs = '', list_peak_back=[], incident_medium = '', output_file_name = '', tof_range = []):
+    def exportScript(self, string_runs='', list_peak_back=[], incident_medium='',
+                     output_file_name='', tof_range=[]):
         self.export_script.append('\n')
 
         peak_ranges = []
@@ -147,7 +152,7 @@ class ReductionSfCalculator(object):
             peak_ranges.append(int(item[1]))
             bck_ranges.append(int(item[2]))
             bck_ranges.append(int(item[3]))
-    
+
         run_list = []
         att_list = []
         toks = string_runs.strip().split(',')
@@ -155,7 +160,7 @@ class ReductionSfCalculator(object):
             pair = item.strip().split(':')
             run_list.append(int(pair[0]))
             att_list.append(int(pair[1]))
-    
+
         _script_exe = 'LRScalingFactors(DirectBeamRuns = ['
         str_run_list = ', '.join(map(lambda x: str(x), run_list))
         _script_exe += str_run_list + '], Attenuators = ['
@@ -170,7 +175,7 @@ class ReductionSfCalculator(object):
         str_back_range = ', '.join(map(lambda x: str(x), bck_ranges))
         _script_exe += str_back_range + '], ScalingFactorFile = "'
         _script_exe += output_file_name + '")'
-        
+
         self.export_script.append(_script_exe)
 
     def refreshOutputFileContainPreview(self, output_file_name):
@@ -180,36 +185,36 @@ class ReductionSfCalculator(object):
         data = self.table_settings
         string_list = []
         for i in range(from_index, to_index+1):
-            string_list.append(str(int(data[i,0])) + ":" + str(int(data[i,1])))
+            string_list.append(str(int(data[i,0])) + ":" + str(int(data[i, 1])))
         return ",".join(string_list)
 
     def getListPeakBack(self, from_index, to_index):
         data = self.table_settings
         return data[from_index:to_index+1, 3:7]
-    
+
     def getIncidentMedium(self):
         return self.sf_gui.incidentMediumComboBox.currentText()
-    
+
     def getOutputFileName(self):
         output_file_name = self.sf_gui.sfFileNameLabel.text()
         return output_file_name
-    
+
     def getTofRange(self, from_index):
         data = self.table_settings
         from_tof_ms = data[from_index, 7]
-        to_tof_ms = data[from_index, 8 ]
+        to_tof_ms = data[from_index, 8]
         tof_from_to_micros = convertTOF([from_tof_ms, to_tof_ms], from_units='ms', to_units='micros')
         return tof_from_to_micros
 
     def generateIndexSameLambda(self):
         _data = self.table_settings
 
-        lambda_list = _data[:,2]        
+        lambda_list = _data[:,2]
         nbr_scripts = len(set(lambda_list))
         self.nbr_scripts = nbr_scripts
-        
+
         from_to_index_same_lambda = np.zeros((nbr_scripts, 2))
-        
+
         first_index_lambda = 0
         ref_lambda = lambda_list[0]
         index_script = 0
@@ -221,7 +226,6 @@ class ReductionSfCalculator(object):
                 ref_lambda = live_lambda
                 index_script+= 1
             if  i == (self.nbr_row-1):
-                from_to_index_same_lambda[index_script,:] = [ first_index_lambda, i]
+                from_to_index_same_lambda[index_script,:] = [first_index_lambda, i]
 
         return from_to_index_same_lambda
-
