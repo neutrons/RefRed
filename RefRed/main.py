@@ -449,8 +449,12 @@ class MainGui(QtGui.QMainWindow):
         _meta_finder.show()
 
     def launch_sf_calculator(self):
-        o_sf_calculator = SFCalculator()
-        o_sf_calculator.show()
+        """
+            Launch the scaling factor calculator
+        """
+        # We need to keep a reference to the created object for pyqt to properly start it.
+        self.sf_calculator = SFCalculator()
+        self.sf_calculator.show()
 
     def stitching_sf_radio_button(self):
         o_reduced_plot = ReducedDataHandler(parent=self)
