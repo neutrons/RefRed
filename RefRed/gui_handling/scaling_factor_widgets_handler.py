@@ -4,32 +4,31 @@ from numpy import shape
 
 
 class ScalingFactorWidgetsHandler(object):
-    
+
     parent = None
-    
-    def __init__(self, parent = None):
+
+    def __init__(self, parent=None):
         self.parent = parent
-        
-    def checkbox(self, status = True):
+
+    def checkbox(self, status=True):
         self.parent.ui.scalingFactorConfigFrame.setEnabled(status)
-        
-    def set_enabled(self, status = True):
+
+    def set_enabled(self, status=True):
         self.parent.ui.scalingFactorFlag.setChecked(status)
 
     def browse(self):
         _path = self.parent.path_ascii
         _filter = ("sfConfig (*.cfg);;Ascii (*.txt);;All (*.*)")
-        filename = str(QtGui.QFileDialog.getOpenFileName(self.parent, 
-                                                     'Open scaling factor file', 
-                                                     _path,
-                                                     _filter))
-        
+        filename = str(QtGui.QFileDialog.getOpenFileName(self.parent,
+                                                         'Open scaling factor file',
+                                                         _path, _filter))
+
         if filename == "":
             return
-        
+
         self.parent.path_ascii = os.path.dirname(filename)
         self.fill_incident_medium_list(filename)
-        
+
     def fill_incident_medium_list(self, filename):
         try:
             _listMedium = self.parse_scaling_factor_file(filename)
@@ -45,10 +44,10 @@ class ScalingFactorWidgetsHandler(object):
         else:
             index = 0
         self.parent.ui.selectIncidentMediumList.setCurrentIndex(index)
-        
+
     def set_index_selected(self, index):
         self.parent.ui.selectIncidentMediumList.setCurrentIndex(index)
-        
+
     def parse_scaling_factor_file(self, filename):
         '''
         will parse the scaling factor file
@@ -62,9 +61,8 @@ class ScalingFactorWidgetsHandler(object):
 
         uniqIncidentMedium = self.list_uniq_incident_medium(_sfFactorTable)
         return uniqIncidentMedium
-        
-    def list_uniq_incident_medium(self, table):
 
+    def list_uniq_incident_medium(self, table):
         [nbr_row, nbr_column] = shape(table)
         first_column_only = []
         for i in range(nbr_row):
@@ -74,4 +72,3 @@ class ScalingFactorWidgetsHandler(object):
         _sorted_list = sorted(set(first_column_only))
         _sorted_list.insert(0, 'Select Incident Medium ...')
         return _sorted_list
-        
