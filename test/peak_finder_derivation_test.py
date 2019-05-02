@@ -1,4 +1,6 @@
+import sys
 import unittest
+sys.path.append('..')
 from RefRed.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
 from RefRed.file_loading_utility import loadCsvFile
 
