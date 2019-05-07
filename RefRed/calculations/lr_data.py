@@ -12,21 +12,21 @@ import RefRed.constants as constants
 from RefRed.plot.all_plot_axis import AllPlotAxis
 from RefRed.utilities import convert_angle
 
-
 NEUTRON_MASS = 1.675e-27  # kg
 PLANCK_CONSTANT = 6.626e-34  # m^2 kg s^-1
 H_OVER_M_NEUTRON = PLANCK_CONSTANT / NEUTRON_MASS
 
 #any run before, tmin and tmax will be used a different algorithm
-RUN_NUMBER_0_BETTER_CHOPPER_COVERAGE = 137261 
+RUN_NUMBER_0_BETTER_CHOPPER_COVERAGE = 137261
+
 
 class LRData(object):
 
-    read_options = dict(is_auto_tof_finder = True,
-                        is_auto_peak_finder = True,
-                        back_offset_from_peak = 3,
-                        bins = 50,
-                        angle_offset = 0.001)
+    read_options = dict(is_auto_tof_finder=True,
+                        is_auto_peak_finder=True,
+                        back_offset_from_peak=3,
+                        bins=50,
+                        angle_offset=0.001)
 
     tof_range = None
     tof_range_manual = None
@@ -40,17 +40,18 @@ class LRData(object):
     full_file_name = ['']
     filename = ''
     ipts = 'N/A'
-    
+
     is_better_chopper_coverage = True
     total_counts = 0
-    
+
     def __init__(self, workspace, lconfig=None, is_data=True, parent=None):
-        
+        #TODO: there appears to be duplicate instances of this class being
+        #      created when loading a file.
         self.parent = parent
         self._tof_axis = []
         self.Ixyt = []
         self.Exyt= []
-        
+
         self.data = []
         self.xydata = []
         self.ytofdata = []
@@ -58,7 +59,7 @@ class LRData(object):
         self.countstofdata = []
         self.countxdata = []
         self.ycountsdata = []
-        
+
         self.workspace = mtd[workspace]
         self.workspace_name = workspace
 
@@ -178,7 +179,6 @@ class LRData(object):
         self.read_data()
 
         if lconfig is None:
-            
             pf = PeakFinderDerivation(range(len(self.ycountsdata)), self.ycountsdata)
             [peak1, peak2] = pf.getPeaks()
             self.peak = [str(peak1), str(peak2)]
@@ -191,19 +191,17 @@ class LRData(object):
             lw_pf = LowResFinder(range(len(self.countsxdata)), self.countsxdata)
             [lowres1, lowres2] = lw_pf.get_low_res()
             self.low_res = [str(lowres1), str(lowres2)]
-            
-            clocking_pf = ClockingFinder(parent = self.parent,
-                                         xdata = range(len(self.ycountsdata)), 
-                                         ydata = self.ycountsdata)
+
+            clocking_pf = ClockingFinder(parent=self.parent,
+                                         xdata=range(len(self.ycountsdata)),
+                                         ydata=self.ycountsdata)
             [clocking1, clocking2] = clocking_pf.clocking
-            
+
             clock_array = [clocking1, clocking2]
             clock_array.sort()
 
             self.clocking  = [str(clocking1), str(clocking2)]
-
         else:
-            
             # if we loaded a config that does not have the clocking info, we will have to retrieve once
             # everything has been loaded (before display)
             if lconfig.data_clocking[0] != '':
@@ -212,7 +210,7 @@ class LRData(object):
                 clocking_pf = LowResFinder(range(len(self.ycountsdata)), self.ycountsdata)
                 [clocking1, clocking2] = clocking_pf.get_low_res()
                 self.clocking  = [str(clocking1), str(clocking2)]
-                
+
             self.tof_auto_flag = np.bool(lconfig.tof_auto_flag)
 
             if is_data:
@@ -227,7 +225,6 @@ class LRData(object):
                 self.low_res = [np.int(lconfig.norm_low_res[0]), np.int(lconfig.norm_low_res[1])] 
                 self.low_res_flag = np.bool(lconfig.norm_low_res_flag)
                 self.back_flag = np.bool(lconfig.norm_back_flag)
-
 
     ################## Properties for easy data access ##########################
     # return the size of the data stored in memory for this dataset
@@ -260,16 +257,16 @@ class LRData(object):
         '''
         calculate q range
         '''
-        [lambda_min, lambda_max] = self.lambda_range        
+        [lambda_min, lambda_max] = self.lambda_range
         _const = float(4) * math.pi
-        theta_rad = convert_angle(angle = self.incident_angle)
-        
+        theta_rad = convert_angle(angle=self.incident_angle)
+
         _const_theta = _const * math.sin(float(theta_rad)/2.)
         q_min = _const_theta / float(lambda_max)
         q_max = _const_theta / float(lambda_min)
-        
+
         self.q_range = [q_min, q_max]
-              
+
     def calculate_lambda_range(self, tof_range=None):
         '''
         calculate lambda range
@@ -290,24 +287,16 @@ class LRData(object):
 
         self.lambda_range = [lambda_min, lambda_max]
 
-    def calculate_theta(self, with_offset = True):
+    def calculate_theta(self, with_offset=True):
         '''
         calculate theta
         '''
         tthd_value = self.tthd
-        tthd_units = self.tthd_units
         thi_value = self.thi
-        thi_units = self.thi_units
-
-        # Make sure we have radians
-        #if thi_units == 'degree':
-        #    thi_value *= math.pi / 180.0
-        #if tthd_units == 'degree':
-        #    tthd_value *= math.pi / 180.0
 
         theta = math.fabs(tthd_value - thi_value) / 2.
         if theta < 0.001:
-            logging.warning("thi and tthd are equal: is this a direct beam?")
+            logging.debug("thi and tthd are equal: is this a direct beam?")
 
         # Add the offset
         angle_offset = 0.0
@@ -315,7 +304,7 @@ class LRData(object):
             angle_offset = float(self.read_options['angle_offset'])
             angle_offset_deg = angle_offset
             theta = theta + angle_offset_deg * math.pi / 180.0
-            
+
         return theta
 
     def getIxyt(self, nxs_histo):
@@ -344,11 +333,10 @@ class LRData(object):
         output_workspace_name = self.workspace_name + '_rebin'
         nxs_histo = Rebin(InputWorkspace = self.workspace, 
                           OutputWorkspace = output_workspace_name,
-                          Params = self.binning, 
+                          Params = self.binning,
                           PreserveEvents = True)
         # retrieve 3D array
         nxs_histo = mtd[output_workspace_name]
-        #[_tof_axis, Ixyt, Exyt] = self.getIxyt(nxs_histo)
         self.getIxyt(nxs_histo)
         self.tof_axis_auto_with_margin = self._tof_axis
 
@@ -373,7 +361,7 @@ class LRData(object):
         self.countstofdata = Iit.astype(float)
         self.countsxdata = Iix.astype(float)
         self.ycountsdata = Iyi.astype(float)
-        
+
         self.data_loaded = True
 
     def is_nexus_taken_after_refDate(self):
@@ -388,4 +376,3 @@ class LRData(object):
             return True
         else:
             return False
-

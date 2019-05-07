@@ -4,10 +4,8 @@ import logging
 import math
 import os
 
-from RefRed.sf_calculator.sort_nxsdata import SortNXSData
 from RefRed.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
 from RefRed.plot.all_plot_axis import AllPlotAxis
-
 
 NEUTRON_MASS = 1.675e-27  # kg
 PLANCK_CONSTANT = 6.626e-34  # m^2 kg s^-1
@@ -15,11 +13,12 @@ H_OVER_M_NEUTRON = PLANCK_CONSTANT / NEUTRON_MASS
 
 #any run before, tmin and tmax will be used a different algorithm
 RUN_NUMBER_0_BETTER_CHOPPER_COVERAGE = 137261 
-        
+
+
 class LRData(object):
     tof_range = None
     low_res = ['0','255']
-    low_res_flag = True    
+    low_res_flag = True
     is_better_chopper_coverage = True
 
     def __init__(self, workspace, read_options):
@@ -30,7 +29,7 @@ class LRData(object):
         self.run_number = mt_run.getProperty('run_number').value
         if float(self.run_number) < RUN_NUMBER_0_BETTER_CHOPPER_COVERAGE:
             self.is_better_chopper_coverage = False
-        
+
         self.lambda_requested = float(mt_run.getProperty('LambdaRequest').value[0])
         self.lambda_requested_units = mt_run.getProperty('LambdaRequest').units
         self.thi = mt_run.getProperty('thi').value[0]
@@ -55,12 +54,12 @@ class LRData(object):
 
         sample = self.workspace.getInstrument().getSample()
         source = self.workspace.getInstrument().getSource()
-        self.dMS = sample.getDistance(source) 
+        self.dMS = sample.getDistance(source)
 
         # create array of distances pixel->sample
         self.number_x_pixels = int(self.workspace.getInstrument().getNumberParameter("number-of-x-pixels")[0])  # 256
         self.number_y_pixels = int(self.workspace.getInstrument().getNumberParameter("number-of-y-pixels")[0])
-        
+
         dPS_array = np.zeros((self.number_x_pixels, self.number_y_pixels))
         for x in range(self.number_y_pixels):
             for y in range(self.number_x_pixels):
@@ -88,7 +87,6 @@ class LRData(object):
             autotmin = np.float(self.tof_range[0])
             autotmax = np.float(self.tof_range[1])
 
-        tof_coeff_narrow = 1.7 * 60 / self.frequency
         tof_coeff_large = 2.5 * 60 / self.frequency
         tof_coeff = 0.5 * 60 / self.frequency
 
@@ -113,7 +111,6 @@ class LRData(object):
         self.binning = [tmin, self.read_options['bins'], tmax]
         self.calculate_lambda_range()
         self.q_range = self.calculate_q_range()
-        #self.lambda_range = self.calculate_lambda_range()
         self.incident_angle = self.calculate_theta(False)
 
         # Proton charge
@@ -189,7 +186,7 @@ class LRData(object):
         q_max = "%.5f" % q_max
 
         return [q_min, q_max]
-        
+
     def calculate_lambda_range(self, tof_range=None):
         '''
         calculate lambda range
@@ -201,7 +198,7 @@ class LRData(object):
             [tof_min, tof_max] = self.tof_range
         else:
             [tof_min, tof_max] = tof_range
-        
+
         lambda_min = _const * (tof_min * 1e-6) / float(1e-10)
         lambda_max = _const * (tof_max * 1e-6) / float(1e-10)
 
@@ -210,7 +207,7 @@ class LRData(object):
 
         self.lambda_range = [lambda_min, lambda_max]
 
-    def calculate_theta(self, with_offset = True):
+    def calculate_theta(self, with_offset=True):
         '''
         calculate theta
         '''
@@ -227,7 +224,7 @@ class LRData(object):
 
         theta = math.fabs(tthd_value - thi_value) / 2.
         if theta < 0.001:
-            logging.warning("thi and tthd are equal: is this a direct beam?")
+            logging.debug("thi and tthd are equal: is this a direct beam?")
 
         # Add the offset
         angle_offset = 0.0
@@ -258,7 +255,7 @@ class LRData(object):
                 _y_error_axis[x, y, :] = _tmp_error
 
         return [_tof_axis, _y_axis, _y_error_axis]    
-        
+
     def read_data(self):
         nxs_histo = Rebin(InputWorkspace=self.workspace, Params=self.binning, PreserveEvents=True)
         # retrieve 3D array

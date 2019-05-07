@@ -45,7 +45,7 @@ from RefRed.sf_preview.sf_preview import SFPreview
 from RefRed.decorators import config_file_has_been_modified, config_file_modification_reset
 from RefRed.about_dialog import AboutDialog
 from RefRed.browsing_runs import BrowsingRuns
-#from RefRed.log_plot_toggle import LogPlotToggle
+
 
 class MainGui(QtGui.QMainWindow):
     ''' Top class that handles the GUI '''
@@ -86,12 +86,9 @@ class MainGui(QtGui.QMainWindow):
 
     #[data, norm, lconfig]
     big_table_data = np.empty((nbr_row_table_reduction, 3), dtype=object)
-    
+
     # various metadata such as q_min (for output reduced ascii)
     gui_metadata = {}
-
-    #Reduced ascii data sets
-    #o_stitched_ascii = None
 
     def __init__(self, argv=[], parent=None):
         if parent is None:
@@ -110,18 +107,6 @@ class MainGui(QtGui.QMainWindow):
         self.file_loaded_signal.connect(self.file_loaded)
         log_file = os.path.expanduser("~") + '/.refred.log'
         logging.basicConfig(filename=log_file, level=logging.DEBUG)
-
-    # export plot into ascii files
-    def export_ix(self):
-        ExportPlotAscii(self, type='ix')
-    def export_it(self):
-        ExportPlotAscii(self, type='it')
-    def export_yt(self):
-        ExportPlotAscii(self, type='yt')
-    def export_yi(self):
-        ExportPlotAscii(self, type='yi')
-    def export_stitching_data(self):
-        ExportPlotAscii(self, type='stitched')
 
     # home button of plots
     def home_clicked_yi_plot(self):
@@ -169,7 +154,7 @@ class MainGui(QtGui.QMainWindow):
                                          is_x_axis_manual_zoom_requested,
                                          mouse_x,
                                          mouse_y):
-        SingleClickPlot(self, data_type='data', 
+        SingleClickPlot(self, data_type='data',
                         plot_type='stitching',
                         is_manual_zoom_requested=is_manual_zoom_requested,
                         is_x_axis_manual_zoom_requested=is_x_axis_manual_zoom_requested,
@@ -222,7 +207,11 @@ class MainGui(QtGui.QMainWindow):
         self.ui.reductionTable.setEnabled(True)
 
     def table_reduction_cell_enter_pressed(self):
-        """ Deal with enter being pressed in a cell of the reduction table """
+        """
+            Deal with enter being pressed in a cell of the reduction table.
+            To ensure that we don't keep unused data in memory, check
+            whether we need to removed a run from memory.
+        """
         row = self.ui.reductionTable.currentRow()
         col = self.ui.reductionTable.currentColumn()
         item = self.ui.reductionTable.item(row, col)
@@ -310,7 +299,7 @@ class MainGui(QtGui.QMainWindow):
         o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent=self)
         o_auto_tof_range.setup()
         o_auto_tof_range.line_edit_validation()
-        
+
     @config_file_has_been_modified
     def data_norm_sequence_event(self):
         self.data_sequence_event()
@@ -355,7 +344,7 @@ class MainGui(QtGui.QMainWindow):
     def action_new(self):
         o_reduction_table_handler = ReductionTableHandler(parent=self)
         o_reduction_table_handler.full_clear()
-        
+
         o_interface_handler = RefRedInterfaceHandler(parent=self)
         o_interface_handler.full_reset()
 
@@ -503,7 +492,7 @@ class MainGui(QtGui.QMainWindow):
         norm_or_stitching_object.setWidget(activated_button=2)
         live_reduction = LiveReductionHandler(parent=self)
         live_reduction.recalculate()
-    
+
     def sf_button(self):
         first_angle_handler = FirstAngleRangeGuiHandler(parent=self)
         first_angle_handler.setWidgets(is_sf_button_clicked=True)

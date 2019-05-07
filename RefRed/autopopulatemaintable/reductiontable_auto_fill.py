@@ -89,7 +89,7 @@ class ReductionTableAutoFill(object):
         self.run()
 
     def merge_list_of_runs(self, new_runs=None):
-    
+
         #manual entry of the runs
         self.raw_run_from_input = new_runs
         self.calculate_discrete_list_of_runs()  # step1 -> list_of_runs_from_input

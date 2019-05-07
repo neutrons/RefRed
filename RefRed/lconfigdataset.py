@@ -61,3 +61,23 @@ class LConfigDataset(object):
     # use in the auto SF class
     tmp_y_axis = []
     tmp_e_axis = []
+
+    def clear_normalization(self):
+        """
+            Clear the normalization information
+            Note: it's not clear what data_sets and data_full_file_name are good for,
+            so we are clearing them by assigning them the default in the class definition.
+        """
+        self.norm_wks = None
+        self.norm_sets = LConfigDataset.norm_sets
+        self.norm_full_file_name = LConfigDataset.norm_full_file_name
+
+    def clear_data(self):
+        """
+            Clear the scattering data information
+            Note: it's not clear what norm_sets and norm_full_file_name are good for,
+            so we are clearing them by assigning them the default in the class definition.
+        """
+        self.data_wks = None
+        self.data_sets = LConfigDataset.norm_sets
+        self.data_full_file_name = LConfigDataset.norm_full_file_name

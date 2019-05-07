@@ -1,9 +1,11 @@
 from PyQt4 import QtGui
+from PyQt4.QtGui import QApplication
 
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.calculations.check_list_run_compatibility_and_display_thread import CheckListRunCompatibilityAndDisplayThread
 import RefRed.colors
 from RefRed.calculations.locate_list_run import LocateListRun
+
 
 class UpdateReductionTable(object):
 
@@ -17,7 +19,9 @@ class UpdateReductionTable(object):
 
         item = self.parent.ui.reductionTable.item(row, col)
         if item.text() == '':
-            self.clear_cell()
+            self.clear_cell(row, col)
+            self.parent.file_loaded_signal.emit()
+            QApplication.processEvents()
             return
 
         data_type = 'data' if col == 1 else 'norm'
@@ -37,7 +41,7 @@ class UpdateReductionTable(object):
             _color = QtGui.QColor(RefRed.colors.VALUE_BAD)
             self.parent.ui.reductionTable.item(row, 8).setBackground(_color)
         else:
-            mess = "%s runs have been located!" %data_type
+            mess = "%s runs have been located!" % data_type
             self.parent.ui.reductionTable.item(row, 8).setText(mess)
             _color = QtGui.QColor(RefRed.colors.VALUE_OK)
             self.parent.ui.reductionTable.item(row, 8).setBackground(_color)
@@ -62,8 +66,26 @@ class UpdateReductionTable(object):
                        is_display_requested = self.display_of_this_row_checked())
         self.parent.loading_nxs_thread[thread_index].start()
 
-    def clear_cell(self):
-        print('in clear cell')
+    def clear_cell(self, row, col):
+        """
+            Clear a reduction table cell, and clean up what is left behind.
+            The main "big_table_data" array has three entries per row,
+                0: Scattering data <class 'RefRed.calculations.lr_data.LRData'>
+                1: Direct beam data <class 'RefRed.calculations.lr_data.LRData'>
+                2: Reduction options <class 'RefRed.lconfigdataset.LConfigDataset'>
+            If col==1, we are clearing the scattering data.
+            If col==2, we are clearing the direct beam.
+        """
+        # Clear the data and configuration
+        # Note: there is a Mantid process cleaning process elsewhere in the code
+        # so we don't have to deal with it here.
+        config = self.parent.big_table_data[self.row, 2]
+        if col==1:
+            self.parent.big_table_data[self.row, 0] = None
+            config.clear_data()
+        elif col==2:
+            self.parent.big_table_data[self.row, 1] = None
+            config.clear_normalization()
 
     def display_of_this_row_checked(self):
         _button_status = self.parent.ui.reductionTable.cellWidget(self.row, 0).checkState()

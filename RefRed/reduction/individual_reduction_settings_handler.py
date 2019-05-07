@@ -1,3 +1,11 @@
+"""
+    Generate reduction options from the reduction table.
+
+    Note from code review:
+    It's not clear why the configuration stored in big_table_data[:, 3]
+    is saved if it's not used here. It creates confusion as to where we should
+    keep this information.
+"""
 from RefRed.gui_handling.gui_utility import GuiUtility
 
 
@@ -42,8 +50,7 @@ class IndividualReductionSettingsHandler(object):
             self._norm_low_res_range = self.get_norm_low_res_range()
 
         self._tof_range = self.get_tof_range()
-        self._output_workspace_name = self.define_output_workspace_name(run_numbers = 
-                                                                        self._data_run_numbers)
+        self._output_workspace_name = self.define_output_workspace_name(run_numbers=self._data_run_numbers)
 
     def define_output_workspace_name(self, run_numbers=None):
         str_run_numbers = run_numbers
@@ -55,7 +62,7 @@ class IndividualReductionSettingsHandler(object):
             tof_range = self.get_auto_tof_range()
         else:
             tof_range = self.get_manual_tof_range()
-        tof_range_micros = self.convert_tof_range_to_micros(tof_range = tof_range)
+        tof_range_micros = self.convert_tof_range_to_micros(tof_range=tof_range)
         return tof_range_micros
 
     def convert_tof_range_to_micros(self, tof_range=None):
@@ -103,7 +110,7 @@ class IndividualReductionSettingsHandler(object):
         clock1 = int(_data.clocking[0])
         clock2 = int(_data.clocking[1])
         return [clock1, clock2]
-    
+
     def get_norm_low_res_range(self):
         _norm = self.norm
         return self.get_low_res_range(data=_norm)
@@ -114,19 +121,19 @@ class IndividualReductionSettingsHandler(object):
         low_res_min = min([low_res1, low_res2])
         low_res_max = max([low_res1, low_res2])
         return [low_res_min, low_res_max]
-        
+
     def get_norm_flag(self):
         _norm = self.norm
         return _norm.use_it_flag
-        
+
     def get_data_back_range(self):
         _data = self.data
         return self.get_back_range(data=_data)
-    
+
     def get_norm_back_range(self):
         _norm = self.norm
         return self.get_back_range(data=_norm)
-    
+
     def get_back_range(self, data=None):
         back1 = int(data.back[0])
         back2 = int(data.back[1])

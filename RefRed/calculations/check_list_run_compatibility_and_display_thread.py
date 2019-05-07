@@ -1,3 +1,13 @@
+"""
+    Notes from inspecting the code:
+    Load data and update application store.
+
+    The main "big_table_data" array has three entries per row,
+        0: Scattering data <class 'RefRed.calculations.lr_data.LRData'>
+        1: Direct beam data <class 'RefRed.calculations.lr_data.LRData'>
+        2: Reduction options <class 'RefRed.lconfigdataset.LConfigDataset'>
+"""
+import logging
 import RefRed.colors
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtGui import QApplication
@@ -42,7 +52,7 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
                 _color = QtGui.QColor(RefRed.colors.VALUE_BAD)
         else:
             _color = QtGui.QColor(RefRed.colors.VALUE_OK)
-        
+
         self.parent.ui.reductionTable.item(self.row, 
                                            self.col).setForeground(_color)
 
@@ -83,12 +93,12 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
             _lconfig = LConfigDataset()
 
         if self.is_working_with_data_column:
-            _lconfig.data_full_file_anme = self.list_nexus
+            _lconfig.data_full_file_name = self.list_nexus
             _lconfig.data_sets = self.list_run
             _lconfig.data_wks = self.wks
             _lconfig.data_runs_compatible = runs_are_compatible
         else:
-            _lconfig.norm_full_file_anme = self.list_nexus
+            _lconfig.norm_full_file_name = self.list_nexus
             _lconfig.norm_sets = self.list_run
             _lconfig.norm_wks = self.wks
             _lconfig.norm_runs_compatible = runs_are_compatible

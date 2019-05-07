@@ -1,3 +1,5 @@
+import sys
+import logging
 from PyQt4.QtGui import QApplication
 from RefRed.mantid_utility import MantidUtility
 from RefRed.lconfigdataset import LConfigDataset
@@ -19,8 +21,6 @@ class LiveReductionHandler(object):
     big_table_data = None
     list_reduced_workspace = []
     nbr_reduction_process = -1
-    debug = False
-    error = False
 
     def __init__(self, parent=None):
         self.parent = parent
@@ -46,40 +46,40 @@ class LiveReductionHandler(object):
         _data_0_0 = _big_table_data[0,0]
         if _data_0_0 is None:
             return
-        
-        StatusMessageHandler(parent=self.parent, 
-                             message='Running reduction ...', 
-                             is_threaded=False)
-        
+
+        StatusMessageHandler(parent=self.parent, message='Running reduction ...', is_threaded=False)
+
         self.parent.ui.reduceButton.setEnabled(False)
-        
+
         self.cleanup()
 
         o_general_settings = GlobalReductionSettingsHandler(parent=self.parent)
         o_reduction_progressbar_handler = ProgressBarHandler(parent=self.parent)
         o_reduction_progressbar_handler.setup(nbr_reduction=self.nbr_reduction_process,
                                               label='Reduction Process ')
-        
+
         for row_index in range(self.nbr_reduction_process):
-            
             o_individual_settings = IndividualReductionSettingsHandler(parent=self.parent,
                                                                        row_index=row_index)
-            
+
             # run reduction
-            self.launch_reduction(o_general=o_general_settings,
-                                  o_individual=o_individual_settings,
-                                  debug=self.debug)
-            if self.error:
-                break
-            
+            try:
+                self.launch_reduction(o_general=o_general_settings,
+                                      o_individual=o_individual_settings)
+            except:
+                logging.error(sys.exc_info()[1])
+                self.parent.ui.reduceButton.setEnabled(True)
+                StatusMessageHandler(parent=self.parent, message='Failed!', is_threaded=True)
+                return
+
             self.save_reduction(row=row_index,
                                 workspace=o_individual_settings._output_workspace_name)
-            
+
             # scale
             o_calculate_sf = LiveCalculateSF(parent=self.parent,
                                              row_index=row_index)
             o_calculate_sf.run()
-            
+
             # plot
             o_reduced_plot = LiveReducedDataHandler(parent=self.parent,
                                                     row_index=row_index)
@@ -94,16 +94,14 @@ class LiveReductionHandler(object):
         self.parent.big_table_data = self.big_table_data
         o_reduction_progressbar_handler.end()
         self.parent.ui.reduceButton.setEnabled(True)
-        
+
         # save reduced data
         self.save_reduced_for_ascii_loaded()
-        
+
         # save size of view for home button
         self.save_stitching_plot_view()
-        
-        StatusMessageHandler(parent=self.parent, 
-                             message='Done!', 
-                             is_threaded=True)
+
+        StatusMessageHandler(parent=self.parent, message='Done!', is_threaded=True)
 
     def save_stitching_plot_view(self):
         big_table_data = self.parent.big_table_data
@@ -123,82 +121,45 @@ class LiveReductionHandler(object):
         else:
             self.parent.o_stitching_ascii_widget.add_data(o_loaded_ascii)
         self.parent.o_stitching_ascii_widget.update_display()
-        
+
     def export(self):
         o_export_script = ExportDataReductionScript(parent=self.parent)
         o_export_script.define_export_filename()
         o_export_script.make_script()
         o_export_script.create_file()
-        
-    def launch_reduction(self, o_general=None, o_individual=None, debug=False):
 
-        if debug:
-            print("Debugging LiquidsReflectrometryReduction")
-            self.print_message('RunNumbers', o_individual._data_run_numbers)
-            self.print_message('NormalizationRunNumber',  o_individual._norm_run_numbers)
-            self.print_message('SignalPeakPixelRange', o_individual._data_peak_range)
-            self.print_message('SubtractSignalBackground', o_individual._data_back_flag)
-            self.print_message('SignalBackgroundPixelRange', o_individual._data_back_range)
-            self.print_message('NormFlag', o_individual._norm_flag)
-            self.print_message('NormPeakPixelRange', o_individual._norm_peak_range)
-            self.print_message('NormBackgroundPixelRange', o_individual._norm_back_range)
-            self.print_message('SubtractNormBackground', o_individual._norm_back_flag)
-            self.print_message('LowResDataAxisPixelRangeFlag', o_individual._data_low_res_flag)
-            self.print_message('LowResDataAxisPixelRange', o_individual._data_low_res_range)
-            self.print_message('LowResNormAxisPixelRangeFlag', o_individual._norm_low_res_flag)
-            self.print_message('LowResNormAxisPixelRange', o_individual._norm_low_res_range)
-            self.print_message('TOFRange', o_individual._tof_range)
-            self.print_message('IncidentMediumSelected', o_general.incident_medium_selected)
-            self.print_message('GeometryCorrectionFlag', o_general.geometry_correction_flag)
-            self.print_message('QMin', o_general.q_min)
-            self.print_message('QStep', o_general.q_step)
-            self.print_message('TOFSteps', o_general.tof_steps)
-            self.print_message('AngleOffset', o_general.angle_offset)
-            self.print_message('AngleOffsetError', o_general.angle_offset_error)
-            self.print_message('ScalingFactorFile', o_general.scaling_factor_file)
-            self.print_message('CropFirstAndLastPoints', True)
-            self.print_message('ApplyPrimaryFraction', True)
-            self.print_message('PrimaryFractionRange', o_individual._data_clocking_range)
-            self.print_message('SlitsWidthFlag', o_general.slits_width_flag)
-            self.print_message('OutputWorkspace', o_individual._output_workspace_name)       
+    def launch_reduction(self, o_general=None, o_individual=None):
+        LiquidsReflectometryReduction(RunNumbers=o_individual._data_run_numbers,
+                                      NormalizationRunNumber=o_individual._norm_run_numbers,
+                                      SignalPeakPixelRange=o_individual._data_peak_range,
+                                      SubtractSignalBackground=o_individual._data_back_flag,
+                                      SignalBackgroundPixelRange=o_individual._data_back_range,
+                                      NormFlag=o_individual._norm_flag,
+                                      NormPeakPixelRange=o_individual._norm_peak_range,
+                                      NormBackgroundPixelRange=o_individual._norm_back_range,
+                                      SubtractNormBackground=o_individual._norm_back_flag,
+                                      LowResDataAxisPixelRangeFlag=o_individual._data_low_res_flag,
+                                      LowResDataAxisPixelRange=o_individual._data_low_res_range,
+                                      LowResNormAxisPixelRangeFlag=o_individual._norm_low_res_flag,
+                                      LowResNormAxisPixelRange=o_individual._norm_low_res_range,
+                                      TOFRange=o_individual._tof_range,
+                                      IncidentMediumSelected=o_general.incident_medium_selected,
+                                      GeometryCorrectionFlag=o_general.geometry_correction_flag,
+                                      QMin=o_general.q_min,
+                                      QStep=o_general.q_step,
+                                      TOFSteps=o_general.tof_steps,
+                                      AngleOffset=o_general.angle_offset,
+                                      AngleOffsetError=o_general.angle_offset_error,
+                                      ScalingFactorFile=o_general.scaling_factor_file,
+                                      CropFirstAndLastPoints=True,
+                                      ApplyPrimaryFraction=True,
+                                      PrimaryFractionRange=o_individual._data_clocking_range,
+                                      SlitsWidthFlag=o_general.slits_width_flag,
+                                      OutputWorkspace=o_individual._output_workspace_name)
+        self.list_reduced_workspace.append(o_individual._output_workspace_name)
+        self.remove_tmp_workspaces()
 
-        try:
-            LiquidsReflectometryReduction( RunNumbers=o_individual._data_run_numbers,
-                                           NormalizationRunNumber=o_individual._norm_run_numbers,
-                                           SignalPeakPixelRange=o_individual._data_peak_range,
-                                           SubtractSignalBackground=o_individual._data_back_flag, 
-                                           SignalBackgroundPixelRange=o_individual._data_back_range,
-                                           NormFlag=o_individual._norm_flag,
-                                           NormPeakPixelRange=o_individual._norm_peak_range,
-                                           NormBackgroundPixelRange=o_individual._norm_back_range,
-                                           SubtractNormBackground=o_individual._norm_back_flag,
-                                           LowResDataAxisPixelRangeFlag=o_individual._data_low_res_flag,
-                                           LowResDataAxisPixelRange=o_individual._data_low_res_range,
-                                           LowResNormAxisPixelRangeFlag=o_individual._norm_low_res_flag,
-                                           LowResNormAxisPixelRange=o_individual._norm_low_res_range,
-                                           TOFRange=o_individual._tof_range,
-                                           IncidentMediumSelected=o_general.incident_medium_selected,
-                                           GeometryCorrectionFlag=o_general.geometry_correction_flag,
-                                           QMin=o_general.q_min,
-                                           QStep=o_general.q_step,
-                                           TOFSteps=o_general.tof_steps,
-                                           AngleOffset=o_general.angle_offset,
-                                           AngleOffsetError=o_general.angle_offset_error,
-                                           ScalingFactorFile=o_general.scaling_factor_file,
-                                           CropFirstAndLastPoints=True,
-                                           ApplyPrimaryFraction=True,
-                                           PrimaryFractionRange=o_individual._data_clocking_range,
-                                           SlitsWidthFlag=o_general.slits_width_flag,
-                                           OutputWorkspace=o_individual._output_workspace_name)
-            self.list_reduced_workspace.append(o_individual._output_workspace_name)
-            self.remove_tmp_workspaces()
-
-        except:
-            self.error = True
-
-    def save_reduction(self, 
-                       row=-1,
-                       workspace=None):
+    def save_reduction(self, row=-1, workspace=None):
 
         big_table_data = self.big_table_data
         _config = big_table_data[row, 2]
