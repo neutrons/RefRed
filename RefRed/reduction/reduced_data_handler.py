@@ -34,14 +34,13 @@ class ReducedDataHandler(object):
         self.parent.big_table_data = big_table_data
 
     def clear_stiching_table(self):
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent=self.parent)
         o_gui_utility.clear_table(self.parent.ui.dataStitchingTable)
 
     def plot(self):
         self.plot_live_reduced_data()
 
     def plot_live_reduced_data(self):
-
         self.parent.ui.data_stitching_plot.clear()
         self.parent.ui.data_stitching_plot.draw()
 
@@ -55,25 +54,23 @@ class ReducedDataHandler(object):
             _q_axis = _lconfig.q_axis_for_display
             _y_axis = _lconfig.y_axis_for_display
             _e_axis = _lconfig.e_axis_for_display
-            sf = self.generate_selected_sf(lconfig = _lconfig)
+            sf = self.generate_selected_sf(lconfig=_lconfig)
 
-            _y_axis = np.array(_y_axis, dtype = np.float)
-            _e_axis = np.array(_e_axis, dtype = np.float)
+            _y_axis = np.array(_y_axis, dtype=np.float)
+            _e_axis = np.array(_e_axis, dtype=np.float)
 
             _y_axis = _y_axis * sf
             _e_axis = _e_axis * sf
 
-            o_produce_output = ProducedSelectedOutputScaled(parent = self.parent, 
-                                                            q_axis = _q_axis,
-                                                            y_axis = _y_axis,
-                                                            e_axis = _e_axis)
+            o_produce_output = ProducedSelectedOutputScaled(parent=self.parent,
+                                                            q_axis=_q_axis,
+                                                            y_axis=_y_axis,
+                                                            e_axis=_e_axis)
             o_produce_output.calculate()
             y_axis = o_produce_output.output_y_axis
             e_axis = o_produce_output.output_e_axis
 
-            self.parent.ui.data_stitching_plot.errorbar(_q_axis,
-                                                        y_axis,
-                                                        yerr = e_axis, 
+            self.parent.ui.data_stitching_plot.errorbar(_q_axis, y_axis, yerr = e_axis,
                                                         color = self.get_current_color_plot(index_row))
 
             if _data.all_plot_axis.is_reduced_plot_stitching_tab_ylog:
@@ -111,11 +108,7 @@ class ReducedDataHandler(object):
                 _data.all_plot_axis.reduced_plot_RQ4userView_y = [ymin, ymax]
                 _data.all_plot_axis.reduced_plot_RQQ4autoView_x= [xmin, xmax]
                 _data.all_plot_axis.reduced_plot_RQ4autoView_y = [ymin, ymax]
-
-                #_data.all_plot_axis.reduced_plot_RQ4QuserView = [xmin, xmax, ymin, ymax]
-                #_data.all_plot_axis.reduced_plot_RQ4QautoView = [xmin, xmax, ymin, ymax]
             else:
-                #[xmin, xmax, ymin, ymax] = _data.all_plot_axis.reduced_plot_RQ4QuserView
                 [xmin, xmax] = _data.all_plot_axis.reduced_plot_RQQ4userView_x
                 [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQ4userView_y
 
@@ -140,12 +133,12 @@ class ReducedDataHandler(object):
         if self.parent.o_stitching_ascii_widget is None:
             return
 
-        self.parent.o_stitching_ascii_widget.update_display(isxlog = _isxlog,
-                                                            isylog = _isylog,
-                                                            display_live_reduced_flag = False)
+        self.parent.o_stitching_ascii_widget.update_display(isxlog=_isxlog,
+                                                            isylog=_isylog,
+                                                            display_live_reduced_flag=False)
 
     def generate_selected_sf(self, lconfig=None):
-        o_gui = GuiUtility(parent = self.parent)
+        o_gui = GuiUtility(parent=self.parent)
         stitching_type = o_gui.getStitchingType()
         if stitching_type is "absolute":
             return lconfig.sf_abs_normalization
@@ -178,7 +171,7 @@ class ProducedSelectedOutputScaled(object):
         self.output_e_axis = None
 
     def calculate(self):
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent=self.parent)
         self.axis_type = o_gui_utility.get_reduced_yaxis_type()
 
         input_q_axis = self.input_q_axis

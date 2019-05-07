@@ -24,7 +24,7 @@ class LiveCalculateSF(object):
         '''
         o_gui = GuiUtility(parent = self.parent)
         stitching_type = o_gui.getStitchingType()
-        
+
         if stitching_type is 'absolute':
             self.absolute_normalization_calculation(row_index=self.row_index)
         elif stitching_type is 'auto':
@@ -46,7 +46,7 @@ class LiveCalculateSF(object):
         o_auto_stit = AutomaticStitching(parent=self.parent, row_index=row_index)
         o_auto_stit.run()
 
-    def manual_stitching_calculation(self, row_index = row_index):
+    def manual_stitching_calculation(self, row_index=row_index):
         '''
         will perform the manual stitching normalization
         '''

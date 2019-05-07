@@ -64,9 +64,7 @@ class LiveReducedDataHandler(object):
             y_axis = o_produce_output.output_y_axis
             e_axis = o_produce_output.output_e_axis
 
-            self.parent.ui.data_stitching_plot.errorbar(_q_axis,
-                                                        y_axis,
-                                                        yerr=e_axis, 
+            self.parent.ui.data_stitching_plot.errorbar(_q_axis, y_axis, yerr=e_axis,
                                                         color=self.get_current_color_plot(index_row))
 
             if _data.all_plot_axis.is_reduced_plot_stitching_tab_ylog:
@@ -145,9 +143,7 @@ class LiveReducedDataHandler(object):
         y_axis = o_produce_output.output_y_axis
         e_axis = o_produce_output.output_e_axis
 
-        self.parent.ui.data_stitching_plot.errorbar(_q_axis,
-                                                    y_axis,
-                                                    yerr=e_axis,
+        self.parent.ui.data_stitching_plot.errorbar(_q_axis, y_axis, yerr=e_axis,
                                                     color=self.get_current_color_plot(self.row_index))
 
         if _data.all_plot_axis.is_reduced_plot_stitching_tab_ylog:
@@ -207,8 +203,8 @@ class LiveReducedDataHandler(object):
         if yaxis_type == 'RvsQ':
             if _data.all_plot_axis.reduced_plot_RQuserView_y is None:
                 self.parent.ui.data_stitching_plot.canvas.draw()
-                [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
-                [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+                [xmin, xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+                [ymin, ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
 
                 _data.all_plot_axis.reduced_plot_RQuserView_y = [ymin, ymax]
                 _data.all_plot_axis.reduced_plot_RQautoView_y = [ymin, ymax]
@@ -218,14 +214,14 @@ class LiveReducedDataHandler(object):
                 [xmin, xmax] = _data.all_plot_axis.reduced_plot_RQQ4userView_x
                 [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQuserView_y
 
-                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
-                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin, xmax])
+                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin, ymax])
                 self.parent.ui.data_stitching_plot.canvas.draw()
         else:
             if _data.all_plot_axis.reduced_plot_RQ4QuserView_y is None:
                 self.parent.ui.data_stitching_plot.canvas.draw()
-                [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
-                [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+                [xmin, xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+                [ymin, ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
 
                 _data.all_plot_axis.reduced_plot_RQ4userView_y = [ymin, ymax]
                 _data.all_plot_axis.reduced_plot_RQ4autoView_y = [ymin, ymax]
@@ -235,8 +231,8 @@ class LiveReducedDataHandler(object):
                 [xmin, xmax] = _data.all_plot_axis.reduced_plot_RQQ4userView_x
                 [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQ4userView_y
 
-                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
-                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin, xmax])
+                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin, ymax])
                 self.parent.ui.data_stitching_plot.canvas.draw()
 
         big_table_data[0, 0] = _data
@@ -296,9 +292,9 @@ class ProducedSelectedOutputScaled(object):
 
         # Log(R) vs Q
         # make sure there is no <= 0 values of _y_axis
-        input_y_axis[input_y_axis <=0] = np.nan
+        input_y_axis[input_y_axis<=0] = np.nan
         self.output_y_axis = np.log(input_y_axis)
-        self.output_e_axis = input_e_axis  ## FIXME
+        self.output_e_axis = input_e_axis  # FIXME
 
     def get_selected_scale_type(self):
         o_gui_utility = GuiUtility(parent=self.parent)
