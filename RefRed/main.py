@@ -31,7 +31,6 @@ from RefRed.plot.home_plot_button_clicked import HomePlotButtonClicked
 from RefRed.plot.mouse_leave_plot import MouseLeavePlot
 from RefRed.plot.log_plot_toggle import LogPlotToggle
 from RefRed.preview_config.preview_config import PreviewConfig
-from RefRed.reduction.reduction_handler import ReductionHandler
 from RefRed.reduction.live_reduction_handler import LiveReductionHandler
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
 from RefRed.reduction_table_handling.reduction_table_check_box import ReductionTableCheckBox
@@ -394,7 +393,7 @@ class MainGui(QtGui.QMainWindow):
         o_template.load_default_directory()
 
     def export_reduction_script_button(self):
-        o_reduction = ReductionHandler(parent=self)
+        o_reduction = LiveReductionHandler(parent=self)
         o_reduction.export()
 
     def data_stitching_table_manual_spin_box(self):
