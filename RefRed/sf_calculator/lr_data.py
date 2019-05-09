@@ -1,3 +1,7 @@
+"""
+    Notes from review: This class does a subset of what is done in calculations.lr_data.
+    This code is probably not needed.
+"""
 from mantid.simpleapi import *
 import numpy as np
 import logging
@@ -10,9 +14,6 @@ from RefRed.plot.all_plot_axis import AllPlotAxis
 NEUTRON_MASS = 1.675e-27  # kg
 PLANCK_CONSTANT = 6.626e-34  # m^2 kg s^-1
 H_OVER_M_NEUTRON = PLANCK_CONSTANT / NEUTRON_MASS
-
-#any run before, tmin and tmax will be used a different algorithm
-RUN_NUMBER_0_BETTER_CHOPPER_COVERAGE = 137261 
 
 
 class LRData(object):
@@ -27,8 +28,6 @@ class LRData(object):
         mt_run = self.workspace.getRun()
 
         self.run_number = mt_run.getProperty('run_number').value
-        if float(self.run_number) < RUN_NUMBER_0_BETTER_CHOPPER_COVERAGE:
-            self.is_better_chopper_coverage = False
 
         self.lambda_requested = float(mt_run.getProperty('LambdaRequest').value[0])
         self.lambda_requested_units = mt_run.getProperty('LambdaRequest').units
@@ -76,34 +75,16 @@ class LRData(object):
         self.theta = self.calculate_theta()
         self.frequency = float(mt_run.getProperty('Speed1').value[0])
 
+        tof_coeff_large = 1.7 * 60 / self.frequency
+        tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff_large) * 1e-4
+        tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - tof_coeff_large) * 1e-4
+
         if self.read_options['is_auto_tof_finder'] or self.tof_range == None:
-            if self.is_better_chopper_coverage:
-                autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - 1.7) * 1e-4
-                autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 1.7) * 1e-4
-            else:
-                autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 - 1.7) * 1e-4
-                autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 1.7) * 1e-4
+            autotmin = tmin
+            autotmax = tmax
         else:
             autotmin = np.float(self.tof_range[0])
             autotmax = np.float(self.tof_range[1])
-
-        tof_coeff_large = 2.5 * 60 / self.frequency
-        tof_coeff = 0.5 * 60 / self.frequency
-
-        if self.frequency:
-            if self.is_better_chopper_coverage:
-                tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff_large) * 1e-4
-                tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - tof_coeff_large) * 1e-4
-            else:
-                tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff + tof_coeff_large) * 1e-4
-                tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff - tof_coeff_large) * 1e-4
-        else:
-            if self.is_better_chopper_coverage:
-                tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 4.5) * 1e-4
-            else:
-                tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + 0.5 + 4.5) * 1e-4
-                
-            tmin = 0
 
         self.tof_range_auto = [autotmin, autotmax]  # microS
         self.tof_range_auto_with_margin = [tmin, tmax]  # microS

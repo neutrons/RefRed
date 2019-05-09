@@ -1,9 +1,6 @@
-from PyQt4.QtGui import QTableWidgetItem
 from PyQt4 import QtGui
-from mantid.simpleapi import *
-import math
 import numpy as np
-import logging
+import mantid.simpleapi as api
 
 from RefRed.sf_calculator.sort_nxsdata import SortNXSData
 from RefRed.sf_calculator.lr_data import LRData
@@ -11,15 +8,7 @@ from RefRed.sf_calculator.lr_data import LRData
 INSTRUMENT_SHORT_NAME = "REF_L"
 
 
-def waiting_effects(function):
-    def new_function(self, *args, **kw):
-        QtGui.QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
-        function(self, *args, **kw)
-        QtGui.QApplication.restoreOverrideCursor()
-    return new_function
-
 class LoadAndSortNXSDataForSFcalculator(object):
-    
     list_runs = []
     loaded_list_runs = []
     list_NXSData = []
@@ -30,7 +19,7 @@ class LoadAndSortNXSDataForSFcalculator(object):
     big_table = []
     is_using_si_slits = False
     sf_gui = None
-    
+
     def __init__(self, list_runs, parent=None, read_options=None):
         self.list_runs = list_runs
         self.read_options = read_options
@@ -38,16 +27,15 @@ class LoadAndSortNXSDataForSFcalculator(object):
         self.loadNXSData()
         self.sortNXSData()
         self.fillTable()
-    
-#    @waiting_effects    
+
     def loadNXSData(self):
         self.list_NXSData = []
         self.big_table = []
         _list_runs = self.list_runs
         for _runs in _list_runs:
-            _full_file_name = FileFinder.findRuns("%s_%d" % (INSTRUMENT_SHORT_NAME, int(_runs)))[0]
+            _full_file_name = api.FileFinder.findRuns("%s_%d" % (INSTRUMENT_SHORT_NAME, int(_runs)))[0]
             if _full_file_name != '':
-                workspace = LoadEventNexus(Filename=_full_file_name, OutputWorkspace="__data_file_%s" % _runs, MetaDataOnly=False)
+                workspace = api.LoadEventNexus(Filename=_full_file_name, OutputWorkspace="__data_file_%s" % _runs, MetaDataOnly=False)
                 _data = LRData(workspace, read_options=self.read_options)
                 if _data is not None:
                     self.list_NXSData.append(_data)
@@ -56,7 +44,7 @@ class LoadAndSortNXSDataForSFcalculator(object):
                     self.fillTable()
                     self.sf_gui.update_table(self, False)
                     QtGui.QApplication.processEvents()
-                
+
     def sortNXSData(self):
         if self.list_NXSData == []:
             return
@@ -97,7 +85,7 @@ class LoadAndSortNXSDataForSFcalculator(object):
                 _tof_auto_flag = 1
             else:
                 _tof_auto_flag = 0
-            
+
             _row = [_run_number,
                     _nbr_attenuator,
                     _lambda_min,
@@ -113,10 +101,10 @@ class LoadAndSortNXSDataForSFcalculator(object):
             big_table[index_row, :] = _row
             index_row += 1
         self.big_table = big_table
-    
+
     def isSiThere(self):
         return self.is_using_Si_slits
-                
+
     def retrieveMetadataValue(self, _name):
         mt_run = self.mt_run
         _value = mt_run.getProperty(_name).value
@@ -129,12 +117,12 @@ class LoadAndSortNXSDataForSFcalculator(object):
         else:
             _value = '[' + str(_value[0]) + ',...]' + '-> (' + str(len(_value)) + ' entries)'
         return _value
-            
+
     def getTableData(self):
         return self.big_table
-    
+
     def getListOfRunsLoaded(self):
         return self.loaded_list_runs
-    
+
     def getListNXSDataSorted(self):
         return self.list_NXSData_sorted

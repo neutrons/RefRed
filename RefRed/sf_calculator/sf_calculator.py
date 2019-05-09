@@ -60,9 +60,9 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
 
         # Application settings
         settings = QtCore.QSettings()
-        self._save_directory = settings.value("save_directory", 
+        self._save_directory = settings.value("save_directory",
                                               os.path.expanduser('~')).toString()
-        self._xml_config_dir = settings.value("xml_config_dir", 
+        self._xml_config_dir = settings.value("xml_config_dir",
                                               os.path.expanduser('~')).toString()
         self.current_loaded_file = os.path.expanduser('~/new_configuration.xml')
 

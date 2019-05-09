@@ -1,19 +1,10 @@
 from PyQt4 import QtGui
 import time
 import os
-from mantid.simpleapi import *
+import mantid.simpleapi as api
 
 import numpy as np
 from RefRed.utilities import convertTOF
-
-
-def createAsciiFile(filename, str_list):
-    if os.path.isfile(filename):
-        os.remove(filename)
-    f = open(filename,'w')
-    for _line in str_list:
-        f.write(str(_line))
-    f.close()
 
 
 class ReductionSfCalculator(object):
@@ -21,7 +12,6 @@ class ReductionSfCalculator(object):
         Compute scaling factors
     """
     sf_gui = None
-    export_script_flag = False
     export_script_file = ''
     export_script = []
     table_settings = []
@@ -37,18 +27,16 @@ class ReductionSfCalculator(object):
         if export_script_flag:
             #TODO: get last path from QSettings
             _path = os.path.expanduser('~')
-            #_path = self.sf_gui.main_gui.path_config
             _filter = u'python (*.py);;All (*.*)'
             filename = QtGui.QFileDialog.getSaveFileName(self.sf_gui, 'Export Script File', _path, filter=_filter)
             if not(filename == ''):
                 self.export_script_file = filename
-                self.prepareExportScript()
             else:
                 return
-        self.collectTableSettings()
-        self.createAndLaunchScripts()
+        self.collect_table_information()
+        self._handle_request()
 
-    def collectTableSettings(self):
+    def collect_table_information(self):
         nbr_row = self.sf_gui.tableWidget.rowCount()
         self.nbr_row = nbr_row
         nbr_column = len(self.index_col)
@@ -64,12 +52,12 @@ class ReductionSfCalculator(object):
 
         self.table_settings = _table_settings
 
-    def createAndLaunchScripts(self):
+    def _handle_request(self):
         from_to_index_same_lambda = self.generateIndexSameLambda()
         nbr_scripts = self.nbr_scripts
 
-        incident_medium = self.getIncidentMedium()
-        output_file_name = self.getOutputFileName()
+        incident_medium = self.sf_gui.incidentMediumComboBox.currentText()
+        output_file_name = self.sf_gui.sfFileNameLabel.text()
         self.sf_gui.updateProgressBar(0.1)
 
         for i in range(nbr_scripts):
@@ -83,7 +71,7 @@ class ReductionSfCalculator(object):
             list_peak_back = self.getListPeakBack(from_index, to_index)
             tof_range = self.getTofRange(from_index)
 
-            if not self.export_script:
+            if not self.export_script_flag:
                 self.launchScript(string_runs=string_runs,
                                   list_peak_back=list_peak_back,
                                   incident_medium=incident_medium,
@@ -92,91 +80,81 @@ class ReductionSfCalculator(object):
 
                 self.refreshOutputFileContainPreview(output_file_name)
             else:
-                self.exportScript(string_runs=string_runs,
-                                  list_peak_back=list_peak_back,
-                                  incident_medium=incident_medium,
-                                  output_file_name=output_file_name,
-                                  tof_range=tof_range)
+                script = self.generate_script(string_runs=string_runs,
+                                              list_peak_back=list_peak_back,
+                                              incident_medium=incident_medium,
+                                              output_file_name=output_file_name,
+                                              tof_range=tof_range)
+                with open(self.export_script_file, 'w') as fd:
+                    fd.write(script)
 
             self.sf_gui.updateProgressBar(float(i + 1) / float(nbr_scripts))
             QtGui.QApplication.processEvents()
 
-        if self.export_script_flag:
-            createAsciiFile(self.export_script_file, self.export_script)
+    def _get_algorithm_params(self, run_string, list_peak_back):
+        """
+            Generate the LRScalingFactors algortihm parameters
+        """
+        peak_ranges = []
+        bck_ranges = []
+        low_res_ranges = []
+        for item in list_peak_back:
+            peak_ranges.append(int(item[0]))
+            peak_ranges.append(int(item[1]))
+            bck_ranges.append(int(item[2]))
+            bck_ranges.append(int(item[3]))
+            low_res_ranges.append(0)
+            low_res_ranges.append(256)
+
+        run_list = []
+        toks = run_string.strip().split(',')
+        for item in toks:
+            pair = item.strip().split(':')
+            run_list.append(int(pair[0]))
+ 
+        return peak_ranges, bck_ranges, low_res_ranges, run_list
 
     def launchScript(self, string_runs='', list_peak_back=[], incident_medium='',
                      output_file_name='', tof_range=[]):
-        peak_ranges = []
-        bck_ranges = []
-        for item in list_peak_back:
-            peak_ranges.append(int(item[0]))
-            peak_ranges.append(int(item[1]))
-            bck_ranges.append(int(item[2]))
-            bck_ranges.append(int(item[3]))
-
-        run_list = []
-        att_list = []
-        toks = string_runs.strip().split(',')
-        for item in toks:
-            pair = item.strip().split(':')
-            run_list.append(int(pair[0]))
-            att_list.append(int(pair[1]))
+        """
+            Create scaling factor file
+        """
+        peak_ranges, bck_ranges, low_res_ranges, run_list = self._get_algorithm_params(string_runs, list_peak_back)
 
         api.LRScalingFactors(DirectBeamRuns=run_list,
-                             Attenuators=att_list,
                              IncidentMedium=str(incident_medium),
-                             TOFRange=tof_range, TOFSteps=200,
-                             SignalPeakPixelRange=peak_ranges, 
+                             TOFRange=tof_range,
+                             TOFSteps=200,
+                             SignalPeakPixelRange=peak_ranges,
                              SignalBackgroundPixelRange=bck_ranges,
+                             LowResolutionPixelRange=low_res_ranges,
                              ScalingFactorFile=str(output_file_name))
 
-    def prepareExportScript(self):
-        script = []
-        script.append('# quicksNXS LRScalingFactors scaling factor calculation script\n')
+    def generate_script(self, string_runs='', list_peak_back=[], incident_medium='',
+                        output_file_name='', tof_range=[]):
+        """
+            Generate a scaling factor calculation script
+        """
+        script = '# quicksNXS LRScalingFactors scaling factor calculation script\n'
         _date = time.strftime("%d_%m_%Y")
-        script.append('# Script  automatically generated on ' + _date + '\n')
-        script.append('\n')
-        script.append('import os\n')
-        script.append('import mantid\n')
-        script.append('from mantid.simpleapi import *\n')
-        self.export_script = script
+        script += '# Script  automatically generated on ' + _date + '\n\n'
+        script += 'import mantid\n'
+        script += 'import mantid.simpleapi as api\n\n'
 
-    def exportScript(self, string_runs='', list_peak_back=[], incident_medium='',
-                     output_file_name='', tof_range=[]):
-        self.export_script.append('\n')
+        peak_ranges, bck_ranges, low_res_ranges, run_list = self._get_algorithm_params(string_runs, list_peak_back)
 
-        peak_ranges = []
-        bck_ranges = []
-        for item in list_peak_back:
-            peak_ranges.append(int(item[0]))
-            peak_ranges.append(int(item[1]))
-            bck_ranges.append(int(item[2]))
-            bck_ranges.append(int(item[3]))
-
-        run_list = []
-        att_list = []
-        toks = string_runs.strip().split(',')
-        for item in toks:
-            pair = item.strip().split(':')
-            run_list.append(int(pair[0]))
-            att_list.append(int(pair[1]))
-
-        _script_exe = 'LRScalingFactors(DirectBeamRuns = ['
         str_run_list = ', '.join(map(lambda x: str(x), run_list))
-        _script_exe += str_run_list + '], Attenuators = ['
-        str_att_list = ', '.join(map(lambda x: str(x), att_list))
-        _script_exe += str_att_list + '], IncidentMedium = '
-        _script_exe += '"' + incident_medium + '", TOFRange = ['
-        str_tof_list = ', '.join(map(lambda x: str(x), tof_range))
-        _script_exe += str_tof_list + '], TOFSteps=200, '
-        _script_exe += 'SignalPeakPixelRange=['
-        str_peak_range = ', '.join(map(lambda x: str(x), peak_ranges))
-        _script_exe += str_peak_range + '], SignalBackgroundPixelRange = ['
-        str_back_range = ', '.join(map(lambda x: str(x), bck_ranges))
-        _script_exe += str_back_range + '], ScalingFactorFile = "'
-        _script_exe += output_file_name + '")'
+        _script_exe = 'api.LRScalingFactors(DirectBeamRuns=[%s], ' % str_run_list
+        _script_exe += 'IncidentMedium="%s", ' % incident_medium
+        _script_exe += 'TOFSteps=200, '
+        _script_exe += 'TOFRange=[%s], ' % ', '.join(map(lambda x: str(x), tof_range))
+        _script_exe += 'SignalPeakPixelRange=[%s], ' % ', '.join(map(lambda x: str(x), peak_ranges))
+        _script_exe += 'SignalBackgroundPixelRange=[%s], ' % ', '.join(map(lambda x: str(x), bck_ranges))
+        _script_exe += 'LowResolutionPixelRange=[%s], ' % ', '.join(map(lambda x: str(x), low_res_ranges))
+        _script_exe += 'ScalingFactorFile="%s")' % output_file_name
 
-        self.export_script.append(_script_exe)
+        script += _script_exe
+        return script
 
     def refreshOutputFileContainPreview(self, output_file_name):
         self.sf_gui.displayConfigFile(output_file_name)
@@ -191,13 +169,6 @@ class ReductionSfCalculator(object):
     def getListPeakBack(self, from_index, to_index):
         data = self.table_settings
         return data[from_index:to_index+1, 3:7]
-
-    def getIncidentMedium(self):
-        return self.sf_gui.incidentMediumComboBox.currentText()
-
-    def getOutputFileName(self):
-        output_file_name = self.sf_gui.sfFileNameLabel.text()
-        return output_file_name
 
     def getTofRange(self, from_index):
         data = self.table_settings
