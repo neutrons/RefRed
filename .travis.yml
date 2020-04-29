@@ -26,7 +26,7 @@ install:
   - conda info -a
 
   # Replace dep1 dep2 ... with your dependencies
-  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION pyqt=4;
+  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy pyqt=4;
   - source activate test-environment
   - conda config --add channels conda-forge
   #- conda config --add channels mantid
