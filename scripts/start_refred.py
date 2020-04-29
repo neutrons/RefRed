@@ -9,12 +9,14 @@ import sys
 from PyQt4.QtGui import QApplication, QSplashScreen, QPixmap
 from PyQt4.QtCore import Qt
 
-sys.path.append("/opt/mantidnightly/bin")
+sys.path.insert(0, "/opt/mantid42/bin")
+sys.path.insert(1, "/opt/mantid42/lib")
 
 # if script was run from commandline
 try:
-    if os.path.abspath(__file__).endswith('scripts/RefRed'):
-        sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    current_directory = os.path.dirname(os.path.abspath(__file__))
+    if current_directory.endswith('RefRed/scripts'):
+        sys.path.insert(0, os.path.dirname(current_directory))
 except NameError:
     pass
 
