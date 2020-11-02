@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
-#@PydevCodeAnalysisIgnore
 
-# Form implementation generated from reading ui file 'designer//sf_calculator_interface.ui'
+# Form implementation generated from reading ui file 'sf_calculator_interface.ui'
 #
-# Created: Fri May 20 10:03:32 2016
-#      by: PyQt4 UI code generator 4.10.1
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -36,7 +34,7 @@ class Ui_SFCalculatorInterface(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1183, 918))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1188, 942))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -320,6 +318,13 @@ class Ui_SFCalculatorInterface(object):
         self.horizontalLayout_40.addWidget(self.TOFmanualToUnitsValue)
         spacerItem5 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_40.addItem(spacerItem5)
+        self.forceSortByMetaData = QtGui.QPushButton(self.scrollAreaWidgetContents)
+        self.forceSortByMetaData.setWhatsThis(_fromUtf8(""))
+        self.forceSortByMetaData.setFlat(False)
+        self.forceSortByMetaData.setObjectName(_fromUtf8("forceSortByMetaData"))
+        self.horizontalLayout_40.addWidget(self.forceSortByMetaData)
+        spacerItem6 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_40.addItem(spacerItem6)
         self.verticalLayout.addLayout(self.horizontalLayout_40)
         self.tableWidget = QtGui.QTableWidget(self.scrollAreaWidgetContents)
         self.tableWidget.setEnabled(False)
@@ -393,8 +398,8 @@ class Ui_SFCalculatorInterface(object):
         self.verticalLayout.addWidget(self.sfFileNamePreview)
         self.horizontalLayout_4 = QtGui.QHBoxLayout()
         self.horizontalLayout_4.setObjectName(_fromUtf8("horizontalLayout_4"))
-        spacerItem6 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout_4.addItem(spacerItem6)
+        spacerItem7 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_4.addItem(spacerItem7)
         self.generateSFfileButton = QtGui.QPushButton(self.scrollAreaWidgetContents)
         self.generateSFfileButton.setEnabled(False)
         self.generateSFfileButton.setObjectName(_fromUtf8("generateSFfileButton"))
@@ -409,7 +414,7 @@ class Ui_SFCalculatorInterface(object):
         self.horizontalLayout_5.addWidget(self.scrollArea)
         SFCalculatorInterface.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(SFCalculatorInterface)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1221, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1221, 28))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuFile = QtGui.QMenu(self.menubar)
         self.menuFile.setObjectName(_fromUtf8("menuFile"))
@@ -489,6 +494,7 @@ class Ui_SFCalculatorInterface(object):
         self.TOFmanualToLabel.setText(_translate("SFCalculatorInterface", "to", None))
         self.TOFmanualToValue.setText(_translate("SFCalculatorInterface", "200", None))
         self.TOFmanualToUnitsValue.setText(_translate("SFCalculatorInterface", "ms", None))
+        self.forceSortByMetaData.setText(_translate("SFCalculatorInterface", "sort", None))
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("SFCalculatorInterface", "Run #", None))
         item = self.tableWidget.horizontalHeaderItem(1)
@@ -537,5 +543,5 @@ class Ui_SFCalculatorInterface(object):
         self.actionEdit_Incident_Medium_List.setText(_translate("SFCalculatorInterface", "Edit Incident Medium List ...", None))
         self.clearSFconentFileMenu.setText(_translate("SFCalculatorInterface", "Clear Content SF File", None))
 
-from mplwidgetnolog import MPLWidgetNoLog
 from .mplwidgetxlog import MPLWidgetXLog
+from mplwidgetnolog import MPLWidgetNoLog
