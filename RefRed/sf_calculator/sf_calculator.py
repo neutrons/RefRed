@@ -102,6 +102,7 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
     def initConnections(self):
         self.yt_plot.toolbar.homeClicked.connect(self.homeYtPlot)
         self.yi_plot.toolbar.homeClicked.connect(self.homeYiPlot)
+        self.forceSortByMetaData.clicked.connect(self.forceSrotTableByMetaData)
 
     def initGui(self):
         palette = QtGui.QPalette()
