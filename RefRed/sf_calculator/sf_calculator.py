@@ -132,6 +132,18 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         self.yi_plot.canvas.ax.set_ylim([ymin, ymax])
         self.yi_plot.canvas.draw()
 
+    def forceSrotTableByMetaData(self):
+        print("Force sorting table by metadata")
+        self.is_manual_edit_of_tableWidget = False
+        _list_runs = self.loaded_list_of_runs
+        o_load_and_sort_nxsdata = LoadAndSortNXSDataForSFcalculator(_list_runs,
+                                                                    parent=self,
+                                                                    read_options=self.read_options,
+                                                                    sort_by_metadata=True,
+                                                                    )
+        self.update_table(o_load_and_sort_nxsdata)
+        self.is_manual_edit_of_tableWidget = True
+
     def forceTypeToInt(self, array_value, default_value=-1):
         final_array_value = []
         for _value in array_value:
