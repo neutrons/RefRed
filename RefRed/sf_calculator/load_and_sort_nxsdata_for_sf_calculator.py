@@ -20,7 +20,13 @@ class LoadAndSortNXSDataForSFcalculator(object):
     is_using_si_slits = False
     sf_gui = None
 
-    def __init__(self, list_runs, parent=None, read_options=None, sort_by_metadata=False):
+    def __init__(
+        self,
+        list_runs,
+        parent=None,
+        read_options=None,
+        sort_by_metadata=False,
+    ):
         self.list_runs = list_runs
         self.read_options = read_options
         self.sf_gui = parent
