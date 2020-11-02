@@ -20,12 +20,14 @@ class LoadAndSortNXSDataForSFcalculator(object):
     is_using_si_slits = False
     sf_gui = None
 
-    def __init__(self, list_runs, parent=None, read_options=None):
+    def __init__(self, list_runs, parent=None, read_options=None, sort_by_metadata=False):
         self.list_runs = list_runs
         self.read_options = read_options
         self.sf_gui = parent
+        self._sort_by_metadata = sort_by_metadata
         self.loadNXSData()
-        self.sortNXSData()
+        if self._sort_by_metadata:
+            self.sortNXSData()
         self.fillTable()
 
     def loadNXSData(self):
@@ -40,7 +42,10 @@ class LoadAndSortNXSDataForSFcalculator(object):
                 if _data is not None:
                     self.list_NXSData.append(_data)
                     self.loaded_list_runs.append(_runs)
-                    self.sortNXSData()
+                    if self._sort_by_metadata:
+                        self.sortNXSData()
+                    else:
+                        self.list_NXSData_sorted = self.list_NXSData
                     self.fillTable()
                     self.sf_gui.update_table(self, False)
                     QtGui.QApplication.processEvents()
