@@ -179,7 +179,8 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         _list_runs = np.unique(np.hstack([_old_runs, _new_runs]))
         o_load_and_sort_nxsdata = LoadAndSortNXSDataForSFcalculator(_list_runs,
                                                                     parent=self,
-                                                                    read_options=self.read_options)
+                                                                    read_options=self.read_options,
+                                                                    )
         self.update_table(o_load_and_sort_nxsdata)
         self.is_manual_edit_of_tableWidget = True
 
