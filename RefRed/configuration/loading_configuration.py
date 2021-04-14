@@ -40,7 +40,7 @@ class LoadingConfiguration(object):
             if isinstance(filename, QtCore.QStringList):
                 filename = filename[-1]
         QtGui.QApplication.processEvents()
-        if not (filename == ""):
+        if not (filename == "") and os.path.isfile(filename):
             self.filename = str(filename)
             self.loading()
             message = 'Done!'
