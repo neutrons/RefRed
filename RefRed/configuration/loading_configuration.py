@@ -29,6 +29,7 @@ class LoadingConfiguration(object):
     def run(self):
         _path = self.parent.path_config
         _filter = ("XML (*.xml);; All Files (*.*)")
+        # add changes here
         filename = QtGui.QFileDialog.getOpenFileName(self.parent,
                                                      'Open Configuration File',
                                                      _path,
