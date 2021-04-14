@@ -29,10 +29,16 @@ class LoadingConfiguration(object):
     def run(self):
         _path = self.parent.path_config
         _filter = ("XML (*.xml);; All Files (*.*)")
-        filename = QtGui.QFileDialog.getOpenFileName(self.parent,
-                                                     'Open Configuration File',
-                                                     _path,
-                                                     _filter)
+        filename = ""
+        file_dialog = QtGui.QFileDialog(self.parent,
+                                        'Open Configuration File',
+                                        _path,
+                                        _filter)
+        file_dialog.setViewMode(QtGui.QFileDialog.List)
+        if file_dialog.exec_():
+            filename = file_dialog.selectedFiles()
+            if isinstance(filename, QtCore.QStringList):
+                filename = filename[-1]
         QtGui.QApplication.processEvents()
         if not (filename == ""):
             self.filename = str(filename)
