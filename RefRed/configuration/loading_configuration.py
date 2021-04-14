@@ -37,8 +37,8 @@ class LoadingConfiguration(object):
         file_dialog.setViewMode(QtGui.QFileDialog.List)
         if file_dialog.exec_():
             filename = file_dialog.selectedFiles()
-            if isinstance(filename, QtCore.QStringList):
-                filename = filename[-1]
+        if isinstance(filename, QtCore.QStringList):
+            filename = filename[-1]
         QtGui.QApplication.processEvents()
         if not (filename == "") and os.path.isfile(filename):
             self.filename = str(filename)
