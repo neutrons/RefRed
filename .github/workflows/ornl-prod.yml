@@ -1,11 +1,14 @@
-name: Trigger ORNL GitLab Pipeline
-on: [push]
+name: Trigger ORNL GitLab Production Pipeline
+on: 
+  push:
+    branches:
+      - master
 jobs:
-  trigger-ci-job:
-    runs-on: self-hosted
+  ornl-trigger-master:
+    runs-on: ubuntu-20.04
     steps:
       - run: curl -X POST -F token=$TOKEN -F ref=$REF $URL 
         env:
           TOKEN: ${{ secrets.GITLAB_TRIGGER_TOKEN }}
-          REF: ${{ secrets.GITLAB_TRIGGER_REF }}
+          REF: master
           URL: ${{ secrets.GITLAB_TRIGGER_URL }}
