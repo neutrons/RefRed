@@ -22,12 +22,23 @@ class SavingConfiguration(object):
         if self.filename == '':
             _path = self.parent.path_config
             _filter = ("XML (*.xml);; All Files (*.*)")            
-            self.filename = str(QtGui.QFileDialog.getSaveFileName(self.parent,
-                                                         'Save Configuration File',
-                                                         _path,
-                                                         _filter))
-            
-            if self.filename == '':
+
+            file_dialog = QtGui.QFileDialog(self.parent,
+                                            'Save Configuration File',
+                                            _path,
+                                            _filter)
+            file_dialog.setViewMode(QtGui.QFileDialog.List)
+            file_dialog.setFileMode(QtGui.QFileDialog.AnyFile)
+            file_dialog.setAcceptMode(QtGui.QFileDialog.AcceptSave)
+	    file_dialog.setConfirmOverwrite(True)
+
+            # cancel operation
+            if file_dialog.exec_():
+                filename = file_dialog.selectedFiles()[0]
+                QtGui.QApplication.processEvents()
+                self.filename = str(filename)
+            else:
+                # No operation
                 return
 
         self.parent.path_config = os.path.dirname(self.filename)
