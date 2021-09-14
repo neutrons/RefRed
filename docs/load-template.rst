@@ -54,7 +54,13 @@ on the image below as follows:
 
   F- Panel F give basic information about the reflected run.
 
-  Once the user inspects these items, they are ready to click the `Reduce`
-  button at the bottom of the screen.
-
 .. image:: template-inspection.png
+
+
+Once the user inspects these items, the user can either save the
+template (using the `Configuration` menu shown above) or click
+the `Reduce` button at the bottom of the screen.
+
+**Success path**
+For the purpose of this use-case, we will call the use-case successful
+if we can save the configuration and load it back.
