@@ -1,7 +1,7 @@
 List of use-cases
 -----------------
 
-Reflectometry measured the probability R(q) of neutrons to reflect
+Reflectometry measures the probability R(q) of neutrons to reflect
 off the surface of a film as a function of q, the wavevector transfer
 perpendicular to the surface of the film.
 
