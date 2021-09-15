@@ -2,9 +2,20 @@ name: Trigger ORNL GitLab Production Pipeline
 on: 
   push:
     branches:
-      - master
+      - main
 jobs:
-  ornl-trigger-master:
+  ornl-trigger-main:
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+       include:
+         - python-version: 2.7
+           env: "prod"
     steps:
-      - run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=master ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
+      - run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
+      - run: ./.github/scripts/install.sh
+        shell: bash
+      - run: ./.github/scripts/test.sh
+        shell: bash
+      - run: codecov
+        shell: bash
