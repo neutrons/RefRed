@@ -14,6 +14,8 @@ jobs:
     steps:
       - run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
       - run: ./.github/scripts/install.sh
+        env:
+          PYTHON_VERSION: ${{ matrix.python-version }}
         shell: bash
       - run: ./.github/scripts/test.sh
         shell: bash
