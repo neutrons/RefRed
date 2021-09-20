@@ -14,12 +14,3 @@ conda config --append channels conda-forge
 conda update -q conda
 # Useful for debugging any issues with conda
 conda info -a
-conda init bash
-# Replace dep1 dep2 ... with your dependencies
-conda create -q -n test-environment python=$PYTHON_VERSION numpy pyqt=4;
-source activate test-environment
-conda config --add channels conda-forge
-#- conda config --add channels mantid
-#- conda install --yes -c mantid/label/nightly mantid-framework
-pip install --upgrade codecov
-pip install flake8
