@@ -24,6 +24,6 @@ jobs:
       - run: |
           chmod +x ${GITHUB_WORKSPACE}/.github/scripts/test.sh
           ${GITHUB_WORKSPACE}/.github/scripts/test.sh
-        shell: bash
+        shell: bash -l {0}
       - run: codecov
         shell: bash
