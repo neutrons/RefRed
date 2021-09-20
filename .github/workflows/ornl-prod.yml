@@ -13,9 +13,9 @@ jobs:
          - python-version: 2.7
            env: "prod"
     steps:
+      - uses: actions/checkout@v2
       - run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
       - run: ${GITHUB_WORKSPACE}/.github/scripts/install.sh
-        uses: actions/checkout@v2
         env:
           PYTHON_ VERSION: ${{ matrix.python-version }}
         shell: bash
