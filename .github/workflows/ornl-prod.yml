@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - migrate_travis_to_github_actions
 jobs:
   ornl-trigger-main:
     runs-on: ubuntu-20.04
@@ -15,7 +16,7 @@ jobs:
       - run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
       - run: ./.github/scripts/install.sh
         env:
-          PYTHON_VERSION: ${{ matrix.python-version }}
+          PYTHON_ VERSION: ${{ matrix.python-version }}
         shell: bash
       - run: ./.github/scripts/test.sh
         shell: bash
