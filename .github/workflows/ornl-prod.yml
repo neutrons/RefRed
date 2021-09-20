@@ -14,11 +14,11 @@ jobs:
            env: "prod"
     steps:
       - run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
-      - run: ./.github/scripts/install.sh
+      - run: ${GITHUB_WORKSPACE}/.github/scripts/install.sh
         env:
           PYTHON_ VERSION: ${{ matrix.python-version }}
         shell: bash
-      - run: ./.github/scripts/test.sh
+      - run: ${GITHUB_WORKSPACE}/.github/scripts/test.sh
         shell: bash
       - run: codecov
         shell: bash
