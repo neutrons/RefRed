@@ -15,11 +15,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
-      - run: ${GITHUB_WORKSPACE}/.github/scripts/install.sh
+      - run: |
+          chmod +x ${GITHUB_WORKSPACE}/.github/scripts/install.sh
+          ${GITHUB_WORKSPACE}/.github/scripts/install.sh
         env:
           PYTHON_ VERSION: ${{ matrix.python-version }}
         shell: bash
-      - run: ${GITHUB_WORKSPACE}/.github/scripts/test.sh
+      - run: |
+          chmod +x ${GITHUB_WORKSPACE}/.github/scripts/test.sh
+          ${GITHUB_WORKSPACE}/.github/scripts/test.sh
         shell: bash
       - run: codecov
         shell: bash
