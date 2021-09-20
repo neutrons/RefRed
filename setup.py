@@ -34,7 +34,8 @@ __packages__ = ['RefRed',
                 ]
 
 setup(name = __package_name__,
-      version = __version__,
+      version=versioneer.get_version(),
+      cmdclass=versioneer.get_cmdclass(),
       description = __description__,
       scripts = __scripts__,
       author = __author__,
