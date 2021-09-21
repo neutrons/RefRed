@@ -15,13 +15,11 @@ jobs:
     steps:
       - run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
       - uses: actions/checkout@v2
-      - uses: s-weigand/setup-conda@v1.0.7
+      - uses: conda-incubator/setup-miniconda@v2
         name: Setup Conda
         with:
+          auto-update-conda: true
           python-version: ${{ matrix.python-version }}
-          conda-channels: conda-forge
-          activate-conda: true
-          update-conda: true
       - name: Check versions
         run: |
             conda --version
@@ -29,17 +27,21 @@ jobs:
             python --version
             pwd
             ls
+        shell: bash -l {0}
       - name: Install Dependencies
         run: |
             chmod +x ${GITHUB_WORKSPACE}/.github/scripts/install.sh
             ${GITHUB_WORKSPACE}/.github/scripts/install.sh
         env:
           PYTHON_ VERSION: ${{ matrix.python-version }}
+        shell: bash -l {0}
       - name: Setup Test Env and Run Tests
         run: |
           chmod +x ${GITHUB_WORKSPACE}/.github/scripts/test.sh
           ${GITHUB_WORKSPACE}/.github/scripts/test.sh
         env:
           PYTHON_ VERSION: ${{ matrix.python-version }}
+        shell: bash -l {0}
       - name: Run Codecov
         run: codecov
+        shell: bash -l {0}
