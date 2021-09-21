@@ -5,13 +5,10 @@
 # third party packages
 import numpy as np
 
-# standard packages
-from typing import List
 
-
-def loadCsvFile(filename: str) -> List[float]:
+def loadCsvFile(filename):
     r"""Loading CSV file created with Excel to test PeakFinderDerivation algorithm
-    :param filename: Absolute path to CSV file
-    :return:Three-item list, each item being one file column
+    :param str filename: Absolute path to CSV file
+    :return List[float]:Three-item list, each item being one file column
     """
     return [column.tolist() for column in np.genfromtxt(filename, delimiter=',').transpose()]

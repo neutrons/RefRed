@@ -3,26 +3,24 @@
 from numpy.testing import assert_allclose
 import pytest  # PYTEST documentation at https://docs.pytest.org/
 
-# standard packages
-from typing import List
-
 
 # Helper functions to showcase some features of pytest
-def example_function() -> List[float]:
-    r"""Serve three floating-point numbers"""
+def example_function():
+    r"""Serve three floating-point numbers
+    :returns: List[float]"""
     return [1.005, 1.999, 3.009]
 
 
-def raises_exception(a: float, b: float) -> float:
+def raises_exception(a, b):
     r"""A function that for throws a custom message when dividing by zero
 
     Docstrings style follows the
     `Numpy style <https://numpydoc.readthedocs.io/en/latest/format.html>`_
 
-    :param a: numerator
-    :param b: denominator
+    :param float a: numerator
+    :param float b: denominator
 
-    :return: Division of the numerator and denominator
+    :return float: Division of the numerator and denominator
     :raise ZeroDivisionError: When the denominator is zero
     """
     try:
@@ -32,8 +30,11 @@ def raises_exception(a: float, b: float) -> float:
     return c
 
 
-def read_file(input_file: str) -> str:
-    r"""Returns the contents of a file"""
+def read_file(input_file):
+    r"""Returns the contents of a file
+    :param str input_file: absolute path to file
+    :return str: contents of the file
+    """
     return open(input_file).read()
 
 
