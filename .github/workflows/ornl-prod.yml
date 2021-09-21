@@ -43,5 +43,9 @@ jobs:
           PYTHON_ VERSION: ${{ matrix.python-version }}
         shell: bash -l {0}
       - name: Run Codecov
-        run: codecov
+        run: |
+          ls
+          cd test
+          ls
+          codecov
         shell: bash -l {0}
