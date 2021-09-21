@@ -12,7 +12,6 @@ jobs:
          - python-version: 2.7
            env: "prod"
     steps:
-      - run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
       - uses: actions/checkout@v2
       - uses: conda-incubator/setup-miniconda@v2
         name: Setup Conda
@@ -48,3 +47,5 @@ jobs:
           ls
           codecov
         shell: bash -l {0}
+        - name: Deploy
+          run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
