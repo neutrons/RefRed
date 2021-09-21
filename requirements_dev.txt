@@ -1,2 +1,7 @@
 # for linting and formatting
+flake8
 pre-commit
+pytest
+pytest-runner
+pytest-xdist
+
