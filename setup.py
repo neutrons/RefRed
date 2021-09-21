@@ -1,14 +1,30 @@
-from distutils.core import setup
-from RefRed.version import str_version
+import os
+from setuptools import setup
+import versioneer
 
-__package_name__ = 'RefRed'
-__version__ = str_version
-__description__ = 'Liquids Reflectrometer Data Reduction Software'
-__author__ = 'Jean Bilheux'
-__author_email__ = 'bilheuxjm@ornl.gov'
-__license__ = 'Copyright 2015-2016'
-__url__ = 'http://'
-__scripts__ = ['scripts/RefRed', 'scripts/start_refred.py']
+THIS_DIR = os.path.dirname(__file__)
+
+
+def read_requirements_from_file(filepath):
+    r"""Read a list of dependencies from the given file and split into a list.
+
+    It is assumed that the file is a flat list with one requirement per line.
+
+    :param str filepath: Path to the file to read
+    :return List[str]:
+    """
+    with open(filepath, 'rU') as req_file:
+        return req_file.readlines()
+
+
+install_requires = read_requirements_from_file(
+    os.path.join(THIS_DIR, 'requirements.txt')
+)
+test_requires = read_requirements_from_file(
+    os.path.join(THIS_DIR, 'requirements_dev.txt')
+)
+
+# TODO can this be safely substituted with setuptools.find_packages?
 __packages__ = ['RefRed',
                 'RefRed.autopopulatemaintable',
                 'RefRed.configuration',
@@ -33,12 +49,19 @@ __packages__ = ['RefRed',
                 'RefRed.thread',
                 ]
 
-setup(name = __package_name__,
+setup(name='RefRed',
       version=versioneer.get_version(),
       cmdclass=versioneer.get_cmdclass(),
-      description = __description__,
-      scripts = __scripts__,
-      author = __author__,
-      author_email = __author_email__,
-      packages = __packages__,
-      url = __url__)
+      description='Liquids Reflectrometer Data Reduction Software',
+      license='GPL version 3.0',
+      scripts=['scripts/RefRed', 'scripts/start_refred.py'],
+      author='Jean Bilheux',
+      author_email='bilheuxjm@ornl.gov',
+      packages=__packages__,
+      url='http://',
+      zip_safe=False,
+      package_dir={},
+      install_requires=install_requires,
+      setup_requires=["pytest-runner"],
+      tests_require=test_requires,
+      )
