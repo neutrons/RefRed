@@ -2,36 +2,13 @@
     TODO: verify whether this is really needed
 """
 
+# third party packages
+import numpy as np
+
 
 def loadCsvFile(filename):
-    '''
-    Loading CSV file created with Excel to test PeakFinderDerivation algorithm
-    '''
-    f = open(filename, 'rt')
-    data = f.readlines()
-    data  = data[0].split('\r')
-    final_data = []
-    for row in data:
-        _row_split = row.split(',')
-        final_data.append(_row_split)
-    f.close()
-    final_data = convertArrayToFloat(final_data)
-    [x, y, e] = isolateXYE(final_data)
-    return [x, y, e]
-
-
-def isolateXYE(data_array):
-    x, y, e = [], [], []
-    for _row in data_array:
-        x.append(_row[0])
-        y.append(_row[1])
-        e.append(_row[2])
-    return [x, y, e]
-
-
-def convertArrayToFloat(data_array):
-    final_array = []
-    for _row in data_array:
-        [x,y,e] = [float(_row[0]), float(_row[1]), float(_row[2])]
-        final_array.append([x, y, e])
-    return final_array
+    r"""Loading CSV file created with Excel to test PeakFinderDerivation algorithm
+    :param str filename: Absolute path to CSV file
+    :return List[float]:Three-item list, each item being one file column
+    """
+    return [column.tolist() for column in np.genfromtxt(filename, delimiter=',').transpose()]
