@@ -13,22 +13,32 @@ jobs:
          - python-version: 2.7
            env: "prod"
     steps:
-      - uses: actions/checkout@v2
       - run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
-      - name: Install Conda
+      - uses: actions/checkout@v2
+      - uses: s-weigand/setup-conda@v1.0.7
+        name: Setup Conda
+            with:
+              python-version: ${{ matrix.python-version }}
+              conda-channels: anaconda, conda-forge
+              activate-conda: true
+      - name: Check versions
+          run: |
+            conda --version
+            which python
+            python --version
+            pwd
+            ls
+      - name: Install Dependencies
         run: |
-          chmod +x ${GITHUB_WORKSPACE}/.github/scripts/install.sh
-          ${GITHUB_WORKSPACE}/.github/scripts/install.sh
+            chmod +x ${GITHUB_WORKSPACE}/.github/scripts/install.sh
+            ${GITHUB_WORKSPACE}/.github/scripts/install.sh
         env:
           PYTHON_ VERSION: ${{ matrix.python-version }}
-        shell: bash
       - name: Setup Test Env and Run Tests
         run: |
           chmod +x ${GITHUB_WORKSPACE}/.github/scripts/test.sh
           ${GITHUB_WORKSPACE}/.github/scripts/test.sh
         env:
           PYTHON_ VERSION: ${{ matrix.python-version }}
-        shell: bash -l {0}
       - name: Run Codecov
         run: codecov
-        shell: bash
