@@ -1,0 +1,4 @@
+#mantid-framework
+matplotlib
+numpy
+PyQt4
