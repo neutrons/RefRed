@@ -22,7 +22,7 @@ jobs:
           conda-channels: anaconda, conda-forge
           activate-conda: true
       - name: Check versions
-          run: |
+        run: |
             conda --version
             which python
             python --version
