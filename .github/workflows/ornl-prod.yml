@@ -47,5 +47,5 @@ jobs:
           ls
           codecov
         shell: bash -l {0}
-        - name: Deploy
-          run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
+      - name: Deploy
+        run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
