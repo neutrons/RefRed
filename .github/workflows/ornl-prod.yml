@@ -2,9 +2,50 @@ name: Trigger ORNL GitLab Production Pipeline
 on: 
   push:
     branches:
-      - master
+      - main
 jobs:
-  ornl-trigger-master:
+  ornl-trigger-main:
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+       include:
+         - python-version: 2.7
+           env: "prod"
     steps:
-      - run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=master ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
+      - uses: actions/checkout@v2
+      - uses: conda-incubator/setup-miniconda@v2
+        name: Setup Conda
+        with:
+          auto-update-conda: true
+          python-version: ${{ matrix.python-version }}
+      - name: Check versions
+        run: |
+            conda --version
+            which python
+            python --version
+            pwd
+            ls
+        shell: bash -l {0}
+      - name: Install Dependencies
+        run: |
+            chmod +x ${GITHUB_WORKSPACE}/.github/scripts/install.sh
+            ${GITHUB_WORKSPACE}/.github/scripts/install.sh
+        env:
+          PYTHON_ VERSION: ${{ matrix.python-version }}
+        shell: bash -l {0}
+      - name: Setup Test Env and Run Tests
+        run: |
+          chmod +x ${GITHUB_WORKSPACE}/.github/scripts/test.sh
+          ${GITHUB_WORKSPACE}/.github/scripts/test.sh
+        env:
+          PYTHON_ VERSION: ${{ matrix.python-version }}
+        shell: bash -l {0}
+      - name: Run Codecov
+        run: |
+          ls
+          cd test
+          ls
+          codecov
+        shell: bash -l {0}
+      - name: Deploy
+        run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
