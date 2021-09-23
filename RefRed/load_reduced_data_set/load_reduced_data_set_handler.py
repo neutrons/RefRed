@@ -13,7 +13,7 @@ class LoadReducedDataSetHandler(object):
 
     def run(self):
         _path = self.parent.path_ascii
-        _filter = u"Ascii File (*.txt);; All (*.*)"
+        _filter = "Ascii File (*.txt);; All (*.*)"
         filename = str(QtGui.QFileDialog.getOpenFileName(self.parent, 'Open Reduced Data Set',
                                                      directory=_path,
                                                      filter=_filter))

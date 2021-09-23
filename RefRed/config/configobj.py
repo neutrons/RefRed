@@ -65,7 +65,7 @@ BOM_SET = {
 
 if sys.version_info < (3, ):
     # text type are unicode or str
-    TEXT_TYPE = (unicode, str)
+    TEXT_TYPE = (str, str)
 else:
     TEXT_TYPE=(str,)
 
@@ -75,7 +75,7 @@ def match_utf8(encoding):
 def u_str(a_string):
     """manage py2 and py3 compatibility for strings"""
     if sys.version_info < (3, ):
-        return unicode(a_string)
+        return str(a_string)
     else:
         return a_string
 
@@ -174,7 +174,7 @@ class Builder(object):
 
     def build_Dict(self, o):
         d = {}
-        items = zip(o.keys, o.values)
+        items = list(zip(o.keys, o.values))
         for key, value in items:
             key = self.build(key)
             value = self.build(value)
@@ -1413,7 +1413,7 @@ class ConfigObj(Section):
             return self._decode(infile, self.encoding)
 
         # No encoding specified - so we need to check for UTF8/UTF16
-        for BOM, (encoding, final_encoding) in BOMS.items():
+        for BOM, (encoding, final_encoding) in list(BOMS.items()):
             if isinstance(line, bytes) and not line.startswith(BOM):
                 continue
             else:

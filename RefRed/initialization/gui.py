@@ -14,11 +14,11 @@ class Gui(object):
     vertical_header = ["Plotted",
                        "Data Run #",
                        "Norm. Run #",
-                       u'2\u03b8 (\u00B0)',
-                       u'\u03bbmin (\u00c5)',
-                       u'\u03bbmax (\u00c5)',
-                       u'Qmin (1/\u00c5)',
-                       u'Qmax (1/\u00c5)',
+                       '2\u03b8 (\u00B0)',
+                       '\u03bbmin (\u00c5)',
+                       '\u03bbmax (\u00c5)',
+                       'Qmin (1/\u00c5)',
+                       'Qmax (1/\u00c5)',
                        'Comments']
     column_widths = [60, 200, 200, 65, 85, 85, 95, 95, 400]	
     stitching_column_widths = [150, 60, 60]
@@ -51,7 +51,7 @@ class Gui(object):
         o_gui.init_widgets_value()
         
     def init_autopopulate_widgets(self):
-        pixmap = QtGui.QPixmap(u':/General/check_icon.png')
+        pixmap = QtGui.QPixmap(':/General/check_icon.png')
         self.parent.ui.check1.setFixedWidth(25)
         self.parent.ui.check1.setFixedHeight(25)
         self.parent.ui.check1.setPixmap(pixmap)
@@ -86,7 +86,7 @@ class Gui(object):
         parent = self.parent
 
         title = window_title
-        parent.setWindowTitle(u'%s%s' %(window_title, '~/tmp.xml'))
+        parent.setWindowTitle('%s%s' %(window_title, '~/tmp.xml'))
 
     def set_gui_size(self):
         screen = QtGui.QDesktopWidget().screenGeometry()

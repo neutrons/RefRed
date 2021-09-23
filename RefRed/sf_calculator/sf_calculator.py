@@ -228,7 +228,7 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         self.fileHasBeenModified()
 
     def browseFile(self):
-        _filter = u'SF config (*.cfg);;All (*.*)'
+        _filter = 'SF config (*.cfg);;All (*.*)'
         fileSelector = QtGui.QFileDialog()
         fileSelector.setFileMode(QtGui.QFileDialog.AnyFile)
         fileSelector.setFilter(_filter)
@@ -742,8 +742,8 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         tof_max_ms = float(nxsdata.tof_axis_auto_with_margin[-1]) / 1000
         self.yt_plot.imshow(ytof, log=True, aspect='auto', origin='lower',
                             extent=[tof_min_ms, tof_max_ms, 0, nxsdata.y.shape[0] - 1])
-        self.yt_plot.set_xlabel(u't (ms)')
-        self.yt_plot.set_ylabel(u'y (pixel)')
+        self.yt_plot.set_xlabel('t (ms)')
+        self.yt_plot.set_ylabel('y (pixel)')
 
         [peak1, peak2] = nxsdata.peak
         [peak1, peak2] = self.forceTypeToInt([peak1, peak2])
@@ -800,10 +800,10 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
 
     def plotYI(self, nxsdata, row):
         ycountsdata = nxsdata.ycountsdata
-        xaxis = range(len(ycountsdata))
+        xaxis = list(range(len(ycountsdata)))
         self.yi_plot.canvas.ax.plot(ycountsdata, xaxis)
-        self.yi_plot.canvas.ax.set_xlabel(u'counts')
-        self.yi_plot.canvas.ax.set_ylabel(u'y (pixel)')
+        self.yi_plot.canvas.ax.set_xlabel('counts')
+        self.yi_plot.canvas.ax.set_ylabel('y (pixel)')
 
         if nxsdata.all_plot_axis.yi_data_interval is None:
             ylim = nxsdata.number_y_pixels - 1

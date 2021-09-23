@@ -80,7 +80,7 @@ class ConfigProxy(object):
     self.configs[name]=storage
     if name in self.storages[storage]:
       # update additional options from config
-      for key, value in items.items():
+      for key, value in list(items.items()):
         if not key in self.storages[storage][name]:
           self.storages[storage][name][key]=value
     else:
@@ -131,7 +131,7 @@ class ConfigProxy(object):
 
     if name in self.storages[cpath]:
       # update additional options from config
-      for key, value in items.items():
+      for key, value in list(items.items()):
         if not key in self.storages[cpath][name]:
           self.storages[cpath][name][key]=value
     else:
@@ -150,11 +150,11 @@ class ConfigProxy(object):
       if cpath in self.configs and self.configs[cpath] in self.path_configs:
         cpath=self.configs[cpath]
       else:
-        raise KeyError, 'Config path %s is not defined'%cpath
+        raise KeyError('Config path %s is not defined'%cpath)
     # save the current config to a file
     # remove constants for storage
-    for ignore, config in self.storages[cpath].items():
-      for key in config.keys():
+    for ignore, config in list(self.storages[cpath].items()):
+      for key in list(config.keys()):
         if key==key.upper():
           del(config[key])
     self.storages[cpath].write()
@@ -177,10 +177,10 @@ class ConfigProxy(object):
       self.path_configs[cpath][0]['config_files'].append(cname)
 
     # update missing items from default config
-    for name, items in self.path_configs[cpath][1].items():
+    for name, items in list(self.path_configs[cpath][1].items()):
       if name in self.storages[cpath]:
         # update additional options from config
-        for key, value in items.items():
+        for key, value in list(items.items()):
           if not key in self.storages[cpath][name]:
             self.storages[cpath][name][key]=value
       else:
@@ -192,7 +192,7 @@ class ConfigProxy(object):
       if cpath in self.configs and self.configs[cpath] in self.path_configs:
         cpath=self.configs[cpath]
       else:
-        raise KeyError, 'Config path %s is not defined'%cpath
+        raise KeyError('Config path %s is not defined'%cpath)
     return self.path_configs[cpath][0]['config_files']
 
   def add_alias(self, config, alias):
@@ -202,46 +202,46 @@ class ConfigProxy(object):
     :returns: The corresponding :class:`ConfigHolder` object.
     '''
     if not config in self.configs:
-      raise KeyError, 'no configuration named %s found'%config
+      raise KeyError('no configuration named %s found'%config)
     self.aliases[alias]=config
     return self[config]
 
   def store(self):
     """store configuration data into .ini files."""
-    for item in self.storages.values():
+    for item in list(self.storages.values()):
       if not hasattr(item, 'write'):
         continue
       # remove constants for storage
       restore={}
-      for cname, config in item.items():
+      for cname, config in list(item.items()):
         restore[cname]={}
-        for key in config.keys():
+        for key in list(config.keys()):
           if key==key.upper():
             restore[cname][key]=config[key]
             del(config[key])
       # only write to ConfigObj items
       item.write()
       # restore constants
-      for cname, cdict in restore.items():
-        for key, value in cdict.items():
+      for cname, cdict in list(restore.items()):
+        for key, value in list(cdict.items()):
           item[cname][key]=value
-    for ccopts, ignore in self.path_configs.values():
+    for ccopts, ignore in list(self.path_configs.values()):
       ccopts.write()
 
   def __getitem__(self, name):
-    if isinstance(name, basestring):
+    if isinstance(name, str):
       if name in self.configs or name in self.aliases:
         return ConfigHolder(self, name)
-      raise KeyError, "%s is no known configuration"%name
+      raise KeyError("%s is no known configuration"%name)
     else:
-      raise KeyError, "Only strings are allowed as keys"
+      raise KeyError("Only strings are allowed as keys")
 
   def get_config_item(self, config, item):
     """Called by :class:`ConfigHolder` to retreive an item"""
     if config in self.aliases:
       config=self.aliases[config]
     if not config in self.configs:
-      raise KeyError, "%s is no known configuration"%config
+      raise KeyError("%s is no known configuration"%config)
     storage=self.configs[config]
     # special convenience methods to switch the config file with the config object
     if storage in self.path_configs and item=='get_configs':
@@ -254,7 +254,7 @@ class ConfigProxy(object):
       value=self.tmp_storages[storage][config][item]
     else:
       value=self.storages[storage][config][item]
-    if isinstance(value, basestring) and '%' in value and \
+    if isinstance(value, str) and '%' in value and \
           not self.storages[storage][config].get('NO_INTERPOLATION', False):
       # perform interpolation with constants if possible
       value=self.interpolate(config, value)
@@ -304,7 +304,7 @@ class ConfigProxy(object):
     if config in self.aliases:
       config=self.aliases[config]
     if not config in self.configs:
-      raise KeyError, "%s is no known configuration"%config
+      raise KeyError("%s is no known configuration"%config)
     storage=self.configs[config]
     if temporary:
       # store value in temporary dictionary
@@ -317,9 +317,9 @@ class ConfigProxy(object):
     if config in self.aliases:
       config=self.aliases[config]
     if not config in self.configs:
-      raise KeyError, "%s is no known configuration"%config
+      raise KeyError("%s is no known configuration"%config)
     storage=self.configs[config]
-    keys=self.storages[storage][config].keys()
+    keys=list(self.storages[storage][config].keys())
     if storage in self.path_configs:
       keys.append('get_configs')
       keys.append('switch_config')
@@ -327,18 +327,18 @@ class ConfigProxy(object):
 
   def keys(self):
     """Return the available configurations"""
-    keys=self.configs.keys()+self.aliases.keys()
+    keys=list(self.configs.keys())+list(self.aliases.keys())
     keys.sort()
     return keys
 
   def values(self):
-    return [self[key] for key in self.keys()]
+    return [self[key] for key in list(self.keys())]
 
   def items(self):
-    return [(key, self[key]) for key in self.keys()]
+    return [(key, self[key]) for key in list(self.keys())]
 
   def __len__(self):
-    return len(self.keys())
+    return len(list(self.keys()))
 
   def __repr__(self):
     output=self.__class__.__name__
@@ -389,28 +389,28 @@ class ConfigHolder(object):
 
   def __setitem__(self, name, value):
     if name==name.upper():
-      raise ValueError, "%s is a constant and thus cannot be altered"%name
+      raise ValueError("%s is a constant and thus cannot be altered"%name)
     self._proxy.set_config_item(self._name, name, value,
                                 temporary=self._storetmp)
 
   def __contains__(self, other):
-    return other in self.keys()
+    return other in list(self.keys())
 
   def keys(self):
     return self._proxy.get_config_keys(self._name)
 
   def values(self):
-    return [self[key] for key in self.keys()]
+    return [self[key] for key in list(self.keys())]
 
   def items(self):
-    return [(str(key), self[key]) for key in self.keys()]
+    return [(str(key), self[key]) for key in list(self.keys())]
 
   def __repr__(self):
     output=self.__class__.__name__+'('
     spacer='\n'+' '*len(output)
-    output+=repr(dict(self.items())).replace('\n', spacer)
+    output+=repr(dict(list(self.items()))).replace('\n', spacer)
     output+=')'
     return output
 
   def __dir__(self):
-    return self.__dict__.keys()+self.keys()
+    return list(self.__dict__.keys())+list(self.keys())

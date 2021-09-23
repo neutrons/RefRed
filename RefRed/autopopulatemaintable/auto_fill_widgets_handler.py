@@ -15,7 +15,7 @@ class AutoFillWidgetsHandler(object):
         self.parent.ui.progressBar_check5.setValue(0)
         self.parent.ui.progressBar_check2.setVisible(False)
         self.parent.ui.progressBar_check5.setVisible(False)
-        pixmap = QtGui.QPixmap(u':/General/check_icon.png')
+        pixmap = QtGui.QPixmap(':/General/check_icon.png')
         self.parent.ui.check1.setPixmap(pixmap)
         self.parent.ui.check2.setPixmap(pixmap)
         self.parent.ui.check3.setPixmap(pixmap)
@@ -49,7 +49,7 @@ class AutoFillWidgetsHandler(object):
         QApplication.processEvents()
 
     def error_step1(self):
-        pixmap = QtGui.QPixmap(u':/General/clear_icon.png')
+        pixmap = QtGui.QPixmap(':/General/clear_icon.png')
         self.parent.ui.check1.setFixedWidth(25)
         self.parent.ui.check1.setFixedHeight(25)
         self.parent.ui.check1.setPixmap(pixmap)

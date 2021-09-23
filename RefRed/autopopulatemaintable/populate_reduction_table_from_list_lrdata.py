@@ -114,7 +114,7 @@ class PopulateReductionTableFromListLRData(object):
     def insert_data_runs_into_table(self):
         for _index, _run in enumerate(self.list_run):
             if type(_run) == type([]):
-                _run = map(str, _run) #to convert to list of string
+                _run = list(map(str, _run)) #to convert to list of string
                 str_run = ",".join(_run)
             else:
                 str_run = str(_run)

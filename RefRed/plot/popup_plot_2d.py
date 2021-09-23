@@ -149,8 +149,8 @@ class PopupPlot2d(QDialog):
         [ymax,xmax] = xydata.shape
         self.ui.detector_plot.imshow(xydata, log=True, aspect='auto',
                                      origin='lower', extent=[0,xmax,0,ymax])
-        self.ui.detector_plot.set_xlabel(u'x (pixel)')
-        self.ui.detector_plot.set_ylabel(u'y (pixel)')
+        self.ui.detector_plot.set_xlabel('x (pixel)')
+        self.ui.detector_plot.set_ylabel('y (pixel)')
 
         [lowres1, lowres2, lowresFlag, peak1, peak2, back1, back2, backFlag] = self.retrieveLowResPeakBack()
         [clock1, clock2] = self.get_clocking_values()
@@ -205,8 +205,8 @@ class PopupPlot2d(QDialog):
         self.ui.y_pixel_vs_tof_plot.clear()
         self.ui.y_pixel_vs_tof_plot.imshow(ytof, log=True, aspect='auto',
                                            origin='lower', extent=[tof_from, tof_to, pixel_from, pixel_to])
-        self.ui.y_pixel_vs_tof_plot.set_xlabel(u't (ms)')
-        self.ui.y_pixel_vs_tof_plot.set_ylabel(u'y (pixel)')
+        self.ui.y_pixel_vs_tof_plot.set_xlabel('t (ms)')
+        self.ui.y_pixel_vs_tof_plot.set_ylabel('y (pixel)')
 
         [tmin,tmax,peak1,peak2,back1,back2,backFlag] = self.retrieveTofPeakBack()
         [clock1, clock2] = self.get_clocking_values()

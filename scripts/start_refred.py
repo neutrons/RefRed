@@ -22,8 +22,8 @@ except NameError:
 
 def _run(argv=[]):
     app=QApplication(argv)
-    splash=QSplashScreen(QPixmap(u':/General/logo_refl_hq.png'))
-    splash.showMessage(u"""<html>
+    splash=QSplashScreen(QPixmap(':/General/logo_refl_hq.png'))
+    splash.showMessage("""<html>
                        <div style="margin-bottom: 420;"> &nbsp;</div>
                        <div style="font-size: 12pt; margin-bottom: 15;">
                        <b>RefRed</b> Version %s

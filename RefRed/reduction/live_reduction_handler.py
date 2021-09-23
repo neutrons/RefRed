@@ -192,8 +192,8 @@ class LiveReductionHandler(object):
             AnalysisDataService.remove(_mt)
 
     def print_message(self, title, value):
-        print('> %s ' %title)
-        print('-> value: ', value, '-> type: ', type(value))
+        print(('> %s ' %title))
+        print(('-> value: ', value, '-> type: ', type(value)))
 
     def calculate_nbr_reduction_process(self):
         nbr_row_table_reduction = self.parent.nbr_row_table_reduction

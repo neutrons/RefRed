@@ -2364,9 +2364,9 @@ class Ui_MainWindow(object):
         self.actionNew.setText(_translate("MainWindow", "New", None))
         self.actionTemplateManagement.setText(_translate("MainWindow", "Template Management ...", None))
 
-from mplwidgetnolog import MPLWidgetNoLog
-from mplwidget import MPLWidget
-from mytablewidget import MyTableWidget
-from mplwidgetxlogylog import MPLWidgetXLogYLog
+from .mplwidgetnolog import MPLWidgetNoLog
+from .mplwidget import MPLWidget
+from .mytablewidget import MyTableWidget
+from .mplwidgetxlogylog import MPLWidgetXLogYLog
 from .mplwidgetxlog import MPLWidgetXLog
-import icons_rc
+from . import icons_rc

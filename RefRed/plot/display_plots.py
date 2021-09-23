@@ -193,8 +193,8 @@ class DisplayPlots(object):
     def plot_ix(self):
         _countsxdata = self.countsxdata
         self.ix_plot_ui.canvas.ax.plot(_countsxdata)
-        self.ix_plot_ui.canvas.ax.set_xlabel(u'pixels')
-        self.ix_plot_ui.canvas.ax.set_ylabel(u'counts')
+        self.ix_plot_ui.canvas.ax.set_xlabel('pixels')
+        self.ix_plot_ui.canvas.ax.set_ylabel('counts')
         self.ix_plot_ui.canvas.ax.set_xlim(0, self.xlim)
 
         if self.lowResFlag:
@@ -241,11 +241,11 @@ class DisplayPlots(object):
     def plot_yi(self):
         _ycountsdata = self.get_ycountsdata_of_tof_range_selected()
 
-        _xaxis = range(len(_ycountsdata))
+        _xaxis = list(range(len(_ycountsdata)))
         self.yi_plot_ui.canvas.ax.plot(_ycountsdata, _xaxis, 
                                        color = colors.COLOR_LIST[1])
-        self.yi_plot_ui.canvas.ax.set_xlabel(u'counts')
-        self.yi_plot_ui.canvas.ax.set_ylabel(u'y (pixel)')
+        self.yi_plot_ui.canvas.ax.set_xlabel('counts')
+        self.yi_plot_ui.canvas.ax.set_ylabel('y (pixel)')
 
         if self._data.all_plot_axis.yi_data_interval is None:
             self.yi_plot_ui.canvas.ax.set_ylim(0, self.ylim)
@@ -290,8 +290,8 @@ class DisplayPlots(object):
         _countstofdata = self.countstofdata
 
         self.it_plot_ui.canvas.ax.plot(_tof_axis[0:-1], _countstofdata)
-        self.it_plot_ui.canvas.ax.set_xlabel(u't (ms)')
-        self.it_plot_ui.canvas.ax.set_ylabel(u'Counts')
+        self.it_plot_ui.canvas.ax.set_xlabel('t (ms)')
+        self.it_plot_ui.canvas.ax.set_ylabel('Counts')
 
         autotmin = float(self.tofRangeAuto[0])
         autotmax = float(self.tofRangeAuto[1])
@@ -331,8 +331,8 @@ class DisplayPlots(object):
                                aspect='auto', 
                                origin='lower',
                                extent=_extent)
-        self.yt_plot_ui.set_xlabel(u't (ms)')
-        self.yt_plot_ui.set_ylabel(u'y (pixel)')
+        self.yt_plot_ui.set_xlabel('t (ms)')
+        self.yt_plot_ui.set_ylabel('y (pixel)')
 
         autotmin = float(self.tofRangeAuto[0])
         autotmax = float(self.tofRangeAuto[1])

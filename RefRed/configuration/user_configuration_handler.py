@@ -42,7 +42,7 @@ class SaveUserConfiguration(object):
                           str(o_user_config.is_reduced_plot_stitching_tab_ylog))
         
         _gui_metadata = self.parent.gui_metadata
-        for _key in _gui_metadata.keys():
+        for _key in list(_gui_metadata.keys()):
             if _key == 'clocking_pixel':
                 _value = "%d, %d" %(_gui_metadata[_key][0], _gui_metadata[_key][1])
             else:

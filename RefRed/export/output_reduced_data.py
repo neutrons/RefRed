@@ -116,7 +116,7 @@ class OutputReducedData(QDialog):
         path = self.parent.path_ascii
         default_filename = path + '/' + default_filename
         directory = path
-        _filter = u"Reduced Ascii (*.txt);; All (*.*)"
+        _filter = "Reduced Ascii (*.txt);; All (*.*)"
         filename = str(QFileDialog.getSaveFileName(self, 
                                                    'Select Location and Name', 
                                                    directory = default_filename,
@@ -251,9 +251,9 @@ class OutputReducedData(QDialog):
 
         print("Creating output file")
         print("====================")
-        print("OutputBinning: %r" %_q_range)
-        print("DQConstant: %r" %(float(self.ui.dq0Value.text())))
-        print("DQSlope: %r" %(float(self.ui.dQoverQvalue.text())))
+        print(("OutputBinning: %r" %_q_range))
+        print(("DQConstant: %r" %(float(self.ui.dq0Value.text()))))
+        print(("DQSlope: %r" %(float(self.ui.dQoverQvalue.text()))))
 
         LRReflectivityOutput(ReducedWorkspaces=_list_wks,
                              OutputBinning=_q_range,

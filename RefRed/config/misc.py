@@ -5,8 +5,8 @@
 
 config_file=''
 
-ADMIN=u'Jean Bilheux'
-ADMIN_EMAIL=u'j35@ornl.gov'
+ADMIN='Jean Bilheux'
+ADMIN_EMAIL='j35@ornl.gov'
 SMTP_SERVER='160.91.4.26'
 
 SCRIPT_VERSION='1.0'

@@ -393,5 +393,5 @@ class Ui_Dialog(object):
         self.back1_label.setText(_translate("Dialog", "*", None))
         self.error_label.setText(_translate("Dialog", "(*) INVALID SELECTION", None))
 
-from mplwidgetnolog import MPLWidgetNoLog
-import icons_rc
+from .mplwidgetnolog import MPLWidgetNoLog
+from . import icons_rc

@@ -27,7 +27,7 @@ class ReductionSfCalculator(object):
         if export_script_flag:
             #TODO: get last path from QSettings
             _path = os.path.expanduser('~')
-            _filter = u'python (*.py);;All (*.*)'
+            _filter = 'python (*.py);;All (*.*)'
             filename = QtGui.QFileDialog.getSaveFileName(self.sf_gui, 'Export Script File', _path, filter=_filter)
             if not(filename == ''):
                 self.export_script_file = filename
@@ -143,14 +143,14 @@ class ReductionSfCalculator(object):
 
         peak_ranges, bck_ranges, low_res_ranges, run_list = self._get_algorithm_params(string_runs, list_peak_back)
 
-        str_run_list = ', '.join(map(lambda x: str(x), run_list))
+        str_run_list = ', '.join([str(x) for x in run_list])
         _script_exe = 'api.LRScalingFactors(DirectBeamRuns=[%s], ' % str_run_list
         _script_exe += 'IncidentMedium="%s", ' % incident_medium
         _script_exe += 'TOFSteps=200, '
-        _script_exe += 'TOFRange=[%s], ' % ', '.join(map(lambda x: str(x), tof_range))
-        _script_exe += 'SignalPeakPixelRange=[%s], ' % ', '.join(map(lambda x: str(x), peak_ranges))
-        _script_exe += 'SignalBackgroundPixelRange=[%s], ' % ', '.join(map(lambda x: str(x), bck_ranges))
-        _script_exe += 'LowResolutionPixelRange=[%s], ' % ', '.join(map(lambda x: str(x), low_res_ranges))
+        _script_exe += 'TOFRange=[%s], ' % ', '.join([str(x) for x in tof_range])
+        _script_exe += 'SignalPeakPixelRange=[%s], ' % ', '.join([str(x) for x in peak_ranges])
+        _script_exe += 'SignalBackgroundPixelRange=[%s], ' % ', '.join([str(x) for x in bck_ranges])
+        _script_exe += 'LowResolutionPixelRange=[%s], ' % ', '.join([str(x) for x in low_res_ranges])
         _script_exe += 'ScalingFactorFile="%s")' % output_file_name
 
         script += _script_exe

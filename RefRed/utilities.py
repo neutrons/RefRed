@@ -2,7 +2,7 @@ import math
 import os
 import numpy as np
 from random import randint
-import nexus_utilities
+from . import nexus_utilities
 
 
 def convert_angle(angle=0, from_units='degree', to_units='rad'):
@@ -47,7 +47,7 @@ def convertTOF(TOFarray=None, from_units='micros', to_units='ms'):
         else:
             raise NameError(from_units)
     except NameError:
-        print 'units not supported'
+        print('units not supported')
         return None
 
 

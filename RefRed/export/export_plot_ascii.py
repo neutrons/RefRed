@@ -68,7 +68,7 @@ class ExportPlotAscii(object):
         parent.path_ascii = os.path.dirname(filename)
         filename = makeSureFileHasExtension(filename, default_ext=".txt")
         countsxdata = _data.countsxdata
-        pixelaxis = range(len(countsxdata))
+        pixelaxis = list(range(len(countsxdata)))
 
         text = ['#Counts vs Pixels (low resolution range)','#Pixel - Counts']
         sz = len(pixelaxis)
@@ -127,7 +127,7 @@ class ExportPlotAscii(object):
         parent.path_ascii = os.path.dirname(filename)
         filename = makeSureFileHasExtension(filename, default_ext=".txt")
         ycountsdata = _data.ycountsdata
-        pixelaxis = range(len(ycountsdata))
+        pixelaxis = list(range(len(ycountsdata)))
 
         text = ['#Counts vs Pixels','#Pixel - Counts']
         sz = len(pixelaxis)
