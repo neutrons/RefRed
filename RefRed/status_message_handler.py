@@ -2,7 +2,7 @@
     TODO: refactor this
 """
 import time
-from PyQt4 import QtCore
+from qtpy import QtCore
 from RefRed.utilities import get_index_free_thread
 
 

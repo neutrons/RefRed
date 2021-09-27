@@ -1,5 +1,5 @@
-from PyQt4 import QtGui
-from PyQt4.QtGui import QApplication
+from qtpy import QtGui
+from qtpy.QtWidgets import QApplication
 
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.calculations.check_list_run_compatibility_and_display_thread import CheckListRunCompatibilityAndDisplayThread

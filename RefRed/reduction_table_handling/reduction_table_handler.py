@@ -1,5 +1,5 @@
-from PyQt4 import QtGui, QtCore
-from PyQt4.QtCore import Qt
+from qtpy import QtWidgets, QtCore
+from qtpy.QtCore import Qt
 import numpy as np
 from RefRed.plot.clear_plots import ClearPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
@@ -50,7 +50,7 @@ class ReductionTableHandler(object):
         for row_index in range(_from_row, _to_row + 1):
             for col_index in range(_nbr_col):
                 if col_index == 0:
-                    _widget = QtGui.QCheckBox()
+                    _widget = QtWidgets.QCheckBox()
                     _widget.setChecked(False)
                     _widget.setEnabled(True)
                     QtCore.QObject.connect(_widget, QtCore.SIGNAL("stateChanged(int)"), 
@@ -58,12 +58,12 @@ class ReductionTableHandler(object):
                     self.parent.ui.reductionTable.setCellWidget(row_index, col_index, _widget)
 
                 elif (col_index == 1) or (col_index == 2):
-                    _item = QtGui.QTableWidgetItem()
+                    _item = QtWidgets.QTableWidgetItem()
                     _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
                     self.parent.ui.reductionTable.setItem(row_index, col_index, _item)
 
                 else:
-                    _item = QtGui.QTableWidgetItem()
+                    _item = QtWidgets.QTableWidgetItem()
                     _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
                     self.parent.ui.reductionTable.setItem(row_index, col_index, _item)
 

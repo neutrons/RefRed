@@ -9,8 +9,8 @@
 """
 import logging
 import RefRed.colors
-from PyQt4 import QtCore, QtGui
-from PyQt4.QtGui import QApplication
+from qtpy import QtCore, QtGui
+from qtpy.QtWidgets import QApplication
 
 from RefRed.reduction_table_handling.check_list_run_compatibility import CheckListRunCompatibility
 from RefRed.calculations.add_list_nexus import AddListNexus

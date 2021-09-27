@@ -1,14 +1,14 @@
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 from RefRed.interfaces.settings_password import Ui_Dialog as UiDialog
 
 
-class SettingsPasswordEditor(QtGui.QDialog):
+class SettingsPasswordEditor(QtWidgets.QDialog):
 
     password = '5'
     
     def __init__(self, parent=None):
         self.parent = parent
-        QtGui.QDialog.__init__(self, parent=parent)
+        QtWidgets.QDialog.__init__(self, parent=parent)
         self.ui = UiDialog()
         self.ui.setupUi(self)
         
@@ -25,7 +25,3 @@ class SettingsPasswordEditor(QtGui.QDialog):
         if self.parent.is_super_user:
             self.parent.ui.lockButton.setText("LOCK !")
         self.close()
-        
-
-        
-    

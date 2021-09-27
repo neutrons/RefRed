@@ -1,4 +1,4 @@
-from PyQt4 import QtGui, QtCore
+from qtpy import QtGui, QtCore
 from RefRed.gui_handling.gui_utility import GuiUtility
 from distutils.util import strtobool
 
@@ -38,7 +38,7 @@ class FillStitchingTable(ParentHandler):
 
     def fillTableRunNumber(self):
         _run_number = self.parent.ui.reductionTable.item(self._row_index, 1).text()
-        _run_item = QtGui.QTableWidgetItem(_run_number)
+        _run_item = QtWidgets.QTableWidgetItem(_run_number)
         _run_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
         self.parent.ui.dataStitchingTable.setItem(self._row_index, 0, _run_item)
 
@@ -58,7 +58,7 @@ class FillStitchingTable(ParentHandler):
             _brush.setColor(QtCore.Qt.red)
 
         sf = "%.4f" %_sf
-        _auto_item = QtGui.QTableWidgetItem(sf)
+        _auto_item = QtWidgets.QTableWidgetItem(sf)
         _auto_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
         _auto_item.setForeground(_brush)
         self.parent.ui.dataStitchingTable.setItem(self._row_index, 1, _auto_item)
@@ -74,7 +74,7 @@ class FillStitchingTable(ParentHandler):
 
     def fillTableForClocking(self):
         sf_clock = "%.4f" % self._lconfig.sf_clocking
-        _item_clock = QtGui.QTableWidgetItem(sf_clock)
+        _item_clock = QtWidgets.QTableWidgetItem(sf_clock)
         _item_clock.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
         _brush = QtGui.QBrush()
         if self._lconfig.is_sf_clocking_used:

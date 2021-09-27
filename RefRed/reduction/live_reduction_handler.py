@@ -1,6 +1,6 @@
 import sys
 import logging
-from PyQt4.QtGui import QApplication
+from qtpy.QtWidgets import QApplication
 from RefRed.mantid_utility import MantidUtility
 from RefRed.lconfigdataset import LConfigDataset
 from RefRed.reduction.live_calculate_sf import LiveCalculateSF

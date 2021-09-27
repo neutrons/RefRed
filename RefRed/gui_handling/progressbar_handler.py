@@ -1,5 +1,5 @@
-from PyQt4 import QtCore, QtGui
-from PyQt4.QtGui import QApplication
+from qtpy import QtCore
+from qtpy.QtWidgets import QApplication
 import time
 
 

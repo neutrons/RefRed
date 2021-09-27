@@ -1,4 +1,4 @@
-from PyQt4 import QtGui, QtCore
+from qtpy import QtWidgets, QtCore
 
 class UpdateReductionTableMetadata(object):
     
@@ -21,21 +21,21 @@ class UpdateReductionTableMetadata(object):
         
         [qmin, qmax] = q_range
         str_qmin = "%.4f" % qmin
-        _item_min = QtGui.QTableWidgetItem(str_qmin)
+        _item_min = QtWidgets.QTableWidgetItem(str_qmin)
         _item_min.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)      
         str_qmax = "%.4f" % qmax
-        _item_max = QtGui.QTableWidgetItem(str_qmax)
+        _item_max = QtWidgets.QTableWidgetItem(str_qmax)
         _item_max.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)      
 
         [lmin, lmax] = lambda_range
-        _item_lmin = QtGui.QTableWidgetItem(str(lmin))
+        _item_lmin = QtWidgets.QTableWidgetItem(str(lmin))
         _item_lmin.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)      
-        _item_lmax = QtGui.QTableWidgetItem(str(lmax))
+        _item_lmax = QtWidgets.QTableWidgetItem(str(lmax))
         _item_lmax.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)      
 
         incident_angle = incident_angle
         str_incident_angle = "%.2f" % incident_angle
-        _item_incident = QtGui.QTableWidgetItem(str_incident_angle)
+        _item_incident = QtWidgets.QTableWidgetItem(str_incident_angle)
         _item_incident.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)      
         
         parent.ui.reductionTable.setItem(row, 6, _item_min)
@@ -51,4 +51,3 @@ class UpdateReductionTableMetadata(object):
         _element_min = min([_element1, _element2])
         _element_max = max([_element1, _element2])
         return [_element_min, _element_max]
-        

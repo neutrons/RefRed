@@ -2,7 +2,7 @@ import sys
 import time
 import numpy as np
 from itertools import chain
-from PyQt4.QtGui import QApplication
+from qtpy.QtWidgets import QApplication
 from mantid.simpleapi import *
 
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker

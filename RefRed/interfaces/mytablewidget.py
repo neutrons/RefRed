@@ -1,7 +1,7 @@
-from PyQt4 import QtGui
-from PyQt4.QtCore import Qt
+from qtpy import QtWidgets
+from qtpy.QtCore import Qt
 
-class MyTableWidget(QtGui.QTableWidget):
+class MyTableWidget(QtWidgets.QTableWidget):
     
     parent = None
     ui = None
@@ -19,4 +19,3 @@ class MyTableWidget(QtGui.QTableWidget):
             
     def setUI(self, ui_parent):
         self.parent = ui_parent
-            

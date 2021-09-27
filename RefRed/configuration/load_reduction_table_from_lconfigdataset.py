@@ -1,4 +1,4 @@
-from PyQt4 import QtGui
+from qtpy import QtGui, QtWidgets
 from RefRed.calculations.add_list_nexus import AddListNexus
 from RefRed.calculations.lr_data import LRData
 from RefRed.calculations.locate_list_run import LocateListRun
@@ -176,11 +176,8 @@ class LoadReductionTableFromLConfigDataSet(object):
             UpdateReductionTableMetadata(parent = self.parent,
                                          lrdata = lrdata, 
                                          row = row)
-            QtGui.QApplication.processEvents()                                             
+            QtWidgets.QApplication.processEvents()
         
         # change color of data/norm field to inform data have been loaded
         _color = QtGui.QColor(RefRed.colors.VALUE_OK)
         self.parent.ui.reductionTable.item(row, reduction_table_index_col).setForeground(_color)
-        
-        
-        

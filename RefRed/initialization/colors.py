@@ -1,4 +1,4 @@
-from PyQt4 import QtGui, QtCore
+from qtpy import QtGui, QtCore
 
 COLOR_LIST = ["#0000aa", "#19e91e", "#e9b619", "#e919dd", "#27aee6", "#e5e738", "#f07317","#0000aa", "#19e91e", "#e9b619", "#e919dd", "#27aee6", "#e5e738", "#f07317"]
 COLOR_BACKGROUND_LIST = ['#c0d2f0', '#c0d59e']

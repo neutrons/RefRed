@@ -1,5 +1,5 @@
 import numpy as np
-from PyQt4.QtCore import Qt
+from qtpy.QtCore import Qt
 
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.plot.clear_plots import ClearPlots

@@ -1,4 +1,4 @@
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 from RefRed import nexus_utilities
 import os
 
@@ -19,12 +19,12 @@ class BrowsingRuns(object):
         _path = self.parent.path_config
         _filter = ("NeXus (*.nxs);;All (*.*)")
         _title = "Select %s NeXus files" % self.data_type
-        filenames = QtGui.QFileDialog.getOpenFileNames(self.parent,
+        filenames = QtWidgets.QFileDialog.getOpenFileNames(self.parent,
                                                        _title,
                                                        _path,
                                                        _filter)
         
-        QtGui.QApplication.processEvents()
+        QtWidgets.QApplication.processEvents()
         if filenames == "":
             self.parent.browsed_files[self.data_type] = None
             return
@@ -48,4 +48,3 @@ class BrowsingRuns(object):
             self.parent.ui.data_sequence_lineEdit.setText(str_list)
         else:
             self.parent.ui.norm_sequence_lineEdit.setText(str_list)
-        

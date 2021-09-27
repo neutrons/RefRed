@@ -1,18 +1,17 @@
-from PyQt4 import QtGui, QtCore
-from PyQt4.QtCore import QSettings
+from qtpy import QtCore, QtWidgets
 from RefRed.interfaces.settings import Ui_MainWindow as UiMainWindow
 from RefRed.settings.settings_password_editor import SettingsPasswordEditor
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.settings.list_settings import ListSettings
 
 
-class SettingsEditor(QtGui.QMainWindow):
+class SettingsEditor(QtWidgets.QMainWindow):
     
     is_super_user = False
     
     def __init__(self, parent=None):
         self.parent = parent
-        QtGui.QMainWindow.__init__(self, parent=parent)
+        QtWidgets.QMainWindow.__init__(self, parent=parent)
         self.ui = UiMainWindow()
         self.ui.setupUi(self)
         self.populate_table()
@@ -28,7 +27,7 @@ class SettingsEditor(QtGui.QMainWindow):
         self.ui.tableWidget.setHorizontalHeaderLabels(['Value'])
 
         for _index, _key in enumerate(_gui_metadata.keys()):
-            _item = QtGui.QTableWidgetItem()
+            _item = QtWidgets.QTableWidgetItem()
             _item.setFlags(QtCore.Qt.ItemIsSelectable | 
                            QtCore.Qt.ItemIsEnabled | 
                            QtCore.Qt.ItemIsEditable)

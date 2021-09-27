@@ -1,5 +1,6 @@
-from PyQt4.QtGui import QDialog, QPalette, QFileDialog
-from PyQt4.QtCore import Qt
+from qtpy.QtGui import QPalette
+from qtpy.QtWidgets import QDialog, QFileDialog
+from qtpy.QtCore import Qt
 import os
 
 from RefRed.interfaces.plot2d_dialog_refl_interface import Ui_Dialog as UiPlot
@@ -565,4 +566,3 @@ class PopupPlot2d(QDialog):
             o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent = self.parent)
             o_auto_tof_range.setup()
             o_auto_tof_range.line_edit_validation()
-            

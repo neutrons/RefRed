@@ -1,5 +1,5 @@
 import sys
-from PyQt4 import QtGui, QtCore
+from qtpy import QtCore, QtWidgets
 import logging
 import numpy as np
 import os
@@ -46,9 +46,9 @@ from RefRed.about_dialog import AboutDialog
 from RefRed.browsing_runs import BrowsingRuns
 
 
-class MainGui(QtGui.QMainWindow):
+class MainGui(QtWidgets.QMainWindow):
     ''' Top class that handles the GUI '''
-    file_loaded_signal = QtCore.pyqtSignal()
+    file_loaded_signal = QtCore.Signal()
 
     # default location
     path_ascii = '.'  # ascii file such as scaling factor file
@@ -91,9 +91,9 @@ class MainGui(QtGui.QMainWindow):
 
     def __init__(self, argv=[], parent=None):
         if parent is None:
-            QtGui.QMainWindow.__init__(self)
+            QtWidgets.QMainWindow.__init__(self)
         else:
-            QtGui.QMainWindow.__init__(self, parent, QtCore.Qt.Window)
+            QtWidgets.QMainWindow.__init__(self, parent, QtCore.Qt.Window)
         self.ui=Ui_MainWindow()
         self.ui.setupUi(self)
 

@@ -1,6 +1,7 @@
 import os
-from PyQt4.QtGui import QDialog, QFileDialog, QPalette
-from PyQt4.QtCore import Qt
+from qtpy.QtGui import QPalette
+from qtpy.QtWidgets import QDialog, QFileDialog
+from qtpy.QtCore import Qt
 from mantid.simpleapi import *
 import numpy as np
 import time

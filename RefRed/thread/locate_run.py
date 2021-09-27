@@ -1,4 +1,4 @@
-from PyQt4 import QtCore
+from qtpy import QtCore
 import RefRed.nexus_utilities
 
 

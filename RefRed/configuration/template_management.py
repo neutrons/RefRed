@@ -4,15 +4,15 @@ import stat
 import re
 import shutil
 import numpy as np
-from PyQt4 import QtGui, QtCore
-from PyQt4.QtGui import QApplication
+from qtpy import QtGui, QtCore, QtWidgets
+from qtpy.QtWidgets import QApplication
 
 from RefRed.interfaces.template_management import Ui_MainWindow
 from RefRed.interfaces.confirm_auto_reduce_dialog import Ui_Dialog
 from RefRed.preview_config.preview_config import PreviewConfig
 
 
-class TemplateManagement(QtGui.QMainWindow):
+class TemplateManagement(QtWidgets.QMainWindow):
 
     _window_title = "Template Management - "
     _filter = "*template*.xml"
@@ -31,7 +31,7 @@ class TemplateManagement(QtGui.QMainWindow):
     def __init__(self, parent=None):
         self.parent = parent
 
-        QtGui.QMainWindow.__init__(self, parent=parent)
+        QtWidgets.QMainWindow.__init__(self, parent=parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self._init_gui()
@@ -50,11 +50,11 @@ class TemplateManagement(QtGui.QMainWindow):
 
     def browseFolderButton(self):
         _path = self._auto_reduce_folder
-        pathQFileDialog = QtGui.QFileDialog(self.parent)
+        pathQFileDialog = QtWidgets.QFileDialog(self.parent)
         folder = str(pathQFileDialog.getExistingDirectory(self,
                                                           'Select Template Folder',
                                                           _path,
-                                                          QtGui.QFileDialog.ShowDirsOnly))
+                                                          QtWidgets.QFileDialog.ShowDirsOnly))
 
         if folder == "":
             return
@@ -87,7 +87,7 @@ class TemplateManagement(QtGui.QMainWindow):
         for _row, _file in enumerate(_list_files):
             # name of file
             _short_file = os.path.basename(_file)
-            _item = QtGui.QTableWidgetItem(_short_file)
+            _item = QtWidgets.QTableWidgetItem(_short_file)
             self.ui.tableWidget.setItem(_row, 0, _item)
 
             # preview button
@@ -97,7 +97,7 @@ class TemplateManagement(QtGui.QMainWindow):
             else:
                 message = "Not a Template File"
             _is_list_files_a_template.append(_button_status)
-            _button = QtGui.QPushButton(message)
+            _button = QtWidgets.QPushButton(message)
             _button.setEnabled(_button_status)
             QtCore.QObject.connect(_button, QtCore.SIGNAL("clicked()"),
                                    lambda row=_row: self.preview_button(row))
@@ -105,7 +105,7 @@ class TemplateManagement(QtGui.QMainWindow):
             self.ui.tableWidget.setCellWidget(_row, 1, _button)
 
         self._is_list_files_a_template = _is_list_files_a_template
-        _default_selection = QtGui.QTableWidgetSelectionRange(0, 0, 0, 1)
+        _default_selection = QtWidgets.QTableWidgetSelectionRange(0, 0, 0, 1)
         self.ui.tableWidget.setRangeSelected(_default_selection, True)
 
         self.check_gui(row_selected = 0)
@@ -145,7 +145,7 @@ class TemplateManagement(QtGui.QMainWindow):
             o_preview_config.show()
             _current_selection = self.ui.tableWidget.selectedRanges()
             self.ui.tableWidget.setRangeSelected(_current_selection[0], False)
-            _selection = QtGui.QTableWidgetSelectionRange(_row, 0, _row, 1)
+            _selection = QtWidgets.QTableWidgetSelectionRange(_row, 0, _row, 1)
             self.ui.tableWidget.setRangeSelected(_selection, True)
         except:
             _widget = self.ui.tableWidget.cellWidget(_row, 1)
@@ -202,12 +202,12 @@ class TemplateManagement(QtGui.QMainWindow):
         self.close()
 
 
-class ConfirmAutoReduceDialog(QtGui.QDialog):
+class ConfirmAutoReduceDialog(QtWidgets.QDialog):
 
     def __init__(self, parent=None, filename=None, ipts=''):
         self.parent = parent
 
-        QtGui.QDialog.__init__(self, parent=parent)
+        QtWidgets.QDialog.__init__(self, parent=parent)
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
 
@@ -239,11 +239,11 @@ class ConfirmAutoReduceDialog(QtGui.QDialog):
 
     def browse_ipts(self):
         _path = self.parent._auto_reduce_folder
-        pathQFileDialog = QtGui.QFileDialog(self.parent)
+        pathQFileDialog = QtWidgets.QFileDialog(self.parent)
         folder = str(pathQFileDialog.getExistingDirectory(self,
                                                           'Select IPTS folder',
                                                           _path,
-                                                          QtGui.QFileDialog.ShowDirsOnly))
+                                                          QtWidgets.QFileDialog.ShowDirsOnly))
 
         if folder == "":
             return

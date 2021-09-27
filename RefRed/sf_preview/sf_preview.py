@@ -1,10 +1,10 @@
-from PyQt4 import QtGui, QtCore
+from qtpy import QtWidgets
 import numpy as np
 from RefRed.interfaces.sf_preview_interface import Ui_MainWindow
 from RefRed.sf_preview.sf_file_handler import SFFileHandler
 
 
-class SFPreview(QtGui.QMainWindow):
+class SFPreview(QtWidgets.QMainWindow):
     
     col_width = 100
     col_width1 = col_width + 50
@@ -16,7 +16,7 @@ class SFPreview(QtGui.QMainWindow):
     def __init__(self, parent=None, filename=''):
         self.parent = parent
         
-        QtGui.QMainWindow.__init__(self, parent=parent)
+        QtWidgets.QMainWindow.__init__(self, parent=parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
@@ -57,6 +57,6 @@ class SFPreview(QtGui.QMainWindow):
             self.ui.table_widget.insertRow(_row)
             for _col in range(nbr_col):
                 _value = values[_row][_col]
-                _item = QtGui.QTableWidgetItem()
+                _item = QtWidgets.QTableWidgetItem()
                 _item.setText(_value)
                 self.ui.table_widget.setItem(_row, _col, _item)

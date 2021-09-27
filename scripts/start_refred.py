@@ -6,8 +6,9 @@
 import os
 import sys
 # must be imported through qtpy before any other gui imports
-from PyQt4.QtGui import QApplication, QSplashScreen, QPixmap
-from PyQt4.QtCore import Qt
+from qtpy.QtWidgets import QApplication, QSplashScreen
+from qtpy.QtGui import QPixmap
+from qtpy.QtCore import Qt
 
 sys.path.insert(0, "/opt/mantid42/bin")
 sys.path.insert(1, "/opt/mantid42/lib")

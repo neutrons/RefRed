@@ -1,5 +1,5 @@
 import RefRed.colors
-from PyQt4 import QtCore, QtGui
+from qtpy import QtGui
 
 from RefRed.reduction_table_handling.check_list_run_compatibility import CheckListRunCompatibility
 from RefRed.calculations.add_list_nexus import AddListNexus

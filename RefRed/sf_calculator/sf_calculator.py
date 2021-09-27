@@ -4,7 +4,7 @@
 """
 import sys
 import os
-from PyQt4 import QtGui, QtCore
+from qtpy import QtGui, QtCore, QtWidgets
 import numpy as np
 import logging
 import time
@@ -32,7 +32,7 @@ def str2bool(v):
             return True
 
 
-class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
+class SFCalculator(QtWidgets.QMainWindow, Ui_SFCalculatorInterface):
     window_title = 'SF Calculator - '
     user_click_exit = False
     time_click1 = -1
@@ -48,7 +48,7 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
     list_nxsdata_sorted = []
 
     def __init__(self, instrument=None, instrument_list=None):
-        QtGui.QMainWindow.__init__(self)
+        QtWidgets.QMainWindow.__init__(self)
         self.setupUi(self)
         self.loaded_list_of_runs = []
 
@@ -61,9 +61,9 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         # Application settings
         settings = QtCore.QSettings()
         self._save_directory = settings.value("save_directory",
-                                              os.path.expanduser('~')).toString()
+                                              os.path.expanduser('~'))
         self._xml_config_dir = settings.value("xml_config_dir",
-                                              os.path.expanduser('~')).toString()
+                                              os.path.expanduser('~'))
         self.current_loaded_file = os.path.expanduser('~/new_configuration.xml')
 
         self.initGui()
@@ -112,7 +112,7 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         self.peak1_error.setPalette(palette)
         self.peak2_error.setPalette(palette)
         self.error_label.setPalette(palette)
-        self.event_progressbar = QtGui.QProgressBar(self.statusbar)
+        self.event_progressbar = QtWidgets.QProgressBar(self.statusbar)
         self.event_progressbar.setMinimumSize(20, 14)
         self.event_progressbar.setMaximumSize(140, 100)
         self.statusbar.addPermanentWidget(self.event_progressbar)
@@ -156,7 +156,7 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
 
     def update_table(self, sorter, finalize=True):
         if len(sorter.big_table) == 0:
-            QtGui.QMessageBox.information(self, "No Files Loaded!", "Check The list of runs")
+            QtWidgets.QMessageBox.information(self, "No Files Loaded!", "Check The list of runs")
             return
 
         self.big_table = sorter.big_table
@@ -229,10 +229,10 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
 
     def browseFile(self):
         _filter = u'SF config (*.cfg);;All (*.*)'
-        fileSelector = QtGui.QFileDialog()
-        fileSelector.setFileMode(QtGui.QFileDialog.AnyFile)
+        fileSelector = QtWidgets.QFileDialog()
+        fileSelector.setFileMode(QtWidgets.QFileDialog.AnyFile)
         fileSelector.setFilter(_filter)
-        fileSelector.setViewMode(QtGui.QFileDialog.List)
+        fileSelector.setViewMode(QtWidgets.QFileDialog.List)
         fileSelector.setDirectory(self.save_directory)
         if (fileSelector.exec_()):
             file_name = str(fileSelector.selectedFiles()[0])
@@ -347,12 +347,12 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
             if index == 0:
                 color = self.tableWidget.item(_row, 0).backgroundColor()
 
-            _item = QtGui.QTableWidgetItem("%s" %lambda_range[0])
+            _item = QtWidgets.QTableWidgetItem("%s" %lambda_range[0])
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             _item.setBackgroundColor(color)
             self.tableWidget.setItem(_row, 2, _item)
 
-            _item = QtGui.QTableWidgetItem("%s" %lambda_range[1])
+            _item = QtWidgets.QTableWidgetItem("%s" %lambda_range[1])
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             _item.setBackgroundColor(color)
             self.tableWidget.setItem(_row, 3, _item)
@@ -364,14 +364,14 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         for index, _row in enumerate(list_row):
             if index == 0:
                 color = self.tableWidget.item(_row, 0).backgroundColor()
-            _item = QtGui.QTableWidgetItem("%.2f"%tof1_ms)
+            _item = QtWidgets.QTableWidgetItem("%.2f"%tof1_ms)
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             _brush_OK = QtGui.QBrush()
             _brush_OK.setColor(RefRed.colors.VALUE_OK)
             _item.setForeground(_brush_OK)
             _item.setBackgroundColor(color)
             self.tableWidget.setItem(_row, 14, _item)
-            _item = QtGui.QTableWidgetItem("%.2f"%tof2_ms)
+            _item = QtWidgets.QTableWidgetItem("%.2f"%tof2_ms)
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             _brush_OK = QtGui.QBrush()
             _brush_OK.setColor(RefRed.colors.VALUE_OK)			
@@ -649,9 +649,9 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         if col != 0:
             return
         self.showWhichRowIsLoading(row)
-        QtGui.QApplication.processEvents()
+        QtWidgets.QApplication.processEvents()
         self.current_table_row_selected = row
-        rangeSelected = QtGui.QTableWidgetSelectionRange(row, 0, row, 15)
+        rangeSelected = QtWidgets.QTableWidgetSelectionRange(row, 0, row, 15)
         self.tableWidget.setRangeSelected(rangeSelected, True)
         self.displaySelectedRow(row)
         self.savePeakBackTofToBigTable(row)
@@ -663,18 +663,18 @@ class SFCalculator(QtGui.QMainWindow, Ui_SFCalculatorInterface):
         nbr_row = self.tableWidget.rowCount()
         for i in range(nbr_row):
             if row == i:
-                _item = QtGui.QTableWidgetItem("loading...")
+                _item = QtWidgets.QTableWidgetItem("loading...")
             else:
-                _item = QtGui.QTableWidgetItem("%d" % i)
+                _item = QtWidgets.QTableWidgetItem("%d" % i)
             self.tableWidget.setVerticalHeaderItem(i, _item)
 
     def showWhichRowIsActivated(self, row):
         nbr_row = self.tableWidget.rowCount()
         for i in range(nbr_row):
             if row == i:
-                _item = QtGui.QTableWidgetItem("ACTIVE")
+                _item = QtWidgets.QTableWidgetItem("ACTIVE")
             else:
-                _item = QtGui.QTableWidgetItem("%d" % i)
+                _item = QtWidgets.QTableWidgetItem("%d" % i)
             self.tableWidget.setVerticalHeaderItem(i, _item)
 
     def displaySelectedRow(self, row):
