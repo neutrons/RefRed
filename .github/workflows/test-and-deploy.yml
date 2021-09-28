@@ -15,6 +15,11 @@ jobs:
        include:
          - python-version: 2.7
            env: "prod"
+
+    defaults:
+      run:
+        shell: bash -l {0}
+
     steps:
       - uses: actions/checkout@v2
       - uses: conda-incubator/setup-miniconda@v2
@@ -29,28 +34,14 @@ jobs:
             python --version
             pwd
             ls
-        shell: bash -l {0}
       - name: Install Dependencies
-        run: |
-            chmod +x ${GITHUB_WORKSPACE}/.github/scripts/install.sh
-            ${GITHUB_WORKSPACE}/.github/scripts/install.sh
+        run: .github/scripts/install.sh
         env:
           PYTHON_ VERSION: ${{ matrix.python-version }}
-        shell: bash -l {0}
       - name: Setup Test Env and Run Tests
-        run: |
-          chmod +x ${GITHUB_WORKSPACE}/.github/scripts/test.sh
-          ${GITHUB_WORKSPACE}/.github/scripts/test.sh
-        env:
-          PYTHON_ VERSION: ${{ matrix.python-version }}
-        shell: bash -l {0}
-      - name: Run Codecov
-        run: |
-          ls
-          cd test
-          ls
-          codecov
-        shell: bash -l {0}
+        run: .github/scripts/test.sh
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
 
       - name: Trigger ORNL GitLab Pipeline for PROD
         if: ${{ github.ref == 'refs/heads/main' }}
