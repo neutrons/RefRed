@@ -4,6 +4,8 @@ Compute Scaling factors
 1- In the `Tools` menu, select `SF Calculator`.
 A new window will pop-up.
 
+.. image:: sf-calculator.png
+
 2- The new window only has one activated field to enter a range of run
 numbers. Enter the following run range: `184975-184989` and click enter.
 Data loading and automated peak finding takes a minute or so.
