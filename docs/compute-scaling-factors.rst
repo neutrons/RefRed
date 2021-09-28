@@ -6,6 +6,7 @@ A new window will pop-up.
 
 2- The new window only has one activated field to enter a range of run
 numbers. Enter the following run range: `184975-184989` and click enter.
+Data loading and automated peak finding takes a minute or so.
 
 3- The table will be populated with all the runs in the selected range.
 For each run, the peak will be selected automatically. You can browse through the runs
