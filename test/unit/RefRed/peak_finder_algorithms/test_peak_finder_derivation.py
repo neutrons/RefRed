@@ -55,7 +55,7 @@ class TestPeakFinderDerivation(object):
 
     def test_calculatefirstderivative_yaxis(self, data_server):
         '''Step4 - derivative: testing the first derivative calculation - axis y'''
-        [xdata, ydata, edata] = loadCsvFile('data/easy_data_set.csv')
+        [xdata, ydata, edata] = loadCsvFile(data_server.path_to('easy_data_set.csv'))
         peakfinder = PeakFinderDerivation(xdata, ydata, edata)
         [_, ydata_first] = peakfinder.getFirstDerivative()
         ydata10 = ydata_first[0:10]
@@ -122,7 +122,7 @@ class TestPeakFinderDerivation(object):
         [xdata, ydata, edata] = loadCsvFile(data_server.path_to('hard_data_set.csv'))
         peakfinder1 = PeakFinderDerivation(xdata, ydata, edata)
         peaks = peakfinder1.getPeaks()
-        assert peaks == pytest.approx([145, 167], abs=0.001)
+        assert peaks == pytest.approx([145, 164], abs=0.001)
 
 
 if __name__ == '__main__':
