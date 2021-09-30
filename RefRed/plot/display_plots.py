@@ -1,4 +1,3 @@
-from PyQt4 import QtGui, QtCore
 import RefRed.colors as colors
 import bisect
 from RefRed.plot.clear_plots import ClearPlots

@@ -1,5 +1,6 @@
-from PyQt4.QtGui import QMainWindow, QPalette, QTableWidgetItem, QCheckBox, QFileDialog, QMessageBox, QPushButton, QPixmap, QIcon
-from PyQt4.QtCore import Qt, QSize, QSettings, QVariant
+from qtpy.QtGui import QPalette, QPixmap, QIcon
+from qtpy.QtWidgets import QMainWindow, QCheckBox, QTableWidgetItem, QFileDialog, QMessageBox, QPushButton
+from qtpy.QtCore import Qt, QSize, QSettings
 from mantid.simpleapi import *
 import os
 import time
@@ -87,12 +88,12 @@ class MetadataFinder(QMainWindow):
 
     def retrieveListMetadataPreviouslySelected(self):
         settings = QSettings()
-        nbr_metadata = str(settings.value("nbr_metadata").toString())
+        nbr_metadata = str(settings.value("nbr_metadata"))
         list_metadata_selected = []
         if nbr_metadata is not '':
             for index in range(int(nbr_metadata)):
                 _name = 'metadata_#%d' %index
-                _value = settings.value(_name).toString()
+                _value = str(settings.value(_name))
                 list_metadata_selected.append(_value)
         self.list_metadata_selected = list_metadata_selected
         _list_values = self.list_values

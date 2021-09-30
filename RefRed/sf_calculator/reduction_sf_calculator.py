@@ -1,4 +1,4 @@
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 import time
 import os
 import mantid.simpleapi as api
@@ -28,7 +28,7 @@ class ReductionSfCalculator(object):
             #TODO: get last path from QSettings
             _path = os.path.expanduser('~')
             _filter = u'python (*.py);;All (*.*)'
-            filename = QtGui.QFileDialog.getSaveFileName(self.sf_gui, 'Export Script File', _path, filter=_filter)
+            filename = QtWidgets.QFileDialog.getSaveFileName(self.sf_gui, 'Export Script File', _path, filter=_filter)
             if not(filename == ''):
                 self.export_script_file = filename
             else:
@@ -89,7 +89,7 @@ class ReductionSfCalculator(object):
                     fd.write(script)
 
             self.sf_gui.updateProgressBar(float(i + 1) / float(nbr_scripts))
-            QtGui.QApplication.processEvents()
+            QtWidgets.QApplication.processEvents()
 
     def _get_algorithm_params(self, run_string, list_peak_back):
         """

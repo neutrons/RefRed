@@ -1,4 +1,4 @@
-from PyQt4 import QtGui, QtCore
+from qtpy import QtWidgets, QtCore
 import numpy as np
 
 from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
@@ -80,10 +80,10 @@ class StitchingAsciiWidget(object):
 
 			self.tableUi.insertRow(i)
 
-			_item = QtGui.QTableWidgetItem(str(_data_object.shortAsciiFilename))
+			_item = QtWidgets.QTableWidgetItem(str(_data_object.shortAsciiFilename))
 			self.tableUi.setItem(i,0,_item)
 			
-			_widget = QtGui.QCheckBox()
+			_widget = QtWidgets.QCheckBox()
 			if _data_object.isEnabled():
 				_status = QtCore.Qt.Checked
 			else:

@@ -1,5 +1,6 @@
-from PyQt4.QtGui import QDialog, QPalette, QFileDialog
-from PyQt4.QtCore import Qt
+from qtpy.QtGui import QPalette
+from qtpy.QtWidgets import QDialog, QFileDialog
+from qtpy.QtCore import Qt
 import os
 import bisect
 

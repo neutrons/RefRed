@@ -1,4 +1,4 @@
-from PyQt4 import QtGui, QtCore
+from qtpy import QtGui, QtCore, QtWidgets
 import socket
 
 from RefRed.version import window_title
@@ -89,7 +89,7 @@ class Gui(object):
         parent.setWindowTitle(u'%s%s' %(window_title, '~/tmp.xml'))
 
     def set_gui_size(self):
-        screen = QtGui.QDesktopWidget().screenGeometry()
+        screen = QtWidgets.QDesktopWidget().screenGeometry()
         self.parent.setGeometry(50, 50, self.gui_size_coeff*screen.width(), 
                                 self.gui_size_coeff*screen.height())
 
@@ -98,7 +98,7 @@ class Gui(object):
         ''' Add the statusbar widgets '''
         parent = self.parent
 
-        parent.eventProgress=QtGui.QProgressBar(parent.ui.statusbar)
+        parent.eventProgress=QtWidgets.QProgressBar(parent.ui.statusbar)
         parent.eventProgress.setMinimumSize(20, 14)
         parent.eventProgress.setMaximumSize(140, 100)
         parent.eventProgress.setVisible(False)
@@ -120,7 +120,7 @@ class Gui(object):
         for row_index in range(self.parent.nbr_row_table_reduction):
             for col_index in range(len(self.column_widths)):
                 if col_index == 0:
-                    _widget = QtGui.QCheckBox()
+                    _widget = QtWidgets.QCheckBox()
                     _widget.setChecked(False)
                     _widget.setEnabled(True)
 
@@ -129,12 +129,12 @@ class Gui(object):
 
                     parent.ui.reductionTable.setCellWidget(row_index, col_index, _widget)
                 elif (col_index == 1) or (col_index == 2):
-                    _item = QtGui.QTableWidgetItem()
+                    _item = QtWidgets.QTableWidgetItem()
                     _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
                     parent.ui.reductionTable.setItem(row_index, col_index, _item)
 
                 else:
-                    _item = QtGui.QTableWidgetItem()
+                    _item = QtWidgets.QTableWidgetItem()
                     _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
                     parent.ui.reductionTable.setItem(row_index, col_index, _item)
 
@@ -176,7 +176,7 @@ class Gui(object):
         parent.ui.reducedAsciiDataSetTable.setColumnWidth(1,50)
         
         for row_index in range(self.parent.nbr_row_table_ascii):
-            _widget = QtGui.QCheckBox()
+            _widget = QtWidgets.QCheckBox()
             _widget.setChecked(False)
             _widget.setEnabled(True)
             

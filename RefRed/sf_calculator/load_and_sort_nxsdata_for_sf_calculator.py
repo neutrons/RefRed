@@ -1,4 +1,4 @@
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 import numpy as np
 import mantid.simpleapi as api
 
@@ -54,7 +54,7 @@ class LoadAndSortNXSDataForSFcalculator(object):
                         self.list_NXSData_sorted = self.list_NXSData
                     self.fillTable()
                     self.sf_gui.update_table(self, False)
-                    QtGui.QApplication.processEvents()
+                    QtWidgets.QApplication.processEvents()
 
     def sortNXSData(self):
         if self.list_NXSData == []:

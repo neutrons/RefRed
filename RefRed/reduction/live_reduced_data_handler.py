@@ -1,4 +1,4 @@
-from PyQt4.QtGui import QApplication
+from qtpy.QtWidgets import QApplication
 import numpy as np
 
 from RefRed.gui_handling.gui_utility import GuiUtility

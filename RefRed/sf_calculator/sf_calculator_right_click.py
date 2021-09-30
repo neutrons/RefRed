@@ -1,4 +1,4 @@
-from PyQt4 import QtGui
+from qtpy import QtGui, QtWidgets
 
 from RefRed.sf_calculator.sf_calculator_table_handler import SFCalculatorTableHandler
 
@@ -9,7 +9,7 @@ class SFCalculatorRightClick(object):
         self.position = position
 
     def run(self):
-        menu = QtGui.QMenu(self.parent)
+        menu = QtWidgets.QMenu(self.parent)
         clear_table = menu.addAction("Clear Table")
         action = menu.exec_(QtGui.QCursor.pos())
 

@@ -1,4 +1,5 @@
-from PyQt4 import QtGui, QtCore
+from qtpy import QtGui, QtCore
+from qtpy import QtWidgets
 import RefRed.colors
 
 
@@ -45,11 +46,11 @@ class FillSFGuiTable(object):
             parent.tableWidget.insertRow(r)
 
             if r == 0:
-                _item = QtGui.QTableWidgetItem("ACTIVE")
+                _item = QtWidgets.QTableWidgetItem("ACTIVE")
                 parent.tableWidget.setVerticalHeaderItem(r, _item)
 
             _atte = int(_row[1])
-            _widget = QtGui.QSpinBox()
+            _widget = QtWidgets.QSpinBox()
             _widget.setMinimum(0)
             _widget.setMaximum(20)
             _widget.setValue(_atte)
@@ -58,56 +59,56 @@ class FillSFGuiTable(object):
             parent.tableWidget.setCellWidget(r,1,_widget)
 
             _lambda_min = str(float(_row[2]))
-            _item = QtGui.QTableWidgetItem(_lambda_min)
+            _item = QtWidgets.QTableWidgetItem(_lambda_min)
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             _color = QtGui.QColor(back_color)
             _item.setBackgroundColor(_color)
             parent.tableWidget.setItem(r,2,_item)
 
             _lambda_max = str(float(_row[3]))
-            _item = QtGui.QTableWidgetItem(_lambda_max)
+            _item = QtWidgets.QTableWidgetItem(_lambda_max)
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             _color = QtGui.QColor(back_color)
             _item.setBackgroundColor(_color)
             parent.tableWidget.setItem(r,3,_item)
 
             _proton_charge = ("%.2e"%(float(_row[4])))
-            _item = QtGui.QTableWidgetItem(_proton_charge)
+            _item = QtWidgets.QTableWidgetItem(_proton_charge)
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             _color = QtGui.QColor(back_color)
             _item.setBackgroundColor(_color)
             parent.tableWidget.setItem(r,4,_item)
 
             _lambda_req = ("%.2f" %(float(_row[5])))
-            _item = QtGui.QTableWidgetItem(_lambda_req)
+            _item = QtWidgets.QTableWidgetItem(_lambda_req)
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             _color = QtGui.QColor(back_color)
             _item.setBackgroundColor(_color)
             parent.tableWidget.setItem(r,5,_item)
 
             _s1w = ("%.2f"%(float(_row[6])))
-            _item = QtGui.QTableWidgetItem(_s1w)
+            _item = QtWidgets.QTableWidgetItem(_s1w)
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             _color = QtGui.QColor(back_color)
             _item.setBackgroundColor(_color)
             parent.tableWidget.setItem(r,6,_item)
 
             _s1h = ("%.2f"%(float(_row[7])))
-            _item = QtGui.QTableWidgetItem(_s1h)
+            _item = QtWidgets.QTableWidgetItem(_s1h)
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             _color = QtGui.QColor(back_color)
             _item.setBackgroundColor(_color)
             parent.tableWidget.setItem(r,7,_item)
 
             _s2iw = ("%.2f"%(float(_row[8])))
-            _item = QtGui.QTableWidgetItem(_s2iw)
+            _item = QtWidgets.QTableWidgetItem(_s2iw)
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             _color = QtGui.QColor(back_color)
             _item.setBackgroundColor(_color)
             parent.tableWidget.setItem(r,8,_item)
 
             _s2ih = ("%.2f"%(float(_row[9])))
-            _item = QtGui.QTableWidgetItem(_s2ih)
+            _item = QtWidgets.QTableWidgetItem(_s2ih)
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             _color = QtGui.QColor(back_color)
             _item.setBackgroundColor(_color)
@@ -130,7 +131,7 @@ class FillSFGuiTable(object):
                     else:
                         _value = "%.d"%(int(float(_value)))
                     _brush.setColor(RefRed.colors.VALUE_OK)
-                _item = QtGui.QTableWidgetItem(_value)
+                _item = QtWidgets.QTableWidgetItem(_value)
                 _item.setForeground(_brush)
                 _color = QtGui.QColor(back_color)
                 _item.setBackgroundColor(_color)
@@ -147,7 +148,7 @@ class FillSFGuiTable(object):
             else:
                 _brush.setColor(RefRed.colors.VALUE_OK)
             _brush_back = QtGui.QBrush()
-            _item = QtGui.QTableWidgetItem(_run_number)
+            _item = QtWidgets.QTableWidgetItem(_run_number)
             _item.setForeground(_brush)
             _color = QtGui.QColor(back_color)
             _item.setBackgroundColor(_color)

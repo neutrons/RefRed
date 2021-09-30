@@ -1,4 +1,4 @@
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 import os
 from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
 from RefRed.load_reduced_data_set.stitching_ascii_widget import StitchingAsciiWidget
@@ -14,11 +14,11 @@ class LoadReducedDataSetHandler(object):
     def run(self):
         _path = self.parent.path_ascii
         _filter = u"Ascii File (*.txt);; All (*.*)"
-        filename = str(QtGui.QFileDialog.getOpenFileName(self.parent, 'Open Reduced Data Set',
+        filename = str(QtWidgets.QFileDialog.getOpenFileName(self.parent, 'Open Reduced Data Set',
                                                      directory=_path,
                                                      filter=_filter))
 
-        QtGui.QApplication.processEvents()
+        QtWidgets.QApplication.processEvents()
         if not (filename== ""):
 
             _new_path = os.path.dirname(filename)

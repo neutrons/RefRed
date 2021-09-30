@@ -1,5 +1,5 @@
-from PyQt4 import QtGui, QtCore
-from PyQt4.QtCore import Qt
+from qtpy import QtWidgets
+from qtpy.QtCore import Qt
 import numpy as np
 
 from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
@@ -101,7 +101,7 @@ class StitchingAsciiWidget(object):
 
             _data_object = self.loaded_ascii_array[i]
 
-            _item = QtGui.QTableWidgetItem(str(_data_object.short_ascii_file_name))
+            _item = QtWidgets.QTableWidgetItem(str(_data_object.short_ascii_file_name))
             self.tableUi.setItem(i,0,_item)
 
             _widget = self.tableUi.cellWidget(i, 1)

@@ -1,5 +1,6 @@
-from PyQt4.QtGui import QMainWindow, QPalette, QCheckBox, QTableWidgetItem, QFileDialog, QPixmap, QIcon
-from PyQt4.QtCore import QSize, QSettings, QVariant
+from qtpy.QtGui import QPixmap, QIcon
+from qtpy.QtWidgets import QMainWindow, QCheckBox, QTableWidgetItem, QFileDialog
+from qtpy.QtCore import QSize, QSettings
 from xml.dom import minidom
 import numpy as np
 import os
@@ -175,12 +176,12 @@ class DisplayMetadata(QMainWindow):
 		
 	def retrieveListMetadataPreviouslySelected(self):
 		settings = QSettings()
-		nbr_metadata = str(settings.value("nbr_metadata").toString())
+		nbr_metadata = str(settings.value("nbr_metadata"))
 		list_metadata_selected = []
 		if nbr_metadata is not '':
 			for index in range(int(nbr_metadata)):
 				_name = 'metadata_#%d' %index
-				_value = settings.value(_name).toString()
+				_value = str(settings.value(_name))
 				list_metadata_selected.append(_value)
 		self.list_metadata_selected = list_metadata_selected
 		_list_values = self.list_values

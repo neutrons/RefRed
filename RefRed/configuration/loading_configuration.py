@@ -1,5 +1,5 @@
 import os
-from PyQt4 import QtGui, QtCore
+from qtpy import QtGui, QtCore, QtWidgets
 from xml.dom import minidom
 from numpy import empty
 from RefRed.lconfigdataset import LConfigDataset
@@ -30,16 +30,16 @@ class LoadingConfiguration(object):
         _path = self.parent.path_config
         _filter = ("XML (*.xml);; All Files (*.*)")
         filename = ""
-        file_dialog = QtGui.QFileDialog(self.parent,
+        file_dialog = QtWidgets.QFileDialog(self.parent,
                                         'Open Configuration File',
                                         _path,
                                         _filter)
-        file_dialog.setViewMode(QtGui.QFileDialog.List)
+        file_dialog.setViewMode(QtWidgets.QFileDialog.List)
         if file_dialog.exec_():
             filename = file_dialog.selectedFiles()
-        if isinstance(filename, QtCore.QStringList):
+        if isinstance(filename, list):
             filename = filename[-1]
-        QtGui.QApplication.processEvents()
+        QtWidgets.QApplication.processEvents()
         if not (filename == "") and os.path.isfile(filename):
             self.filename = str(filename)
             self.loading()
@@ -248,7 +248,7 @@ class LoadingConfiguration(object):
 
     def populate_reduction_table_from_lconfigdataset(self):
         PopulateReductionTable(parent = self.parent)
-        QtGui.QApplication.processEvents()
+        QtWidgets.QApplication.processEvents()
 
     def load_reduction_table_from_lconfigdataset(self):
         LoadReductionTable(parent = self.parent)

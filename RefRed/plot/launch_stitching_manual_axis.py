@@ -1,4 +1,4 @@
-from PyQt4.QtGui import QMainWindow
+from qtpy.QtWidgets import QMainWindow
 from RefRed.interfaces.manual_x_axis_interface import Ui_MainWindow as UiMainWindowXaxis
 from RefRed.interfaces.manual_y_axis_interface import Ui_MainWindow as UiMainWindowYaxis
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler

@@ -1,11 +1,11 @@
-from PyQt4 import QtGui
+from qtpy import QtGui, QtWidgets
 from xml.dom import minidom
 from numpy import empty
 from RefRed.interfaces.preview_configuration import Ui_MainWindow as UiMainWindow
 import RefRed.colors
 
 
-class PreviewConfig(QtGui.QMainWindow):
+class PreviewConfig(QtWidgets.QMainWindow):
     
     system_name = ['instrument_name',
                    'timestamp',
@@ -76,7 +76,7 @@ class PreviewConfig(QtGui.QMainWindow):
             self.check_format()
             return
         
-        QtGui.QMainWindow.__init__(self, parent=parent)
+        QtWidgets.QMainWindow.__init__(self, parent=parent)
         self.ui = UiMainWindow()
         self.ui.setupUi(self)
         _title = self._title
@@ -172,7 +172,7 @@ class PreviewConfig(QtGui.QMainWindow):
         self.ui.previewTableWidget.setColumnCount(nbr_column)
         for _column in range(nbr_column):
             for _row in range(nbr_row):
-                _item = QtGui.QTableWidgetItem(_data_table[_column, _row])
+                _item = QtWidgets.QTableWidgetItem(_data_table[_column, _row])
                 if _row in self._colored_row:
                     _brush = QtGui.QBrush()
                     _brush.setColor(RefRed.colors.VALUE_OK)
@@ -206,7 +206,7 @@ class PreviewConfig(QtGui.QMainWindow):
         self.ui.systemTableWidget.setColumnCount(1)
 
         for _row in range(nbr_row):
-            _item = QtGui.QTableWidgetItem(_system_table[_row])
+            _item = QtWidgets.QTableWidgetItem(_system_table[_row])
             #if _row in self._colored_row:
                 #_brush = QtGui.QBrush()
                 #_brush.setColor(RefRed.colors.VALUE_OK)
@@ -218,11 +218,8 @@ class PreviewConfig(QtGui.QMainWindow):
         _path = self.parent.path_config
         _title = "Select Configuration File"
         _filter = ("Config (*.xml)")
-        filename = QtGui.QFileDialog.getOpenFileName(self,
+        filename = QtWidgets.QFileDialog.getOpenFileName(self,
                                                      _title,
                                                      _path,
                                                      _filter)
         return str(filename)
-        
-        
-        

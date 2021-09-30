@@ -1,4 +1,4 @@
-from PyQt4.QtCore import QSettings
+from qtpy.QtCore import QSettings
 import os
 from RefRed.configuration.user_configuration import UserConfiguration
 from RefRed.utilities import str2bool
@@ -12,16 +12,16 @@ class RetrieveUserConfiguration(object):
         
         settings = QSettings()
         self.parent.path_ascii = str(settings.value("path_ascii", 
-                                                    os.path.expanduser('~')).toString())
+                                                    os.path.expanduser('~')))
 
         self.parent.path_config = str(settings.value("path_config", 
-                                                    os.path.expanduser('~')).toString())
+                                                    os.path.expanduser('~')))
         
         o_user_config = UserConfiguration()
-        ylog_value = str(settings.value("is_reduced_plot_stitching_tab_ylog").toString())
+        ylog_value = str(settings.value("is_reduced_plot_stitching_tab_ylog"))
         if ylog_value is not '':
             o_user_config.is_reduced_plot_stitching_tab_ylog = str2bool(ylog_value)
-        xlog_value = str(settings.value("is_reduced_plot_stitching_tab_xlog").toString())
+        xlog_value = str(settings.value("is_reduced_plot_stitching_tab_xlog"))
         if xlog_value is not '':
             o_user_config.is_reduced_plot_stitching_tab_xlog = str2bool(xlog_value)
         self.parent.o_user_configuration = o_user_config

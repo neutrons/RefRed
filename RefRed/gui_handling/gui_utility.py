@@ -1,4 +1,4 @@
-from PyQt4.QtCore import Qt
+from qtpy.QtCore import Qt
 import RefRed.version
 
 

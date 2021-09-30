@@ -1,7 +1,7 @@
 '''
   Module for useful decorators
 '''
-from PyQt4 import QtGui, QtCore
+from qtpy import QtGui, QtCore, QtWidgets
 from RefRed.version import window_title
 #
 # Help functions adopted from Michele Simionato's decorator module
@@ -30,7 +30,7 @@ def config_file_has_been_modified(function):
 
 def waiting_effects(function):
     def new_function(self, *args, **kw):
-        QtGui.QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
+        QtWidgets.QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
         function(self, *args, **kw)
-        QtGui.QApplication.restoreOverrideCursor()
+        QtWidgets.QApplication.restoreOverrideCursor()
     return new_function

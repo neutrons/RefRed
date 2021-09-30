@@ -4,11 +4,11 @@
 # Form implementation generated from reading ui file 'designer//settings.ui'
 #
 # Created: Fri May 20 10:03:32 2016
-#      by: PyQt4 UI code generator 4.10.1
+#      by: qtpy UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -17,58 +17,58 @@ except AttributeError:
         return s
 
 try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
+    _encoding = QtWidgets.QApplication.UnicodeUTF8
     def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+        return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+        return QtWidgets.QApplication.translate(context, text, disambig)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
         MainWindow.setWindowModality(QtCore.Qt.NonModal)
         MainWindow.resize(800, 600)
-        self.centralwidget = QtGui.QWidget(MainWindow)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
-        self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.label = QtGui.QLabel(self.centralwidget)
+        self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setObjectName(_fromUtf8("label"))
         self.verticalLayout.addWidget(self.label)
-        self.tableWidget = QtGui.QTableWidget(self.centralwidget)
+        self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.tableWidget.setEnabled(False)
         self.tableWidget.setAlternatingRowColors(True)
         self.tableWidget.setObjectName(_fromUtf8("tableWidget"))
         self.tableWidget.setColumnCount(1)
         self.tableWidget.setRowCount(2)
-        item = QtGui.QTableWidgetItem()
+        item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setVerticalHeaderItem(0, item)
-        item = QtGui.QTableWidgetItem()
+        item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setVerticalHeaderItem(1, item)
-        item = QtGui.QTableWidgetItem()
+        item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, item)
         self.verticalLayout.addWidget(self.tableWidget)
-        self.label_2 = QtGui.QLabel(self.centralwidget)
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.verticalLayout.addWidget(self.label_2)
-        self.lockButton = QtGui.QPushButton(self.centralwidget)
+        self.lockButton = QtWidgets.QPushButton(self.centralwidget)
         self.lockButton.setObjectName(_fromUtf8("lockButton"))
         self.verticalLayout.addWidget(self.lockButton)
         MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtGui.QMenuBar(MainWindow)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 25))
         self.menubar.setObjectName(_fromUtf8("menubar"))
-        self.menuFile = QtGui.QMenu(self.menubar)
+        self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName(_fromUtf8("menuFile"))
         MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtGui.QStatusBar(MainWindow)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
         MainWindow.setStatusBar(self.statusbar)
-        self.actionSave = QtGui.QAction(MainWindow)
+        self.actionSave = QtWidgets.QAction(MainWindow)
         self.actionSave.setEnabled(False)
         self.actionSave.setObjectName(_fromUtf8("actionSave"))
-        self.actionReset = QtGui.QAction(MainWindow)
+        self.actionReset = QtWidgets.QAction(MainWindow)
         self.actionReset.setEnabled(True)
         self.actionReset.setObjectName(_fromUtf8("actionReset"))
         self.menuFile.addSeparator()
