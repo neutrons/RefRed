@@ -1,4 +1,5 @@
 from qtpy import QtGui, QtCore
+from qtpy import QtWidgets
 from RefRed.gui_handling.gui_utility import GuiUtility
 from distutils.util import strtobool
 

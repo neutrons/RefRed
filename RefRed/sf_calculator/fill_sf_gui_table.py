@@ -1,4 +1,5 @@
 from qtpy import QtGui, QtCore
+from qtpy import QtWidgets
 import RefRed.colors
 
 
