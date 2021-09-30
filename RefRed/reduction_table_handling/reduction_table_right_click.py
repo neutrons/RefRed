@@ -1,4 +1,4 @@
-from qtpy import QtGui
+from qtpy import QtGui, QtWidgets
 
 from RefRed.reduction_table_handling.reduction_table_handler import ReductionTableHandler
 from RefRed.metadata.display_metadata import DisplayMetadata

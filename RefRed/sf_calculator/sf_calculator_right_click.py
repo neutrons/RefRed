@@ -1,4 +1,4 @@
-from qtpy import QtGui
+from qtpy import QtGui, QtWidgets
 
 from RefRed.sf_calculator.sf_calculator_table_handler import SFCalculatorTableHandler
 

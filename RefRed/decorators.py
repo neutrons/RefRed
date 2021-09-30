@@ -1,7 +1,7 @@
 '''
   Module for useful decorators
 '''
-from qtpy import QtGui, QtCore
+from qtpy import QtGui, QtCore, QtWidgets
 from RefRed.version import window_title
 #
 # Help functions adopted from Michele Simionato's decorator module
