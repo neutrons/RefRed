@@ -1,4 +1,5 @@
-from mantid.simpleapi import *
+from mantid.api import mtd
+
 
 class CheckIfSameNxsProperty(object):
 

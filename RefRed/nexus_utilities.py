@@ -1,5 +1,6 @@
 import sys
-from mantid.simpleapi import *
+from mantid.kernel import logger
+from mantid.api import FileFinder
 import h5py
 
 def findNeXusFullPath(run_number):
@@ -9,6 +10,7 @@ def findNeXusFullPath(run_number):
         logger.error("Could not find file: %s" % sys.exc_value)
         full_file_name = ''
     return full_file_name
+
 
 def get_run_number(nexus_full_path):
     with h5py.File(nexus_full_path, 'r') as hf:

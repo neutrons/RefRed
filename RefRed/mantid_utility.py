@@ -1,4 +1,5 @@
-from mantid.simpleapi import *
+from mantid.api import AnalysisDataService
+from mantid.simpleapi import DeleteWorkspace
 
 
 class MantidUtility(object):
@@ -9,5 +10,5 @@ class MantidUtility(object):
     def cleanup_workspaces(self):
         ws_list = AnalysisDataService.getObjectNames()
         for _ws in ws_list:
-#            if (_ws.endswith('_rebin') or _ws.startswith('_')):
+            # if (_ws.endswith('_rebin') or _ws.startswith('_')):
             DeleteWorkspace(_ws)

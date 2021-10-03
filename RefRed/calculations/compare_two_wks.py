@@ -1,4 +1,5 @@
-from mantid.simpleapi import *
+from mantid.api import mtd
+
 
 class CompareTwoWks(object):
     '''
@@ -61,4 +62,3 @@ class CompareTwoWks(object):
 
     def result(self):
         return self.result_comparison
-    

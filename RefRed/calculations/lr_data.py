@@ -4,7 +4,8 @@ import math
 import os
 import gc
 
-from mantid.simpleapi import *
+from mantd.api import mtd
+from mantid.simpleapi import Rebin
 from RefRed.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
 from RefRed.low_res_finder_algorithms.low_res_finder import LowResFinder
 from RefRed.clocking_algorithms.clocking_finder import ClockingFinder
@@ -136,7 +137,7 @@ class LRData(object):
                 autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff + \
                 tof_coeff_narrow) * 1e-4
 
-        # automatically calcualte the TOF range for display
+        # automatically calculate the TOF range for display
         if self.is_better_chopper_coverage:
             tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - tof_coeff_large) * 1e-4
             tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff_large) * 1e-4
@@ -156,7 +157,7 @@ class LRData(object):
 
         self.binning = [tmin, self.read_options['bins'], tmax]
         self.calculate_lambda_range()
-        self.incident_angle = 2.*self.calculate_theta(with_offset = False) # 2.theta
+        self.incident_angle = 2. * self.calculate_theta(with_offset=False)  # 2.theta
         self.calculate_q_range()
         # self.lambda_range = self.calculate_lambda_range()
 
@@ -209,7 +210,7 @@ class LRData(object):
             else:
                 clocking_pf = LowResFinder(range(len(self.ycountsdata)), self.ycountsdata)
                 [clocking1, clocking2] = clocking_pf.get_low_res()
-                self.clocking  = [str(clocking1), str(clocking2)]
+                self.clocking = [str(clocking1), str(clocking2)]
 
             self.tof_auto_flag = np.bool(lconfig.tof_auto_flag)
 
@@ -331,10 +332,10 @@ class LRData(object):
 
     def read_data(self):
         output_workspace_name = self.workspace_name + '_rebin'
-        nxs_histo = Rebin(InputWorkspace = self.workspace, 
-                          OutputWorkspace = output_workspace_name,
-                          Params = self.binning,
-                          PreserveEvents = True)
+        nxs_histo = Rebin(InputWorkspace=self.workspace,
+                          OutputWorkspace=output_workspace_name,
+                          Params=self.binning,
+                          PreserveEvents=True)
         # retrieve 3D array
         nxs_histo = mtd[output_workspace_name]
         self.getIxyt(nxs_histo)
