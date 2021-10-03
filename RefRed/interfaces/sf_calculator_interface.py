@@ -544,4 +544,4 @@ class Ui_SFCalculatorInterface(object):
         self.clearSFconentFileMenu.setText(_translate("SFCalculatorInterface", "Clear Content SF File", None))
 
 from .mplwidgetxlog import MPLWidgetXLog
-from mplwidgetnolog import MPLWidgetNoLog
+from .mplwidgetnolog import MPLWidgetNoLog

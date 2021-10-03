@@ -63,21 +63,10 @@ BOM_SET = {
     None: BOM_UTF8
     }
 
-if sys.version_info < (3, ):
-    # text type are unicode or str
-    TEXT_TYPE = (unicode, str)
-else:
-    TEXT_TYPE=(str,)
+TEXT_TYPE=(str,)
 
 def match_utf8(encoding):
     return BOM_LIST.get(encoding.lower()) == 'utf_8'
-
-def u_str(a_string):
-    """manage py2 and py3 compatibility for strings"""
-    if sys.version_info < (3, ):
-        return unicode(a_string)
-    else:
-        return a_string
 
 # Quote strings used for writing values
 squot = "'%s'"
@@ -174,8 +163,7 @@ class Builder(object):
 
     def build_Dict(self, o):
         d = {}
-        items = zip(o.keys, o.values)
-        for key, value in items:
+        for key, value in zip(o.keys, o.values):
             key = self.build(key)
             value = self.build(value)
             d[key] = value
@@ -2069,12 +2057,12 @@ class ConfigObj(Section):
         if not output.endswith(newline):
             output += newline
         if outfile is not None:
-            outfile.write(u_str(output))
+            outfile.write(str(output))
         else:
             h = open(self.filename, 'wb')
             if type(output) is not bytes:
                 output=output.encode() # encoding the data to bytes
-            h.write(u_str(output))
+            h.write(str(output))
             h.close()
 
     def validate(self, validator, preserve_errors=False, copy=False,

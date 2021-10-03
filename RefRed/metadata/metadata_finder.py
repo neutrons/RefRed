@@ -73,7 +73,7 @@ class MetadataFinder(QMainWindow):
     def initListMetadata(self):
         _nxs = self.list_nxs[0]
         mt_run = _nxs.getRun()
-        self.list_keys = mt_run.keys()
+        self.list_keys = list(mt_run.keys())
         sz = len(self.list_keys)
         self.list_values = np.zeros(sz, dtype=bool)
 
@@ -269,7 +269,7 @@ class MetadataFinder(QMainWindow):
                     return
                 self.list_filename.append(_filename)
                 randomString = RefRed.utilities.generate_random_workspace_name()
-                print("About to load %s" % _filename)
+                print(("About to load %s" % _filename))
                 _nxs = LoadEventNexus(Filename=_filename, OutputWorkspace=randomString, MetaDataOnly=True)
                 self.list_nxs.append(_nxs)
 
@@ -334,10 +334,10 @@ class MetadataFinder(QMainWindow):
             settings.setValue(name, metadata)
 
     def importConfiguration(self):
-        _filter = u"Metadata Configuration (*_metadata.cfg);; All (*.*)"
+        _filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
         _default_path = self.parent.path_config
         filename = str(QFileDialog.getOpenFileName(self,
-                                                   u'Import Metadata Configuration',
+                                                   'Import Metadata Configuration',
                                                    directory=_default_path,
                                                    filter=(_filter)))
         if filename == '':
@@ -348,11 +348,11 @@ class MetadataFinder(QMainWindow):
         self.populateconfigureTable()
 
     def exportConfiguration(self):
-        _filter = u"Metadata Configuration (*_metadata.cfg);; All (*.*)"
+        _filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
         _date = time.strftime("%d_%m_%Y")
         _default_name = self.parent.path_config + '/' + _date + \
         '_metadata.cfg'
-        filename = str(QFileDialog.getSaveFileName(self, u'Export Metadata Configuration',
+        filename = str(QFileDialog.getSaveFileName(self, 'Export Metadata Configuration',
                                                    _default_name,
                                                    filter=(_filter)))
         if filename == '':
@@ -393,11 +393,11 @@ class MetadataFinder(QMainWindow):
     def saveMetadataListAsAsciiFile(self):
         if self.list_runs == []:
             return
-        _filter = u'List Metadata (*_metadata.txt);;All(*.*)'
+        _filter = 'List Metadata (*_metadata.txt);;All(*.*)'
         _run_number = str(self.list_runs[0])
         _default_name = self.parent.path_ascii + '/' + \
                 _run_number + '_metadata.txt'
-        filename = QFileDialog.getSaveFileName(self, u'Save Metadata into ASCII',
+        filename = QFileDialog.getSaveFileName(self, 'Save Metadata into ASCII',
                                                _default_name, filter=_filter)
         if filename == '':
             return

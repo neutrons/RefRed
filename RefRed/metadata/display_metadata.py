@@ -64,7 +64,7 @@ class DisplayMetadata(QMainWindow):
 	def initListMetadata(self):
 		wks = self.lrdata.workspace
 		self.mt_run = wks.getRun()
-		self.list_keys = self.mt_run.keys()
+		self.list_keys = list(self.mt_run.keys())
 		sz = len(self.list_keys)
 		self.list_values = np.zeros(sz, dtype=bool)
 			
@@ -270,10 +270,10 @@ class DisplayMetadata(QMainWindow):
 			settings.setValue(name, metadata)
 
 	def saveMetadataListAsAscii(self):
-		_filter = u'List Metadata (*_metadata.txt);;All(*.*)'
+		_filter = 'List Metadata (*_metadata.txt);;All(*.*)'
 		_run_number = self.active_data.run_number
 		_default_name = self.parent.path_ascii + '/' + _run_number + '_metadata.txt'
-		filename = QFileDialog.getSaveFileName(self, u'Save Metadata into ASCII', _default_name, filter=_filter)
+		filename = QFileDialog.getSaveFileName(self, 'Save Metadata into ASCII', _default_name, filter=_filter)
 		if filename == '':
 			return
 	
@@ -292,10 +292,10 @@ class DisplayMetadata(QMainWindow):
 		RefRed.utilities.write_ascii_file(filename, text)
 	
 	def exportConfiguration(self):
-		_filter = u"Metadata Configuration (*_metadata.cfg);; All (*.*)"
+		_filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
 		_date = time.strftime("%d_%m_%Y")
 		_default_name = self.parent.path_config + '/' + _date + '_metadata.cfg'
-		filename = QFileDialog.getSaveFileName(self, u'Export Metadata Configuration', _default_name,
+		filename = QFileDialog.getSaveFileName(self, 'Export Metadata Configuration', _default_name,
 											   filter=(_filter))
 		if filename == '':
 			return
@@ -310,9 +310,9 @@ class DisplayMetadata(QMainWindow):
 		RefRed.utilities.write_ascii_file(filename, text)
 
 	def importConfiguration(self):
-		_filter = u"Metadata Configuration (*_metadata.cfg);; All (*.*)"
+		_filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
 		_default_path = self.parent.path_config
-		filename = QFileDialog.getOpenFileName(self, u'Import Metadata Configuration',
+		filename = QFileDialog.getOpenFileName(self, 'Import Metadata Configuration',
 		                                       directory=_default_path,
 		                                       filter=(_filter))
 		if filename == '':

@@ -2152,9 +2152,9 @@ class Ui_MainWindow(object):
         self.actionRunReduction.setText(_translate("MainWindow", "RUN", None))
         self.actionExportScript.setText(_translate("MainWindow", "Export Script ...", None))
 
-from mplwidgetnolog import MPLWidgetNoLog
+from .mplwidgetnolog import MPLWidgetNoLog
 from .mplwidget import MPLWidget
-from mytablewidget import MyTableWidget
-from mplwidgetxlogylog import MPLWidgetXLogYLog
+from .mytablewidget import MyTableWidget
+from .mplwidgetxlogylog import MPLWidgetXLogYLog
 from .mplwidgetxlog import MPLWidgetXLog
-import icons_rc
+from . import icons_rc

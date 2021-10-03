@@ -7,7 +7,7 @@ def findNeXusFullPath(run_number):
     try:
         full_file_name = FileFinder.findRuns("REF_L_%d" % int(run_number))[0]
     except RuntimeError:
-        logger.error("Could not find file: %s" % sys.exc_value)
+        logger.error("Could not find file: %s" % sys.exc_info()[1])
         full_file_name = ''
     return full_file_name
 

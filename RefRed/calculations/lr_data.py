@@ -180,7 +180,7 @@ class LRData(object):
         self.read_data()
 
         if lconfig is None:
-            pf = PeakFinderDerivation(range(len(self.ycountsdata)), self.ycountsdata)
+            pf = PeakFinderDerivation(list(range(len(self.ycountsdata))), self.ycountsdata)
             [peak1, peak2] = pf.getPeaks()
             self.peak = [str(peak1), str(peak2)]
 
@@ -189,12 +189,12 @@ class LRData(object):
             back2 = int(peak2 + backOffsetFromPeak)
             self.back = [str(back1), str(back2)]
 
-            lw_pf = LowResFinder(range(len(self.countsxdata)), self.countsxdata)
+            lw_pf = LowResFinder(list(range(len(self.countsxdata))), self.countsxdata)
             [lowres1, lowres2] = lw_pf.get_low_res()
             self.low_res = [str(lowres1), str(lowres2)]
 
             clocking_pf = ClockingFinder(parent=self.parent,
-                                         xdata=range(len(self.ycountsdata)),
+                                         xdata=list(range(len(self.ycountsdata))),
                                          ydata=self.ycountsdata)
             [clocking1, clocking2] = clocking_pf.clocking
 
@@ -208,7 +208,7 @@ class LRData(object):
             if lconfig.data_clocking[0] != '':
                 self.clocking = [np.float(lconfig.data_clocking[0]), np.float(lconfig.data_clocking[1])]
             else:
-                clocking_pf = LowResFinder(range(len(self.ycountsdata)), self.ycountsdata)
+                clocking_pf = LowResFinder(list(range(len(self.ycountsdata))), self.ycountsdata)
                 [clocking1, clocking2] = clocking_pf.get_low_res()
                 self.clocking = [str(clocking1), str(clocking2)]
 

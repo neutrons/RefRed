@@ -118,7 +118,7 @@ class OutputReducedData(QDialog):
         path = self.parent.path_ascii
         default_filename = path + '/' + default_filename
         directory = path
-        _filter = u"Reduced Ascii (*.txt);; All (*.*)"
+        _filter = "Reduced Ascii (*.txt);; All (*.*)"
         filename = str(QFileDialog.getSaveFileName(self, 
                                                    'Select Location and Name', 
                                                    directory = default_filename,

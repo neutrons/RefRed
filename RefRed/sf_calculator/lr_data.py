@@ -112,7 +112,7 @@ class LRData(object):
         self.read_data()
 
         if self.read_options['is_auto_peak_finder']:
-            pf = PeakFinderDerivation(range(len(self.ycountsdata)), self.ycountsdata)
+            pf = PeakFinderDerivation(list(range(len(self.ycountsdata))), self.ycountsdata)
             [peak1, peak2] = pf.getPeaks()
             self.peak = [str(peak1), str(peak2)]
 
@@ -224,8 +224,8 @@ class LRData(object):
         _y_axis = np.zeros((self.number_x_pixels, self.number_y_pixels, nbr_tof - 1))
         _y_error_axis = np.zeros((self.number_x_pixels, self.number_y_pixels, nbr_tof - 1))
 
-        x_range = range(self.number_x_pixels)
-        y_range = range(self.number_y_pixels)
+        x_range = list(range(self.number_x_pixels))
+        y_range = list(range(self.number_y_pixels))
 
         for x in x_range:
             for y in y_range:

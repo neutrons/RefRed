@@ -18,10 +18,10 @@ class FillSFGuiTable(object):
         else:
             s2ih = 'S2H'
             s2iw = 'S2W'
-        verticalHeader = ["Run #","Nbr. Attenuator",u"\u03bbmin(\u00c5)",
-                          u"\u03bbmax(\u00c5)",
+        verticalHeader = ["Run #","Nbr. Attenuator","\\u03bbmin(\\u00c5)",
+                          "\\u03bbmax(\\u00c5)",
                           "p Charge (mC)",
-                          u"\u03bb requested (\u00c5)",
+                          "\\u03bb requested (\\u00c5)",
                           "S1W","S1H",s2iw, s2ih,
                           "Peak1","Peak2",
                           "Back1", "Back2",

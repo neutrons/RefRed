@@ -96,7 +96,7 @@ class PopupPlot1d(QDialog):
 		self.parent.path_ascii = os.path.dirname(filename)
 
 		ycountsdata = _active_data.ycountsdata
-		pixelaxis = range(len(ycountsdata))
+		pixelaxis = list(range(len(ycountsdata)))
 		
 		text = ['#Couns vs Pixels','#Pixel - Counts']
 		sz = len(pixelaxis)
@@ -281,7 +281,7 @@ class PopupPlot1d(QDialog):
 		self.ycountsdata = self.get_ycountsdata_of_tof_range_selected()
 		_yaxis = self.ycountsdata
 
-		xaxis = range(len(_yaxis))
+		xaxis = list(range(len(_yaxis)))
 		self.xaxis = xaxis
 		
 		_peak = self.data.peak
@@ -313,8 +313,8 @@ class PopupPlot1d(QDialog):
 		# John
 		ui_plot1 = self.ui.plot_pixel_vs_counts
 		ui_plot1.plot(_yaxis, xaxis)
-		ui_plot1.canvas.ax.set_xlabel(u'counts')
-		ui_plot1.canvas.ax.set_ylabel(u'Pixels')
+		ui_plot1.canvas.ax.set_xlabel('counts')
+		ui_plot1.canvas.ax.set_ylabel('Pixels')
 		if self.isJohnLog:
 			ui_plot1.canvas.ax.set_xscale('log')
 		else:
@@ -353,8 +353,8 @@ class PopupPlot1d(QDialog):
 		# Jim
 		ui_plot2 = self.ui.plot_counts_vs_pixel
 		ui_plot2.canvas.ax.plot(xaxis, _yaxis)
-		ui_plot2.canvas.ax.set_xlabel(u'Pixels')
-		ui_plot2.canvas.ax.set_ylabel(u'Counts')
+		ui_plot2.canvas.ax.set_xlabel('Pixels')
+		ui_plot2.canvas.ax.set_ylabel('Counts')
 		if self.isJimLog:
 			ui_plot2.canvas.ax.set_yscale('log')
 		else:
@@ -588,8 +588,8 @@ class PopupPlot1d(QDialog):
 		
 		ui_plot1 = self.ui.plot_pixel_vs_counts
 		ui_plot1.canvas.ax.plot(_yaxis, self.xaxis)
-		ui_plot1.canvas.ax.set_xlabel(u'counts')
-		ui_plot1.canvas.ax.set_ylabel(u'Pixels')
+		ui_plot1.canvas.ax.set_xlabel('counts')
+		ui_plot1.canvas.ax.set_ylabel('Pixels')
 		if self.isJohnLog:
 			ui_plot1.canvas.ax.set_xscale('log')
 		else:
@@ -630,8 +630,8 @@ class PopupPlot1d(QDialog):
 
 		ui_plot2 = self.ui.plot_counts_vs_pixel
 		ui_plot2.canvas.ax.plot(self.xaxis, _yaxis)
-		ui_plot2.canvas.ax.set_xlabel(u'Pixels')
-		ui_plot2.canvas.ax.set_ylabel(u'Counts')
+		ui_plot2.canvas.ax.set_xlabel('Pixels')
+		ui_plot2.canvas.ax.set_ylabel('Counts')
 		if self.isJimLog:
 			ui_plot2.canvas.ax.set_yscale('log')
 		else:

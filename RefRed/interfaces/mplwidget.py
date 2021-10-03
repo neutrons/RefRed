@@ -232,10 +232,10 @@ class NavigationToolbar(NavigationToolbar2QT):
       Save the plot to a temporary png file and show a preview dialog also used for printing.
     '''
     filetypes=self.canvas.get_supported_filetypes_grouped()
-    sorted_filetypes=filetypes.items()
+    sorted_filetypes=list(filetypes.items())
     sorted_filetypes.sort()
 
-    filename=os.path.join(tempfile.gettempdir(), u"quicknxs_print.png")
+    filename=os.path.join(tempfile.gettempdir(), "quicknxs_print.png")
     self.canvas.print_figure(filename, dpi=600)
     imgpix=QtGui.QPixmap(filename)
     os.remove(filename)
@@ -276,11 +276,11 @@ class NavigationToolbar(NavigationToolbar2QT):
             filters.append(filter_)
       filters=';;'.join(filters)
 
-      fname=QtWidgets.QFileDialog.getSaveFileName(self, u"Choose a filename to save to", start, filters)
+      fname=QtWidgets.QFileDialog.getSaveFileName(self, "Choose a filename to save to", start, filters)
       if fname:
           try:
-              self.canvas.print_figure(unicode(fname))
-          except Exception, e:
+              self.canvas.print_figure(str(fname))
+          except Exception as e:
               QtWidgets.QMessageBox.critical(
                   self, "Error saving file", str(e),
                   QtWidgets.QMessageBox.Ok, QtGui.QMessageBox.NoButton)
