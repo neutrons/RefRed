@@ -11,7 +11,7 @@ class ExportXMLConfig(object):
     str_array = []
     
     def __init__(self, parent=None, filename=''):
-	self.init_variables()
+        self.init_variables()
 
         self.parent = parent
         self.filename = filename
@@ -19,33 +19,33 @@ class ExportXMLConfig(object):
         self.prepare_big_table_data()
         self.header_part()
         self.main_part()
-	self.save_xml()
+        self.save_xml()
         
     def init_variables(self):
-	self.filename = ''
-	self.str_array = []
+        self.filename = ''
+        self.str_array = []
     
     def	prepare_big_table_data(self):
-	'''
-	all data files used last data clocking values
-	'''
+        '''
+        all data files used last data clocking values
+        '''
 
-	big_table_data = self.parent.big_table_data
-	o_gui_utility = GuiUtility(parent = self.parent)
-	row_highest_q = o_gui_utility.get_row_with_highest_q()
+        big_table_data = self.parent.big_table_data
+        o_gui_utility = GuiUtility(parent = self.parent)
+        row_highest_q = o_gui_utility.get_row_with_highest_q()
 
-	_ref_lrdata = big_table_data[row_highest_q, 0]
-	_ref_clocking = _ref_lrdata.clocking
+        _ref_lrdata = big_table_data[row_highest_q, 0]
+        _ref_clocking = _ref_lrdata.clocking
 
-	for row in range(row_highest_q):
-	    _lrdata = big_table_data[row, 0]
-	    _lrdata.clocking = _ref_clocking
-	    big_table_data[row, 0] = _lrdata
-	    
-	self.parent.big_table_data = big_table_data
-        
+        for row in range(row_highest_q):
+            _lrdata = big_table_data[row, 0]
+            _lrdata.clocking = _ref_clocking
+            big_table_data[row, 0] = _lrdata
+
+        self.parent.big_table_data = big_table_data
+
     def header_part(self):
-	str_array = self.str_array
+        str_array = self.str_array
         str_array.append('<Reduction>\n')
         str_array.append(' <instrument_name>REFL</instrument_name>\n')
 
@@ -68,69 +68,69 @@ class ExportXMLConfig(object):
         import mantid
         str_array.append(' <mantid_version>' + mantid.__version__ + '</mantid_version>\n')
 
-	# generator
-	str_array.append('<generator>RefRed</generator>\n')
+        # generator
+        str_array.append('<generator>RefRed</generator>\n')
 
         # metadata
         str_array.append(' <DataSeries>\n')
-        
+
         self.str_array = str_array
-	
+
     def main_part(self):
-	
-	str_array = self.str_array
+
+        str_array = self.str_array
         _big_table_data = self.parent.big_table_data
-	nbr_row = self.parent.nbr_row_table_reduction
-	o_general_settings = GlobalReductionSettingsHandler(parent = self.parent)
-	
+        nbr_row = self.parent.nbr_row_table_reduction
+        o_general_settings = GlobalReductionSettingsHandler(parent = self.parent)
+
         for row in range(nbr_row):
 
             _data = _big_table_data[row,0]
-	    if _data is None:
-		break
+            if _data is None:
+                break
 
-	    str_array.append('  <RefLData>\n')
-	    str_array.append('   <peak_selection_type>narrow</peak_selection_type>\n')
-	    
-	    #data_full_file_name = _data.full_file_name
-	    #if type(data_full_file_name) == type([]):
-		#data_full_file_name = ','.join(data_full_file_name)
-	    data_peak = _data.peak
-	    data_back = _data.back
-	    data_low_res = _data.low_res
-	    data_back_flag = _data.back_flag
-	    data_low_res_flag = bool(_data.low_res_flag)
-	    data_lambda_requested = _data.lambda_requested
-	    clocking = _data.clocking
-	    tof = _data.tof_range
-#	    tof_units = _data.tof_units
-	    tof_auto_flag = _data.tof_auto_flag
-	    q_range = _data.q_range
-	    lambda_range = _data.lambda_range
-	    incident_angle = _data.incident_angle
+            str_array.append('  <RefLData>\n')
+            str_array.append('   <peak_selection_type>narrow</peak_selection_type>\n')
+
+            #data_full_file_name = _data.full_file_name
+            #if type(data_full_file_name) == type([]):
+            #data_full_file_name = ','.join(data_full_file_name)
+            data_peak = _data.peak
+            data_back = _data.back
+            data_low_res = _data.low_res
+            data_back_flag = _data.back_flag
+            data_low_res_flag = bool(_data.low_res_flag)
+            data_lambda_requested = _data.lambda_requested
+            clocking = _data.clocking
+            tof = _data.tof_range
+            # tof_units = _data.tof_units
+            tof_auto_flag = _data.tof_auto_flag
+            q_range = _data.q_range
+            lambda_range = _data.lambda_range
+            incident_angle = _data.incident_angle
 
             _norm = _big_table_data[row,1]
-	    if (_norm is not None):
-		norm_full_file_name = _norm.full_file_name
-		#if type(norm_full_file_name) == type([]):
-		    #norm_full_file_name = ','.join(norm_full_file_name)
-		norm_flag = _norm.use_it_flag
-		norm_peak = _norm.peak
-		norm_back = _norm.back
-		norm_back_flag = _norm.back_flag
-		norm_low_res = _norm.low_res
-		norm_low_res_flag = _norm.low_res_flag
-		norm_lambda_requested = _norm.lambda_requested
-	    else:
-		#norm_full_file_name = ''
-		norm_flag = False
-		norm_peak = [0,255]
-		norm_back = [0,255]
-		norm_back_flag = False
-		norm_low_res = [0,255]
-		norm_low_res_flag = False
-		norm_lambda_requested = -1
-	    
+            if (_norm is not None):
+                norm_full_file_name = _norm.full_file_name
+                #if type(norm_full_file_name) == type([]):
+                    #norm_full_file_name = ','.join(norm_full_file_name)
+                norm_flag = _norm.use_it_flag
+                norm_peak = _norm.peak
+                norm_back = _norm.back
+                norm_back_flag = _norm.back_flag
+                norm_low_res = _norm.low_res
+                norm_low_res_flag = _norm.low_res_flag
+                norm_lambda_requested = _norm.lambda_requested
+            else:
+                #norm_full_file_name = ''
+                norm_flag = False
+                norm_peak = [0,255]
+                norm_back = [0,255]
+                norm_back_flag = False
+                norm_low_res = [0,255]
+                norm_low_res_flag = False
+                norm_lambda_requested = -1
+
             str_array.append('   <from_peak_pixels>' + str(data_peak[0]) + '</from_peak_pixels>\n')
             str_array.append('   <to_peak_pixels>' + str(data_peak[1]) + '</to_peak_pixels>\n')
             str_array.append('   <peak_discrete_selection>N/A</peak_discrete_selection>\n')
@@ -139,8 +139,8 @@ class ExportXMLConfig(object):
             str_array.append('   <back_roi1_to>' + str(data_back[1]) + '</back_roi1_to>\n')
             str_array.append('   <back_roi2_from>0</back_roi2_from>\n')
             str_array.append('   <back_roi2_to>0</back_roi2_to>\n')
-	    str_array.append('   <clocking_from>' + str(int(clocking[0])) + '</clocking_from>\n')
-	    str_array.append('   <clocking_to>' + str(int(clocking[1])) + '</clocking_to>\n')
+            str_array.append('   <clocking_from>' + str(int(clocking[0])) + '</clocking_from>\n')
+            str_array.append('   <clocking_to>' + str(int(clocking[1])) + '</clocking_to>\n')
             str_array.append('   <tof_range_flag>True</tof_range_flag>\n')
             str_array.append('   <from_tof_range>' + str(tof[0]) + '</from_tof_range>\n')
             str_array.append('   <to_tof_range>' + str(tof[1]) + '</to_tof_range>\n')
@@ -196,19 +196,19 @@ class ExportXMLConfig(object):
             angleError = str(self.parent.ui.angleOffsetError.text())
             str_array.append('   <angle_offset>' + angleValue + '</angle_offset>\n')
             str_array.append('   <angle_offset_error>' + angleError + '</angle_offset_error>\n')
-	    
-	    q_step = str(self.parent.ui.qStep.text())
-	    str_array.append('   <q_step>' + q_step + '</q_step>\n')
-	    q_min = str(self.parent.gui_metadata['q_min'])
-	    str_array.append('   <q_min>' + q_min + '</q_min>\n')
-	    
+
+            q_step = str(self.parent.ui.qStep.text())
+            str_array.append('   <q_step>' + q_step + '</q_step>\n')
+            q_min = str(self.parent.gui_metadata['q_min'])
+            str_array.append('   <q_min>' + q_min + '</q_min>\n')
+
             scalingFactorFlag = self.parent.ui.scalingFactorFlag.isChecked()
             str_array.append('   <scaling_factor_flag>' + str(scalingFactorFlag) + '</scaling_factor_flag>\n')
             scalingFactorFile = o_general_settings.scaling_factor_file
             str_array.append('   <scaling_factor_file>' + scalingFactorFile + '</scaling_factor_file>\n')
 
             # incident medium
-            allItems = [str(self.parent.ui.selectIncidentMediumList.itemText(i)) for i in range(self.parent.ui.selectIncidentMediumList.count())] 
+            allItems = [str(self.parent.ui.selectIncidentMediumList.itemText(i)) for i in range(self.parent.ui.selectIncidentMediumList.count())]
             finalList = allItems[1:]
             strFinalList = ",".join(finalList)
             str_array.append('   <incident_medium_list>' + strFinalList + '</incident_medium_list>\n')
@@ -226,22 +226,21 @@ class ExportXMLConfig(object):
             fcdqoverq = _exportStitchingAsciiSettings.fourth_column_dq_over_q
             str_array.append('   <fourth_column_dq_over_q>' + str(fcdqoverq) + '</fourth_column_dq_over_q>\n')
 
-	    str_array.append('   <slits_width_flag>True</slits_width_flag>\n')
+            str_array.append('   <slits_width_flag>True</slits_width_flag>\n')
             str_array.append('  </RefLData>\n')
 
         str_array.append('  </DataSeries>\n')
         str_array.append('</Reduction>\n')
-	self.str_array = str_array
+        self.str_array = str_array
 
     def save_xml(self):
-	filename = self.filename
-	str_array = self.str_array
-	
+        filename = self.filename
+        str_array = self.str_array
+
         # write out XML file
-	if os.path.isfile(filename):
-	    os.remove(filename)
+        if os.path.isfile(filename):
+            os.remove(filename)
 
         f = open(filename, 'w')
         f.writelines(str_array)
         f.close()
-	
