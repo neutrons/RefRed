@@ -122,7 +122,7 @@ class TestPeakFinderDerivation(object):
         [xdata, ydata, edata] = loadCsvFile(data_server.path_to('hard_data_set.csv'))
         peakfinder1 = PeakFinderDerivation(xdata, ydata, edata)
         peaks = peakfinder1.getPeaks()
-        assert peaks == pytest.approx([145, 164], abs=0.001)
+        assert peaks == pytest.approx([145, 167], abs=0.001)
 
 
 if __name__ == '__main__':
