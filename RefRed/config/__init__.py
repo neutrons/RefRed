@@ -68,7 +68,7 @@ def _create_proxy():
   global proxy, __all__
   proxy=_ConfigProxy(_config_path)
   for ignore, name, ispackage in _pkgutil.iter_modules([_package_dir]):
-    if ispackage or name in ['baseconfig', 'configobj']:
+    if ispackage or name in ['baseconfig']:
       continue
     try:
       modi=__import__('RefRed.config.'+name, fromlist=[name])

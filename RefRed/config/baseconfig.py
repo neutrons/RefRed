@@ -16,7 +16,7 @@ import os
 import atexit
 import re
 import sys
-from .configobj import ConfigObj, ConfigObjError
+from configobj import ConfigObj, ConfigObjError
 
 
 class ConfigProxy(object):

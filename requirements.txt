@@ -1,4 +1,5 @@
 #mantid-framework
+configobj
 matplotlib
 numpy
 #PyQt4

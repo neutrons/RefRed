@@ -4,7 +4,7 @@ import math
 import os
 import gc
 
-from mantd.api import mtd
+from mantid.api import mtd
 from mantid.simpleapi import Rebin
 from RefRed.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
 from RefRed.low_res_finder_algorithms.low_res_finder import LowResFinder
