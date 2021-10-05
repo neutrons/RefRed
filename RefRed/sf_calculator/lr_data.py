@@ -64,10 +64,10 @@ class LRData(object):
             for y in range(self.number_x_pixels):
                 _index = self.number_x_pixels * x + y
                 detector = self.workspace.getDetector(_index)
-                dPS_array[y, x] = sample.getDistance(detector)
+                dPS_array[y][x] = sample.getDistance(detector)
 
         # distance sample->center of detector
-        self.dSD = dPS_array[self.number_x_pixels / 2, self.number_y_pixels / 2]
+        self.dSD = dPS_array[int(self.number_x_pixels / 2), int(self.number_y_pixels / 2)]
         # distance source->center of detector
         self.dMD = self.dSD + self.dMS
 
