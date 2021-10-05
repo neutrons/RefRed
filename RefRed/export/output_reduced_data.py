@@ -2,7 +2,8 @@ import os
 from qtpy.QtGui import QPalette
 from qtpy.QtWidgets import QDialog, QFileDialog
 from qtpy.QtCore import Qt
-from mantid.simpleapi import *
+from mantid.api import mtd
+from mantid.simpleapi import ConvertToHistogram, CreateWorkspace, LRReflectivityOutput, Rebin, Scale
 import numpy as np
 import time
 
@@ -35,8 +36,8 @@ class OutputReducedData(QDialog):
     dq_over_q = None
     use_lowest_error_value_flag = True
 
-    def __init__(self, parent = None):
-        QDialog.__init__(self, parent = parent)
+    def __init__(self, parent=None):
+        QDialog.__init__(self, parent=parent)
         self.setWindowModality(False)
         self._open_instances.append(self)
         self.ui = UiDialog()
@@ -48,12 +49,12 @@ class OutputReducedData(QDialog):
         palette.setColor(QPalette.Foreground, Qt.red)
         self.ui.folder_error.setPalette(palette)
 
-        o_loaded_ascii = ReducedAsciiLoader(parent = parent,
-                                            ascii_file_name = '',
-                                            is_live_reduction = True)
+        o_loaded_ascii = ReducedAsciiLoader(parent=parent,
+                                            ascii_file_name='',
+                                            is_live_reduction=True)
         if parent.o_stitching_ascii_widget is None:
-            o_stitching_ascii_widget = StitchingAsciiWidget(parent = self.parent,
-                                                            loaded_ascii = o_loaded_ascii)
+            o_stitching_ascii_widget = StitchingAsciiWidget(parent=self.parent,
+                                                            loaded_ascii=o_loaded_ascii)
             parent.o_stitching_ascii_widget = o_stitching_ascii_widget
 
         # retrieve gui parameters 
@@ -101,7 +102,7 @@ class OutputReducedData(QDialog):
         path = self.parent.path_ascii
         folder = str(QFileDialog.getExistingDirectory(self,
                                                       'Select Location',
-                                                      directory = path))
+                                                      directory=path))
         if folder == '':
             return
 
@@ -112,12 +113,12 @@ class OutputReducedData(QDialog):
 
     def create_1_common_file(self):
 
-        run_number = self.parent.ui.reductionTable.item(0,1).text()
+        run_number = self.parent.ui.reductionTable.item(0, 1).text()
         default_filename = 'REFL_' + run_number + '_reduced_data.txt'
         path = self.parent.path_ascii
         default_filename = path + '/' + default_filename
         directory = path
-        _filter = u"Reduced Ascii (*.txt);; All (*.*)"
+        _filter = "Reduced Ascii (*.txt);; All (*.*)"
         filename = str(QFileDialog.getSaveFileName(self, 
                                                    'Select Location and Name', 
                                                    directory = default_filename,

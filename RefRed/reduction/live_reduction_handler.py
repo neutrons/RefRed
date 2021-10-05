@@ -12,8 +12,8 @@ from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSe
 from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
 from RefRed.status_message_handler import StatusMessageHandler
 from RefRed.load_reduced_data_set.stitching_ascii_widget import StitchingAsciiWidget
-from mantid.simpleapi import *
-import mantid
+from mantid.api import AnalysisDataService, mtd
+from mantid.simpleapi import LiquidsReflectometryReduction
 
 
 class LiveReductionHandler(object):

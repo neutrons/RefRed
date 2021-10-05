@@ -2,7 +2,7 @@
     Notes from review: This class does a subset of what is done in calculations.lr_data.
     This code is probably not needed.
 """
-from mantid.simpleapi import *
+from mantid.simpleapi import Rebin
 import numpy as np
 import logging
 import math
@@ -64,10 +64,10 @@ class LRData(object):
             for y in range(self.number_x_pixels):
                 _index = self.number_x_pixels * x + y
                 detector = self.workspace.getDetector(_index)
-                dPS_array[y, x] = sample.getDistance(detector)
+                dPS_array[y][x] = sample.getDistance(detector)
 
         # distance sample->center of detector
-        self.dSD = dPS_array[self.number_x_pixels / 2, self.number_y_pixels / 2]
+        self.dSD = dPS_array[int(self.number_x_pixels / 2), int(self.number_y_pixels / 2)]
         # distance source->center of detector
         self.dMD = self.dSD + self.dMS
 
@@ -112,7 +112,7 @@ class LRData(object):
         self.read_data()
 
         if self.read_options['is_auto_peak_finder']:
-            pf = PeakFinderDerivation(range(len(self.ycountsdata)), self.ycountsdata)
+            pf = PeakFinderDerivation(list(range(len(self.ycountsdata))), self.ycountsdata)
             [peak1, peak2] = pf.getPeaks()
             self.peak = [str(peak1), str(peak2)]
 
@@ -224,8 +224,8 @@ class LRData(object):
         _y_axis = np.zeros((self.number_x_pixels, self.number_y_pixels, nbr_tof - 1))
         _y_error_axis = np.zeros((self.number_x_pixels, self.number_y_pixels, nbr_tof - 1))
 
-        x_range = range(self.number_x_pixels)
-        y_range = range(self.number_y_pixels)
+        x_range = list(range(self.number_x_pixels))
+        y_range = list(range(self.number_y_pixels))
 
         for x in x_range:
             for y in y_range:

@@ -68,11 +68,11 @@ def _create_proxy():
   global proxy, __all__
   proxy=_ConfigProxy(_config_path)
   for ignore, name, ispackage in _pkgutil.iter_modules([_package_dir]):
-    if ispackage or name in ['baseconfig', 'configobj']:
+    if ispackage or name in ['baseconfig']:
       continue
     try:
       modi=__import__('RefRed.config.'+name, fromlist=[name])
-    except Exception, error:
+    except Exception as error:
       _warn("Could not import module %s,\n %s: %s"%(name, error.__class__.__name__, error))
       continue
     if 'config_path' in modi.__dict__:
@@ -98,7 +98,7 @@ def _create_proxy():
       config_holder=modi #@UnusedVariable
     # add item to the package * import
     __all__.append(name)
-    exec "global %s;%s=config_holder"%(name, name)
+    exec("global %s;%s=config_holder"%(name, name))
 
 if proxy is None:
   _create_proxy()

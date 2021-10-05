@@ -1,6 +1,6 @@
 from qtpy import QtCore
-from mantid.simpleapi import *
-import time
+from mantid.simpleapi import LoadEventNexus
+
 
 class LoadNexus(QtCore.QThread):
     
@@ -11,7 +11,7 @@ class LoadNexus(QtCore.QThread):
         self.metadata_only = metadata_only
         
     def run(self):
-#        try:
+        #try:
         _workspace = LoadEventNexus(Filename=self.filename,
                                     OutputWorkspace=self.output_wks,
                                     MetadataOnly=self.metadata_only)
@@ -26,6 +26,3 @@ class LoadNexus(QtCore.QThread):
     
     def pause(self):
         pass
-
-
-    

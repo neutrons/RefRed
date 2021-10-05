@@ -10,7 +10,7 @@ class InitializeSettings(object):
         self.parent = parent
         
         o_list_settings = ListSettings()
-        _list_keys = o_list_settings.__dict__.keys()
+        _list_keys = list(o_list_settings.__dict__.keys())
         
         _settings = QSettings()
         _gui_metadata = {}

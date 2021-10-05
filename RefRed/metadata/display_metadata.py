@@ -8,7 +8,6 @@ import time
 
 from RefRed.interfaces.display_metadata_interface import Ui_MainWindow as MainWindow
 from RefRed.gui_handling.gui_utility import GuiUtility
-from mantid.simpleapi import *
 import RefRed.utilities
 
 
@@ -32,7 +31,7 @@ class DisplayMetadata(QMainWindow):
 	def __init__(self, parent=None):
 		self.parent = parent
 
-		QMainWindow.__init__(self, parent = parent)
+		QMainWindow.__init__(self, parent=parent)
 		self.setWindowModality(False)
 		self.ui = MainWindow()
 		self.ui.setupUi(self)
@@ -54,7 +53,7 @@ class DisplayMetadata(QMainWindow):
 		self.populateConfigTable()
 
 	def retrieve_lradata(self):
-		o_gui_utility = GuiUtility(parent = self.parent)
+		o_gui_utility = GuiUtility(parent=self.parent)
 		col_selected = o_gui_utility.get_current_table_reduction_column_selected()
 		row_selected = o_gui_utility.get_current_table_reduction_row_selected()
 		self.col = col_selected
@@ -65,11 +64,11 @@ class DisplayMetadata(QMainWindow):
 	def initListMetadata(self):
 		wks = self.lrdata.workspace
 		self.mt_run = wks.getRun()
-		self.list_keys = self.mt_run.keys()
+		self.list_keys = list(self.mt_run.keys())
 		sz = len(self.list_keys)
 		self.list_values = np.zeros(sz, dtype=bool)
 			
-	def liveEditSearchLineEdit(self, str):
+	def liveEditSearchLineEdit(self, str_value):
 		self.populateMetadataTable()
 		self.populateConfigTable()
 		
@@ -194,13 +193,13 @@ class DisplayMetadata(QMainWindow):
 
 	def init_gui(self):
 		_run_number = self.retrieve_run_number()
-		title = ('Metadata of run %s'%_run_number)
+		title = ('Metadata of run %s' % _run_number)
 		self.setWindowTitle(title)
 		magIcon = QPixmap('../icons/magnifier.png')
 		self.ui.searchLabel.setPixmap(magIcon)
 		clearIcon = QIcon('../icons/clear.png')
 		self.ui.clearButton.setIcon(clearIcon)
-		sz = QSize(15,15)
+		sz = QSize(15, 15)
 		self.ui.clearButton.setIconSize(sz)
 
 	def retrieve_run_number(self):
@@ -212,7 +211,7 @@ class DisplayMetadata(QMainWindow):
 	def close_gui(self):
 		self.close()
 
-	def getNodeValue(self,node,flag):
+	def getNodeValue(self, node, flag):
 		try:
 			_tmp = node.getElementsByTagName(flag)
 			_value = _tmp[0].childNodes[0].nodeValue
@@ -226,10 +225,10 @@ class DisplayMetadata(QMainWindow):
 			self.populateMetadataTable()
 			
 	def getNewListMetadataSelected(self):
-		_list_keys= self.list_keys
+		_list_keys = self.list_keys
 		_list_values = self.list_values
 		_list_metadata_selected = []
-		for idx,val in enumerate(_list_values):
+		for idx, val in enumerate(_list_values):
 			if val == True:
 				_list_metadata_selected.append(_list_keys[idx])
 		return _list_metadata_selected
@@ -251,8 +250,8 @@ class DisplayMetadata(QMainWindow):
 		nbr_row = _config_table.rowCount()
 		_list_metadata_selected = []
 		for r in range(nbr_row):
-			_is_selected = _config_table.cellWidget(r,0).isChecked()
-			_name = _config_table.item(r,1).text()
+			_is_selected = _config_table.cellWidget(r, 0).isChecked()
+			_name = _config_table.item(r, 1).text()
 			if _is_selected:
 				_list_metadata_selected.append(_name)
 			_index = _list_keys.index(_name)
@@ -271,12 +270,10 @@ class DisplayMetadata(QMainWindow):
 			settings.setValue(name, metadata)
 
 	def saveMetadataListAsAscii(self):
-		_filter = u'List Metadata (*_metadata.txt);;All(*.*)'
+		_filter = 'List Metadata (*_metadata.txt);;All(*.*)'
 		_run_number = self.active_data.run_number
 		_default_name = self.parent.path_ascii + '/' + _run_number + '_metadata.txt'
-		filename = QFileDialog.getSaveFileName(self, u'Save Metadata into ASCII',
-		                                       _default_name,
-		                                       filter=_filter)
+		filename = QFileDialog.getSaveFileName(self, 'Save Metadata into ASCII', _default_name, filter=_filter)
 		if filename == '':
 			return
 	
@@ -288,19 +285,18 @@ class DisplayMetadata(QMainWindow):
 		_metadata_table = self.ui.metadataTable
 		nbr_row = _metadata_table.rowCount()
 		for r in range(nbr_row):
-			_line = _metadata_table.item(r,0).text() + ' ' + \
+			_line = _metadata_table.item(r, 0).text() + ' ' + \
 			        str(_metadata_table.item(r,1).text()) + ' ' + 	\
 			        str(_metadata_table.item(r,2).text())
 			text.append(_line)
 		RefRed.utilities.write_ascii_file(filename, text)
 	
 	def exportConfiguration(self):
-		_filter = u"Metadata Configuration (*_metadata.cfg);; All (*.*)"
+		_filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
 		_date = time.strftime("%d_%m_%Y")
 		_default_name = self.parent.path_config + '/' + _date + '_metadata.cfg'
-		filename = QFileDialog.getSaveFileName(self, u'Export Metadata Configuration',
-		                                       _default_name,
-		                                       filter = (_filter))
+		filename = QFileDialog.getSaveFileName(self, 'Export Metadata Configuration', _default_name,
+											   filter=(_filter))
 		if filename == '':
 			return
 		
@@ -314,9 +310,9 @@ class DisplayMetadata(QMainWindow):
 		RefRed.utilities.write_ascii_file(filename, text)
 
 	def importConfiguration(self):
-		_filter = u"Metadata Configuration (*_metadata.cfg);; All (*.*)"
+		_filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
 		_default_path = self.parent.path_config
-		filename = QFileDialog.getOpenFileName(self, u'Import Metadata Configuration',
+		filename = QFileDialog.getOpenFileName(self, 'Import Metadata Configuration',
 		                                       directory=_default_path,
 		                                       filter=(_filter))
 		if filename == '':
@@ -331,7 +327,7 @@ class DisplayMetadata(QMainWindow):
 		_config_table = self.ui.configureTable
 		nbr_row = _config_table.rowCount()
 		for r in range(nbr_row):
-			_name = self.ui.configureTable.item(r,1).text()
+			_name = self.ui.configureTable.item(r, 1).text()
 			_yesNo = QCheckBox()
 			if _name in list_metadata_selected:
 				_yesNo.setChecked(True)
@@ -342,7 +338,7 @@ class DisplayMetadata(QMainWindow):
 		_config_table = self.ui.configureTable
 		nbr_row = _config_table.rowCount()
 		for r in range(nbr_row):
-			_name = self.ui.configureTable.item(r,1).text()
+			_name = self.ui.configureTable.item(r, 1).text()
 			_yesNo = QCheckBox()
 			_yesNo.setText('')
 			self.ui.configureTable.setCellWidget(r, 0, _yesNo)

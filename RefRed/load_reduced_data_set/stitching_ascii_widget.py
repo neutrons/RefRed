@@ -200,14 +200,14 @@ class StitchingAsciiWidget(object):
         #big_table_data[0,0] = _data0
         #self.parent.big_table_data = big_table_data
 
-        self.stitchingPlot.set_xlabel(u'Q (1/Angstroms)')
+        self.stitchingPlot.set_xlabel('Q (1/Angstroms)')
         type = self.get_selected_reduced_output()
         if type == 'RvsQ':
-            self.stitchingPlot.set_ylabel(u'R')
+            self.stitchingPlot.set_ylabel('R')
         elif type == 'RQ4vsQ':
-            self.stitchingPlot.set_ylabel(u'RQ4')
+            self.stitchingPlot.set_ylabel('RQ4')
         else:
-            self.stitchingPlot.set_ylabel(u'Log(Q))')
+            self.stitchingPlot.set_ylabel('Log(Q))')
         self.stitchingPlot.draw()
 
     def format_data_from_ymode_selected(self, q_axis, y_axis, e_axis):

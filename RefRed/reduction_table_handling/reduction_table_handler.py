@@ -22,7 +22,7 @@ class ReductionTableHandler(object):
         self.__reset_default_config_file_name()
 
     def __reset_default_config_file_name(self):
-        str_new_window_title = (u"%s%s" % (window_title, self.parent.default_loaded_file))
+        str_new_window_title = ("%s%s" % (window_title, self.parent.default_loaded_file))
         self.parent.setWindowTitle(str_new_window_title)
         self.parent.ui.previewLive.setEnabled(False)
         self.parent.ui.actionExportScript.setEnabled(False)
@@ -107,7 +107,7 @@ class ReductionTableHandler(object):
         self.parent.big_table_data = big_table_data
 
     def __is_row_displayed_in_range_selected(self):
-        _range_selected = range(self.from_row, self.to_row + 1)
+        _range_selected = list(range(self.from_row, self.to_row + 1))
         o_gui_utility = GuiUtility(parent=self.parent)
         _row_displayed = o_gui_utility.get_current_table_reduction_check_box_checked()
         if _row_displayed == -1:

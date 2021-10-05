@@ -1,5 +1,5 @@
-from mantid.simpleapi import *
 from RefRed.calculations.load_nexus import LoadNexus
+
 
 class LoadListNexus(object):
 
@@ -25,11 +25,11 @@ class LoadListNexus(object):
         for index, nexus_name in enumerate(list_nexus):
             filename = list_nexus[index]
             _run = list_run[index]
-            _ws_name = "%s_file_%s" %(self.prefix, _run)
-            wks_object = LoadNexus(filename = filename,
-                                   output_wks = _ws_name,
-                                   metadata_only = metadata_only)
-            if (wks_object.workspace):
+            _ws_name = "%s_file_%s" % (self.prefix, _run)
+            wks_object = LoadNexus(filename=filename,
+                                   output_wks=_ws_name,
+                                   metadata_only=metadata_only)
+            if wks_object.workspace:
                 self.list_wks_loaded.append(_ws_name)
                 self.list_run_loaded.append(_run)
                 self.list_nexus_loaded.append(nexus_name)

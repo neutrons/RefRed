@@ -319,4 +319,4 @@ class Ui_Dialog(object):
 
 from .mplwidget import MPLWidget
 from .mplwidgetxlog import MPLWidgetXLog
-import icons_rc
+from . import icons_rc

@@ -1,4 +1,5 @@
-from mantid.simpleapi import *
+from mantid import mtd
+from mantid.simpleapi import CreateWorkspace, Fit, ReplaceSpecialValues
 import numpy as np
 
 

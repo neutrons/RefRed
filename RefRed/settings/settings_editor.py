@@ -19,7 +19,7 @@ class SettingsEditor(QtWidgets.QMainWindow):
     def populate_table(self):
         _gui_metadata = self.parent.gui_metadata
 
-        _list_keys = _gui_metadata.keys()
+        _list_keys = list(_gui_metadata.keys())
         nbr_key = len(_list_keys)
         self.ui.tableWidget.setColumnCount(1)
         self.ui.tableWidget.setRowCount(nbr_key)
@@ -42,7 +42,7 @@ class SettingsEditor(QtWidgets.QMainWindow):
     def reset_button(self):
         """ reset all the settings to default value hard coded in program """
         o_list_settings = ListSettings()
-        _list_keys = o_list_settings.__dict__.keys()
+        _list_keys = list(o_list_settings.__dict__.keys())
         
         _gui_metadata = {}
         for _key in _list_keys:

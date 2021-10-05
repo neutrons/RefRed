@@ -3,7 +3,6 @@ import time
 import numpy as np
 from itertools import chain
 from qtpy.QtWidgets import QApplication
-from mantid.simpleapi import *
 
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.autopopulatemaintable.extract_lconfigdataset_runs import ExtractLConfigDataSetRuns

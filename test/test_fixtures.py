@@ -2,7 +2,7 @@
 import pytest
 
 # standard packages
-from pathlib2 import Path
+from pathlib import Path
 
 
 def test_data_server(data_server):
