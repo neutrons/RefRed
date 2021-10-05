@@ -214,7 +214,7 @@ class LoadingConfiguration(object):
         try:
             _norm_full_file_name = self.getNodeValue(node, 'norm_full_file_name')
             _norm_full_file_name = _norm_full_file_name.split(',')
-            _norm_full_fil_name = [str(x) for x in _norm_full_file_name]
+            _norm_full_file_name = [str(x) for x in _norm_full_file_name]
         except:
             _norm_full_file_name = ['']
         iMetadata.norm_full_file_name = _norm_full_file_name

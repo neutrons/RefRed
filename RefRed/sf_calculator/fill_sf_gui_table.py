@@ -156,7 +156,7 @@ class FillSFGuiTable(object):
                 _brush.setColor(RefRed.colors.VALUE_BAD)
             else:
                 _brush.setColor(RefRed.colors.VALUE_OK)
-            _brush_back = QtGui.QBrush()
+            QtGui.QBrush()  # TODO is this line necessary?
             _item = QtWidgets.QTableWidgetItem(_run_number)
             _item.setForeground(_brush)
             _color = QtGui.QColor(back_color)

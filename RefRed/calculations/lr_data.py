@@ -1,7 +1,7 @@
 import numpy as np
 import logging
 import math
-import os
+# import os
 import gc
 
 from mantid.api import mtd
@@ -160,7 +160,7 @@ class LRData(object):
 
         # Proton charge
         _proton_charge = float(mt_run.getProperty('gd_prtn_chrg').value)
-        _proton_charge_units = mt_run.getProperty('gd_prtn_chrg').units
+        # _proton_charge_units = mt_run.getProperty('gd_prtn_chrg').units
         new_proton_charge_units = 'mC'
 
         self.proton_charge = _proton_charge * 3.6  # to go from microA/h to mC
@@ -224,7 +224,7 @@ class LRData(object):
                 self.low_res_flag = np.bool(lconfig.norm_low_res_flag)
                 self.back_flag = np.bool(lconfig.norm_back_flag)
 
-    ################## Properties for easy data access ##########################
+    # Properties for easy data access
     # return the size of the data stored in memory for this dataset
     @property
     def xdata(self):

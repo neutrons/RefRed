@@ -4,11 +4,11 @@
   combines module parameters with temporary and user changeable
   configuration file options. When used in other modules
   this facility is completely hidden to the API.
-  
+
   As each parameter can be accessed as an attribute of the ConfigHolder object
   it behaves exactly like the according module would to, thus
   IDEs with context sensitive syntax completion work with it as well.
-  
+
   The initialization of all config modules is done in the config __init__ module.
 '''
 
@@ -58,11 +58,11 @@ class ConfigProxy(object):
             storage = self.default_storage
         if storage is None:
             storage = '_temp'
-            if not '_temp' in self.storages:
+            if '_temp' not in self.storages:
                 self.tmp_storages[storage] = {}
                 # use the exact same dictionary object
                 self.storages[storage] = self.tmp_storages[storage]
-        elif not storage in self.storages:
+        elif storage not in self.storages:
             sfile = os.path.join(self.config_path, storage + '.ini')
             try:
                 self.storages[storage] = ConfigObj(
@@ -81,7 +81,7 @@ class ConfigProxy(object):
         if name in self.storages[storage]:
             # update additional options from config
             for key, value in items.items():
-                if not key in self.storages[storage][name]:
+                if key not in self.storages[storage][name]:
                     self.storages[storage][name][key] = value
         else:
             self.storages[storage][name] = dict(items)
@@ -109,7 +109,7 @@ class ConfigProxy(object):
             ccopts['last_file'] = last_cfile
             ccopts['config_files'] = [last_cfile]
 
-        if not cpath in self.storages:
+        if cpath not in self.storages:
             sfile = os.path.join(cpath, last_cfile + '.ini')
             try:
                 self.storages[cpath] = ConfigObj(
@@ -129,7 +129,7 @@ class ConfigProxy(object):
         if name in self.storages[cpath]:
             # update additional options from config
             for key, value in list(items.items()):
-                if not key in self.storages[cpath][name]:
+                if key not in self.storages[cpath][name]:
                     self.storages[cpath][name][key] = value
         else:
             self.storages[cpath][name] = dict(items)
@@ -143,7 +143,7 @@ class ConfigProxy(object):
         return self[name]
 
     def switch_path_config(self, cpath, cname):
-        if not cpath in self.path_configs:
+        if cpath not in self.path_configs:
             if cpath in self.configs and self.configs[cpath] in self.path_configs:
                 cpath = self.configs[cpath]
             else:
@@ -169,7 +169,7 @@ class ConfigProxy(object):
                     sys.exc_info(),
                 )
             )
-        if not cname in self.path_configs[cpath][0]['config_files']:
+        if cname not in self.path_configs[cpath][0]['config_files']:
             self.path_configs[cpath][0]['config_files'].append(cname)
 
         # update missing items from default config
@@ -177,14 +177,14 @@ class ConfigProxy(object):
             if name in self.storages[cpath]:
                 # update additional options from config
                 for key, value in list(items.items()):
-                    if not key in self.storages[cpath][name]:
+                    if key not in self.storages[cpath][name]:
                         self.storages[cpath][name][key] = value
             else:
                 self.storages[cpath][name] = dict(items)
             self.path_configs[cpath][0]['last_file'] = cname
 
     def get_path_configs(self, cpath):
-        if not cpath in self.path_configs:
+        if cpath not in self.path_configs:
             if cpath in self.configs and self.configs[cpath] in self.path_configs:
                 cpath = self.configs[cpath]
             else:
@@ -197,7 +197,7 @@ class ConfigProxy(object):
 
         :returns: The corresponding :class:`ConfigHolder` object.
         '''
-        if not config in self.configs:
+        if config not in self.configs:
             raise KeyError('no configuration named %s found' % config)
         self.aliases[alias] = config
         return self[config]
@@ -236,7 +236,7 @@ class ConfigProxy(object):
         """Called by :class:`ConfigHolder` to retreive an item"""
         if config in self.aliases:
             config = self.aliases[config]
-        if not config in self.configs:
+        if config not in self.configs:
             raise KeyError("%s is no known configuration" % config)
         storage = self.configs[config]
         # special convenience methods to switch the config file with the config object
@@ -250,11 +250,8 @@ class ConfigProxy(object):
             value = self.tmp_storages[storage][config][item]
         else:
             value = self.storages[storage][config][item]
-        if (
-            isinstance(value, str)
-            and '%' in value
-            and not self.storages[storage][config].get('NO_INTERPOLATION', False)
-        ):
+        if isinstance(value, str) and '%' in value\
+                and not self.storages[storage][config].get('NO_INTERPOLATION', False):
             # perform interpolation with constants if possible
             value = self.interpolate(config, value)
         return value
@@ -274,9 +271,9 @@ class ConfigProxy(object):
             match_str = match.group()
             match_key = match.groups()[0]
             match_end = match.span()[1]
-            match = self._KEYCRE.search(value[match_start + match_end :])
+            match = self._KEYCRE.search(value[match_start + match_end:])
             match_start += match_end
-            if not '.' in match_key:
+            if '.' not in match_key:
                 # search same config for value
                 if match_key in self.tmp_storages[storage][config]:
                     value = value.replace(match_str, vtype(self.tmp_storages[storage][config][match_key]))
@@ -302,7 +299,7 @@ class ConfigProxy(object):
         """Called by :class:`ConfigHolder` to set an item value"""
         if config in self.aliases:
             config = self.aliases[config]
-        if not config in self.configs:
+        if config not in self.configs:
             raise KeyError("%s is no known configuration" % config)
         storage = self.configs[config]
         if temporary:
@@ -315,7 +312,7 @@ class ConfigProxy(object):
         """Called by :class:`ConfigHolder` to get the keys for it's config"""
         if config in self.aliases:
             config = self.aliases[config]
-        if not config in self.configs:
+        if config not in self.configs:
             raise KeyError("%s is no known configuration" % config)
         storage = self.configs[config]
         keys = list(self.storages[storage][config].keys())

@@ -241,9 +241,9 @@ class LiveReducedDataHandler(object):
     def generate_selected_sf(self, lconfig=None):
         o_gui = GuiUtility(parent=self.parent)
         stitching_type = o_gui.getStitchingType()
-        if stitching_type is "absolute":
+        if stitching_type == "absolute":
             return lconfig.sf_abs_normalization
-        elif stitching_type is "auto":
+        elif stitching_type == "auto":
             return lconfig.sf_auto
         else:
             return lconfig.sf_manual

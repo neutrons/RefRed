@@ -2,7 +2,7 @@ from qtpy.QtCore import QSettings
 import os
 from RefRed.configuration.user_configuration import UserConfiguration
 from RefRed.utilities import str2bool
-from RefRed.settings.list_settings import ListSettings
+# from RefRed.settings.list_settings import ListSettings
 
 
 class RetrieveUserConfiguration(object):
@@ -16,10 +16,10 @@ class RetrieveUserConfiguration(object):
 
         o_user_config = UserConfiguration()
         ylog_value = str(settings.value("is_reduced_plot_stitching_tab_ylog"))
-        if ylog_value is not '':
+        if ylog_value != '':
             o_user_config.is_reduced_plot_stitching_tab_ylog = str2bool(ylog_value)
         xlog_value = str(settings.value("is_reduced_plot_stitching_tab_xlog"))
-        if xlog_value is not '':
+        if xlog_value != '':
             o_user_config.is_reduced_plot_stitching_tab_xlog = str2bool(xlog_value)
         self.parent.o_user_configuration = o_user_config
 

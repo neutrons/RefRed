@@ -1,4 +1,4 @@
-import sys
+# import sys
 import time
 import numpy as np
 from itertools import chain
@@ -150,7 +150,7 @@ class ReductionTableAutoFill(object):
     def loading_full_reductionTable(self):
         _list_nexus_sorted = self.list_nexus_sorted
         _list_runs_sorted = self.list_runs_sorted
-        _data_type_selected = self.data_type_selected
+        # _data_type_selected = self.data_type_selected
         _is_working_with_data_column = True if self.data_type_selected == 'data' else False
 
         self.parent.ui.progressBar_check5.setMinimum(0)

@@ -50,7 +50,7 @@ class PopulateReductionTableFromListLRData(object):
         list_lrdata = self.list_lrdata
         big_table_data = self.big_table_data
         for _index, _wks in enumerate(self.list_wks):
-            if type(_wks) == type([]):
+            if isinstance(_wks, list):
                 pass
             else:
                 _lrdata = list_lrdata[_index]
@@ -96,7 +96,7 @@ class PopulateReductionTableFromListLRData(object):
                     _list_norm_runs_sorted.append(_run)
                     _list_norm_wks_sorted.append(_list_wks[_norm_index])
                     _list_norm_nexus_sorted.append(_list_nexus[_norm_index])
-                    if type(_run) == type([]):
+                    if isinstance(_run, list):
                         str_run = ",".join(_run)
                     else:
                         str_run = str(_run)
@@ -112,7 +112,7 @@ class PopulateReductionTableFromListLRData(object):
 
     def insert_data_runs_into_table(self):
         for _index, _run in enumerate(self.list_run):
-            if type(_run) == type([]):
+            if isinstance(_run, list):
                 _run = list(map(str, _run))  # to convert to list of string
                 str_run = ",".join(_run)
             else:

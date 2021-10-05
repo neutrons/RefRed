@@ -113,7 +113,7 @@ class OutputReducedData(QDialog):
         default_filename = 'REFL_' + run_number + '_reduced_data.txt'
         path = self.parent.path_ascii
         default_filename = path + '/' + default_filename
-        directory = path
+        # directory = path
         _filter = "Reduced Ascii (*.txt);; All (*.*)"
         filename = str(
             QFileDialog.getSaveFileName(self, 'Select Location and Name', directory=default_filename, filter=(_filter))
@@ -211,9 +211,9 @@ class OutputReducedData(QDialog):
     def generate_selected_sf(self, lconfig=None):
         o_gui = GuiUtility(parent=self.parent)
         stitching_type = o_gui.getStitchingType()
-        if stitching_type is "absolute":
+        if stitching_type == "absolute":
             return lconfig.sf_abs_normalization
-        elif stitching_type is "auto":
+        elif stitching_type == "auto":
             return lconfig.sf_auto
         else:
             return lconfig.sf_manual
@@ -228,10 +228,10 @@ class OutputReducedData(QDialog):
         return list_wks
 
     def create_output_file(self):
-        o_gui_utility = GuiUtility(parent=self.parent)
-        nbr_row = o_gui_utility.reductionTable_nbr_row()
-        _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
-        _big_table_data = _dataObject.big_table_data
+        # o_gui_utility = GuiUtility(parent=self.parent)
+        # nbr_row = o_gui_utility.reductionTable_nbr_row()
+        # _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
+        # _big_table_data = _dataObject.big_table_data
 
         # q min, q max
         [_q_min, _q_max] = self.get_q_range()
@@ -341,12 +341,13 @@ class OutputReducedData(QDialog):
         _reduction_method = '# Reduction method: manual'
         _reduction_engine = '# Reduction engine: RefRed'
         _reduction_date = '# %s' % _date
-        _ipts = o_gui_utility.get_ipts(row=0)
+        # _ipts = o_gui_utility.get_ipts(row=0)
         for _entry in [_date, _reduction_method, _reduction_engine, _reduction_date]:
             text.append(_entry)
         text.append("#")
 
-        _legend = "# DataRun\tNormRun\t2theta(degrees)\tLambdaMin(A)\tLambdaMax(A)\tQmin(1/A)\tQmax(1/A)\tScalingFactor\tTotal Counts\tpcCharge(mC)"
+        _legend = "# DataRun\tNormRun\t2theta(degrees)\tLambdaMin(A)\tLambdaMax(A)\tQmin(1/A)" \
+                  "\tQmax(1/A)\tScalingFactor\tTotal Counts\tpcCharge(mC)"
         text.append(_legend)
         _data_run = str(reduction_table.item(row, 1).text())
         _norm_run = str(reduction_table.item(row, 2).text())
@@ -393,13 +394,14 @@ class OutputReducedData(QDialog):
         _reduction_method = '# Reduction method: manual'
         _reduction_engine = '# Reduction engine: RefRed'
         _reduction_date = '# %s' % _date
-        _ipts = o_gui_utility.get_ipts(row=0)
+        # _ipts = o_gui_utility.get_ipts(row=0)
         for _entry in [_date, _reduction_method, _reduction_engine, _reduction_date]:
             text.append(_entry)
         text.append("#")
 
         nbr_row = o_gui_utility.reductionTable_nbr_row()
-        _legend = "# DataRun\tNormRun\t2theta(degrees)\tLambdaMin(A)\tLambdaMax(A)\tQmin(1/A)\tQmax(1/A)\tScalingFactor\tTotal Counts\tpcCharge(mC)"
+        _legend = "# DataRun\tNormRun\t2theta(degrees)\tLambdaMin(A)\tLambdaMax(A)\tQmin(1/A)" \
+                  "\tQmax(1/A)\tScalingFactor\tTotal Counts\tpcCharge(mC)"
         text.append(_legend)
         for _row in range(nbr_row):
             _data_run = str(reduction_table.item(_row, 1).text())
@@ -439,14 +441,12 @@ class OutputReducedData(QDialog):
         return text
 
     def retrieve_total_counts(self, row):
-        parent = self.parent
         _big_table_data = self.parent.big_table_data
         _lrdata = _big_table_data[row, 0]
         total_counts = _lrdata.total_counts
         return total_counts
 
     def retrieve_pcCharge(self, row):
-        parent = self.parent
         _big_table_data = self.parent.big_table_data
         _lrdata = _big_table_data[row, 0]
         pcCharge = _lrdata.proton_charge

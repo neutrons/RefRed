@@ -18,7 +18,7 @@ class ReductionTableCheckBox(object):
     def __init__(self, parent=None, row_selected=-1):
         if row_selected == -1:
             return
-        if parent == None:
+        if parent is None:
             return
 
         self.prev_row_selected = parent.prev_table_reduction_row_selected

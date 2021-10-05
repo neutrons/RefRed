@@ -45,7 +45,7 @@ class AllPlotAxis(object):
         self.reduced_plot_RQuserView_y = [ymin, ymax]
         self.reduced_plot_RQautoView_y = [ymin, ymax]
         self.reduced_plot_RQQ4userView_x = [xmin, xmax]
-        self.reduced_plot_RQQ4autoView_x = [xmi, xmax]
+        self.reduced_plot_RQQ4autoView_x = [xmin, xmax]
 
     def save_user_reduced_view(self, xmin=-1, xmax=-1, ymin=-1, ymax=-1):
         self.reduced_plot_RQ4userView_y = [ymin, ymax]

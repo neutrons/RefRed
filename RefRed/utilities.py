@@ -342,7 +342,7 @@ def removeEmptyStrElementAndUpdateIndexSelected(str_list, index_selected):
 
 
 def format_to_list(values):
-    if type(values) == type([]):
+    if isinstance(values, list):
         return values
     else:
         return [values]

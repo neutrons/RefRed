@@ -1,4 +1,4 @@
-import sys
+# import sys
 from qtpy import QtCore, QtWidgets
 import logging
 import numpy as np
@@ -18,7 +18,8 @@ from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidg
 from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.stitching_yscale_options_radio_button_handler import StitchingYScaleOptionsRadioButtonHandler
-from RefRed.gui_handling.first_angle_range_gui_handler import *
+from RefRed.gui_handling.first_angle_range_gui_handler import \
+    NormalizationOrStitchingButtonStatus, FirstAngleRangeGuiHandler
 from RefRed.gui_handling.refred_interface_handler import RefRedInterfaceHandler
 from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
@@ -334,7 +335,7 @@ class MainGui(QtWidgets.QMainWindow):
 
     @config_file_has_been_modified
     def data_browse_button(self):
-        o_browser = BrowsingRuns(parent=self, data_type='data')
+        BrowsingRuns(parent=self, data_type='data')
         ReductionTableAutoFill(parent=self, list_of_run_from_input='', data_type_selected='data')
         self.ui.data_sequence_lineEdit.setText('')
 
@@ -346,7 +347,7 @@ class MainGui(QtWidgets.QMainWindow):
 
     @config_file_has_been_modified
     def norm_browse_button(self):
-        o_browser = BrowsingRuns(parent=self, data_type='norm')
+        BrowsingRuns(parent=self, data_type='norm')
         ReductionTableAutoFill(parent=self, list_of_run_from_input='', data_type_selected='norm')
         self.ui.norm_sequence_lineEdit.setText('')
 

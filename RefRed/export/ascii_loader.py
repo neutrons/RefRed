@@ -9,7 +9,7 @@ class AsciiLoader(object):
     data_col4 = []
 
     def __init__(self, filename=None, nbr_col=3):
-        if nbr_col is not 3:
+        if nbr_col != 3:
             raise RuntimeError('only 3 supported for now!')
         data = np.genfromtxt(filename, dtype=float, comments='#')
         self.data_col1 = data[:, 0]

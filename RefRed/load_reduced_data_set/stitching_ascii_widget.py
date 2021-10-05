@@ -2,7 +2,7 @@ from qtpy import QtWidgets
 from qtpy.QtCore import Qt
 import numpy as np
 
-from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
+# from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
 from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.colors
 
@@ -227,7 +227,7 @@ class StitchingAsciiWidget(object):
             # Log(R) vs Q
             _final_y_axis = np.log(_y_axis)
             # _final_e_axis = np.log(_e_axis)
-            _final_e_axis = _e_axis  ## FIXME
+            _final_e_axis = _e_axis  # FIXME
         except:
             _final_e_axis = _e_axis
             _final_y_axis = _y_axis

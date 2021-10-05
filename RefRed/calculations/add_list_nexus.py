@@ -47,7 +47,7 @@ class AddListNexus(object):
                     lwks = _list_wks[0]
                     for i in range(1, len(_list_wks)):
                         rwks = _list_wks[1]
-                        lwks_temp = Plus(LHSWorkspace=lwks, RHSWorkspace=rwks, OutputWorkspace=lwks)
+                        Plus(LHSWorkspace=lwks, RHSWorkspace=rwks, OutputWorkspace=lwks)
                     self.wks = lwks
 
                 else:

@@ -141,9 +141,9 @@ class ReducedDataHandler(object):
     def generate_selected_sf(self, lconfig=None):
         o_gui = GuiUtility(parent=self.parent)
         stitching_type = o_gui.getStitchingType()
-        if stitching_type is "absolute":
+        if stitching_type == "absolute":
             return lconfig.sf_abs_normalization
-        elif stitching_type is "auto":
+        elif stitching_type == "auto":
             return lconfig.sf_auto
         else:
             return lconfig.sf_manual
@@ -196,4 +196,4 @@ class ProducedSelectedOutputScaled(object):
         # make sure there is no <= 0 values of _y_axis
         input_y_axis[input_y_axis <= 0] = np.nan
         self.output_y_axis = np.log(input_y_axis)
-        self.output_e_axis = input_e_axis  ## FIXME
+        self.output_e_axis = input_e_axis  # FIXME

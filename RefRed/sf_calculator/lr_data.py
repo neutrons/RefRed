@@ -79,7 +79,7 @@ class LRData(object):
         tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff_large) * 1e-4
         tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - tof_coeff_large) * 1e-4
 
-        if self.read_options['is_auto_tof_finder'] or self.tof_range == None:
+        if self.read_options['is_auto_tof_finder'] or self.tof_range is None:
             autotmin = tmin
             autotmax = tmax
         else:
@@ -96,7 +96,7 @@ class LRData(object):
 
         # Proton charge
         _proton_charge = float(mt_run.getProperty('gd_prtn_chrg').value)
-        _proton_charge_units = mt_run.getProperty('gd_prtn_chrg').units
+        # _proton_charge_units = mt_run.getProperty('gd_prtn_chrg').units
         new_proton_charge_units = 'mC'
 
         self.proton_charge = _proton_charge * 3.6  # to go from microA/h to mC
@@ -121,7 +121,7 @@ class LRData(object):
             back2 = int(peak2 + backOffsetFromPeak)
             self.back = [str(back1), str(back2)]
 
-    ################## Properties for easy data access ##########################
+    # Properties for easy data access #
     # return the size of the data stored in memory for this dataset
     @property
     def xdata(self):

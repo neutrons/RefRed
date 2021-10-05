@@ -7,6 +7,7 @@
 #      by: qtpy UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
+from .mplwidget import MPLWidget
 
 from qtpy import QtCore, QtWidgets
 
@@ -113,6 +114,3 @@ class Ui_Form(object):
         item.setText(_translate("Form", "Label", None))
         self.pushButton.setText(_translate("Form", "Clear", None))
         self.pushButton_2.setText(_translate("Form", "Open", None))
-
-
-from .mplwidget import MPLWidget

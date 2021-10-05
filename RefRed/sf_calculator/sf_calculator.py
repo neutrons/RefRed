@@ -503,7 +503,7 @@ class SFCalculator(QtWidgets.QMainWindow, Ui_SFCalculatorInterface):
         self.fileHasBeenModified()
 
     def fillGuiTable(self):
-        _fill_gui_object = FillSFGuiTable(parent=self, table=self.big_table, is_using_si_slits=self.is_using_si_slits)
+        FillSFGuiTable(parent=self, table=self.big_table, is_using_si_slits=self.is_using_si_slits)
 
     def fileHasBeenModified(self):
         dialog_title = self.window_title + self.current_loaded_file
@@ -518,7 +518,7 @@ class SFCalculator(QtWidgets.QMainWindow, Ui_SFCalculatorInterface):
     def updatePeakBackTofWidgets(self, row):
         _list_nxsdata_sorted = self.list_nxsdata_sorted
         _nxsdata_row = _list_nxsdata_sorted[row]
-        if _nxsdata_row == None:
+        if _nxsdata_row is None:
             return
         [peak1, peak2] = _nxsdata_row.peak
         if peak1 == '' or peak1 == 'N/A':
@@ -618,7 +618,7 @@ class SFCalculator(QtWidgets.QMainWindow, Ui_SFCalculatorInterface):
         self.TOFmanualToValue.setEnabled(status)
 
     def checkGui(self):
-        if (self.loaded_list_of_runs != []) or (self.big_table != None):
+        if (self.loaded_list_of_runs != []) or (self.big_table is not None):
             wdg_enabled = True
         else:
             wdg_enabled = False

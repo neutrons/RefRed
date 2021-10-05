@@ -1,7 +1,7 @@
 from qtpy.QtGui import QPixmap, QIcon
 from qtpy.QtWidgets import QMainWindow, QCheckBox, QTableWidgetItem, QFileDialog
 from qtpy.QtCore import QSize, QSettings
-from xml.dom import minidom
+# from xml.dom import minidom
 import numpy as np
 import os
 import time
@@ -127,7 +127,7 @@ class DisplayMetadata(QMainWindow):
         list_values = self.list_values
         search_string = str(self.ui.searchLineEdit.text()).lower()
 
-        _metadata_table = self.list_metadata_selected
+        # _metadata_table = self.list_metadata_selected
         _index = 0
         for _key in list_keys:
             _name = _key
@@ -163,7 +163,7 @@ class DisplayMetadata(QMainWindow):
             _value = str(_value)
         elif len(_value) == 1:
             _value = str(_value)
-        elif type(_value) == type(""):
+        elif isinstance(_value, str):
             _value = _value
         else:
             _value = '[' + str(_value[0]) + ',...]' + '-> (' + str(len(_value)) + ' entries)'
@@ -174,7 +174,7 @@ class DisplayMetadata(QMainWindow):
         settings = QSettings()
         nbr_metadata = str(settings.value("nbr_metadata"))
         list_metadata_selected = []
-        if nbr_metadata is not '':
+        if nbr_metadata != '':
             for index in range(int(nbr_metadata)):
                 _name = 'metadata_#%d' % index
                 _value = str(settings.value(_name))
@@ -226,7 +226,7 @@ class DisplayMetadata(QMainWindow):
         _list_values = self.list_values
         _list_metadata_selected = []
         for idx, val in enumerate(_list_values):
-            if val == True:
+            if val is True:
                 _list_metadata_selected.append(_list_keys[idx])
         return _list_metadata_selected
 
@@ -282,13 +282,9 @@ class DisplayMetadata(QMainWindow):
         _metadata_table = self.ui.metadataTable
         nbr_row = _metadata_table.rowCount()
         for r in range(nbr_row):
-            _line = (
-                _metadata_table.item(r, 0).text()
-                + ' '
-                + str(_metadata_table.item(r, 1).text())
-                + ' '
+            _line = _metadata_table.item(r, 0).text() + ' ' + str(_metadata_table.item(r, 1).text()) + ' '\
                 + str(_metadata_table.item(r, 2).text())
-            )
+
             text.append(_line)
         RefRed.utilities.write_ascii_file(filename, text)
 
@@ -338,7 +334,7 @@ class DisplayMetadata(QMainWindow):
         _config_table = self.ui.configureTable
         nbr_row = _config_table.rowCount()
         for r in range(nbr_row):
-            _name = self.ui.configureTable.item(r, 1).text()
+            # _name = self.ui.configureTable.item(r, 1).text()
             _yesNo = QCheckBox()
             _yesNo.setText('')
             self.ui.configureTable.setCellWidget(r, 0, _yesNo)

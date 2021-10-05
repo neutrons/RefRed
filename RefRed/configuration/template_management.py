@@ -69,7 +69,7 @@ class TemplateManagement(QtWidgets.QMainWindow):
         self._clear_table()
         self.ui.tableWidget.setColumnCount(2)
 
-        if self._folder is '':
+        if self._folder == '':
             QApplication.restoreOverrideCursor()
             return
 
@@ -115,7 +115,7 @@ class TemplateManagement(QtWidgets.QMainWindow):
     def get_button_status(self, _file):
         status = True
         try:
-            o_preview_config = PreviewConfig(parent=None, filename=_file, check_format=True)
+            PreviewConfig(parent=None, filename=_file, check_format=True)
         except:
             status = False
         return status
@@ -210,7 +210,7 @@ class ConfirmAutoReduceDialog(QtWidgets.QDialog):
         _short_file = os.path.basename(filename)
         self.ui.file_name.setText(_short_file)
 
-        _color = QtGui.QColor(QtCore.Qt.darkGreen)
+        QtGui.QColor(QtCore.Qt.darkGreen)  # TODO is this line necessary?
         self.ui.file_name.setStyleSheet('color: green')
 
         if ipts == '':
@@ -259,7 +259,7 @@ class ConfirmAutoReduceDialog(QtWidgets.QDialog):
         return ipts
 
     def is_really_an_ipts(self, _input_ipts):
-        match_obj = re.match('IPTS-\d*', _input_ipts)
+        match_obj = re.match(r'IPTS-\d*', _input_ipts)
         if match_obj:
             return True
         return False

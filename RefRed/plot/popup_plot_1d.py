@@ -5,7 +5,7 @@ import os
 import bisect
 
 from RefRed.interfaces.plot_dialog_refl_interface import Ui_Dialog as UiPlot
-from RefRed.interfaces.mplwidget import MPLWidget
+# from RefRed.interfaces.mplwidget import MPLWidget
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.colors
@@ -171,7 +171,7 @@ class PopupPlot1d(QDialog):
         peak1 = self.ui.jim_peak1.value()
         peak2 = self.ui.jim_peak2.value()
         peak_min = min([peak1, peak2])
-        peak_max = max([peak1, peak2])
+        # peak_max = max([peak1, peak2])
         if peak_min != peak1:
             self.ui.jim_peak1.setValue(peak2)
             self.ui.john_peak1.setValue(peak2)
@@ -181,7 +181,7 @@ class PopupPlot1d(QDialog):
         back1 = self.ui.jim_back1.value()
         back2 = self.ui.jim_back2.value()
         back_min = min([back1, back2])
-        back_max = max([back1, back2])
+        # back_max = max([back1, back2])
         if back_min != back1:
             self.ui.jim_back1.setValue(back2)
             self.ui.john_back1.setValue(back2)

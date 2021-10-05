@@ -2,7 +2,7 @@ import RefRed.colors as colors
 import bisect
 from RefRed.plot.clear_plots import ClearPlots
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
-from RefRed.gui_handling.gui_utility import GuiUtility
+# from RefRed.gui_handling.gui_utility import GuiUtility
 
 
 class DisplayPlots(object):
@@ -163,7 +163,7 @@ class DisplayPlots(object):
             parent.ui.S2SiHlabel.setText('S2H:')
             parent.ui.metadataS2WValue.setText('%.2f' % d.S2W)
             parent.ui.metadataS2HValue.setText('%.2f' % d.S2H)
-        nexus = d.filename
+        # nexus = d.filename
         if self.is_data:
             parent.ui.dataNameOfFile.setText('%s' % d.run_number)
         else:

@@ -41,7 +41,7 @@ class BrowsingRuns(object):
         _unique_list_runs = set(_list_runs)
         str_list = ",".join(_unique_list_runs)
 
-        if self.data_type is 'data':
+        if self.data_type == 'data':
             self.parent.ui.data_sequence_lineEdit.setText(str_list)
         else:
             self.parent.ui.norm_sequence_lineEdit.setText(str_list)

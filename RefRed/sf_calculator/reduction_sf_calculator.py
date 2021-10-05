@@ -175,7 +175,7 @@ class ReductionSfCalculator(object):
 
     def getListPeakBack(self, from_index, to_index):
         data = self.table_settings
-        return data[from_index : to_index + 1, 3:7]
+        return data[from_index: to_index + 1, 3:7]
 
     def getTofRange(self, from_index):
         data = self.table_settings

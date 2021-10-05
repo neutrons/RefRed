@@ -33,6 +33,7 @@ class MouseLeavePlot(object):
         if data is None:
             return
 
+        c = 0  # TODO what is the meaning of `c` ?
         if plot_type == 'yi':
             if c == 0:
                 plot_ui = parent.ui.data_yi_plot

@@ -4,7 +4,7 @@ from qtpy.QtCore import Qt
 import os
 
 from RefRed.interfaces.plot2d_dialog_refl_interface import Ui_Dialog as UiPlot
-from RefRed.interfaces.mplwidget import MPLWidget
+# from RefRed.interfaces.mplwidget import MPLWidget
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.colors
@@ -153,19 +153,19 @@ class PopupPlot2d(QDialog):
         [clock1, clock2] = self.get_clocking_values()
 
         if lowresFlag:
-            lr1 = self.ui.detector_plot.canvas.ax.axvline(lowres1, color=RefRed.colors.LOWRESOLUTION_SELECTION_COLOR)
-            lr2 = self.ui.detector_plot.canvas.ax.axvline(lowres2, color=RefRed.colors.LOWRESOLUTION_SELECTION_COLOR)
+            self.ui.detector_plot.canvas.ax.axvline(lowres1, color=RefRed.colors.LOWRESOLUTION_SELECTION_COLOR)
+            self.ui.detector_plot.canvas.ax.axvline(lowres2, color=RefRed.colors.LOWRESOLUTION_SELECTION_COLOR)
 
-        p1 = self.ui.detector_plot.canvas.ax.axhline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
-        p2 = self.ui.detector_plot.canvas.ax.axhline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
+        self.ui.detector_plot.canvas.ax.axhline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
+        self.ui.detector_plot.canvas.ax.axhline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
 
         if self.is_data:
-            c1 = self.ui.detector_plot.canvas.ax.axhline(clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
-            c1 = self.ui.detector_plot.canvas.ax.axhline(clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
+            self.ui.detector_plot.canvas.ax.axhline(clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
+            self.ui.detector_plot.canvas.ax.axhline(clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
 
         if backFlag:
-            b1 = self.ui.detector_plot.canvas.ax.axhline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
-            b2 = self.ui.detector_plot.canvas.ax.axhline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
+            self.ui.detector_plot.canvas.ax.axhline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
+            self.ui.detector_plot.canvas.ax.axhline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
 
         if self.data.all_plot_axis.detector_data_interval is None:
             self.ui.detector_plot.draw()
@@ -201,19 +201,19 @@ class PopupPlot2d(QDialog):
         [tmin, tmax, peak1, peak2, back1, back2, backFlag] = self.retrieveTofPeakBack()
         [clock1, clock2] = self.get_clocking_values()
 
-        t1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmin, color=RefRed.colors.TOF_SELECTION_COLOR)
-        t2 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmax, color=RefRed.colors.TOF_SELECTION_COLOR)
+        self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmin, color=RefRed.colors.TOF_SELECTION_COLOR)
+        self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmax, color=RefRed.colors.TOF_SELECTION_COLOR)
 
-        p1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
-        p2 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
+        self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
+        self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
 
         if self.is_data:
-            c1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
-            c1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
+            self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
+            self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
 
         if backFlag:
-            b1 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
-            b2 = self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
+            self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
+            self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
 
         if self.data.all_plot_axis.yt_data_interval is None:
             self.ui.y_pixel_vs_tof_plot.canvas.ax.set_ylim(0, pixel_to)
@@ -259,12 +259,14 @@ class PopupPlot2d(QDialog):
     def init_gui(self):
         palette = QPalette()
         palette.setColor(QPalette.Foreground, Qt.red)
+        r"""
         if self.data.new_detector_geometry_flag:
             yrange = [0, 303]
             xrange = [0, 255]
         else:
             yrange = [0, 255]
             xrange = [0, 303]
+        """
         self.ui.error_label.setVisible(False)
         self.ui.error_label.setPalette(palette)
 
@@ -349,7 +351,7 @@ class PopupPlot2d(QDialog):
         peak1 = self.ui.peak1.value()
         peak2 = self.ui.peak2.value()
         peak_min = min([peak1, peak2])
-        peak_max = max([peak1, peak2])
+        # peak_max = max([peak1, peak2])
         if peak_min != peak1:
             self.ui.peak1.setValue(peak2)
             self.ui.peak2.setValue(peak1)
@@ -357,7 +359,7 @@ class PopupPlot2d(QDialog):
         back1 = self.ui.back1.value()
         back2 = self.ui.back2.value()
         back_min = min([back1, back2])
-        back_max = max([back1, back2])
+        # back_max = max([back1, back2])
         if back_min != back1:
             self.ui.back1.setValue(back2)
             self.ui.back2.setValue(back1)

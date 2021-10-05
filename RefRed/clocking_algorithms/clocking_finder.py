@@ -117,7 +117,7 @@ class ClockingFinder(object):
         left_xdata = xdata[0:left_max]
         left_ydata = ydata[0:left_max]
         o_clocking_left = ClockingAlgorithm(xdata=left_xdata, ydata=left_ydata)
-        left_clocking = o_clocking_algo.clocking[0]
+        left_clocking = o_clocking_left.clocking[0]
 
         right_xdata = xdata[right_min:-1]
         right_ydata = ydata[right_min:-1]

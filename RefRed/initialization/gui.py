@@ -87,7 +87,7 @@ class Gui(object):
         '''Define the raw title of the main window'''
         parent = self.parent
 
-        title = window_title
+        # title = window_title
         parent.setWindowTitle('%s%s' % (window_title, '~/tmp.xml'))
 
     def set_gui_size(self):

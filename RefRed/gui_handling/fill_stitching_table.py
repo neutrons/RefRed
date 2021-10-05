@@ -26,9 +26,9 @@ class FillStitchingTable(ParentHandler):
 
         self.fillTableRunNumber()
 
-        if stitching_type is 'absolute':
+        if stitching_type == 'absolute':
             self.fillTableForAbsoluteNormalization()
-        elif stitching_type is 'auto':
+        elif stitching_type == 'auto':
             self.fillTableForAutoStitching()
         else:
             self.fillTableForManualStitching()

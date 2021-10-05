@@ -47,9 +47,10 @@ class SortNXSData(object):
 
     def mergedNXSData(self, nxsdata1, nxsdata2):
         logging.error("SortNXSData.mergedNXSData not implemented")
-        _full_file_name1 = nxsdata1.active_data.filename
-        _full_file_name2 = nxsdata2.active_data.filename
-        # _new_nxsdata = NXSData([_full_file_name1, _full_file_name2], bins=self.sf_gui.bin_size, is_auto_peak_finder=True)
+        # _full_file_name1 = nxsdata1.active_data.filename
+        # _full_file_name2 = nxsdata2.active_data.filename
+        # _new_nxsdata = NXSData([_full_file_name1, _full_file_name2],
+        #                        bins=self.sf_gui.bin_size, is_auto_peak_finder=True)
         return None  # _new_nxsdata
 
     def getSortedList(self):

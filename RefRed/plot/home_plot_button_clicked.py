@@ -53,7 +53,7 @@ class HomePlotButtonClicked(object):
             elif plot_type == 'it':
                 [xmin, xmax, ymin, ymax] = data.all_plot_axis.it_data_interval
                 data.all_plot_axis.it_view_interval = [xmin, xmax, ymin, ymax]
-                if colum == 0:
+                if column == 0:
                     _plot_ui = parent.ui.data_it_plot.canvas
                 else:
                     _plot_ui = parent.ui.norm_it_plot.canvas

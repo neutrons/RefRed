@@ -7,6 +7,8 @@
 #      by: qtpy UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
+from .mplwidget import MPLWidget
+# from . import icons_rc
 
 from qtpy import QtCore, QtGui, QtWidgets
 
@@ -97,7 +99,3 @@ class Ui_Dialog(object):
         self.applyButton.setText(_translate("Dialog", "Apply\n" "scales\n" "to\n" "all", None))
         self.IminLabel.setText(_translate("Dialog", "Min\n" "10^", None))
         self.clipButton.setText(_translate("Dialog", "Clip", None))
-
-
-from .mplwidget import MPLWidget
-from . import icons_rc

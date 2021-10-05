@@ -77,7 +77,7 @@ class SortLRDataList(object):
                 wks_fix = list_wks_sorted[index_lrdata_fix]
                 nexus_fix = list_nexus_sorted[index_lrdata_fix]
 
-                if type(lrdata_fix) == type([]):
+                if isinstance(lrdata_fix, list):
                     lrdata_fix = lrdata_fix[0]
                     runs_fix = runs_fix[0]
                     wks_fix = wks_fix[0]
@@ -101,7 +101,7 @@ class SortLRDataList(object):
                         break
 
                 else:
-                    if type(lrdata_fix) == type([]):
+                    if isinstance(lrdata_fix, list):
                         lrdata_mov = lrdata_fix.append(lrdata_mov)
                         runs_mov = runs_fix.append(runs_mov)
                         wks_mov = wks_fix.append(wks_mov)

@@ -3,7 +3,7 @@
   Package containing configuration modules.
   This folder contains all files which define constants and parameters
   for quicknxs.
-  
+
   The config package facilitates a special ConfigProxy interface that
   acts like a dictionary, which is automatically generated from the
   submodules. Constants (variables using only capital letters) are
@@ -13,27 +13,27 @@
   next import. To get access to the configuration other modules
   only need to import the module name, which can be either
   used as dictionary or by accessing the objects attributes.
-  
+
   For example the module "user1" could look like this::
-    
+
     # module docstring
     config_file="user"
     CONST1=12.3
     CONST2=431.2
     opt1=12
     opt2=1
-  
+
   The module that wants to use these information will be similar to::
-  
+
     from quicknxs.config import user1
-    
+
     print user1.CONS1 # directly read from module
     print user1['opt1'] # first time read from module than from user.ini file
-    
+
   If the module does not define the 'config_file' variable it is treated as
   a normal module, if it is None the storage is just temporary and if it
   is the empty string it will use the default config file.
-  
+
   The proxy allows simple interpolation by using '%(name)s' inside a variable
   string, which will be substituted by the name variable from the same config.
   To use variables from a different config use '%(config.name)s' syntax.
@@ -79,35 +79,26 @@ def _create_proxy():
         if 'config_path' in modi.__dict__:
             moddict = {}
             for key, value in modi.__dict__.items():
-                if (
-                    key.startswith('_')
-                    or key == 'config_path'
-                    or hasattr(value, '__file__')
-                    or hasattr(value, '__module__')
-                    or type(value).__name__ == 'module'
-                ):
+                if key.startswith('_') or key == 'config_path' or hasattr(value, '__file__')\
+                        or hasattr(value, '__module__') or type(value).__name__ == 'module':
                     continue
                 moddict[key] = value
-            config_holder = proxy.add_path_config(name, moddict, modi.config_path)  # @UnusedVariable
+            config_holder = proxy.add_path_config(name, moddict, modi.config_path)  # noqa F841
         elif 'config_file' in modi.__dict__:
             moddict = {}
             for key, value in modi.__dict__.items():
-                if (
-                    key.startswith('_')
-                    or key == 'config_file'
-                    or hasattr(value, '__file__')
-                    or hasattr(value, '__module__')
-                    or type(value).__name__ == 'module'
-                ):
+                if key.startswith('_') or key == 'config_file' or hasattr(value, '__file__')\
+                        or hasattr(value, '__module__') or type(value).__name__ == 'module':
                     continue
                 moddict[key] = value
-            config_holder = proxy.add_config(name, moddict, storage=modi.config_file)  # @UnusedVariable
+            config_holder = proxy.add_config(name, moddict, storage=modi.config_file)
         else:
             # if config_file is not defined in the module, just use the module itself
-            config_holder = modi  # @UnusedVariable
+            config_holder = modi  # noqa F841
+            pass
         # add item to the package * import
         __all__.append(name)
-        exec("global %s;%s=config_holder" % (name, name))
+        exec("global %s;%s=config_holder" % (name, name))  # FIXME should it be (name, config_holder) ?
 
 
 if proxy is None:

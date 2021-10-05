@@ -24,8 +24,8 @@ def mantid_location(valid_versions, root_location='/opt'):
 
     # Check for installed Mantid versions under /opt
     short_version = {'5.1.0': '51'}  # dictionary translating a version to one of the /opt versions
-    for version in valid_versions:
-        install_path = os.path.join(root_location, 'mantid' + short_version[version])  # e.g "/opt/mantid51"
+    for _version in valid_versions:
+        install_path = os.path.join(root_location, 'mantid' + short_version[_version])  # e.g "/opt/mantid51"
         if os.path.isdir(install_path):  # check only for the existence of the directory, but not its contents
             mantid_path = install_path
             break
@@ -84,7 +84,7 @@ def _run(argv=[]):
 
 
 if __name__ == '__main__':
-    from RefRed import config
+    # from RefRed import config
     from RefRed import version
     from RefRed.main import MainGui
 

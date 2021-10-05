@@ -7,6 +7,12 @@
 #      by: qtpy UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
+from .mplwidgetnolog import MPLWidgetNoLog
+from .mplwidget import MPLWidget
+from .mytablewidget import MyTableWidget
+from .mplwidgetxlogylog import MPLWidgetXLogYLog
+from .mplwidgetxlog import MPLWidgetXLog
+# from . import icons_rc
 
 from qtpy import QtCore, QtGui, QtWidgets
 
@@ -1979,8 +1985,10 @@ class Ui_MainWindow(object):
                 "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
                 "p, li { white-space: pre-wrap; }\n"
-                "</style></head><body style=\" font-family:\'Lucida Grande\'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
-                "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">µs</p></body></html>",
+                "</style></head><body style=\" font-family:\'Lucida Grande\'; font-size:13pt; "
+                "font-weight:400; font-style:normal;\">\n"
+                "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; "
+                "-qt-block-indent:0; text-indent:0px;\">µs</p></body></html>",
                 None,
             )
         )
@@ -1995,8 +2003,10 @@ class Ui_MainWindow(object):
                 "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
                 "p, li { white-space: pre-wrap; }\n"
-                "</style></head><body style=\" font-family:\'Lucida Grande\'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
-                "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">&#177;</p></body></html>",
+                "</style></head><body style=\" font-family:\'Lucida Grande\'; "
+                "font-size:13pt; font-weight:400; font-style:normal;\">\n"
+                "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; "
+                "-qt-block-indent:0; text-indent:0px;\">&#177;</p></body></html>",
                 None,
             )
         )
@@ -2319,11 +2329,3 @@ class Ui_MainWindow(object):
         self.action_save_configuration.setShortcut(_translate("MainWindow", "Meta+S", None))
         self.actionRunReduction.setText(_translate("MainWindow", "RUN", None))
         self.actionExportScript.setText(_translate("MainWindow", "Export Script ...", None))
-
-
-from .mplwidgetnolog import MPLWidgetNoLog
-from .mplwidget import MPLWidget
-from .mytablewidget import MyTableWidget
-from .mplwidgetxlogylog import MPLWidgetXLogYLog
-from .mplwidgetxlog import MPLWidgetXLog
-from . import icons_rc

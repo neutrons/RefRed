@@ -5,6 +5,8 @@
 # Created by: qtpy UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
+from .mplwidgetxlog import MPLWidgetXLog
+from .mplwidgetnolog import MPLWidgetNoLog
 
 from qtpy import QtCore, QtGui, QtWidgets
 
@@ -631,7 +633,3 @@ class Ui_SFCalculatorInterface(object):
             _translate("SFCalculatorInterface", "Edit Incident Medium List ...", None)
         )
         self.clearSFconentFileMenu.setText(_translate("SFCalculatorInterface", "Clear Content SF File", None))
-
-
-from .mplwidgetxlog import MPLWidgetXLog
-from .mplwidgetnolog import MPLWidgetNoLog

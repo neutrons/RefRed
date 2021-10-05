@@ -90,7 +90,7 @@ class MetadataFinder(QMainWindow):
         settings = QSettings()
         nbr_metadata = str(settings.value("nbr_metadata"))
         list_metadata_selected = []
-        if nbr_metadata is not '':
+        if nbr_metadata != '':
             for index in range(int(nbr_metadata)):
                 _name = 'metadata_#%d' % index
                 _value = str(settings.value(_name))
@@ -216,7 +216,7 @@ class MetadataFinder(QMainWindow):
             _value = str(_value)
         elif len(_value) == 1:
             _value = str(_value)
-        elif type(_value) == type(""):
+        elif isinstance(_value, list):
             _value = _value
         else:
             _value = '[' + str(_value[0]) + ',...]' + '-> (' + str(len(_value)) + ' entries)'
@@ -248,8 +248,8 @@ class MetadataFinder(QMainWindow):
                 return
             else:
                 _list_runs = self.list_runs
-                _list_nxs = self.list_nxs
-                _list_filename = self.list_filename
+                # _list_nxs = self.list_nxs
+                # _list_filename = self.list_filename
 
         elif _list_runs[0] == -2:
             self.ui.inputErrorLabel.setVisible(True)
@@ -279,7 +279,7 @@ class MetadataFinder(QMainWindow):
             self.ui.metadataTable.insertColumn(2)
             _header.append(name)
         self.ui.metadataTable.setHorizontalHeaderLabels(_header)
-        list_nxs = self.list_nxs
+        # list_nxs = self.list_nxs
 
     def populateMetadataTable(self):
         list_metadata_selected = self.list_metadata_selected
@@ -314,7 +314,7 @@ class MetadataFinder(QMainWindow):
         _config_table = self.ui.configureTable
         nbr_row = _config_table.rowCount()
         for r in range(nbr_row):
-            _name = self.ui.configureTable.item(r, 1).text()
+            # _name = self.ui.configureTable.item(r, 1).text()
             _yesNo = QCheckBox()
             _yesNo.setText('')
             self.ui.configureTable.setCellWidget(r, 0, _yesNo)
@@ -405,12 +405,8 @@ class MetadataFinder(QMainWindow):
         _metadata_table = self.ui.metadataTable
         nbr_row = _metadata_table.rowCount()
         for r in range(nbr_row):
-            _line = (
-                _metadata_table.item(r, 0).text()
-                + ' '
-                + str(_metadata_table.item(r, 1).text())
-                + ' '
+            _line = _metadata_table.item(r, 0).text() + ' ' + str(_metadata_table.item(r, 1).text()) + ' '\
                 + str(_metadata_table.item(r, 2).text())
-            )
+
             text.append(_line)
         RefRed.utilities.write_ascii_file(filename, text)

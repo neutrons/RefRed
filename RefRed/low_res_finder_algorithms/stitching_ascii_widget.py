@@ -1,7 +1,7 @@
 from qtpy import QtWidgets, QtCore
 import numpy as np
 
-from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
+# from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
 import RefRed.colors
 
 
@@ -204,7 +204,7 @@ class StitchingAsciiWidget(object):
         # Log(R) vs Q
         _final_y_axis = np.log(_y_axis)
         # _final_e_axis = np.log(_e_axis)
-        _final_e_axis = _e_axis  ## FIXME
+        _final_e_axis = _e_axis  # FIXME
         return [_final_y_axis, _final_e_axis]
 
     def get_selected_reduced_output(self):

@@ -14,14 +14,14 @@ class ExtractLConfigDataSetRuns(object):
 
         for _lconfig in self.lconfigdataset:
             if _lconfig is not None:
-                if self.data_type is 'data':
+                if self.data_type == 'data':
                     _list_run = _lconfig.data_sets
                 else:
                     _list_run = _lconfig.norm_sets
 
                 if _list_run is not ['']:
                     for _run in _list_run:
-                        if _run is not '':
+                        if _run != '':
                             int_run = int(_run)
                             full_list_runs.append(int_run)
 

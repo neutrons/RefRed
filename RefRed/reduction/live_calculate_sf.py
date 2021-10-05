@@ -25,9 +25,9 @@ class LiveCalculateSF(object):
         o_gui = GuiUtility(parent=self.parent)
         stitching_type = o_gui.getStitchingType()
 
-        if stitching_type is 'absolute':
+        if stitching_type == 'absolute':
             self.absolute_normalization_calculation(row_index=self.row_index)
-        elif stitching_type is 'auto':
+        elif stitching_type == 'auto':
             self.auto_stitching_calculation(row_index=self.row_index)
         else:
             self.manual_stitching_calculation(row_index=self.row_index)

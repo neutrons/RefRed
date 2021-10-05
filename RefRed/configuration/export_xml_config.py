@@ -108,14 +108,14 @@ class ExportXMLConfig(object):
             clocking = _data.clocking
             tof = _data.tof_range
             # tof_units = _data.tof_units
-            tof_auto_flag = _data.tof_auto_flag
+            # tof_auto_flag = _data.tof_auto_flag
             q_range = _data.q_range
             lambda_range = _data.lambda_range
             incident_angle = _data.incident_angle
 
             _norm = _big_table_data[row, 1]
             if _norm is not None:
-                norm_full_file_name = _norm.full_file_name
+                # norm_full_file_name = _norm.full_file_name
                 # if type(norm_full_file_name) == type([]):
                 # norm_full_file_name = ','.join(norm_full_file_name)
                 norm_flag = _norm.use_it_flag

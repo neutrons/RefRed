@@ -29,7 +29,7 @@ class ChangeStitchingDataInterval(object):
 
             if (x_min is None) and (x_max is None):
                 _lrdata.all_plot_axis.reduced_plot_RQ4userView_y = [y_min, y_max]
-                _lrdata.all_plot_axis.reduced_plot_RQQ4userView_x = [x_min_user, x_max_user]
+                _lrdata.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin_user, xmax_user]
 
             else:
                 _lrdata.all_plot_axis.reduced_plot_RQ4userView_y = [ymin_user, ymax_user]
@@ -71,7 +71,7 @@ class LaunchStitchingManualXAxis(QMainWindow):
         height = self.height()
         self.setFixedSize(width, height)
 
-        pos_main_gui = self.parent.pos()
+        self.parent.pos()
         plot_gui_pos = self.parent.ui.data_stitching_plot.pos()
         plot_gui_height = self.parent.ui.data_stitching_plot.frameGeometry().height()
         self.move(mouse_x + plot_gui_pos.x(), plot_gui_pos.y() + plot_gui_height + mouse_y - 50)
@@ -125,9 +125,7 @@ class LaunchStitchingManualXAxis(QMainWindow):
     def validate_changes(self):
         self.x_min = float(str(self.ui.x_min_value.text()))
         self.x_max = float(str(self.ui.x_max_value.text()))
-        o_changes = ChangeStitchingDataInterval(
-            parent=self.parent, yaxis_type=self.yaxis_type, x_min=self.x_min, x_max=self.x_max
-        )
+        ChangeStitchingDataInterval(parent=self.parent, yaxis_type=self.yaxis_type, x_min=self.x_min, x_max=self.x_max)
 
 
 class LaunchStitchingManualYAxis(QMainWindow):
@@ -154,7 +152,7 @@ class LaunchStitchingManualYAxis(QMainWindow):
         height = self.height()
         self.setFixedSize(width, height)
 
-        pos_main_gui = self.parent.pos()
+        self.parent.pos()
         plot_gui_pos = self.parent.ui.data_stitching_plot.pos()
         plot_gui_height = self.parent.ui.data_stitching_plot.frameGeometry().height()
         self.move(mouse_x + plot_gui_pos.x(), plot_gui_height - mouse_y + plot_gui_pos.y())
@@ -195,7 +193,7 @@ class LaunchStitchingManualYAxis(QMainWindow):
             [xmin_auto, xmax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQQ4autoView_x
             [ymin_auto, ymax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQautoView_y
             self._lrdata.all_plot_axis.reduced_plot_RQuserView_y = [ymin_auto, ymax_auto]
-            [xmin, xmax, ymin, ymax] = [xmin_user, xmax_user, ymin_auto, ymax_auto]
+            ymin, ymax = ymin_auto, ymax_auto
 
             # self._lrdata.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin_user, xmax_user]
             # [xmin_user, xmax_user, ymin_user, ymax_user] = self._lrdata.all_plot_axis.reduced_plot_RQuserView
@@ -208,7 +206,7 @@ class LaunchStitchingManualYAxis(QMainWindow):
             [xmin_auto, xmax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQQ4autoView_x
             [ymin_auto, ymax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQ4autoView_y
             self._lrdata.all_plot_axis.reduced_plot_RQ4userView_y = [ymin_auto, ymax_auto]
-            [xmin, xmax, ymin, ymax] = [xmin_user, xmax_user, ymin_auto, ymax_auto]
+            ymin, ymax = ymin_auto, ymax_auto
 
             # [xmin_user, xmax_user, ymin_user, ymax_user] = self._lrdata.all_plot_axis.reduced_plot_RQ4QuserView
             # [xmin_auto, xmax_auto, ymin_auto, ymax_auto] = self._lrdata.all_plot_axis.reduced_plot_RQ4QautoView
@@ -230,6 +228,4 @@ class LaunchStitchingManualYAxis(QMainWindow):
     def validate_changes(self):
         self.y_min = float(str(self.ui.y_min_value.text()))
         self.y_max = float(str(self.ui.y_max_value.text()))
-        o_changes = ChangeStitchingDataInterval(
-            parent=self.parent, yaxis_type=self.yaxis_type, y_min=self.y_min, y_max=self.y_max
-        )
+        ChangeStitchingDataInterval(parent=self.parent, yaxis_type=self.yaxis_type, y_min=self.y_min, y_max=self.y_max)

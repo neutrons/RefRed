@@ -7,6 +7,9 @@
 #      by: qtpy UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
+from .mplwidget import MPLWidget
+from .mplwidgetxlog import MPLWidgetXLog
+# from . import icons_rc
 
 from qtpy import QtCore, QtGui, QtWidgets
 
@@ -345,8 +348,3 @@ class Ui_Dialog(object):
         self.jim_back2_label.setText(_translate("Dialog", "*", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Dialog", "Jim", None))
         self.invalid_selection_label.setText(_translate("Dialog", "(*)    INVALID SELECTION", None))
-
-
-from .mplwidget import MPLWidget
-from .mplwidgetxlog import MPLWidgetXLog
-from . import icons_rc
