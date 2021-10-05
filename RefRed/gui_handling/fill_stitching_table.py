@@ -5,16 +5,14 @@ from distutils.util import strtobool
 
 
 class ParentHandler(object):
-    
     def __init__(self, parent=None):
         self.parent = parent
         self.big_table_data = self.parent.big_table_data
 
 
 class FillStitchingTable(ParentHandler):
-
     def __init__(self, parent=None, row_index=0):
-        super(FillStitchingTable, self).__init__(parent = parent)
+        super(FillStitchingTable, self).__init__(parent=parent)
         self.row_index = row_index
 
     def fillRow(self, row_index=0):
@@ -23,14 +21,14 @@ class FillStitchingTable(ParentHandler):
         if self._lconfig is None:
             return
 
-        o_gui = GuiUtility(parent = self.parent)
+        o_gui = GuiUtility(parent=self.parent)
         stitching_type = o_gui.getStitchingType()
 
         self.fillTableRunNumber()
 
-        if stitching_type is 'absolute':
+        if stitching_type == 'absolute':
             self.fillTableForAbsoluteNormalization()
-        elif stitching_type is 'auto':
+        elif stitching_type == 'auto':
             self.fillTableForAutoStitching()
         else:
             self.fillTableForManualStitching()
@@ -58,7 +56,7 @@ class FillStitchingTable(ParentHandler):
         else:
             _brush.setColor(QtCore.Qt.red)
 
-        sf = "%.4f" %_sf
+        sf = "%.4f" % _sf
         _auto_item = QtWidgets.QTableWidgetItem(sf)
         _auto_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
         _auto_item.setForeground(_brush)
@@ -66,7 +64,7 @@ class FillStitchingTable(ParentHandler):
 
     def fillTableForManualStitching(self):
         _widget_manual = QtGui.QDoubleSpinBox()
-        _widget_manual.setMinimum(0.)
+        _widget_manual.setMinimum(0.0)
         sf_manual = self._lconfig.sf_manual
         _widget_manual.setValue(sf_manual)
         _widget_manual.setSingleStep(0.001)

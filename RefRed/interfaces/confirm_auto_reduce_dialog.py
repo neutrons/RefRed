@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#@PydevCodeAnalysisIgnore
+# @PydevCodeAnalysisIgnore
 
 # Form implementation generated from reading ui file 'designer//confirm_auto_reduce_dialog.ui'
 #
@@ -13,16 +13,23 @@ from qtpy import QtCore, QtGui, QtWidgets
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
+
     def _fromUtf8(s):
         return s
 
+
 try:
     _encoding = QtWidgets.QApplication.UnicodeUTF8
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
+
+
 except AttributeError:
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig)
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -53,7 +60,7 @@ class Ui_Dialog(object):
         font.setFamily(_fromUtf8("Abyssinica SIL"))
         font.setPointSize(12)
         self.label.setFont(font)
-        self.label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.label.setObjectName(_fromUtf8("label"))
         self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
         self.file_name = QtWidgets.QLabel(Dialog)
@@ -70,7 +77,7 @@ class Ui_Dialog(object):
         font.setFamily(_fromUtf8("Abyssinica SIL"))
         font.setPointSize(12)
         self.label_2.setFont(font)
-        self.label_2.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_2.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.gridLayout.addWidget(self.label_2, 1, 0, 1, 1)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
@@ -102,7 +109,7 @@ class Ui_Dialog(object):
         font.setPointSize(10)
         self.buttonBox.setFont(font)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel | QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.verticalLayout.addWidget(self.buttonBox)
 
@@ -119,4 +126,3 @@ class Ui_Dialog(object):
         self.label_2.setText(_translate("Dialog", "in IPTS:", None))
         self.ipts.setText(_translate("Dialog", "N/A", None))
         self.select_ipts_button.setText(_translate("Dialog", "Select IPTS..", None))
-

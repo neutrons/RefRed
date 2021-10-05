@@ -2,8 +2,8 @@ from qtpy import QtGui, QtWidgets
 
 from RefRed.sf_calculator.sf_calculator_table_handler import SFCalculatorTableHandler
 
-class SFCalculatorRightClick(object):
 
+class SFCalculatorRightClick(object):
     def __init__(self, parent=None, position=None):
         self.parent = parent
         self.position = position
@@ -17,5 +17,5 @@ class SFCalculatorRightClick(object):
             self.clear_table()
 
     def clear_table(self):
-        o_sf_calculator_table_handler = SFCalculatorTableHandler(parent = self.parent)
+        o_sf_calculator_table_handler = SFCalculatorTableHandler(parent=self.parent)
         o_sf_calculator_table_handler.full_clear()

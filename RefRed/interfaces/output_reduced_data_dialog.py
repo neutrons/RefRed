@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#@PydevCodeAnalysisIgnore
+# @PydevCodeAnalysisIgnore
 
 # Form implementation generated from reading ui file 'designer//output_reduced_data_dialog.ui'
 #
@@ -13,16 +13,23 @@ from qtpy import QtCore, QtWidgets
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
+
     def _fromUtf8(s):
         return s
 
+
 try:
     _encoding = QtWidgets.QApplication.UnicodeUTF8
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
+
+
 except AttributeError:
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig)
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -155,10 +162,18 @@ class Ui_Dialog(object):
         self.verticalLayout_2.addWidget(self.folder_error)
 
         self.retranslateUi(Dialog)
-        QtCore.QObject.connect(self.createAsciiButton, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.create_reduce_ascii_button_event)
-        QtCore.QObject.connect(self.one_ascii_format, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.output_format_radio_buttons_event)
-        QtCore.QObject.connect(self.n_ascii_format, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.output_format_radio_buttons_event)
-        QtCore.QObject.connect(self.auto_qmin_button, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), Dialog.auto_qmin_button)
+        QtCore.QObject.connect(
+            self.createAsciiButton, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.create_reduce_ascii_button_event
+        )
+        QtCore.QObject.connect(
+            self.one_ascii_format, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.output_format_radio_buttons_event
+        )
+        QtCore.QObject.connect(
+            self.n_ascii_format, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.output_format_radio_buttons_event
+        )
+        QtCore.QObject.connect(
+            self.auto_qmin_button, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), Dialog.auto_qmin_button
+        )
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -169,18 +184,34 @@ class Ui_Dialog(object):
         self.manual_qmin_value.setText(_translate("Dialog", "0.005", None))
         self.label_6.setText(_translate("Dialog", "1/Å", None))
         self.groupBox.setTitle(_translate("Dialog", "Resolution", None))
-        self.label_3.setText(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">dQ<span style=\" vertical-align:sub;\">0</span></p></body></html>", None))
+        self.label_3.setText(
+            _translate(
+                "Dialog",
+                "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                "p, li { white-space: pre-wrap; }\n"
+                "</style></head><body style=\" font-family:\'Sans\'; font-size:10pt;"
+                " font-weight:400; font-style:normal;\">\n"
+                "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0;"
+                " text-indent:0px;\">dQ<span style=\" vertical-align:sub;\">0</span></p></body></html>",
+                None,
+            )
+        )
         self.dq0Value.setText(_translate("Dialog", "0.0004", None))
         self.label_4.setText(_translate("Dialog", "1/Å", None))
-        self.label_5.setText(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Sans\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">ΔQ<span style=\" vertical-align:sub;\">1</span>/Q</p></body></html>", None))
+        self.label_5.setText(
+            _translate(
+                "Dialog",
+                "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                "p, li { white-space: pre-wrap; }\n"
+                "</style></head><body style=\" font-family:\'Sans\';"
+                " font-size:10pt; font-weight:400; font-style:normal;\">\n"
+                "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0;"
+                " text-indent:0px;\">ΔQ<span style=\" vertical-align:sub;\">1</span>/Q</p></body></html>",
+                None,
+            )
+        )
         self.dQoverQvalue.setText(_translate("Dialog", "0.005", None))
         self.groupBox_2.setTitle(_translate("Dialog", "  Output format", None))
         self.one_ascii_format.setText(_translate("Dialog", "1 Ascii File for All Reduced Data Set", None))
@@ -192,4 +223,3 @@ class Ui_Dialog(object):
         self.ext_name_label.setText(_translate("Dialog", ".txt", None))
         self.createAsciiButton.setText(_translate("Dialog", "Create Ascii File ...", None))
         self.folder_error.setText(_translate("Dialog", "CHECK FOLDER PERMISSION !", None))
-

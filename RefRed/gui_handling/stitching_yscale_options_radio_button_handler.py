@@ -2,7 +2,6 @@ from qtpy.QtWidgets import QApplication
 
 
 class StitchingYScaleOptionsRadioButtonHandler(object):
-
     def __init__(self, parent=None):
         self.parent = parent
 

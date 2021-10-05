@@ -3,23 +3,23 @@ from RefRed.status_message_handler import StatusMessageHandler
 
 
 class SFFileHandler(object):
-    
+
     full_sf_factor_table = []
     full_sf_factor_labels = []
     nbr_row = -1
     nbr_column = -1
-    
+
     def __init__(self, parent=None, filename=''):
         self.parent = parent
         self.filename = filename
-        
+
     def retrieve_contain(self):
         self.parse_file()
         self.parse_lines()
-        
+
     def parse_file(self):
         _filename = self.filename
-        
+
         try:
             f = open(_filename, 'r')
             sf_factor_table = []
@@ -29,10 +29,7 @@ class SFFileHandler(object):
             f.close()
             self.sf_factor_table = sf_factor_table
         except:
-            StatusMessageHandler(parent = self.parent, 
-                                 message = 'File Does Not Exist!', 
-                                 is_threaded = True,
-                                 severity = 'bad')
+            StatusMessageHandler(parent=self.parent, message='File Does Not Exist!', is_threaded=True, severity='bad')
             raise ImportError
 
     def parse_lines(self):

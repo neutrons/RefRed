@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#@PydevCodeAnalysisIgnore
+# @PydevCodeAnalysisIgnore
 
 # Form implementation generated from reading ui file 'designer//plot_dialog.ui'
 #
@@ -7,22 +7,31 @@
 #      by: qtpy UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
+from .mplwidget import MPLWidget
+# from . import icons_rc
 
 from qtpy import QtCore, QtGui, QtWidgets
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
+
     def _fromUtf8(s):
         return s
 
+
 try:
     _encoding = QtWidgets.QApplication.UnicodeUTF8
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
+
+
 except AttributeError:
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig)
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -86,15 +95,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(_translate("Dialog", "Plot", None))
-        self.ImaxLabel.setText(_translate("Dialog", "Max\n"
-"10^", None))
-        self.applyButton.setText(_translate("Dialog", "Apply\n"
-"scales\n"
-"to\n"
-"all", None))
-        self.IminLabel.setText(_translate("Dialog", "Min\n"
-"10^", None))
+        self.ImaxLabel.setText(_translate("Dialog", "Max\n" "10^", None))
+        self.applyButton.setText(_translate("Dialog", "Apply\n" "scales\n" "to\n" "all", None))
+        self.IminLabel.setText(_translate("Dialog", "Min\n" "10^", None))
         self.clipButton.setText(_translate("Dialog", "Clip", None))
-
-from .mplwidget import MPLWidget
-from . import icons_rc

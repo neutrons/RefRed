@@ -13,20 +13,22 @@ class LoadAndSortNXSDataForSFcalculator(object):
     loaded_list_runs = []
     list_NXSData = []
     list_NXSData_sorted = []
-    list_metadata = ['gd_prtn_chrg', 'S1HWidth', 'S1VHeight',
-                     'S2HWidth', 'S2VHeight', 'SiHWidth', 'SiVHeight',
-                     'LambdaRequest', 'vATT']
+    list_metadata = [
+        'gd_prtn_chrg',
+        'S1HWidth',
+        'S1VHeight',
+        'S2HWidth',
+        'S2VHeight',
+        'SiHWidth',
+        'SiVHeight',
+        'LambdaRequest',
+        'vATT',
+    ]
     big_table = []
     is_using_si_slits = False
     sf_gui = None
 
-    def __init__(
-        self,
-        list_runs,
-        parent=None,
-        read_options=None,
-        sort_by_metadata=False,
-    ):
+    def __init__(self, list_runs, parent=None, read_options=None, sort_by_metadata=False):
         self.list_runs = list_runs
         self.read_options = read_options
         self.sf_gui = parent
@@ -43,7 +45,9 @@ class LoadAndSortNXSDataForSFcalculator(object):
         for _runs in _list_runs:
             _full_file_name = api.FileFinder.findRuns("%s_%d" % (INSTRUMENT_SHORT_NAME, int(_runs)))[0]
             if _full_file_name != '':
-                workspace = api.LoadEventNexus(Filename=_full_file_name, OutputWorkspace="__data_file_%s" % _runs, MetaDataOnly=False)
+                workspace = api.LoadEventNexus(
+                    Filename=_full_file_name, OutputWorkspace="__data_file_%s" % _runs, MetaDataOnly=False
+                )
                 _data = LRData(workspace, read_options=self.read_options)
                 if _data is not None:
                     self.list_NXSData.append(_data)
@@ -97,18 +101,25 @@ class LoadAndSortNXSDataForSFcalculator(object):
             else:
                 _tof_auto_flag = 0
 
-            _row = [_run_number,
-                    _nbr_attenuator,
-                    _lambda_min,
-                    _lambda_max,
-                    _proton_charge,
-                    _lambda_requested,
-                    _S1W, _S1H,
-                    _Si2W, _Si2H,
-                    _peak1, _peak2,
-                    _back1, _back2,
-                    _tof1, _tof2,
-                    _tof_auto_flag]
+            _row = [
+                _run_number,
+                _nbr_attenuator,
+                _lambda_min,
+                _lambda_max,
+                _proton_charge,
+                _lambda_requested,
+                _S1W,
+                _S1H,
+                _Si2W,
+                _Si2H,
+                _peak1,
+                _peak2,
+                _back1,
+                _back2,
+                _tof1,
+                _tof2,
+                _tof_auto_flag,
+            ]
             big_table[index_row, :] = _row
             index_row += 1
         self.big_table = big_table
@@ -123,7 +134,7 @@ class LoadAndSortNXSDataForSFcalculator(object):
             _value = str(_value)
         elif len(_value) == 1:
             _value = str(_value)
-        elif type(_value) == type(""):
+        elif isinstance(_value, str):
             _value = _value
         else:
             _value = '[' + str(_value[0]) + ',...]' + '-> (' + str(len(_value)) + ' entries)'

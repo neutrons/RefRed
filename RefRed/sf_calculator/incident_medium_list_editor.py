@@ -9,7 +9,7 @@ class IncidentMediumListEditor(QDialog):
     sf_gui = None
     current_index = -1
 
-    def __init__(self,  parent=None):
+    def __init__(self, parent=None):
         self.sf_gui = parent
 
         QDialog.__init__(self, parent=parent)
@@ -19,8 +19,11 @@ class IncidentMediumListEditor(QDialog):
         self.initGui()
 
     def initGui(self):
-        _list = [str(self.sf_gui.incidentMediumComboBox.itemText(i)) for i in range(1,self.sf_gui.incidentMediumComboBox.count())]
-        self.current_index = self.sf_gui.incidentMediumComboBox.currentIndex()-1
+        _list = [
+            str(self.sf_gui.incidentMediumComboBox.itemText(i))
+            for i in range(1, self.sf_gui.incidentMediumComboBox.count())
+        ]
+        self.current_index = self.sf_gui.incidentMediumComboBox.currentIndex() - 1
         [_list, _] = removeEmptyStrElementAndUpdateIndexSelected(_list, self.current_index)
         self.fillGui(_list)
 

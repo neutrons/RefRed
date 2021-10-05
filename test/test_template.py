@@ -1,4 +1,3 @@
-
 # third party packages
 from numpy.testing import assert_allclose
 import pytest  # PYTEST documentation at https://docs.pytest.org/
@@ -40,7 +39,6 @@ def read_file(input_file):
 
 # Encapsulate all your tests for your script under a test-suite class
 class TestExampleScript:
-
     def test_my_function(self):
         r"""Compare some expected value to the obtained value after running your script"""
         expected = [1, 2, 3]
@@ -60,8 +58,8 @@ class TestExampleScript:
         path_to_file = data_server.path_to('easy_data_set.csv')
         assert '285,3,1.732050808' in read_file(path_to_file)
         # read file tests/data/examples/test_file_2.dat
-        #path_to_file = data_server.path_to('examples/test_file_2.dat')
-        #assert 'Bye World!' in read_file(path_to_file)
+        # path_to_file = data_server.path_to('examples/test_file_2.dat')
+        # assert 'Bye World!' in read_file(path_to_file)
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#@PydevCodeAnalysisIgnore
+# @PydevCodeAnalysisIgnore
 
 # Form implementation generated from reading ui file 'designer//compare_widget.ui'
 #
@@ -7,22 +7,30 @@
 #      by: qtpy UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
+from .mplwidget import MPLWidget
 
 from qtpy import QtCore, QtWidgets
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
+
     def _fromUtf8(s):
         return s
 
+
 try:
     _encoding = QtWidgets.QApplication.UnicodeUTF8
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
+
+
 except AttributeError:
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig)
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -89,7 +97,9 @@ class Ui_Form(object):
         QtCore.QObject.connect(self.pushButton_2, QtCore.SIGNAL(_fromUtf8("pressed()")), Form.open_file)
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("pressed()")), Form.clear_plot)
         QtCore.QObject.connect(self.compareList, QtCore.SIGNAL(_fromUtf8("itemChanged(QTableWidgetItem*)")), Form.draw)
-        QtCore.QObject.connect(self.compareList, QtCore.SIGNAL(_fromUtf8("cellDoubleClicked(int,int)")), Form.edit_cell)
+        QtCore.QObject.connect(
+            self.compareList, QtCore.SIGNAL(_fromUtf8("cellDoubleClicked(int,int)")), Form.edit_cell
+        )
         QtCore.QMetaObject.connectSlotsByName(Form)
         Form.setTabOrder(self.compareList, self.pushButton_2)
         Form.setTabOrder(self.pushButton_2, self.pushButton)
@@ -104,5 +114,3 @@ class Ui_Form(object):
         item.setText(_translate("Form", "Label", None))
         self.pushButton.setText(_translate("Form", "Clear", None))
         self.pushButton_2.setText(_translate("Form", "Open", None))
-
-from .mplwidget import MPLWidget

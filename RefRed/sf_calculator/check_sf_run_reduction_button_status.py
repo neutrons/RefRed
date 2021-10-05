@@ -1,5 +1,6 @@
 from RefRed.utilities import removeEmptyStrElementAndUpdateIndexSelected
 
+
 class CheckSfRunReductionButtonStatus(object):
 
     sf_gui = None
@@ -8,8 +9,11 @@ class CheckSfRunReductionButtonStatus(object):
         self.sf_gui = parent
 
     def isIncidentMediumReady(self):
-        _list = [str(self.sf_gui.incidentMediumComboBox.itemText(i)) for i in range(1, self.sf_gui.incidentMediumComboBox.count())]
-        _current_index = self.sf_gui.incidentMediumComboBox.currentIndex()-1
+        _list = [
+            str(self.sf_gui.incidentMediumComboBox.itemText(i))
+            for i in range(1, self.sf_gui.incidentMediumComboBox.count())
+        ]
+        _current_index = self.sf_gui.incidentMediumComboBox.currentIndex() - 1
         [_list, current_index] = removeEmptyStrElementAndUpdateIndexSelected(_list, _current_index)
         if _list == [] or current_index == -1:
             return False
@@ -41,4 +45,4 @@ class CheckSfRunReductionButtonStatus(object):
         return True
 
     def isEverythingReady(self):
-        return (self.isIncidentMediumReady() and self.isBigTableReady() and self.isOutputFileNameReady())
+        return self.isIncidentMediumReady() and self.isBigTableReady() and self.isOutputFileNameReady()

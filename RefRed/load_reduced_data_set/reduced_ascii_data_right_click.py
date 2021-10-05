@@ -4,7 +4,6 @@ from RefRed.load_reduced_data_set.load_reduced_data_set_handler import LoadReduc
 
 
 class ReducedAsciiDataRightClick(object):
-    
     def __init__(self, parent=None, position=None):
         self.parent = parent
         self.position = position

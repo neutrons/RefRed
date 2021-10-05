@@ -4,10 +4,10 @@ class PopulateReductionTableFromLConfigDataSet(object):
 
     def __init__(self, parent=None):
         self.parent = parent
-        
+
         big_table_data = self.parent.big_table_data
-        
-        for row_index, lconfig in enumerate(big_table_data[:,2]):
+
+        for row_index, lconfig in enumerate(big_table_data[:, 2]):
             if lconfig is None:
                 return
             data_sets = ",".join(lconfig.data_sets)

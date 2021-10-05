@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#@PydevCodeAnalysisIgnore
+# @PydevCodeAnalysisIgnore
 
 # Form implementation generated from reading ui file 'designer//settings_password.ui'
 #
@@ -13,16 +13,23 @@ from qtpy import QtCore, QtWidgets
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
+
     def _fromUtf8(s):
         return s
 
+
 try:
     _encoding = QtWidgets.QApplication.UnicodeUTF8
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
+
+
 except AttributeError:
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig)
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -51,7 +58,7 @@ class Ui_Dialog(object):
         self.horizontalLayout_2.addLayout(self.horizontalLayout)
         self.buttonBox = QtWidgets.QDialogButtonBox(Dialog)
         self.buttonBox.setOrientation(QtCore.Qt.Vertical)
-        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel | QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.horizontalLayout_2.addWidget(self.buttonBox)
 
@@ -63,4 +70,3 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(_translate("Dialog", "Dialog", None))
         self.label.setText(_translate("Dialog", "PASSWORD :", None))
-

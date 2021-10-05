@@ -1,7 +1,7 @@
 import numpy as np
 import logging
 import math
-import os
+# import os
 import gc
 
 from mantid.api import mtd
@@ -17,17 +17,15 @@ NEUTRON_MASS = 1.675e-27  # kg
 PLANCK_CONSTANT = 6.626e-34  # m^2 kg s^-1
 H_OVER_M_NEUTRON = PLANCK_CONSTANT / NEUTRON_MASS
 
-#any run before, tmin and tmax will be used a different algorithm
+# any run before, tmin and tmax will be used a different algorithm
 RUN_NUMBER_0_BETTER_CHOPPER_COVERAGE = 137261
 
 
 class LRData(object):
 
-    read_options = dict(is_auto_tof_finder=True,
-                        is_auto_peak_finder=True,
-                        back_offset_from_peak=3,
-                        bins=50,
-                        angle_offset=0.001)
+    read_options = dict(
+        is_auto_tof_finder=True, is_auto_peak_finder=True, back_offset_from_peak=3, bins=50, angle_offset=0.001
+    )
 
     tof_range = None
     tof_range_manual = None
@@ -36,7 +34,7 @@ class LRData(object):
     tof_range_auto_with_margin = []
 
     low_res = ['0', '255']
-    low_res_flag = True 
+    low_res_flag = True
     use_it_flag = True
     full_file_name = ['']
     filename = ''
@@ -46,12 +44,12 @@ class LRData(object):
     total_counts = 0
 
     def __init__(self, workspace, lconfig=None, is_data=True, parent=None):
-        #TODO: there appears to be duplicate instances of this class being
+        # TODO: there appears to be duplicate instances of this class being
         #      created when loading a file.
         self.parent = parent
         self._tof_axis = []
         self.Ixyt = []
-        self.Exyt= []
+        self.Exyt = []
 
         self.data = []
         self.xydata = []
@@ -68,10 +66,10 @@ class LRData(object):
 
         self.ipts = mt_run.getProperty('experiment_identifier').value
         self.run_number = mt_run.getProperty('run_number').value
-        
+
         if float(self.run_number) < RUN_NUMBER_0_BETTER_CHOPPER_COVERAGE:
             self.is_better_chopper_coverage = False
-        
+
         self.lambda_requested = float(mt_run.getProperty('LambdaRequest').value[0])
         self.lambda_requested_units = mt_run.getProperty('LambdaRequest').units
         self.thi = mt_run.getProperty('thi').value[0]
@@ -96,15 +94,15 @@ class LRData(object):
 
         self.attenuatorNbr = mt_run.getProperty('vATT').value[0] - 1
         self.date = mt_run.getProperty('run_start').value
-        
+
         sample = self.workspace.getInstrument().getSample()
         source = self.workspace.getInstrument().getSource()
-        self.dMS = sample.getDistance(source) 
+        self.dMS = sample.getDistance(source)
 
         # create array of distances pixel->sample
         self.number_x_pixels = int(self.workspace.getInstrument().getNumberParameter("number-of-x-pixels")[0])  # 256
         self.number_y_pixels = int(self.workspace.getInstrument().getNumberParameter("number-of-y-pixels")[0])
-        
+
         dPS_array = np.zeros((self.number_x_pixels, self.number_y_pixels))
         for x in range(self.number_y_pixels):
             for y in range(self.number_x_pixels):
@@ -134,8 +132,7 @@ class LRData(object):
                 autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff_narrow) * 1e-4
             else:
                 autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff - tof_coeff_narrow) * 1e-4
-                autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff + \
-                tof_coeff_narrow) * 1e-4
+                autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff + tof_coeff_narrow) * 1e-4
 
         # automatically calculate the TOF range for display
         if self.is_better_chopper_coverage:
@@ -150,20 +147,20 @@ class LRData(object):
 
         self.tof_range_auto = [autotmin, autotmax]  # microS
         self.tof_range_auto_with_margin = [tmin, tmax]  # microS
-        
+
         # manual tof range (if user wants to use a manual time range)
         self.tof_range = [autotmin, autotmax]  # for the first time, initialize tof_range like auto (microS)
         self.tof_range_manual = [autotmin, autotmax]
 
         self.binning = [tmin, self.read_options['bins'], tmax]
         self.calculate_lambda_range()
-        self.incident_angle = 2. * self.calculate_theta(with_offset=False)  # 2.theta
+        self.incident_angle = 2.0 * self.calculate_theta(with_offset=False)  # 2.theta
         self.calculate_q_range()
         # self.lambda_range = self.calculate_lambda_range()
 
         # Proton charge
         _proton_charge = float(mt_run.getProperty('gd_prtn_chrg').value)
-        _proton_charge_units = mt_run.getProperty('gd_prtn_chrg').units
+        # _proton_charge_units = mt_run.getProperty('gd_prtn_chrg').units
         new_proton_charge_units = 'mC'
 
         self.proton_charge = _proton_charge * 3.6  # to go from microA/h to mC
@@ -193,15 +190,15 @@ class LRData(object):
             [lowres1, lowres2] = lw_pf.get_low_res()
             self.low_res = [str(lowres1), str(lowres2)]
 
-            clocking_pf = ClockingFinder(parent=self.parent,
-                                         xdata=list(range(len(self.ycountsdata))),
-                                         ydata=self.ycountsdata)
+            clocking_pf = ClockingFinder(
+                parent=self.parent, xdata=list(range(len(self.ycountsdata))), ydata=self.ycountsdata
+            )
             [clocking1, clocking2] = clocking_pf.clocking
 
             clock_array = [clocking1, clocking2]
             clock_array.sort()
 
-            self.clocking  = [str(clocking1), str(clocking2)]
+            self.clocking = [str(clocking1), str(clocking2)]
         else:
             # if we loaded a config that does not have the clocking info, we will have to retrieve once
             # everything has been loaded (before display)
@@ -217,42 +214,50 @@ class LRData(object):
             if is_data:
                 self.peak = [np.int(lconfig.data_peak[0]), np.int(lconfig.data_peak[1])]
                 self.back = [np.int(lconfig.data_back[0]), np.int(lconfig.data_back[1])]
-                self.low_res = [np.int(lconfig.data_low_res[0]), np.int(lconfig.data_low_res[1])] 
+                self.low_res = [np.int(lconfig.data_low_res[0]), np.int(lconfig.data_low_res[1])]
                 self.low_res_flag = np.bool(lconfig.data_low_res_flag)
                 self.back_flag = np.bool(lconfig.data_back_flag)
             else:
                 self.peak = [np.int(lconfig.norm_peak[0]), np.int(lconfig.norm_peak[1])]
                 self.back = [np.int(lconfig.norm_back[0]), np.int(lconfig.norm_back[1])]
-                self.low_res = [np.int(lconfig.norm_low_res[0]), np.int(lconfig.norm_low_res[1])] 
+                self.low_res = [np.int(lconfig.norm_low_res[0]), np.int(lconfig.norm_low_res[1])]
                 self.low_res_flag = np.bool(lconfig.norm_low_res_flag)
                 self.back_flag = np.bool(lconfig.norm_back_flag)
 
-    ################## Properties for easy data access ##########################
+    # Properties for easy data access
     # return the size of the data stored in memory for this dataset
     @property
-    def xdata(self): return self.xydata.mean(axis=0)
+    def xdata(self):
+        return self.xydata.mean(axis=0)
 
     @property
-    def ydata(self): return self.xydata.mean(axis=1)
+    def ydata(self):
+        return self.xydata.mean(axis=1)
 
     @property
-    def tofdata(self): return self.xtofdata.mean(axis=0)
+    def tofdata(self):
+        return self.xtofdata.mean(axis=0)
 
     # coordinates corresponding to the data items
     @property
-    def x(self): return np.arange(self.xydata.shape[1])
+    def x(self):
+        return np.arange(self.xydata.shape[1])
 
     @property
-    def y(self): return np.arange(self.xydata.shape[0])
+    def y(self):
+        return np.arange(self.xydata.shape[0])
 
     @property
-    def xy(self): return np.meshgrid(self.x, self.y)
+    def xy(self):
+        return np.meshgrid(self.x, self.y)
 
     @property
-    def tof(self): return (self.tof_edges[:-1] + self.tof_edges[1:]) / 2.
+    def tof(self):
+        return (self.tof_edges[:-1] + self.tof_edges[1:]) / 2.0
 
     @property
-    def xtof(self): return np.meshgrid(self.tof, self.x)
+    def xtof(self):
+        return np.meshgrid(self.tof, self.x)
 
     def calculate_q_range(self):
         '''
@@ -262,7 +267,7 @@ class LRData(object):
         _const = float(4) * math.pi
         theta_rad = convert_angle(angle=self.incident_angle)
 
-        _const_theta = _const * math.sin(float(theta_rad)/2.)
+        _const_theta = _const * math.sin(float(theta_rad) / 2.0)
         q_min = _const_theta / float(lambda_max)
         q_max = _const_theta / float(lambda_min)
 
@@ -295,7 +300,7 @@ class LRData(object):
         tthd_value = self.tthd
         thi_value = self.thi
 
-        theta = math.fabs(tthd_value - thi_value) / 2.
+        theta = math.fabs(tthd_value - thi_value) / 2.0
         if theta < 0.001:
             logging.debug("thi and tthd are equal: is this a direct beam?")
 
@@ -332,10 +337,12 @@ class LRData(object):
 
     def read_data(self):
         output_workspace_name = self.workspace_name + '_rebin'
-        nxs_histo = Rebin(InputWorkspace=self.workspace,
-                          OutputWorkspace=output_workspace_name,
-                          Params=self.binning,
-                          PreserveEvents=True)
+        nxs_histo = Rebin(
+            InputWorkspace=self.workspace,
+            OutputWorkspace=output_workspace_name,
+            Params=self.binning,
+            PreserveEvents=True,
+        )
         # retrieve 3D array
         nxs_histo = mtd[output_workspace_name]
         self.getIxyt(nxs_histo)
@@ -343,7 +350,7 @@ class LRData(object):
 
         # # keep only the low resolution range requested
         from_pixel = 0
-        to_pixel = self.number_x_pixels-1
+        to_pixel = self.number_x_pixels - 1
 
         # keep only low resolution range defined
         self.Ixyt = self.Ixyt[from_pixel:to_pixel, :, :]

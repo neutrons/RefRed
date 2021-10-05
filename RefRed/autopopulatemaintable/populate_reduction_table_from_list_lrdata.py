@@ -11,8 +11,7 @@ class PopulateReductionTableFromListLRData(object):
     LAMBDA_REQUESTED_TOLERANCE = 0.01
     THI_TOLERANCE = 0.015
 
-    def __init__(self, parent=None, list_lrdata=None, list_wks=None,
-                 list_run=None, list_nexus=None, is_data=True):
+    def __init__(self, parent=None, list_lrdata=None, list_wks=None, list_run=None, list_nexus=None, is_data=True):
 
         self.parent = parent
         self.list_run = list_run
@@ -38,8 +37,8 @@ class PopulateReductionTableFromListLRData(object):
 
         if is_data:
             self.clear_reductionTable()
-            
-        self.insert_runs_into_table()    
+
+        self.insert_runs_into_table()
 
         if is_data:
             self.clear_big_table_data()
@@ -51,13 +50,13 @@ class PopulateReductionTableFromListLRData(object):
         list_lrdata = self.list_lrdata
         big_table_data = self.big_table_data
         for _index, _wks in enumerate(self.list_wks):
-            if type(_wks) == type([]):
+            if isinstance(_wks, list):
                 pass
             else:
                 _lrdata = list_lrdata[_index]
                 big_table_data[_index, self.big_table_data_col] = _lrdata
         self.big_table_data = big_table_data
-                                
+
     def insert_runs_into_table(self):
         if self.is_data:
             self.insert_data_runs_into_table()
@@ -69,39 +68,39 @@ class PopulateReductionTableFromListLRData(object):
         _list_run = self.list_run
         _list_wks = self.list_wks
         _list_nexus = self.list_nexus
-        
+
         _list_norm_lrdata_sorted = []
         _list_norm_runs_sorted = []
         _list_norm_wks_sorted = []
         _list_norm_nexus_sorted = []
-        
+
         _big_table_data = self.big_table_data
 
         # retrive data column lrdata
-        _list_data_lrdata = _big_table_data[:,0]
+        _list_data_lrdata = _big_table_data[:, 0]
         _data_index = 0
         _data_lrdata = _list_data_lrdata[_data_index]
-        while (_data_lrdata is not None):
+        while _data_lrdata is not None:
             _data_lambda_value = _data_lrdata.lambda_requested
             _data_thi_value = _data_lrdata.thi
-            
+
             for _norm_index, _norm_lrdata in enumerate(_list_lrdata):
                 _norm_lambda_value = _norm_lrdata.lambda_requested
                 _norm_thi_value = _norm_lrdata.thi
-                
-                if (np.abs(_norm_lambda_value - _data_lambda_value) < self.LAMBDA_REQUESTED_TOLERANCE)  and \
-                   (np.abs(_norm_thi_value - _data_thi_value) < self.THI_TOLERANCE):
+
+                if (np.abs(_norm_lambda_value - _data_lambda_value) < self.LAMBDA_REQUESTED_TOLERANCE) and (
+                    np.abs(_norm_thi_value - _data_thi_value) < self.THI_TOLERANCE
+                ):
                     _run = _list_run[_norm_index]
                     _list_norm_lrdata_sorted.append(_norm_lrdata)
                     _list_norm_runs_sorted.append(_run)
                     _list_norm_wks_sorted.append(_list_wks[_norm_index])
                     _list_norm_nexus_sorted.append(_list_nexus[_norm_index])
-                    if type(_run) == type([]):
+                    if isinstance(_run, list):
                         str_run = ",".join(_run)
                     else:
                         str_run = str(_run)
-                    self.parent.ui.reductionTable.item(_data_index, 
-                                                       self.reductionTable_col).setText(str_run)
+                    self.parent.ui.reductionTable.item(_data_index, self.reductionTable_col).setText(str_run)
                     break
             _data_index += 1
             _data_lrdata = _list_data_lrdata[_data_index]
@@ -110,11 +109,11 @@ class PopulateReductionTableFromListLRData(object):
         self.list_runs_sorted = _list_norm_runs_sorted
         self.list_wks_sorted = _list_norm_wks_sorted
         self.list_nexus_sorted = _list_norm_nexus_sorted
-            
+
     def insert_data_runs_into_table(self):
         for _index, _run in enumerate(self.list_run):
-            if type(_run) == type([]):
-                _run = list(map(str, _run)) #to convert to list of string
+            if isinstance(_run, list):
+                _run = list(map(str, _run))  # to convert to list of string
                 str_run = ",".join(_run)
             else:
                 str_run = str(_run)
@@ -126,6 +125,6 @@ class PopulateReductionTableFromListLRData(object):
         for _row in range(nbr_row):
             for _col in range(1, nbr_col):
                 self.parent.ui.reductionTable.item(_row, _col).setText("")
-                
+
     def clear_big_table_data(self):
         self.big_table_data = np.empty((self.parent.nbr_row_table_reduction, 3), dtype=object)

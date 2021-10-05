@@ -5,22 +5,31 @@
 # Created by: qtpy UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
+from .mplwidgetxlog import MPLWidgetXLog
+from .mplwidgetnolog import MPLWidgetNoLog
 
 from qtpy import QtCore, QtGui, QtWidgets
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
+
     def _fromUtf8(s):
         return s
 
+
 try:
     _encoding = QtWidgets.QApplication.UnicodeUTF8
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
+
+
 except AttributeError:
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig)
+
 
 class Ui_SFCalculatorInterface(object):
     def setupUi(self, SFCalculatorInterface):
@@ -445,35 +454,115 @@ class Ui_SFCalculatorInterface(object):
         self.menubar.addAction(self.menuTools.menuAction())
 
         self.retranslateUi(SFCalculatorInterface)
-        QtCore.QObject.connect(self.runSequenceLineEdit, QtCore.SIGNAL(_fromUtf8("returnPressed()")), SFCalculatorInterface.runSequenceLineEditEvent)
-        QtCore.QObject.connect(self.tableWidget, QtCore.SIGNAL(_fromUtf8("customContextMenuRequested(QPoint)")), SFCalculatorInterface.tableWidgetRightClick)
-        QtCore.QObject.connect(self.sfFileNameBrowseButton, QtCore.SIGNAL(_fromUtf8("clicked()")), SFCalculatorInterface.browseFile)
-        QtCore.QObject.connect(self.actionSavingAsConfiguration, QtCore.SIGNAL(_fromUtf8("triggered()")), SFCalculatorInterface.savingAsConfiguration)
-        QtCore.QObject.connect(self.dataTOFautoMode, QtCore.SIGNAL(_fromUtf8("clicked()")), SFCalculatorInterface.selectAutoTOF)
-        QtCore.QObject.connect(self.dataTOFmanualMode, QtCore.SIGNAL(_fromUtf8("clicked()")), SFCalculatorInterface.selectManualTOF)
-        QtCore.QObject.connect(self.actionLoadingConfiguration, QtCore.SIGNAL(_fromUtf8("triggered()")), SFCalculatorInterface.loadingConfiguration)
-        QtCore.QObject.connect(self.tableWidget, QtCore.SIGNAL(_fromUtf8("cellClicked(int,int)")), SFCalculatorInterface.tableWidgetCellSelected)
-        QtCore.QObject.connect(self.dataBackToValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), SFCalculatorInterface.back2SpinBoxValueChanged)
-        QtCore.QObject.connect(self.dataBackFromValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), SFCalculatorInterface.back1SpinBoxValueChanged)
-        QtCore.QObject.connect(self.dataPeakFromValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), SFCalculatorInterface.peak1SpinBoxValueChanged)
-        QtCore.QObject.connect(self.dataPeakToValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), SFCalculatorInterface.peak2SpinBoxValueChanged)
-        QtCore.QObject.connect(self.TOFmanualFromValue, QtCore.SIGNAL(_fromUtf8("returnPressed()")), SFCalculatorInterface.manualTOFtextFieldValidated)
-        QtCore.QObject.connect(self.TOFmanualToValue, QtCore.SIGNAL(_fromUtf8("returnPressed()")), SFCalculatorInterface.manualTOFtextFieldValidated)
-        QtCore.QObject.connect(self.incidentMediumComboBox, QtCore.SIGNAL(_fromUtf8("currentIndexChanged(int)")), SFCalculatorInterface.incidentMediumComboBoxChanged)
-        QtCore.QObject.connect(self.actionSavingConfiguration, QtCore.SIGNAL(_fromUtf8("triggered()")), SFCalculatorInterface.savingConfiguration)
-        QtCore.QObject.connect(self.toolButton, QtCore.SIGNAL(_fromUtf8("clicked()")), SFCalculatorInterface.editIncidentMediumList)
-        QtCore.QObject.connect(self.generateSFfileButton, QtCore.SIGNAL(_fromUtf8("clicked()")), SFCalculatorInterface.generateSFfile)
-        QtCore.QObject.connect(self.exportButton, QtCore.SIGNAL(_fromUtf8("clicked()")), SFCalculatorInterface.exportScript)
-        QtCore.QObject.connect(self.tableWidget, QtCore.SIGNAL(_fromUtf8("cellChanged(int,int)")), SFCalculatorInterface.tableWidgetCellEntered)
-        QtCore.QObject.connect(self.clearSFconentFileMenu, QtCore.SIGNAL(_fromUtf8("triggered()")), SFCalculatorInterface.clearSFContentFile)
-        QtCore.QObject.connect(self.tableWidget, QtCore.SIGNAL(_fromUtf8("itemSelectionChanged()")), SFCalculatorInterface.tableWidgetRowSelected)
+        QtCore.QObject.connect(
+            self.runSequenceLineEdit,
+            QtCore.SIGNAL(_fromUtf8("returnPressed()")),
+            SFCalculatorInterface.runSequenceLineEditEvent,
+        )
+        QtCore.QObject.connect(
+            self.tableWidget,
+            QtCore.SIGNAL(_fromUtf8("customContextMenuRequested(QPoint)")),
+            SFCalculatorInterface.tableWidgetRightClick,
+        )
+        QtCore.QObject.connect(
+            self.sfFileNameBrowseButton, QtCore.SIGNAL(_fromUtf8("clicked()")), SFCalculatorInterface.browseFile
+        )
+        QtCore.QObject.connect(
+            self.actionSavingAsConfiguration,
+            QtCore.SIGNAL(_fromUtf8("triggered()")),
+            SFCalculatorInterface.savingAsConfiguration,
+        )
+        QtCore.QObject.connect(
+            self.dataTOFautoMode, QtCore.SIGNAL(_fromUtf8("clicked()")), SFCalculatorInterface.selectAutoTOF
+        )
+        QtCore.QObject.connect(
+            self.dataTOFmanualMode, QtCore.SIGNAL(_fromUtf8("clicked()")), SFCalculatorInterface.selectManualTOF
+        )
+        QtCore.QObject.connect(
+            self.actionLoadingConfiguration,
+            QtCore.SIGNAL(_fromUtf8("triggered()")),
+            SFCalculatorInterface.loadingConfiguration,
+        )
+        QtCore.QObject.connect(
+            self.tableWidget,
+            QtCore.SIGNAL(_fromUtf8("cellClicked(int,int)")),
+            SFCalculatorInterface.tableWidgetCellSelected,
+        )
+        QtCore.QObject.connect(
+            self.dataBackToValue,
+            QtCore.SIGNAL(_fromUtf8("editingFinished()")),
+            SFCalculatorInterface.back2SpinBoxValueChanged,
+        )
+        QtCore.QObject.connect(
+            self.dataBackFromValue,
+            QtCore.SIGNAL(_fromUtf8("editingFinished()")),
+            SFCalculatorInterface.back1SpinBoxValueChanged,
+        )
+        QtCore.QObject.connect(
+            self.dataPeakFromValue,
+            QtCore.SIGNAL(_fromUtf8("editingFinished()")),
+            SFCalculatorInterface.peak1SpinBoxValueChanged,
+        )
+        QtCore.QObject.connect(
+            self.dataPeakToValue,
+            QtCore.SIGNAL(_fromUtf8("editingFinished()")),
+            SFCalculatorInterface.peak2SpinBoxValueChanged,
+        )
+        QtCore.QObject.connect(
+            self.TOFmanualFromValue,
+            QtCore.SIGNAL(_fromUtf8("returnPressed()")),
+            SFCalculatorInterface.manualTOFtextFieldValidated,
+        )
+        QtCore.QObject.connect(
+            self.TOFmanualToValue,
+            QtCore.SIGNAL(_fromUtf8("returnPressed()")),
+            SFCalculatorInterface.manualTOFtextFieldValidated,
+        )
+        QtCore.QObject.connect(
+            self.incidentMediumComboBox,
+            QtCore.SIGNAL(_fromUtf8("currentIndexChanged(int)")),
+            SFCalculatorInterface.incidentMediumComboBoxChanged,
+        )
+        QtCore.QObject.connect(
+            self.actionSavingConfiguration,
+            QtCore.SIGNAL(_fromUtf8("triggered()")),
+            SFCalculatorInterface.savingConfiguration,
+        )
+        QtCore.QObject.connect(
+            self.toolButton, QtCore.SIGNAL(_fromUtf8("clicked()")), SFCalculatorInterface.editIncidentMediumList
+        )
+        QtCore.QObject.connect(
+            self.generateSFfileButton, QtCore.SIGNAL(_fromUtf8("clicked()")), SFCalculatorInterface.generateSFfile
+        )
+        QtCore.QObject.connect(
+            self.exportButton, QtCore.SIGNAL(_fromUtf8("clicked()")), SFCalculatorInterface.exportScript
+        )
+        QtCore.QObject.connect(
+            self.tableWidget,
+            QtCore.SIGNAL(_fromUtf8("cellChanged(int,int)")),
+            SFCalculatorInterface.tableWidgetCellEntered,
+        )
+        QtCore.QObject.connect(
+            self.clearSFconentFileMenu,
+            QtCore.SIGNAL(_fromUtf8("triggered()")),
+            SFCalculatorInterface.clearSFContentFile,
+        )
+        QtCore.QObject.connect(
+            self.tableWidget,
+            QtCore.SIGNAL(_fromUtf8("itemSelectionChanged()")),
+            SFCalculatorInterface.tableWidgetRowSelected,
+        )
         QtCore.QMetaObject.connectSlotsByName(SFCalculatorInterface)
 
     def retranslateUi(self, SFCalculatorInterface):
         SFCalculatorInterface.setWindowTitle(_translate("SFCalculatorInterface", "SF Calculator", None))
         self.label.setText(_translate("SFCalculatorInterface", "Run or Sequence of Runs:", None))
-        self.runSequenceLineEdit.setToolTip(_translate("SFCalculatorInterface", "1234 or 1234,1236,1239 or 1234-1238", None))
-        self.incidentMediumComboBox.setItemText(0, _translate("SFCalculatorInterface", "Select or Define Incident Medium ...", None))
+        self.runSequenceLineEdit.setToolTip(
+            _translate("SFCalculatorInterface", "1234 or 1234,1236,1239 or 1234-1238", None)
+        )
+        self.incidentMediumComboBox.setItemText(
+            0, _translate("SFCalculatorInterface", "Select or Define Incident Medium ...", None)
+        )
         self.toolButton.setText(_translate("SFCalculatorInterface", "...", None))
         self.error_label.setText(_translate("SFCalculatorInterface", "SELECTION ERROR", None))
         self.dataBackFromLabel.setText(_translate("SFCalculatorInterface", "Back2", None))
@@ -540,8 +629,7 @@ class Ui_SFCalculatorInterface(object):
         self.actionSavingAsConfiguration.setShortcut(_translate("SFCalculatorInterface", "Meta+Shift+S", None))
         self.actionSavingConfiguration.setText(_translate("SFCalculatorInterface", "Save", None))
         self.actionSavingConfiguration.setShortcut(_translate("SFCalculatorInterface", "Meta+S", None))
-        self.actionEdit_Incident_Medium_List.setText(_translate("SFCalculatorInterface", "Edit Incident Medium List ...", None))
+        self.actionEdit_Incident_Medium_List.setText(
+            _translate("SFCalculatorInterface", "Edit Incident Medium List ...", None)
+        )
         self.clearSFconentFileMenu.setText(_translate("SFCalculatorInterface", "Clear Content SF File", None))
-
-from .mplwidgetxlog import MPLWidgetXLog
-from .mplwidgetnolog import MPLWidgetNoLog

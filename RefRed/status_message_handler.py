@@ -7,7 +7,6 @@ from RefRed.utilities import get_index_free_thread
 
 
 class StatusMessageThreaded(QtCore.QThread):
-
     def setup(self, parent):
         self.parent = parent
 
@@ -17,9 +16,7 @@ class StatusMessageThreaded(QtCore.QThread):
 
 
 class StatusMessageHandler(object):
-
-    def __init__(self, parent=None, message='',
-                 severity='good', is_threaded=True):
+    def __init__(self, parent=None, message='', severity='good', is_threaded=True):
         self.parent = parent
 
         if severity == 'good':

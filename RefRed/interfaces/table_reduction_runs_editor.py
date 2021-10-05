@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#@PydevCodeAnalysisIgnore
+# @PydevCodeAnalysisIgnore
 
 # Form implementation generated from reading ui file 'designer//table_reduction_runs_editor.ui'
 #
@@ -13,16 +13,23 @@ from qtpy import QtCore, QtGui, QtWidgets
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
+
     def _fromUtf8(s):
         return s
 
+
 try:
     _encoding = QtWidgets.QApplication.UnicodeUTF8
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
+
+
 except AttributeError:
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig)
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -182,9 +189,15 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QObject.connect(self.cancelButton, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.closeEvent)
-        QtCore.QObject.connect(self.dataLineEdit, QtCore.SIGNAL(_fromUtf8("returnPressed()")), MainWindow.dataLineEditValidate)
-        QtCore.QObject.connect(self.insertValidRunsButton, QtCore.SIGNAL(_fromUtf8("pressed()")), MainWindow.insertValidRunsButton)
-        QtCore.QObject.connect(self.normLineEdit, QtCore.SIGNAL(_fromUtf8("returnPressed()")), MainWindow.normLineEditValidate)
+        QtCore.QObject.connect(
+            self.dataLineEdit, QtCore.SIGNAL(_fromUtf8("returnPressed()")), MainWindow.dataLineEditValidate
+        )
+        QtCore.QObject.connect(
+            self.insertValidRunsButton, QtCore.SIGNAL(_fromUtf8("pressed()")), MainWindow.insertValidRunsButton
+        )
+        QtCore.QObject.connect(
+            self.normLineEdit, QtCore.SIGNAL(_fromUtf8("returnPressed()")), MainWindow.normLineEditValidate
+        )
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -214,4 +227,3 @@ class Ui_MainWindow(object):
         self.invalidRunLabel.setText(_translate("MainWindow", "Invalid Run (No Matching Lambda Requested) ", None))
         self.cancelButton.setText(_translate("MainWindow", "CANCEL", None))
         self.insertValidRunsButton.setText(_translate("MainWindow", "INSERT VALID RUNS", None))
-

@@ -4,7 +4,6 @@ import time
 
 
 class AutoFillWidgetsHandler(object):
-
     def __init__(self, parent=None):
         self.parent = parent
         self.setup()
@@ -60,7 +59,7 @@ class AutoFillWidgetsHandler(object):
     def step2(self):
         self.parent.ui.check2.setVisible(True)
         QApplication.processEvents()
-        
+
     def step3(self):
         self.parent.ui.check3.setVisible(True)
         QApplication.processEvents()
@@ -75,7 +74,6 @@ class AutoFillWidgetsHandler(object):
 
 
 class DelayClosing(QtCore.QThread):
-
     def setup(self, parent, delay=3):
         self.parent = parent
         self.delay = delay

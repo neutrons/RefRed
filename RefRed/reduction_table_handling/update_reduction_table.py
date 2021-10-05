@@ -2,7 +2,9 @@ from qtpy import QtGui
 from qtpy.QtWidgets import QApplication
 
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
-from RefRed.calculations.check_list_run_compatibility_and_display_thread import CheckListRunCompatibilityAndDisplayThread
+from RefRed.calculations.check_list_run_compatibility_and_display_thread import (
+    CheckListRunCompatibilityAndDisplayThread,
+)
 import RefRed.colors
 from RefRed.calculations.locate_list_run import LocateListRun
 
@@ -13,7 +15,7 @@ class UpdateReductionTable(object):
     is_data_displayed = True
 
     def __init__(self, parent=None, row=0, col=1, runs=None):
-        self.parent= parent
+        self.parent = parent
         self.row = row
         self.col = col
 
@@ -36,7 +38,7 @@ class UpdateReductionTable(object):
         if list_run_object.list_run_not_found != []:
             str_list_run_not_found = [str(x) for x in list_run_object.list_run_not_found]
             runs_not_located = ', '.join(str_list_run_not_found)
-            mess = "Can not locate %s run(s): %s" %(data_type, runs_not_located)
+            mess = "Can not locate %s run(s): %s" % (data_type, runs_not_located)
             self.parent.ui.reductionTable.item(row, 8).setText(mess)
             _color = QtGui.QColor(RefRed.colors.VALUE_BAD)
             self.parent.ui.reductionTable.item(row, 8).setBackground(_color)
@@ -56,34 +58,36 @@ class UpdateReductionTable(object):
         self.parent.ui.reductionTable.item(row, col).setText(final_list_run_found)
 
         list_nexus_found = list_run_object.list_nexus_found
-        thread_index = ((self.col-1) + 2*self.row)
+        thread_index = (self.col - 1) + 2 * self.row
         self.parent.loading_nxs_thread[thread_index] = CheckListRunCompatibilityAndDisplayThread()
-        self.parent.loading_nxs_thread[thread_index].setup(parent=self.parent,
-                       list_run = list_run_found,
-                       list_nexus = list_nexus_found,
-                       row = row,
-                       is_working_with_data_column = self.is_data_displayed,
-                       is_display_requested = self.display_of_this_row_checked())
+        self.parent.loading_nxs_thread[thread_index].setup(
+            parent=self.parent,
+            list_run=list_run_found,
+            list_nexus=list_nexus_found,
+            row=row,
+            is_working_with_data_column=self.is_data_displayed,
+            is_display_requested=self.display_of_this_row_checked(),
+        )
         self.parent.loading_nxs_thread[thread_index].start()
 
     def clear_cell(self, row, col):
         """
-            Clear a reduction table cell, and clean up what is left behind.
-            The main "big_table_data" array has three entries per row,
-                0: Scattering data <class 'RefRed.calculations.lr_data.LRData'>
-                1: Direct beam data <class 'RefRed.calculations.lr_data.LRData'>
-                2: Reduction options <class 'RefRed.lconfigdataset.LConfigDataset'>
-            If col==1, we are clearing the scattering data.
-            If col==2, we are clearing the direct beam.
+        Clear a reduction table cell, and clean up what is left behind.
+        The main "big_table_data" array has three entries per row,
+            0: Scattering data <class 'RefRed.calculations.lr_data.LRData'>
+            1: Direct beam data <class 'RefRed.calculations.lr_data.LRData'>
+            2: Reduction options <class 'RefRed.lconfigdataset.LConfigDataset'>
+        If col==1, we are clearing the scattering data.
+        If col==2, we are clearing the direct beam.
         """
         # Clear the data and configuration
         # Note: there is a Mantid process cleaning process elsewhere in the code
         # so we don't have to deal with it here.
         config = self.parent.big_table_data[self.row, 2]
-        if col==1:
+        if col == 1:
             self.parent.big_table_data[self.row, 0] = None
             config.clear_data()
-        elif col==2:
+        elif col == 2:
             self.parent.big_table_data[self.row, 1] = None
             config.clear_normalization()
 

@@ -66,10 +66,7 @@ def output_2d_ascii_file(filename, image):
     f.close
 
 
-def output_big_ascii_file(file_name,
-                          x_axis,
-                          y_axis,
-                          y_error_axis):
+def output_big_ascii_file(file_name, x_axis, y_axis, y_error_axis):
 
     f = open(file_name, 'w')
 
@@ -89,10 +86,7 @@ def output_big_ascii_file(file_name,
     f.close
 
 
-def output_ascii_file(file_name,
-                      x_axis,
-                      y_axis,
-                      y_error_axis):
+def output_ascii_file(file_name, x_axis, y_axis, y_error_axis):
 
     f = open(file_name, 'w')
 
@@ -113,10 +107,7 @@ def import_ascii_file(filename):
     return data
 
 
-def output_big_Q_ascii_file(file_name,
-                            x_axis,
-                            y_axis,
-                            y_error_axis):
+def output_big_Q_ascii_file(file_name, x_axis, y_axis, y_error_axis):
 
     if os.path.isfile(file_name):
         os.remove(file_name)
@@ -164,7 +155,7 @@ def weighted_mean(data_array, error_array):
     dataDen = 0
     for i in range(sz):
         if not (error_array[i] == 0):
-            tmpFactor = 1. / float((pow(error_array[i], 2)))
+            tmpFactor = 1.0 / float((pow(error_array[i], 2)))
             dataDen += tmpFactor
 
     if dataDen == 0:
@@ -351,7 +342,7 @@ def removeEmptyStrElementAndUpdateIndexSelected(str_list, index_selected):
 
 
 def format_to_list(values):
-    if type(values) == type([]):
+    if isinstance(values, list):
         return values
     else:
         return [values]
@@ -374,7 +365,7 @@ def weighted_mean_default(data_array, error_array, error_0):
     # calculate the numerator of mean
     dataNum = 0
     for i in range(sz):
-        if (error_array[i] == 0):
+        if error_array[i] == 0:
             error_array[i] = error_0
 
         tmpFactor = float(data_array[i]) / float((pow(error_array[i], 2)))
@@ -383,9 +374,9 @@ def weighted_mean_default(data_array, error_array, error_0):
     # calculate denominator
     dataDen = 0
     for i in range(sz):
-        if (error_array[i] == 0):
+        if error_array[i] == 0:
             error_array[i] = error_0
-        tmpFactor = 1. / float((pow(error_array[i], 2)))
+        tmpFactor = 1.0 / float((pow(error_array[i], 2)))
         dataDen += tmpFactor
 
     if dataDen == 0:

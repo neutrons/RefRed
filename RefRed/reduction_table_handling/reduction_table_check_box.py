@@ -18,7 +18,7 @@ class ReductionTableCheckBox(object):
     def __init__(self, parent=None, row_selected=-1):
         if row_selected == -1:
             return
-        if parent == None:
+        if parent is None:
             return
 
         self.prev_row_selected = parent.prev_table_reduction_row_selected
@@ -51,7 +51,7 @@ class ReductionTableCheckBox(object):
 
             self.parent.prev_table_reduction_row_selected = self.row_selected
 
-    def update_gui(self):  
+    def update_gui(self):
         """will update widgets such as TOF auto/manual"""
         _row_selected = self.row_selected
         if self.is_row_selected_checked(_row_selected):
@@ -69,16 +69,11 @@ class ReductionTableCheckBox(object):
         _row_selected = self.row_selected
         _is_data_selected = self.is_data_tab_selected()
         if self.is_row_selected_checked(_row_selected):
-            DisplayPlots(parent=self.parent,
-                         row=self.row_selected,
-                         is_data=self.is_data_tab_selected())
+            DisplayPlots(parent=self.parent, row=self.row_selected, is_data=self.is_data_tab_selected())
         else:
             update_obj = UpdatePlotWidgetStatus(parent=self.parent)
             update_obj.disable_all()
-            ClearPlots(self.parent,
-                       is_data=_is_data_selected,
-                       is_norm=not(_is_data_selected),
-                       all_plots=True)
+            ClearPlots(self.parent, is_data=_is_data_selected, is_norm=not (_is_data_selected), all_plots=True)
 
     def is_data_tab_selected(self):
         if self.parent.ui.dataNormTabWidget.currentIndex() == 0:

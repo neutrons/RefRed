@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#@PydevCodeAnalysisIgnore
+# @PydevCodeAnalysisIgnore
 
 # Form implementation generated from reading ui file 'designer//template_management.ui'
 #
@@ -13,16 +13,23 @@ from qtpy import QtCore, QtWidgets
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
+
     def _fromUtf8(s):
         return s
 
+
 try:
     _encoding = QtWidgets.QApplication.UnicodeUTF8
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
+
+
 except AttributeError:
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig)
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -84,10 +91,20 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        QtCore.QObject.connect(self.select_folder_button, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.browseFolderButton)
-        QtCore.QObject.connect(self.template_filter_button, QtCore.SIGNAL(_fromUtf8("currentIndexChanged(QString)")), MainWindow.filterTemplateButton)
-        QtCore.QObject.connect(self.template_file_button, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.templateFileSelectedButton)
-        QtCore.QObject.connect(self.tableWidget, QtCore.SIGNAL(_fromUtf8("cellClicked(int,int)")), MainWindow.selectionChanged)
+        QtCore.QObject.connect(
+            self.select_folder_button, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.browseFolderButton
+        )
+        QtCore.QObject.connect(
+            self.template_filter_button,
+            QtCore.SIGNAL(_fromUtf8("currentIndexChanged(QString)")),
+            MainWindow.filterTemplateButton,
+        )
+        QtCore.QObject.connect(
+            self.template_file_button, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.templateFileSelectedButton
+        )
+        QtCore.QObject.connect(
+            self.tableWidget, QtCore.SIGNAL(_fromUtf8("cellClicked(int,int)")), MainWindow.selectionChanged
+        )
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -98,5 +115,6 @@ class Ui_MainWindow(object):
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "New Column", None))
         self.label.setText(_translate("MainWindow", "Filter:", None))
-        self.template_file_button.setText(_translate("MainWindow", "Template File Selected Becomes Automatic Reduction Template", None))
-
+        self.template_file_button.setText(
+            _translate("MainWindow", "Template File Selected Becomes Automatic Reduction Template", None)
+        )

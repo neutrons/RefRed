@@ -7,7 +7,7 @@
         1: Direct beam data <class 'RefRed.calculations.lr_data.LRData'>
         2: Reduction options <class 'RefRed.lconfigdataset.LConfigDataset'>
 """
-import logging
+# import logging
 import RefRed.colors
 from qtpy import QtCore, QtGui
 from qtpy.QtWidgets import QApplication
@@ -26,8 +26,15 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
     wks = None
     lrdata = None
 
-    def setup(self, parent=None, list_run=None, list_nexus=None, row=-1,
-              is_working_with_data_column=True, is_display_requested=False):
+    def setup(
+        self,
+        parent=None,
+        list_run=None,
+        list_nexus=None,
+        row=-1,
+        is_working_with_data_column=True,
+        is_display_requested=False,
+    ):
 
         self.parent = parent
         self.list_run = list_run
@@ -42,9 +49,8 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
     def run(self):
         runs_are_compatible = False
 
-        if (len(self.list_run) > 1):
-            o_check_runs = CheckListRunCompatibility(list_nexus=self.list_nexus,
-                                                     list_run=self.list_run)
+        if len(self.list_run) > 1:
+            o_check_runs = CheckListRunCompatibility(list_nexus=self.list_nexus, list_run=self.list_run)
             runs_are_compatible = o_check_runs.runs_compatible
             if runs_are_compatible:
                 _color = QtGui.QColor(RefRed.colors.VALUE_OK)
@@ -53,14 +59,12 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
         else:
             _color = QtGui.QColor(RefRed.colors.VALUE_OK)
 
-        self.parent.ui.reductionTable.item(self.row, 
-                                           self.col).setForeground(_color)
+        self.parent.ui.reductionTable.item(self.row, self.col).setForeground(_color)
 
-        #if runs_are_compatible:
-        o_add_list_nexus = AddListNexus(list_nexus=self.list_nexus,
-                                        list_run=self.list_run,
-                                        metadata_only=False,
-                                        check_nexus_compatibility=False)
+        # if runs_are_compatible:
+        o_add_list_nexus = AddListNexus(
+            list_nexus=self.list_nexus, list_run=self.list_run, metadata_only=False, check_nexus_compatibility=False
+        )
         self.wks = o_add_list_nexus.wks
         self.runs_are_compatible = runs_are_compatible
         self.update_lconfigdataset()
@@ -80,10 +84,8 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
             return
 
         row = self.row
-        lrdata = self.lrdata 
-        UpdateReductionTableMetadata(parent=self.parent,
-                                     lrdata=lrdata,
-                                     row=row)
+        lrdata = self.lrdata
+        UpdateReductionTableMetadata(parent=self.parent, lrdata=lrdata, row=row)
 
     def update_lconfigdataset(self):
         runs_are_compatible = self.runs_are_compatible
@@ -116,5 +118,4 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
         self.parent.big_table_data = big_table_data
 
     def display_plots(self):
-        DisplayPlots(parent=self.parent, row=self.row,
-                     is_data=self.is_working_with_data_column)
+        DisplayPlots(parent=self.parent, row=self.row, is_data=self.is_working_with_data_column)

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#@PydevCodeAnalysisIgnore
+# @PydevCodeAnalysisIgnore
 
 # Form implementation generated from reading ui file 'designer//preview_configuration.ui'
 #
@@ -13,16 +13,23 @@ from qtpy import QtCore, QtWidgets
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
+
     def _fromUtf8(s):
         return s
 
+
 try:
     _encoding = QtWidgets.QApplication.UnicodeUTF8
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
+
+
 except AttributeError:
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig)
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -111,7 +118,9 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
-        QtCore.QObject.connect(self.actionBrowse, QtCore.SIGNAL(_fromUtf8("activated()")), MainWindow.action_browse_button)
+        QtCore.QObject.connect(
+            self.actionBrowse, QtCore.SIGNAL(_fromUtf8("activated()")), MainWindow.action_browse_button
+        )
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -124,4 +133,3 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Raw", None))
         self.menuFile.setTitle(_translate("MainWindow", "File", None))
         self.actionBrowse.setText(_translate("MainWindow", "Browse ...", None))
-
