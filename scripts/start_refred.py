@@ -1,10 +1,11 @@
 #!/usr/bin/env python
-#-*- coding: utf8 -*-
+# -*- coding: utf8 -*-
 '''
   Small program for quick access to SNS liquids reflectometer raw data.
 '''
 import os
 import sys
+
 # must be imported through qtpy before any other gui imports
 from qtpy.QtWidgets import QApplication, QSplashScreen
 from qtpy.QtGui import QPixmap
@@ -33,6 +34,7 @@ def mantid_location(valid_versions, root_location='/opt'):
     if not mantid_path:
         try:
             import mantid
+
             mantid_version = mantid.__version__
         except ImportError:
             raise ImportError('Could not find a version of Mantid')
@@ -57,29 +59,33 @@ try:
 except NameError:
     pass
 
+
 def _run(argv=[]):
-    app=QApplication(argv)
-    splash=QSplashScreen(QPixmap(':/General/logo_refl_hq.png'))
-    splash.showMessage("""<html>
+    app = QApplication(argv)
+    splash = QSplashScreen(QPixmap(':/General/logo_refl_hq.png'))
+    splash.showMessage(
+        """<html>
                        <div style="margin-bottom: 420;"> &nbsp;</div>
                        <div style="font-size: 12pt; margin-bottom: 15;">
                        <b>RefRed</b> Version %s
                        </div>
                        <div>Starting up...</div>
-                       </html>"""%version.str_version,
-                                 alignment=Qt.AlignBottom|Qt.AlignHCenter)
+                       </html>"""
+        % version.str_version,
+        alignment=Qt.AlignBottom | Qt.AlignHCenter,
+    )
     splash.show()
     QApplication.processEvents()
 
-    window=MainGui(argv)
+    window = MainGui(argv)
     window.show()
     splash.finish(window)
     return app.exec_()
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     from RefRed import config
     from RefRed import version
     from RefRed.main import MainGui
-    
+
     sys.exit(_run(sys.argv[1:]))

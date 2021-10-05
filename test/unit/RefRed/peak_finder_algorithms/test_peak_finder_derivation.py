@@ -7,32 +7,31 @@ import pytest
 
 
 class TestPeakFinderDerivation(object):
-
     def test_get5HighestPoints_xdata(self, data_server):
-        '''Step2 - 5highest points: using run 125682 to check calculation of 5 highest points - xdata '''
+        '''Step2 - 5highest points: using run 125682 to check calculation of 5 highest points - xdata'''
         [xdata, ydata, edata] = loadCsvFile(data_server.path_to('easy_data_set.csv'))
         peakfinder1 = PeakFinderDerivation(xdata, ydata, edata)
         [high_x, _] = peakfinder1.get5HighestPoints()
         high_x = high_x.tolist()
-        assert high_x == pytest.approx([155., 156., 154., 157., 153.])
+        assert high_x == pytest.approx([155.0, 156.0, 154.0, 157.0, 153.0])
 
     def test_get5HighestPoints_ydata(self, data_server):
-        '''Step2 - 5highest points: using run 125682 to check calculation of 5 highest points - ydata '''
+        '''Step2 - 5highest points: using run 125682 to check calculation of 5 highest points - ydata'''
         [xdata, ydata, edata] = loadCsvFile(data_server.path_to('easy_data_set.csv'))
         peakfinder1 = PeakFinderDerivation(xdata, ydata, edata)
         [_, high_y] = peakfinder1.get5HighestPoints()
         high_y = high_y.tolist()
-        assert high_y == pytest.approx([32351., 28999., 19351., 9503., 2796.])
+        assert high_y == pytest.approx([32351.0, 28999.0, 19351.0, 9503.0, 2796.0])
 
     def test_calculatePeakPixel_sumPeakCounts(self, data_server):
-        '''Step3 - calculate peak pixel using run 125682 to check calculation of 5 highest points - sum_xdata '''
+        '''Step3 - calculate peak pixel using run 125682 to check calculation of 5 highest points - sum_xdata'''
         [xdata, ydata, edata] = loadCsvFile(data_server.path_to('easy_data_set.csv'))
         peakfinder1 = PeakFinderDerivation(xdata, ydata, edata)
         sum_five_highest_xdata = peakfinder1.getSumPeakCounts()
         assert sum_five_highest_xdata == pytest.approx(93000.0)
 
     def test_calcuatePeakPixel_sumPeakCountTimePixel(self, data_server):
-        '''Step3 - calculate peak pixel using run 125682 to check calculation of 5 highest points - sum_ydata '''
+        '''Step3 - calculate peak pixel using run 125682 to check calculation of 5 highest points - sum_ydata'''
         [xdata, ydata, edata] = loadCsvFile(data_server.path_to('easy_data_set.csv'))
         peakfinder1 = PeakFinderDerivation(xdata, ydata, edata)
         sum_five_highest_ydata = peakfinder1.getSumPeakCountsTimePixel()
