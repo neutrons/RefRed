@@ -21,34 +21,34 @@ class GuiUtility(object):
     def init_widgets_value(self):
         _gui_metadata = self.parent.gui_metadata
 
-        #event tof bins
+        # event tof bins
         _tof_bin = _gui_metadata['tof_bin']
         self.parent.ui.eventTofBins.setValue(_tof_bin)
 
-        #q bin
+        # q bin
         _q_bin = _gui_metadata['q_min']
         self.parent.ui.qStep.setText(str(_q_bin))
 
-        #angle offset
+        # angle offset
         _angle_offset = "%.3f" % _gui_metadata['angle_offset']
         self.parent.ui.angleOffsetValue.setText(_angle_offset)
 
-        #angle offset error
+        # angle offset error
         _angle_offset_error = "%.3f" % _gui_metadata['angle_offset_error']
         self.parent.ui.angleOffsetError.setText(_angle_offset_error)
 
     def get_row_with_highest_q(self):
-        big_table_data =  self.parent.big_table_data
+        big_table_data = self.parent.big_table_data
         index = 0
         _lrdata = big_table_data[0, 2]
-        while (_lrdata is not None):
+        while _lrdata is not None:
             _lrdata = big_table_data[index + 1, 2]
             index += 1
-        return (index - 1)
+        return index - 1
 
     def is_row_with_highest_q(self):
         row_selected = self.get_current_table_reduction_check_box_checked()
-        big_table_data =  self.parent.big_table_data
+        big_table_data = self.parent.big_table_data
         if big_table_data[row_selected + 1, 0] is None:
             return True
         return False
@@ -95,7 +95,7 @@ class GuiUtility(object):
         for _row in range(nbr_row):
             if _row == row:
                 continue
-            _item = str(self.parent.ui.reductionTable.item(_row,2).text())
+            _item = str(self.parent.ui.reductionTable.item(_row, 2).text())
             if _item == ref_run_number:
                 all_rows.append(_row)
         all_rows.sort()
@@ -112,12 +112,12 @@ class GuiUtility(object):
     def is_auto_tof_range_radio_button_selected(self):
         return self.parent.ui.dataTOFautoMode.isChecked()
 
-    def set_auto_tof_range_radio_button(self, status = True):
+    def set_auto_tof_range_radio_button(self, status=True):
         self.parent.ui.dataTOFautoMode.setChecked(status)
         self.parent.ui.dataTOFmanualMode.setChecked(not status)
-        self.set_auto_tof_range_widgets(status = status)
+        self.set_auto_tof_range_widgets(status=status)
 
-    def set_auto_tof_range_widgets(self, status = True):
+    def set_auto_tof_range_widgets(self, status=True):
         self.parent.ui.TOFmanualFromLabel.setEnabled(not status)
         self.parent.ui.TOFmanualFromValue.setEnabled(not status)
         self.parent.ui.TOFmanualFromUnitsValue.setEnabled(not status)
@@ -141,12 +141,12 @@ class GuiUtility(object):
 
     def reductionTable_nbr_row(self):
         big_table_data = self.parent.big_table_data
-        for _index_row, _ldata in enumerate(big_table_data[:,0]):
+        for _index_row, _ldata in enumerate(big_table_data[:, 0]):
             if _ldata is None:
                 return _index_row
         return _index_row
 
-    def new_config_file_loaded(self, config_file_name = None):
+    def new_config_file_loaded(self, config_file_name=None):
         self.parent.current_loaded_file = config_file_name
         dialog_title = RefRed.version.window_title + self.parent.current_loaded_file
         self.parent.setWindowTitle(dialog_title)

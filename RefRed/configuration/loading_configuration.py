@@ -3,8 +3,12 @@ from qtpy import QtGui, QtCore, QtWidgets
 from xml.dom import minidom
 from numpy import empty
 from RefRed.lconfigdataset import LConfigDataset
-from RefRed.configuration.populate_reduction_table_from_lconfigdataset import PopulateReductionTableFromLConfigDataSet as PopulateReductionTable
-from RefRed.configuration.load_reduction_table_from_lconfigdataset import LoadReductionTableFromLConfigDataSet as LoadReductionTable
+from RefRed.configuration.populate_reduction_table_from_lconfigdataset import (
+    PopulateReductionTableFromLConfigDataSet as PopulateReductionTable,
+)
+from RefRed.configuration.load_reduction_table_from_lconfigdataset import (
+    LoadReductionTableFromLConfigDataSet as LoadReductionTable,
+)
 from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidgetsHandler
 from RefRed.plot.clear_plots import ClearPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
@@ -22,18 +26,13 @@ class LoadingConfiguration(object):
     def __init__(self, parent=None):
         self.parent = parent
         self.filename = ''
-        StatusMessageHandler(parent=self.parent,
-                             message='Loading config ...',
-                             is_threaded=False)
+        StatusMessageHandler(parent=self.parent, message='Loading config ...', is_threaded=False)
 
     def run(self):
         _path = self.parent.path_config
-        _filter = ("XML (*.xml);; All Files (*.*)")
+        _filter = "XML (*.xml);; All Files (*.*)"
         filename = ""
-        file_dialog = QtWidgets.QFileDialog(self.parent,
-                                        'Open Configuration File',
-                                        _path,
-                                        _filter)
+        file_dialog = QtWidgets.QFileDialog(self.parent, 'Open Configuration File', _path, _filter)
         file_dialog.setViewMode(QtWidgets.QFileDialog.List)
         if file_dialog.exec_():
             filename = file_dialog.selectedFiles()
@@ -47,9 +46,7 @@ class LoadingConfiguration(object):
         else:
             message = 'User Canceled loading!'
 
-        StatusMessageHandler(parent=self.parent,
-                             message=message,
-                             is_threaded=True)
+        StatusMessageHandler(parent=self.parent, message=message, is_threaded=True)
 
     def loading(self):
         self.parent.path_config = os.path.dirname(self.filename)
@@ -121,16 +118,16 @@ class LoadingConfiguration(object):
         short_scaling_factor_file = os.path.basename(scaling_factor_file)
         self.parent.ui.scalingFactorFile.setText(short_scaling_factor_file)
 
-        o_scaling_factor_widget = ScalingFactorWidgetsHandler(parent = self.parent)
+        o_scaling_factor_widget = ScalingFactorWidgetsHandler(parent=self.parent)
         o_scaling_factor_widget.fill_incident_medium_list(scaling_factor_file)
-        #+1 to make mantid friendly
-        index_selected = int(self.getNodeValue(node_0, 'incident_medium_index_selected'))+1 
+        # +1 to make mantid friendly
+        index_selected = int(self.getNodeValue(node_0, 'incident_medium_index_selected')) + 1
         o_scaling_factor_widget.set_index_selected(index_selected)
 
         self.parent.path_ascii = os.path.dirname(scaling_factor_file)
         scaling_factor_flag = str2bool(self.getNodeValue(node_0, 'scaling_factor_flag'))
-        o_scaling_factor_widget.checkbox(status = scaling_factor_flag)
-        o_scaling_factor_widget.set_enabled(status = scaling_factor_flag)
+        o_scaling_factor_widget.checkbox(status=scaling_factor_flag)
+        o_scaling_factor_widget.set_enabled(status=scaling_factor_flag)
 
     def getMetadataObject(self, node):
         iMetadata = LConfigDataset()
@@ -224,7 +221,7 @@ class LoadingConfiguration(object):
 
         return iMetadata
 
-    def getNodeValue(self,node,flag):
+    def getNodeValue(self, node, flag):
         try:
             _tmp = node.getElementsByTagName(flag)
             _value = _tmp[0].childNodes[0].nodeValue
@@ -233,8 +230,7 @@ class LoadingConfiguration(object):
         return _value
 
     def clear_display(self):
-        ClearPlots(parent=self.parent, is_data=True,
-                   is_norm=True, all_plots=True)
+        ClearPlots(parent=self.parent, is_data=True, is_norm=True, all_plots=True)
 
     def clear_reductionTable(self):
         nbr_row = self.parent.ui.reductionTable.rowCount()
@@ -247,8 +243,8 @@ class LoadingConfiguration(object):
                 self.parent.ui.reductionTable.item(_row, _col).setForeground(_brush_color)
 
     def populate_reduction_table_from_lconfigdataset(self):
-        PopulateReductionTable(parent = self.parent)
+        PopulateReductionTable(parent=self.parent)
         QtWidgets.QApplication.processEvents()
 
     def load_reduction_table_from_lconfigdataset(self):
-        LoadReductionTable(parent = self.parent)
+        LoadReductionTable(parent=self.parent)

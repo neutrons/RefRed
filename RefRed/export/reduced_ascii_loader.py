@@ -36,7 +36,6 @@ class ReducedAsciiLoader(object):
     def retrieve_ascii_data(self):
         filename = self.ascii_file_name
         nbr_col = 3
-        _asciiData = AsciiLoader(filename=filename,
-                                 nbr_col=nbr_col)
+        _asciiData = AsciiLoader(filename=filename, nbr_col=nbr_col)
 
         [self.col1, self.col2, self.col3, self.col4] = _asciiData.data()

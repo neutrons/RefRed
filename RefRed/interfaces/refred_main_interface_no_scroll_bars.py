@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#@PydevCodeAnalysisIgnore
+# @PydevCodeAnalysisIgnore
 
 # Form implementation generated from reading ui file 'designer//refred_main_interface_no_scroll_bars.ui'
 #
@@ -13,16 +13,23 @@ from qtpy import QtCore, QtGui, QtWidgets
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
+
     def _fromUtf8(s):
         return s
 
+
 try:
     _encoding = QtWidgets.QApplication.UnicodeUTF8
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
+
+
 except AttributeError:
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig)
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -327,7 +334,7 @@ class Ui_MainWindow(object):
         self.label_sf_precision = QtWidgets.QLabel(self.scalingFactorConfigFrame)
         self.label_sf_precision.setEnabled(True)
         self.label_sf_precision.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.label_sf_precision.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_sf_precision.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.label_sf_precision.setObjectName(_fromUtf8("label_sf_precision"))
         self.horizontalLayout_16.addWidget(self.label_sf_precision)
         self.sfPrecision = QtWidgets.QLineEdit(self.scalingFactorConfigFrame)
@@ -392,7 +399,7 @@ class Ui_MainWindow(object):
         self.label_146.setMinimumSize(QtCore.QSize(130, 0))
         self.label_146.setMaximumSize(QtCore.QSize(130, 16777215))
         self.label_146.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.label_146.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_146.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.label_146.setObjectName(_fromUtf8("label_146"))
         self.gridLayout_4.addWidget(self.label_146, 0, 0, 1, 1)
         self.metadataProtonChargeValue = QtWidgets.QLabel(self.frame)
@@ -438,7 +445,7 @@ class Ui_MainWindow(object):
         self.label_152.setSizePolicy(sizePolicy)
         self.label_152.setMinimumSize(QtCore.QSize(130, 0))
         self.label_152.setMaximumSize(QtCore.QSize(40, 16777215))
-        self.label_152.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_152.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.label_152.setObjectName(_fromUtf8("label_152"))
         self.gridLayout_4.addWidget(self.label_152, 2, 0, 1, 1)
         self.metadatathiValue = QtWidgets.QLabel(self.frame)
@@ -469,7 +476,7 @@ class Ui_MainWindow(object):
         self.label_154.setSizePolicy(sizePolicy)
         self.label_154.setMinimumSize(QtCore.QSize(130, 0))
         self.label_154.setMaximumSize(QtCore.QSize(40, 16777215))
-        self.label_154.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_154.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.label_154.setObjectName(_fromUtf8("label_154"))
         self.gridLayout_4.addWidget(self.label_154, 3, 0, 1, 1)
         self.metadatatthdValue = QtWidgets.QLabel(self.frame)
@@ -500,7 +507,7 @@ class Ui_MainWindow(object):
         self.label_156.setSizePolicy(sizePolicy)
         self.label_156.setMinimumSize(QtCore.QSize(40, 0))
         self.label_156.setMaximumSize(QtCore.QSize(130, 16777215))
-        self.label_156.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_156.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.label_156.setObjectName(_fromUtf8("label_156"))
         self.gridLayout_4.addWidget(self.label_156, 4, 0, 1, 1)
         self.metadataS1WValue = QtWidgets.QLabel(self.frame)
@@ -531,7 +538,7 @@ class Ui_MainWindow(object):
         self.S2SiWlabel.setSizePolicy(sizePolicy)
         self.S2SiWlabel.setMinimumSize(QtCore.QSize(40, 0))
         self.S2SiWlabel.setMaximumSize(QtCore.QSize(130, 16777215))
-        self.S2SiWlabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.S2SiWlabel.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.S2SiWlabel.setObjectName(_fromUtf8("S2SiWlabel"))
         self.gridLayout_4.addWidget(self.S2SiWlabel, 5, 0, 1, 1)
         self.metadataS2WValue = QtWidgets.QLabel(self.frame)
@@ -561,7 +568,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.label_160.sizePolicy().hasHeightForWidth())
         self.label_160.setSizePolicy(sizePolicy)
         self.label_160.setMaximumSize(QtCore.QSize(130, 16777215))
-        self.label_160.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_160.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.label_160.setObjectName(_fromUtf8("label_160"))
         self.gridLayout_4.addWidget(self.label_160, 6, 0, 1, 1)
         self.metadataS1HValue = QtWidgets.QLabel(self.frame)
@@ -591,7 +598,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.S2SiHlabel.sizePolicy().hasHeightForWidth())
         self.S2SiHlabel.setSizePolicy(sizePolicy)
         self.S2SiHlabel.setMaximumSize(QtCore.QSize(130, 16777215))
-        self.S2SiHlabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.S2SiHlabel.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.S2SiHlabel.setObjectName(_fromUtf8("S2SiHlabel"))
         self.gridLayout_4.addWidget(self.S2SiHlabel, 7, 0, 1, 1)
         self.metadataS2HValue = QtWidgets.QLabel(self.frame)
@@ -1594,7 +1601,7 @@ class Ui_MainWindow(object):
         self.sf_found_label.setObjectName(_fromUtf8("sf_found_label"))
         self.horizontalLayout_8.addWidget(self.sf_found_label)
         self.sf_not_found_label = QtWidgets.QLabel(self.data_stitching_Tab)
-        self.sf_not_found_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.sf_not_found_label.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.sf_not_found_label.setObjectName(_fromUtf8("sf_not_found_label"))
         self.horizontalLayout_8.addWidget(self.sf_not_found_label)
         self.verticalLayout_4.addLayout(self.horizontalLayout_8)
@@ -1774,53 +1781,179 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.plotTab.setCurrentIndex(0)
         self.dataNormTabWidget.setCurrentIndex(0)
-        QtCore.QObject.connect(self.data_sequence_lineEdit, QtCore.SIGNAL(_fromUtf8("returnPressed()")), MainWindow.data_norm_sequence_event)
-        QtCore.QObject.connect(self.norm_sequence_lineEdit, QtCore.SIGNAL(_fromUtf8("returnPressed()")), MainWindow.data_norm_sequence_event)
-        QtCore.QObject.connect(self.dataNormTabWidget, QtCore.SIGNAL(_fromUtf8("currentChanged(int)")), MainWindow.data_norm_tab_changed)
-        QtCore.QObject.connect(self.action_load_configuration, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.load_configuration)
-        QtCore.QObject.connect(self.action_save_as_configuration, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.save_as_configuration)
-        QtCore.QObject.connect(self.action_save_configuration, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.save_configuration)
-        QtCore.QObject.connect(self.dataBackToValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), MainWindow.data_back_spinbox_validation)
-        QtCore.QObject.connect(self.dataBackFromValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), MainWindow.data_back_spinbox_validation)
-        QtCore.QObject.connect(self.dataPeakToValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), MainWindow.data_peak_spinbox_validation)
-        QtCore.QObject.connect(self.dataPeakFromValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), MainWindow.data_peak_spinbox_validation)
-        QtCore.QObject.connect(self.normBackToValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), MainWindow.norm_back_spinbox_validation)
-        QtCore.QObject.connect(self.normBackFromValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), MainWindow.norm_back_spinbox_validation)
-        QtCore.QObject.connect(self.normPeakFromValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), MainWindow.norm_peak_spinbox_validation)
-        QtCore.QObject.connect(self.normPeakToValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), MainWindow.norm_peak_spinbox_validation)
-        QtCore.QObject.connect(self.dataLowResFromValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), MainWindow.data_low_res_validation)
-        QtCore.QObject.connect(self.dataLowResToValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), MainWindow.data_low_res_validation)
-        QtCore.QObject.connect(self.normLowResFromValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), MainWindow.norm_low_res_validation)
-        QtCore.QObject.connect(self.normLowResToValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), MainWindow.norm_low_res_validation)
-        QtCore.QObject.connect(self.dataBackgroundFlag, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.data_back_checkbox)
-        QtCore.QObject.connect(self.normBackgroundFlag, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.norm_back_checkbox)
-        QtCore.QObject.connect(self.dataLowResFlag, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.data_low_res_checkbox)
-        QtCore.QObject.connect(self.normLowResFlag, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.norm_low_res_checkbox)
-        QtCore.QObject.connect(self.scalingFactorFlag, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), MainWindow.use_scaling_factor_checkbox)
-        QtCore.QObject.connect(self.sfBrowseButton, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.browse_scaling_factor_button)
-        QtCore.QObject.connect(self.dataTOFautoMode, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.auto_tof_range_radio_button)
-        QtCore.QObject.connect(self.TOFmanualFromValue, QtCore.SIGNAL(_fromUtf8("returnPressed()")), MainWindow.manual_tof_range_line_edit_validation)
-        QtCore.QObject.connect(self.TOFmanualToValue, QtCore.SIGNAL(_fromUtf8("returnPressed()")), MainWindow.manual_tof_range_line_edit_validation)
-        QtCore.QObject.connect(self.dataTOFmanualMode, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.auto_tof_range_radio_button)
-        QtCore.QObject.connect(self.reduceButton, QtCore.SIGNAL(_fromUtf8("pressed()")), MainWindow.run_reduction_button)
-        QtCore.QObject.connect(self.reductionTable, QtCore.SIGNAL(_fromUtf8("customContextMenuRequested(QPoint)")), MainWindow.reduction_table_right_click)
-        QtCore.QObject.connect(self.actionSF_Calculator, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.launch_sf_calculator)
-        QtCore.QObject.connect(self.actionRunReduction, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.run_reduction_button)
-        QtCore.QObject.connect(self.autoSF, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.stitching_sf_radio_button)
-        QtCore.QObject.connect(self.manualSF, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.stitching_sf_radio_button)
+        QtCore.QObject.connect(
+            self.data_sequence_lineEdit,
+            QtCore.SIGNAL(_fromUtf8("returnPressed()")),
+            MainWindow.data_norm_sequence_event,
+        )
+        QtCore.QObject.connect(
+            self.norm_sequence_lineEdit,
+            QtCore.SIGNAL(_fromUtf8("returnPressed()")),
+            MainWindow.data_norm_sequence_event,
+        )
+        QtCore.QObject.connect(
+            self.dataNormTabWidget, QtCore.SIGNAL(_fromUtf8("currentChanged(int)")), MainWindow.data_norm_tab_changed
+        )
+        QtCore.QObject.connect(
+            self.action_load_configuration, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.load_configuration
+        )
+        QtCore.QObject.connect(
+            self.action_save_as_configuration,
+            QtCore.SIGNAL(_fromUtf8("triggered()")),
+            MainWindow.save_as_configuration,
+        )
+        QtCore.QObject.connect(
+            self.action_save_configuration, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.save_configuration
+        )
+        QtCore.QObject.connect(
+            self.dataBackToValue,
+            QtCore.SIGNAL(_fromUtf8("editingFinished()")),
+            MainWindow.data_back_spinbox_validation,
+        )
+        QtCore.QObject.connect(
+            self.dataBackFromValue,
+            QtCore.SIGNAL(_fromUtf8("editingFinished()")),
+            MainWindow.data_back_spinbox_validation,
+        )
+        QtCore.QObject.connect(
+            self.dataPeakToValue,
+            QtCore.SIGNAL(_fromUtf8("editingFinished()")),
+            MainWindow.data_peak_spinbox_validation,
+        )
+        QtCore.QObject.connect(
+            self.dataPeakFromValue,
+            QtCore.SIGNAL(_fromUtf8("editingFinished()")),
+            MainWindow.data_peak_spinbox_validation,
+        )
+        QtCore.QObject.connect(
+            self.normBackToValue,
+            QtCore.SIGNAL(_fromUtf8("editingFinished()")),
+            MainWindow.norm_back_spinbox_validation,
+        )
+        QtCore.QObject.connect(
+            self.normBackFromValue,
+            QtCore.SIGNAL(_fromUtf8("editingFinished()")),
+            MainWindow.norm_back_spinbox_validation,
+        )
+        QtCore.QObject.connect(
+            self.normPeakFromValue,
+            QtCore.SIGNAL(_fromUtf8("editingFinished()")),
+            MainWindow.norm_peak_spinbox_validation,
+        )
+        QtCore.QObject.connect(
+            self.normPeakToValue,
+            QtCore.SIGNAL(_fromUtf8("editingFinished()")),
+            MainWindow.norm_peak_spinbox_validation,
+        )
+        QtCore.QObject.connect(
+            self.dataLowResFromValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), MainWindow.data_low_res_validation
+        )
+        QtCore.QObject.connect(
+            self.dataLowResToValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), MainWindow.data_low_res_validation
+        )
+        QtCore.QObject.connect(
+            self.normLowResFromValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), MainWindow.norm_low_res_validation
+        )
+        QtCore.QObject.connect(
+            self.normLowResToValue, QtCore.SIGNAL(_fromUtf8("editingFinished()")), MainWindow.norm_low_res_validation
+        )
+        QtCore.QObject.connect(
+            self.dataBackgroundFlag, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.data_back_checkbox
+        )
+        QtCore.QObject.connect(
+            self.normBackgroundFlag, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.norm_back_checkbox
+        )
+        QtCore.QObject.connect(
+            self.dataLowResFlag, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.data_low_res_checkbox
+        )
+        QtCore.QObject.connect(
+            self.normLowResFlag, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.norm_low_res_checkbox
+        )
+        QtCore.QObject.connect(
+            self.scalingFactorFlag, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), MainWindow.use_scaling_factor_checkbox
+        )
+        QtCore.QObject.connect(
+            self.sfBrowseButton, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.browse_scaling_factor_button
+        )
+        QtCore.QObject.connect(
+            self.dataTOFautoMode, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.auto_tof_range_radio_button
+        )
+        QtCore.QObject.connect(
+            self.TOFmanualFromValue,
+            QtCore.SIGNAL(_fromUtf8("returnPressed()")),
+            MainWindow.manual_tof_range_line_edit_validation,
+        )
+        QtCore.QObject.connect(
+            self.TOFmanualToValue,
+            QtCore.SIGNAL(_fromUtf8("returnPressed()")),
+            MainWindow.manual_tof_range_line_edit_validation,
+        )
+        QtCore.QObject.connect(
+            self.dataTOFmanualMode, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.auto_tof_range_radio_button
+        )
+        QtCore.QObject.connect(
+            self.reduceButton, QtCore.SIGNAL(_fromUtf8("pressed()")), MainWindow.run_reduction_button
+        )
+        QtCore.QObject.connect(
+            self.reductionTable,
+            QtCore.SIGNAL(_fromUtf8("customContextMenuRequested(QPoint)")),
+            MainWindow.reduction_table_right_click,
+        )
+        QtCore.QObject.connect(
+            self.actionSF_Calculator, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.launch_sf_calculator
+        )
+        QtCore.QObject.connect(
+            self.actionRunReduction, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.run_reduction_button
+        )
+        QtCore.QObject.connect(
+            self.autoSF, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.stitching_sf_radio_button
+        )
+        QtCore.QObject.connect(
+            self.manualSF, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.stitching_sf_radio_button
+        )
         QtCore.QObject.connect(self.oneSF, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.stitching_sf_radio_button)
-        QtCore.QObject.connect(self.actionExportScript, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.export_reduction_script_button)
-        QtCore.QObject.connect(self.RvsQ, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.stitching_yscale_options_radio_button_1)
-        QtCore.QObject.connect(self.RQ4vsQ, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.stitching_yscale_options_radio_button_2)
-        QtCore.QObject.connect(self.LogRvsQ, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.stitching_yscale_options_radio_button_3)
-        QtCore.QObject.connect(self.previewScalingFactorFile, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.preview_scaling_factor_button)
-        QtCore.QObject.connect(self.eventTofBins, QtCore.SIGNAL(_fromUtf8("valueChanged(QString)")), MainWindow.widget_modified)
-        QtCore.QObject.connect(self.qStep, QtCore.SIGNAL(_fromUtf8("textChanged(QString)")), MainWindow.widget_modified)
-        QtCore.QObject.connect(self.angleOffsetValue, QtCore.SIGNAL(_fromUtf8("textChanged(QString)")), MainWindow.widget_modified)
-        QtCore.QObject.connect(self.angleOffsetError, QtCore.SIGNAL(_fromUtf8("textChanged(QString)")), MainWindow.widget_modified)
-        QtCore.QObject.connect(self.sfPrecision, QtCore.SIGNAL(_fromUtf8("textChanged(QString)")), MainWindow.widget_modified)
-        QtCore.QObject.connect(self.selectIncidentMediumList, QtCore.SIGNAL(_fromUtf8("currentIndexChanged(QString)")), MainWindow.widget_modified)
-        QtCore.QObject.connect(self.loadReducedAsciiDataSet, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.load_reduced_data_set_button)
+        QtCore.QObject.connect(
+            self.actionExportScript, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.export_reduction_script_button
+        )
+        QtCore.QObject.connect(
+            self.RvsQ, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.stitching_yscale_options_radio_button_1
+        )
+        QtCore.QObject.connect(
+            self.RQ4vsQ, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.stitching_yscale_options_radio_button_2
+        )
+        QtCore.QObject.connect(
+            self.LogRvsQ, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.stitching_yscale_options_radio_button_3
+        )
+        QtCore.QObject.connect(
+            self.previewScalingFactorFile,
+            QtCore.SIGNAL(_fromUtf8("clicked()")),
+            MainWindow.preview_scaling_factor_button,
+        )
+        QtCore.QObject.connect(
+            self.eventTofBins, QtCore.SIGNAL(_fromUtf8("valueChanged(QString)")), MainWindow.widget_modified
+        )
+        QtCore.QObject.connect(
+            self.qStep, QtCore.SIGNAL(_fromUtf8("textChanged(QString)")), MainWindow.widget_modified
+        )
+        QtCore.QObject.connect(
+            self.angleOffsetValue, QtCore.SIGNAL(_fromUtf8("textChanged(QString)")), MainWindow.widget_modified
+        )
+        QtCore.QObject.connect(
+            self.angleOffsetError, QtCore.SIGNAL(_fromUtf8("textChanged(QString)")), MainWindow.widget_modified
+        )
+        QtCore.QObject.connect(
+            self.sfPrecision, QtCore.SIGNAL(_fromUtf8("textChanged(QString)")), MainWindow.widget_modified
+        )
+        QtCore.QObject.connect(
+            self.selectIncidentMediumList,
+            QtCore.SIGNAL(_fromUtf8("currentIndexChanged(QString)")),
+            MainWindow.widget_modified,
+        )
+        QtCore.QObject.connect(
+            self.loadReducedAsciiDataSet,
+            QtCore.SIGNAL(_fromUtf8("clicked()")),
+            MainWindow.load_reduced_data_set_button,
+        )
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1837,22 +1970,36 @@ class Ui_MainWindow(object):
         self.groupBox_6.setTitle(_translate("MainWindow", "Parameters", None))
         self.label_29.setToolTip(_translate("MainWindow", "The number of bins for the Time of Flight channels", None))
         self.label_29.setText(_translate("MainWindow", "TOF bins", None))
-        self.eventTofBins.setToolTip(_translate("MainWindow", "The number of bins for the Time of Flight channels", None))
-        self.label_33.setText(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Lucida Grande\'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">µs</p></body></html>", None))
+        self.eventTofBins.setToolTip(
+            _translate("MainWindow", "The number of bins for the Time of Flight channels", None)
+        )
+        self.label_33.setText(
+            _translate(
+                "MainWindow",
+                "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                "p, li { white-space: pre-wrap; }\n"
+                "</style></head><body style=\" font-family:\'Lucida Grande\'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
+                "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">µs</p></body></html>",
+                None,
+            )
+        )
         self.label_10.setText(_translate("MainWindow", "Q binning", None))
         self.qStep.setText(_translate("MainWindow", "0.01", None))
         self.label_11.setText(_translate("MainWindow", "ΔQ/Q", None))
         self.groupBox_4.setTitle(_translate("MainWindow", "Geometry Correction", None))
         self.angleOffsetValue.setText(_translate("MainWindow", "0.008", None))
-        self.label_20.setText(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Lucida Grande\'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">&#177;</p></body></html>", None))
+        self.label_20.setText(
+            _translate(
+                "MainWindow",
+                "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                "p, li { white-space: pre-wrap; }\n"
+                "</style></head><body style=\" font-family:\'Lucida Grande\'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
+                "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">&#177;</p></body></html>",
+                None,
+            )
+        )
         self.angleOffsetError.setText(_translate("MainWindow", "0.001", None))
         self.label_21.setText(_translate("MainWindow", "degrees", None))
         self.groupBox_5.setTitle(_translate("MainWindow", "Scaling Factor", None))
@@ -1906,7 +2053,9 @@ class Ui_MainWindow(object):
         self.dataLowResFlag.setText(_translate("MainWindow", "Low Resolution", None))
         self.dataLowResFromLabel.setText(_translate("MainWindow", "From Pixel", None))
         self.dataLowResToLabel.setText(_translate("MainWindow", "To Pixel", None))
-        self.dataNormTabWidget.setTabText(self.dataNormTabWidget.indexOf(self.tab), _translate("MainWindow", "  D A T A  ", None))
+        self.dataNormTabWidget.setTabText(
+            self.dataNormTabWidget.indexOf(self.tab), _translate("MainWindow", "  D A T A  ", None)
+        )
         self.useNormalizationFlag.setText(_translate("MainWindow", "Use Normalization", None))
         self.norm_selection_error_label.setText(_translate("MainWindow", "SELECTION ERROR", None))
         self.normBackFromLabel.setText(_translate("MainWindow", "Back2", None))
@@ -1921,7 +2070,9 @@ class Ui_MainWindow(object):
         self.normLowResFlag.setText(_translate("MainWindow", "Low Resolution", None))
         self.normLowResFromLabel.setText(_translate("MainWindow", "From Pixel", None))
         self.normLowResToLabel.setText(_translate("MainWindow", "To Pixel", None))
-        self.dataNormTabWidget.setTabText(self.dataNormTabWidget.indexOf(self.tab_2), _translate("MainWindow", "  N O R M A L I Z A T I O N  ", None))
+        self.dataNormTabWidget.setTabText(
+            self.dataNormTabWidget.indexOf(self.tab_2), _translate("MainWindow", "  N O R M A L I Z A T I O N  ", None)
+        )
         self.dataTOFmanualLabel.setText(_translate("MainWindow", "TOF range", None))
         self.dataTOFautoMode.setText(_translate("MainWindow", "Auto", None))
         self.dataTOFmanualMode.setText(_translate("MainWindow", "Manual", None))
@@ -2011,7 +2162,14 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "New Column", None))
         self.reduceButton.setText(_translate("MainWindow", "R E D U C E", None))
         self.plotTab.setTabText(self.plotTab.indexOf(self.Overview_Tab), _translate("MainWindow", "Overview", None))
-        self.plotTab.setTabToolTip(self.plotTab.indexOf(self.Overview_Tab), _translate("MainWindow", "Show the active dataset and information about the datasets selected for normalization and reduction", None))
+        self.plotTab.setTabToolTip(
+            self.plotTab.indexOf(self.Overview_Tab),
+            _translate(
+                "MainWindow",
+                "Show the active dataset and information about the datasets selected for normalization and reduction",
+                None,
+            ),
+        )
         item = self.dataStitchingTable.verticalHeaderItem(0)
         item.setText(_translate("MainWindow", "New Row", None))
         item = self.dataStitchingTable.verticalHeaderItem(1)
@@ -2101,7 +2259,9 @@ class Ui_MainWindow(object):
         self.RvsQ.setText(_translate("MainWindow", "R vs Q", None))
         self.RQ4vsQ.setText(_translate("MainWindow", "RQ^4 vs Q", None))
         self.LogRvsQ.setText(_translate("MainWindow", "LogR vs Q", None))
-        self.plotTab.setTabText(self.plotTab.indexOf(self.data_stitching_Tab), _translate("MainWindow", "Data Stitching", None))
+        self.plotTab.setTabText(
+            self.plotTab.indexOf(self.data_stitching_Tab), _translate("MainWindow", "Data Stitching", None)
+        )
         self.menuHelp.setTitle(_translate("MainWindow", "Help", None))
         self.menuFile.setTitle(_translate("MainWindow", "Configuration", None))
         self.menuAdvanced.setTitle(_translate("MainWindow", "Tools", None))
@@ -2125,22 +2285,30 @@ class Ui_MainWindow(object):
         self.actionRaise_Error.setText(_translate("MainWindow", "Raise Error", None))
         self.actionLog_Debug_Messages.setText(_translate("MainWindow", "Log Debug Messages", None))
         self.actionQuick_Reduce.setText(_translate("MainWindow", "Quick-Reduce", None))
-        self.actionQuick_Reduce.setToolTip(_translate("MainWindow", "Reduce list using options from last export", None))
+        self.actionQuick_Reduce.setToolTip(
+            _translate("MainWindow", "Reduce list using options from last export", None)
+        )
         self.actionQuick_Reduce.setShortcut(_translate("MainWindow", "Ctrl+R", None))
         self.actionBrowse_NXS_File.setText(_translate("MainWindow", "Browse NXS File...", None))
         self.actionBrowse_NXS_File.setShortcut(_translate("MainWindow", "Ctrl+N", None))
         self.actionFilter_Points.setText(_translate("MainWindow", "Filter Points...", None))
-        self.actionFilter_Points.setToolTip(_translate("MainWindow", "Remove points from already exported reflectivity datasets", None))
+        self.actionFilter_Points.setToolTip(
+            _translate("MainWindow", "Remove points from already exported reflectivity datasets", None)
+        )
         self.actionOpen_Reduction_Preview.setText(_translate("MainWindow", "Open Reduction Preview...", None))
         self.actionLoadConfiguration.setText(_translate("MainWindow", "Load Configuration (light and fast) ...", None))
         self.actionLoadConfiguration.setShortcut(_translate("MainWindow", "Meta+O", None))
         self.actionSaveConfiguration.setText(_translate("MainWindow", "Save Configuration...", None))
         self.actionSaveConfiguration.setShortcut(_translate("MainWindow", "Ctrl+S", None))
-        self.actionLoadFullConfiguration.setText(_translate("MainWindow", "Load Configuration (heavy and slow) ...", None))
+        self.actionLoadFullConfiguration.setText(
+            _translate("MainWindow", "Load Configuration (heavy and slow) ...", None)
+        )
         self.actionLoad_Configuration_light.setText(_translate("MainWindow", "Load Configuration (light)", None))
         self.action_load_configuration.setText(_translate("MainWindow", "Load ...", None))
         self.action_load_configuration.setShortcut(_translate("MainWindow", "Meta+O", None))
-        self.actionLoadFullConfiguration_2.setText(_translate("MainWindow", "Load Configuration (heavy and slow) ...", None))
+        self.actionLoadFullConfiguration_2.setText(
+            _translate("MainWindow", "Load Configuration (heavy and slow) ...", None)
+        )
         self.action_save_as_configuration.setText(_translate("MainWindow", "Save As ..", None))
         self.action_save_as_configuration.setShortcut(_translate("MainWindow", "Meta+Shift+S", None))
         self.actionSF_Calculator.setText(_translate("MainWindow", "SF Calculator ...", None))
@@ -2151,6 +2319,7 @@ class Ui_MainWindow(object):
         self.action_save_configuration.setShortcut(_translate("MainWindow", "Meta+S", None))
         self.actionRunReduction.setText(_translate("MainWindow", "RUN", None))
         self.actionExportScript.setText(_translate("MainWindow", "Export Script ...", None))
+
 
 from .mplwidgetnolog import MPLWidgetNoLog
 from .mplwidget import MPLWidget

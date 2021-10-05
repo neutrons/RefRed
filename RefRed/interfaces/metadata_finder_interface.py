@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#@PydevCodeAnalysisIgnore
+# @PydevCodeAnalysisIgnore
 
 # Form implementation generated from reading ui file 'designer//metadata_finder_interface.ui'
 #
@@ -13,16 +13,23 @@ from qtpy import QtCore, QtGui, QtWidgets
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
+
     def _fromUtf8(s):
         return s
 
+
 try:
     _encoding = QtWidgets.QApplication.UnicodeUTF8
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
+
+
 except AttributeError:
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig)
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -140,13 +147,25 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
-        QtCore.QObject.connect(self.runNumberEdit, QtCore.SIGNAL(_fromUtf8("returnPressed()")), MainWindow.runNumberEditEvent)
+        QtCore.QObject.connect(
+            self.runNumberEdit, QtCore.SIGNAL(_fromUtf8("returnPressed()")), MainWindow.runNumberEditEvent
+        )
         QtCore.QObject.connect(self.unselectAll, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.unselectAll)
-        QtCore.QObject.connect(self.exportConfiguration, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.exportConfiguration)
-        QtCore.QObject.connect(self.importConfiguration, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.importConfiguration)
-        QtCore.QObject.connect(self.tabWidget, QtCore.SIGNAL(_fromUtf8("currentChanged(int)")), MainWindow.userChangedTab)
-        QtCore.QObject.connect(self.saveAsciiButton, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.saveMetadataListAsAsciiFile)
-        QtCore.QObject.connect(self.searchLineEdit, QtCore.SIGNAL(_fromUtf8("textEdited(QString)")), MainWindow.searchLineEditLive)
+        QtCore.QObject.connect(
+            self.exportConfiguration, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.exportConfiguration
+        )
+        QtCore.QObject.connect(
+            self.importConfiguration, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.importConfiguration
+        )
+        QtCore.QObject.connect(
+            self.tabWidget, QtCore.SIGNAL(_fromUtf8("currentChanged(int)")), MainWindow.userChangedTab
+        )
+        QtCore.QObject.connect(
+            self.saveAsciiButton, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.saveMetadataListAsAsciiFile
+        )
+        QtCore.QObject.connect(
+            self.searchLineEdit, QtCore.SIGNAL(_fromUtf8("textEdited(QString)")), MainWindow.searchLineEditLive
+        )
         QtCore.QObject.connect(self.clearButton, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.searchLineEditClear)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -175,4 +194,3 @@ class Ui_MainWindow(object):
         self.exportConfiguration.setText(_translate("MainWindow", "Export Configuration ...", None))
         self.importConfiguration.setText(_translate("MainWindow", "Import Configuration ...", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Configuration", None))
-

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#@PydevCodeAnalysisIgnore
+# @PydevCodeAnalysisIgnore
 
 # Form implementation generated from reading ui file 'designer//display_metadata.ui'
 #
@@ -13,16 +13,23 @@ from qtpy import QtCore, QtWidgets
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
+
     def _fromUtf8(s):
         return s
 
+
 try:
     _encoding = QtWidgets.QApplication.UnicodeUTF8
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
+
+
 except AttributeError:
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig)
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -100,9 +107,15 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
         self.tabWidget.setCurrentIndex(0)
         QtCore.QObject.connect(self.tabWidget, QtCore.SIGNAL(_fromUtf8("currentChanged(int)")), Dialog.userChangedTab)
-        QtCore.QObject.connect(self.saveMetadataAsAsciiButton, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.saveMetadataListAsAscii)
-        QtCore.QObject.connect(self.exportConfigurationButton, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.exportConfiguration)
-        QtCore.QObject.connect(self.importConfigurationButton, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.importConfiguration)
+        QtCore.QObject.connect(
+            self.saveMetadataAsAsciiButton, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.saveMetadataListAsAscii
+        )
+        QtCore.QObject.connect(
+            self.exportConfigurationButton, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.exportConfiguration
+        )
+        QtCore.QObject.connect(
+            self.importConfigurationButton, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.importConfiguration
+        )
         QtCore.QObject.connect(self.unselectAllButton, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.unselectAll)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
@@ -128,4 +141,3 @@ class Ui_Dialog(object):
         self.exportConfigurationButton.setText(_translate("Dialog", "Export Configuration ...", None))
         self.importConfigurationButton.setText(_translate("Dialog", "Import Configuration ...", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Configure), _translate("Dialog", "Configure", None))
-

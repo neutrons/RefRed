@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#@PydevCodeAnalysisIgnore
+# @PydevCodeAnalysisIgnore
 
 # Form implementation generated from reading ui file 'designer//plot2d_dialog_refl_interface.ui'
 #
@@ -13,16 +13,23 @@ from qtpy import QtCore, QtGui, QtWidgets
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
+
     def _fromUtf8(s):
         return s
 
+
 try:
     _encoding = QtWidgets.QApplication.UnicodeUTF8
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
+
+
 except AttributeError:
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig)
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -242,7 +249,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.peak2_label.setFont(font)
         self.peak2_label.setAccessibleDescription(_fromUtf8(""))
-        self.peak2_label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
+        self.peak2_label.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignHCenter)
         self.peak2_label.setObjectName(_fromUtf8("peak2_label"))
         self.verticalLayout_13.addWidget(self.peak2_label)
         self.peak2 = QtWidgets.QSpinBox(self.frame)
@@ -288,7 +295,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.peak1_label.setFont(font)
         self.peak1_label.setAccessibleDescription(_fromUtf8(""))
-        self.peak1_label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
+        self.peak1_label.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignHCenter)
         self.peak1_label.setObjectName(_fromUtf8("peak1_label"))
         self.verticalLayout_14.addWidget(self.peak1_label)
         spacerItem10 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -328,7 +335,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.back2_label.setFont(font)
         self.back2_label.setAccessibleDescription(_fromUtf8(""))
-        self.back2_label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
+        self.back2_label.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignHCenter)
         self.back2_label.setObjectName(_fromUtf8("back2_label"))
         self.verticalLayout_9.addWidget(self.back2_label)
         self.back2 = QtWidgets.QSpinBox(self.frame_2)
@@ -378,7 +385,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.back1_label.setFont(font)
         self.back1_label.setAccessibleDescription(_fromUtf8(""))
-        self.back1_label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
+        self.back1_label.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignHCenter)
         self.back1_label.setObjectName(_fromUtf8("back1_label"))
         self.verticalLayout_10.addWidget(self.back1_label)
         spacerItem14 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -444,7 +451,7 @@ class Ui_Dialog(object):
         self.verticalLayout_3.addLayout(self.horizontalLayout_4)
         self.error_label = QtWidgets.QLabel(Dialog)
         self.error_label.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.error_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.error_label.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.error_label.setObjectName(_fromUtf8("error_label"))
         self.verticalLayout_3.addWidget(self.error_label)
         self.horizontalLayout_6.addLayout(self.verticalLayout_3)
@@ -452,18 +459,34 @@ class Ui_Dialog(object):
 
         self.retranslateUi(Dialog)
         self.tabWidget.setCurrentIndex(0)
-        QtCore.QObject.connect(self.back_flag, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), Dialog.activate_or_not_back_widgets)
+        QtCore.QObject.connect(
+            self.back_flag, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), Dialog.activate_or_not_back_widgets
+        )
         QtCore.QObject.connect(self.peak1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.manual_input_peak1)
         QtCore.QObject.connect(self.peak2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.manual_input_peak2)
         QtCore.QObject.connect(self.back1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.manual_input_back1)
         QtCore.QObject.connect(self.back2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.manual_input_back2)
-        QtCore.QObject.connect(self.tof_from, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.manual_input_of_tof_field)
-        QtCore.QObject.connect(self.low_res2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.manual_input_of_low_res_field)
-        QtCore.QObject.connect(self.tof_manual_flag, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.manual_auto_tof_clicked)
-        QtCore.QObject.connect(self.low_res_flag, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), Dialog.activate_or_not_low_res_widgets)
-        QtCore.QObject.connect(self.low_res1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.manual_input_of_low_res_field)
-        QtCore.QObject.connect(self.tof_to, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.manual_input_of_tof_field)
-        QtCore.QObject.connect(self.tof_auto_flag, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.manual_auto_tof_clicked)
+        QtCore.QObject.connect(
+            self.tof_from, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.manual_input_of_tof_field
+        )
+        QtCore.QObject.connect(
+            self.low_res2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.manual_input_of_low_res_field
+        )
+        QtCore.QObject.connect(
+            self.tof_manual_flag, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.manual_auto_tof_clicked
+        )
+        QtCore.QObject.connect(
+            self.low_res_flag, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), Dialog.activate_or_not_low_res_widgets
+        )
+        QtCore.QObject.connect(
+            self.low_res1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.manual_input_of_low_res_field
+        )
+        QtCore.QObject.connect(
+            self.tof_to, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.manual_input_of_tof_field
+        )
+        QtCore.QObject.connect(
+            self.tof_auto_flag, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.manual_auto_tof_clicked
+        )
         QtCore.QObject.connect(self.clock1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.clock_spinbox)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 

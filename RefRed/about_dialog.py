@@ -32,10 +32,15 @@ class AboutDialog(object):
           - Mantid:  %s
           - Matplotlib: %s
           - Qt: %s
-          - PyQt: %s''' % (RefRed_version, python_version,
-                           numpy_version, mantid_version,
-                           matplotlib_version, qt_version,
-                           pyqt_version)
+          - PyQt: %s''' % (
+            RefRed_version,
+            python_version,
+            numpy_version,
+            mantid_version,
+            matplotlib_version,
+            qt_version,
+            pyqt_version,
+        )
 
         QtWidgets.QMessageBox.about(self.parent, 'About RefRed', message)
 
@@ -43,5 +48,5 @@ class AboutDialog(object):
         str_version = sys.version_info
         str_array = []
         for value in str_version:
-                str_array.append(str(value))
+            str_array.append(str(value))
         return ".".join(str_array[0:3])

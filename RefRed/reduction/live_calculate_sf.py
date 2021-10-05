@@ -22,7 +22,7 @@ class LiveCalculateSF(object):
         '''
         main part of the program that will calculate the various SF
         '''
-        o_gui = GuiUtility(parent = self.parent)
+        o_gui = GuiUtility(parent=self.parent)
         stitching_type = o_gui.getStitchingType()
 
         if stitching_type is 'absolute':
@@ -32,7 +32,7 @@ class LiveCalculateSF(object):
         else:
             self.manual_stitching_calculation(row_index=self.row_index)
 
-    def absolute_normalization_calculation(self, row_index = row_index):
+    def absolute_normalization_calculation(self, row_index=row_index):
         '''
         will perform the absolute normalization
         '''

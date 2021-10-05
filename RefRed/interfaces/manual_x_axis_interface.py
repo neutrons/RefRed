@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#@PydevCodeAnalysisIgnore
+# @PydevCodeAnalysisIgnore
 
 # Form implementation generated from reading ui file 'designer//manual_x_axis_interface.ui'
 #
@@ -13,16 +13,23 @@ from qtpy import QtCore, QtWidgets
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
+
     def _fromUtf8(s):
         return s
 
+
 try:
     _encoding = QtWidgets.QApplication.UnicodeUTF8
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
+
+
 except AttributeError:
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig)
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -77,7 +84,9 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QObject.connect(self.x_max_value, QtCore.SIGNAL(_fromUtf8("returnPressed()")), MainWindow.x_max_event)
         QtCore.QObject.connect(self.x_min_value, QtCore.SIGNAL(_fromUtf8("returnPressed()")), MainWindow.x_min_event)
-        QtCore.QObject.connect(self.auto_rescale, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.x_auto_rescale_event)
+        QtCore.QObject.connect(
+            self.auto_rescale, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.x_auto_rescale_event
+        )
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -86,4 +95,3 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "OR", None))
         self.label_3.setText(_translate("MainWindow", "X min", None))
         self.label.setText(_translate("MainWindow", "X max", None))
-

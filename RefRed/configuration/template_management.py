@@ -51,10 +51,11 @@ class TemplateManagement(QtWidgets.QMainWindow):
     def browseFolderButton(self):
         _path = self._auto_reduce_folder
         pathQFileDialog = QtWidgets.QFileDialog(self.parent)
-        folder = str(pathQFileDialog.getExistingDirectory(self,
-                                                          'Select Template Folder',
-                                                          _path,
-                                                          QtWidgets.QFileDialog.ShowDirsOnly))
+        folder = str(
+            pathQFileDialog.getExistingDirectory(
+                self, 'Select Template Folder', _path, QtWidgets.QFileDialog.ShowDirsOnly
+            )
+        )
 
         if folder == "":
             return
@@ -99,8 +100,7 @@ class TemplateManagement(QtWidgets.QMainWindow):
             _is_list_files_a_template.append(_button_status)
             _button = QtWidgets.QPushButton(message)
             _button.setEnabled(_button_status)
-            QtCore.QObject.connect(_button, QtCore.SIGNAL("clicked()"),
-                                   lambda row=_row: self.preview_button(row))
+            QtCore.QObject.connect(_button, QtCore.SIGNAL("clicked()"), lambda row=_row: self.preview_button(row))
 
             self.ui.tableWidget.setCellWidget(_row, 1, _button)
 
@@ -108,28 +108,26 @@ class TemplateManagement(QtWidgets.QMainWindow):
         _default_selection = QtWidgets.QTableWidgetSelectionRange(0, 0, 0, 1)
         self.ui.tableWidget.setRangeSelected(_default_selection, True)
 
-        self.check_gui(row_selected = 0)
+        self.check_gui(row_selected=0)
 
         QApplication.restoreOverrideCursor()
 
     def get_button_status(self, _file):
         status = True
         try:
-            o_preview_config = PreviewConfig(parent=None,
-                                             filename=_file,
-                                             check_format=True)
+            o_preview_config = PreviewConfig(parent=None, filename=_file, check_format=True)
         except:
             status = False
         return status
 
     def check_gui(self, row_selected=-1):
         _is_list_files_a_template = self._is_list_files_a_template
-        if (_is_list_files_a_template == []):
+        if _is_list_files_a_template == []:
             status = False
         else:
             if row_selected == -1:
                 row_selected = self.ui.tableWidget.currentRow()
-            if (row_selected == -1):
+            if row_selected == -1:
                 status = False
             else:
                 status = _is_list_files_a_template[row_selected]
@@ -137,11 +135,13 @@ class TemplateManagement(QtWidgets.QMainWindow):
 
     def preview_button(self, _row):
         try:
-            o_preview_config = PreviewConfig(parent=self,
-                                             is_live=False,
-                                             filename=self._list_files[_row],
-                                             geometry_parent=self.geometry(),
-                                             window_offset=_row * self._window_offset)
+            o_preview_config = PreviewConfig(
+                parent=self,
+                is_live=False,
+                filename=self._list_files[_row],
+                geometry_parent=self.geometry(),
+                window_offset=_row * self._window_offset,
+            )
             o_preview_config.show()
             _current_selection = self.ui.tableWidget.selectedRanges()
             self.ui.tableWidget.setRangeSelected(_current_selection[0], False)
@@ -162,9 +162,7 @@ class TemplateManagement(QtWidgets.QMainWindow):
     def templateFileSelectedButton(self):
         _selected_row = self.ui.tableWidget.currentRow()
         _filename = self._list_files[_selected_row]
-        o_confirm = ConfirmAutoReduceDialog(parent=self,
-                                            filename=_filename,
-                                            ipts=self._current_ipts)
+        o_confirm = ConfirmAutoReduceDialog(parent=self, filename=_filename, ipts=self._current_ipts)
         o_confirm.show()
 
     def selectionChanged(self):
@@ -181,7 +179,7 @@ class TemplateManagement(QtWidgets.QMainWindow):
     def _replace_auto_template(self, full_file_name=''):
         _final_auto_reduce_template_folder = self.retrieve_final_auto_reduce_template_folder()
         _auto_reduce_name = self._auto_reduce_name
-        _template_source_name = self._full_template_file_name_selected 
+        _template_source_name = self._full_template_file_name_selected
 
         _dst = _final_auto_reduce_template_folder + '/' + _auto_reduce_name
         _src = _template_source_name
@@ -190,20 +188,16 @@ class TemplateManagement(QtWidgets.QMainWindow):
             _dst = self._debug_dst_folder
 
         shutil.copyfile(_src, _dst)
-        os.chmod(_dst, stat.S_IWUSR |
-                 stat.S_IRUSR |
-                 stat.S_IXUSR |
-                 stat.S_IWGRP |
-                 stat.S_IRGRP |
-                 stat.S_IXGRP |
-                 stat.S_IWOTH)
+        os.chmod(
+            _dst,
+            stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IWGRP | stat.S_IRGRP | stat.S_IXGRP | stat.S_IWOTH,
+        )
 
     def closeEvent(self, event=None):
         self.close()
 
 
 class ConfirmAutoReduceDialog(QtWidgets.QDialog):
-
     def __init__(self, parent=None, filename=None, ipts=''):
         self.parent = parent
 
@@ -240,10 +234,9 @@ class ConfirmAutoReduceDialog(QtWidgets.QDialog):
     def browse_ipts(self):
         _path = self.parent._auto_reduce_folder
         pathQFileDialog = QtWidgets.QFileDialog(self.parent)
-        folder = str(pathQFileDialog.getExistingDirectory(self,
-                                                          'Select IPTS folder',
-                                                          _path,
-                                                          QtWidgets.QFileDialog.ShowDirsOnly))
+        folder = str(
+            pathQFileDialog.getExistingDirectory(self, 'Select IPTS folder', _path, QtWidgets.QFileDialog.ShowDirsOnly)
+        )
 
         if folder == "":
             return

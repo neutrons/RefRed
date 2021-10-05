@@ -3,7 +3,6 @@ import RefRed.nexus_utilities
 
 
 class LocateRunThread(QtCore.QThread):
-
     def setup(self, parent, run_number, index):
         self.parent = parent
         self.run_number = run_number

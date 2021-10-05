@@ -18,7 +18,7 @@ H_OVER_M_NEUTRON = PLANCK_CONSTANT / NEUTRON_MASS
 
 class LRData(object):
     tof_range = None
-    low_res = ['0','255']
+    low_res = ['0', '255']
     low_res_flag = True
     is_better_chopper_coverage = True
 
@@ -124,29 +124,37 @@ class LRData(object):
     ################## Properties for easy data access ##########################
     # return the size of the data stored in memory for this dataset
     @property
-    def xdata(self): return self.xydata.mean(axis=0)
+    def xdata(self):
+        return self.xydata.mean(axis=0)
 
     @property
-    def ydata(self): return self.xydata.mean(axis=1)
+    def ydata(self):
+        return self.xydata.mean(axis=1)
 
     @property
-    def tofdata(self): return self.xtofdata.mean(axis=0)
+    def tofdata(self):
+        return self.xtofdata.mean(axis=0)
 
     # coordinates corresponding to the data items
     @property
-    def x(self): return np.arange(self.xydata.shape[1])
+    def x(self):
+        return np.arange(self.xydata.shape[1])
 
     @property
-    def y(self): return np.arange(self.xydata.shape[0])
+    def y(self):
+        return np.arange(self.xydata.shape[0])
 
     @property
-    def xy(self): return np.meshgrid(self.x, self.y)
+    def xy(self):
+        return np.meshgrid(self.x, self.y)
 
     @property
-    def tof(self): return (self.tof_edges[:-1] + self.tof_edges[1:]) / 2.
+    def tof(self):
+        return (self.tof_edges[:-1] + self.tof_edges[1:]) / 2.0
 
     @property
-    def xtof(self): return np.meshgrid(self.tof, self.x)
+    def xtof(self):
+        return np.meshgrid(self.tof, self.x)
 
     def calculate_q_range(self):
         '''
@@ -203,7 +211,7 @@ class LRData(object):
         if tthd_units == 'degree':
             tthd_value *= math.pi / 180.0
 
-        theta = math.fabs(tthd_value - thi_value) / 2.
+        theta = math.fabs(tthd_value - thi_value) / 2.0
         if theta < 0.001:
             logging.debug("thi and tthd are equal: is this a direct beam?")
 
@@ -235,7 +243,7 @@ class LRData(object):
                 _tmp_error = nxs_histo.readE(_index)[:]
                 _y_error_axis[x, y, :] = _tmp_error
 
-        return [_tof_axis, _y_axis, _y_error_axis]    
+        return [_tof_axis, _y_axis, _y_error_axis]
 
     def read_data(self):
         nxs_histo = Rebin(InputWorkspace=self.workspace, Params=self.binning, PreserveEvents=True)
@@ -245,7 +253,7 @@ class LRData(object):
 
         # # keep only the low resolution range requested
         from_pixel = 0
-        to_pixel = self.number_x_pixels-1
+        to_pixel = self.number_x_pixels - 1
 
         # keep only low resolution range defined
         Ixyt = Ixyt[from_pixel:to_pixel, :, :]

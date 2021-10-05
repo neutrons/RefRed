@@ -3,15 +3,15 @@ from RefRed.settings.list_settings import ListSettings
 
 
 class InitializeSettings(object):
-    
+
     list_key = []
-    
+
     def __init__(self, parent=None):
         self.parent = parent
-        
+
         o_list_settings = ListSettings()
         _list_keys = list(o_list_settings.__dict__.keys())
-        
+
         _settings = QSettings()
         _gui_metadata = {}
         for _key in _list_keys:

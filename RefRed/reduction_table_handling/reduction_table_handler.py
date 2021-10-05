@@ -22,7 +22,7 @@ class ReductionTableHandler(object):
         self.__reset_default_config_file_name()
 
     def __reset_default_config_file_name(self):
-        str_new_window_title = ("%s%s" % (window_title, self.parent.default_loaded_file))
+        str_new_window_title = "%s%s" % (window_title, self.parent.default_loaded_file)
         self.parent.setWindowTitle(str_new_window_title)
         self.parent.ui.previewLive.setEnabled(False)
         self.parent.ui.actionExportScript.setEnabled(False)
@@ -53,8 +53,11 @@ class ReductionTableHandler(object):
                     _widget = QtWidgets.QCheckBox()
                     _widget.setChecked(False)
                     _widget.setEnabled(True)
-                    QtCore.QObject.connect(_widget, QtCore.SIGNAL("stateChanged(int)"), 
-                                           lambda state=0, row=row_index: self.parent.reduction_table_visibility_changed_test(state, row))
+                    QtCore.QObject.connect(
+                        _widget,
+                        QtCore.SIGNAL("stateChanged(int)"),
+                        lambda state=0, row=row_index: self.parent.reduction_table_visibility_changed_test(state, row),
+                    )
                     self.parent.ui.reductionTable.setCellWidget(row_index, col_index, _widget)
 
                 elif (col_index == 1) or (col_index == 2):
@@ -137,13 +140,7 @@ class ReductionTableHandler(object):
         parent.ui.metadataS2HValue.setText('N/A')
 
     def __clear_plots(self):
-        ClearPlots(self.parent,
-                   is_data=True,
-                   is_norm=True,
-                   plot_yt=True,
-                   plot_yi=True,
-                   plot_it=True,
-                   plot_ix=True)
+        ClearPlots(self.parent, is_data=True, is_norm=True, plot_yt=True, plot_yi=True, plot_it=True, plot_ix=True)
 
     def __clear_reduction_table(self):
         nbr_row = self.parent.ui.reductionTable.rowCount()
@@ -153,5 +150,4 @@ class ReductionTableHandler(object):
                 self.parent.ui.reductionTable.item(_row, _col).setText("")
 
     def __clear_big_table_data(self):
-        self.parent.big_table_data = np.empty((self.parent.nbr_row_table_reduction,
-                                               3), dtype=object)
+        self.parent.big_table_data = np.empty((self.parent.nbr_row_table_reduction, 3), dtype=object)

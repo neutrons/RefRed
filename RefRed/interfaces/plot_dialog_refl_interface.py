@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#@PydevCodeAnalysisIgnore
+# @PydevCodeAnalysisIgnore
 
 # Form implementation generated from reading ui file 'designer//plot_dialog_refl_interface.ui'
 #
@@ -13,16 +13,23 @@ from qtpy import QtCore, QtGui, QtWidgets
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
+
     def _fromUtf8(s):
         return s
 
+
 try:
     _encoding = QtWidgets.QApplication.UnicodeUTF8
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig, _encoding)
+
+
 except AttributeError:
+
     def _translate(context, text, disambig):
         return QtWidgets.QApplication.translate(context, text, disambig)
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -67,7 +74,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.john_peak2_label.setFont(font)
         self.john_peak2_label.setAccessibleDescription(_fromUtf8(""))
-        self.john_peak2_label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
+        self.john_peak2_label.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignHCenter)
         self.john_peak2_label.setObjectName(_fromUtf8("john_peak2_label"))
         self.verticalLayout_13.addWidget(self.john_peak2_label)
         self.john_peak2 = QtWidgets.QSpinBox(self.frame)
@@ -113,7 +120,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.john_peak1_label.setFont(font)
         self.john_peak1_label.setAccessibleDescription(_fromUtf8(""))
-        self.john_peak1_label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
+        self.john_peak1_label.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignHCenter)
         self.john_peak1_label.setObjectName(_fromUtf8("john_peak1_label"))
         self.verticalLayout_14.addWidget(self.john_peak1_label)
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -153,7 +160,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.john_back2_label.setFont(font)
         self.john_back2_label.setAccessibleDescription(_fromUtf8(""))
-        self.john_back2_label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
+        self.john_back2_label.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignHCenter)
         self.john_back2_label.setObjectName(_fromUtf8("john_back2_label"))
         self.verticalLayout_9.addWidget(self.john_back2_label)
         self.john_back2 = QtWidgets.QSpinBox(self.frame_2)
@@ -203,7 +210,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.john_back1_label.setFont(font)
         self.john_back1_label.setAccessibleDescription(_fromUtf8(""))
-        self.john_back1_label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
+        self.john_back1_label.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignHCenter)
         self.john_back1_label.setObjectName(_fromUtf8("john_back1_label"))
         self.verticalLayout_10.addWidget(self.john_back1_label)
         spacerItem5 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -478,26 +485,56 @@ class Ui_Dialog(object):
         self.tabWidget.addTab(self.tab_2, _fromUtf8(""))
         self.verticalLayout_3.addWidget(self.tabWidget)
         self.invalid_selection_label = QtWidgets.QLabel(Dialog)
-        self.invalid_selection_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.invalid_selection_label.setAlignment(
+            QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter
+        )
         self.invalid_selection_label.setObjectName(_fromUtf8("invalid_selection_label"))
         self.verticalLayout_3.addWidget(self.invalid_selection_label)
 
         self.retranslateUi(Dialog)
         self.tabWidget.setCurrentIndex(1)
-        QtCore.QObject.connect(self.jim_peak1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.jim_peak1_spinbox_signal)
-        QtCore.QObject.connect(self.john_peak1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.john_peak1_spinbox_signal)
-        QtCore.QObject.connect(self.jim_peak2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.jim_peak2_spinbox_signal)
-        QtCore.QObject.connect(self.john_peak2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.john_peak2_spinbox_signal)
-        QtCore.QObject.connect(self.jim_back1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.jim_back1_spinbox_signal)
-        QtCore.QObject.connect(self.john_back1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.john_back1_spinbox_signal)
-        QtCore.QObject.connect(self.jim_back2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.jim_back2_spinbox_signal)
-        QtCore.QObject.connect(self.john_back2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.john_back2_spinbox_signal)
-        QtCore.QObject.connect(self.jim_back_flag, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), Dialog.jim_back_flag_clicked)
-        QtCore.QObject.connect(self.john_back_flag, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), Dialog.john_back_flag_clicked)
-        QtCore.QObject.connect(self.jim_clock1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.jim_clock_spinbox_signal)
-        QtCore.QObject.connect(self.jim_clock2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.jim_clock_spinbox_signal)
-        QtCore.QObject.connect(self.john_clock1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.john_clock_spinbox_signal)
-        QtCore.QObject.connect(self.john_clock2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.john_clock_spinbox_signal)
+        QtCore.QObject.connect(
+            self.jim_peak1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.jim_peak1_spinbox_signal
+        )
+        QtCore.QObject.connect(
+            self.john_peak1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.john_peak1_spinbox_signal
+        )
+        QtCore.QObject.connect(
+            self.jim_peak2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.jim_peak2_spinbox_signal
+        )
+        QtCore.QObject.connect(
+            self.john_peak2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.john_peak2_spinbox_signal
+        )
+        QtCore.QObject.connect(
+            self.jim_back1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.jim_back1_spinbox_signal
+        )
+        QtCore.QObject.connect(
+            self.john_back1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.john_back1_spinbox_signal
+        )
+        QtCore.QObject.connect(
+            self.jim_back2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.jim_back2_spinbox_signal
+        )
+        QtCore.QObject.connect(
+            self.john_back2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.john_back2_spinbox_signal
+        )
+        QtCore.QObject.connect(
+            self.jim_back_flag, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), Dialog.jim_back_flag_clicked
+        )
+        QtCore.QObject.connect(
+            self.john_back_flag, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), Dialog.john_back_flag_clicked
+        )
+        QtCore.QObject.connect(
+            self.jim_clock1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.jim_clock_spinbox_signal
+        )
+        QtCore.QObject.connect(
+            self.jim_clock2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.jim_clock_spinbox_signal
+        )
+        QtCore.QObject.connect(
+            self.john_clock1, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.john_clock_spinbox_signal
+        )
+        QtCore.QObject.connect(
+            self.john_clock2, QtCore.SIGNAL(_fromUtf8("editingFinished()")), Dialog.john_clock_spinbox_signal
+        )
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -521,6 +558,7 @@ class Ui_Dialog(object):
         self.jim_clocking_box.setTitle(_translate("Dialog", "CLOCKING", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Dialog", "Jim", None))
         self.invalid_selection_label.setText(_translate("Dialog", "(*)    INVALID SELECTION", None))
+
 
 from .mplwidget import MPLWidget
 from .mplwidgetxlog import MPLWidgetXLog

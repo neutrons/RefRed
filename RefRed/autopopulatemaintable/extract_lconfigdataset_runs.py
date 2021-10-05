@@ -1,8 +1,8 @@
 class ExtractLConfigDataSetRuns(object):
-    ''' This class get an array of LConfigDataSet and extract the data sets
-        and append them in a list that is returned
+    '''This class get an array of LConfigDataSet and extract the data sets
+    and append them in a list that is returned
 
-        #TODO: this doesn't need to be a class
+    #TODO: this doesn't need to be a class
     '''
 
     def __init__(self, lconfigdataset=None, data_type='data'):

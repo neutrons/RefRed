@@ -6,6 +6,7 @@ class UpdatePlotWidgetStatus(object):
     This class will check if the plot widgets can be enabled according to
     status of the main table and tab selected
     '''
+
     parent = None
 
     def __init__(self, parent=None):
@@ -43,7 +44,7 @@ class UpdatePlotWidgetStatus(object):
             else:
                 status_enable = True
         else:
-            status_visible = True # always visible
+            status_visible = True  # always visible
             status_enable = False
 
         self.parent.ui.dataPrimFromLabel.setVisible(status_visible)

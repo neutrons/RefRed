@@ -10,85 +10,76 @@ import RefRed.colors
 
 
 class LoadReductionTableFromLConfigDataSet(object):
-    
+
     parent = None
-    
+
     def __init__(self, parent=None):
         self.parent = parent
 
-
         nbr_lconfig = self.get_nbr_lconfig()
         big_table_data = self.parent.big_table_data
-        o_load_config_progressbar_handler = ProgressBarHandler(parent = parent)
-        o_load_config_progressbar_handler.setup(nbr_reduction = nbr_lconfig,
-                                                label = 'Loading Config.')
-        
-        b_refresh_display_after_full_loading = False #only if no clocking info of plot displayed
-        for index_row, lconfig in enumerate(big_table_data[:,2]):
+        o_load_config_progressbar_handler = ProgressBarHandler(parent=parent)
+        o_load_config_progressbar_handler.setup(nbr_reduction=nbr_lconfig, label='Loading Config.')
+
+        b_refresh_display_after_full_loading = False  # only if no clocking info of plot displayed
+        for index_row, lconfig in enumerate(big_table_data[:, 2]):
             if lconfig is None:
                 o_load_config_progressbar_handler.end()
                 break
-            
+
             list_data_run = lconfig.data_sets
-            o_list_data_nexus = LocateListRun(list_run = list_data_run)
-            list_data_nexus= o_list_data_nexus.list_nexus_found
-#            list_data_nexus= o_list_data_nexus.list_run_found
-            _add_data_nexus = AddListNexus(list_nexus = list_data_nexus,
-                                           list_run = list_data_run,
-                                           metadata_only = False,
-                                           check_nexus_compatibility = False,
-                                           prefix = 'data')
-            data_lrdata = LRData(_add_data_nexus.wks, 
-                                 lconfig = lconfig, 
-                                 is_data = True,
-                                 parent = self.parent)
-            self.update_lrdata(lrdata = data_lrdata, 
-                               lconfig = lconfig, 
-                               type = 'data',
-                               row = index_row)
-                        
+            o_list_data_nexus = LocateListRun(list_run=list_data_run)
+            list_data_nexus = o_list_data_nexus.list_nexus_found
+            #            list_data_nexus= o_list_data_nexus.list_run_found
+            _add_data_nexus = AddListNexus(
+                list_nexus=list_data_nexus,
+                list_run=list_data_run,
+                metadata_only=False,
+                check_nexus_compatibility=False,
+                prefix='data',
+            )
+            data_lrdata = LRData(_add_data_nexus.wks, lconfig=lconfig, is_data=True, parent=self.parent)
+            self.update_lrdata(lrdata=data_lrdata, lconfig=lconfig, type='data', row=index_row)
+
             list_norm_run = lconfig.norm_sets
-            o_list_norm_nexus = LocateListRun(list_run = list_norm_run)
+            o_list_norm_nexus = LocateListRun(list_run=list_norm_run)
             list_norm_nexus = o_list_norm_nexus.list_nexus_found
             if list_norm_nexus != []:
-                _add_norm_nexus = AddListNexus(list_nexus = list_norm_nexus,
-                                               list_run = list_norm_run,
-                                               metadata_only = False,
-                                               check_nexus_compatibility = False,
-                                               prefix = 'norm')
-                norm_lrdata = LRData(_add_norm_nexus.wks, 
-                                     is_data = False,
-                                     parent = self.parent)
-                self.update_lrdata(lrdata = norm_lrdata, 
-                                   lconfig = lconfig, 
-                                   type = 'norm',
-                                   row = index_row)
+                _add_norm_nexus = AddListNexus(
+                    list_nexus=list_norm_nexus,
+                    list_run=list_norm_run,
+                    metadata_only=False,
+                    check_nexus_compatibility=False,
+                    prefix='norm',
+                )
+                norm_lrdata = LRData(_add_norm_nexus.wks, is_data=False, parent=self.parent)
+                self.update_lrdata(lrdata=norm_lrdata, lconfig=lconfig, type='norm', row=index_row)
 
             is_display_requested = self.display_of_this_row_checked(index_row)
             if is_display_requested:
-                self.display_plots(row = index_row)
-                
+                self.display_plots(row=index_row)
+
             if is_display_requested and data_lrdata.clocking == ['', '']:
                 b_refresh_display_after_full_loading = True
-                
+
             o_load_config_progressbar_handler.next_step()
-            
+
         self.globalize_clocking_parameters()
         big_table_data = self.parent.big_table_data
         if b_refresh_display_after_full_loading:
-            for index_row, lconfig in enumerate(big_table_data[:,2]):
+            for index_row, lconfig in enumerate(big_table_data[:, 2]):
                 if lconfig is None:
                     return
                 is_display_requested = self.display_of_this_row_checked(index_row)
                 if is_display_requested:
-                    self.display_plots(row = index_row)
-                
+                    self.display_plots(row=index_row)
+
     def globalize_clocking_parameters(self):
         '''
-        the clocking settings of all the data should only use the 
+        the clocking settings of all the data should only use the
         ones calculated for the last data file loaded
         '''
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent=self.parent)
         last_data_row = o_gui_utility.get_row_with_highest_q()
         big_table_data = self.parent.big_table_data
         lrdata = big_table_data[last_data_row, 0]
@@ -103,27 +94,25 @@ class LoadReductionTableFromLConfigDataSet(object):
                 break
             _lrdata.clocking = clocking
             big_table_data[i, 0] = _lrdata
-            
+
         self.parent.big_table_data = big_table_data
 
     def display_plots(self, row=0):
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent=self.parent)
         is_data = o_gui_utility.is_data_tab_selected()
-        
-        DisplayPlots(parent = self.parent,
-                     row = row,
-                     is_data = is_data)
-        
+
+        DisplayPlots(parent=self.parent, row=row, is_data=is_data)
+
     def display_of_this_row_checked(self, row):
         _button_status = self.parent.ui.reductionTable.cellWidget(row, 0).checkState()
         if _button_status == 2:
             return True
         return False
-                    
+
     def get_nbr_lconfig(self):
         big_table_data = self.parent.big_table_data
         nbr_row = 0
-        for index_row, lconfig in enumerate(big_table_data[:,2]):
+        for index_row, lconfig in enumerate(big_table_data[:, 2]):
             if lconfig is None:
                 return nbr_row
             nbr_row += 1
@@ -131,7 +120,7 @@ class LoadReductionTableFromLConfigDataSet(object):
 
     def update_lrdata(self, lrdata=None, lconfig=None, type='data', row=0):
         big_table_data = self.parent.big_table_data
-        
+
         if type == 'data':
             peak1 = int(lconfig.data_peak[0])
             peak2 = int(lconfig.data_peak[1])
@@ -142,7 +131,7 @@ class LoadReductionTableFromLConfigDataSet(object):
             low_res2 = int(lconfig.data_low_res[1])
             low_res_flag = lconfig.data_low_res_flag
             full_file_name = lconfig.data_full_file_name
-            
+
         else:
             peak1 = int(lconfig.norm_peak[0])
             peak2 = int(lconfig.norm_peak[1])
@@ -153,10 +142,10 @@ class LoadReductionTableFromLConfigDataSet(object):
             low_res2 = int(lconfig.norm_low_res[1])
             low_res_flag = lconfig.norm_low_res_flag
             full_file_name = lconfig.norm_full_file_name
-            
+
         tof_auto_flag = lconfig.tof_auto_flag
         tof_range = lconfig.tof_range
-        
+
         # using lconfig values
         lrdata.peak = [peak1, peak2]
         lrdata.back = [back1, back2]
@@ -166,18 +155,16 @@ class LoadReductionTableFromLConfigDataSet(object):
         lrdata.tof_range = tof_range
         lrdata.tof_auto_flag = tof_auto_flag
         lrdata.full_file_name = full_file_name
-        
+
         index_col = 0 if type == 'data' else 1
         reduction_table_index_col = index_col + 1
         big_table_data[row, index_col] = lrdata
         self.parent.big_table_data = big_table_data
-        
+
         if type == 'data':
-            UpdateReductionTableMetadata(parent = self.parent,
-                                         lrdata = lrdata, 
-                                         row = row)
+            UpdateReductionTableMetadata(parent=self.parent, lrdata=lrdata, row=row)
             QtWidgets.QApplication.processEvents()
-        
+
         # change color of data/norm field to inform data have been loaded
         _color = QtGui.QColor(RefRed.colors.VALUE_OK)
         self.parent.ui.reductionTable.item(row, reduction_table_index_col).setForeground(_color)

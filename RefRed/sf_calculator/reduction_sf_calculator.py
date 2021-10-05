@@ -9,13 +9,14 @@ from RefRed.utilities import convertTOF
 
 class ReductionSfCalculator(object):
     """
-        Compute scaling factors
+    Compute scaling factors
     """
+
     sf_gui = None
     export_script_file = ''
     export_script = []
     table_settings = []
-    index_col = [0,1,5,10,11,12,13,14,15]
+    index_col = [0, 1, 5, 10, 11, 12, 13, 14, 15]
     nbr_row = -1
     nbr_scripts = 0
     new_sfcalculator_script = True
@@ -25,11 +26,11 @@ class ReductionSfCalculator(object):
         self.export_script_flag = export_script_flag
 
         if export_script_flag:
-            #TODO: get last path from QSettings
+            # TODO: get last path from QSettings
             _path = os.path.expanduser('~')
             _filter = 'python (*.py);;All (*.*)'
             filename = QtWidgets.QFileDialog.getSaveFileName(self.sf_gui, 'Export Script File', _path, filter=_filter)
-            if not(filename == ''):
+            if not (filename == ''):
                 self.export_script_file = filename
             else:
                 return
@@ -61,8 +62,8 @@ class ReductionSfCalculator(object):
         self.sf_gui.updateProgressBar(0.1)
 
         for i in range(nbr_scripts):
-            from_index = int(from_to_index_same_lambda[i,0])
-            to_index = int(from_to_index_same_lambda[i,1])
+            from_index = int(from_to_index_same_lambda[i, 0])
+            to_index = int(from_to_index_same_lambda[i, 1])
 
             if (to_index - from_index) <= 1:
                 continue
@@ -72,19 +73,23 @@ class ReductionSfCalculator(object):
             tof_range = self.getTofRange(from_index)
 
             if not self.export_script_flag:
-                self.launchScript(string_runs=string_runs,
-                                  list_peak_back=list_peak_back,
-                                  incident_medium=incident_medium,
-                                  output_file_name=output_file_name,
-                                  tof_range=tof_range)
+                self.launchScript(
+                    string_runs=string_runs,
+                    list_peak_back=list_peak_back,
+                    incident_medium=incident_medium,
+                    output_file_name=output_file_name,
+                    tof_range=tof_range,
+                )
 
                 self.refreshOutputFileContainPreview(output_file_name)
             else:
-                script = self.generate_script(string_runs=string_runs,
-                                              list_peak_back=list_peak_back,
-                                              incident_medium=incident_medium,
-                                              output_file_name=output_file_name,
-                                              tof_range=tof_range)
+                script = self.generate_script(
+                    string_runs=string_runs,
+                    list_peak_back=list_peak_back,
+                    incident_medium=incident_medium,
+                    output_file_name=output_file_name,
+                    tof_range=tof_range,
+                )
                 with open(self.export_script_file, 'w') as fd:
                     fd.write(script)
 
@@ -93,7 +98,7 @@ class ReductionSfCalculator(object):
 
     def _get_algorithm_params(self, run_string, list_peak_back):
         """
-            Generate the LRScalingFactors algortihm parameters
+        Generate the LRScalingFactors algortihm parameters
         """
         peak_ranges = []
         bck_ranges = []
@@ -111,29 +116,31 @@ class ReductionSfCalculator(object):
         for item in toks:
             pair = item.strip().split(':')
             run_list.append(int(pair[0]))
- 
+
         return peak_ranges, bck_ranges, low_res_ranges, run_list
 
-    def launchScript(self, string_runs='', list_peak_back=[], incident_medium='',
-                     output_file_name='', tof_range=[]):
+    def launchScript(self, string_runs='', list_peak_back=[], incident_medium='', output_file_name='', tof_range=[]):
         """
-            Create scaling factor file
+        Create scaling factor file
         """
         peak_ranges, bck_ranges, low_res_ranges, run_list = self._get_algorithm_params(string_runs, list_peak_back)
 
-        api.LRScalingFactors(DirectBeamRuns=run_list,
-                             IncidentMedium=str(incident_medium),
-                             TOFRange=tof_range,
-                             TOFSteps=200,
-                             SignalPeakPixelRange=peak_ranges,
-                             SignalBackgroundPixelRange=bck_ranges,
-                             LowResolutionPixelRange=low_res_ranges,
-                             ScalingFactorFile=str(output_file_name))
+        api.LRScalingFactors(
+            DirectBeamRuns=run_list,
+            IncidentMedium=str(incident_medium),
+            TOFRange=tof_range,
+            TOFSteps=200,
+            SignalPeakPixelRange=peak_ranges,
+            SignalBackgroundPixelRange=bck_ranges,
+            LowResolutionPixelRange=low_res_ranges,
+            ScalingFactorFile=str(output_file_name),
+        )
 
-    def generate_script(self, string_runs='', list_peak_back=[], incident_medium='',
-                        output_file_name='', tof_range=[]):
+    def generate_script(
+        self, string_runs='', list_peak_back=[], incident_medium='', output_file_name='', tof_range=[]
+    ):
         """
-            Generate a scaling factor calculation script
+        Generate a scaling factor calculation script
         """
         script = '# quicksNXS LRScalingFactors scaling factor calculation script\n'
         _date = time.strftime("%d_%m_%Y")
@@ -162,13 +169,13 @@ class ReductionSfCalculator(object):
     def getStringRuns(self, from_index, to_index):
         data = self.table_settings
         string_list = []
-        for i in range(from_index, to_index+1):
-            string_list.append(str(int(data[i,0])) + ":" + str(int(data[i, 1])))
+        for i in range(from_index, to_index + 1):
+            string_list.append(str(int(data[i, 0])) + ":" + str(int(data[i, 1])))
         return ",".join(string_list)
 
     def getListPeakBack(self, from_index, to_index):
         data = self.table_settings
-        return data[from_index:to_index+1, 3:7]
+        return data[from_index : to_index + 1, 3:7]
 
     def getTofRange(self, from_index):
         data = self.table_settings
@@ -180,7 +187,7 @@ class ReductionSfCalculator(object):
     def generateIndexSameLambda(self):
         _data = self.table_settings
 
-        lambda_list = _data[:,2]
+        lambda_list = _data[:, 2]
         nbr_scripts = len(set(lambda_list))
         self.nbr_scripts = nbr_scripts
 
@@ -189,14 +196,14 @@ class ReductionSfCalculator(object):
         first_index_lambda = 0
         ref_lambda = lambda_list[0]
         index_script = 0
-        for i in range(1,self.nbr_row):
+        for i in range(1, self.nbr_row):
             live_lambda = lambda_list[i]
-            if (live_lambda != ref_lambda):
-                from_to_index_same_lambda[index_script,:] = [first_index_lambda, i-1]
+            if live_lambda != ref_lambda:
+                from_to_index_same_lambda[index_script, :] = [first_index_lambda, i - 1]
                 first_index_lambda = i
                 ref_lambda = live_lambda
-                index_script+= 1
-            if  i == (self.nbr_row-1):
-                from_to_index_same_lambda[index_script,:] = [first_index_lambda, i]
+                index_script += 1
+            if i == (self.nbr_row - 1):
+                from_to_index_same_lambda[index_script, :] = [first_index_lambda, i]
 
         return from_to_index_same_lambda

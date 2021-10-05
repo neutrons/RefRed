@@ -25,13 +25,10 @@ class SortLRDataList(object):
 
     criteria2_value = None
     criteria2_type = ''
-        
-    def __init__(self, parent=None, 
-                 list_lrdata=None, 
-                 list_runs=None,
-                 list_wks=None,
-                 list_nexus=None,
-                 data_type_selected='data'):
+
+    def __init__(
+        self, parent=None, list_lrdata=None, list_runs=None, list_wks=None, list_nexus=None, data_type_selected='data'
+    ):
 
         self.list_lrdata = list_lrdata
         self.list_runs = list_runs
@@ -86,8 +83,7 @@ class SortLRDataList(object):
                     wks_fix = wks_fix[0]
                     nexus_fix = nexus_fix[0]
 
-                o_compare_lrdata = CompareTwoLRData(lrdata_1=lrdata_fix,
-                                                    lrdata_2=lrdata_mov)
+                o_compare_lrdata = CompareTwoLRData(lrdata_1=lrdata_fix, lrdata_2=lrdata_mov)
 
                 if o_compare_lrdata.result_comparison < 0:
                     list_lrdata_sorted.insert(index_lrdata_fix, lrdata_mov)
@@ -97,7 +93,7 @@ class SortLRDataList(object):
                     break
 
                 elif o_compare_lrdata.result_comparison > 0:
-                    if index_lrdata_fix == (len(list_lrdata_sorted)-1):
+                    if index_lrdata_fix == (len(list_lrdata_sorted) - 1):
                         list_lrdata_sorted.append(lrdata_mov)
                         list_runs_sorted.append(runs_mov)
                         list_wks_sorted.append(wks_mov)
