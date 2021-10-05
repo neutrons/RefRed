@@ -3,7 +3,7 @@ import logging
 import time
 from pathlib import Path
 from qtpy.QtGui import QPalette
-from qtpy.QtWidgets import QDialog, QFileDialog
+from qtpy import QtWidgets
 from qtpy.QtCore import Qt
 from mantid.api import mtd
 from mantid.simpleapi import (
@@ -26,7 +26,7 @@ from RefRed.reduction.reduced_data_handler import ReducedDataHandler
 import RefRed.utilities
 
 
-class OutputReducedData(QDialog):
+class OutputReducedData(QtWidgets.QDialog):
 
     _open_instances = []
     o_stitching_ascii_widget = None
@@ -105,7 +105,7 @@ class OutputReducedData(QDialog):
 
     def create_n_files(self):
         path = self.parent.path_ascii
-        folder = str(QFileDialog.getExistingDirectory(self, "Select Location", directory=path))
+        folder = str(QtWidgets.QFileDialog.getExistingDirectory(self, "Select Location", directory=path))
         if folder == "":
             return
 
@@ -121,7 +121,7 @@ class OutputReducedData(QDialog):
         default_filename = path / default_filename
         caption = "Select Location and Name"
         filter = "Reduced Ascii (*.txt);; All (*.*)"
-        filename, filter = QFileDialog.getSaveFileName(
+        filename, filter = QtWidgets.QFileDialog.getSaveFileName(
             self,
             caption,
             str(default_filename),
@@ -477,7 +477,7 @@ class OutputReducedData(QDialog):
         big_table_data = self.parent.big_table_data
         _lconfig = big_table_data[row, 2]
         sf = o_reduced_data_hanlder.generate_selected_sf(lconfig=_lconfig)
-        return str(sf)
+        return f"{sf:.12f}"
 
     def create_file(self):
         RefRed.utilities.write_ascii_file(self.filename, self.text_data)
