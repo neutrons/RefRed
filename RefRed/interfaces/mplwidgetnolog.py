@@ -7,7 +7,7 @@ import matplotlib.colors
 from RefRed.config import plotting
 from RefRed.interfaces.mplwidget import set_matplotlib_backend
 
-
+# set the default backend to be compatible with Qt in case someone uses pylab from IPython console
 
 
 def _set_default_rc():

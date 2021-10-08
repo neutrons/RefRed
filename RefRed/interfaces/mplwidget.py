@@ -220,7 +220,7 @@ class NavigationToolbar(NavigationToolbar2QT):
 
     def save_figure(self, *args):
         filetypes = self.canvas.get_supported_filetypes_grouped()
-        sorted_filetypes = filetypes.items()
+        sorted_filetypes = list(filetypes.items())
         sorted_filetypes.sort()
         default_filetype = self.canvas.get_default_filetype()
 
