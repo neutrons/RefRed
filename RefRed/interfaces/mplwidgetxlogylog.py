@@ -5,6 +5,7 @@ from qtpy import QtCore, QtGui, QtWidgets
 import matplotlib.cm
 import matplotlib.colors
 from RefRed.config import plotting
+from RefRed.interfaces.mplwidget import set_matplotlib_backend
 
 # set the default backend to be compatible with Qt in case someone uses pylab from IPython console
 matplotlib.use('Qt4Agg')
@@ -22,8 +23,13 @@ cmap = matplotlib.colors.LinearSegmentedColormap.from_list(
 )
 matplotlib.cm.register_cmap('default', cmap=cmap)
 
-from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.backends.backend_qt4 import NavigationToolbar2QT
+BACKEND = set_matplotlib_backend()
+if BACKEND == 'Qt4Agg':
+    from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
+    from matplotlib.backends.backend_qt4 import NavigationToolbar2QT
+elif BACKEND == 'Qt5Agg':
+    from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+    from matplotlib.backends.backend_qt5 import NavigationToolbar2QT
 from matplotlib.cbook import Stack
 from matplotlib.colors import LogNorm, Normalize
 from matplotlib.figure import Figure
