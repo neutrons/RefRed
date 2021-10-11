@@ -239,14 +239,13 @@ class SFCalculator(QtWidgets.QMainWindow):
         self.fileHasBeenModified()
 
     def browseFile(self):
-        _filter = "SF config (*.cfg);;All (*.*)"
-        fileSelector = QtWidgets.QFileDialog()
-        fileSelector.setFileMode(QtWidgets.QFileDialog.AnyFile)
-        fileSelector.setNameFilter(_filter)
-        fileSelector.setViewMode(QtWidgets.QFileDialog.List)
-        fileSelector.setDirectory(self.save_directory)
-        if fileSelector.exec_():
-            file_name = str(fileSelector.selectedFiles()[0])
+        file_name, _ = QtWidgets.QFileDialog.getSaveFileName(
+            self,  # parent widget
+            "Open Configuration File",  # dialog title
+            self.save_directory,  # opening directory
+            "SF config (*.cfg);;All (*.*)"  # list of display-file filters
+        )
+        if file_name:
             self.update_config_file(file_name)
 
     def selectManualTOF(self):
