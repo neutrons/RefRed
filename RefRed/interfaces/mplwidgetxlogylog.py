@@ -5,11 +5,7 @@ from qtpy import QtCore, QtGui, QtWidgets
 import matplotlib.cm
 import matplotlib.colors
 from RefRed.config import plotting
-from RefRed.interfaces.mplwidget import set_matplotlib_backend
-
-# set the default backend to be compatible with Qt in case someone uses pylab from IPython console
-matplotlib.use('Qt4Agg')
-
+from RefRed.interfaces.mplwidgets import set_matplotlib_backend
 
 def _set_default_rc():
     matplotlib.rc('font', **plotting.font)
@@ -33,11 +29,6 @@ elif BACKEND == 'Qt5Agg':
 from matplotlib.cbook import Stack
 from matplotlib.colors import LogNorm, Normalize
 from matplotlib.figure import Figure
-
-try:
-    import matplotlib.backends.qt4_editor.figureoptions as figureoptions
-except ImportError:
-    figureoptions = None
 
 
 class NavigationToolbar(NavigationToolbar2QT):
