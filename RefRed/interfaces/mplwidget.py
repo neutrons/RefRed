@@ -41,7 +41,8 @@ class NavigationToolbar(NavigationToolbar2QT):
     def _init_toolbar(self):
         if not hasattr(self, '_actions'):
             self._actions = {}
-        self.basedir = os.path.join(matplotlib.rcParams['datapath'], 'images')
+        if BACKEND == 'Qt4Agg':
+            self.basedir = os.path.join(matplotlib.rcParams['datapath'], 'images')
 
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/go-home.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -239,7 +240,8 @@ class MplCanvas(FigureCanvas):
         self.xaxis_style = 'linear'
         self.yaxis_style = 'linear'
         self.format_labels()
-        self.ax.hold(True)
+        if BACKEND == 'Qt4Agg':
+            self.ax.hold(True)
         FigureCanvas.__init__(self, self.fig)
         # self.fc = FigureCanvas(self.fig)
         FigureCanvas.setSizePolicy(self, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -294,7 +296,8 @@ class MPLWidget(QtWidgets.QWidget):
         self.canvas = MplCanvas()
         self.canvas.ax2 = None
         self.vbox = QtWidgets.QVBoxLayout()
-        self.vbox.setMargin(1)
+        if BACKEND == 'Qt4Agg':
+            self.vbox.setMargin(1)
         self.vbox.addWidget(self.canvas)
         if with_toolbar:
             self.toolbar = NavigationToolbar(self.canvas, self)
