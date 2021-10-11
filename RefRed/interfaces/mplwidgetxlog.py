@@ -16,7 +16,7 @@ elif BACKEND == 'Qt5Agg':
     from matplotlib.backends.backend_qt5 import NavigationToolbar2QT
 from matplotlib.cbook import Stack
 from matplotlib.colors import LogNorm, Normalize
-from matplotlib.figure import Figure
+from RefRed.interfaces.mplwidgets import MplCanvasMine
 
 
 class NavigationToolbar(NavigationToolbar2QT):
@@ -226,65 +226,6 @@ class NavigationToolbar(NavigationToolbar2QT):
         self.canvas.draw()
 
 
-class MplCanvas(FigureCanvas):
-
-    trigger_click = QtCore.Signal()
-    trigger_figure_left = QtCore.Signal()
-
-    def __init__(self, parent=None, width=3, height=3, dpi=100, sharex=None, sharey=None, adjust={}):
-        self.fig = Figure(figsize=(width, height), dpi=dpi, facecolor='#FFFFFF')
-        self.ax = self.fig.add_subplot(111, sharex=sharex, sharey=sharey)
-        self.fig.subplots_adjust(left=0.15, bottom=0.1, right=0.95, top=0.95)
-        self.xtitle = ""
-        self.ytitle = ""
-        self.PlotTitle = ""
-        self.grid_status = True
-        self.xaxis_style = 'linear'
-        self.yaxis_style = 'linear'
-        self.format_labels()
-        if BACKEND == 'Qt4Agg':
-            self.ax.hold(True)
-        FigureCanvas.__init__(self, self.fig)
-        # self.fc = FigureCanvas(self.fig)
-        FigureCanvas.setSizePolicy(self, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        FigureCanvas.updateGeometry(self)
-
-        self.fig.canvas.mpl_connect('button_press_event', self.button_pressed)
-        self.fig.canvas.mpl_connect('figure_leave_event', self.figure_leave)
-
-    def button_pressed(self, event):
-        self.trigger_click.emit()
-
-    def figure_leave(self, event):
-        self.trigger_figure_left.emit()
-
-    def format_labels(self):
-        self.ax.set_title(self.PlotTitle)
-
-    #    self.ax.title.set_fontsize(10)
-    #    self.ax.set_xlabel(self.xtitle, fontsize=9)
-    #    self.ax.set_ylabel(self.ytitle, fontsize=9)
-    #    labels_x=self.ax.get_xticklabels()
-    #    labels_y=self.ax.get_yticklabels()
-    #
-    #    for xlabel in labels_x:
-    #      xlabel.set_fontsize(8)
-    #    for ylabel in labels_y:
-    #      ylabel.set_fontsize(8)
-
-    def sizeHint(self):
-        w, h = self.get_width_height()
-        w = max(w, self.height())
-        h = max(h, self.width())
-        return QtCore.QSize(w, h)
-
-    def minimumSizeHint(self):
-        return QtCore.QSize(40, 40)
-
-    def get_default_filetype(self):
-        return 'png'
-
-
 class MPLWidgetXLog(QtWidgets.QWidget):
     cplot = None
     cbar = None
@@ -296,7 +237,7 @@ class MPLWidgetXLog(QtWidgets.QWidget):
 
     def __init__(self, parent=None, with_toolbar=True, coordinates=False):
         QtWidgets.QWidget.__init__(self, parent)
-        self.canvas = MplCanvas()
+        self.canvas = MplCanvasMine()
 
         self.canvas.ax2 = None
         self.vbox = QtWidgets.QVBoxLayout()
