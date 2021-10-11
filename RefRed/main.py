@@ -205,7 +205,7 @@ class MainGui(QtWidgets.QMainWindow):
         LogPlotToggle(parent=self, status=checked, plot_type='yt', is_y_log=True)
 
     def logy_toggle_it_plot(self, checked):
-        LogPlotToggle(parnt=self, status=checked, plot_type='it', is_y_log=True)
+        LogPlotToggle(parent=self, status=checked, plot_type='it', is_y_log=True)
 
     def logy_toggle_ix_plot(self, checked):
         LogPlotToggle(parent=self, status=checked, plot_type='ix', is_y_log=True)
