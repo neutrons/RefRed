@@ -1,227 +1,10 @@
-#!/usr/bin/env python
-import os
-import tempfile
 from qtpy import QtCore, QtGui, QtWidgets
-import matplotlib.cm
-import matplotlib.colors
-from RefRed.config import plotting
-from RefRed.interfaces.mplwidgets import set_matplotlib_backend
+from matplotlib.cbook import Stack
+from matplotlib.colors import LogNorm
+from RefRed.interfaces.mplwidgets import set_matplotlib_backend, MplCanvasMine, NavigationToolbarMine
+
 
 BACKEND = set_matplotlib_backend()
-if BACKEND == 'Qt4Agg':
-    from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
-    from matplotlib.backends.backend_qt4 import NavigationToolbar2QT
-elif BACKEND == 'Qt5Agg':
-    from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-    from matplotlib.backends.backend_qt5 import NavigationToolbar2QT
-from matplotlib.cbook import Stack
-from matplotlib.colors import LogNorm, Normalize
-from RefRed.interfaces.mplwidgets import MplCanvasMine
-
-
-class NavigationToolbar(NavigationToolbar2QT):
-    '''
-    A small change to the original navigation toolbar.
-    '''
-
-    _auto_toggle = False
-    logtog = QtCore.Signal(str)
-    homeClicked = QtCore.Signal()
-    exportClicked = QtCore.Signal()
-
-    isPanActivated = False
-    isZoomActivated = False
-
-    home_settings = None
-
-    def __init__(self, canvas, parent, coordinates=False):
-        NavigationToolbar2QT.__init__(self, canvas, parent, coordinates)
-        self.setIconSize(QtCore.QSize(20, 20))
-
-    def _init_toolbar(self):
-        if not hasattr(self, '_actions'):
-            self._actions = {}
-        if BACKEND == 'Qt4Agg':
-            self.basedir = os.path.join(matplotlib.rcParams['datapath'], 'images')
-
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/go-home.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        a = self.addAction(icon, 'Home', self.home)
-        a.setToolTip('Reset original view')
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/zoom-previous.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        a = self.addAction(icon, 'Back', self.back)
-        a.setToolTip('Back to previous view')
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/zoom-next.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        a = self.addAction(icon, 'Forward', self.forward)
-        a.setToolTip('Forward to next view')
-        self.addSeparator()
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/transform-move.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        a = self.addAction(icon, 'Pan', self.pan)
-        a.setToolTip('Pan axes with left mouse, zoom with right')
-        a.setCheckable(True)
-        self._actions['pan'] = a
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/zoom-select.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        a = self.addAction(icon, 'Zoom', self.zoom)
-        a.setToolTip('Zoom to rectangle')
-        a.setCheckable(True)
-        self._actions['zoom'] = a
-        self.addSeparator()
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/edit-guides.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        a = self.addAction(icon, 'Subplots', self.configure_subplots)
-        a.setToolTip('Configure plot boundaries')
-
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/document-save.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        a = self.addAction(icon, 'Save', self.save_figure)
-        a.setToolTip('Save the figure')
-
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/document-print.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        a = self.addAction(icon, 'Print', self.print_figure)
-        a.setToolTip('Print the figure with the default printer')
-
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/export_ascii.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        a = self.addAction(icon, "Export", self.export_ascii)
-        a.setToolTip('Export the plot into ASCII file')
-
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/toggle-log.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.addSeparator()
-        a = self.addAction(icon, 'Log', self.toggle_log)
-        a.setToolTip('Toggle logarithmic scale')
-
-        self.buttons = {}
-
-        # Add the x,y location widget at the right side of the toolbar
-        # The stretch factor is 1 which means any resizing of the toolbar
-        # will resize this label instead of the buttons.
-        self.locLabel = QtWidgets.QLabel("", self)
-        self.locLabel.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTop)
-        self.locLabel.setSizePolicy(
-            QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Ignored)
-        )
-        self.labelAction = self.addWidget(self.locLabel)
-        if self.coordinates:
-            self.labelAction.setVisible(True)
-        else:
-            self.labelAction.setVisible(False)
-
-        # reference holder for subplots_adjust window
-        self.adj_window = None
-
-    def activate_widget(self, widget_name, activateIt):
-
-        if widget_name == 'pan':
-            if activateIt:
-                self.isPanActivated = True
-                self.isZoomActivated = False
-            else:
-                self.isPanActivated = False
-        elif widget_name == 'zoom':
-            if activateIt:
-                self.isZoomActivated = True
-                self.isPanActivated = False
-            else:
-                self.isZoomActivated = False
-
-    def home(self, *args):
-        NavigationToolbar2QT.home(self, *args)
-        self.homeClicked.emit()
-
-    def pan(self, *args):
-        NavigationToolbar2QT.pan(self, *args)
-        self.activate_widget('pan', not self.isPanActivated)
-
-    def zoom(self, *args):
-        NavigationToolbar2QT.zoom(self, *args)
-        self.activate_widget('zoom', not self.isZoomActivated)
-
-    def export_ascii(self):
-        self.exportClicked.emit()
-
-    def print_figure(self):
-        '''
-        Save the plot to a temporary png file and show a preview dialog also used for printing.
-        '''
-        filetypes = self.canvas.get_supported_filetypes_grouped()
-        sorted_filetypes = list(filetypes.items())
-        sorted_filetypes.sort()
-
-        filename = os.path.join(tempfile.gettempdir(), "quicknxs_print.png")
-        self.canvas.print_figure(filename, dpi=600)
-        imgpix = QtGui.QPixmap(filename)
-        os.remove(filename)
-
-        imgobj = QtWidgets.QLabel()
-        imgobj.setPixmap(imgpix)
-        imgobj.setMask(imgpix.mask())
-        imgobj.setGeometry(0, 0, imgpix.width(), imgpix.height())
-
-        def getPrintData(printer):
-            imgobj.render(printer)
-
-        printer = QtGui.QPrinter()
-        printer.setPrinterName('mrac4a_printer')
-        printer.setPageSize(QtGui.QPrinter.Letter)
-        printer.setResolution(600)
-        printer.setOrientation(QtGui.QPrinter.Landscape)
-
-        pd = QtGui.QPrintPreviewDialog(printer)
-        pd.paintRequested.connect(getPrintData)
-        pd.exec_()
-
-    def save_figure(self, *args):
-        filetypes = self.canvas.get_supported_filetypes_grouped()
-        sorted_filetypes = list(filetypes.items())
-        sorted_filetypes.sort()
-        default_filetype = self.canvas.get_default_filetype()
-
-        start = "image." + default_filetype
-        filters = []
-        for name, exts in sorted_filetypes:
-            exts_list = " ".join(['*.%s' % ext for ext in exts])
-            filter_ = '%s (%s)' % (name, exts_list)
-            if default_filetype in exts:
-                filters.insert(0, filter_)
-            else:
-                filters.append(filter_)
-        filters = ';;'.join(filters)
-
-        fname = QtWidgets.QFileDialog.getSaveFileName(self, "Choose a filename to save to", start, filters)
-        if fname:
-            try:
-                self.canvas.print_figure(str(fname))
-            except Exception as e:
-                QtWidgets.QMessageBox.critical(
-                    self, "Error saving file", str(e), QtWidgets.QMessageBox.Ok, QtGui.QMessageBox.NoButton
-                )
-
-    def toggle_log(self, *args):
-        ax = self.canvas.ax
-        if len(ax.images) == 0 and all([c.__class__.__name__ != 'QuadMesh' for c in ax.collections]):
-            logstate = ax.get_yscale()
-            if logstate == 'linear':
-                ax.set_yscale('log')
-            else:
-                ax.set_yscale('linear')
-            self.canvas.draw()
-            self.logtog.emit(ax.get_yscale())
-        else:
-            imgs = ax.images + [c for c in ax.collections if c.__class__.__name__ == 'QuadMesh']
-            norm = imgs[0].norm
-            if norm.__class__ is LogNorm:
-                for img in imgs:
-                    img.set_norm(Normalize(norm.vmin, norm.vmax))
-            else:
-                for img in imgs:
-                    img.set_norm(LogNorm(norm.vmin, norm.vmax))
-        self.canvas.draw()
 
 
 class MPLWidget(QtWidgets.QWidget):
@@ -241,10 +24,10 @@ class MPLWidget(QtWidgets.QWidget):
             self.vbox.setMargin(1)
         self.vbox.addWidget(self.canvas)
         if with_toolbar:
-            self.toolbar = NavigationToolbar(self.canvas, self)
+            self.toolbar = NavigationToolbarMine(self.canvas, self, with_logX=False, with_logY=True)
             self.toolbar.coordinates = coordinates
             self.vbox.addWidget(self.toolbar)
-            self.toolbar.logtog.connect(self.logtoggleylog)
+            self.toolbar.logtogy.connect(self.logtoggleylog)
         else:
             self.toolbar = None
         self.setLayout(self.vbox)
@@ -358,18 +141,20 @@ class MPLWidget(QtWidgets.QWidget):
 
     def clear(self):
         self.cplot = None
-        self.toolbar._views.clear()
-        self.toolbar._positions.clear()
         self.canvas.ax.clear()
         if self.canvas.ax2 is not None:
             self.canvas.ax2.clear()
 
     def update(self, *data, **opts):
         self.cplot.set_data(*data)
+        self.toolbar.update(*data, **opts)
         if 'extent' in opts:
             self.cplot.set_extent(opts['extent'])
-            oldviews = self.toolbar._views
-            if self.toolbar._views:
+            if BACKEND == 'Qt4Agg':
+                oldviews = self.toolbar._views
+            else:
+                oldviews = []
+            if BACKEND == 'Qt4Agg' and self.toolbar._views:
                 # set the new extent as home for the new data
                 newviews = Stack()
                 newviews.push([tuple(opts['extent'])])

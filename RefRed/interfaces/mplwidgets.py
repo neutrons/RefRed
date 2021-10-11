@@ -74,10 +74,13 @@ class NavigationToolbarMine(NavigationToolbar2QT):
     xlog = False
 
     def __init__(self, canvas, parent, coordinates=False, with_logX=False, with_logY=False):
+        # these properties must be set before parent constructor is called
+        # which automatically runs self._init_toolbar()
+        self._with_logX = with_logX
+        self._with_logY = with_logY
         NavigationToolbar2QT.__init__(self, canvas, parent, coordinates)
         self.setIconSize(QtCore.QSize(20, 20))
-        self._with_logX=with_logX
-        self._with_logY=with_logY
+
 
     def _init_toolbar(self):
         if not hasattr(self, '_actions'):
@@ -131,17 +134,19 @@ class NavigationToolbarMine(NavigationToolbar2QT):
         a = self.addAction(icon, "Export", self.export_ascii)
         a.setToolTip('Export the plot into ASCII file')
 
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/toggle-log.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.addSeparator()
-        a = self.addAction(icon, 'Log', self.toggle_ylog)
-        a.setToolTip('Toggle logarithmic y scale')
+        if self._with_logY:
+            icon = QtGui.QIcon()
+            icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/toggle-log.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            self.addSeparator()
+            a = self.addAction(icon, 'Log', self.toggle_ylog)
+            a.setToolTip('Toggle logarithmic y scale')
 
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/toggle-xlog.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.addSeparator()
-        a = self.addAction(icon, 'Log', self.toggle_xlog)
-        a.setToolTip('Toggle logarithmic x scale')
+        if self._with_logX:
+            icon = QtGui.QIcon()
+            icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/toggle-xlog.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            self.addSeparator()
+            a = self.addAction(icon, 'Log', self.toggle_xlog)
+            a.setToolTip('Toggle logarithmic x scale')
 
         self.buttons = {}
 
@@ -520,18 +525,20 @@ class MPLWidgetMine(QtWidgets.QWidget):
 
     def clear(self):
         self.cplot = None
-        self.toolbar._views.clear()
-        self.toolbar._positions.clear()
         self.canvas.ax.clear()
         if self.canvas.ax2 is not None:
             self.canvas.ax2.clear()
 
     def update(self, *data, **opts):
         self.cplot.set_data(*data)
+        self.toolbar.update(*data, **opts)
         if 'extent' in opts:
             self.cplot.set_extent(opts['extent'])
-            oldviews = self.toolbar._views
-            if self.toolbar._views:
+            if BACKEND == 'Qt4Agg':
+                oldviews = self.toolbar._views
+            else:
+                oldviews = []
+            if BACKEND == 'Qt4Agg' and self.toolbar._views:
                 # set the new extent as home for the new data
                 newviews = Stack()
                 newviews.push([tuple(opts['extent'])])
