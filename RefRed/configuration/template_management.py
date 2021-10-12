@@ -7,8 +7,7 @@ import numpy as np
 from qtpy import QtGui, QtCore, QtWidgets
 from qtpy.QtWidgets import QApplication
 
-from RefRed.interfaces.template_management import Ui_MainWindow
-from RefRed.interfaces.confirm_auto_reduce_dialog import Ui_Dialog
+from RefRed.interfaces import load_ui
 from RefRed.preview_config.preview_config import PreviewConfig
 
 
@@ -32,8 +31,7 @@ class TemplateManagement(QtWidgets.QMainWindow):
         self.parent = parent
 
         QtWidgets.QMainWindow.__init__(self, parent=parent)
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
+        self.ui = load_ui("template_management.ui", self)
         self._init_gui()
         self._current_ipts = self.parent.current_ipts
 
@@ -202,8 +200,7 @@ class ConfirmAutoReduceDialog(QtWidgets.QDialog):
         self.parent = parent
 
         QtWidgets.QDialog.__init__(self, parent=parent)
-        self.ui = Ui_Dialog()
-        self.ui.setupUi(self)
+        self.ui = load_ui("confirm_auto_reduce_dialog.ui", self)
 
         self.full_file_name = filename
         self.parent._full_template_file_name_selected = filename
