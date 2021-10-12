@@ -7,7 +7,7 @@ from mantid.simpleapi import ConvertToHistogram, CreateWorkspace, LRReflectivity
 import numpy as np
 import time
 
-from RefRed.interfaces.output_reduced_data_dialog import Ui_Dialog as UiDialog
+from RefRed.interfaces import load_ui
 from RefRed.load_reduced_data_set.stitching_ascii_widget import StitchingAsciiWidget
 from RefRed.configuration.export_stitching_ascii_settings import ExportStitchingAsciiSettings
 from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
@@ -41,8 +41,7 @@ class OutputReducedData(QDialog):
         QDialog.__init__(self, parent=parent)
         self.setWindowModality(False)
         self._open_instances.append(self)
-        self.ui = UiDialog()
-        self.ui.setupUi(self)
+        self.ui = load_ui("output_reduced_data_dialog.ui" , self)
         self.parent = parent
 
         self.ui.folder_error.setVisible(False)
@@ -70,7 +69,7 @@ class OutputReducedData(QDialog):
         _q_min = str(_gui_metadata['q_min'])
         self.ui.manual_qmin_value.setText(_q_min)
 
-    def auto_qmin_button(self, state):
+    def auto_qmin_button_clicked(self, state):
         self.ui.manual_qmin_frame.setEnabled(not state)
 
     def output_format_radio_buttons_event(self):

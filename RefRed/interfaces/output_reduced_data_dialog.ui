@@ -396,7 +396,7 @@ p, li { white-space: pre-wrap; }
    <sender>auto_qmin_button</sender>
    <signal>clicked(bool)</signal>
    <receiver>Dialog</receiver>
-   <slot>auto_qmin_button()</slot>
+   <slot>auto_qmin_button_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>68</x>
@@ -412,6 +412,6 @@ p, li { white-space: pre-wrap; }
  <slots>
   <slot>create_reduce_ascii_button_event()</slot>
   <slot>output_format_radio_buttons_event()</slot>
-  <slot>auto_qmin_button()</slot>
+  <slot>auto_qmin_button_clicked()</slot>
  </slots>
 </ui>
