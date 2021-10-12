@@ -265,7 +265,7 @@
    <sender>unselectAll</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>unselectAll()</slot>
+   <slot>unselectAllClicked()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>69</x>
@@ -281,7 +281,7 @@
    <sender>exportConfiguration</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>exportConfiguration()</slot>
+   <slot>exportConfigurationClicked()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>520</x>
@@ -297,7 +297,7 @@
    <sender>importConfiguration</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>importConfiguration()</slot>
+   <slot>importConfigurationClicked()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>693</x>
@@ -376,9 +376,9 @@
  </connections>
  <slots>
   <slot>runNumberEditEvent()</slot>
-  <slot>unselectAll()</slot>
-  <slot>exportConfiguration()</slot>
-  <slot>importConfiguration()</slot>
+  <slot>unselectAllClicked()</slot>
+  <slot>exportConfigurationClicked()</slot>
+  <slot>importConfigurationClicked()</slot>
   <slot>userChangedTab()</slot>
   <slot>saveMetadataListAsAsciiFile()</slot>
   <slot>searchLineEditLive()</slot>
