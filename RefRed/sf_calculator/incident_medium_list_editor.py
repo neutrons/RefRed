@@ -1,6 +1,6 @@
 from qtpy.QtWidgets import QDialog
 
-from RefRed.interfaces.incident_medium_list_editor_interface import Ui_Dialog as UiDialog
+from RefRed.interfaces import load_ui
 from RefRed.utilities import removeEmptyStrElementAndUpdateIndexSelected
 
 
@@ -14,8 +14,7 @@ class IncidentMediumListEditor(QDialog):
 
         QDialog.__init__(self, parent=parent)
         self.setWindowModality(False)
-        self.ui = UiDialog()
-        self.ui.setupUi(self)
+        self.ui = load_ui("incident_medium_list_editor_interface.ui", self)
         self.initGui()
 
     def initGui(self):
