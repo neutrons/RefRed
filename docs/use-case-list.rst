@@ -17,6 +17,5 @@ the reduction parameters that will be used to generate the R(q) curve.
 
 The following are typical use cases:
   - `Load previous reduction from template <load-template.rst>`_
-  - Load new data set without a template
-  - Compute scaling factors
-  - Browse meta-data
+  - `Reduce and export data <reduce-data.rst>`_
+  - `Compute scaling factors <compute-scaling-factors.rst>`_

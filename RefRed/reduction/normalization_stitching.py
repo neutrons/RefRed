@@ -3,7 +3,6 @@ from RefRed.reduction.calculate_sf_critical_edge import CalculateSFCE
 
 
 class ParentHandler(object):
-
     def __init__(self, parent=None, row_index=0):
         self.parent = parent
         self.row_index = row_index
@@ -18,7 +17,7 @@ class ParentHandler(object):
         data_set = self.getLConfig(0)
         q_range = [_q_min, _q_max]
         calculate_sf = CalculateSFCE(q_range, data_set)
-        _sf = 1./calculate_sf.getSF()
+        _sf = 1.0 / calculate_sf.getSF()
         new_data_set = self.saveSFinLConfig(data_set, _sf, data_type=data_type)
         self.saveLConfig(new_data_set, 0)
 
@@ -42,14 +41,14 @@ class ParentHandler(object):
         data_set = big_table_data[row_index, 2]
         return data_set
 
+
 class AbsoluteNormalization(ParentHandler):
     '''
     this class performs the absolute normalization of reduced data
     '''
 
     def __init__(self, parent=None, row_index=0):
-        super(AbsoluteNormalization, self).__init__(parent=parent,
-                                                    row_index=row_index)
+        super(AbsoluteNormalization, self).__init__(parent=parent, row_index=row_index)
 
     def run(self):
         if self.row_index == 0:
@@ -73,14 +72,14 @@ class AbsoluteNormalization(ParentHandler):
         lconfig = self.saveSFinLConfig(lconfig, _sf, data_type='absolute')
         self.saveLConfig = lconfig
 
+
 class AutomaticStitching(ParentHandler):
     '''
     automatic stiching of the reduced data using the Q range to calculate the CE
     '''
 
     def __init__(self, parent=None, row_index=0):
-        super(AutomaticStitching, self).__init__(parent=parent,
-                                                 row_index=row_index)
+        super(AutomaticStitching, self).__init__(parent=parent, row_index=row_index)
 
     def run(self):
         self.use_first_angle_range()
@@ -100,9 +99,10 @@ class AutomaticStitching(ParentHandler):
         right_lconfig = self.getLConfig(_row_index)
 
         calculate_sf = CalculateSFoverlapRange(left_lconfig, right_lconfig)
-        _sf = 1./calculate_sf.getSF()
+        _sf = 1.0 / calculate_sf.getSF()
         right_lconfig.sf_auto = _sf
         self.saveLConfig(right_lconfig, _row_index)
+
 
 class ManualStitching(ParentHandler):
     '''
@@ -111,8 +111,7 @@ class ManualStitching(ParentHandler):
     '''
 
     def __init__(self, parent=None, row_index=0):
-        super(ManualStitching, self).__init__(parent=parent,
-                                              row_index=row_index)
+        super(ManualStitching, self).__init__(parent=parent, row_index=row_index)
 
     def run(self):
         ce_lconfig = self.getLConfig(self.row_index)

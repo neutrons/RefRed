@@ -1,6 +1,7 @@
-from PyQt4.QtGui import QMainWindow, QPalette, QTableWidgetItem, QCheckBox, QFileDialog, QMessageBox, QPushButton, QPixmap, QIcon
-from PyQt4.QtCore import Qt, QSize, QSettings, QVariant
-from mantid.simpleapi import *
+from qtpy.QtGui import QPalette, QPixmap, QIcon
+from qtpy.QtWidgets import QMainWindow, QCheckBox, QTableWidgetItem, QFileDialog, QMessageBox, QPushButton
+from qtpy.QtCore import Qt, QSize, QSettings
+from mantid.simpleapi import LoadEventNexus
 import os
 import time
 import numpy as np
@@ -32,7 +33,7 @@ class MetadataFinder(QMainWindow):
     def __init__(self, parent=None):
         self.parent = parent
 
-        QMainWindow.__init__(self, parent = parent)
+        QMainWindow.__init__(self, parent=parent)
         self.setWindowModality(False)
         self._open_instances.append(self)
         self.ui = UiMainWindow()
@@ -42,7 +43,7 @@ class MetadataFinder(QMainWindow):
 
     def initList(self):
         self.list_runs = []
-        self.list_filename= []
+        self.list_filename = []
         self.list_nxs = []
 
     def initGui(self):
@@ -51,30 +52,30 @@ class MetadataFinder(QMainWindow):
         palette.setColor(QPalette.Foreground, Qt.red)
         self.ui.inputErrorLabel.setPalette(palette)
 
-        # as long as issue with routine not fixed        
-        self.ui.saveAsciiButton.setVisible(False) 
+        # as long as issue with routine not fixed
+        self.ui.saveAsciiButton.setVisible(False)
 
-        self.ui.configureTable.setColumnWidth(0,70)
-        self.ui.configureTable.setColumnWidth(1,300)
-        self.ui.configureTable.setColumnWidth(2,300)
-        self.ui.configureTable.setColumnWidth(3,300)
+        self.ui.configureTable.setColumnWidth(0, 70)
+        self.ui.configureTable.setColumnWidth(1, 300)
+        self.ui.configureTable.setColumnWidth(2, 300)
+        self.ui.configureTable.setColumnWidth(3, 300)
 
         magIcon = QPixmap('../icons/magnifier.png')
         self.ui.searchLabel.setPixmap(magIcon)
         clearIcon = QIcon('../icons/clear.png')
         self.ui.clearButton.setIcon(clearIcon)
-        sz = QSize(15,15)
+        sz = QSize(15, 15)
         self.ui.clearButton.setIconSize(sz)
-        #self.ui.clearButton.setVisible(False)
-        #self.ui.searchLabel.setVisible(False)
-        #self.ui.searchLineEdit.setVisible(False)
+        # self.ui.clearButton.setVisible(False)
+        # self.ui.searchLabel.setVisible(False)
+        # self.ui.searchLineEdit.setVisible(False)
 
     def initListMetadata(self):
         _nxs = self.list_nxs[0]
         mt_run = _nxs.getRun()
-        self.list_keys = mt_run.keys()
+        self.list_keys = list(mt_run.keys())
         sz = len(self.list_keys)
-        self.list_values = np.zeros(sz, dtype = bool)
+        self.list_values = np.zeros(sz, dtype=bool)
 
     def searchLineEditLive(self, txt):
         self.populateconfigureTable()
@@ -87,12 +88,12 @@ class MetadataFinder(QMainWindow):
 
     def retrieveListMetadataPreviouslySelected(self):
         settings = QSettings()
-        nbr_metadata = str(settings.value("nbr_metadata").toString())
+        nbr_metadata = str(settings.value("nbr_metadata"))
         list_metadata_selected = []
-        if nbr_metadata is not '':
+        if nbr_metadata != '':
             for index in range(int(nbr_metadata)):
-                _name = 'metadata_#%d' %index
-                _value = settings.value(_name).toString()
+                _name = 'metadata_#%d' % index
+                _value = str(settings.value(_name))
                 list_metadata_selected.append(_value)
         self.list_metadata_selected = list_metadata_selected
         _list_values = self.list_values
@@ -120,7 +121,7 @@ class MetadataFinder(QMainWindow):
         for i in range(nbr_row):
             _config_table.removeRow(0)
         _config_table.show()
-            
+
     @waiting_effects
     def runNumberEditEvent(self):
         self.initList()
@@ -132,7 +133,7 @@ class MetadataFinder(QMainWindow):
         self.updateGUI()
         self.list_metadata_selected = self.getNewListMetadataSelected()
         self.loadAndPopulateMetadataTable()
-        
+
     def updateGUI(self):
         if self.list_nxs != []:
             config_widget_status = True
@@ -142,21 +143,21 @@ class MetadataFinder(QMainWindow):
         self.ui.exportConfiguration.setEnabled(config_widget_status)
         self.ui.importConfiguration.setEnabled(config_widget_status)
         self.ui.saveAsciiButton.setEnabled(config_widget_status)
-        
+
     def populateconfigureTable(self):
         if self.ui.inputErrorLabel.isVisible():
             return
         if self.list_filename == []:
             return
         self.clearConfigureTable()
-        #_filename = self.list_filename[0]
-        #nxs = LoadEventNexus(Filename=_filename)
-        
+        # _filename = self.list_filename[0]
+        # nxs = LoadEventNexus(Filename=_filename)
+
         nxs = self.list_nxs[0]
         if self.first_load:
             self.first_load = False
-            #mt_run = nxs.getRun()
-            #self.list_keys = mt_run.keys()
+            # mt_run = nxs.getRun()
+            # self.list_keys = mt_run.keys()
             self.initListMetadata()
             self.retrieveListMetadataPreviouslySelected()
 
@@ -167,10 +168,9 @@ class MetadataFinder(QMainWindow):
         _index = 0
         for _key in list_keys:
             _name = _key
-            if (search_string.strip() != '') and \
-               (not(search_string in _name.lower())):
+            if (search_string.strip() != '') and (not (search_string in _name.lower())):
                 continue
-            
+
             self.ui.configureTable.insertRow(_index)
 
             _yesNo = QCheckBox()
@@ -184,8 +184,7 @@ class MetadataFinder(QMainWindow):
             _nameItem = QTableWidgetItem(_name)
             self.ui.configureTable.setItem(_index, 1, _nameItem)
 
-            [value, units] = self.retrieveValueUnits(nxs.getRun(), 
-                                                    _name)
+            [value, units] = self.retrieveValueUnits(nxs.getRun(), _name)
             _valueItem = QTableWidgetItem(value)
             self.ui.configureTable.setItem(_index, 2, _valueItem)
             _unitsItem = QTableWidgetItem(units)
@@ -217,11 +216,10 @@ class MetadataFinder(QMainWindow):
             _value = str(_value)
         elif len(_value) == 1:
             _value = str(_value)
-        elif type(_value) == type(""):
+        elif isinstance(_value, list):
             _value = _value
         else:
-            _value = '[' + str(_value[0]) + ',...]' + '-> (' + \
-                    str(len(_value)) + ' entries)'
+            _value = '[' + str(_value[0]) + ',...]' + '-> (' + str(len(_value)) + ' entries)'
         _units = mt_run.getProperty(_name).units
         return [_value, _units]
 
@@ -236,7 +234,7 @@ class MetadataFinder(QMainWindow):
         _list_runs = oListRuns.getFinalList()
         if len(_list_runs) > self.WARNING_NBR_FILES:
             msgBox = QMessageBox()
-            _str = "Program is about to load " + str(len(_list_runs)) + " files. Do you want to continue ?"                                                                   
+            _str = "Program is about to load " + str(len(_list_runs)) + " files. Do you want to continue ?"
             msgBox.setText(_str)
             msgBox.addButton(QPushButton('NO'), QMessageBox.NoRole)
             msgBox.addButton(QPushButton('YES'), QMessageBox.YesRole)
@@ -250,8 +248,8 @@ class MetadataFinder(QMainWindow):
                 return
             else:
                 _list_runs = self.list_runs
-                _list_nxs = self.list_nxs
-                _list_filename = self.list_filename
+                # _list_nxs = self.list_nxs
+                # _list_filename = self.list_filename
 
         elif _list_runs[0] == -2:
             self.ui.inputErrorLabel.setVisible(True)
@@ -265,22 +263,23 @@ class MetadataFinder(QMainWindow):
                 try:
                     _filename = RefRed.nexus_utilities.findNeXusFullPath(_runs)
                 except:
-                    self.ui.inputErrorLabel.setVisible(True)                    
+                    self.ui.inputErrorLabel.setVisible(True)
                     return
                 self.list_filename.append(_filename)
-                randomString = RefRed.utilities.generate_random_workspace_name();print("About to load %s" % _filename)
-                _nxs = LoadEventNexus(Filename = _filename, OutputWorkspace = randomString, MetaDataOnly=True)
+                randomString = RefRed.utilities.generate_random_workspace_name()
+                print(("About to load %s" % _filename))
+                _nxs = LoadEventNexus(Filename=_filename, OutputWorkspace=randomString, MetaDataOnly=True)
                 self.list_nxs.append(_nxs)
 
         self.ui.inputErrorLabel.setVisible(False)
         list_metadata_selected = self.list_metadata_selected
 
-        _header = ['Run #','IPTS']
+        _header = ['Run #', 'IPTS']
         for name in list_metadata_selected:
             self.ui.metadataTable.insertColumn(2)
             _header.append(name)
         self.ui.metadataTable.setHorizontalHeaderLabels(_header)
-        list_nxs = self.list_nxs
+        # list_nxs = self.list_nxs
 
     def populateMetadataTable(self):
         list_metadata_selected = self.list_metadata_selected
@@ -303,13 +302,10 @@ class MetadataFinder(QMainWindow):
 
             column_index = 0
             for name in list_metadata_selected:
-                [value,units] = self.retrieveValueUnits(mt_run, 
-                                                       name)
+                [value, units] = self.retrieveValueUnits(mt_run, name)
                 _str = str(value) + ' ' + str(units)
                 _item = QTableWidgetItem(_str)
-                self.ui.metadataTable.setItem(_index, 
-                                             2 + column_index, 
-                                             _item)
+                self.ui.metadataTable.setItem(_index, 2 + column_index, _item)
                 column_index += 1
 
             _index += 1
@@ -318,7 +314,7 @@ class MetadataFinder(QMainWindow):
         _config_table = self.ui.configureTable
         nbr_row = _config_table.rowCount()
         for r in range(nbr_row):
-            _name = self.ui.configureTable.item(r, 1).text()
+            # _name = self.ui.configureTable.item(r, 1).text()
             _yesNo = QCheckBox()
             _yesNo.setText('')
             self.ui.configureTable.setCellWidget(r, 0, _yesNo)
@@ -336,12 +332,13 @@ class MetadataFinder(QMainWindow):
             settings.setValue(name, metadata)
 
     def importConfiguration(self):
-        _filter = u"Metadata Configuration (*_metadata.cfg);; All (*.*)"
+        _filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
         _default_path = self.parent.path_config
-        filename = str(QFileDialog.getOpenFileName(self, 
-                                               u'Import Metadata Configuration',
-                                               directory = _default_path,
-                                               filter = (_filter)))
+        filename = str(
+            QFileDialog.getOpenFileName(
+                self, 'Import Metadata Configuration', directory=_default_path, filter=(_filter)
+            )
+        )
         if filename == '':
             return
 
@@ -350,13 +347,12 @@ class MetadataFinder(QMainWindow):
         self.populateconfigureTable()
 
     def exportConfiguration(self):
-        _filter = u"Metadata Configuration (*_metadata.cfg);; All (*.*)"
+        _filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
         _date = time.strftime("%d_%m_%Y")
-        _default_name = self.parent.path_config + '/' + _date + \
-        '_metadata.cfg'
-        filename = str(QFileDialog.getSaveFileName(self, u'Export Metadata Configuration',
-                                                   _default_name,
-                                                   filter = (_filter)))
+        _default_name = self.parent.path_config + '/' + _date + '_metadata.cfg'
+        filename = str(
+            QFileDialog.getSaveFileName(self, 'Export Metadata Configuration', _default_name, filter=(_filter))
+        )
         if filename == '':
             return
 
@@ -367,15 +363,15 @@ class MetadataFinder(QMainWindow):
         for _name in list_metadata_selected:
             text.append(_name)
 
-        filename = RefRed.utilities.makeSureFileHasExtension(filename, default_ext = ".cfg")
+        filename = RefRed.utilities.makeSureFileHasExtension(filename, default_ext=".cfg")
         RefRed.utilities.write_ascii_file(filename, text)
 
     def getIPTS(self, filename):
         parse_path = filename.split('/')
         return parse_path[3]
 
-    def userChangedTab(self, int):
-        if int ==0: #metadata
+    def userChangedTab(self, int_value):
+        if int_value == 0:  # metadata
             self.list_metadata_selected = self.getNewListMetadataSelected()
             self.loadAndPopulateMetadataTable()
 
@@ -395,13 +391,10 @@ class MetadataFinder(QMainWindow):
     def saveMetadataListAsAsciiFile(self):
         if self.list_runs == []:
             return
-        _filter = u'List Metadata (*_metadata.txt);;All(*.*)'
+        _filter = 'List Metadata (*_metadata.txt);;All(*.*)'
         _run_number = str(self.list_runs[0])
-        _default_name = self.parent.path_ascii + '/' + \
-                _run_number + '_metadata.txt'
-        filename = QFileDialog.getSaveFileName(self, u'Save Metadata into ASCII',
-                                                   _default_name,
-                                                   filter = _filter)
+        _default_name = self.parent.path_ascii + '/' + _run_number + '_metadata.txt'
+        filename = QFileDialog.getSaveFileName(self, 'Save Metadata into ASCII', _default_name, filter=_filter)
         if filename == '':
             return
 
@@ -412,8 +405,8 @@ class MetadataFinder(QMainWindow):
         _metadata_table = self.ui.metadataTable
         nbr_row = _metadata_table.rowCount()
         for r in range(nbr_row):
-            _line = _metadata_table.item(r, 0).text() + ' ' + \
-                    str(_metadata_table.item(r, 1).text()) + ' ' + \
-                    str(_metadata_table.item(r, 2).text())
+            _line = _metadata_table.item(r, 0).text() + ' ' + str(_metadata_table.item(r, 1).text()) + ' '\
+                + str(_metadata_table.item(r, 2).text())
+
             text.append(_line)
         RefRed.utilities.write_ascii_file(filename, text)

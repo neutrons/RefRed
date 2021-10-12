@@ -1,5 +1,6 @@
 import math
-from mantid.simpleapi import *
+from mantid.api import mtd
+from mantid.simpleapi import CreateWorkspace, Fit, ReplaceSpecialValues
 import numpy as np
 
 
@@ -29,15 +30,15 @@ class CalculateSF(object):
         '''
         Critical edge set must be brought to 0
         '''
-        dataSet = self.big_table_data[0,2]
+        dataSet = self.big_table_data[0, 2]
 
         _y_axis = dataSet.reduce_y_axis
         _e_axis = dataSet.reduce_e_axis
-        error_0 = 1./dataSet.proton_charge
+        error_0 = 1.0 / dataSet.proton_charge
         [data_mean, mean_error] = self.weighted_mean(_y_axis, _e_axis, error_0)
-        _sf = 1./data_mean 
+        _sf = 1.0 / data_mean
         dataSet.sf_auto = _sf
-        self.big_table_data[0,2] = dataSet
+        self.big_table_data[0, 2] = dataSet
 
     def autoSFAllOtherDataSet(self):
         '''
@@ -46,13 +47,13 @@ class CalculateSF(object):
         '''
         nbr_row = self.nbr_process
         for j in range(1, nbr_row):
-            left_set = self.apply_left_sf(self.big_table_data[j-1, 2])
+            left_set = self.apply_left_sf(self.big_table_data[j - 1, 2])
             right_set = self.big_table_data[j, 2]
 
-            _sf = 1./self.fit_data_of_overlap_range(left_set, right_set)
+            _sf = 1.0 / self.fit_data_of_overlap_range(left_set, right_set)
 
             right_set.sf_auto = _sf
-            self.big_table_data[j,2] = right_set
+            self.big_table_data[j, 2] = right_set
 
     def fit_data_of_overlap_range(self, left_set, right_set):
         '''
@@ -60,7 +61,9 @@ class CalculateSF(object):
         '''
         left_x_axis = left_set.reduce_q_axis
         right_x_axis = right_set.reduce_q_axis
-        [min_x, max_x, index_min_in_left, index_max_in_right, no_overlap] = self.calculate_overlap_axis(left_x_axis, right_x_axis)
+        [min_x, max_x, index_min_in_left, index_max_in_right, no_overlap] = self.calculate_overlap_axis(
+            left_x_axis, right_x_axis
+        )
         if no_overlap:
             _sf = 1
 
@@ -100,42 +103,35 @@ class CalculateSF(object):
             y_axis = data_set.tmp_y_axis[threshold_index:]
             e_axis = data_set.tmp_e_axis[threshold_index:]
         else:
-            x_axis = data_set.reduce_q_axis[:threshold_index+1]
-            y_axis = data_set.reduce_y_axis[:threshold_index+1]
-            e_axis = data_set.reduce_e_axis[:threshold_index+1]
+            x_axis = data_set.reduce_q_axis[: threshold_index + 1]
+            y_axis = data_set.reduce_y_axis[: threshold_index + 1]
+            e_axis = data_set.reduce_e_axis[: threshold_index + 1]
 
-        dataToFit = CreateWorkspace(DataX=x_axis,
-                                    DataY=y_axis,
-                                    DataE=e_axis,
-                                    Nspec=1)
+        dataToFit = CreateWorkspace(DataX=x_axis, DataY=y_axis, DataE=e_axis, Nspec=1)
 
-        dataToFit = ReplaceSpecialValues(InputWorkspace=dataToFit, 
-                                         NaNValue=0,
-                                         NaNError=0,
-                                         InfinityValue=0,
-                                         InfinityError=0)
+        dataToFit = ReplaceSpecialValues(
+            InputWorkspace=dataToFit, NaNValue=0, NaNError=0, InfinityValue=0, InfinityError=0
+        )
 
-        Fit(InputWorkspace=dataToFit, 
-            Function="name=UserFunction, Formula=a+b*x, a=1, b=2",
-            Output='res')
+        Fit(InputWorkspace=dataToFit, Function="name=UserFunction, Formula=a+b*x, a=1, b=2", Output='res')
 
         res = mtd['res_Parameters']
 
-        b = res.cell(0,1)
-        a = res.cell(1,1)
+        b = res.cell(0, 1)
+        a = res.cell(1, 1)
 
-        return [a,b]
+        return [a, b]
 
     def scale_to_apply_for_best_overlap(self, fit_range_to_use, a_left, b_left, a_right, b_right):
         '''
-        This function will use the same overlap region and will determine the scaling to apply to 
+        This function will use the same overlap region and will determine the scaling to apply to
         the second fit to get the best match
         '''
 
         left_mean = self.calculate_mean_of_function_over_range(fit_range_to_use, a_left, b_left)
         right_mean = self.calculate_mean_of_function_over_range(fit_range_to_use, a_right, b_right)
 
-        _sf =  right_mean / left_mean
+        _sf = right_mean / left_mean
 
         return _sf
 
@@ -149,7 +145,7 @@ class CalculateSF(object):
         left_min_index = 0
         right_max_index = -1
 
-        if left_axis[-1] <= right_axis[0]: # no overlap
+        if left_axis[-1] <= right_axis[0]:  # no overlap
             return [_min_x, _max_x, left_min_index, right_max_index, no_overlap]
 
         _min_x = right_axis[0]
@@ -193,20 +189,20 @@ class CalculateSF(object):
         sz = len(data_array)
 
         # calculate the numerator of mean
-        dataNum = 0;
+        dataNum = 0
         for i in range(sz):
-            if (error_array[i] == 0):
+            if error_array[i] == 0:
                 error_array[i] = error_0
 
-            tmpFactor = float(data_array[i]) / float((pow(error_array[i],2)))
+            tmpFactor = float(data_array[i]) / float((pow(error_array[i], 2)))
             dataNum += tmpFactor
 
         # calculate denominator
-        dataDen = 0;
+        dataDen = 0
         for i in range(sz):
-            if (error_array[i] == 0):
+            if error_array[i] == 0:
                 error_array[i] = error_0
-            tmpFactor = 1./float((pow(error_array[i],2)))
+            tmpFactor = 1.0 / float((pow(error_array[i], 2)))
             dataDen += tmpFactor
 
         if dataDen == 0:
@@ -214,6 +210,6 @@ class CalculateSF(object):
             mean_error = np.nan
         else:
             data_mean = float(dataNum) / float(dataDen)
-            mean_error = math.sqrt(1/dataDen)
+            mean_error = math.sqrt(1 / dataDen)
 
         return [data_mean, mean_error]

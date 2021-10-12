@@ -48,14 +48,14 @@ class ClockingAlgorithm(object):
 
         _xdata_firstderi = []
         _ydata_firstderi = []
-        for i in range(len(xdata)-1):
+        for i in range(len(xdata) - 1):
             _left_x = xdata[i]
-            _right_x = xdata[i+1]
+            _right_x = xdata[i + 1]
             _xdata_firstderi.append(np.mean([_left_x, _right_x]))
 
             _left_y = ydata[i]
-            _right_y = ydata[i+1]
-            _ydata_firstderi.append((_right_y - _left_y)/(_right_x - _left_x))
+            _right_y = ydata[i + 1]
+            _ydata_firstderi.append((_right_y - _left_y) / (_right_x - _left_x))
 
         self.xdata_firstderi = _xdata_firstderi
         self.ydata_firstderi = _ydata_firstderi
@@ -91,7 +91,7 @@ class ClockingAlgorithm(object):
         _tmp_value = _pixel[int(px_offset)]
         _peak_min_final_value = _tmp_value if _tmp_value > 5 else 5
 
-        px_offset = len(_counts)-1
+        px_offset = len(_counts) - 1
         while abs(_counts[int(round(px_offset))]) < _std_deviation_counts_firstderi:
             px_offset -= 1
         _tmp_value = _pixel[int(round(px_offset))]
@@ -111,21 +111,17 @@ class ClockingFinder(object):
         self.clocking = self.parent.gui_metadata['clocking_pixel']
         return
 
-        o_clocking_algo = ClockingAlgorithm(xdata = xdata,
-                                            ydata = ydata,
-                                            edata = edata)
+        o_clocking_algo = ClockingAlgorithm(xdata=xdata, ydata=ydata, edata=edata)
         [left_max, right_min] = o_clocking_algo.clocking
 
-        left_xdata = xdata[0: left_max]
-        left_ydata = ydata[0: left_max]
-        o_clocking_left = ClockingAlgorithm(xdata = left_xdata,
-                                            ydata = left_ydata)
-        left_clocking = o_clocking_algo.clocking[0]
+        left_xdata = xdata[0:left_max]
+        left_ydata = ydata[0:left_max]
+        o_clocking_left = ClockingAlgorithm(xdata=left_xdata, ydata=left_ydata)
+        left_clocking = o_clocking_left.clocking[0]
 
-        right_xdata = xdata[right_min: -1]
-        right_ydata = ydata[right_min: -1]
-        o_clocking_right = ClockingAlgorithm(xdata = right_xdata,
-                                             ydata = right_ydata)
+        right_xdata = xdata[right_min:-1]
+        right_ydata = ydata[right_min:-1]
+        o_clocking_right = ClockingAlgorithm(xdata=right_xdata, ydata=right_ydata)
         right_clocking = o_clocking_right.clocking[1]
 
         self.clocking = [left_clocking, right_clocking]

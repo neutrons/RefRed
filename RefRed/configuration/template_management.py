@@ -4,15 +4,15 @@ import stat
 import re
 import shutil
 import numpy as np
-from PyQt4 import QtGui, QtCore
-from PyQt4.QtGui import QApplication
+from qtpy import QtGui, QtCore, QtWidgets
+from qtpy.QtWidgets import QApplication
 
 from RefRed.interfaces.template_management import Ui_MainWindow
 from RefRed.interfaces.confirm_auto_reduce_dialog import Ui_Dialog
 from RefRed.preview_config.preview_config import PreviewConfig
 
 
-class TemplateManagement(QtGui.QMainWindow):
+class TemplateManagement(QtWidgets.QMainWindow):
 
     _window_title = "Template Management - "
     _filter = "*template*.xml"
@@ -31,7 +31,7 @@ class TemplateManagement(QtGui.QMainWindow):
     def __init__(self, parent=None):
         self.parent = parent
 
-        QtGui.QMainWindow.__init__(self, parent=parent)
+        QtWidgets.QMainWindow.__init__(self, parent=parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self._init_gui()
@@ -50,11 +50,12 @@ class TemplateManagement(QtGui.QMainWindow):
 
     def browseFolderButton(self):
         _path = self._auto_reduce_folder
-        pathQFileDialog = QtGui.QFileDialog(self.parent)
-        folder = str(pathQFileDialog.getExistingDirectory(self,
-                                                          'Select Template Folder',
-                                                          _path,
-                                                          QtGui.QFileDialog.ShowDirsOnly))
+        pathQFileDialog = QtWidgets.QFileDialog(self.parent)
+        folder = str(
+            pathQFileDialog.getExistingDirectory(
+                self, 'Select Template Folder', _path, QtWidgets.QFileDialog.ShowDirsOnly
+            )
+        )
 
         if folder == "":
             return
@@ -68,7 +69,7 @@ class TemplateManagement(QtGui.QMainWindow):
         self._clear_table()
         self.ui.tableWidget.setColumnCount(2)
 
-        if self._folder is '':
+        if self._folder == '':
             QApplication.restoreOverrideCursor()
             return
 
@@ -87,7 +88,7 @@ class TemplateManagement(QtGui.QMainWindow):
         for _row, _file in enumerate(_list_files):
             # name of file
             _short_file = os.path.basename(_file)
-            _item = QtGui.QTableWidgetItem(_short_file)
+            _item = QtWidgets.QTableWidgetItem(_short_file)
             self.ui.tableWidget.setItem(_row, 0, _item)
 
             # preview button
@@ -97,39 +98,36 @@ class TemplateManagement(QtGui.QMainWindow):
             else:
                 message = "Not a Template File"
             _is_list_files_a_template.append(_button_status)
-            _button = QtGui.QPushButton(message)
+            _button = QtWidgets.QPushButton(message)
             _button.setEnabled(_button_status)
-            QtCore.QObject.connect(_button, QtCore.SIGNAL("clicked()"),
-                                   lambda row=_row: self.preview_button(row))
+            QtCore.QObject.connect(_button, QtCore.SIGNAL("clicked()"), lambda row=_row: self.preview_button(row))
 
             self.ui.tableWidget.setCellWidget(_row, 1, _button)
 
         self._is_list_files_a_template = _is_list_files_a_template
-        _default_selection = QtGui.QTableWidgetSelectionRange(0, 0, 0, 1)
+        _default_selection = QtWidgets.QTableWidgetSelectionRange(0, 0, 0, 1)
         self.ui.tableWidget.setRangeSelected(_default_selection, True)
 
-        self.check_gui(row_selected = 0)
+        self.check_gui(row_selected=0)
 
         QApplication.restoreOverrideCursor()
 
     def get_button_status(self, _file):
         status = True
         try:
-            o_preview_config = PreviewConfig(parent=None,
-                                             filename=_file,
-                                             check_format=True)
+            PreviewConfig(parent=None, filename=_file, check_format=True)
         except:
             status = False
         return status
 
     def check_gui(self, row_selected=-1):
         _is_list_files_a_template = self._is_list_files_a_template
-        if (_is_list_files_a_template == []):
+        if _is_list_files_a_template == []:
             status = False
         else:
             if row_selected == -1:
                 row_selected = self.ui.tableWidget.currentRow()
-            if (row_selected == -1):
+            if row_selected == -1:
                 status = False
             else:
                 status = _is_list_files_a_template[row_selected]
@@ -137,15 +135,17 @@ class TemplateManagement(QtGui.QMainWindow):
 
     def preview_button(self, _row):
         try:
-            o_preview_config = PreviewConfig(parent=self,
-                                             is_live=False,
-                                             filename=self._list_files[_row],
-                                             geometry_parent=self.geometry(),
-                                             window_offset=_row * self._window_offset)
+            o_preview_config = PreviewConfig(
+                parent=self,
+                is_live=False,
+                filename=self._list_files[_row],
+                geometry_parent=self.geometry(),
+                window_offset=_row * self._window_offset,
+            )
             o_preview_config.show()
             _current_selection = self.ui.tableWidget.selectedRanges()
             self.ui.tableWidget.setRangeSelected(_current_selection[0], False)
-            _selection = QtGui.QTableWidgetSelectionRange(_row, 0, _row, 1)
+            _selection = QtWidgets.QTableWidgetSelectionRange(_row, 0, _row, 1)
             self.ui.tableWidget.setRangeSelected(_selection, True)
         except:
             _widget = self.ui.tableWidget.cellWidget(_row, 1)
@@ -162,9 +162,7 @@ class TemplateManagement(QtGui.QMainWindow):
     def templateFileSelectedButton(self):
         _selected_row = self.ui.tableWidget.currentRow()
         _filename = self._list_files[_selected_row]
-        o_confirm = ConfirmAutoReduceDialog(parent=self,
-                                            filename=_filename,
-                                            ipts=self._current_ipts)
+        o_confirm = ConfirmAutoReduceDialog(parent=self, filename=_filename, ipts=self._current_ipts)
         o_confirm.show()
 
     def selectionChanged(self):
@@ -181,7 +179,7 @@ class TemplateManagement(QtGui.QMainWindow):
     def _replace_auto_template(self, full_file_name=''):
         _final_auto_reduce_template_folder = self.retrieve_final_auto_reduce_template_folder()
         _auto_reduce_name = self._auto_reduce_name
-        _template_source_name = self._full_template_file_name_selected 
+        _template_source_name = self._full_template_file_name_selected
 
         _dst = _final_auto_reduce_template_folder + '/' + _auto_reduce_name
         _src = _template_source_name
@@ -190,24 +188,20 @@ class TemplateManagement(QtGui.QMainWindow):
             _dst = self._debug_dst_folder
 
         shutil.copyfile(_src, _dst)
-        os.chmod(_dst, stat.S_IWUSR |
-                 stat.S_IRUSR |
-                 stat.S_IXUSR |
-                 stat.S_IWGRP |
-                 stat.S_IRGRP |
-                 stat.S_IXGRP |
-                 stat.S_IWOTH)
+        os.chmod(
+            _dst,
+            stat.S_IWUSR | stat.S_IRUSR | stat.S_IXUSR | stat.S_IWGRP | stat.S_IRGRP | stat.S_IXGRP | stat.S_IWOTH,
+        )
 
     def closeEvent(self, event=None):
         self.close()
 
 
-class ConfirmAutoReduceDialog(QtGui.QDialog):
-
+class ConfirmAutoReduceDialog(QtWidgets.QDialog):
     def __init__(self, parent=None, filename=None, ipts=''):
         self.parent = parent
 
-        QtGui.QDialog.__init__(self, parent=parent)
+        QtWidgets.QDialog.__init__(self, parent=parent)
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
 
@@ -216,7 +210,7 @@ class ConfirmAutoReduceDialog(QtGui.QDialog):
         _short_file = os.path.basename(filename)
         self.ui.file_name.setText(_short_file)
 
-        _color = QtGui.QColor(QtCore.Qt.darkGreen)
+        QtGui.QColor(QtCore.Qt.darkGreen)  # TODO is this line necessary?
         self.ui.file_name.setStyleSheet('color: green')
 
         if ipts == '':
@@ -239,11 +233,10 @@ class ConfirmAutoReduceDialog(QtGui.QDialog):
 
     def browse_ipts(self):
         _path = self.parent._auto_reduce_folder
-        pathQFileDialog = QtGui.QFileDialog(self.parent)
-        folder = str(pathQFileDialog.getExistingDirectory(self,
-                                                          'Select IPTS folder',
-                                                          _path,
-                                                          QtGui.QFileDialog.ShowDirsOnly))
+        pathQFileDialog = QtWidgets.QFileDialog(self.parent)
+        folder = str(
+            pathQFileDialog.getExistingDirectory(self, 'Select IPTS folder', _path, QtWidgets.QFileDialog.ShowDirsOnly)
+        )
 
         if folder == "":
             return
@@ -266,7 +259,7 @@ class ConfirmAutoReduceDialog(QtGui.QDialog):
         return ipts
 
     def is_really_an_ipts(self, _input_ipts):
-        match_obj = re.match('IPTS-\d*', _input_ipts)
+        match_obj = re.match(r'IPTS-\d*', _input_ipts)
         if match_obj:
             return True
         return False

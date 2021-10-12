@@ -1,4 +1,4 @@
-from PyQt4.QtGui import QApplication
+from qtpy.QtWidgets import QApplication
 import numpy as np
 
 from RefRed.gui_handling.gui_utility import GuiUtility
@@ -54,18 +54,18 @@ class LiveReducedDataHandler(object):
             _e_axis = np.array(_e_axis, dtype=np.float)
 
             _y_axis = _y_axis * sf
-            _e_axis = _e_axis *sf
+            _e_axis = _e_axis * sf
 
-            o_produce_output = ProducedSelectedOutputScaled(parent=self.parent,
-                                                            q_axis=_q_axis,
-                                                            y_axis=_y_axis,
-                                                            e_axis=_e_axis)
+            o_produce_output = ProducedSelectedOutputScaled(
+                parent=self.parent, q_axis=_q_axis, y_axis=_y_axis, e_axis=_e_axis
+            )
             o_produce_output.calculate()
             y_axis = o_produce_output.output_y_axis
             e_axis = o_produce_output.output_e_axis
 
-            self.parent.ui.data_stitching_plot.errorbar(_q_axis, y_axis, yerr=e_axis,
-                                                        color=self.get_current_color_plot(index_row))
+            self.parent.ui.data_stitching_plot.errorbar(
+                _q_axis, y_axis, yerr=e_axis, color=self.get_current_color_plot(index_row)
+            )
 
             if _data.all_plot_axis.is_reduced_plot_stitching_tab_ylog:
                 self.parent.ui.data_stitching_plot.set_yscale('log')
@@ -75,7 +75,7 @@ class LiveReducedDataHandler(object):
 
             self.parent.ui.data_stitching_plot.draw()
 
-            o_gui_utility = GuiUtility(parent = self.parent)
+            o_gui_utility = GuiUtility(parent=self.parent)
             yaxis_type = o_gui_utility.get_reduced_yaxis_type()
             if yaxis_type == 'RvsQ':
                 if _data.all_plot_axis.reduced_plot_RQuserView_y is None:
@@ -89,8 +89,8 @@ class LiveReducedDataHandler(object):
                 else:
                     [xmin, xmax] = _data.all_plot_axis.reduced_plot_RQQ4userView_x
                     [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQuserView_y
-                    self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
-                    self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                    self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin, xmax])
+                    self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin, ymax])
                     self.parent.ui.data_stitching_plot.canvas.draw()
             else:
                 if _data.all_plot_axis.reduced_plot_RQ4userView_y is None:
@@ -106,8 +106,8 @@ class LiveReducedDataHandler(object):
                     [xmin, xmax] = _data.all_plot_axis.reduced_plot_RQQ4userView_x
                     [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQ4userView_y
 
-                    self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
-                    self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                    self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin, xmax])
+                    self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin, ymax])
                     self.parent.ui.data_stitching_plot.canvas.draw()
 
             QApplication.processEvents()
@@ -135,16 +135,16 @@ class LiveReducedDataHandler(object):
         _y_axis = _y_axis * sf
         _e_axis = _e_axis * sf
 
-        o_produce_output = ProducedSelectedOutputScaled(parent=self.parent,
-                                                        q_axis=_q_axis,
-                                                        y_axis=_y_axis,
-                                                        e_axis=_e_axis)
+        o_produce_output = ProducedSelectedOutputScaled(
+            parent=self.parent, q_axis=_q_axis, y_axis=_y_axis, e_axis=_e_axis
+        )
         o_produce_output.calculate()
         y_axis = o_produce_output.output_y_axis
         e_axis = o_produce_output.output_e_axis
 
-        self.parent.ui.data_stitching_plot.errorbar(_q_axis, y_axis, yerr=e_axis,
-                                                    color=self.get_current_color_plot(self.row_index))
+        self.parent.ui.data_stitching_plot.errorbar(
+            _q_axis, y_axis, yerr=e_axis, color=self.get_current_color_plot(self.row_index)
+        )
 
         if _data.all_plot_axis.is_reduced_plot_stitching_tab_ylog:
             self.parent.ui.data_stitching_plot.set_yscale('log')
@@ -163,8 +163,8 @@ class LiveReducedDataHandler(object):
         if yaxis_type == 'RvsQ':
             if _data.all_plot_axis.reduced_plot_RQuserView_y is None:
                 self.parent.ui.data_stitching_plot.canvas.draw()
-                [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
-                [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+                [xmin, xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+                [ymin, ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
                 _data.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin, xmax]
                 _data.all_plot_axis.reduced_plot_RQuserView_y = [ymin, ymax]
                 _data.all_plot_axis.reduced_plot_RQQ4autoView_x = [xmin, xmax]
@@ -172,29 +172,29 @@ class LiveReducedDataHandler(object):
             else:
                 [xmin, xmax] = _data.all_plot_axis.reduced_plot_RQQ4userView_x
                 [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQuserView_y
-                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
-                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin, xmax])
+                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin, ymax])
                 self.parent.ui.data_stitching_plot.canvas.draw()
         else:
             if _data.all_plot_axis.reduced_plot_RQ4userView_y is None:
                 self.parent.ui.data_stitching_plot.canvas.draw()
-                [xmin,xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
-                [ymin,ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
+                [xmin, xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
+                [ymin, ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
 
                 _data.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin, xmax]
                 _data.all_plot_axis.reduced_plot_RQ4userView_y = [ymin, ymax]
-                _data.all_plot_axis.reduced_plot_RQQ4autoView_x= [xmin, xmax]
+                _data.all_plot_axis.reduced_plot_RQQ4autoView_x = [xmin, xmax]
                 _data.all_plot_axis.reduced_plot_RQ4autoView_y = [ymin, ymax]
             else:
                 [xmin, xmax] = _data.all_plot_axis.reduced_plot_RQQ4userView_x
                 [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQ4userView_y
 
-                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin,xmax])
-                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin,ymax])
+                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin, xmax])
+                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin, ymax])
                 self.parent.ui.data_stitching_plot.canvas.draw()
 
     def save_xy_axis(self):
-        o_gui_utility = GuiUtility(parent = self.parent)
+        o_gui_utility = GuiUtility(parent=self.parent)
         yaxis_type = o_gui_utility.get_reduced_yaxis_type()
 
         big_table_data = self.parent.big_table_data
@@ -239,11 +239,11 @@ class LiveReducedDataHandler(object):
         self.parent.big_table_data = big_table_data
 
     def generate_selected_sf(self, lconfig=None):
-        o_gui = GuiUtility(parent = self.parent)
+        o_gui = GuiUtility(parent=self.parent)
         stitching_type = o_gui.getStitchingType()
-        if stitching_type is "absolute":
+        if stitching_type == "absolute":
             return lconfig.sf_abs_normalization
-        elif stitching_type is "auto":
+        elif stitching_type == "auto":
             return lconfig.sf_auto
         else:
             return lconfig.sf_manual
@@ -292,7 +292,7 @@ class ProducedSelectedOutputScaled(object):
 
         # Log(R) vs Q
         # make sure there is no <= 0 values of _y_axis
-        input_y_axis[input_y_axis<=0] = np.nan
+        input_y_axis[input_y_axis <= 0] = np.nan
         self.output_y_axis = np.log(input_y_axis)
         self.output_e_axis = input_e_axis  # FIXME
 

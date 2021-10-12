@@ -1,5 +1,5 @@
 import os
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 import RefRed.utilities
 from RefRed.export.output_reduced_data import OutputReducedData
 from RefRed.gui_handling.gui_utility import GuiUtility
@@ -37,9 +37,7 @@ class ExportPlotAscii(object):
         default_filename = 'REFL_' + run_number + '_2dPxVsTof.txt'
         path = parent.path_ascii
         default_filename = path + '/' + default_filename
-        filename = str(QtGui.QFileDialog.getSaveFileName(parent,
-                                                         'Create 2D Pixel VS TOF',
-                                                         default_filename))
+        filename = str(QtWidgets.QFileDialog.getSaveFileName(parent, 'Create 2D Pixel VS TOF', default_filename))
 
         if filename.strip() == '':
             return
@@ -52,15 +50,17 @@ class ExportPlotAscii(object):
     def export_ix(self):
         parent = self.parent
         big_table_data = parent.big_table_data
-        [row,col] = self.get_current_row_col_displayed()
+        [row, col] = self.get_current_row_col_displayed()
         _data = big_table_data[row, col]
         run_number = _data.run_number
         default_filename = 'REFL_' + run_number + '_ix.txt'
         path = parent.path_ascii
         default_filename = path + '/' + default_filename
-        filename = str(QtGui.QFileDialog.getSaveFileName(parent,
-                                                         'Create Counts vs Pixel (low resolution range) ASCII File',
-                                                         default_filename))
+        filename = str(
+            QtWidgets.QFileDialog.getSaveFileName(
+                parent, 'Create Counts vs Pixel (low resolution range) ASCII File', default_filename
+            )
+        )
 
         if filename.strip() == '':
             return
@@ -68,9 +68,9 @@ class ExportPlotAscii(object):
         parent.path_ascii = os.path.dirname(filename)
         filename = makeSureFileHasExtension(filename, default_ext=".txt")
         countsxdata = _data.countsxdata
-        pixelaxis = range(len(countsxdata))
+        pixelaxis = list(range(len(countsxdata)))
 
-        text = ['#Counts vs Pixels (low resolution range)','#Pixel - Counts']
+        text = ['#Counts vs Pixels (low resolution range)', '#Pixel - Counts']
         sz = len(pixelaxis)
         for i in range(sz):
             _line = str(pixelaxis[i]) + ' ' + str(countsxdata[i])
@@ -80,15 +80,15 @@ class ExportPlotAscii(object):
     def export_it(self):
         parent = self.parent
         big_table_data = parent.big_table_data
-        [row,col] = self.get_current_row_col_displayed()
+        [row, col] = self.get_current_row_col_displayed()
         _data = big_table_data[row, col]
         run_number = _data.run_number
         default_filename = 'REFL_' + run_number + '_yt.txt'
         path = parent.path_ascii
         default_filename = path + '/' + default_filename
-        filename = str(QtGui.QFileDialog.getSaveFileName(parent,
-                                                         'Create Counts vs TOF ASCII File',
-                                                         default_filename))
+        filename = str(
+            QtWidgets.QFileDialog.getSaveFileName(parent, 'Create Counts vs TOF ASCII File', default_filename)
+        )
 
         if filename.strip() == '':
             return
@@ -98,10 +98,10 @@ class ExportPlotAscii(object):
         filename = makeSureFileHasExtension(filename, default_ext=".txt")
         tof = _data.tof_axis_auto_with_margin
         if tof[-1] > 1000:
-            tof /= 1000.
+            tof /= 1000.0
 
-        text = ['#Counts vs  TOF','#TOF(ms) - Counts']
-        sz = len(tof)-1
+        text = ['#Counts vs  TOF', '#TOF(ms) - Counts']
+        sz = len(tof) - 1
         for i in range(sz):
             _line = str(tof[i]) + ' ' + str(countstofdata[i])
             text.append(_line)
@@ -111,15 +111,15 @@ class ExportPlotAscii(object):
     def export_yi(self):
         parent = self.parent
         big_table_data = parent.big_table_data
-        [row,col] = self.get_current_row_col_displayed()
+        [row, col] = self.get_current_row_col_displayed()
         _data = big_table_data[row, col]
         run_number = _data.run_number
         default_filename = 'REFL_' + run_number + '_rpx.txt'
         path = parent.path_ascii
         default_filename = path + '/' + default_filename
-        filename = str(QtGui.QFileDialog.getSaveFileName(parent,
-                                                         'Create Counts vs Pixel ASCII File',
-                                                         default_filename))
+        filename = str(
+            QtWidgets.QFileDialog.getSaveFileName(parent, 'Create Counts vs Pixel ASCII File', default_filename)
+        )
 
         if filename.strip() == '':
             return
@@ -127,9 +127,9 @@ class ExportPlotAscii(object):
         parent.path_ascii = os.path.dirname(filename)
         filename = makeSureFileHasExtension(filename, default_ext=".txt")
         ycountsdata = _data.ycountsdata
-        pixelaxis = range(len(ycountsdata))
+        pixelaxis = list(range(len(ycountsdata)))
 
-        text = ['#Counts vs Pixels','#Pixel - Counts']
+        text = ['#Counts vs Pixels', '#Pixel - Counts']
         sz = len(pixelaxis)
         for i in range(sz):
             _line = str(pixelaxis[i]) + ' ' + str(ycountsdata[i])

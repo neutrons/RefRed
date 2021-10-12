@@ -1,4 +1,5 @@
-from mantid.simpleapi import *
+from mantid.api import mtd
+
 
 class CheckIfSameNxsProperty(object):
 
@@ -16,10 +17,10 @@ class CheckIfSameNxsProperty(object):
 
         _lambda_source = self.get_lambda_requested(list_wks[0])
         for index in range(1, len(list_wks)):
-                _lambda_target = self.get_lambda_requested(list_wks[index])
-                if (_lambda_target != _lambda_source):
-                    self.is_same_property = False
-                    return
+            _lambda_target = self.get_lambda_requested(list_wks[index])
+            if _lambda_target != _lambda_source:
+                self.is_same_property = False
+                return
 
         self.is_same_property = True
 

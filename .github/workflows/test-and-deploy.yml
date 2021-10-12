@@ -1,0 +1,57 @@
+name: Trigger ORNL GitLab Production Pipeline
+on: 
+  push:
+    branches:
+      - main
+      - next
+      - qa
+  pull_request:
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+       include:
+         - python-version: 3.6
+           env: "prod"
+
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: conda-incubator/setup-miniconda@v2
+        name: Setup Conda
+        with:
+          auto-update-conda: true
+          python-version: ${{ matrix.python-version }}
+      - name: Check versions
+        run: |
+            conda --version
+            which python
+            python --version
+            pwd
+            ls
+      - name: Install Dependencies
+        run: .github/scripts/install.sh
+        env:
+          PYTHON_ VERSION: ${{ matrix.python-version }}
+      - name: Setup Test Env and Run Tests
+        run: .github/scripts/test.sh
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+
+      - name: Trigger ORNL GitLab Pipeline for PROD
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
+
+      - name: Trigger ORNL GitLab Pipeline for DEV
+        if: ${{ github.ref == 'refs/heads/next' }}
+        run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main -F variables[PLAY]=conda/update -F variables[CONDA_ENV]=refred-dev ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
+
+      - name: Trigger ORNL GitLab Pipeline for QA 
+        if: ${{ github.ref == 'refs/heads/qa' }}
+        run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main -F variables[PLAY]=conda/update -F variables[CONDA_ENV]=refred-qa ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
+

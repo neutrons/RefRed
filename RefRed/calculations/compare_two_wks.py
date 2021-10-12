@@ -1,19 +1,17 @@
-from mantid.simpleapi import *
+from mantid.api import mtd
+
 
 class CompareTwoWks(object):
     '''
     will return -1, 0 or 1 according to the position of the wksToPosition in relation to the
     wksToCompareWith based on the following criteria
     '''
+
     wks_to_compare_with_run = None
     wks_to_position_run = None
     result_comparison = 0
 
-    def __init__(self,
-                 wks_to_compare_with=None,
-                 wks_to_position=None,
-                 criteria1=None,
-                 criteria2=None):
+    def __init__(self, wks_to_compare_with=None, wks_to_position=None, criteria1=None, criteria2=None):
 
         self.wks_to_compare_with_run = wks_to_compare_with
         self.wks_to_position_run = wks_to_position
@@ -31,10 +29,10 @@ class CompareTwoWks(object):
     def compare_parameter(self, param, order, param_backup=None):
         _wks_to_compare_with_run = mtd[self.wks_to_compare_with_run]
         _wks_to_position_run = mtd[self.wks_to_position_run]
-        
+
         _wks_to_compare_with_run = _wks_to_compare_with_run.getRun()
         _wks_to_position_run = _wks_to_position_run.getRun()
-        
+
         try:
             _param_wks_to_compare_with = float(_wks_to_compare_with_run.getProperty(param).value[0])
             _param_wks_to_position = float(_wks_to_position_run.getProperty(param).value[0])
@@ -61,4 +59,3 @@ class CompareTwoWks(object):
 
     def result(self):
         return self.result_comparison
-    

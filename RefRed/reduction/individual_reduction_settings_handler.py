@@ -68,8 +68,8 @@ class IndividualReductionSettingsHandler(object):
     def convert_tof_range_to_micros(self, tof_range=None):
         tof1 = float(tof_range[0])
         if tof1 < 100:
-            tof1_micros = tof1 * 1000.
-            tof2_micros = float(tof_range[1]) * 1000.
+            tof1_micros = tof1 * 1000.0
+            tof2_micros = float(tof_range[1]) * 1000.0
         else:
             tof1_micros = tof1
             tof2_micros = float(tof_range[1])

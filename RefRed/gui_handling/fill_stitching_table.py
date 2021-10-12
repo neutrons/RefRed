@@ -1,19 +1,18 @@
-from PyQt4 import QtGui, QtCore
+from qtpy import QtGui, QtCore
+from qtpy import QtWidgets
 from RefRed.gui_handling.gui_utility import GuiUtility
 from distutils.util import strtobool
 
 
 class ParentHandler(object):
-    
     def __init__(self, parent=None):
         self.parent = parent
         self.big_table_data = self.parent.big_table_data
 
 
 class FillStitchingTable(ParentHandler):
-
     def __init__(self, parent=None, row_index=0):
-        super(FillStitchingTable, self).__init__(parent = parent)
+        super(FillStitchingTable, self).__init__(parent=parent)
         self.row_index = row_index
 
     def fillRow(self, row_index=0):
@@ -22,14 +21,14 @@ class FillStitchingTable(ParentHandler):
         if self._lconfig is None:
             return
 
-        o_gui = GuiUtility(parent = self.parent)
+        o_gui = GuiUtility(parent=self.parent)
         stitching_type = o_gui.getStitchingType()
 
         self.fillTableRunNumber()
 
-        if stitching_type is 'absolute':
+        if stitching_type == 'absolute':
             self.fillTableForAbsoluteNormalization()
-        elif stitching_type is 'auto':
+        elif stitching_type == 'auto':
             self.fillTableForAutoStitching()
         else:
             self.fillTableForManualStitching()
@@ -38,7 +37,7 @@ class FillStitchingTable(ParentHandler):
 
     def fillTableRunNumber(self):
         _run_number = self.parent.ui.reductionTable.item(self._row_index, 1).text()
-        _run_item = QtGui.QTableWidgetItem(_run_number)
+        _run_item = QtWidgets.QTableWidgetItem(_run_number)
         _run_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
         self.parent.ui.dataStitchingTable.setItem(self._row_index, 0, _run_item)
 
@@ -57,15 +56,15 @@ class FillStitchingTable(ParentHandler):
         else:
             _brush.setColor(QtCore.Qt.red)
 
-        sf = "%.4f" %_sf
-        _auto_item = QtGui.QTableWidgetItem(sf)
+        sf = "%.4f" % _sf
+        _auto_item = QtWidgets.QTableWidgetItem(sf)
         _auto_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
         _auto_item.setForeground(_brush)
         self.parent.ui.dataStitchingTable.setItem(self._row_index, 1, _auto_item)
 
     def fillTableForManualStitching(self):
         _widget_manual = QtGui.QDoubleSpinBox()
-        _widget_manual.setMinimum(0.)
+        _widget_manual.setMinimum(0.0)
         sf_manual = self._lconfig.sf_manual
         _widget_manual.setValue(sf_manual)
         _widget_manual.setSingleStep(0.001)
@@ -74,7 +73,7 @@ class FillStitchingTable(ParentHandler):
 
     def fillTableForClocking(self):
         sf_clock = "%.4f" % self._lconfig.sf_clocking
-        _item_clock = QtGui.QTableWidgetItem(sf_clock)
+        _item_clock = QtWidgets.QTableWidgetItem(sf_clock)
         _item_clock.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
         _brush = QtGui.QBrush()
         if self._lconfig.is_sf_clocking_used:

@@ -1,4 +1,5 @@
-from mantid.simpleapi import *
+from mantid import mtd
+from mantid.simpleapi import CreateWorkspace, Fit, ReplaceSpecialValues
 import numpy as np
 
 
@@ -21,8 +22,9 @@ class CalculateSFoverlapRange(object):
 
         left_x_axis = left_set.reduce_q_axis
         right_x_axis = right_set.reduce_q_axis
-        [min_x, max_x, index_min_in_left, index_max_in_right, no_overlap] = \
-            self.calculateOverlapAxis(left_x_axis, right_x_axis)
+        [min_x, max_x, index_min_in_left, index_max_in_right, no_overlap] = self.calculateOverlapAxis(
+            left_x_axis, right_x_axis
+        )
 
         if no_overlap:
             _sf = 1
@@ -40,7 +42,7 @@ class CalculateSFoverlapRange(object):
 
     def applySFtoLconfig(self, lconfig):
         '''
-        use the auto_sf to the data set 
+        use the auto_sf to the data set
         '''
         y_axis = lconfig.reduce_y_axis
         e_axis = lconfig.reduce_e_axis
@@ -70,7 +72,7 @@ class CalculateSFoverlapRange(object):
         left_min_index = 0
         right_max_index = -1
 
-        if left_axis[-1] <= right_axis[0]: # no overlap
+        if left_axis[-1] <= right_axis[0]:  # no overlap
             return [_min_x, _max_x, left_min_index, right_max_index, no_overlap]
 
         _min_x = right_axis[0]
@@ -91,31 +93,24 @@ class CalculateSFoverlapRange(object):
             y_axis = data_set.tmp_y_axis[threshold_index:]
             e_axis = data_set.tmp_e_axis[threshold_index:]
         else:
-            x_axis = data_set.reduce_q_axis[:threshold_index+1]
-            y_axis = data_set.reduce_y_axis[:threshold_index+1]
-            e_axis = data_set.reduce_e_axis[:threshold_index+1]
+            x_axis = data_set.reduce_q_axis[: threshold_index + 1]
+            y_axis = data_set.reduce_y_axis[: threshold_index + 1]
+            e_axis = data_set.reduce_e_axis[: threshold_index + 1]
 
-        dataToFit = CreateWorkspace(DataX=x_axis,
-                                    DataY=y_axis,
-                                    DataE=e_axis,
-                                    Nspec=1)
+        dataToFit = CreateWorkspace(DataX=x_axis, DataY=y_axis, DataE=e_axis, Nspec=1)
 
-        dataToFit = ReplaceSpecialValues(InputWorkspace=dataToFit, 
-                                         NaNValue=0,
-                                         NaNError=0,
-                                         InfinityValue=0,
-                                         InfinityError=0)
+        dataToFit = ReplaceSpecialValues(
+            InputWorkspace=dataToFit, NaNValue=0, NaNError=0, InfinityValue=0, InfinityError=0
+        )
 
-        Fit(InputWorkspace = dataToFit, 
-            Function = "name=UserFunction, Formula=a+b*x, a=1, b=2",
-            Output='res')
+        Fit(InputWorkspace=dataToFit, Function="name=UserFunction, Formula=a+b*x, a=1, b=2", Output='res')
 
         res = mtd['res_Parameters']
 
-        b = res.cell(0,1)
-        a = res.cell(1,1)
+        b = res.cell(0, 1)
+        a = res.cell(1, 1)
 
-        return [a,b]
+        return [a, b]
 
     def findNearest(self, array, value):
         idx = (np.abs(array - value)).argmin()
@@ -123,12 +118,12 @@ class CalculateSFoverlapRange(object):
 
     def scaleToApplyForBestOverlap(self, fit_range_to_use, a_left, b_left, a_right, b_right):
         '''
-        This function will use the same overlap region and will determine the scaling to apply to 
+        This function will use the same overlap region and will determine the scaling to apply to
         the second fit to get the best match
         '''
         left_mean = self.calculateMeanOfFunctionOverRange(fit_range_to_use, a_left, b_left)
         right_mean = self.calculateMeanOfFunctionOverRange(fit_range_to_use, a_right, b_right)
-        _sf =  right_mean / left_mean
+        _sf = right_mean / left_mean
         return _sf
 
     def calculateMeanOfFunctionOverRange(self, range_to_use, a, b):
@@ -144,5 +139,5 @@ class CalculateSFoverlapRange(object):
         return _mean
 
     def fct(self, a, b, x):
-            _value = a * x + b
-            return _value
+        _value = a * x + b
+        return _value

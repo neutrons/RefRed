@@ -8,6 +8,7 @@ class CompareTwoNXSDataForSFcalculator(object):
     #4: S2H (descending order)
     #5 if everything up to this point is identical, return 0
     '''
+
     nexusToCompareWithRun = None
     nexusToPositionRun = None
     mtdToCompareWith = None
@@ -51,9 +52,9 @@ class CompareTwoNXSDataForSFcalculator(object):
             resultLessThan = 1
             resultMoreThan = -1
 
-        if (_paramNexusToPosition < _paramNexusToCompareWith):
+        if _paramNexusToPosition < _paramNexusToCompareWith:
             return resultLessThan
-        elif (_paramNexusToPosition > _paramNexusToCompareWith):
+        elif _paramNexusToPosition > _paramNexusToCompareWith:
             return resultMoreThan
         else:
             return 0
@@ -62,7 +63,7 @@ class CompareTwoNXSDataForSFcalculator(object):
         _run = _mtd.getRun()
         pcharge = float(_run.getProperty('gd_prtn_chrg').value)
 
-        #FIXME get total counts and divide pcharge/total_counts
+        # FIXME get total counts and divide pcharge/total_counts
         total_counts = float(_mtd.getNumberEvents())
 
         normalized_pcharge = pcharge / total_counts
@@ -86,9 +87,9 @@ class CompareTwoNXSDataForSFcalculator(object):
             resultLessThan = 1
             resultMoreThan = -1
 
-        if (_paramNexusToPosition < _paramNexusToCompareWith):
+        if _paramNexusToPosition < _paramNexusToCompareWith:
             return resultLessThan
-        elif (_paramNexusToPosition > _paramNexusToCompareWith):
+        elif _paramNexusToPosition > _paramNexusToCompareWith:
             return resultMoreThan
         else:
             return 0

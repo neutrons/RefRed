@@ -1,17 +1,16 @@
-from PyQt4 import QtGui
+from qtpy import QtGui, QtWidgets
 
 from RefRed.reduction_table_handling.reduction_table_handler import ReductionTableHandler
 from RefRed.metadata.display_metadata import DisplayMetadata
 
 
 class ReductionTableRightClick(object):
-    
     def __init__(self, parent=None, position=None):
         self.parent = parent
         self.position = position
 
     def run(self):
-        menu = QtGui.QMenu(self.parent)
+        menu = QtWidgets.QMenu(self.parent)
         remove_row = menu.addAction("Remove Row(s)")
         clear_table = menu.addAction("Clear Table")
         menu.addSeparator()

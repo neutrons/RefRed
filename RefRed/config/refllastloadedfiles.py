@@ -1,9 +1,10 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 '''
 This will keep record of all the last config, ascii and reduced files
 '''
 
 import os
+
 config_path = os.path.expanduser('~/tmp/path_config')
 
 reduce1 = ''

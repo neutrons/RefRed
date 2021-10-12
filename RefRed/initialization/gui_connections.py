@@ -1,5 +1,4 @@
 class GuiConnections(object):
-
     def __init__(self, parent=None):
         parent.ui.data_yt_plot.singleClick.connect(parent.single_click_data_yt_plot)
         parent.ui.data_yt_plot.leaveFigure.connect(parent.leave_figure_yt_plot)

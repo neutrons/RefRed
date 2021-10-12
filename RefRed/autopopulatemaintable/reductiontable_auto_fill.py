@@ -1,9 +1,8 @@
-import sys
+# import sys
 import time
 import numpy as np
 from itertools import chain
-from PyQt4.QtGui import QApplication
-from mantid.simpleapi import *
+from qtpy.QtWidgets import QApplication
 
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.autopopulatemaintable.extract_lconfigdataset_runs import ExtractLConfigDataSetRuns
@@ -17,6 +16,7 @@ from RefRed.mantid_utility import MantidUtility
 from RefRed.utilities import format_to_list
 from RefRed.autopopulatemaintable.auto_fill_widgets_handler import AutoFillWidgetsHandler
 from RefRed.nexus_utilities import get_run_number
+
 
 class ReductionTableAutoFill(object):
 
@@ -32,10 +32,7 @@ class ReductionTableAutoFill(object):
     data_type_selected = 'data'
     o_auto_fill_widgets_handler = None
 
-    def __init__(self, parent=None, 
-                 list_of_run_from_input='',
-                 data_type_selected='data', 
-                 reset_table=False):
+    def __init__(self, parent=None, list_of_run_from_input='', data_type_selected='data', reset_table=False):
 
         self.parent = parent
 
@@ -89,7 +86,7 @@ class ReductionTableAutoFill(object):
 
     def merge_list_of_runs(self, new_runs=None):
 
-        #manual entry of the runs
+        # manual entry of the runs
         self.raw_run_from_input = new_runs
         self.calculate_discrete_list_of_runs()  # step1 -> list_of_runs_from_input
 
@@ -153,7 +150,7 @@ class ReductionTableAutoFill(object):
     def loading_full_reductionTable(self):
         _list_nexus_sorted = self.list_nexus_sorted
         _list_runs_sorted = self.list_runs_sorted
-        _data_type_selected = self.data_type_selected
+        # _data_type_selected = self.data_type_selected
         _is_working_with_data_column = True if self.data_type_selected == 'data' else False
 
         self.parent.ui.progressBar_check5.setMinimum(0)
@@ -166,12 +163,14 @@ class ReductionTableAutoFill(object):
             _is_display_requested = self.display_of_this_row_checked(index)
             _list_run = format_to_list(_list_runs_sorted[index])
             _nexus = format_to_list(nexus)
-            o_check_and_load = CheckListRunCompatibilityAndDisplay(parent=self.parent,
-                                                                   list_run=_list_run,
-                                                                   list_nexus=_nexus,
-                                                                   row=index,
-                                                                   is_working_with_data_column=_is_working_with_data_column,
-                                                                   is_display_requested=_is_display_requested)
+            o_check_and_load = CheckListRunCompatibilityAndDisplay(
+                parent=self.parent,
+                list_run=_list_run,
+                list_nexus=_nexus,
+                row=index,
+                is_working_with_data_column=_is_working_with_data_column,
+                is_display_requested=_is_display_requested,
+            )
             o_check_and_load.run()
             self.parent.ui.progressBar_check5.setValue(index + 1)
             QApplication.processEvents()
@@ -228,10 +227,9 @@ class ReductionTableAutoFill(object):
         _list_full_file_name = self.list_nxs
         _list_run = self.full_list_of_runs
         _prefix = self.data_type_selected
-        o_load_list = LoadListNexus(list_nexus=_list_full_file_name,
-                                    list_run=_list_run,
-                                    metadata_only=False,
-                                    prefix=_prefix)
+        o_load_list = LoadListNexus(
+            list_nexus=_list_full_file_name, list_run=_list_run, metadata_only=False, prefix=_prefix
+        )
         self.list_wks_loaded = o_load_list.list_wks_loaded
         self.list_nexus_loaded = o_load_list.list_nexus_loaded
 
@@ -255,12 +253,14 @@ class ReductionTableAutoFill(object):
         self.o_auto_fill_widgets_handler.step2()
 
     def sorting_runs(self):
-        o_wks_sorted = SortLRDataList(parent=self.parent,
-                                      list_lrdata=np.array(self.list_lrdata),
-                                      list_runs=np.array(self.full_list_of_runs),
-                                      list_wks=np.array(self.list_wks_loaded),
-                                      list_nexus=np.array(self.list_nexus_loaded),
-                                      data_type_selected=self.data_type_selected)
+        o_wks_sorted = SortLRDataList(
+            parent=self.parent,
+            list_lrdata=np.array(self.list_lrdata),
+            list_runs=np.array(self.full_list_of_runs),
+            list_wks=np.array(self.list_wks_loaded),
+            list_nexus=np.array(self.list_nexus_loaded),
+            data_type_selected=self.data_type_selected,
+        )
 
         o_wks_sorted.run()
         self.list_lrdata_sorted = o_wks_sorted.list_lrdata_sorted
@@ -275,12 +275,14 @@ class ReductionTableAutoFill(object):
         list_wks_sorted = self.list_wks_sorted
         list_nexus_sorted = self.list_nexus_sorted
         is_data = True if self.data_type_selected == 'data' else False
-        o_pop_reduction_table = PopulateReductionTableFromListLRData(parent=self.parent,
-                                                                     list_lrdata=list_lrdata_sorted,
-                                                                     list_wks=list_wks_sorted,
-                                                                     list_run=list_runs_sorted,
-                                                                     list_nexus=list_nexus_sorted,
-                                                                     is_data=is_data)
+        o_pop_reduction_table = PopulateReductionTableFromListLRData(
+            parent=self.parent,
+            list_lrdata=list_lrdata_sorted,
+            list_wks=list_wks_sorted,
+            list_run=list_runs_sorted,
+            list_nexus=list_nexus_sorted,
+            is_data=is_data,
+        )
         if not is_data:
             self.list_runs_sorted = o_pop_reduction_table.list_runs_sorted
             self.list_lrdata_sorted = o_pop_reduction_table.list_lrdata_sorted

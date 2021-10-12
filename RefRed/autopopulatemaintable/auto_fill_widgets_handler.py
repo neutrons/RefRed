@@ -1,10 +1,9 @@
-from PyQt4.QtGui import QApplication
-from PyQt4 import QtCore, QtGui
+from qtpy.QtWidgets import QApplication
+from qtpy import QtCore, QtGui
 import time
 
 
 class AutoFillWidgetsHandler(object):
-
     def __init__(self, parent=None):
         self.parent = parent
         self.setup()
@@ -15,7 +14,7 @@ class AutoFillWidgetsHandler(object):
         self.parent.ui.progressBar_check5.setValue(0)
         self.parent.ui.progressBar_check2.setVisible(False)
         self.parent.ui.progressBar_check5.setVisible(False)
-        pixmap = QtGui.QPixmap(u':/General/check_icon.png')
+        pixmap = QtGui.QPixmap(':/General/check_icon.png')
         self.parent.ui.check1.setPixmap(pixmap)
         self.parent.ui.check2.setPixmap(pixmap)
         self.parent.ui.check3.setPixmap(pixmap)
@@ -49,7 +48,7 @@ class AutoFillWidgetsHandler(object):
         QApplication.processEvents()
 
     def error_step1(self):
-        pixmap = QtGui.QPixmap(u':/General/clear_icon.png')
+        pixmap = QtGui.QPixmap(':/General/clear_icon.png')
         self.parent.ui.check1.setFixedWidth(25)
         self.parent.ui.check1.setFixedHeight(25)
         self.parent.ui.check1.setPixmap(pixmap)
@@ -60,7 +59,7 @@ class AutoFillWidgetsHandler(object):
     def step2(self):
         self.parent.ui.check2.setVisible(True)
         QApplication.processEvents()
-        
+
     def step3(self):
         self.parent.ui.check3.setVisible(True)
         QApplication.processEvents()
@@ -75,7 +74,6 @@ class AutoFillWidgetsHandler(object):
 
 
 class DelayClosing(QtCore.QThread):
-
     def setup(self, parent, delay=3):
         self.parent = parent
         self.delay = delay

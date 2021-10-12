@@ -15,14 +15,11 @@ class CheckListRunCompatibility(object):
 
         list_run_found = list_run
         list_nexus_found = list_nexus
-        
-        load_object = LoadListNexus(list_nexus=list_nexus_found,
-                                    list_run=list_run_found,
-                                    metadata_only=True)
+
+        load_object = LoadListNexus(list_nexus=list_nexus_found, list_run=list_run_found, metadata_only=True)
         self.list_wks = load_object.list_wks_loaded
 
-        same_property_object = CheckIfSameNxsProperty(list_wks=self.list_wks,
-                                                      property_name='LambdaRequest')
+        same_property_object = CheckIfSameNxsProperty(list_wks=self.list_wks, property_name='LambdaRequest')
         if same_property_object.is_same_property:
             self.runs_compatible = True
         else:

@@ -31,8 +31,9 @@ class AutoTofRangeRadioButtonHandler(object):
         if self.row == -1:
             return
 
-        self.all_rows = o_gui_utility.get_other_row_with_same_run_number_as_row(row=self.row, 
-                                                                                auto_mode=is_auto_tof_selected)
+        self.all_rows = o_gui_utility.get_other_row_with_same_run_number_as_row(
+            row=self.row, auto_mode=is_auto_tof_selected
+        )
         self.col = o_gui_utility.get_data_norm_tab_selected()
         self.is_data = True if self.col == 0 else False
 
@@ -82,9 +83,7 @@ class AutoTofRangeRadioButtonHandler(object):
         _lrdata.calculate_q_range()
         big_table_data[row, 0] = _lrdata
         self.parent.big_table_data = big_table_data
-        UpdateReductionTableMetadata(parent=self.parent,
-                                     lrdata=_lrdata,
-                                     row=row)
+        UpdateReductionTableMetadata(parent=self.parent, lrdata=_lrdata, row=row)
 
     def line_edit_validation(self):
         if self.row == -1:
@@ -96,11 +95,16 @@ class AutoTofRangeRadioButtonHandler(object):
             self.recalculate_reduction_table_metadata(row=_row)
 
     def refresh_plot(self):
-        DisplayPlots(parent=self.parent,
-                     row=self.row, is_data=self.is_data,
-                     plot_yt=True, plot_yi=True,
-                     plot_it=True, plot_ix=False,
-                     refresh_reduction_table=False)
+        DisplayPlots(
+            parent=self.parent,
+            row=self.row,
+            is_data=self.is_data,
+            plot_yt=True,
+            plot_yi=True,
+            plot_it=True,
+            plot_ix=False,
+            refresh_reduction_table=False,
+        )
 
     def save_current_manual_tof_range(self):
         big_table_data = self.parent.big_table_data
@@ -110,7 +114,7 @@ class AutoTofRangeRadioButtonHandler(object):
                 _data = big_table_data[_row, _col]
                 if _data is None:
                     break
-                _data.tof_range_manual = _tof_range_manual 
+                _data.tof_range_manual = _tof_range_manual
                 _data.tof_range = _tof_range_manual
                 self.new_tof_range = _tof_range_manual
                 big_table_data[_row, _col] = _data
@@ -134,15 +138,15 @@ class AutoTofRangeRadioButtonHandler(object):
         self.parent.big_table_data = big_table_data
 
     def retrieve_tof_range_defined_by_user(self):
-        tof1 = float(self.parent.ui.TOFmanualFromValue.text()) * 1000.
-        tof2 = float(self.parent.ui.TOFmanualToValue.text()) * 1000.
+        tof1 = float(self.parent.ui.TOFmanualFromValue.text()) * 1000.0
+        tof2 = float(self.parent.ui.TOFmanualToValue.text()) * 1000.0
         return [tof1, tof2]
 
     def replace_tof_range_displayed(self):
         tof_range = self.new_tof_range
 
-        tof1 = "%.2f" % (tof_range[0] / 1000.)
-        tof2 = "%.2f" % (tof_range[1] / 1000.)
+        tof1 = "%.2f" % (tof_range[0] / 1000.0)
+        tof2 = "%.2f" % (tof_range[1] / 1000.0)
 
         self.parent.ui.TOFmanualFromValue.setText(tof1)
         self.parent.ui.TOFmanualToValue.setText(tof2)

@@ -1,5 +1,5 @@
-from PyQt4 import QtGui, QtCore
-from PyQt4.QtCore import Qt
+from qtpy import QtWidgets, QtCore
+from qtpy.QtCore import Qt
 import numpy as np
 from RefRed.plot.clear_plots import ClearPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
@@ -22,7 +22,7 @@ class ReductionTableHandler(object):
         self.__reset_default_config_file_name()
 
     def __reset_default_config_file_name(self):
-        str_new_window_title = (u"%s%s" % (window_title, self.parent.default_loaded_file))
+        str_new_window_title = "%s%s" % (window_title, self.parent.default_loaded_file)
         self.parent.setWindowTitle(str_new_window_title)
         self.parent.ui.previewLive.setEnabled(False)
         self.parent.ui.actionExportScript.setEnabled(False)
@@ -50,20 +50,23 @@ class ReductionTableHandler(object):
         for row_index in range(_from_row, _to_row + 1):
             for col_index in range(_nbr_col):
                 if col_index == 0:
-                    _widget = QtGui.QCheckBox()
+                    _widget = QtWidgets.QCheckBox()
                     _widget.setChecked(False)
                     _widget.setEnabled(True)
-                    QtCore.QObject.connect(_widget, QtCore.SIGNAL("stateChanged(int)"), 
-                                           lambda state=0, row=row_index: self.parent.reduction_table_visibility_changed_test(state, row))
+                    QtCore.QObject.connect(
+                        _widget,
+                        QtCore.SIGNAL("stateChanged(int)"),
+                        lambda state=0, row=row_index: self.parent.reduction_table_visibility_changed_test(state, row),
+                    )
                     self.parent.ui.reductionTable.setCellWidget(row_index, col_index, _widget)
 
                 elif (col_index == 1) or (col_index == 2):
-                    _item = QtGui.QTableWidgetItem()
+                    _item = QtWidgets.QTableWidgetItem()
                     _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
                     self.parent.ui.reductionTable.setItem(row_index, col_index, _item)
 
                 else:
-                    _item = QtGui.QTableWidgetItem()
+                    _item = QtWidgets.QTableWidgetItem()
                     _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
                     self.parent.ui.reductionTable.setItem(row_index, col_index, _item)
 
@@ -107,7 +110,7 @@ class ReductionTableHandler(object):
         self.parent.big_table_data = big_table_data
 
     def __is_row_displayed_in_range_selected(self):
-        _range_selected = range(self.from_row, self.to_row + 1)
+        _range_selected = list(range(self.from_row, self.to_row + 1))
         o_gui_utility = GuiUtility(parent=self.parent)
         _row_displayed = o_gui_utility.get_current_table_reduction_check_box_checked()
         if _row_displayed == -1:
@@ -137,13 +140,7 @@ class ReductionTableHandler(object):
         parent.ui.metadataS2HValue.setText('N/A')
 
     def __clear_plots(self):
-        ClearPlots(self.parent,
-                   is_data=True,
-                   is_norm=True,
-                   plot_yt=True,
-                   plot_yi=True,
-                   plot_it=True,
-                   plot_ix=True)
+        ClearPlots(self.parent, is_data=True, is_norm=True, plot_yt=True, plot_yi=True, plot_it=True, plot_ix=True)
 
     def __clear_reduction_table(self):
         nbr_row = self.parent.ui.reductionTable.rowCount()
@@ -153,5 +150,4 @@ class ReductionTableHandler(object):
                 self.parent.ui.reductionTable.item(_row, _col).setText("")
 
     def __clear_big_table_data(self):
-        self.parent.big_table_data = np.empty((self.parent.nbr_row_table_reduction,
-                                               3), dtype=object)
+        self.parent.big_table_data = np.empty((self.parent.nbr_row_table_reduction, 3), dtype=object)

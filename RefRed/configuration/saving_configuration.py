@@ -1,4 +1,4 @@
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 import os
 from RefRed.configuration.export_xml_config import ExportXMLConfig
 from RefRed.utilities import makeSureFileHasExtension
@@ -14,27 +14,22 @@ class SavingConfiguration(object):
         self.parent = parent
         self.filename = filename
 
-        StatusMessageHandler(parent=self.parent,
-                             message='Saving config ...',
-                             is_threaded=False)
+        StatusMessageHandler(parent=self.parent, message='Saving config ...', is_threaded=False)
 
     def run(self):
         if self.filename == '':
             _path = self.parent.path_config
-            _filter = ("XML (*.xml);; All Files (*.*)")
+            _filter = "XML (*.xml);; All Files (*.*)"
 
-            file_dialog = QtGui.QFileDialog(self.parent,
-                                            'Save Configuration File',
-                                            _path,
-                                            _filter)
-            file_dialog.setViewMode(QtGui.QFileDialog.List)
-            file_dialog.setFileMode(QtGui.QFileDialog.AnyFile)
-            file_dialog.setAcceptMode(QtGui.QFileDialog.AcceptSave)
+            file_dialog = QtWidgets.QFileDialog(self.parent, 'Save Configuration File', _path, _filter)
+            file_dialog.setViewMode(QtWidgets.QFileDialog.List)
+            file_dialog.setFileMode(QtWidgets.QFileDialog.AnyFile)
+            file_dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptSave)
             file_dialog.setConfirmOverwrite(True)
 
             if file_dialog.exec_():
                 filename = file_dialog.selectedFiles()[0]
-                QtGui.QApplication.processEvents()
+                QtWidgets.QApplication.processEvents()
                 self.filename = str(filename)
             else:
                 # No operation
@@ -42,12 +37,9 @@ class SavingConfiguration(object):
 
         self.parent.path_config = os.path.dirname(self.filename)
         self.filename = makeSureFileHasExtension(self.filename)
-        o_export = ExportXMLConfig(parent=self.parent,
-                                   filename=self.filename)
+        ExportXMLConfig(parent=self.parent, filename=self.filename)
 
-        StatusMessageHandler(parent=self.parent,
-                             message='Done!',
-                             is_threaded=True)
+        StatusMessageHandler(parent=self.parent, message='Done!', is_threaded=True)
 
         o_gui_utility = GuiUtility(parent=self.parent)
         o_gui_utility.new_config_file_loaded(config_file_name=self.filename)

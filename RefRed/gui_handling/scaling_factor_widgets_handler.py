@@ -1,4 +1,4 @@
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 import os
 from numpy import shape
 
@@ -18,10 +18,8 @@ class ScalingFactorWidgetsHandler(object):
 
     def browse(self):
         _path = self.parent.path_ascii
-        _filter = ("sfConfig (*.cfg);;Ascii (*.txt);;All (*.*)")
-        filename = str(QtGui.QFileDialog.getOpenFileName(self.parent,
-                                                         'Open scaling factor file',
-                                                         _path, _filter))
+        _filter = "sfConfig (*.cfg);;Ascii (*.txt);;All (*.*)"
+        filename = str(QtWidgets.QFileDialog.getOpenFileName(self.parent, 'Open scaling factor file', _path, _filter))
 
         if filename == "":
             return
@@ -52,7 +50,7 @@ class ScalingFactorWidgetsHandler(object):
         '''
         will parse the scaling factor file
         '''
-        f = open(filename,'r')
+        f = open(filename, 'r')
         _sfFactorTable = []
         for line in f.read().split('\n'):
             if (len(line) > 0) and (line[0] != '#'):
