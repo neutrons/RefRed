@@ -1097,7 +1097,7 @@
   <customwidget>
    <class>MPLWidgetNoLog</class>
    <extends>QWidget</extends>
-   <header>mplwidgetnolog.h</header>
+   <header>RefRed/interfaces/mplwidgetnolog.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -3,7 +3,7 @@ from qtpy.QtWidgets import QDialog, QFileDialog
 from qtpy.QtCore import Qt
 import os
 
-from RefRed.interfaces.plot2d_dialog_refl_interface import Ui_Dialog as UiPlot
+from RefRed.interfaces import load_ui
 # from RefRed.interfaces.mplwidget import MPLWidget
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
@@ -39,8 +39,7 @@ class PopupPlot2d(QDialog):
         QDialog.__init__(self, parent=parent)
         self.setWindowModality(False)
         self._open_instances.append(self)
-        self.ui = UiPlot()
-        self.ui.setupUi(self)
+        self.ui = load_ui("plot2d_dialog_refl_interface.ui", self)
 
         self.setWindowTitle('Detector and  Pixel vs TOF  views')
         self.init_gui()
