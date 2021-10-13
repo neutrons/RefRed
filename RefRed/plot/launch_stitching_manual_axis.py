@@ -1,6 +1,5 @@
 from qtpy.QtWidgets import QMainWindow
-from RefRed.interfaces.manual_x_axis_interface import Ui_MainWindow as UiMainWindowXaxis
-from RefRed.interfaces.manual_y_axis_interface import Ui_MainWindow as UiMainWindowYaxis
+from RefRed.interfaces import load_ui
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
 from RefRed.gui_handling.gui_utility import GuiUtility
 
@@ -57,8 +56,7 @@ class LaunchStitchingManualXAxis(QMainWindow):
         QMainWindow.__init__(self, parent=parent)
 
         self.setWindowModality(False)
-        self.ui = UiMainWindowXaxis()
-        self.ui.setupUi(self)
+        self.ui = load_ui("manual_x_axis_interface.ui", self)
         self.parent = parent
 
         o_gui_utility = GuiUtility(parent=self.parent)
@@ -138,8 +136,7 @@ class LaunchStitchingManualYAxis(QMainWindow):
     def __init__(self, parent=None, mouse_x=0, mouse_y=0):
         QMainWindow.__init__(self, parent=parent)
         self.setWindowModality(False)
-        self.ui = UiMainWindowYaxis()
-        self.ui.setupUi(self)
+        self.ui = load_ui("manual_y_axis_interface.ui", self)
         self.parent = parent
 
         o_gui_utility = GuiUtility(parent=self.parent)

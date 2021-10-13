@@ -6,7 +6,7 @@ import os
 import time
 import numpy as np
 
-from RefRed.interfaces.metadata_finder_interface import Ui_MainWindow as UiMainWindow
+from RefRed.interfaces import load_ui
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.decorators import waiting_effects
 import RefRed.utilities
@@ -36,8 +36,7 @@ class MetadataFinder(QMainWindow):
         QMainWindow.__init__(self, parent=parent)
         self.setWindowModality(False)
         self._open_instances.append(self)
-        self.ui = UiMainWindow()
-        self.ui.setupUi(self)
+        self.ui = load_ui("metadata_finder_interface.ui", self)
 
         self.initGui()
 
@@ -310,7 +309,7 @@ class MetadataFinder(QMainWindow):
 
             _index += 1
 
-    def unselectAll(self):
+    def unselectAllClicked(self):
         _config_table = self.ui.configureTable
         nbr_row = _config_table.rowCount()
         for r in range(nbr_row):
@@ -331,7 +330,7 @@ class MetadataFinder(QMainWindow):
             name = 'metadata_#%d' % index
             settings.setValue(name, metadata)
 
-    def importConfiguration(self):
+    def importConfigurationClicked(self):
         _filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
         _default_path = self.parent.path_config
         filename = str(
@@ -346,7 +345,7 @@ class MetadataFinder(QMainWindow):
         self.list_metadata_selected = data
         self.populateconfigureTable()
 
-    def exportConfiguration(self):
+    def exportConfigurationClicked(self):
         _filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
         _date = time.strftime("%d_%m_%Y")
         _default_name = self.parent.path_config + '/' + _date + '_metadata.cfg'

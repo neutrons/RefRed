@@ -1,5 +1,5 @@
 from qtpy import QtWidgets
-from RefRed.interfaces.settings_password import Ui_Dialog as UiDialog
+from RefRed.interfaces import load_ui
 
 
 class SettingsPasswordEditor(QtWidgets.QDialog):
@@ -9,8 +9,7 @@ class SettingsPasswordEditor(QtWidgets.QDialog):
     def __init__(self, parent=None):
         self.parent = parent
         QtWidgets.QDialog.__init__(self, parent=parent)
-        self.ui = UiDialog()
-        self.ui.setupUi(self)
+        self.ui = load_ui("settings_password.ui", self)
 
     def closeEvent(self, event=None):
         pass

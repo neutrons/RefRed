@@ -1,5 +1,5 @@
 from qtpy import QtCore, QtWidgets
-from RefRed.interfaces.settings import Ui_MainWindow as UiMainWindow
+from RefRed.interfaces import load_ui
 from RefRed.settings.settings_password_editor import SettingsPasswordEditor
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.settings.list_settings import ListSettings
@@ -12,8 +12,7 @@ class SettingsEditor(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         self.parent = parent
         QtWidgets.QMainWindow.__init__(self, parent=parent)
-        self.ui = UiMainWindow()
-        self.ui.setupUi(self)
+        self.ui = load_ui("settings.ui", self)
         self.populate_table()
 
     def populate_table(self):

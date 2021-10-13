@@ -4,7 +4,7 @@ from qtpy.QtCore import Qt
 import os
 import bisect
 
-from RefRed.interfaces.plot_dialog_refl_interface import Ui_Dialog as UiPlot
+from RefRed.interfaces import load_ui
 # from RefRed.interfaces.mplwidget import MPLWidget
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
@@ -51,8 +51,7 @@ class PopupPlot1d(QDialog):
         QDialog.__init__(self, parent=parent)
         self.setWindowModality(False)
         self._open_instances.append(self)
-        self.ui = UiPlot()
-        self.ui.setupUi(self)
+        self.ui = load_ui("plot_dialog_refl_interface.ui", self)
 
         self.setWindowTitle('Counts vs Y pixel (Jim and John views)')
         self.hide_and_format_invalid_widgets()

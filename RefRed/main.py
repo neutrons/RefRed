@@ -23,7 +23,7 @@ from RefRed.gui_handling.first_angle_range_gui_handler import \
 from RefRed.gui_handling.refred_interface_handler import RefRedInterfaceHandler
 from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
-from RefRed.interfaces.refred_main_interface import Ui_MainWindow
+from RefRed.interfaces import load_ui
 from RefRed.load_reduced_data_set.load_reduced_data_set_handler import LoadReducedDataSetHandler
 from RefRed.load_reduced_data_set.reduced_ascii_data_right_click import ReducedAsciiDataRightClick
 from RefRed.metadata.metadata_finder import MetadataFinder
@@ -118,8 +118,7 @@ class MainGui(QtWidgets.QMainWindow):
             QtWidgets.QMainWindow.__init__(self)
         else:
             QtWidgets.QMainWindow.__init__(self, parent, QtCore.Qt.Window)
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
+        self.ui = load_ui("refred_main_interface.ui", self)
 
         InitializeSettings(self)
         InitializeGui(self)
@@ -496,13 +495,13 @@ class MainGui(QtWidgets.QMainWindow):
         live_reduction = LiveReductionHandler(parent=self)
         live_reduction.recalculate()
 
-    def sf_button(self):
+    def sf_button_clicked(self):
         first_angle_handler = FirstAngleRangeGuiHandler(parent=self)
         first_angle_handler.setWidgets(is_sf_button_clicked=True)
         live_reduction = LiveReductionHandler(parent=self)
         live_reduction.recalculate()
 
-    def first_angle_range_button(self):
+    def first_angle_range_button_clicked(self):
         first_angle_handler = FirstAngleRangeGuiHandler(parent=self)
         first_angle_handler.setWidgets(is_sf_button_clicked=False)
         live_reduction = LiveReductionHandler(parent=self)

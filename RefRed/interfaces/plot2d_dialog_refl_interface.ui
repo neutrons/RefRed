@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>2D Selection Tool</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
@@ -572,6 +572,43 @@
                    </item>
                    <item>
                     <widget class="QSpinBox" name="peak2">
+                     <property name="palette">
+                      <palette>
+                       <active>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>0</red>
+                           <green>170</green>
+                           <blue>0</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </active>
+                       <inactive>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>0</red>
+                           <green>170</green>
+                           <blue>0</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </inactive>
+                       <disabled>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>118</red>
+                           <green>118</green>
+                           <blue>117</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </disabled>
+                      </palette>
+                     </property>
                      <property name="maximum">
                       <number>303</number>
                      </property>
@@ -587,6 +624,43 @@
                   <layout class="QVBoxLayout" name="verticalLayout_14">
                    <item>
                     <widget class="QSpinBox" name="peak1">
+                     <property name="palette">
+                      <palette>
+                       <active>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>0</red>
+                           <green>170</green>
+                           <blue>0</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </active>
+                       <inactive>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>0</red>
+                           <green>170</green>
+                           <blue>0</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </inactive>
+                       <disabled>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>118</red>
+                           <green>118</green>
+                           <blue>117</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </disabled>
+                      </palette>
+                     </property>
                      <property name="maximum">
                       <number>303</number>
                      </property>
@@ -702,6 +776,43 @@
                    </item>
                    <item>
                     <widget class="QSpinBox" name="back2">
+                     <property name="palette">
+                      <palette>
+                       <active>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>255</red>
+                           <green>0</green>
+                           <blue>0</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </active>
+                       <inactive>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>255</red>
+                           <green>0</green>
+                           <blue>0</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </inactive>
+                       <disabled>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>118</red>
+                           <green>118</green>
+                           <blue>117</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </disabled>
+                      </palette>
+                     </property>
                      <property name="maximum">
                       <number>303</number>
                      </property>
@@ -743,6 +854,43 @@
                    </item>
                    <item>
                     <widget class="QSpinBox" name="back1">
+                     <property name="palette">
+                      <palette>
+                       <active>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>255</red>
+                           <green>0</green>
+                           <blue>0</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </active>
+                       <inactive>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>255</red>
+                           <green>0</green>
+                           <blue>0</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </inactive>
+                       <disabled>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>118</red>
+                           <green>118</green>
+                           <blue>117</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </disabled>
+                      </palette>
+                     </property>
                      <property name="maximum">
                       <number>303</number>
                      </property>
@@ -791,6 +939,139 @@
            </layout>
           </widget>
          </item>
+         <item>
+          <widget class="QGroupBox" name="clocking_box">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="title">
+            <string>CLOCKING</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_15">
+            <item>
+             <widget class="QFrame" name="frame_6">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_16">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_18">
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_18">
+                   <item>
+                    <widget class="QSpinBox" name="clock2">
+                     <property name="palette">
+                      <palette>
+                       <active>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>0</red>
+                           <green>0</green>
+                           <blue>255</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </active>
+                       <inactive>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>0</red>
+                           <green>0</green>
+                           <blue>255</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </inactive>
+                       <disabled>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>118</red>
+                           <green>118</green>
+                           <blue>117</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </disabled>
+                      </palette>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_8">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="clock1">
+                     <property name="palette">
+                      <palette>
+                       <active>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>0</red>
+                           <green>0</green>
+                           <blue>255</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </active>
+                       <inactive>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>0</red>
+                           <green>0</green>
+                           <blue>255</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </inactive>
+                       <disabled>
+                        <colorrole role="Text">
+                         <brush brushstyle="SolidPattern">
+                          <color alpha="255">
+                           <red>118</red>
+                           <green>118</green>
+                           <blue>117</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                       </disabled>
+                      </palette>
+                     </property>
+                     <property name="maximum">
+                      <number>303</number>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
         </layout>
        </item>
        <item>
@@ -816,7 +1097,7 @@
   <customwidget>
    <class>MPLWidgetNoLog</class>
    <extends>QWidget</extends>
-   <header>mplwidgetnolog.h</header>
+   <header>RefRed/interfaces/mplwidgetnolog.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
@@ -824,22 +1105,6 @@
   <include location="../icons/icons.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>low_res_flag</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>Dialog</receiver>
-   <slot>activate_or_not_low_res_widgets()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>309</x>
-     <y>1118</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>689</x>
-     <y>593</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>back_flag</sender>
    <signal>clicked(bool)</signal>
@@ -921,14 +1186,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>low_res1</sender>
+   <sender>tof_from</sender>
    <signal>editingFinished()</signal>
    <receiver>Dialog</receiver>
-   <slot>manual_input_of_low_res_field()</slot>
+   <slot>manual_input_of_tof_field()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>689</x>
-     <y>1119</y>
+     <x>437</x>
+     <y>1121</y>
     </hint>
     <hint type="destinationlabel">
      <x>689</x>
@@ -953,14 +1218,46 @@
    </hints>
   </connection>
   <connection>
-   <sender>tof_from</sender>
-   <signal>editingFinished()</signal>
+   <sender>tof_manual_flag</sender>
+   <signal>clicked()</signal>
    <receiver>Dialog</receiver>
-   <slot>manual_input_of_tof_field()</slot>
+   <slot>manual_auto_tof_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>437</x>
+     <x>251</x>
      <y>1121</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>689</x>
+     <y>593</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>low_res_flag</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Dialog</receiver>
+   <slot>activate_or_not_low_res_widgets()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>309</x>
+     <y>1118</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>689</x>
+     <y>593</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>low_res1</sender>
+   <signal>editingFinished()</signal>
+   <receiver>Dialog</receiver>
+   <slot>manual_input_of_low_res_field()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>689</x>
+     <y>1119</y>
     </hint>
     <hint type="destinationlabel">
      <x>689</x>
@@ -1001,14 +1298,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>tof_manual_flag</sender>
-   <signal>clicked()</signal>
+   <sender>clock1</sender>
+   <signal>editingFinished()</signal>
    <receiver>Dialog</receiver>
-   <slot>manual_auto_tof_clicked()</slot>
+   <slot>clock_spinbox()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>251</x>
-     <y>1121</y>
+     <x>1318</x>
+     <y>1116</y>
     </hint>
     <hint type="destinationlabel">
      <x>689</x>
@@ -1032,5 +1329,6 @@
   <slot>manual_input_back1_2()</slot>
   <slot>manual_input_back2()</slot>
   <slot>manual_input_back2_2()</slot>
+  <slot>clock_spinbox()</slot>
  </slots>
 </ui>

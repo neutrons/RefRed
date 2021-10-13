@@ -4,7 +4,6 @@ import tempfile
 from qtpy import QtCore, QtGui, QtWidgets
 import matplotlib.cm
 import matplotlib.colors
-# from . import icons_rc
 from RefRed.config import plotting
 
 # set the default backend to be compatible with Qt in case someone uses pylab from IPython console

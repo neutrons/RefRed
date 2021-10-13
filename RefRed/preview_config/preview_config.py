@@ -1,7 +1,7 @@
 from qtpy import QtGui, QtWidgets
 from xml.dom import minidom
 from numpy import empty
-from RefRed.interfaces.preview_configuration import Ui_MainWindow as UiMainWindow
+from RefRed.interfaces import load_ui
 import RefRed.colors
 
 
@@ -74,8 +74,7 @@ class PreviewConfig(QtWidgets.QMainWindow):
             return
 
         QtWidgets.QMainWindow.__init__(self, parent=parent)
-        self.ui = UiMainWindow()
-        self.ui.setupUi(self)
+        self.ui = load_ui("preview_configuration.ui", self)
         _title = self._title
         self.setWindowTitle(_title)
 

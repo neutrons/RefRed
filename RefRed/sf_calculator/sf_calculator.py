@@ -10,7 +10,7 @@ import logging
 import time
 
 import RefRed.colors
-from RefRed.interfaces.sf_calculator_interface import Ui_SFCalculatorInterface
+from RefRed.interfaces import load_ui
 from RefRed.sf_calculator.fill_sf_gui_table import FillSFGuiTable
 from RefRed.sf_calculator.incident_medium_list_editor import IncidentMediumListEditor
 from RefRed.sf_calculator.load_and_sort_nxsdata_for_sf_calculator import LoadAndSortNXSDataForSFcalculator
@@ -32,7 +32,7 @@ def str2bool(v):
             return True
 
 
-class SFCalculator(QtWidgets.QMainWindow, Ui_SFCalculatorInterface):
+class SFCalculator(QtWidgets.QMainWindow):
     window_title = 'SF Calculator - '
     user_click_exit = False
     time_click1 = -1
@@ -49,7 +49,7 @@ class SFCalculator(QtWidgets.QMainWindow, Ui_SFCalculatorInterface):
 
     def __init__(self, instrument=None, instrument_list=None):
         QtWidgets.QMainWindow.__init__(self)
-        self.setupUi(self)
+        self.ui = load_ui('sf_calculator_interface.ui', self)
         self.loaded_list_of_runs = []
 
         # Default options

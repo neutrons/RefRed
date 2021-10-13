@@ -6,7 +6,7 @@ import numpy as np
 import os
 import time
 
-from RefRed.interfaces.display_metadata_interface import Ui_MainWindow as MainWindow
+from RefRed.interfaces import load_ui
 from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.utilities
 
@@ -33,8 +33,7 @@ class DisplayMetadata(QMainWindow):
 
         QMainWindow.__init__(self, parent=parent)
         self.setWindowModality(False)
-        self.ui = MainWindow()
-        self.ui.setupUi(self)
+        self.ui = load_ui("display_metadata_interface.ui", self)
         self.ui.metadataTable.setColumnWidth(0, 300)
         self.ui.metadataTable.setColumnWidth(1, 200)
         self.ui.metadataTable.setColumnWidth(2, 200)
