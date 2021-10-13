@@ -50,8 +50,16 @@ elif BACKEND == 'Qt5Agg':
     from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
     from matplotlib.backends.backend_qt5 import NavigationToolbar2QT
 
+# path where all of the icons are
+ICON_DIR = os.path.join(os.path.split(__file__)[0], '../', 'icons')
+def getIcon(filename: str) -> 'QtGui.QIcon':
+    filename_full = os.path.join(ICON_DIR, filename)
+    icon = QtGui.QIcon()
+    icon.addPixmap(QtGui.QPixmap(filename_full), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+    return icon
 
-class NavigationToolbarMine(NavigationToolbar2QT):
+
+class NavigationToolbar(NavigationToolbar2QT):
     '''
     A small change to the original navigation toolbar.
     '''
@@ -87,65 +95,59 @@ class NavigationToolbarMine(NavigationToolbar2QT):
         if BACKEND == 'Qt4Agg':
             self.basedir = os.path.join(matplotlib.rcParams['datapath'], 'images')
 
-        #        icon=QtGui.QIcon()
-        #        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/go-home.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        #        a=self.addAction(icon, 'Home', self.home)
-        #        a.setToolTip('Reset original view')
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/zoom-previous.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon = getIcon("zoom-previous.png")
         a = self.addAction(icon, 'Back', self.back)
         a.setToolTip('Back to previous view')
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/zoom-next.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+
+        icon = getIcon("zoom-next.png")
         a = self.addAction(icon, 'Forward', self.forward)
         a.setToolTip('Forward to next view')
+
         self.addSeparator()
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/transform-move.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+
+        icon = getIcon("transform-move.png")
         a = self.addAction(icon, 'Pan', self.pan)
         a.setToolTip('Pan axes with left mouse, zoom with right')
         a.setCheckable(True)
         self._actions['pan'] = a
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/zoom-select.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+
+        icon = getIcon("zoom-select.png")
         a = self.addAction(icon, 'Zoom', self.zoom)
         a.setToolTip('Zoom to rectangle')
         a.setCheckable(True)
         self._actions['zoom'] = a
+
         self.addSeparator()
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/edit-guides.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+
+        icon = getIcon("edit-guides.png")
         a = self.addAction(icon, 'Subplots', self.configure_subplots)
         a.setToolTip('Configure plot boundaries')
 
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/document-save.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon = getIcon("document-save.png")
         a = self.addAction(icon, 'Save', self.save_figure)
         a.setToolTip('Save the figure')
 
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/document-print.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon = getIcon("document-print.png")
         a = self.addAction(icon, 'Print', self.print_figure)
         a.setToolTip('Print the figure with the default printer')
 
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/export_ascii.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon = getIcon("export_ascii.png")
         a = self.addAction(icon, "Export", self.export_ascii)
         a.setToolTip('Export the plot into ASCII file')
 
         if self._with_logY:
-            icon = QtGui.QIcon()
-            icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/toggle-log.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-            self.addSeparator()
+            icon = getIcon("toggle-log.png")
             a = self.addAction(icon, 'Log', self.toggle_ylog)
             a.setToolTip('Toggle logarithmic y scale')
 
-        if self._with_logX:
-            icon = QtGui.QIcon()
-            icon.addPixmap(QtGui.QPixmap(":/MPL Toolbar/toggle-xlog.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
             self.addSeparator()
+
+        if self._with_logX:
+            icon = getIcon("toggle-xlog.png")
             a = self.addAction(icon, 'Log', self.toggle_xlog)
             a.setToolTip('Toggle logarithmic x scale')
+
+            self.addSeparator()
 
         self.buttons = {}
 
@@ -305,7 +307,7 @@ class NavigationToolbarMine(NavigationToolbar2QT):
         self.canvas.draw()
 
 
-class MplCanvasMine(FigureCanvas):
+class MplCanvas(FigureCanvas):
 
     trigger_click = QtCore.Signal(bool, bool, int, int)
     trigger_figure_left = QtCore.Signal()
@@ -360,17 +362,6 @@ class MplCanvasMine(FigureCanvas):
     def format_labels(self):
         self.ax.set_title(self.PlotTitle)
 
-    #    self.ax.title.set_fontsize(10)
-    #    self.ax.set_xlabel(self.xtitle, fontsize=9)
-    #    self.ax.set_ylabel(self.ytitle, fontsize=9)
-    #    labels_x=self.ax.get_xticklabels()
-    #    labels_y=self.ax.get_yticklabels()
-    #
-    #    for xlabel in labels_x:
-    #      xlabel.set_fontsize(8)
-    #    for ylabel in labels_y:
-    #      ylabel.set_fontsize(8)
-
     def sizeHint(self):
         w, h = self.get_width_height()
         w = max(w, self.height())
@@ -395,7 +386,7 @@ class MPLWidgetMine(QtWidgets.QWidget):
 
     def __init__(self, parent=None, with_toolbar=True, coordinates=False, with_logX=False, with_logY=False):
         QtWidgets.QWidget.__init__(self, parent)
-        self.canvas = MplCanvasMine()
+        self.canvas = MplCanvas()
 
         self.canvas.ax2 = None
         self.vbox = QtWidgets.QVBoxLayout()
@@ -403,7 +394,7 @@ class MPLWidgetMine(QtWidgets.QWidget):
             self.vbox.setMargin(1)
         self.vbox.addWidget(self.canvas)
         if with_toolbar:
-            self.toolbar = NavigationToolbarMine(self.canvas, self, with_logX=with_logX, with_logY=with_logY)
+            self.toolbar = NavigationToolbar(self.canvas, self, with_logX=with_logX, with_logY=with_logY)
             self.toolbar.coordinates = coordinates
             self.vbox.addWidget(self.toolbar)
             self.toolbar.logtogx.connect(self.logtogglex)
