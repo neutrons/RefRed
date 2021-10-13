@@ -4,7 +4,6 @@ import tempfile
 from qtpy import QtCore, QtGui, QtWidgets
 import matplotlib.cm
 import matplotlib.colors
-from . import icons_rc  # @UnusedImport
 from RefRed.config import plotting
 from matplotlib.figure import Figure
 
@@ -554,3 +553,20 @@ class MPLWidgetMine(QtWidgets.QWidget):
 
     def adjust(self, **adjustment):
         return self.canvas.fig.subplots_adjust(**adjustment)
+
+# Custom subclasses to get around the fact that qtcreator isn't making it easy to pass arguments to the constructor
+class MPLWidgetNoLog(MPLWidgetMine):
+    def __init__(self, parent=None, with_toolbar=True, coordinates=False):
+        super().__init__(parent=parent, with_toolbar=with_toolbar, coordinates=coordinates, with_logX=False, with_logY=False)
+
+class MPLWidgetXLog(MPLWidgetMine):
+    def __init__(self, parent=None, with_toolbar=True, coordinates=False):
+        super().__init__(parent=parent, with_toolbar=with_toolbar, coordinates=coordinates, with_logX=True, with_logY=False)
+
+class MPLWidget(MPLWidgetMine):
+    def __init__(self, parent=None, with_toolbar=True, coordinates=False):
+        super().__init__(parent=parent, with_toolbar=with_toolbar, coordinates=coordinates, with_logX=False, with_logY=True)
+
+class MPLWidgetXLogYLog(MPLWidgetMine):
+    def __init__(self, parent=None, with_toolbar=True, coordinates=False):
+        super().__init__(parent=parent, with_toolbar=with_toolbar, coordinates=coordinates, with_logX=True, with_logY=True)
