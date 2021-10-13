@@ -4,7 +4,6 @@ from qtpy.QtCore import Qt
 import os
 
 from RefRed.interfaces import load_ui
-# from RefRed.interfaces.mplwidget import MPLWidget
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.colors
