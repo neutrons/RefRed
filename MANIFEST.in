@@ -2,6 +2,4 @@ include MANIFEST.in
 include README
 include scripts/RefRed
 include RefRed/*
-include compile_gui.pl
 recursive-include icons *.png *.svg *.ico
-
