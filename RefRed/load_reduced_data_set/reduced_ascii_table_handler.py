@@ -30,11 +30,8 @@ class ReducedAsciiTableHandler(object):
             _widget = QtWidgets.QCheckBox()
             _widget.setChecked(False)
             _widget.setEnabled(True)
-            QtCore.QObject.connect(
-                _widget,
-                QtCore.SIGNAL("stateChanged(int)"),
-                self.parent.reduced_ascii_data_set_table_visibility_changed,
-            )
+            _widget.stateChanged.connect(self.parent.reduced_ascii_data_set_table_visibility_changed)
+
             self.parent.ui.reducedAsciiDataSetTable.setCellWidget(self.total_number_of_rows_in_table - 1, 1, _widget)
 
     def __clear_table_rows(self):
@@ -53,11 +50,8 @@ class ReducedAsciiTableHandler(object):
                 _widget = QtWidgets.QCheckBox()
                 _widget.setChecked(False)
                 _widget.setEnabled(True)
-                QtCore.QObject.connect(
-                    _widget,
-                    QtCore.SIGNAL("stateChanged(int)"),
-                    self.parent.reduced_ascii_data_set_table_visibility_changed,
-                )
+                _widget.stateChanged.connect(self.parent.reduced_ascii_data_set_table_visibility_changed)
+
                 self.parent.ui.reducedAsciiDataSetTable.setCellWidget(
                     self.total_number_of_rows_in_table - 1, 1, _widget
                 )
