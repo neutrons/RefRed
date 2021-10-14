@@ -46,9 +46,9 @@ def mantid_location(valid_versions, root_location='/opt'):
 
 
 # TODO fetch the valid versions from a configuration file
-mantid_path = mantid_location(['5.1.0'], root_location='/opt')
-sys.path.insert(0, os.path.join(mantid_path, 'bin'))
-sys.path.insert(1, os.path.join(mantid_path, 'lib'))
+# mantid_path = mantid_location(['5.1.0'], root_location='/opt')
+# sys.path.insert(0, os.path.join(mantid_path, 'bin'))
+# sys.path.insert(1, os.path.join(mantid_path, 'lib'))
 
 
 # if script was run from commandline
