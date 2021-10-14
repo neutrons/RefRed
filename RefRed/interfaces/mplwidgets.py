@@ -323,8 +323,6 @@ class MplCanvas(FigureCanvas):
         self.xaxis_style = 'linear'
         self.yaxis_style = 'linear'
         self.format_labels()
-        if BACKEND == 'Qt4Agg':
-            self.ax.hold(True)
         FigureCanvas.__init__(self, self.fig)
         # self.fc = FigureCanvas(self.fig)
         FigureCanvas.setSizePolicy(self, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
