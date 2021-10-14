@@ -1139,13 +1139,13 @@
   <customwidget>
    <class>MPLWidgetXLog</class>
    <extends>QWidget</extends>
-   <header>RefRed/interfaces/mplwidgetxlog.h</header>
+   <header>RefRed/interfaces/mplwidgets.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>MPLWidget</class>
    <extends>QWidget</extends>
-   <header>RefRed/interfaces/mplwidget.h</header>
+   <header>RefRed/interfaces/mplwidgets.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

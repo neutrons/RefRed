@@ -1071,13 +1071,13 @@
   <customwidget>
    <class>MPLWidgetXLog</class>
    <extends>QWidget</extends>
-   <header>RefRed/interfaces/mplwidgetxlog.h</header>
+   <header>RefRed/interfaces/mplwidgets.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>MPLWidgetNoLog</class>
    <extends>QWidget</extends>
-   <header>RefRed/interfaces/mplwidgetnolog.h</header>
+   <header>RefRed/interfaces/mplwidgets.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

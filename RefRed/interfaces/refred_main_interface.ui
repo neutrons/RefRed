@@ -4670,25 +4670,25 @@ p, li { white-space: pre-wrap; }
   <customwidget>
    <class>MPLWidget</class>
    <extends>QWidget</extends>
-   <header>RefRed/interfaces/mplwidget.h</header>
+   <header>RefRed/interfaces/mplwidgets.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>MPLWidgetXLog</class>
    <extends>QWidget</extends>
-   <header>RefRed/interfaces/mplwidgetxlog.h</header>
+   <header>RefRed/interfaces/mplwidgets.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>MPLWidgetNoLog</class>
    <extends>QWidget</extends>
-   <header>RefRed/interfaces/mplwidgetnolog.h</header>
+   <header>RefRed/interfaces/mplwidgets.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>MPLWidgetXLogYLog</class>
    <extends>QWidget</extends>
-   <header>RefRed/interfaces/mplwidgetxlogylog.h</header>
+   <header>RefRed/interfaces/mplwidgets.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
