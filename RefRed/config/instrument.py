@@ -2,6 +2,7 @@
 '''
 REF_L specific values.
 '''
+from os.path import expanduser
 
 config_file = ''
 
@@ -15,4 +16,4 @@ OLD_BASE_SEARCH = '*/*/%s/NeXus/REF_L_%s*'
 LIVE_DATA = '/SNS/REF_L/shared/LiveData/meta_data.xml'
 EXTENSION_SCRIPTS = '/SNS/REF_L/shared/quicknxs_scripts'
 
-local_data_base = '/users/j35/'
+local_data_base = expanduser('~/')
