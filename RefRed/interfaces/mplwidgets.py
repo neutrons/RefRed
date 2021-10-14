@@ -8,16 +8,20 @@ from matplotlib.colors import LogNorm, Normalize
 from RefRed.config import plotting
 from matplotlib.figure import Figure
 
+
 # set the default backend to be compatible with Qt in case someone uses pylab from IPython console
 def _set_default_rc():
     matplotlib.rc('font', **plotting.font)
     matplotlib.rc('savefig', **plotting.savefig)
+
+
 _set_default_rc()
 
 cmap = matplotlib.colors.LinearSegmentedColormap.from_list(
     'default', ['#0000ff', '#00ff00', '#ffff00', '#ff0000', '#bd7efc', '#000000'], N=256
 )
 matplotlib.cm.register_cmap('default', cmap=cmap)
+
 
 # set the default backend to be compatible with Qt in case someone uses pylab from IPython console
 def set_matplotlib_backend():
@@ -43,6 +47,7 @@ def set_matplotlib_backend():
         matplotlib.use(backend)
     return backend
 
+
 BACKEND = set_matplotlib_backend()
 if BACKEND == 'Qt4Agg':
     from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
@@ -50,9 +55,12 @@ if BACKEND == 'Qt4Agg':
 elif BACKEND == 'Qt5Agg':
     from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
     from matplotlib.backends.backend_qt5 import NavigationToolbar2QT
+    from matplotlib.cbook import Stack
 
 # path where all of the icons are
 ICON_DIR = os.path.join(os.path.split(__file__)[0], '../', 'icons')
+
+
 def getIcon(filename: str) -> 'QtGui.QIcon':
     filename_full = os.path.join(ICON_DIR, filename)
     icon = QtGui.QIcon()
@@ -88,7 +96,6 @@ class NavigationToolbar(NavigationToolbar2QT):
         self._with_logY = with_logY
         NavigationToolbar2QT.__init__(self, canvas, parent, coordinates)
         self.setIconSize(QtCore.QSize(20, 20))
-
 
     def _init_toolbar(self):
         if not hasattr(self, '_actions'):
@@ -333,7 +340,6 @@ class MplCanvas(FigureCanvas):
         self.fig.canvas.mpl_connect('figure_leave_event', self.figure_leave)
 
     def button_pressed(self, event):
-        _axis = self.ax.axis()
         is_x_axis_manual_zoom_requested = False
         is_manual_zoom_requested = False
 
@@ -544,19 +550,27 @@ class MPLWidgetMine(QtWidgets.QWidget):
     def adjust(self, **adjustment):
         return self.canvas.fig.subplots_adjust(**adjustment)
 
+
 # Custom subclasses to get around the fact that qtcreator isn't making it easy to pass arguments to the constructor
 class MPLWidgetNoLog(MPLWidgetMine):
     def __init__(self, parent=None, with_toolbar=True, coordinates=False):
-        super().__init__(parent=parent, with_toolbar=with_toolbar, coordinates=coordinates, with_logX=False, with_logY=False)
+        super().__init__(parent=parent, with_toolbar=with_toolbar, coordinates=coordinates,
+                         with_logX=False, with_logY=False)
+
 
 class MPLWidgetXLog(MPLWidgetMine):
     def __init__(self, parent=None, with_toolbar=True, coordinates=False):
-        super().__init__(parent=parent, with_toolbar=with_toolbar, coordinates=coordinates, with_logX=True, with_logY=False)
+        super().__init__(parent=parent, with_toolbar=with_toolbar, coordinates=coordinates,
+                         with_logX=True, with_logY=False)
+
 
 class MPLWidget(MPLWidgetMine):
     def __init__(self, parent=None, with_toolbar=True, coordinates=False):
-        super().__init__(parent=parent, with_toolbar=with_toolbar, coordinates=coordinates, with_logX=False, with_logY=True)
+        super().__init__(parent=parent, with_toolbar=with_toolbar, coordinates=coordinates,
+                         with_logX=False, with_logY=True)
+
 
 class MPLWidgetXLogYLog(MPLWidgetMine):
     def __init__(self, parent=None, with_toolbar=True, coordinates=False):
-        super().__init__(parent=parent, with_toolbar=with_toolbar, coordinates=coordinates, with_logX=True, with_logY=True)
+        super().__init__(parent=parent, with_toolbar=with_toolbar, coordinates=coordinates,
+                         with_logX=True, with_logY=True)

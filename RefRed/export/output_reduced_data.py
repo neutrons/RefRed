@@ -41,7 +41,7 @@ class OutputReducedData(QDialog):
         QDialog.__init__(self, parent=parent)
         self.setWindowModality(False)
         self._open_instances.append(self)
-        self.ui = load_ui("output_reduced_data_dialog.ui" , self)
+        self.ui = load_ui("output_reduced_data_dialog.ui", self)
         self.parent = parent
 
         self.ui.folder_error.setVisible(False)
