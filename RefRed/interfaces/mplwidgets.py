@@ -4,6 +4,7 @@ import tempfile
 from qtpy import QtCore, QtGui, QtWidgets
 import matplotlib.cm
 import matplotlib.colors
+from matplotlib.colors import LogNorm, Normalize
 from RefRed.config import plotting
 from matplotlib.figure import Figure
 
