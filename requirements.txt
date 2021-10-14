@@ -1,6 +1,7 @@
 #mantid-framework
 configobj
-matplotlib==1.5.3 # TODO NavigationToolbar2QT._views deprecated in newer in newer matplotlib
+matplotlib
 numpy
 #PyQt4
 setuptools
+qtpy
