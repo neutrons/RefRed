@@ -208,6 +208,8 @@ class Gui(object):
             from ..config.instrument import local_data_base
 
             parent.path_ascii = local_data_base
+        print('Using database in', parent.path_ascii)
+
 
     def init_error_label_widgets(self):
         '''will hide the error label by default'''

@@ -24,9 +24,6 @@ class TemplateManagement(QtWidgets.QMainWindow):
     _folder = ''
     _current_ipts = ''
 
-    debug = False
-    _debug_dst_folder = '/home/j35/sandbox/template.xml'
-
     def __init__(self, parent=None):
         self.parent = parent
 
@@ -181,9 +178,6 @@ class TemplateManagement(QtWidgets.QMainWindow):
 
         _dst = _final_auto_reduce_template_folder + '/' + _auto_reduce_name
         _src = _template_source_name
-
-        if self.debug:
-            _dst = self._debug_dst_folder
 
         shutil.copyfile(_src, _dst)
         os.chmod(

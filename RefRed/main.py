@@ -54,7 +54,6 @@ class MainGui(QtWidgets.QMainWindow):
 
     # default location
     path_ascii = '.'  # ascii file such as scaling factor file
-    path_config = '/home/j35/sandbox'  # config file of RefRed
 
     full_scaling_factor_file_name = ''
     default_loaded_file = '~/tmp.xml'
