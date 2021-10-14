@@ -5615,7 +5615,7 @@ p, li { white-space: pre-wrap; }
   </connection>
   <connection>
    <sender>previewLive</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>preview_live_config()</slot>
    <hints>
@@ -5631,7 +5631,7 @@ p, li { white-space: pre-wrap; }
   </connection>
   <connection>
    <sender>previewBrowse</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>preview_browse_config()</slot>
    <hints>
@@ -5647,7 +5647,7 @@ p, li { white-space: pre-wrap; }
   </connection>
   <connection>
    <sender>actionSettings</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>settings_editor()</slot>
    <hints>
@@ -5663,7 +5663,7 @@ p, li { white-space: pre-wrap; }
   </connection>
   <connection>
    <sender>actionNew</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>action_new()</slot>
    <hints>
@@ -5679,7 +5679,7 @@ p, li { white-space: pre-wrap; }
   </connection>
   <connection>
    <sender>actionTemplateManagement</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>launch_template_management()</slot>
    <hints>

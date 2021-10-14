@@ -162,7 +162,7 @@
  <connections>
   <connection>
    <sender>actionBrowse</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>action_browse_button()</slot>
    <hints>
