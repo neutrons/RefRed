@@ -95,7 +95,7 @@ class TemplateManagement(QtWidgets.QMainWindow):
             _is_list_files_a_template.append(_button_status)
             _button = QtWidgets.QPushButton(message)
             _button.setEnabled(_button_status)
-            QtCore.QObject.connect(_button, QtCore.SIGNAL("clicked()"), lambda row=_row: self.preview_button(row))
+            _button.clicked.connect(lambda row=_row: self.preview_button(row))
 
             self.ui.tableWidget.setCellWidget(_row, 1, _button)
 

@@ -124,11 +124,8 @@ class Gui(object):
                     _widget.setChecked(False)
                     _widget.setEnabled(True)
 
-                    QtCore.QObject.connect(
-                        _widget,
-                        QtCore.SIGNAL("stateChanged(int)"),
-                        lambda state=0, row=row_index: self.parent.reduction_table_visibility_changed_test(state, row),
-                    )
+                    _signal_func = lambda state=0,row=row_index: self.parent.reduction_table_visibility_changed_test(state, row)
+                    _widget.stateChanged.connect(_signal_func)
 
                     parent.ui.reductionTable.setCellWidget(row_index, col_index, _widget)
                 elif (col_index == 1) or (col_index == 2):
@@ -182,12 +179,7 @@ class Gui(object):
             _widget = QtWidgets.QCheckBox()
             _widget.setChecked(False)
             _widget.setEnabled(True)
-
-            QtCore.QObject.connect(
-                _widget,
-                QtCore.SIGNAL("stateChanged(int)"),
-                self.parent.reduced_ascii_data_set_table_visibility_changed,
-            )
+            _widget.stateChanged.connect(self.parent.reduced_ascii_data_set_table_visibility_changed)
             parent.ui.reducedAsciiDataSetTable.setCellWidget(row_index, 1, _widget)
 
     def set_export_stitching_settings(self):
