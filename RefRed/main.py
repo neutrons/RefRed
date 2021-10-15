@@ -444,7 +444,7 @@ class MainGui(QtWidgets.QMainWindow):
         Launch the scaling factor calculator
         """
         # We need to keep a reference to the created object for pyqt to properly start it.
-        self.sf_calculator = SFCalculator()
+        self.sf_calculator = SFCalculator(parent=self)
         self.sf_calculator.show()
 
     def stitching_sf_radio_button(self):
