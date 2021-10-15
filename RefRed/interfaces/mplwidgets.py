@@ -445,7 +445,8 @@ class MPLWidgetMine(QtWidgets.QWidget):
         '''
         Convenience to redraw the graph.
         '''
-        self.canvas.draw()
+        if self.canvas.ax.has_data():
+            self.canvas.draw()
 
     def plot(self, *args, **opts):
         '''
