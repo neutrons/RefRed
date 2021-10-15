@@ -56,8 +56,9 @@ class MainGui(QtWidgets.QMainWindow):
     path_ascii = '.'  # ascii file such as scaling factor file
 
     full_scaling_factor_file_name = ''
-    default_loaded_file = '~/tmp.xml'
-    current_loaded_file = '~/tmp.xml'
+    home_dir = os.path.expanduser("~")
+    default_loaded_file = os.path.join(home_dir, 'tmp.xml')
+    current_loaded_file = os.path.join(home_dir, 'tmp.xml')
     browsed_files = {'data': None, 'norm': None}
     current_ipts = ""
 
@@ -362,7 +363,7 @@ class MainGui(QtWidgets.QMainWindow):
         o_load_config.run()
 
     @config_file_modification_reset
-    def save_configuration(self):
+    def save_configuration(self, *args, **kwargs):
         o_save_config = SavingConfiguration(parent=self, filename=self.current_loaded_file)
         o_save_config.run()
 

@@ -1,4 +1,5 @@
 import os
+import logging
 from qtpy import QtGui, QtCore, QtWidgets
 from xml.dom import minidom
 from numpy import empty
@@ -93,6 +94,12 @@ class LoadingConfiguration(object):
     def populate_main_gui_general_settings(self):
         dom = self.dom
         RefLData = dom.getElementsByTagName('RefLData')
+
+        # Nothing to set, return early
+        if not RefLData:
+            logging.warning("No RefLData found in config, skipping.")
+            return
+
         node_0 = RefLData[0]
 
         q_step = self.getNodeValue(node_0, 'q_step')

@@ -212,8 +212,14 @@ class PreviewConfig(QtWidgets.QMainWindow):
         self.ui.systemTableWidget.resizeColumnsToContents()
 
     def _browse_file_name(self):
-        _path = self.parent.path_config
-        _title = "Select Configuration File"
-        _filter = "Config (*.xml)"
-        filename = QtWidgets.QFileDialog.getOpenFileName(self, _title, _path, _filter)
+        filename = QtWidgets.QFileDialog.getOpenFileName(
+            self,
+            caption="Select Configuration File",
+            directory=self.parent.path_config,
+            filter="Config (*.xml)",
+            )
+
+        if isinstance(filename, tuple):
+            filename = filename[0]
+
         return str(filename)
