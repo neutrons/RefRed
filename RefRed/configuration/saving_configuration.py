@@ -25,7 +25,10 @@ class SavingConfiguration(object):
             file_dialog.setViewMode(QtWidgets.QFileDialog.List)
             file_dialog.setFileMode(QtWidgets.QFileDialog.AnyFile)
             file_dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptSave)
-            file_dialog.setConfirmOverwrite(True)
+            # file_dialog.setConfirmOverwrite(True)
+            # by default, confirmation is enabled, if needed, it can be turned
+            # off with
+            # file_dialog.setOption(QtWidgets.QFileDialog.DontConfirmOverwrite, True)
 
             if file_dialog.exec_():
                 filename = file_dialog.selectedFiles()[0]
