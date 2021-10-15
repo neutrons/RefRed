@@ -47,9 +47,9 @@ class SFCalculator(QtWidgets.QMainWindow):
     loaded_list_of_runs = []
     list_nxsdata_sorted = []
 
-    def __init__(self, instrument=None, instrument_list=None):
-        QtWidgets.QMainWindow.__init__(self)
-        self.ui = load_ui('sf_calculator_interface.ui', self)
+    def __init__(self, instrument=None, instrument_list=None, parent=None):
+        super(SFCalculator, self).__init__(parent)
+        self.ui = load_ui('sf_calculator_interface.ui', baseinstance=self)
         self.loaded_list_of_runs = []
 
         # Default options
