@@ -282,7 +282,6 @@ class DisplayMetadata(QMainWindow):
             str(_default_name),
             _filter,
         )
-
         if filename:
             self.parent.path_config = os.path.dirname(filename)
 
@@ -313,7 +312,6 @@ class DisplayMetadata(QMainWindow):
             str(_default_name),
             _filter,
         )
-
         if filename:
             self.parent.path_config = os.path.dirname(filename)
 
@@ -327,7 +325,6 @@ class DisplayMetadata(QMainWindow):
     def importConfiguration(self):
         _filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
         _default_path = self.parent.path_config
-
         filename, _ = QFileDialog.getOpenFileName(
             self,
             "Import Metadata Configuration",

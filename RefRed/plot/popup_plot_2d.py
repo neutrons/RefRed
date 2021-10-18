@@ -1,3 +1,4 @@
+from numpy.lib.arraysetops import isin
 from qtpy.QtGui import QPalette
 from qtpy.QtWidgets import QDialog, QFileDialog
 from qtpy.QtCore import Qt
@@ -88,7 +89,6 @@ class PopupPlot2d(QDialog):
             caption,
             str(default_filename),
         )
-
         if filename:
             self.parent.path_ascii = os.path.dirname(filename)
             image = _active_data.ytofdata
@@ -105,7 +105,6 @@ class PopupPlot2d(QDialog):
             caption,
             str(default_filename),
         )
-
         if filename:
             self.parent.path_ascii = os.path.dirname(filename)
             image = _active_data.xydata

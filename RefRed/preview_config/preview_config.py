@@ -231,7 +231,7 @@ class PreviewConfig(QtWidgets.QMainWindow):
             self,
             caption="Select Configuration File",
             directory=self.parent.path_config,
-            filter="Config (*.xml)",
+            filter="Config (*.xml)"
         )
 
         return str(filename)
