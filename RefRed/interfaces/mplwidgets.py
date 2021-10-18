@@ -258,10 +258,15 @@ class NavigationToolbar(NavigationToolbar2QT):
                 filters.append(filter_)
         filters = ';;'.join(filters)
 
-        fname = QtWidgets.QFileDialog.getSaveFileName(self, "Choose a filename to save to", start, filters)
-        if fname:
+        rst = QtWidgets.QFileDialog.getSaveFileName(self, "Choose a filename to save to", start, filters)
+        if isinstance(rst, tuple):
+            figname, _ = rst
+        else:
+            figname = rst
+
+        if figname:
             try:
-                self.canvas.print_figure(str(fname))
+                self.canvas.print_figure(str(figname))
             except Exception as e:
                 QtWidgets.QMessageBox.critical(
                     self, "Error saving file", str(e), QtWidgets.QMessageBox.Ok, QtGui.QMessageBox.NoButton

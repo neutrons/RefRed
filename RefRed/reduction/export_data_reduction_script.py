@@ -51,7 +51,13 @@ class ExportDataReductionScript(object):
         default_filename = 'REFL_' + run_number + '_data_reduction_script.py'
         path = parent.path_ascii
         default_filename = path + '/' + default_filename
-        filename = str(QtWidgets.QFileDialog.getSaveFileName(parent, 'Python Script', default_filename))
+
+        rst = str(QtWidgets.QFileDialog.getSaveFileName(parent, 'Python Script', default_filename))
+        if isinstance(rst):
+            filename, _ = rst
+        else:
+            filename = rst
+
         if filename == '':
             return
         self.export_filename = filename

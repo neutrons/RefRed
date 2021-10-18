@@ -52,8 +52,14 @@ class ReductionSfCalculator(object):
             # TODO: get last path from QSettings
             _path = os.path.expanduser('~')
             _filter = 'python (*.py);;All (*.*)'
-            filename = QtWidgets.QFileDialog.getSaveFileName(self.sf_gui, 'Export Script File', _path, filter=_filter)
-            if not (filename == ''):
+
+            rst = QtWidgets.QFileDialog.getSaveFileName(self.sf_gui, 'Export Script File', _path, filter=_filter)
+            if isinstance(rst, tuple):
+                filename, _ = rst
+            else:
+                filename = rst
+
+            if filename != '':
                 self.export_script_file = filename
             else:
                 # No file is specified: user cancel the operation

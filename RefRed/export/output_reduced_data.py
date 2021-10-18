@@ -114,9 +114,13 @@ class OutputReducedData(QDialog):
         default_filename = path + '/' + default_filename
         # directory = path
         _filter = "Reduced Ascii (*.txt);; All (*.*)"
-        filename = str(
-            QFileDialog.getSaveFileName(self, 'Select Location and Name', directory=default_filename, filter=(_filter))
-        )
+        rst = QFileDialog.getSaveFileName(self, 'Select Location and Name', directory=default_filename, filter=(_filter))
+
+        if isinstance(rst, tuple):
+            filename, _ = rst
+        else:
+            filename = rst
+
         if filename.strip() == '':
             return
 

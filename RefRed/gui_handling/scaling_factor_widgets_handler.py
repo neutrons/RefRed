@@ -19,7 +19,12 @@ class ScalingFactorWidgetsHandler(object):
     def browse(self):
         _path = self.parent.path_ascii
         _filter = "sfConfig (*.cfg);;Ascii (*.txt);;All (*.*)"
-        filename = str(QtWidgets.QFileDialog.getOpenFileName(self.parent, 'Open scaling factor file', _path, _filter))
+        rst = QtWidgets.QFileDialog.getOpenFileName(self.parent, 'Open scaling factor file', _path, _filter)
+
+        if isinstance(rst, tuple):
+            filename, _ = rst
+        else:
+            filename = rst
 
         if filename == "":
             return

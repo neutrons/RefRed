@@ -37,7 +37,12 @@ class ExportPlotAscii(object):
         default_filename = 'REFL_' + run_number + '_2dPxVsTof.txt'
         path = parent.path_ascii
         default_filename = path + '/' + default_filename
-        filename = str(QtWidgets.QFileDialog.getSaveFileName(parent, 'Create 2D Pixel VS TOF', default_filename))
+        rst = QtWidgets.QFileDialog.getSaveFileName(parent, 'Create 2D Pixel VS TOF', default_filename)
+
+        if isinstance(rst, tuple):
+            filename, _ = rst
+        else:
+            filename = rst
 
         if filename.strip() == '':
             return
@@ -56,11 +61,14 @@ class ExportPlotAscii(object):
         default_filename = 'REFL_' + run_number + '_ix.txt'
         path = parent.path_ascii
         default_filename = path + '/' + default_filename
-        filename = str(
-            QtWidgets.QFileDialog.getSaveFileName(
+        rst = QtWidgets.QFileDialog.getSaveFileName(
                 parent, 'Create Counts vs Pixel (low resolution range) ASCII File', default_filename
             )
-        )
+
+        if isinstance(rst, tuple):
+            filename, _ = rst
+        else:
+            filename = rst
 
         if filename.strip() == '':
             return
@@ -86,9 +94,12 @@ class ExportPlotAscii(object):
         default_filename = 'REFL_' + run_number + '_yt.txt'
         path = parent.path_ascii
         default_filename = path + '/' + default_filename
-        filename = str(
-            QtWidgets.QFileDialog.getSaveFileName(parent, 'Create Counts vs TOF ASCII File', default_filename)
-        )
+        rst = QtWidgets.QFileDialog.getSaveFileName(parent, 'Create Counts vs TOF ASCII File', default_filename)
+
+        if isinstance(rst, tuple):
+            filename, _ = rst
+        else:
+            filename = rst
 
         if filename.strip() == '':
             return
@@ -117,9 +128,12 @@ class ExportPlotAscii(object):
         default_filename = 'REFL_' + run_number + '_rpx.txt'
         path = parent.path_ascii
         default_filename = path + '/' + default_filename
-        filename = str(
-            QtWidgets.QFileDialog.getSaveFileName(parent, 'Create Counts vs Pixel ASCII File', default_filename)
-        )
+        rst = QtWidgets.QFileDialog.getSaveFileName(parent, 'Create Counts vs Pixel ASCII File', default_filename)
+
+        if isinstance(rst, tuple):
+            filename, _ = rst
+        else:
+            filename = rst
 
         if filename.strip() == '':
             return
