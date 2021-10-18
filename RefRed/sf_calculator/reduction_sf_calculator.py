@@ -1,6 +1,7 @@
 from qtpy import QtWidgets
 import time
 import os
+import logging
 import mantid.simpleapi as api
 from typing import Union
 
@@ -93,6 +94,9 @@ class ReductionSfCalculator(object):
         from_to_index_same_lambda = self.generateIndexSameLambda()
         # # This is to expose for testing
         # self._from_to_index_same_lambda = from_to_index_same_lambda
+        if from_to_index_same_lambda is None:
+            self.sf_gui.updateProgressBar(0.0)
+            pass
 
         nbr_scripts = self.nbr_scripts
 
@@ -242,16 +246,20 @@ class ReductionSfCalculator(object):
         from_to_index_same_lambda = np.zeros((nbr_scripts, 2))
 
         first_index_lambda = 0
-        ref_lambda = lambda_list[0]
-        index_script = 0
-        for i in range(1, self.nbr_row):
-            live_lambda = lambda_list[i]
-            if live_lambda != ref_lambda:
-                from_to_index_same_lambda[index_script, :] = [first_index_lambda, i - 1]
-                first_index_lambda = i
-                ref_lambda = live_lambda
-                index_script += 1
-            if i == (self.nbr_row - 1):
-                from_to_index_same_lambda[index_script, :] = [first_index_lambda, i]
+        if len(lambda_list) > 0:
+            ref_lambda = lambda_list[0]
+            index_script = 0
+            for i in range(1, self.nbr_row):
+                live_lambda = lambda_list[i]
+                if live_lambda != ref_lambda:
+                    from_to_index_same_lambda[index_script, :] = [first_index_lambda, i - 1]
+                    first_index_lambda = i
+                    ref_lambda = live_lambda
+                    index_script += 1
+                if i == (self.nbr_row - 1):
+                    from_to_index_same_lambda[index_script, :] = [first_index_lambda, i]
+        else:
+            logging.warning("empty lambda_list, skipping")
+            return None
 
         return from_to_index_same_lambda

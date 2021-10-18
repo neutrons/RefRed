@@ -227,7 +227,7 @@ class SFCalculator(QtWidgets.QMainWindow):
         _filter = 'SF config (*.cfg);;All (*.*)'
         fileSelector = QtWidgets.QFileDialog()
         fileSelector.setFileMode(QtWidgets.QFileDialog.AnyFile)
-        fileSelector.setFilter(_filter)
+        fileSelector.setNameFilter(_filter)
         fileSelector.setViewMode(QtWidgets.QFileDialog.List)
         fileSelector.setDirectory(self.save_directory)
         if fileSelector.exec_():
