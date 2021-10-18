@@ -276,10 +276,7 @@ class ReductionSfCalculator(object):
             for i in range(1, self.nbr_row):
                 live_lambda = lambda_list[i]
                 if live_lambda != ref_lambda:
-                    from_to_index_same_lambda[index_script, :] = [
-                        first_index_lambda,
-                        i - 1,
-                    ]
+                    from_to_index_same_lambda[index_script, :] = [first_index_lambda, i - 1]
                     first_index_lambda = i
                     ref_lambda = live_lambda
                     index_script += 1
