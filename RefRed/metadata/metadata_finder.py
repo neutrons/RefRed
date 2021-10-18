@@ -333,11 +333,15 @@ class MetadataFinder(QMainWindow):
     def importConfigurationClicked(self):
         _filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
         _default_path = self.parent.path_config
-        filename = str(
-            QFileDialog.getOpenFileName(
+
+        rst = QFileDialog.getOpenFileName(
                 self, 'Import Metadata Configuration', directory=_default_path, filter=(_filter)
             )
-        )
+        if isinstance(rst, tuple):
+            filename, _ = rst
+        else:
+            filename = rst
+
         if filename == '':
             return
 
@@ -349,9 +353,13 @@ class MetadataFinder(QMainWindow):
         _filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
         _date = time.strftime("%d_%m_%Y")
         _default_name = self.parent.path_config + '/' + _date + '_metadata.cfg'
-        filename = str(
-            QFileDialog.getSaveFileName(self, 'Export Metadata Configuration', _default_name, filter=(_filter))
-        )
+
+        rst = QFileDialog.getSaveFileName(self, 'Export Metadata Configuration', _default_name, filter=(_filter))
+        if isinstance(rst, tuple):
+            filename, _ = rst
+        else:
+            filename = rst
+
         if filename == '':
             return
 
@@ -393,7 +401,13 @@ class MetadataFinder(QMainWindow):
         _filter = 'List Metadata (*_metadata.txt);;All(*.*)'
         _run_number = str(self.list_runs[0])
         _default_name = self.parent.path_ascii + '/' + _run_number + '_metadata.txt'
-        filename = QFileDialog.getSaveFileName(self, 'Save Metadata into ASCII', _default_name, filter=_filter)
+
+        rst = QFileDialog.getSaveFileName(self, 'Save Metadata into ASCII', _default_name, filter=_filter)
+        if isinstance(rst, tuple):
+            filename, _ = rst
+        else:
+            filename = rst
+
         if filename == '':
             return
 

@@ -82,7 +82,12 @@ class PopupPlot1d(QDialog):
         default_filename = 'REFL_' + str(run_number) + '_rpx.txt'
         _path = self.parent.path_ascii
         default_filename = _path + '/' + default_filename
-        filename = QFileDialog.getSaveFileName(self, 'Create Counts vs Pixel ASCII File', default_filename)
+
+        rst = QFileDialog.getSaveFileName(self, 'Create Counts vs Pixel ASCII File', default_filename)
+        if isinstance(rst, tuple):
+            filename, _ = rst
+        else:
+            filename = rst
 
         # user canceled
         if str(filename).strip() == '':

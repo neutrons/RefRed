@@ -14,15 +14,16 @@ class LoadReducedDataSetHandler(object):
     def run(self):
         _path = self.parent.path_ascii
         _filter = "Ascii File (*.txt);; All (*.*)"
-        filename = str(
-            QtWidgets.QFileDialog.getOpenFileName(
+        rst = QtWidgets.QFileDialog.getOpenFileName(
                 self.parent, 'Open Reduced Data Set', directory=_path, filter=_filter
             )
-        )
+        if isinstance(rst, tuple):
+            filename, _ = rst
+        else:
+            filename = rst
 
         QtWidgets.QApplication.processEvents()
-        if not (filename == ""):
-
+        if filename != "":
             _new_path = os.path.dirname(filename)
             self.parent.path_ascii = _new_path
 
