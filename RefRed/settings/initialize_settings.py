@@ -27,6 +27,7 @@ class InitializeSettings(object):
                 if _value in ['', 'None']:
                     _value = o_list_settings.__dict__[_key]
                 else:
+                    print("THIS IS THE KEY :: " + _key)
                     _value = float(_value)
             _gui_metadata[_key] = _value
 
