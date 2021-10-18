@@ -15,10 +15,10 @@ def config_file_modification_reset(function):
 
     @wraps(function)
     def new_function(*args, **kw):
-        ui = args[0]  # first argument is the ui
-        current_loaded_file = ui.current_loaded_file
+        mainwindow = args[0]  # first argument is the mainwindow
+        current_loaded_file = mainwindow.current_loaded_file
         str_new_window_title = "%s%s" % (window_title, current_loaded_file)
-        ui.setWindowTitle(str_new_window_title)
+        mainwindow.setWindowTitle(str_new_window_title)
         function(*args, **kw)
 
     return new_function
@@ -27,12 +27,13 @@ def config_file_modification_reset(function):
 def config_file_has_been_modified(function):
 
     @wraps(function)
-    def new_function(self, *args, **kw):
-        current_loaded_file = self.current_loaded_file
-        self.ui.reduceButton.setEnabled(True)
+    def new_function(*args, **kw):
+        mainwindow = args[0]  # first argument is the ui
+        current_loaded_file = mainwindow.current_loaded_file
+        mainwindow.ui.reduceButton.setEnabled(True)
         str_new_window_title = "%s%s*" % (window_title, current_loaded_file)
-        self.setWindowTitle(str_new_window_title)
-        function(self, *args, **kw)
+        mainwindow.setWindowTitle(str_new_window_title)
+        function(*args, **kw)
 
     return new_function
 
