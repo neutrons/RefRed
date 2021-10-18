@@ -14,6 +14,10 @@ def findNeXusFullPath(run_number):
 
 
 def get_run_number(nexus_full_path):
-    with h5py.File(nexus_full_path, 'r') as hf:
-        _run_number = hf.get('entry/run_number')
+    try:
+        with h5py.File(nexus_full_path, 'r') as hf:
+            _run_number = hf.get('entry/run_number')
         return _run_number[0]
+    except:
+        logger.error("Could not find run number: %s" % sys.exc_info()[1])
+        return None

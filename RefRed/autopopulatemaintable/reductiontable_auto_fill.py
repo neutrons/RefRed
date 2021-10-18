@@ -219,7 +219,8 @@ class ReductionTableAutoFill(object):
         _list_runs = []
         for _nxs in _list_nxs:
             _run = get_run_number(_nxs)
-            _list_runs.append(_run)
+            if _run is not None:
+                _list_runs.append(_run)
 
         self.full_list_of_runs = _list_runs
 
