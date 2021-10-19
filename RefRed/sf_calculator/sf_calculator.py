@@ -339,8 +339,7 @@ class SFCalculator(QtWidgets.QMainWindow):
 
         for index, _row in enumerate(list_row):
             if index == 0:
-                color = self.tableWidget.item(_row, 0).backgroundColor()
-
+                color = self.tableWidget.item(_row, 0).background()
             _item = QtWidgets.QTableWidgetItem("%s" % lambda_range[0])
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             _item.setBackground(color)
@@ -356,7 +355,7 @@ class SFCalculator(QtWidgets.QMainWindow):
         list_row = self.getListRowWithSameLambda()
         for index, _row in enumerate(list_row):
             if index == 0:
-                color = self.tableWidget.item(_row, 0).backgroundColor()
+                color = self.tableWidget.item(_row, 0).background()
             _item = QtWidgets.QTableWidgetItem("%.2f" % tof1_ms)
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             _brush_OK = QtGui.QBrush()
