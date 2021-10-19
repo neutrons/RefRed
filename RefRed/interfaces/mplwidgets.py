@@ -288,7 +288,7 @@ class NavigationToolbar(NavigationToolbar2QT):
                 ax.set_yscale('log')
             self.ylog = not self.ylog
 
-            self.canvas.draw()
+            self.canvas.draw_idle()
             self.logtogy.emit(ax.get_yscale())
         else:
             imgs = ax.images + [c for c in ax.collections if c.__class__.__name__ == 'QuadMesh']
@@ -299,7 +299,7 @@ class NavigationToolbar(NavigationToolbar2QT):
                 else:
                     for img in imgs:
                         img.set_norm(LogNorm(norm.vmin, norm.vmax))
-        self.canvas.draw()
+        self.canvas.draw_idle()
 
     def toggle_xlog(self, *args):
         ax = self.canvas.ax
@@ -311,7 +311,7 @@ class NavigationToolbar(NavigationToolbar2QT):
                 ax.set_xscale('log')
             self.xlog = not self.xlog
 
-            self.canvas.draw()
+            self.canvas.draw_idle()
             self.logtogx.emit(ax.get_xscale())
         else:
             imgs = ax.images + [c for c in ax.collections if c.__class__.__name__ == 'QuadMesh']
@@ -322,7 +322,7 @@ class NavigationToolbar(NavigationToolbar2QT):
                 else:
                     for img in imgs:
                         img.set_norm(LogNorm(norm.vmin, norm.vmax))
-        self.canvas.draw()
+        self.canvas.draw_idle()
 
 
 class MplCanvas(FigureCanvas):
@@ -438,9 +438,9 @@ class MPLWidgetMine(QtWidgets.QWidget):
         Make sure the cursor is reset to it's default when leaving the widget.
         In some cases the zoom cursor does not reset when leaving the plot.
         '''
-        if self.toolbar:
-            QtWidgets.QApplication.restoreOverrideCursor()
-            self.toolbar._lastCursor = None
+        # if self.toolbar:
+        #     QtWidgets.QApplication.restoreOverrideCursor()
+        #     self.toolbar._lastCursor = None
         return QtWidgets.QWidget.leaveEvent(self, event)
 
     def set_config(self, config):
@@ -456,7 +456,7 @@ class MPLWidgetMine(QtWidgets.QWidget):
         Convenience to redraw the graph.
         '''
         if self.canvas.ax.has_data():
-            self.canvas.draw()
+            self.canvas.draw_idle()
 
     def plot(self, *args, **opts):
         '''

@@ -63,7 +63,13 @@ class FillStitchingTable(ParentHandler):
         self.parent.ui.dataStitchingTable.setItem(self._row_index, 1, _auto_item)
 
     def fillTableForManualStitching(self):
-        _widget_manual = QtGui.QDoubleSpinBox()
+        try:
+            # assume PyQt4
+            _widget_manual = QtGui.QDoubleSpinBox()
+        except AttributeError:
+            # assume PyQt5
+            _widget_manual = QtWidgets.QDoubleSpinBox()
+
         _widget_manual.setMinimum(0.0)
         sf_manual = self._lconfig.sf_manual
         _widget_manual.setValue(sf_manual)
