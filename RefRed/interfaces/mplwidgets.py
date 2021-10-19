@@ -96,8 +96,13 @@ class NavigationToolbar(NavigationToolbar2QT):
         self._with_logY = with_logY
         NavigationToolbar2QT.__init__(self, canvas, parent, coordinates)
         self.setIconSize(QtCore.QSize(20, 20))
+        #
+        self.setup_toolbar()
 
     def _init_toolbar(self):
+        pass
+
+    def setup_toolbar(self):
         if not hasattr(self, '_actions'):
             self._actions = {}
         if BACKEND == 'Qt4Agg':
