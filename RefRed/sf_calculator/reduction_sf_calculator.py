@@ -97,6 +97,8 @@ class ReductionSfCalculator(object):
         if from_to_index_same_lambda is None:
             self.sf_gui.updateProgressBar(0.0)
             pass
+        # # This is to expose for testing
+        # self._from_to_index_same_lambda = from_to_index_same_lambda
 
         nbr_scripts = self.nbr_scripts
 
