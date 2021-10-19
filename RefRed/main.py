@@ -56,8 +56,9 @@ class MainGui(QtWidgets.QMainWindow):
     path_ascii = '.'  # ascii file such as scaling factor file
 
     full_scaling_factor_file_name = ''
-    default_loaded_file = '~/tmp.xml'
-    current_loaded_file = '~/tmp.xml'
+    home_dir = os.path.expanduser("~")
+    default_loaded_file = os.path.join(home_dir, 'tmp.xml')
+    current_loaded_file = os.path.join(home_dir, 'tmp.xml')
     browsed_files = {'data': None, 'norm': None}
     current_ipts = ""
 
@@ -260,91 +261,91 @@ class MainGui(QtWidgets.QMainWindow):
         ReductionTableCheckBox(parent=self, row_selected=_current_table_reduction_row_selected)
 
     @config_file_has_been_modified
-    def widget_modified(self, value_changed):
+    def widget_modified(self, *args, **kwargs):
         pass
 
     @config_file_has_been_modified
-    def data_back_spinbox_validation(self):
+    def data_back_spinbox_validation(self, *args, **kwargs):
         DataBackSpinbox(parent=self)
 
     @config_file_has_been_modified
-    def data_back_checkbox(self):
+    def data_back_checkbox(self, *args, **kwargs):
         DataBackSpinbox(parent=self)
 
     @config_file_has_been_modified
-    def data_peak_spinbox_validation(self):
+    def data_peak_spinbox_validation(self, *args, **kwargs):
         DataPeakSpinbox(parent=self)
 
     @config_file_has_been_modified
-    def norm_back_spinbox_validation(self):
+    def norm_back_spinbox_validation(self, *args, **kwargs):
         NormBackSpinbox(parent=self)
 
     @config_file_has_been_modified
-    def norm_back_checkbox(self):
+    def norm_back_checkbox(self, *args, **kwargs):
         NormBackSpinbox(parent=self)
 
     @config_file_has_been_modified
-    def norm_peak_spinbox_validation(self):
+    def norm_peak_spinbox_validation(self, *args, **kwargs):
         NormPeakSpinbox(parent=self)
 
     @config_file_has_been_modified
-    def data_low_res_validation(self):
+    def data_low_res_validation(self, *args, **kwargs):
         DataLowResSpinbox(parent=self)
 
     @config_file_has_been_modified
-    def norm_low_res_validation(self):
+    def norm_low_res_validation(self, *args, **kwargs):
         NormLowResSpinbox(parent=self)
 
     @config_file_has_been_modified
-    def data_low_res_checkbox(self):
+    def data_low_res_checkbox(self, *args, **kwargs):
         DataLowResSpinbox(parent=self)
 
     @config_file_has_been_modified
-    def norm_low_res_checkbox(self):
+    def norm_low_res_checkbox(self, *args, **kwargs):
         NormLowResSpinbox(parent=self)
 
     @config_file_has_been_modified
-    def clock_validation(self):
+    def clock_validation(self, *args, **kwargs):
         DataClockingSpinbox(parent=self)
 
     @config_file_has_been_modified
-    def auto_tof_range_radio_button(self):
+    def auto_tof_range_radio_button(self, *args, **kwargs):
         o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent=self)
         o_auto_tof_range.setup()
         o_auto_tof_range.radio_button_handler()
 
     @config_file_has_been_modified
-    def manual_tof_range_line_edit_validation(self):
+    def manual_tof_range_line_edit_validation(self, *args, **kwargs):
         o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent=self)
         o_auto_tof_range.setup()
         o_auto_tof_range.line_edit_validation()
 
     @config_file_has_been_modified
-    def data_norm_sequence_event(self):
+    def data_norm_sequence_event(self, *args, **kwargs):
         self.data_sequence_event()
         self.norm_sequence_event()
 
     @config_file_has_been_modified
-    def data_sequence_event(self):
+    def data_sequence_event(self, *args, **kwargs):
         str_data_input = self.ui.data_sequence_lineEdit.text()
         ReductionTableAutoFill(parent=self, list_of_run_from_input=str_data_input, data_type_selected='data')
         self.ui.data_sequence_lineEdit.setText('')
         self.norm_sequence_event()
 
     @config_file_has_been_modified
-    def data_browse_button(self):
+    def data_browse_button(self, *args, **kwargs):
         BrowsingRuns(parent=self, data_type='data')
         ReductionTableAutoFill(parent=self, list_of_run_from_input='', data_type_selected='data')
         self.ui.data_sequence_lineEdit.setText('')
 
     @config_file_has_been_modified
-    def norm_sequence_event(self):
+    def norm_sequence_event(self, *args, **kwargs):
         str_norm_input = self.ui.norm_sequence_lineEdit.text()
         ReductionTableAutoFill(parent=self, list_of_run_from_input=str_norm_input, data_type_selected='norm')
         self.ui.norm_sequence_lineEdit.setText('')
 
     @config_file_has_been_modified
-    def norm_browse_button(self):
+    def norm_browse_button(self, *args, **kwargs):
         BrowsingRuns(parent=self, data_type='norm')
         ReductionTableAutoFill(parent=self, list_of_run_from_input='', data_type_selected='norm')
         self.ui.norm_sequence_lineEdit.setText('')
@@ -362,7 +363,7 @@ class MainGui(QtWidgets.QMainWindow):
         o_load_config.run()
 
     @config_file_modification_reset
-    def save_configuration(self):
+    def save_configuration(self, *args, **kwargs):
         o_save_config = SavingConfiguration(parent=self, filename=self.current_loaded_file)
         o_save_config.run()
 
@@ -379,12 +380,12 @@ class MainGui(QtWidgets.QMainWindow):
         o_preview_config.show()
 
     @config_file_has_been_modified
-    def use_scaling_factor_checkbox(self, status):
+    def use_scaling_factor_checkbox(self, status, *args, **kwargs):
         o_scaling_factor = ScalingFactorWidgetsHandler(parent=self)
         o_scaling_factor.checkbox(status=status)
 
     @config_file_has_been_modified
-    def browse_scaling_factor_button(self):
+    def browse_scaling_factor_button(self, *args, **kwargs):
         o_scaling_factor = ScalingFactorWidgetsHandler(parent=self)
         o_scaling_factor.browse()
 
@@ -431,7 +432,7 @@ class MainGui(QtWidgets.QMainWindow):
         o_export_plot.export()
 
     @config_file_has_been_modified
-    def reduction_table_right_click(self, position):
+    def reduction_table_right_click(self, position, *args, **kwargs):
         o_reduction_table_right_click = ReductionTableRightClick(parent=self, position=position)
         o_reduction_table_right_click.run()
 
@@ -444,7 +445,7 @@ class MainGui(QtWidgets.QMainWindow):
         Launch the scaling factor calculator
         """
         # We need to keep a reference to the created object for pyqt to properly start it.
-        self.sf_calculator = SFCalculator()
+        self.sf_calculator = SFCalculator(parent=self)
         self.sf_calculator.show()
 
     def stitching_sf_radio_button(self):

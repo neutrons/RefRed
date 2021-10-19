@@ -1,7 +1,8 @@
+import os
+import logging
 from RefRed.configuration.export_stitching_ascii_settings import ExportStitchingAsciiSettings
 from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
 from RefRed.gui_handling.gui_utility import GuiUtility
-import os
 
 
 class ExportXMLConfig(object):
@@ -35,7 +36,7 @@ class ExportXMLConfig(object):
         row_highest_q = o_gui_utility.get_row_with_highest_q()
 
         _ref_lrdata = big_table_data[row_highest_q, 0]
-        _ref_clocking = _ref_lrdata.clocking
+        _ref_clocking = _ref_lrdata.clocking if _ref_lrdata else ''
 
         for row in range(row_highest_q):
             _lrdata = big_table_data[row, 0]
@@ -250,6 +251,7 @@ class ExportXMLConfig(object):
         if os.path.isfile(filename):
             os.remove(filename)
 
-        f = open(filename, 'w')
-        f.writelines(str_array)
-        f.close()
+        with open(filename, 'w') as outfile:
+            outfile.writelines(str_array)
+
+        logging.info(f"Config is saved to {filename}.")

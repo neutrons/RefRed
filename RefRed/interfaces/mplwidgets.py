@@ -96,8 +96,13 @@ class NavigationToolbar(NavigationToolbar2QT):
         self._with_logY = with_logY
         NavigationToolbar2QT.__init__(self, canvas, parent, coordinates)
         self.setIconSize(QtCore.QSize(20, 20))
+        #
+        self.setup_toolbar()
 
     def _init_toolbar(self):
+        pass
+
+    def setup_toolbar(self):
         if not hasattr(self, '_actions'):
             self._actions = {}
         if BACKEND == 'Qt4Agg':
@@ -258,10 +263,15 @@ class NavigationToolbar(NavigationToolbar2QT):
                 filters.append(filter_)
         filters = ';;'.join(filters)
 
-        fname = QtWidgets.QFileDialog.getSaveFileName(self, "Choose a filename to save to", start, filters)
-        if fname:
+        rst = QtWidgets.QFileDialog.getSaveFileName(self, "Choose a filename to save to", start, filters)
+        if isinstance(rst, tuple):
+            figname, _ = rst
+        else:
+            figname = rst
+
+        if figname:
             try:
-                self.canvas.print_figure(str(fname))
+                self.canvas.print_figure(str(figname))
             except Exception as e:
                 QtWidgets.QMessageBox.critical(
                     self, "Error saving file", str(e), QtWidgets.QMessageBox.Ok, QtGui.QMessageBox.NoButton
@@ -445,7 +455,8 @@ class MPLWidgetMine(QtWidgets.QWidget):
         '''
         Convenience to redraw the graph.
         '''
-        self.canvas.draw()
+        if self.canvas.ax.has_data():
+            self.canvas.draw()
 
     def plot(self, *args, **opts):
         '''

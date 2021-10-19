@@ -78,7 +78,12 @@ class PopupPlot2d(QDialog):
         default_filename = 'REFL_' + run_number + '_2dPxVsTof.txt'
         path = self.parent.path_ascii
         default_filename = path + '/' + default_filename
-        filename = QFileDialog.getSaveFileName(self, 'Create 2D Pixel VS TOF', default_filename)
+
+        rst = QFileDialog.getSaveFileName(self, 'Create 2D Pixel VS TOF', default_filename)
+        if isinstance(rst, tuple):
+            filename, _ = rst
+        else:
+            filename = rst
 
         if str(filename).strip() == '':
             # 			info('User Canceled Outpout ASCII')
@@ -94,7 +99,12 @@ class PopupPlot2d(QDialog):
         default_filename = 'REFL_' + run_number + '_2dDetectorView.txt'
         path = self.parent.path_ascii
         default_filename = path + '/' + default_filename
-        filename = QFileDialog.getSaveFileName(self, 'Create 2D Y Pixel VS X Pixel (Detector View)', default_filename)
+
+        rst = QFileDialog.getSaveFileName(self, 'Create 2D Y Pixel VS X Pixel (Detector View)', default_filename)
+        if isinstance(rst, tuple):
+            filename, _ = rst
+        else:
+            filename = rst
 
         if str(filename).strip() == '':
             # 			info('User Canceled Outpout ASCII')

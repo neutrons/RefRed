@@ -17,14 +17,14 @@ class InitializeSettings(object):
         for _key in _list_keys:
             if _key == 'clocking_pixel':
                 _value = str(_settings.value(_key))
-                if _value == '':
+                if _value in ['', 'None']:
                     _value = o_list_settings.__dict__[_key]
                 else:
                     [px1, px2] = _value.split(",")
                     _value = [int(px1), int(px2)]
             else:
                 _value = str(_settings.value(_key))
-                if _value == '':
+                if _value in ['', 'None']:
                     _value = o_list_settings.__dict__[_key]
                 else:
                     _value = float(_value)

@@ -47,9 +47,9 @@ class SFCalculator(QtWidgets.QMainWindow):
     loaded_list_of_runs = []
     list_nxsdata_sorted = []
 
-    def __init__(self, instrument=None, instrument_list=None):
-        QtWidgets.QMainWindow.__init__(self)
-        self.ui = load_ui('sf_calculator_interface.ui', self)
+    def __init__(self, instrument=None, instrument_list=None, parent=None):
+        super(SFCalculator, self).__init__(parent)
+        self.ui = load_ui('sf_calculator_interface.ui', baseinstance=self)
         self.loaded_list_of_runs = []
 
         # Default options
@@ -125,13 +125,13 @@ class SFCalculator(QtWidgets.QMainWindow):
         [xmin, xmax, ymin, ymax] = self.yt_plot.toolbar.home_settings
         self.yt_plot.canvas.ax.set_xlim([xmin, xmax])
         self.yt_plot.canvas.ax.set_ylim([ymin, ymax])
-        self.yt_plot.canvas.draw()
+        # self.yt_plot.canvas.draw()
 
     def homeYiPlot(self):
         [xmin, xmax, ymin, ymax] = self.yi_plot.toolbar.home_settings
         self.yi_plot.canvas.ax.set_xlim([xmin, xmax])
         self.yi_plot.canvas.ax.set_ylim([ymin, ymax])
-        self.yi_plot.canvas.draw()
+        # self.yi_plot.canvas.draw()
 
     def forceSrotTableByMetaData(self):
         print("Force sorting table by metadata")
@@ -227,7 +227,7 @@ class SFCalculator(QtWidgets.QMainWindow):
         _filter = 'SF config (*.cfg);;All (*.*)'
         fileSelector = QtWidgets.QFileDialog()
         fileSelector.setFileMode(QtWidgets.QFileDialog.AnyFile)
-        fileSelector.setFilter(_filter)
+        fileSelector.setNameFilter(_filter)
         fileSelector.setViewMode(QtWidgets.QFileDialog.List)
         fileSelector.setDirectory(self.save_directory)
         if fileSelector.exec_():
@@ -343,12 +343,12 @@ class SFCalculator(QtWidgets.QMainWindow):
 
             _item = QtWidgets.QTableWidgetItem("%s" % lambda_range[0])
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-            _item.setBackgroundColor(color)
+            _item.setBackground(color)
             self.tableWidget.setItem(_row, 2, _item)
 
             _item = QtWidgets.QTableWidgetItem("%s" % lambda_range[1])
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-            _item.setBackgroundColor(color)
+            _item.setBackground(color)
             self.tableWidget.setItem(_row, 3, _item)
 
     def updateTableWithTOFinfos(self, tof1_ms, tof2_ms):
@@ -362,14 +362,14 @@ class SFCalculator(QtWidgets.QMainWindow):
             _brush_OK = QtGui.QBrush()
             _brush_OK.setColor(RefRed.colors.VALUE_OK)
             _item.setForeground(_brush_OK)
-            _item.setBackgroundColor(color)
+            _item.setBackground(color)
             self.tableWidget.setItem(_row, 14, _item)
             _item = QtWidgets.QTableWidgetItem("%.2f" % tof2_ms)
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
             _brush_OK = QtGui.QBrush()
             _brush_OK.setColor(RefRed.colors.VALUE_OK)
             _item.setForeground(_brush_OK)
-            _item.setBackgroundColor(color)
+            _item.setBackground(color)
             self.tableWidget.setItem(_row, 15, _item)
 
     def getListRowWithSameLambda(self):
@@ -778,7 +778,7 @@ class SFCalculator(QtWidgets.QMainWindow):
             else:
                 ylim = 255
             self.yt_plot.canvas.ax.set_ylim(0, ylim)
-            self.yt_plot.canvas.draw()
+            # self.yt_plot.canvas.draw()
             [xmin, xmax] = self.yt_plot.canvas.ax.xaxis.get_view_interval()
             [ymin, ymax] = self.yt_plot.canvas.ax.yaxis.get_view_interval()
             nxsdata.all_plot_axis.yt_data_interval = [xmin, xmax, ymin, ymax]
@@ -788,7 +788,8 @@ class SFCalculator(QtWidgets.QMainWindow):
         else:
             [xmin, xmax, ymin, ymax] = nxsdata.all_plot_axis.yt_view_interval
             self.yt_plot.canvas.ax.set_ylim([ymin, ymax])
-            self.yt_plot.canvas.draw()
+
+        # self.yt_plot.canvas.draw()
 
     def plotYI(self, nxsdata, row):
         ycountsdata = nxsdata.ycountsdata
@@ -826,7 +827,7 @@ class SFCalculator(QtWidgets.QMainWindow):
             self.yi_plot.canvas.ax.set_xscale('linear')
 
         if nxsdata.all_plot_axis.yi_data_interval is None:
-            self.yi_plot.canvas.draw()
+            # self.yi_plot.canvas.draw()
             [xmin, xmax] = self.yi_plot.canvas.ax.xaxis.get_view_interval()
             [ymin, ymax] = self.yi_plot.canvas.ax.yaxis.get_view_interval()
             nxsdata.all_plot_axis.yi_data_interval = [xmin, xmax, ymin, ymax]
@@ -837,7 +838,8 @@ class SFCalculator(QtWidgets.QMainWindow):
             [xmin, xmax, ymin, ymax] = nxsdata.all_plot_axis.yi_view_interval
             self.yi_plot.canvas.ax.set_xlim([xmin, xmax])
             self.yi_plot.canvas.ax.set_ylim([ymin, ymax])
-            self.yi_plot.canvas.draw()
+
+        # self.yi_plot.canvas.draw()
 
     def saveNXSdata(self, nxsdata, row):
         list_nxsdata_sorted = self.list_nxsdata_sorted
