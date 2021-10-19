@@ -9,7 +9,7 @@ class SFFileHandler(object):
     nbr_row = -1
     nbr_column = -1
 
-    def __init__(self, parent=None, filename=''):
+    def __init__(self, parent=None, filename=""):
         self.parent = parent
         self.filename = filename
 
@@ -21,15 +21,19 @@ class SFFileHandler(object):
         _filename = self.filename
 
         try:
-            f = open(_filename, 'r')
-            sf_factor_table = []
-            for line in f.read().split('\n'):
-                if (len(line) > 0) and (line[0] != '#'):
-                    sf_factor_table.append(line.split(' '))
-            f.close()
+            with open(_filename, "r") as f:
+                sf_factor_table = []
+                for line in f.read().split("\n"):
+                    if (len(line) > 0) and (line[0] != "#"):
+                        sf_factor_table.append(line.split(" "))
             self.sf_factor_table = sf_factor_table
         except:
-            StatusMessageHandler(parent=self.parent, message='File Does Not Exist!', is_threaded=True, severity='bad')
+            StatusMessageHandler(
+                parent=self.parent,
+                message="File Does Not Exist!",
+                is_threaded=True,
+                severity="bad",
+            )
             raise ImportError
 
     def parse_lines(self):
@@ -41,7 +45,7 @@ class SFFileHandler(object):
             _table_line = []
             for _col in range(self.nbr_column):
                 _field = _sf_factor_table[_row][_col]
-                _field_split = _field.split('=')
+                _field_split = _field.split("=")
                 if _row == 0:
                     full_sf_factor_labels.append(_field_split[0])
                 _table_line.append(_field_split[1])
