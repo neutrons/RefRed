@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from qtpy.QtGui import QPalette
 from qtpy.QtWidgets import QDialog, QFileDialog
 from qtpy.QtCore import Qt
@@ -126,8 +127,8 @@ class OutputReducedData(QDialog):
 
         run_number = self.parent.ui.reductionTable.item(0, 1).text()
         default_filename = "REFL_" + run_number + "_reduced_data.txt"
-        path = self.parent.path_ascii
-        default_filename = path + "/" + default_filename
+        path = Path(self.parent.path_ascii)
+        default_filename = path + default_filename
         # directory = path
         _filter = "Reduced Ascii (*.txt);; All (*.*)"
         rst = QFileDialog.getSaveFileName(
@@ -426,9 +427,19 @@ class OutputReducedData(QDialog):
         text.append("#")
 
         nbr_row = o_gui_utility.reductionTable_nbr_row()
-        _legend = (
-            "# DataRun\tNormRun\t2theta(degrees)\tLambdaMin(A)\tLambdaMax(A)\tQmin(1/A)"
-            "\tQmax(1/A)\tScalingFactor\tTotal Counts\tpcCharge(mC)"
+        _legend = "\t".join(
+            [
+                "# DataRun",
+                "NormRun",
+                "2theta(degrees)",
+                "LambdaMin(A)",
+                "LambdaMax(A)",
+                "Qmin(1/A)",
+                "Qmax(1/A)",
+                "ScalingFactor",
+                "Total Counts",
+                "pcCharge(mC)",
+            ]
         )
         text.append(_legend)
         for _row in range(nbr_row):
