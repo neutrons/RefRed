@@ -25,6 +25,7 @@ class ReductionSfCalculator(object):
         self.sf_gui = parent
         self.export_script_flag = export_script_flag
 
+        # FIXME TODO - is it good to mix presenter/model with view?
         if export_script_flag:
             # TODO: get last path from QSettings
             _path = os.path.expanduser('~')
