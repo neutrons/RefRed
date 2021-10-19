@@ -145,9 +145,8 @@ class PreviewConfig(QtWidgets.QMainWindow):
         self._display_table()
 
     def _display_raw_file(self):
-        _file = open(self.file_name, "r")
-        data = _file.read()
-        _file.close
+        with open(self.file_name, "r") as _file:
+            data = _file.read()
         self.ui.rawTextEdit.setText(data)
 
     def _display_table(self):

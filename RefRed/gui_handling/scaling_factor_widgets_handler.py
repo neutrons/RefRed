@@ -19,7 +19,9 @@ class ScalingFactorWidgetsHandler(object):
     def browse(self):
         _path = self.parent.path_ascii
         _filter = "sfConfig (*.cfg);;Ascii (*.txt);;All (*.*)"
-        rst = QtWidgets.QFileDialog.getOpenFileName(self.parent, 'Open scaling factor file', _path, _filter)
+        rst = QtWidgets.QFileDialog.getOpenFileName(
+            self.parent, "Open scaling factor file", _path, _filter
+        )
 
         if isinstance(rst, tuple):
             filename, _ = rst
@@ -40,7 +42,7 @@ class ScalingFactorWidgetsHandler(object):
             self.parent.ui.scalingFactorFile.setText(os.path.basename(filename))
             self.parent.full_scaling_factor_file_name = filename
         except:
-            _listMedium = 'N/A'
+            _listMedium = "N/A"
 
         if self.parent.ui.selectIncidentMediumList.count() > 1:
             index = 1
@@ -52,15 +54,14 @@ class ScalingFactorWidgetsHandler(object):
         self.parent.ui.selectIncidentMediumList.setCurrentIndex(index)
 
     def parse_scaling_factor_file(self, filename):
-        '''
+        """
         will parse the scaling factor file
-        '''
-        f = open(filename, 'r')
-        _sfFactorTable = []
-        for line in f.read().split('\n'):
-            if (len(line) > 0) and (line[0] != '#'):
-                _sfFactorTable.append(line.split(' '))
-        f.close()
+        """
+        with open(filename, "r") as f:
+            _sfFactorTable = []
+            for line in f.read().split("\n"):
+                if (len(line) > 0) and (line[0] != "#"):
+                    _sfFactorTable.append(line.split(" "))
 
         uniqIncidentMedium = self.list_uniq_incident_medium(_sfFactorTable)
         return uniqIncidentMedium
@@ -69,9 +70,9 @@ class ScalingFactorWidgetsHandler(object):
         [nbr_row, nbr_column] = shape(table)
         first_column_only = []
         for i in range(nbr_row):
-            _line_split = table[i][0].split('=')
+            _line_split = table[i][0].split("=")
             first_column_only.append(_line_split[1])
 
         _sorted_list = sorted(set(first_column_only))
-        _sorted_list.insert(0, 'Select Incident Medium ...')
+        _sorted_list.insert(0, "Select Incident Medium ...")
         return _sorted_list
