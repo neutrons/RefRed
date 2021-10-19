@@ -26,6 +26,7 @@ class ReductionSfCalculator(object):
         self.sf_gui = parent
         self.export_script_flag = export_script_flag
 
+        # FIXME TODO - is it good to mix presenter/model with view?
         if export_script_flag:
             _path = os.path.expanduser("~")
             _filter = "python (*.py);;All (*.*)"
