@@ -200,7 +200,6 @@ class DisplayPlots(object):
             self.ix_plot_ui.canvas.ax.set_yscale('linear')
 
         if self._data.all_plot_axis.ix_data_interval is None:
-            # self.ix_plot_ui.canvas.draw()
             [xmin, xmax] = self.ix_plot_ui.canvas.ax.xaxis.get_view_interval()
             [ymin, ymax] = self.ix_plot_ui.canvas.ax.yaxis.get_view_interval()
             self._data.all_plot_axis.ix_data_interval = [xmin, xmax, ymin, ymax]
@@ -210,9 +209,8 @@ class DisplayPlots(object):
             [xmin, xmax, ymin, ymax] = self._data.all_plot_axis.ix_view_interval
             self.ix_plot_ui.canvas.ax.set_xlim([xmin, xmax])
             self.ix_plot_ui.canvas.ax.set_ylim([ymin, ymax])
-            # self.ix_plot_ui.canvas.draw()
         
-        # self.ix_plot_ui.canvas.draw()
+        self.ix_plot_ui.canvas.draw_idle()
 
     def get_ycountsdata_of_tof_range_selected(self):
         autotmin = float(self.tofRangeAuto[0])
@@ -259,7 +257,6 @@ class DisplayPlots(object):
             self.yi_plot_ui.canvas.ax.axhline(self.clocking[1], color=colors.CLOCKING_SELECTION_COLOR)
 
         if self._data.all_plot_axis.yi_data_interval is None:
-            # self.yi_plot_ui.canvas.draw()
             [xmin, xmax] = self.yi_plot_ui.canvas.ax.xaxis.get_view_interval()
             [ymin, ymax] = self.yi_plot_ui.canvas.ax.yaxis.get_view_interval()
             self._data.all_plot_axis.yi_data_interval = [xmin, xmax, ymin, ymax]
@@ -270,7 +267,7 @@ class DisplayPlots(object):
             self.yi_plot_ui.canvas.ax.set_xlim([xmin, xmax])
             self.yi_plot_ui.canvas.ax.set_ylim([ymin, ymax])
         
-        # self.yi_plot_ui.canvas.draw()
+        self.yi_plot_ui.canvas.draw_idle()
 
     def plot_it(self):
         _tof_axis = self.fullTofAxis
@@ -284,13 +281,11 @@ class DisplayPlots(object):
         autotmax = float(self.tofRangeAuto[1])
         self.it_plot_ui.canvas.ax.axvline(autotmin, color=colors.TOF_SELECTION_COLOR)
         self.it_plot_ui.canvas.ax.axvline(autotmax, color=colors.TOF_SELECTION_COLOR)
-        # self.it_plot_ui.canvas.draw()
 
         if self._data.all_plot_axis.is_it_ylog:
             self.it_plot_ui.canvas.ax.set_yscale('log')
         else:
             self.it_plot_ui.canvas.ax.set_yscale('linear')
-        # self.it_plot_ui.canvas.draw()
 
         if self._data.all_plot_axis.it_data_interval is None:
             [xmin, xmax] = self.it_plot_ui.canvas.ax.xaxis.get_view_interval()
@@ -303,7 +298,7 @@ class DisplayPlots(object):
             self.it_plot_ui.canvas.ax.set_xlim([xmin, xmax])
             self.it_plot_ui.canvas.ax.set_ylim([ymin, ymax])
 
-        # self.it_plot_ui.canvas.draw()
+        self.it_plot_ui.canvas.draw_idle()
 
     def plot_yt(self):
 
@@ -343,7 +338,6 @@ class DisplayPlots(object):
 
         if self._data.all_plot_axis.yt_data_interval is None:
             self.yt_plot_ui.canvas.ax.set_ylim(0, self.ylim)
-            # self.yt_plot_ui.canvas.draw()
             [xmin, xmax] = self.yt_plot_ui.canvas.ax.xaxis.get_view_interval()
             [ymin, ymax] = self.yt_plot_ui.canvas.ax.yaxis.get_view_interval()
             self._data.all_plot_axis.yt_data_interval = [xmin, xmax, ymin, ymax]
@@ -354,7 +348,7 @@ class DisplayPlots(object):
             self.yt_plot_ui.canvas.ax.set_xlim([xmin, xmax])
             self.yt_plot_ui.canvas.ax.set_ylim([ymin, ymax])
 
-        # self.yt_plot_ui.canvas.draw()
+        self.yt_plot_ui.canvas.draw_idle()
 
     def displayTOFrange(self, tmin, tmax, units):
         parent = self.parent

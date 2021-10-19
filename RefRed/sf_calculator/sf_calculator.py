@@ -125,13 +125,13 @@ class SFCalculator(QtWidgets.QMainWindow):
         [xmin, xmax, ymin, ymax] = self.yt_plot.toolbar.home_settings
         self.yt_plot.canvas.ax.set_xlim([xmin, xmax])
         self.yt_plot.canvas.ax.set_ylim([ymin, ymax])
-        # self.yt_plot.canvas.draw()
+        self.yt_plot.canvas.draw_idle()
 
     def homeYiPlot(self):
         [xmin, xmax, ymin, ymax] = self.yi_plot.toolbar.home_settings
         self.yi_plot.canvas.ax.set_xlim([xmin, xmax])
         self.yi_plot.canvas.ax.set_ylim([ymin, ymax])
-        # self.yi_plot.canvas.draw()
+        self.yi_plot.canvas.draw_idle()
 
     def forceSrotTableByMetaData(self):
         print("Force sorting table by metadata")
@@ -778,7 +778,6 @@ class SFCalculator(QtWidgets.QMainWindow):
             else:
                 ylim = 255
             self.yt_plot.canvas.ax.set_ylim(0, ylim)
-            # self.yt_plot.canvas.draw()
             [xmin, xmax] = self.yt_plot.canvas.ax.xaxis.get_view_interval()
             [ymin, ymax] = self.yt_plot.canvas.ax.yaxis.get_view_interval()
             nxsdata.all_plot_axis.yt_data_interval = [xmin, xmax, ymin, ymax]
@@ -789,7 +788,7 @@ class SFCalculator(QtWidgets.QMainWindow):
             [xmin, xmax, ymin, ymax] = nxsdata.all_plot_axis.yt_view_interval
             self.yt_plot.canvas.ax.set_ylim([ymin, ymax])
 
-        # self.yt_plot.canvas.draw()
+        self.yt_plot.canvas.draw_idle()
 
     def plotYI(self, nxsdata, row):
         ycountsdata = nxsdata.ycountsdata
@@ -827,7 +826,6 @@ class SFCalculator(QtWidgets.QMainWindow):
             self.yi_plot.canvas.ax.set_xscale('linear')
 
         if nxsdata.all_plot_axis.yi_data_interval is None:
-            # self.yi_plot.canvas.draw()
             [xmin, xmax] = self.yi_plot.canvas.ax.xaxis.get_view_interval()
             [ymin, ymax] = self.yi_plot.canvas.ax.yaxis.get_view_interval()
             nxsdata.all_plot_axis.yi_data_interval = [xmin, xmax, ymin, ymax]
@@ -839,7 +837,7 @@ class SFCalculator(QtWidgets.QMainWindow):
             self.yi_plot.canvas.ax.set_xlim([xmin, xmax])
             self.yi_plot.canvas.ax.set_ylim([ymin, ymax])
 
-        # self.yi_plot.canvas.draw()
+        self.yi_plot.canvas.draw_idle()
 
     def saveNXSdata(self, nxsdata, row):
         list_nxsdata_sorted = self.list_nxsdata_sorted

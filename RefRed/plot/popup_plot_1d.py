@@ -592,7 +592,8 @@ class PopupPlot1d(QDialog):
         [xmin, xmax, ymin, ymax] = self.data.all_plot_axis.yi_view_interval
         self.ui.plot_pixel_vs_counts.canvas.ax.set_xlim([xmin, xmax])
         self.ui.plot_pixel_vs_counts.canvas.ax.set_ylim([ymin, ymax])
-        #ui_plot1.canvas.draw()
+
+        ui_plot1.canvas.draw_idle()
 
     def update_counts_vs_pixel_plot(self):
         self.ui.plot_counts_vs_pixel.clear()
@@ -629,7 +630,8 @@ class PopupPlot1d(QDialog):
         [xmin, xmax, ymin, ymax] = self.data.all_plot_axis.yi_view_interval
         self.ui.plot_counts_vs_pixel.canvas.ax.set_xlim([ymin, ymax])
         self.ui.plot_counts_vs_pixel.canvas.ax.set_ylim([xmin, xmax])
-        # ui_plot2.canvas.draw()
+        
+        ui_plot2.canvas.draw_idle()
 
     def closeEvent(self, event=None):
         peak1 = self.ui.jim_peak1.value()
