@@ -2,7 +2,9 @@ from qtpy import QtGui, QtCore, QtWidgets
 import socket
 
 from RefRed.version import window_title
-from RefRed.configuration.export_stitching_ascii_settings import ExportStitchingAsciiSettings
+from RefRed.configuration.export_stitching_ascii_settings import (
+    ExportStitchingAsciiSettings,
+)
 from RefRed.plot.all_plot_axis import AllPlotAxis
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
@@ -15,12 +17,12 @@ class Gui(object):
         "Plotted",
         "Data Run #",
         "Norm. Run #",
-        '2\\u03b8 (\\u00B0)',
-        '\\u03bbmin (\\u00c5)',
-        '\\u03bbmax (\\u00c5)',
-        'Qmin (1/\\u00c5)',
-        'Qmax (1/\\u00c5)',
-        'Comments',
+        "2\\u03b8 (\\u00B0)",
+        "\\u03bbmin (\\u00c5)",
+        "\\u03bbmax (\\u00c5)",
+        "Qmin (1/\\u00c5)",
+        "Qmax (1/\\u00c5)",
+        "Comments",
     ]
     column_widths = [60, 200, 200, 65, 85, 85, 95, 95, 400]
     stitching_column_widths = [150, 60, 60]
@@ -53,7 +55,7 @@ class Gui(object):
         o_gui.init_widgets_value()
 
     def init_autopopulate_widgets(self):
-        pixmap = QtGui.QPixmap(':/General/check_icon.png')
+        pixmap = QtGui.QPixmap(":/General/check_icon.png")
         self.parent.ui.check1.setFixedWidth(25)
         self.parent.ui.check1.setFixedHeight(25)
         self.parent.ui.check1.setPixmap(pixmap)
@@ -84,18 +86,23 @@ class Gui(object):
         self.parent.ui.frame_reduction.setVisible(False)
 
     def set_gui_title(self):
-        '''Define the raw title of the main window'''
+        """Define the raw title of the main window"""
         parent = self.parent
 
         # title = window_title
-        parent.setWindowTitle('%s%s' % (window_title, '~/tmp.xml'))
+        parent.setWindowTitle("%s%s" % (window_title, "~/tmp.xml"))
 
     def set_gui_size(self):
         screen = QtWidgets.QDesktopWidget().screenGeometry()
-        self.parent.setGeometry(50, 50, self.gui_size_coeff * screen.width(), self.gui_size_coeff * screen.height())
+        self.parent.setGeometry(
+            50,
+            50,
+            self.gui_size_coeff * screen.width(),
+            self.gui_size_coeff * screen.height(),
+        )
 
     def set_statusbar(self):
-        '''Add the statusbar widgets'''
+        """Add the statusbar widgets"""
         parent = self.parent
 
         parent.eventProgress = QtWidgets.QProgressBar(parent.ui.statusbar)
@@ -105,7 +112,7 @@ class Gui(object):
         parent.ui.statusbar.addPermanentWidget(parent.eventProgress)
 
     def set_main_table(self):
-        '''Define the labels and size of the main reduction table'''
+        """Define the labels and size of the main reduction table"""
         parent = self.parent
 
         vertical_header = self.vertical_header
@@ -124,13 +131,22 @@ class Gui(object):
                     _widget.setChecked(False)
                     _widget.setEnabled(True)
 
-                    _signal_func = lambda state=0,row=row_index: self.parent.reduction_table_visibility_changed_test(state, row)
+                    _signal_func = lambda state=0, row=row_index: self.parent.reduction_table_visibility_changed_test(  # noqa: E501, E731
+                        state, row
+                    )
                     _widget.stateChanged.connect(_signal_func)
 
-                    parent.ui.reductionTable.setCellWidget(row_index, col_index, _widget)
+                    parent.ui.reductionTable.setCellWidget(
+                        row_index, col_index, _widget
+                    )
                 elif (col_index == 1) or (col_index == 2):
                     _item = QtWidgets.QTableWidgetItem()
-                    _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
+                    _flags = (
+                        QtCore.Qt.ItemIsSelectable
+                        | QtCore.Qt.ItemIsEnabled
+                        | QtCore.Qt.ItemIsEditable
+                    )
+                    _item.setFlags(_flags)
                     parent.ui.reductionTable.setItem(row_index, col_index, _item)
 
                 else:
@@ -139,7 +155,7 @@ class Gui(object):
                     parent.ui.reductionTable.setItem(row_index, col_index, _item)
 
     def set_stiching_table(self):
-        '''initialize the stiching table (labels, size...)'''
+        """initialize the stiching table (labels, size...)"""
         parent = self.parent
 
         vertical_header = ["Data Run #", "SF", "Clock."]
@@ -166,7 +182,7 @@ class Gui(object):
         parent.ui.clocking_not_found_label.setPalette(palette_red)
 
     def set_reduced_table(self):
-        '''initialize the reduced table from the stitching tabe'''
+        """initialize the reduced table from the stitching tabe"""
         parent = self.parent
 
         vertical_header = ["ASCII files", "Active"]
@@ -179,32 +195,33 @@ class Gui(object):
             _widget = QtWidgets.QCheckBox()
             _widget.setChecked(False)
             _widget.setEnabled(True)
-            _widget.stateChanged.connect(self.parent.reduced_ascii_data_set_table_visibility_changed)
+            _widget.stateChanged.connect(
+                self.parent.reduced_ascii_data_set_table_visibility_changed
+            )
             parent.ui.reducedAsciiDataSetTable.setCellWidget(row_index, 1, _widget)
 
     def set_export_stitching_settings(self):
-        '''set up the export stitching settings'''
+        """set up the export stitching settings"""
         parent = self.parent
 
         parent.exportStitchingAsciiSettings = ExportStitchingAsciiSettings()
 
     def set_default_path(self):
-        '''set up the default path when looking for nexus'''
+        """set up the default path when looking for nexus"""
         parent = self.parent
 
-        if socket.gethostname() == 'lrac.sns.gov':
+        if socket.gethostname() == "lrac.sns.gov":
             from ..config.instrument import data_base
 
             parent.path_ascii = data_base
-        elif socket.gethostname() == 'mac83978':
+        elif socket.gethostname() == "mac83978":
             from ..config.instrument import local_data_base
 
             parent.path_ascii = local_data_base
-        print('Using database in', parent.path_ascii)
-
+        print("Using database in", parent.path_ascii)
 
     def init_error_label_widgets(self):
-        '''will hide the error label by default'''
+        """will hide the error label by default"""
         parent = self.parent
         palette = QtGui.QPalette()
         palette.setColor(QtGui.QPalette.Foreground, QtCore.Qt.red)

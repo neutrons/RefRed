@@ -14,7 +14,7 @@ import RefRed.utilities
 class PopupPlot1d(QDialog):
 
     parent = None
-    data_type = 'data'
+    data_type = "data"
     data = None
     is_data = True
     row = 0
@@ -37,14 +37,14 @@ class PopupPlot1d(QDialog):
 
     nbr_pixel_y_axis = 304
 
-    def __init__(self, parent=None, data_type='data', data=None, row=0):
+    def __init__(self, parent=None, data_type="data", data=None, row=0):
 
         self.data_type = data_type
         self.parent = parent
         self.data = data
         self.row = row
-        self.col = 0 if data_type == 'data' else 1
-        self.is_data = True if data_type == 'data' else False
+        self.col = 0 if data_type == "data" else 1
+        self.is_data = True if data_type == "data" else False
         self.is_row_with_highest_q = self.is_row_with_higest_q()
 
         QDialog.__init__(self, parent=parent)
@@ -52,16 +52,28 @@ class PopupPlot1d(QDialog):
         self._open_instances.append(self)
         self.ui = load_ui("plot_dialog_refl_interface.ui", self)
 
-        self.setWindowTitle('Counts vs Y pixel (Jim and John views)')
+        self.setWindowTitle("Counts vs Y pixel (Jim and John views)")
         self.hide_and_format_invalid_widgets()
 
-        self.ui.plot_counts_vs_pixel.leaveFigure.connect(self.leave_plot_counts_vs_pixel)
-        self.ui.plot_counts_vs_pixel.toolbar.homeClicked.connect(self.home_plot_counts_vs_pixel)
-        self.ui.plot_counts_vs_pixel.toolbar.exportClicked.connect(self.export_counts_vs_pixel)
+        self.ui.plot_counts_vs_pixel.leaveFigure.connect(
+            self.leave_plot_counts_vs_pixel
+        )
+        self.ui.plot_counts_vs_pixel.toolbar.homeClicked.connect(
+            self.home_plot_counts_vs_pixel
+        )
+        self.ui.plot_counts_vs_pixel.toolbar.exportClicked.connect(
+            self.export_counts_vs_pixel
+        )
 
-        self.ui.plot_pixel_vs_counts.leaveFigure.connect(self.leave_plot_pixel_vs_counts)
-        self.ui.plot_pixel_vs_counts.toolbar.homeClicked.connect(self.home_plot_pixel_vs_counts)
-        self.ui.plot_pixel_vs_counts.toolbar.exportClicked.connect(self.export_counts_vs_pixel)
+        self.ui.plot_pixel_vs_counts.leaveFigure.connect(
+            self.leave_plot_pixel_vs_counts
+        )
+        self.ui.plot_pixel_vs_counts.toolbar.homeClicked.connect(
+            self.home_plot_pixel_vs_counts
+        )
+        self.ui.plot_pixel_vs_counts.toolbar.exportClicked.connect(
+            self.export_counts_vs_pixel
+        )
 
         _new_detector_geometry_flag = self.data.new_detector_geometry_flag
         if not _new_detector_geometry_flag:
@@ -79,18 +91,20 @@ class PopupPlot1d(QDialog):
 
         _active_data = self.data
         run_number = _active_data.run_number
-        default_filename = 'REFL_' + str(run_number) + '_rpx.txt'
+        default_filename = "REFL_" + str(run_number) + "_rpx.txt"
         _path = self.parent.path_ascii
-        default_filename = _path + '/' + default_filename
+        default_filename = _path + "/" + default_filename
 
-        rst = QFileDialog.getSaveFileName(self, 'Create Counts vs Pixel ASCII File', default_filename)
+        rst = QFileDialog.getSaveFileName(
+            self, "Create Counts vs Pixel ASCII File", default_filename
+        )
         if isinstance(rst, tuple):
             filename, _ = rst
         else:
             filename = rst
 
         # user canceled
-        if str(filename).strip() == '':
+        if str(filename).strip() == "":
             return
 
         self.parent.path_ascii = os.path.dirname(filename)
@@ -98,10 +112,10 @@ class PopupPlot1d(QDialog):
         ycountsdata = _active_data.ycountsdata
         pixelaxis = list(range(len(ycountsdata)))
 
-        text = ['#Couns vs Pixels', '#Pixel - Counts']
+        text = ["#Couns vs Pixels", "#Pixel - Counts"]
         sz = len(pixelaxis)
         for i in range(sz):
-            _line = str(pixelaxis[i]) + ' ' + str(ycountsdata[i])
+            _line = str(pixelaxis[i]) + " " + str(ycountsdata[i])
             text.append(_line)
 
         RefRed.utilities.write_ascii_file(filename, text)
@@ -135,7 +149,7 @@ class PopupPlot1d(QDialog):
         self.ui.plot_pixel_vs_counts.draw()
         self.ui.plot_counts_vs_pixel.canvas.ax.xaxis.set_data_interval(ymin, ymax)
         self.ui.plot_counts_vs_pixel.canvas.ax.yaxis.set_data_interval(xmin, xmax)
-        #self.ui.plot_counts_vs_pixel.draw()
+        # self.ui.plot_counts_vs_pixel.draw()
         self.data.all_plot_axis.yi_view_interval = [xmin, xmax, ymin, ymax]
         self.update_counts_vs_pixel_plot()
 
@@ -313,19 +327,23 @@ class PopupPlot1d(QDialog):
         # John
         ui_plot1 = self.ui.plot_pixel_vs_counts
         ui_plot1.plot(_yaxis, xaxis)
-        ui_plot1.canvas.ax.set_xlabel('counts')
-        ui_plot1.canvas.ax.set_ylabel('Pixels')
+        ui_plot1.canvas.ax.set_xlabel("counts")
+        ui_plot1.canvas.ax.set_ylabel("Pixels")
         if self.isJohnLog:
-            ui_plot1.canvas.ax.set_xscale('log')
+            ui_plot1.canvas.ax.set_xscale("log")
         else:
-            ui_plot1.canvas.ax.set_xscale('linear')
+            ui_plot1.canvas.ax.set_xscale("linear")
         ui_plot1.canvas.ax.set_ylim(0, self.nbr_pixel_y_axis - 1)
         ui_plot1.canvas.ax.axhline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
         ui_plot1.canvas.ax.axhline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
 
         if self.is_data:
-            ui_plot1.canvas.ax.axhline(clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
-            ui_plot1.canvas.ax.axhline(clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
+            ui_plot1.canvas.ax.axhline(
+                clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR
+            )
+            ui_plot1.canvas.ax.axhline(
+                clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR
+            )
 
         if back_flag:
             ui_plot1.canvas.ax.axhline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
@@ -333,11 +351,22 @@ class PopupPlot1d(QDialog):
 
         if self.data.all_plot_axis.yi_data_interval is None:
             ui_plot1.draw()
-            [xmin, xmax] = self.ui.plot_pixel_vs_counts.canvas.ax.xaxis.get_view_interval()
-            [ymin, ymax] = self.ui.plot_pixel_vs_counts.canvas.ax.yaxis.get_view_interval()
+            [
+                xmin,
+                xmax,
+            ] = self.ui.plot_pixel_vs_counts.canvas.ax.xaxis.get_view_interval()
+            [
+                ymin,
+                ymax,
+            ] = self.ui.plot_pixel_vs_counts.canvas.ax.yaxis.get_view_interval()
             self.data.all_plot_axis.yi_data_interval = [xmin, xmax, ymin, ymax]
             self.data.all_plot_axis.yi_view_interval = [xmin, xmax, ymin, ymax]
-            self.ui.plot_pixel_vs_counts.toolbar.home_settings = [xmin, xmax, ymin, ymax]
+            self.ui.plot_pixel_vs_counts.toolbar.home_settings = [
+                xmin,
+                xmax,
+                ymin,
+                ymax,
+            ]
         else:
             [xmin, xmax, ymin, ymax] = self.data.all_plot_axis.yi_view_interval
             self.ui.plot_pixel_vs_counts.canvas.ax.set_xlim([xmin, xmax])
@@ -347,20 +376,24 @@ class PopupPlot1d(QDialog):
         # Jim
         ui_plot2 = self.ui.plot_counts_vs_pixel
         ui_plot2.canvas.ax.plot(xaxis, _yaxis)
-        ui_plot2.canvas.ax.set_xlabel('Pixels')
-        ui_plot2.canvas.ax.set_ylabel('Counts')
+        ui_plot2.canvas.ax.set_xlabel("Pixels")
+        ui_plot2.canvas.ax.set_ylabel("Counts")
         if self.isJimLog:
-            ui_plot2.canvas.ax.set_yscale('log')
+            ui_plot2.canvas.ax.set_yscale("log")
         else:
-            ui_plot2.canvas.ax.set_yscale('linear')
+            ui_plot2.canvas.ax.set_yscale("linear")
         ui_plot2.canvas.ax.set_xlim(0, self.nbr_pixel_y_axis - 1)
 
         ui_plot2.canvas.ax.axvline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
         ui_plot2.canvas.ax.axvline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
 
         if self.is_data:
-            ui_plot2.canvas.ax.axvline(clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
-            ui_plot2.canvas.ax.axvline(clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
+            ui_plot2.canvas.ax.axvline(
+                clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR
+            )
+            ui_plot2.canvas.ax.axvline(
+                clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR
+            )
 
         if back_flag:
             ui_plot2.canvas.ax.axvline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
@@ -379,13 +412,13 @@ class PopupPlot1d(QDialog):
         ui_plot2.logtogy.connect(self.logtoggleylog)
 
     def logtogglexlog(self, status):
-        if status == 'log':
+        if status == "log":
             self.isJohnLog = True
         else:
             self.isJohnLog = False
 
     def logtoggleylog(self, status):
-        if status == 'log':
+        if status == "log":
             self.isJimLog = True
         else:
             self.isJimLog = False
@@ -572,12 +605,12 @@ class PopupPlot1d(QDialog):
 
         ui_plot1 = self.ui.plot_pixel_vs_counts
         ui_plot1.canvas.ax.plot(_yaxis, self.xaxis)
-        ui_plot1.canvas.ax.set_xlabel('counts')
-        ui_plot1.canvas.ax.set_ylabel('Pixels')
+        ui_plot1.canvas.ax.set_xlabel("counts")
+        ui_plot1.canvas.ax.set_ylabel("Pixels")
         if self.isJohnLog:
-            ui_plot1.canvas.ax.set_xscale('log')
+            ui_plot1.canvas.ax.set_xscale("log")
         else:
-            ui_plot1.canvas.ax.set_xscale('linear')
+            ui_plot1.canvas.ax.set_xscale("linear")
         # 		ui_plot1.canvas.ax.set_ylim(0,self.nbr_pixel_y_axis-1)
         ui_plot1.canvas.ax.axhline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
         ui_plot1.canvas.ax.axhline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
@@ -609,12 +642,12 @@ class PopupPlot1d(QDialog):
 
         ui_plot2 = self.ui.plot_counts_vs_pixel
         ui_plot2.canvas.ax.plot(self.xaxis, _yaxis)
-        ui_plot2.canvas.ax.set_xlabel('Pixels')
-        ui_plot2.canvas.ax.set_ylabel('Counts')
+        ui_plot2.canvas.ax.set_xlabel("Pixels")
+        ui_plot2.canvas.ax.set_ylabel("Counts")
         if self.isJimLog:
-            ui_plot2.canvas.ax.set_yscale('log')
+            ui_plot2.canvas.ax.set_yscale("log")
         else:
-            ui_plot2.canvas.ax.set_yscale('linear')
+            ui_plot2.canvas.ax.set_yscale("linear")
         # 		ui_plot2.canvas.ax.set_xlim(0,self.nbr_pixel_y_axis-1)
 
         ui_plot2.canvas.ax.axvline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
@@ -630,7 +663,7 @@ class PopupPlot1d(QDialog):
         [xmin, xmax, ymin, ymax] = self.data.all_plot_axis.yi_view_interval
         self.ui.plot_counts_vs_pixel.canvas.ax.set_xlim([ymin, ymax])
         self.ui.plot_counts_vs_pixel.canvas.ax.set_ylim([xmin, xmax])
-        
+
         ui_plot2.canvas.draw_idle()
 
     def closeEvent(self, event=None):
@@ -665,7 +698,7 @@ class PopupPlot1d(QDialog):
 
         self.parent.big_table_data = big_table_data
 
-        if self.data_type == 'data':
+        if self.data_type == "data":
             self.parent.ui.dataPeakFromValue.setValue(peak1)
             self.parent.ui.dataPeakToValue.setValue(peak2)
             self.parent.ui.dataBackFromValue.setValue(back1)

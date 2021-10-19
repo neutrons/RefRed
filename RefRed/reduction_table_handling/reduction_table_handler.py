@@ -40,7 +40,7 @@ class ReductionTableHandler(object):
     def __to_do_if_table_empty(self):
         """If the table is now empty, various reset algos"""
         _cell_value = str(self.parent.ui.reductionTable.item(0, 1).text())
-        if _cell_value == '':
+        if _cell_value == "":
             self.__reset_default_config_file_name()
 
     def __clear_rows_reduction_table(self):
@@ -53,13 +53,21 @@ class ReductionTableHandler(object):
                     _widget = QtWidgets.QCheckBox()
                     _widget.setChecked(False)
                     _widget.setEnabled(True)
-                    _sig_func = lambda state=0, row=row_index: self.parent.reduction_table_visibility_changed_test(state, row)
+                    _sig_func = lambda state=0, row=row_index: self.parent.reduction_table_visibility_changed_test(  # noqa: E501, E731
+                        state, row
+                    )
                     _widget.stateChanged.connect(_sig_func)
-                    self.parent.ui.reductionTable.setCellWidget(row_index, col_index, _widget)
+                    self.parent.ui.reductionTable.setCellWidget(
+                        row_index, col_index, _widget
+                    )
 
                 elif (col_index == 1) or (col_index == 2):
                     _item = QtWidgets.QTableWidgetItem()
-                    _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
+                    _item.setFlags(
+                        QtCore.Qt.ItemIsSelectable
+                        | QtCore.Qt.ItemIsEnabled
+                        | QtCore.Qt.ItemIsEditable
+                    )
                     self.parent.ui.reductionTable.setItem(row_index, col_index, _item)
 
                 else:
@@ -80,11 +88,17 @@ class ReductionTableHandler(object):
             _target_row_index = _from_row + _row_offset
             for col_index in range(_nbr_col):
                 if col_index == 0:
-                    _widget = self.parent.ui.reductionTable.cellWidget(_target_row_index, col_index)
+                    _widget = self.parent.ui.reductionTable.cellWidget(
+                        _target_row_index, col_index
+                    )
                     _widget.setChecked(self.__is_row_selected_checked(row_index))
                 else:
-                    _cell_value = self.parent.ui.reductionTable.item(row_index, col_index).text()
-                    self.parent.ui.reductionTable.item(_target_row_index, col_index).setText(_cell_value)
+                    _cell_value = self.parent.ui.reductionTable.item(
+                        row_index, col_index
+                    ).text()
+                    self.parent.ui.reductionTable.item(
+                        _target_row_index, col_index
+                    ).setText(_cell_value)
             _row_offset += 1
 
     def __is_row_selected_checked(self, row_selected):
@@ -96,7 +110,9 @@ class ReductionTableHandler(object):
             return True
 
     def __get_checkbox_signal_function(self, row_index):
-        root_function_name = 'self.parent.reduction_table_visibility_changed_' + str(row_index)
+        root_function_name = "self.parent.reduction_table_visibility_changed_" + str(
+            row_index
+        )
         return root_function_name
 
     def __clear_rows_big_table_data(self):
@@ -123,21 +139,29 @@ class ReductionTableHandler(object):
 
     def __clear_metadata(self):
         parent = self.parent
-        parent.ui.metadataProtonChargeValue.setText('N/A')
-        parent.ui.metadataProtonChargeUnits.setText('units')
-        parent.ui.metadataLambdaRequestedValue.setText('N/A')
-        parent.ui.metadataLambdaRequestedUnits.setText('units')
-        parent.ui.metadatathiValue.setText('N/A')
-        parent.ui.metadatathiUnits.setText('units')
-        parent.ui.metadatatthdValue.setText('N/A')
-        parent.ui.metadatatthdUnits.setText('units')
-        parent.ui.metadataS1WValue.setText('N/A')
-        parent.ui.metadataS1HValue.setText('N/A')
-        parent.ui.metadataS2WValue.setText('N/A')
-        parent.ui.metadataS2HValue.setText('N/A')
+        parent.ui.metadataProtonChargeValue.setText("N/A")
+        parent.ui.metadataProtonChargeUnits.setText("units")
+        parent.ui.metadataLambdaRequestedValue.setText("N/A")
+        parent.ui.metadataLambdaRequestedUnits.setText("units")
+        parent.ui.metadatathiValue.setText("N/A")
+        parent.ui.metadatathiUnits.setText("units")
+        parent.ui.metadatatthdValue.setText("N/A")
+        parent.ui.metadatatthdUnits.setText("units")
+        parent.ui.metadataS1WValue.setText("N/A")
+        parent.ui.metadataS1HValue.setText("N/A")
+        parent.ui.metadataS2WValue.setText("N/A")
+        parent.ui.metadataS2HValue.setText("N/A")
 
     def __clear_plots(self):
-        ClearPlots(self.parent, is_data=True, is_norm=True, plot_yt=True, plot_yi=True, plot_it=True, plot_ix=True)
+        ClearPlots(
+            self.parent,
+            is_data=True,
+            is_norm=True,
+            plot_yt=True,
+            plot_yi=True,
+            plot_it=True,
+            plot_ix=True,
+        )
 
     def __clear_reduction_table(self):
         nbr_row = self.parent.ui.reductionTable.rowCount()
@@ -147,4 +171,6 @@ class ReductionTableHandler(object):
                 self.parent.ui.reductionTable.item(_row, _col).setText("")
 
     def __clear_big_table_data(self):
-        self.parent.big_table_data = np.empty((self.parent.nbr_row_table_reduction, 3), dtype=object)
+        self.parent.big_table_data = np.empty(
+            (self.parent.nbr_row_table_reduction, 3), dtype=object
+        )

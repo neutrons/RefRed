@@ -2,6 +2,7 @@ import RefRed.colors as colors
 import bisect
 from RefRed.plot.clear_plots import ClearPlots
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
+
 # from RefRed.gui_handling.gui_utility import GuiUtility
 
 
@@ -81,7 +82,7 @@ class DisplayPlots(object):
             self.tofRangeAuto = self.getTOFrangeInMs(_data.tof_range_auto)
         else:
             self.tofRangeAuto = self.getTOFrangeInMs(_data.tof_range_manual)
-        self.displayTOFrange(self.tofRangeAuto[0], self.tofRangeAuto[1], 'ms')
+        self.displayTOFrange(self.tofRangeAuto[0], self.tofRangeAuto[1], "ms")
         # print(self.tofRangeAuto)
 
         #        o_gui_utility = GuiUtility(parent = self.parent)
@@ -131,9 +132,9 @@ class DisplayPlots(object):
 
         if plot_yt or plot_it or plot_yi or plot_ix:
             if is_data:
-                parent.ui.dataNameOfFile.setText('%s' % (_data.filename))
+                parent.ui.dataNameOfFile.setText("%s" % (_data.filename))
             else:
-                parent.ui.normNameOfFile.setText('%s' % (_data.filename))
+                parent.ui.normNameOfFile.setText("%s" % (_data.filename))
             self.displayMetadata()
 
     def displayMetadata(self):
@@ -142,62 +143,66 @@ class DisplayPlots(object):
         if d is None:
             return
         parent = self.parent
-        parent.ui.metadataProtonChargeValue.setText('%.2e' % d.proton_charge)
-        parent.ui.metadataProtonChargeUnits.setText('%s' % d.proton_charge_units)
-        parent.ui.metadataLambdaRequestedValue.setText('%.2f' % d.lambda_requested)
-        parent.ui.metadataLambdaRequestedUnits.setText('%s' % d.lambda_requested_units)
-        parent.ui.metadatathiValue.setText('%.2f' % d.ths)
-        parent.ui.metadatathiUnits.setText('%s' % d.ths_units)
-        parent.ui.metadatatthdValue.setText('%.2f' % d.tthd)
-        parent.ui.metadatatthdUnits.setText('%s' % d.tthd_units)
-        parent.ui.metadataS1WValue.setText('%.2f' % d.S1W)
-        parent.ui.metadataS1HValue.setText('%.2f' % d.S1H)
-        parent.ui.metadataRunNumber.setText('%s' % d.run_number)
+        parent.ui.metadataProtonChargeValue.setText("%.2e" % d.proton_charge)
+        parent.ui.metadataProtonChargeUnits.setText("%s" % d.proton_charge_units)
+        parent.ui.metadataLambdaRequestedValue.setText("%.2f" % d.lambda_requested)
+        parent.ui.metadataLambdaRequestedUnits.setText("%s" % d.lambda_requested_units)
+        parent.ui.metadatathiValue.setText("%.2f" % d.ths)
+        parent.ui.metadatathiUnits.setText("%s" % d.ths_units)
+        parent.ui.metadatatthdValue.setText("%.2f" % d.tthd)
+        parent.ui.metadatatthdUnits.setText("%s" % d.tthd_units)
+        parent.ui.metadataS1WValue.setText("%.2f" % d.S1W)
+        parent.ui.metadataS1HValue.setText("%.2f" % d.S1H)
+        parent.ui.metadataRunNumber.setText("%s" % d.run_number)
         if d.isSiThere:
-            parent.ui.S2SiWlabel.setText('SiW:')
-            parent.ui.S2SiHlabel.setText('SiH:')
-            parent.ui.metadataS2WValue.setText('%.2f' % d.SiW)
-            parent.ui.metadataS2HValue.setText('%.2f' % d.SiH)
+            parent.ui.S2SiWlabel.setText("SiW:")
+            parent.ui.S2SiHlabel.setText("SiH:")
+            parent.ui.metadataS2WValue.setText("%.2f" % d.SiW)
+            parent.ui.metadataS2HValue.setText("%.2f" % d.SiH)
         else:
-            parent.ui.S2SiWlabel.setText('S2W:')
-            parent.ui.S2SiHlabel.setText('S2H:')
-            parent.ui.metadataS2WValue.setText('%.2f' % d.S2W)
-            parent.ui.metadataS2HValue.setText('%.2f' % d.S2H)
+            parent.ui.S2SiWlabel.setText("S2W:")
+            parent.ui.S2SiHlabel.setText("S2H:")
+            parent.ui.metadataS2WValue.setText("%.2f" % d.S2W)
+            parent.ui.metadataS2HValue.setText("%.2f" % d.S2H)
         # nexus = d.filename
         if self.is_data:
-            parent.ui.dataNameOfFile.setText('%s' % d.run_number)
+            parent.ui.dataNameOfFile.setText("%s" % d.run_number)
         else:
-            parent.ui.normNameOfFile.setText('%s' % d.run_number)
+            parent.ui.normNameOfFile.setText("%s" % d.run_number)
 
     def clearMetadataWidgets(self):
         parent = self.parent
-        parent.ui.metadataProtonChargeValue.setText('N/A')
-        parent.ui.metadataLambdaRequestedValue.setText('N/A')
-        parent.ui.metadataS1HValue.setText('N/A')
-        parent.ui.metadataS1WValue.setText('N/A')
-        parent.ui.metadataS2HValue.setText('N/A')
-        parent.ui.metadataS2WValue.setText('N/A')
-        parent.ui.metadatathiValue.setText('N/A')
-        parent.ui.metadatatthdValue.setText('N/A')
-        parent.ui.dataNameOfFile.setText('')
-        parent.ui.normNameOfFile.setText('')
-        parent.ui.metadataRunNumber.setText('N/A')
+        parent.ui.metadataProtonChargeValue.setText("N/A")
+        parent.ui.metadataLambdaRequestedValue.setText("N/A")
+        parent.ui.metadataS1HValue.setText("N/A")
+        parent.ui.metadataS1WValue.setText("N/A")
+        parent.ui.metadataS2HValue.setText("N/A")
+        parent.ui.metadataS2WValue.setText("N/A")
+        parent.ui.metadatathiValue.setText("N/A")
+        parent.ui.metadatatthdValue.setText("N/A")
+        parent.ui.dataNameOfFile.setText("")
+        parent.ui.normNameOfFile.setText("")
+        parent.ui.metadataRunNumber.setText("N/A")
 
     def plot_ix(self):
         _countsxdata = self.countsxdata
         self.ix_plot_ui.canvas.ax.plot(_countsxdata)
-        self.ix_plot_ui.canvas.ax.set_xlabel('pixels')
-        self.ix_plot_ui.canvas.ax.set_ylabel('counts')
+        self.ix_plot_ui.canvas.ax.set_xlabel("pixels")
+        self.ix_plot_ui.canvas.ax.set_ylabel("counts")
         self.ix_plot_ui.canvas.ax.set_xlim(0, self.xlim)
 
         if self.lowResFlag:
-            self.ix_plot_ui.canvas.ax.axvline(self.lowRes[0], color=colors.LOWRESOLUTION_SELECTION_COLOR)
-            self.ix_plot_ui.canvas.ax.axvline(self.lowRes[1], color=colors.LOWRESOLUTION_SELECTION_COLOR)
+            self.ix_plot_ui.canvas.ax.axvline(
+                self.lowRes[0], color=colors.LOWRESOLUTION_SELECTION_COLOR
+            )
+            self.ix_plot_ui.canvas.ax.axvline(
+                self.lowRes[1], color=colors.LOWRESOLUTION_SELECTION_COLOR
+            )
 
         if self._data.all_plot_axis.is_ix_ylog:
-            self.ix_plot_ui.canvas.ax.set_yscale('log')
+            self.ix_plot_ui.canvas.ax.set_yscale("log")
         else:
-            self.ix_plot_ui.canvas.ax.set_yscale('linear')
+            self.ix_plot_ui.canvas.ax.set_yscale("linear")
 
         if self._data.all_plot_axis.ix_data_interval is None:
             [xmin, xmax] = self.ix_plot_ui.canvas.ax.xaxis.get_view_interval()
@@ -209,7 +214,7 @@ class DisplayPlots(object):
             [xmin, xmax, ymin, ymax] = self._data.all_plot_axis.ix_view_interval
             self.ix_plot_ui.canvas.ax.set_xlim([xmin, xmax])
             self.ix_plot_ui.canvas.ax.set_ylim([ymin, ymax])
-        
+
         self.ix_plot_ui.canvas.draw_idle()
 
     def get_ycountsdata_of_tof_range_selected(self):
@@ -234,27 +239,39 @@ class DisplayPlots(object):
 
         _xaxis = list(range(len(_ycountsdata)))
         self.yi_plot_ui.canvas.ax.plot(_ycountsdata, _xaxis, color=colors.COLOR_LIST[1])
-        self.yi_plot_ui.canvas.ax.set_xlabel('counts')
-        self.yi_plot_ui.canvas.ax.set_ylabel('y (pixel)')
+        self.yi_plot_ui.canvas.ax.set_xlabel("counts")
+        self.yi_plot_ui.canvas.ax.set_ylabel("y (pixel)")
 
         if self._data.all_plot_axis.yi_data_interval is None:
             self.yi_plot_ui.canvas.ax.set_ylim(0, self.ylim)
 
-        self.yi_plot_ui.canvas.ax.axhline(self.peak[0], color=colors.PEAK_SELECTION_COLOR)
-        self.yi_plot_ui.canvas.ax.axhline(self.peak[1], color=colors.PEAK_SELECTION_COLOR)
+        self.yi_plot_ui.canvas.ax.axhline(
+            self.peak[0], color=colors.PEAK_SELECTION_COLOR
+        )
+        self.yi_plot_ui.canvas.ax.axhline(
+            self.peak[1], color=colors.PEAK_SELECTION_COLOR
+        )
 
         if self.backFlag:
-            self.yi_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR)
-            self.yi_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR)
+            self.yi_plot_ui.canvas.ax.axhline(
+                self.back[0], color=colors.BACK_SELECTION_COLOR
+            )
+            self.yi_plot_ui.canvas.ax.axhline(
+                self.back[1], color=colors.BACK_SELECTION_COLOR
+            )
 
         if self._data.all_plot_axis.is_yi_xlog:
-            self.yi_plot_ui.canvas.ax.set_xscale('log')
+            self.yi_plot_ui.canvas.ax.set_xscale("log")
         else:
-            self.yi_plot_ui.canvas.ax.set_xscale('linear')
+            self.yi_plot_ui.canvas.ax.set_xscale("linear")
 
         if self.is_data:
-            self.yi_plot_ui.canvas.ax.axhline(self.clocking[0], color=colors.CLOCKING_SELECTION_COLOR)
-            self.yi_plot_ui.canvas.ax.axhline(self.clocking[1], color=colors.CLOCKING_SELECTION_COLOR)
+            self.yi_plot_ui.canvas.ax.axhline(
+                self.clocking[0], color=colors.CLOCKING_SELECTION_COLOR
+            )
+            self.yi_plot_ui.canvas.ax.axhline(
+                self.clocking[1], color=colors.CLOCKING_SELECTION_COLOR
+            )
 
         if self._data.all_plot_axis.yi_data_interval is None:
             [xmin, xmax] = self.yi_plot_ui.canvas.ax.xaxis.get_view_interval()
@@ -266,7 +283,7 @@ class DisplayPlots(object):
             [xmin, xmax, ymin, ymax] = self._data.all_plot_axis.yi_view_interval
             self.yi_plot_ui.canvas.ax.set_xlim([xmin, xmax])
             self.yi_plot_ui.canvas.ax.set_ylim([ymin, ymax])
-        
+
         self.yi_plot_ui.canvas.draw_idle()
 
     def plot_it(self):
@@ -274,8 +291,8 @@ class DisplayPlots(object):
         _countstofdata = self.countstofdata
 
         self.it_plot_ui.canvas.ax.plot(_tof_axis[0:-1], _countstofdata)
-        self.it_plot_ui.canvas.ax.set_xlabel('t (ms)')
-        self.it_plot_ui.canvas.ax.set_ylabel('Counts')
+        self.it_plot_ui.canvas.ax.set_xlabel("t (ms)")
+        self.it_plot_ui.canvas.ax.set_ylabel("Counts")
 
         autotmin = float(self.tofRangeAuto[0])
         autotmax = float(self.tofRangeAuto[1])
@@ -283,9 +300,9 @@ class DisplayPlots(object):
         self.it_plot_ui.canvas.ax.axvline(autotmax, color=colors.TOF_SELECTION_COLOR)
 
         if self._data.all_plot_axis.is_it_ylog:
-            self.it_plot_ui.canvas.ax.set_yscale('log')
+            self.it_plot_ui.canvas.ax.set_yscale("log")
         else:
-            self.it_plot_ui.canvas.ax.set_yscale('linear')
+            self.it_plot_ui.canvas.ax.set_yscale("linear")
 
         if self._data.all_plot_axis.it_data_interval is None:
             [xmin, xmax] = self.it_plot_ui.canvas.ax.xaxis.get_view_interval()
@@ -306,9 +323,11 @@ class DisplayPlots(object):
         _isLog = True
         _tof_axis = self.tofAxis
         _extent = [_tof_axis[0], _tof_axis[1], 0, self.ylim]
-        self.yt_plot_ui.imshow(_ytof, log=_isLog, aspect='auto', origin='lower', extent=_extent)
-        self.yt_plot_ui.set_xlabel('t (ms)')
-        self.yt_plot_ui.set_ylabel('y (pixel)')
+        self.yt_plot_ui.imshow(
+            _ytof, log=_isLog, aspect="auto", origin="lower", extent=_extent
+        )
+        self.yt_plot_ui.set_xlabel("t (ms)")
+        self.yt_plot_ui.set_ylabel("y (pixel)")
 
         autotmin = float(self.tofRangeAuto[0])
         autotmax = float(self.tofRangeAuto[1])
@@ -316,25 +335,41 @@ class DisplayPlots(object):
         [tmin, tmax] = self.getTOFrangeInMs([autotmin, autotmax])
         self.yt_plot_ui.canvas.ax.axvline(tmin, color=colors.TOF_SELECTION_COLOR)
         self.yt_plot_ui.canvas.ax.axvline(tmax, color=colors.TOF_SELECTION_COLOR)
-        self.yt_plot_ui.canvas.ax.axhline(self.peak[0], color=colors.PEAK_SELECTION_COLOR)
-        self.yt_plot_ui.canvas.ax.axhline(self.peak[1], color=colors.PEAK_SELECTION_COLOR)
+        self.yt_plot_ui.canvas.ax.axhline(
+            self.peak[0], color=colors.PEAK_SELECTION_COLOR
+        )
+        self.yt_plot_ui.canvas.ax.axhline(
+            self.peak[1], color=colors.PEAK_SELECTION_COLOR
+        )
 
         if self.is_data:
-            self.yi_plot_ui.canvas.ax.axhline(self.clocking[0], color=colors.CLOCKING_SELECTION_COLOR)
-            self.yi_plot_ui.canvas.ax.axhline(self.clocking[1], color=colors.CLOCKING_SELECTION_COLOR)
+            self.yi_plot_ui.canvas.ax.axhline(
+                self.clocking[0], color=colors.CLOCKING_SELECTION_COLOR
+            )
+            self.yi_plot_ui.canvas.ax.axhline(
+                self.clocking[1], color=colors.CLOCKING_SELECTION_COLOR
+            )
 
         if self.backFlag:
-            self.yt_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR)
-            self.yt_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR)
+            self.yt_plot_ui.canvas.ax.axhline(
+                self.back[0], color=colors.BACK_SELECTION_COLOR
+            )
+            self.yt_plot_ui.canvas.ax.axhline(
+                self.back[1], color=colors.BACK_SELECTION_COLOR
+            )
 
         if self.is_data:
-            self.yt_plot_ui.canvas.ax.axhline(self.clocking[0], color=colors.CLOCKING_SELECTION_COLOR)
-            self.yt_plot_ui.canvas.ax.axhline(self.clocking[1], color=colors.CLOCKING_SELECTION_COLOR)
+            self.yt_plot_ui.canvas.ax.axhline(
+                self.clocking[0], color=colors.CLOCKING_SELECTION_COLOR
+            )
+            self.yt_plot_ui.canvas.ax.axhline(
+                self.clocking[1], color=colors.CLOCKING_SELECTION_COLOR
+            )
 
         if self._data.all_plot_axis.is_yt_ylog:
-            self.yt_plot_ui.canvas.ax.set_yscale('log')
+            self.yt_plot_ui.canvas.ax.set_yscale("log")
         else:
-            self.yt_plot_ui.canvas.ax.set_yscale('linear')
+            self.yt_plot_ui.canvas.ax.set_yscale("linear")
 
         if self._data.all_plot_axis.yt_data_interval is None:
             self.yt_plot_ui.canvas.ax.set_ylim(0, self.ylim)
