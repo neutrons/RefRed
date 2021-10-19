@@ -1,5 +1,5 @@
 name: Trigger ORNL GitLab Production Pipeline
-on: 
+on:
   push:
     branches:
       - main
@@ -39,7 +39,9 @@ jobs:
         env:
           PYTHON_ VERSION: ${{ matrix.python-version }}
       - name: Setup Test Env and Run Tests
-        run: .github/scripts/test.sh
+        run: |
+          flake8 --statistics RefRed
+          python -m pytest --cov=RefRed --cov-report=xml --cov-report=term test
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
 
@@ -51,7 +53,6 @@ jobs:
         if: ${{ github.ref == 'refs/heads/next' }}
         run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main -F variables[PLAY]=conda/update -F variables[CONDA_ENV]=refred-dev ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
 
-      - name: Trigger ORNL GitLab Pipeline for QA 
+      - name: Trigger ORNL GitLab Pipeline for QA
         if: ${{ github.ref == 'refs/heads/qa' }}
         run: curl -sX POST -F token=${{ secrets.GITLAB_TRIGGER_TOKEN }} -F ref=main -F variables[PLAY]=conda/update -F variables[CONDA_ENV]=refred-qa ${{ secrets.GITLAB_TRIGGER_URL }} > /dev/null
-
