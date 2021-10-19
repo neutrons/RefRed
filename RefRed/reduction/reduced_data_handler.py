@@ -86,7 +86,6 @@ class ReducedDataHandler(object):
         yaxis_type = o_gui_utility.get_reduced_yaxis_type()
         if yaxis_type == 'RvsQ':
             if _data.all_plot_axis.reduced_plot_RQuserView_y is None:
-                self.parent.ui.data_stitching_plot.canvas.draw()
                 [xmin, xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
                 [ymin, ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
                 _data.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin, xmax]
@@ -98,10 +97,8 @@ class ReducedDataHandler(object):
                 [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQuserView_y
                 self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin, xmax])
                 self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin, ymax])
-                self.parent.ui.data_stitching_plot.canvas.draw()
         else:
             if _data.all_plot_axis.reduced_plot_RQ4userView_y is None:
-                self.parent.ui.data_stitching_plot.canvas.draw()
                 [xmin, xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
                 [ymin, ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
 
@@ -115,7 +112,8 @@ class ReducedDataHandler(object):
 
                 self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin, xmax])
                 self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin, ymax])
-                self.parent.ui.data_stitching_plot.canvas.draw()
+
+        self.parent.ui.data_stitching_plot.canvas.draw_idle()
 
         big_table_data[0, 0] = _data
         self.parent.big_table_data = big_table_data

@@ -225,7 +225,7 @@ class PopupPlot2d(QDialog):
 
         if self.data.all_plot_axis.yt_data_interval is None:
             self.ui.y_pixel_vs_tof_plot.canvas.ax.set_ylim(0, pixel_to)
-            self.ui.y_pixel_vs_tof_plot.canvas.draw()
+            self.ui.y_pixel_vs_tof_plot.canvas.draw_idle()
             [xmin, xmax] = self.ui.y_pixel_vs_tof_plot.canvas.ax.xaxis.get_view_interval()
             [ymin, ymax] = self.ui.y_pixel_vs_tof_plot.canvas.ax.yaxis.get_view_interval()
             self.data.all_plot_axis.yt_data_interval = [xmin, xmax, ymin, ymax]
