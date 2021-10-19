@@ -1,3 +1,4 @@
+from pathlib import Path
 from qtpy.QtGui import QPalette, QPixmap, QIcon
 from qtpy.QtWidgets import (
     QMainWindow,
@@ -225,9 +226,7 @@ class MetadataFinder(QMainWindow):
         elif isinstance(_value, list):
             _value = _value
         else:
-            _value = (
-                "[" + str(_value[0]) + ",...]" + "-> (" + str(len(_value)) + " entries)"
-            )
+            _value = f"[{_value[0]},...]-> ({len(_value)} entries)"
         _units = mt_run.getProperty(_name).units
         return [_value, _units]
 
@@ -368,7 +367,7 @@ class MetadataFinder(QMainWindow):
     def exportConfigurationClicked(self):
         _filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
         _date = time.strftime("%d_%m_%Y")
-        _default_name = self.parent.path_config + "/" + _date + "_metadata.cfg"
+        _default_name = Path(self.parent.path_config) + _date + "_metadata.cfg"
 
         rst = QFileDialog.getSaveFileName(
             self, "Export Metadata Configuration", _default_name, filter=(_filter)
@@ -441,9 +440,11 @@ class MetadataFinder(QMainWindow):
         nbr_row = _metadata_table.rowCount()
         for r in range(nbr_row):
             _line = " ".join(
-                str(_metadata_table.item(r, 0).text()),
-                str(_metadata_table.item(r, 1).text()),
-                str(_metadata_table.item(r, 2).text()),
+                [
+                    str(_metadata_table.item(r, 0).text()),
+                    str(_metadata_table.item(r, 1).text()),
+                    str(_metadata_table.item(r, 2).text()),
+                ]
             )
 
             text.append(_line)

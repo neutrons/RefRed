@@ -4,6 +4,7 @@
 """
 import sys
 import os
+from pathlib import Path
 from qtpy import QtGui, QtCore, QtWidgets
 import numpy as np
 import logging
@@ -217,7 +218,7 @@ class SFCalculator(QtWidgets.QMainWindow):
         if not file_name.endswith('.cfg'):
             file_name += '.cfg'
         if not os.path.isfile(file_name):
-            open(file_name, 'w').close()
+            Path(file_name).touch()
         self.displayConfigFile(file_name)
         self.sfFileNameLabel.setText(file_name)
         self.save_directory = os.path.dirname(file_name)

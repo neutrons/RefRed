@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from qtpy import QtWidgets
 import RefRed.utilities
 from RefRed.export.output_reduced_data import OutputReducedData
@@ -61,8 +62,8 @@ class ExportPlotAscii(object):
         _data = big_table_data[row, col]
         run_number = _data.run_number
         default_filename = "REFL_" + run_number + "_ix.txt"
-        path = parent.path_ascii
-        default_filename = path + "/" + default_filename
+        path = Path(parent.path_ascii)
+        default_filename = path + default_filename
         rst = QtWidgets.QFileDialog.getSaveFileName(
             parent,
             "Create Counts vs Pixel (low resolution range) ASCII File",
@@ -83,10 +84,8 @@ class ExportPlotAscii(object):
         pixelaxis = list(range(len(countsxdata)))
 
         text = ["#Counts vs Pixels (low resolution range)", "#Pixel - Counts"]
-        sz = len(pixelaxis)
-        for i in range(sz):
-            _line = str(pixelaxis[i]) + " " + str(countsxdata[i])
-            text.append(_line)
+        text += [f"{p} {c}" for p, c in zip(pixelaxis, countsxdata)]
+
         RefRed.utilities.write_ascii_file(filename, text)
 
     def export_it(self):
@@ -96,8 +95,8 @@ class ExportPlotAscii(object):
         _data = big_table_data[row, col]
         run_number = _data.run_number
         default_filename = "REFL_" + run_number + "_yt.txt"
-        path = parent.path_ascii
-        default_filename = path + "/" + default_filename
+        path = Path(parent.path_ascii)
+        default_filename = path + default_filename
         rst = QtWidgets.QFileDialog.getSaveFileName(
             parent, "Create Counts vs TOF ASCII File", default_filename
         )
@@ -118,10 +117,7 @@ class ExportPlotAscii(object):
             tof /= 1000.0
 
         text = ["#Counts vs  TOF", "#TOF(ms) - Counts"]
-        sz = len(tof) - 1
-        for i in range(sz):
-            _line = str(tof[i]) + " " + str(countstofdata[i])
-            text.append(_line)
+        text += [f"{t} {c}" for t, c in zip(tof[:-1], countstofdata)]
         text.append(str(tof[-1]))
         RefRed.utilities.write_ascii_file(filename, text)
 
@@ -132,8 +128,8 @@ class ExportPlotAscii(object):
         _data = big_table_data[row, col]
         run_number = _data.run_number
         default_filename = "REFL_" + run_number + "_rpx.txt"
-        path = parent.path_ascii
-        default_filename = path + "/" + default_filename
+        path = Path(parent.path_ascii)
+        default_filename = path + default_filename
         rst = QtWidgets.QFileDialog.getSaveFileName(
             parent, "Create Counts vs Pixel ASCII File", default_filename
         )
@@ -152,10 +148,8 @@ class ExportPlotAscii(object):
         pixelaxis = list(range(len(ycountsdata)))
 
         text = ["#Counts vs Pixels", "#Pixel - Counts"]
-        sz = len(pixelaxis)
-        for i in range(sz):
-            _line = str(pixelaxis[i]) + " " + str(ycountsdata[i])
-            text.append(_line)
+        text += [f"{p} {c}" for p, c in zip(pixelaxis, ycountsdata)]
+
         RefRed.utilities.write_ascii_file(filename, text)
 
     def export_stitched(self):
