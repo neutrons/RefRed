@@ -1,15 +1,24 @@
 import os
+from pathlib import Path
 from qtpy.QtGui import QPalette
 from qtpy.QtWidgets import QDialog, QFileDialog
 from qtpy.QtCore import Qt
 from mantid.api import mtd
-from mantid.simpleapi import ConvertToHistogram, CreateWorkspace, LRReflectivityOutput, Rebin, Scale
+from mantid.simpleapi import (
+    ConvertToHistogram,
+    CreateWorkspace,
+    LRReflectivityOutput,
+    Rebin,
+    Scale,
+)
 import numpy as np
 import time
 
 from RefRed.interfaces import load_ui
 from RefRed.load_reduced_data_set.stitching_ascii_widget import StitchingAsciiWidget
-from RefRed.configuration.export_stitching_ascii_settings import ExportStitchingAsciiSettings
+from RefRed.configuration.export_stitching_ascii_settings import (
+    ExportStitchingAsciiSettings,
+)
 from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
@@ -21,8 +30,8 @@ class OutputReducedData(QDialog):
     _open_instances = []
     o_stitching_ascii_widget = None
     parent = None
-    filename = ''
-    folder = ''
+    filename = ""
+    folder = ""
 
     q_axis = None
     y_axis = None
@@ -49,16 +58,22 @@ class OutputReducedData(QDialog):
         palette.setColor(QPalette.Foreground, Qt.red)
         self.ui.folder_error.setPalette(palette)
 
-        o_loaded_ascii = ReducedAsciiLoader(parent=parent, ascii_file_name='', is_live_reduction=True)
+        o_loaded_ascii = ReducedAsciiLoader(
+            parent=parent, ascii_file_name="", is_live_reduction=True
+        )
         if parent.o_stitching_ascii_widget is None:
-            o_stitching_ascii_widget = StitchingAsciiWidget(parent=self.parent, loaded_ascii=o_loaded_ascii)
+            o_stitching_ascii_widget = StitchingAsciiWidget(
+                parent=self.parent, loaded_ascii=o_loaded_ascii
+            )
             parent.o_stitching_ascii_widget = o_stitching_ascii_widget
 
         # retrieve gui parameters
         _export_stitching_ascii_settings = ExportStitchingAsciiSettings()
         self.dq0 = str(_export_stitching_ascii_settings.fourth_column_dq0)
         self.dq_over_q = str(_export_stitching_ascii_settings.fourth_column_dq_over_q)
-        self.is_with_4th_column_flag = bool(_export_stitching_ascii_settings.fourth_column_flag)
+        self.is_with_4th_column_flag = bool(
+            _export_stitching_ascii_settings.fourth_column_flag
+        )
         # self.use_lowest_error_value_flag = bool(_export_stitching_ascii_settings.use_lowest_error_value_flag)
 
         self.ui.dq0Value.setText(self.dq0)
@@ -66,7 +81,7 @@ class OutputReducedData(QDialog):
         self.ui.output4thColumnFlag.setChecked(self.is_with_4th_column_flag)
 
         _gui_metadata = self.parent.gui_metadata
-        _q_min = str(_gui_metadata['q_min'])
+        _q_min = str(_gui_metadata["q_min"])
         self.ui.manual_qmin_value.setText(_q_min)
 
     def auto_qmin_button_clicked(self, state):
@@ -97,8 +112,10 @@ class OutputReducedData(QDialog):
 
     def create_n_files(self):
         path = self.parent.path_ascii
-        folder = str(QFileDialog.getExistingDirectory(self, 'Select Location', directory=path))
-        if folder == '':
+        folder = str(
+            QFileDialog.getExistingDirectory(self, "Select Location", directory=path)
+        )
+        if folder == "":
             return
 
         self.folder = folder
@@ -109,19 +126,24 @@ class OutputReducedData(QDialog):
     def create_1_common_file(self):
 
         run_number = self.parent.ui.reductionTable.item(0, 1).text()
-        default_filename = 'REFL_' + run_number + '_reduced_data.txt'
-        path = self.parent.path_ascii
-        default_filename = path + '/' + default_filename
+        default_filename = "REFL_" + run_number + "_reduced_data.txt"
+        path = Path(self.parent.path_ascii)
+        default_filename = path + default_filename
         # directory = path
         _filter = "Reduced Ascii (*.txt);; All (*.*)"
-        rst = QFileDialog.getSaveFileName(self, 'Select Location and Name', directory=default_filename, filter=(_filter))
+        rst = QFileDialog.getSaveFileName(
+            self,
+            "Select Location and Name",
+            directory=default_filename,
+            filter=(_filter),
+        )
 
         if isinstance(rst, tuple):
             filename, _ = rst
         else:
             filename = rst
 
-        if filename.strip() == '':
+        if filename.strip() == "":
             return
 
         folder = os.path.dirname(filename)
@@ -163,15 +185,15 @@ class OutputReducedData(QDialog):
             if self.is_with_4th_column_flag:
                 dq0 = self.ui.dq0Value.text()
                 self.dq0 = float(dq0)
-                line1 = '# dQ0[1/Angstroms]= ' + dq0
-                line2 = '# dQ1/Q= ' + dq_over_q
-                line3 = '# Q[1/Angstroms] R delta_R Precision'
+                line1 = "# dQ0[1/Angstroms]= " + dq0
+                line2 = "# dQ1/Q= " + dq_over_q
+                line3 = "# Q[1/Angstroms] R delta_R Precision"
                 text.append(line1)
                 text.append(line2)
                 text.append("#")
                 text.append(line3)
             else:
-                text.append('# Q[1/Angstroms] R delta_R')
+                text.append("# Q[1/Angstroms] R delta_R")
 
             self.text_data = text
             self.produce_data_without_common_q_axis(row=_row)
@@ -182,7 +204,7 @@ class OutputReducedData(QDialog):
         folder = self.folder
         prefix = self.ui.prefix_name_value.text()
         suffix = self.ui.suffix_name_value.text()
-        ext = 'txt'
+        ext = "txt"
         run_number = self.parent.ui.reductionTable.item(row, 1).text()
         filename = "%s/%s_%s_%s.%s" % (folder, prefix, run_number, suffix, ext)
         return filename
@@ -195,15 +217,15 @@ class OutputReducedData(QDialog):
         if self.is_with_4th_column_flag:
             dq0 = self.ui.dq0Value.text()
             self.dq0 = float(dq0)
-            line1 = '# dQ0[1/Angstroms]= ' + dq0
-            line2 = '# dQ1/Q= ' + dq_over_q
-            line3 = '# Q[1/Angstroms] R delta_R Precision'
+            line1 = "# dQ0[1/Angstroms]= " + dq0
+            line2 = "# dQ1/Q= " + dq_over_q
+            line3 = "# Q[1/Angstroms] R delta_R Precision"
             text.append(line1)
             text.append(line2)
             text.append("#")
             text.append(line3)
         else:
-            text.append('# Q[1/Angstroms] R delta_R')
+            text.append("# Q[1/Angstroms] R delta_R")
 
         self.text_data = text
 
@@ -319,7 +341,7 @@ class OutputReducedData(QDialog):
             _data = _big_table_data[_row, 2]
             _wks = _data.wks
             _sf = self.retrieve_sf(_data)
-            _wks_scaled = Scale(_wks, _sf, 'Multiply')
+            _wks_scaled = Scale(_wks, _sf, "Multiply")
             _data.wks_scaled = _wks_scaled
             _big_table_data[_row, 2]
 
@@ -328,9 +350,9 @@ class OutputReducedData(QDialog):
     def retrieve_sf(self, lconfigdataset):
         o_gui = GuiUtility(parent=self.parent)
         stitching_type = o_gui.getStitchingType()
-        if stitching_type == 'absolute':
+        if stitching_type == "absolute":
             return lconfigdataset.sf_abs_normalization
-        elif stitching_type == 'auto':
+        elif stitching_type == "auto":
             return lconfigdataset.sf_auto
         else:
             return lconfigdataset.sf_manual
@@ -341,16 +363,18 @@ class OutputReducedData(QDialog):
 
         o_gui_utility = GuiUtility(parent=self.parent)
         _date = time.strftime("# Date: %d_%m_%Y")
-        _reduction_method = '# Reduction method: manual'
-        _reduction_engine = '# Reduction engine: RefRed'
-        _reduction_date = '# %s' % _date
+        _reduction_method = "# Reduction method: manual"
+        _reduction_engine = "# Reduction engine: RefRed"
+        _reduction_date = "# %s" % _date
         # _ipts = o_gui_utility.get_ipts(row=0)
         for _entry in [_date, _reduction_method, _reduction_engine, _reduction_date]:
             text.append(_entry)
         text.append("#")
 
-        _legend = "# DataRun\tNormRun\t2theta(degrees)\tLambdaMin(A)\tLambdaMax(A)\tQmin(1/A)" \
-                  "\tQmax(1/A)\tScalingFactor\tTotal Counts\tpcCharge(mC)"
+        _legend = (
+            "# DataRun\tNormRun\t2theta(degrees)\tLambdaMin(A)\tLambdaMax(A)\tQmin(1/A)"
+            "\tQmax(1/A)\tScalingFactor\tTotal Counts\tpcCharge(mC)"
+        )
         text.append(_legend)
         _data_run = str(reduction_table.item(row, 1).text())
         _norm_run = str(reduction_table.item(row, 2).text())
@@ -377,14 +401,14 @@ class OutputReducedData(QDialog):
         text.append(_value)
 
         # clocking settings
-        text.append('#')
-        text.append('# Clocking Correction used')
+        text.append("#")
+        text.append("# Clocking Correction used")
         o_gui_utility = GuiUtility(parent=self.parent)
         last_row = o_gui_utility.get_row_with_highest_q()
         big_table_data = self.parent.big_table_data
         clocking = big_table_data[last_row, 0].clocking
-        text.append('# clock1: %s' % clocking[0])
-        text.append('# clock2: %s' % clocking[1])
+        text.append("# clock1: %s" % clocking[0])
+        text.append("# clock2: %s" % clocking[1])
 
         return text
 
@@ -394,17 +418,29 @@ class OutputReducedData(QDialog):
 
         o_gui_utility = GuiUtility(parent=self.parent)
         _date = time.strftime("# Date: %d_%m_%Y")
-        _reduction_method = '# Reduction method: manual'
-        _reduction_engine = '# Reduction engine: RefRed'
-        _reduction_date = '# %s' % _date
+        _reduction_method = "# Reduction method: manual"
+        _reduction_engine = "# Reduction engine: RefRed"
+        _reduction_date = "# %s" % _date
         # _ipts = o_gui_utility.get_ipts(row=0)
         for _entry in [_date, _reduction_method, _reduction_engine, _reduction_date]:
             text.append(_entry)
         text.append("#")
 
         nbr_row = o_gui_utility.reductionTable_nbr_row()
-        _legend = "# DataRun\tNormRun\t2theta(degrees)\tLambdaMin(A)\tLambdaMax(A)\tQmin(1/A)" \
-                  "\tQmax(1/A)\tScalingFactor\tTotal Counts\tpcCharge(mC)"
+        _legend = "\t".join(
+            [
+                "# DataRun",
+                "NormRun",
+                "2theta(degrees)",
+                "LambdaMin(A)",
+                "LambdaMax(A)",
+                "Qmin(1/A)",
+                "Qmax(1/A)",
+                "ScalingFactor",
+                "Total Counts",
+                "pcCharge(mC)",
+            ]
+        )
         text.append(_legend)
         for _row in range(nbr_row):
             _data_run = str(reduction_table.item(_row, 1).text())
@@ -432,14 +468,14 @@ class OutputReducedData(QDialog):
             text.append(_value)
 
         # clocking settings
-        text.append('#')
-        text.append('# Clocking Correction used')
+        text.append("#")
+        text.append("# Clocking Correction used")
         o_gui_utility = GuiUtility(parent=self.parent)
         last_row = o_gui_utility.get_row_with_highest_q()
         big_table_data = self.parent.big_table_data
         clocking = big_table_data[last_row, 0].clocking
-        text.append('# clock1: %s' % clocking[0])
-        text.append('# clock2: %s' % clocking[1])
+        text.append("# clock1: %s" % clocking[0])
+        text.append("# clock2: %s" % clocking[1])
 
         return text
 
@@ -496,7 +532,7 @@ class OutputReducedData(QDialog):
         for i in range(nbr_row):
             _data = _big_table_data[i, 2]
 
-            tmp_wks_name = 'wks_' + str(i)
+            tmp_wks_name = "wks_" + str(i)
 
             _q_axis = _data.reduce_q_axis
             _y_axis = _data.reduce_y_axis[:-1]
@@ -509,23 +545,34 @@ class OutputReducedData(QDialog):
             maxQ = max([_q_axis[-1], maxQ])
 
             tmp_wks_name = CreateWorkspace(
-                DataX=_q_axis, DataY=_y_axis, DataE=_e_axis, Nspec=1, UnitX="Wavelength", OutputWorkspace=tmp_wks_name
+                DataX=_q_axis,
+                DataY=_y_axis,
+                DataE=_e_axis,
+                Nspec=1,
+                UnitX="Wavelength",
+                OutputWorkspace=tmp_wks_name,
             )
             tmp_wks_name.setDistribution(True)
 
             # rebin everyting using the same Q binning parameters
         binQ = self.parent.ui.qStep.text()
-        bin_parameters = str(minQ) + ',-' + str(binQ) + ',' + str(maxQ)
+        bin_parameters = str(minQ) + ",-" + str(binQ) + "," + str(maxQ)
         for i in range(nbr_row):
 
-            tmp_wks_name = 'wks_' + str(i)
-            ConvertToHistogram(InputWorkspace=tmp_wks_name, OutputWorkspace=tmp_wks_name)
+            tmp_wks_name = "wks_" + str(i)
+            ConvertToHistogram(
+                InputWorkspace=tmp_wks_name, OutputWorkspace=tmp_wks_name
+            )
 
-            Rebin(InputWorkspace=tmp_wks_name, Params=bin_parameters, OutputWorkspace=tmp_wks_name)
+            Rebin(
+                InputWorkspace=tmp_wks_name,
+                Params=bin_parameters,
+                OutputWorkspace=tmp_wks_name,
+            )
 
         # we use the first histo as output reference
-        data_y = mtd['wks_0'].dataY(0).copy()
-        data_e = mtd['wks_0'].dataE(0).copy()
+        data_y = mtd["wks_0"].dataY(0).copy()
+        data_e = mtd["wks_0"].dataE(0).copy()
 
         skip_index = 0
         point_to_skip = 2
@@ -535,8 +582,8 @@ class OutputReducedData(QDialog):
             skip_point = True
             can_skip_last_point = False
 
-            data_y_k = mtd['wks_' + str(k)].dataY(0)
-            data_e_k = mtd['wks_' + str(k)].dataE(0)
+            data_y_k = mtd["wks_" + str(k)].dataY(0)
+            data_e_k = mtd["wks_" + str(k)].dataE(0)
             for j in range(len(data_y_k) - 1):
 
                 if data_y_k[j] > 0:
@@ -569,7 +616,7 @@ class OutputReducedData(QDialog):
                     data_y[j] = data_y_k[j]
                     data_e[j] = data_e_k[j]
 
-        data_x = mtd['wks_1'].dataX(0)
+        data_x = mtd["wks_1"].dataX(0)
 
         self.q_axis = data_x
         self.y_axis = data_y
@@ -607,11 +654,11 @@ class OutputReducedData(QDialog):
         for i in range(sz):
             if _y_axis[i] > self.R_THRESHOLD:
                 _line = str(_q_axis[i])
-                _line += ' ' + str(_y_axis[i])
-                _line += ' ' + str(_e_axis[i])
+                _line += " " + str(_y_axis[i])
+                _line += " " + str(_e_axis[i])
                 if self.is_with_4th_column_flag:
                     _precision = str(dq0 + dq_over_q * _q_axis[i])
-                    _line += ' ' + _precision
+                    _line += " " + _precision
                 text.append(_line)
 
         self.text_data = text
@@ -628,7 +675,7 @@ class OutputReducedData(QDialog):
         self.q_axis = new_q_axis
 
     def cleanup_data(self):
-        '''Remove data where error bar is bigger than value'''
+        """Remove data where error bar is bigger than value"""
         _q_axis = self.q_axis
         _y_axis = self.y_axis
         _e_axis = self.e_axis
@@ -660,5 +707,5 @@ class OutputReducedData(QDialog):
     def closeEvent(self, event=None):
         _gui_metadata = self.parent.gui_metadata
         _q_min = str(self.ui.manual_qmin_value.text())
-        _gui_metadata['q_min'] = _q_min
+        _gui_metadata["q_min"] = _q_min
         self.parent.gui_metadata = _gui_metadata

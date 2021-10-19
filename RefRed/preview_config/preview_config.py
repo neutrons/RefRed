@@ -7,55 +7,62 @@ import RefRed.colors
 
 class PreviewConfig(QtWidgets.QMainWindow):
 
-    system_name = ['instrument_name', 'timestamp', 'python_version', 'platform', 'architecture', 'mantid_version']
+    system_name = [
+        "instrument_name",
+        "timestamp",
+        "python_version",
+        "platform",
+        "architecture",
+        "mantid_version",
+    ]
 
     data_name = [
-        'peak_selection_type',
-        'from_peak_pixels',
-        'to_peak_pixels',
-        'peak_discrete_selection',
-        'background_flag',
-        'back_roi1_from',
-        'back_roi1_to',
-        'back_roi2_from',
-        'back_roi2_to',
-        'clocking_from',
-        'clocking_to',
-        'tof_range_flag',
-        'from_tof_range',
-        'to_tof_range',
-        'data_sets',
-        'x_min_pixel',
-        'x_max_pixel',
-        'x_range_flag',
-        'tthd_value',
-        'ths_value',
-        'norm_flag',
-        'norm_x_range_flag',
-        'norm_x_max',
-        'norm_x_min',
-        'norm_from_peak_pixels',
-        'norm_to_peak_pixels',
-        'norm_background_flag',
-        'norm_from_back_pixels',
-        'norm_to_back_pixels',
-        'norm_dataset',
-        'q_min',
-        'q_step',
-        'auto_q_binning',
-        'overlap_lowest_error',
-        'overlap_mean_value',
-        'angle_offset',
-        'angle_offset_error',
-        'scaling_factor_flag',
-        'scaling_factor_file',
-        'slits_width_flag',
-        'geometry_correction_switch',
-        'incident_medium_list',
-        'incident_medium_index_selected',
-        'fourth_column_flag',
-        'fourth_column_dq0',
-        'fourth_column_dq_over_q',
+        "peak_selection_type",
+        "from_peak_pixels",
+        "to_peak_pixels",
+        "peak_discrete_selection",
+        "background_flag",
+        "back_roi1_from",
+        "back_roi1_to",
+        "back_roi2_from",
+        "back_roi2_to",
+        "clocking_from",
+        "clocking_to",
+        "tof_range_flag",
+        "from_tof_range",
+        "to_tof_range",
+        "data_sets",
+        "x_min_pixel",
+        "x_max_pixel",
+        "x_range_flag",
+        "tthd_value",
+        "ths_value",
+        "norm_flag",
+        "norm_x_range_flag",
+        "norm_x_max",
+        "norm_x_min",
+        "norm_from_peak_pixels",
+        "norm_to_peak_pixels",
+        "norm_background_flag",
+        "norm_from_back_pixels",
+        "norm_to_back_pixels",
+        "norm_dataset",
+        "q_min",
+        "q_step",
+        "auto_q_binning",
+        "overlap_lowest_error",
+        "overlap_mean_value",
+        "angle_offset",
+        "angle_offset_error",
+        "scaling_factor_flag",
+        "scaling_factor_file",
+        "slits_width_flag",
+        "geometry_correction_switch",
+        "incident_medium_list",
+        "incident_medium_index_selected",
+        "fourth_column_flag",
+        "fourth_column_dq0",
+        "fourth_column_dq_over_q",
     ]
 
     _data_table = []
@@ -64,7 +71,13 @@ class PreviewConfig(QtWidgets.QMainWindow):
     _colored_row = [14, 29]  # highlights data and norm rows
 
     def __init__(
-        self, parent=None, is_live=False, filename=None, geometry_parent=None, window_offset=[0, 0], check_format=False
+        self,
+        parent=None,
+        is_live=False,
+        filename=None,
+        geometry_parent=None,
+        window_offset=[0, 0],
+        check_format=False,
     ):
         self.parent = parent
 
@@ -80,7 +93,9 @@ class PreviewConfig(QtWidgets.QMainWindow):
 
         if geometry_parent:
             current_geometry = self.geometry()
-            current_geometry.setLeft(geometry_parent.left() + geometry_parent.width() + window_offset[0])
+            current_geometry.setLeft(
+                geometry_parent.left() + geometry_parent.width() + window_offset[0]
+            )
             current_geometry.setTop(geometry_parent.top() + window_offset[1])
             self.setGeometry(current_geometry)
 
@@ -110,7 +125,7 @@ class PreviewConfig(QtWidgets.QMainWindow):
             _value = str(_dom.getElementsByTagName(_name)[0].childNodes[0].data)
             _system_table[_index] = str(_value)
 
-            refl_data = _dom.getElementsByTagName('RefLData')
+            refl_data = _dom.getElementsByTagName("RefLData")
             nbr_row = len(refl_data)
             _data_table = empty((nbr_row, len(self.data_name)), dtype=object)
             for _row_index, _run_node in enumerate(refl_data):
@@ -130,9 +145,8 @@ class PreviewConfig(QtWidgets.QMainWindow):
         self._display_table()
 
     def _display_raw_file(self):
-        _file = open(self.file_name, 'r')
-        data = _file.read()
-        _file.close
+        with open(self.file_name, "r") as _file:
+            data = _file.read()
         self.ui.rawTextEdit.setText(data)
 
     def _display_table(self):
@@ -153,7 +167,7 @@ class PreviewConfig(QtWidgets.QMainWindow):
         self._populate_runs_data()
 
     def _retrieve_runs_data(self, _dom):
-        refl_data = _dom.getElementsByTagName('RefLData')
+        refl_data = _dom.getElementsByTagName("RefLData")
         nbr_row = len(refl_data)
         _data_table = empty((nbr_row, len(self.data_name)), dtype=object)
         for _row_index, _run_node in enumerate(refl_data):
@@ -181,8 +195,8 @@ class PreviewConfig(QtWidgets.QMainWindow):
         try:
             _tmp = node.getElementsByTagName(flag)
             _value = _tmp[0].childNodes[0].nodeValue
-        except:
-            _value = ''
+        except RuntimeError:
+            _value = ""
         return _value
 
     def _work_on_system_data(self, _dom):
@@ -217,7 +231,7 @@ class PreviewConfig(QtWidgets.QMainWindow):
             caption="Select Configuration File",
             directory=self.parent.path_config,
             filter="Config (*.xml)",
-            )
+        )
 
         if isinstance(rst, tuple):
             filename, _ = rst
