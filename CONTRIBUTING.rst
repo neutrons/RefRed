@@ -21,6 +21,8 @@ Creating a Local Environment for Development
 
 [To be completed]
 
+* This project is configured to use the pre-commit framework. Please `configure the git hook <https://pre-commit.com/#3-install-the-git-hook-scripts>`_ by running ``pre-commit install``.
+
 Coding
 ------
 
