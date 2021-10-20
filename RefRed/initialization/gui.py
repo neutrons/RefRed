@@ -17,11 +17,11 @@ class Gui(object):
         "Plotted",
         "Data Run #",
         "Norm. Run #",
-        "2\\u03b8 (\\u00B0)",
-        "\\u03bbmin (\\u00c5)",
-        "\\u03bbmax (\\u00c5)",
-        "Qmin (1/\\u00c5)",
-        "Qmax (1/\\u00c5)",
+        "2\u03b8 (\u00B0)",
+        "\u03bbmin (\u00c5)",
+        "\u03bbmax (\u00c5)",
+        "Qmin (1/\u00c5)",
+        "Qmax (1/\u00c5)",
         "Comments",
     ]
     column_widths = [60, 200, 200, 65, 85, 85, 95, 95, 400]
