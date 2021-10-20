@@ -41,10 +41,6 @@ class LoadAndSortNXSDataForSFcalculator(object):
         # NOTE: sorting is done on the fly with the loading of each run
         self.loadNXSData()
 
-        # if self._sort_by_metadata:
-        #     self.sortNXSData()
-        # self.fillTable()
-
     def loadNXSData(self):
         for _runs in self.list_runs:
             _full_file_name = api.FileFinder.findRuns("%s_%d" % (INSTRUMENT_SHORT_NAME, int(_runs)))[0]
