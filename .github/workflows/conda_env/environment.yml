@@ -1,0 +1,11 @@
+name: test
+channels:
+- mantid
+- conda-forge
+dependencies:
+- mantid-framework=6.2.0
+- qtpy
+- configobj
+- pytest-cov
+- pytest-qt=3.3.0
+- flake8=3.9.2
