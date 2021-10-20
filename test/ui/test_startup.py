@@ -69,8 +69,6 @@ def test_startup(qtbot):
 
     assert window.ui.plotTab.currentIndex() == 1
     # Open and close SF Calculator
-    # this fails because of a bug in PyQt5, just disable for now, need to fix in SF Calculator
-    """
     action_rect = window.ui.menubar.actionGeometry(window.ui.menuAdvanced.menuAction())
     qtbot.mouseClick(window.ui.menubar, QtCore.Qt.LeftButton, pos=action_rect.center())
     qtbot.wait(wait)
@@ -83,7 +81,6 @@ def test_startup(qtbot):
     assert window.sf_calculator.windowTitle().startswith("SF Calculator - ")
     window.sf_calculator.close()
     qtbot.wait(wait)
-    """
 
     # Open About Dialog
     action_rect = window.ui.menubar.actionGeometry(window.ui.menuHelp.menuAction())

@@ -7,5 +7,8 @@ dependencies:
 - qtpy
 - configobj
 - pytest-cov
-- pytest-qt=3.3.0
+- pytest-qt
 - flake8=3.9.2
+- pip
+- pip:
+  - PyQt5
