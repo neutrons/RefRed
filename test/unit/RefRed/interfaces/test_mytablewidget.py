@@ -5,7 +5,7 @@ from RefRed.interfaces.mytablewidget import MyTableWidget
 from qtpy import QtWidgets
 from qtpy.QtCore import Qt
 
-import mock
+import unittest.mock as mock
 import pytest
 
 class Event(object):
@@ -38,7 +38,7 @@ class TestMyTableWidget(object):
         widget.keyPressEvent(Event(Qt.Key_Return))
         assert mockSuperInit.called
         assert not mockSuperKeyPressEvent.called
-        assert m.table_reduction_cell_enter_pressed().assert_called()
+        m.table_reduction_cell_enter_pressed.assert_called()
 
 if __name__ == '__main__':
     pytest.main([__file__])
