@@ -1,17 +1,23 @@
 import pytest
+from pytest_mock import mocker
 from RefRed.sf_calculator.reduction_sf_calculator import ReductionSfCalculator
 import numpy as np
+# import qtpy
 
 
-def test_class_reduction_sf_calculator():
+def test_class_reduction_sf_calculator(mocker):
     """Test class ReductionSfCalculator
     """
+    set_mockers(mocker)
+
     # Set up mocking class and etc.
-    mock_sf_gui = MockSFGui()
+    from RefRed.sf_calculator.sf_calculator import SFCalculator
+    sf_gui = SFCalculator()
+
     test_script_file_name = 'whatever.h5'
 
     # Init
-    test_reducer = ReductionSfCalculator(mock_sf_gui, test_script_file_name, test_mode=True)
+    test_reducer = ReductionSfCalculator(sf_gui, True)
 
     # Validation
     assert test_reducer
@@ -25,14 +31,34 @@ def test_class_reduction_sf_calculator():
     assert test_reducer.nbr_scripts
 
 
-class MockSFGui(object):
+def set_mockers(mocker_fixture):
+    mocker_fixture.patch('RefRed.sf_calculator.sf_calculator.SFCalculator.__init__',
+                         MockSFGui.init)
+    mocker_fixture.patch('qtpy.QtWidgets.QFileDialog.getSaveFileName', MockSFGui.qt_get_save_file_name)
+    mocker_fixture.patch('qtpy.QtWidgets.QTableWidget.__init__', MockSFGui.table_init)
+    mocker_fixture.patch('qtpy.QtWidgets.QTableWidget.rowCount', MockSFGui.row_count)
+
+
+class MockSFGui:
     """
     Mocking SF_gui
     """
-    def __init__(self):
+    def init(self):
         """
         constructor
         """
+        from qtpy.QtWidgets import QTableWidget
+        self.name = 'Mock SF GUI'
+        self.tableWidget = QTableWidget()
+        return
+
+    def qt_get_save_file_name(parent, name, path, filter):
+        return 'whatever.h5'
+
+    def row_count(self):
+        return 9
+
+    def table_init(self):
         return
 
 
