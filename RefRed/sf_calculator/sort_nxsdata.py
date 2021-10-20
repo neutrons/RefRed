@@ -1,3 +1,4 @@
+import logging
 from RefRed.sf_calculator.compare_two_nxsdata_for_sfcalculator import CompareTwoNXSDataForSFcalculator
 
 
@@ -36,6 +37,7 @@ class SortNXSData(object):
                 else:
                     # we should never get here since run number and data (ws) is
                     # one-to-one mapping
+                    logging.warning("Duplicated run numbers found, check your input.")
                     _is_same_nxs = True
                     break
             if not _is_same_nxs:
