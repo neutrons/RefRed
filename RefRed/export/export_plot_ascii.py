@@ -28,18 +28,19 @@ class ExportPlotAscii(object):
             self.export_yi()
         elif _data_type == "stitched":
             self.export_stitched()
+        else:
+            raise ValueError(f"data type {_data_type} not supported.")
 
     def export_yt(self):
         parent = self.parent
         big_table_data = parent.big_table_data
         [row, col] = self.get_current_row_col_displayed()
         _data = big_table_data[row, col]
-        run_number = _data.run_number
-        default_filename = "REFL_" + run_number + "_2dPxVsTof.txt"
-        path = parent.path_ascii
-        default_filename = path + "/" + default_filename
+        default_filename = f"REFL_{_data.run_number}_2dPxVsTof.txt"
+        path = Path(parent.path_ascii)
+        default_filename = path / default_filename
         rst = QtWidgets.QFileDialog.getSaveFileName(
-            parent, "Create 2D Pixel VS TOF", default_filename
+            parent, "Create 2D Pixel VS TOF", str(default_filename)
         )
 
         if isinstance(rst, tuple):
@@ -60,14 +61,13 @@ class ExportPlotAscii(object):
         big_table_data = parent.big_table_data
         [row, col] = self.get_current_row_col_displayed()
         _data = big_table_data[row, col]
-        run_number = _data.run_number
-        default_filename = "REFL_" + run_number + "_ix.txt"
+        default_filename = f"REFL_{_data.run_number}_ix.txt"
         path = Path(parent.path_ascii)
-        default_filename = path + default_filename
+        default_filename = path / default_filename
         rst = QtWidgets.QFileDialog.getSaveFileName(
             parent,
             "Create Counts vs Pixel (low resolution range) ASCII File",
-            default_filename,
+            str(default_filename),
         )
 
         if isinstance(rst, tuple):
@@ -93,12 +93,11 @@ class ExportPlotAscii(object):
         big_table_data = parent.big_table_data
         [row, col] = self.get_current_row_col_displayed()
         _data = big_table_data[row, col]
-        run_number = _data.run_number
-        default_filename = "REFL_" + run_number + "_yt.txt"
+        default_filename = f"REFL_{_data.run_number}_yt.txt"
         path = Path(parent.path_ascii)
-        default_filename = path + default_filename
+        default_filename = path / default_filename
         rst = QtWidgets.QFileDialog.getSaveFileName(
-            parent, "Create Counts vs TOF ASCII File", default_filename
+            parent, "Create Counts vs TOF ASCII File", str(default_filename)
         )
 
         if isinstance(rst, tuple):
@@ -126,12 +125,11 @@ class ExportPlotAscii(object):
         big_table_data = parent.big_table_data
         [row, col] = self.get_current_row_col_displayed()
         _data = big_table_data[row, col]
-        run_number = _data.run_number
-        default_filename = "REFL_" + run_number + "_rpx.txt"
+        default_filename = f"REFL_{_data.run_number}_rpx.txt"
         path = Path(parent.path_ascii)
-        default_filename = path + default_filename
+        default_filename = path / default_filename
         rst = QtWidgets.QFileDialog.getSaveFileName(
-            parent, "Create Counts vs Pixel ASCII File", default_filename
+            parent, "Create Counts vs Pixel ASCII File", str(default_filename)
         )
 
         if isinstance(rst, tuple):
