@@ -27,9 +27,10 @@ class TestLoadNexus(object):
             filename=data_server.path_to("REF_L_188230.nxs.h5"), metadata_only=True
         )
         assert load_obj.workspace
-        assert load_obj.output_wks is None
         # check that the workspace exists in mantid's ADS
         assert mtd.doesExist(load_obj.workspace.name())
+        # check the workspace name matches when no output name is specified
+        assert load_obj.workspace.name() == load_obj.output_wks == "REF_L_188230.nxs.h5"
         # check that no events were loaded with metadata only
         assert load_obj.workspace.getNumberEvents() == 0
 
