@@ -42,7 +42,6 @@ class ReductionSfCalculator(object):
         self.sf_gui = parent
         self.export_script_flag = True
         self._unit_test_mode = test_mode
-        # self._from_to_index_same_lambda = None
 
         # FIXME TODO - is it good to mix presenter/model with view?
         if export_script_flag:
