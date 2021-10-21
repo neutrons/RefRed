@@ -24,6 +24,7 @@ from RefRed.configuration.export_stitching_ascii_settings import (
 from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
+from RefRed.widgets import getSaveFileName
 import RefRed.utilities
 
 
@@ -129,30 +130,22 @@ class OutputReducedData(QDialog):
         default_filename = f"REFL_{run_number}_reduced_data.txt"
         path = Path(self.parent.path_ascii)
         default_filename = path / default_filename
+        caption = "Select Location and Name"
+        filter = "Reduced Ascii (*.txt);; All (*.*)"
+        filename, filter = getSaveFileName(
+            self, caption, str(default_filename), filter,
+            )
 
-        rst = QFileDialog.getSaveFileName(
-            self,
-            "Select Location and Name",
-            directory=str(default_filename),
-            filter="Reduced Ascii (*.txt);; All (*.*)",
-        )
+        if filename.strip():
+            # valid filename, save now
+            folder = os.path.dirname(filename)
+            if not self.is_folder_access_granted(folder):
+                self.ui.folder_error.setVisible(True)
+                return
 
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
-
-        if filename.strip() == "":
-            return
-
-        folder = os.path.dirname(filename)
-        if not self.is_folder_access_granted(folder):
-            self.ui.folder_error.setVisible(True)
-            return
-
-        self.filename = filename
-        self.parent.path_ascii = os.path.dirname(filename)
-        self.write_1_common_ascii()
+            self.filename = filename
+            self.parent.path_ascii = os.path.dirname(filename)
+            self.write_1_common_ascii()
 
     def save_back_widget_parameters_used(self):
         _is_with_4th_column_flag = self.ui.output4thColumnFlag.isChecked()

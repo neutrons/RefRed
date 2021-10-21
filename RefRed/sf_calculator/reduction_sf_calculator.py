@@ -6,6 +6,7 @@ import mantid.simpleapi as api
 
 import numpy as np
 from RefRed.utilities import convertTOF
+from RefRed.widgets import getSaveFileName
 
 
 class ReductionSfCalculator(object):
@@ -27,22 +28,15 @@ class ReductionSfCalculator(object):
         self.export_script_flag = export_script_flag
 
         if export_script_flag:
-            # TODO: get last path from QSettings
             _path = os.path.expanduser('~')
             _filter = 'python (*.py);;All (*.*)'
+            _caption = "Export Script File"
+            filename, _ = getSaveFileName(self.sf_gui, _caption, _path, _filter)
 
-            rst = QtWidgets.QFileDialog.getSaveFileName(self.sf_gui, 'Export Script File', _path, filter=_filter)
-            if isinstance(rst, tuple):
-                filename, _ = rst
-            else:
-                filename = rst
-
-            if filename != '':
+            if filename:
                 self.export_script_file = filename
-            else:
-                return
-        self.collect_table_information()
-        self._handle_request()
+                self.collect_table_information()
+                self._handle_request()
 
     def collect_table_information(self):
         nbr_row = self.sf_gui.tableWidget.rowCount()

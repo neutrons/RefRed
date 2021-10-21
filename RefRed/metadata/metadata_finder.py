@@ -17,6 +17,7 @@ import numpy as np
 from RefRed.interfaces import load_ui
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.decorators import waiting_effects
+from RefRed.widgets import getSaveFileName
 import RefRed.utilities
 import RefRed.nexus_utilities
 
@@ -367,30 +368,22 @@ class MetadataFinder(QMainWindow):
     def exportConfigurationClicked(self):
         _filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
         _date = time.strftime("%d_%m_%Y")
-        _default_name = Path(self.parent.path_config) + _date + "_metadata.cfg"
+        _default_name = Path(self.parent.path_config) / f"{_date}_metadata.cfg"
+        _caption = "Export Metadata Configuration"
+        filename, _ = getSaveFileName(self, _caption, str(_default_name), _filter)
 
-        rst = QFileDialog.getSaveFileName(
-            self, "Export Metadata Configuration", _default_name, filter=(_filter)
-        )
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
+        if filename:
+            self.parent.path_config = os.path.dirname(filename)
 
-        if filename == "":
-            return
+            list_metadata_selected = self.list_metadata_selected
+            text = []
+            for _name in list_metadata_selected:
+                text.append(_name)
 
-        self.parent.path_config = os.path.dirname(filename)
-
-        list_metadata_selected = self.list_metadata_selected
-        text = []
-        for _name in list_metadata_selected:
-            text.append(_name)
-
-        filename = RefRed.utilities.makeSureFileHasExtension(
-            filename, default_ext=".cfg"
-        )
-        RefRed.utilities.write_ascii_file(filename, text)
+            filename = RefRed.utilities.makeSureFileHasExtension(
+                filename, default_ext=".cfg"
+            )
+            RefRed.utilities.write_ascii_file(filename, text)
 
     def getIPTS(self, filename):
         parse_path = filename.split("/")
@@ -419,33 +412,19 @@ class MetadataFinder(QMainWindow):
             return
         _filter = "List Metadata (*_metadata.txt);;All(*.*)"
         _run_number = str(self.list_runs[0])
-        _default_name = self.parent.path_ascii + "/" + _run_number + "_metadata.txt"
+        _default_name = Path(self.parent.path_ascii) / f"{_run_number}_metadata.txt"
+        _caption = "Save Metadata into ASCII"
+        filename, _ = getSaveFileName(self, _caption, str(_default_name), _filter)
 
-        rst = QFileDialog.getSaveFileName(
-            self, "Save Metadata into ASCII", _default_name, filter=_filter
-        )
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
+        if filename:
+            self.parent.path_config = os.path.dirname(filename)
+            text = ["# Metadata Selected for run " + _run_number]
+            text.append("#Name - Value - Units")
 
-        if filename == "":
-            return
-
-        self.parent.path_config = os.path.dirname(filename)
-        text = ["# Metadata Selected for run " + _run_number]
-        text.append("#Name - Value - Units")
-
-        _metadata_table = self.ui.metadataTable
-        nbr_row = _metadata_table.rowCount()
-        for r in range(nbr_row):
-            _line = " ".join(
-                [
-                    str(_metadata_table.item(r, 0).text()),
-                    str(_metadata_table.item(r, 1).text()),
-                    str(_metadata_table.item(r, 2).text()),
-                ]
-            )
-
-            text.append(_line)
-        RefRed.utilities.write_ascii_file(filename, text)
+            _metadata_table = self.ui.metadataTable
+            nbr_row = _metadata_table.rowCount()
+            text = [" ".join(
+                        [str(_metadata_table.item(r, i).text()) for i in range(3)]
+                        ) 
+                        for r in range(nbr_row)]
+            RefRed.utilities.write_ascii_file(filename, text)

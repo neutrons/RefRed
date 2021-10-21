@@ -5,9 +5,11 @@ from qtpy.QtCore import QSize, QSettings
 import numpy as np
 import os
 import time
+from pathlib import Path
 
 from RefRed.interfaces import load_ui
 from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.widgets import getSaveFileName
 import RefRed.utilities
 
 
@@ -268,53 +270,40 @@ class DisplayMetadata(QMainWindow):
     def saveMetadataListAsAscii(self):
         _filter = 'List Metadata (*_metadata.txt);;All(*.*)'
         _run_number = self.active_data.run_number
-        _default_name = self.parent.path_ascii + '/' + _run_number + '_metadata.txt'
+        _default_name = Path(self.parent.path_ascii) / f"{_run_number}_metadata.txt"
+        _caption = "Save Metadata into ASCII"
+        filename, _ = getSaveFileName(self, _caption, str(_default_name), _filter)
 
-        rst = QFileDialog.getSaveFileName(self, 'Save Metadata into ASCII', _default_name, filter=_filter)
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
+        if filename:
+            self.parent.path_config = os.path.dirname(filename)
 
-        if filename == '':
-            return
+            text = ['# Metadata Selected for run ' + _run_number]
+            text.append('#Name - Value - Units')
 
-        self.parent.path_config = os.path.dirname(filename)
-
-        text = ['# Metadata Selected for run ' + _run_number]
-        text.append('#Name - Value - Units')
-
-        _metadata_table = self.ui.metadataTable
-        nbr_row = _metadata_table.rowCount()
-        for r in range(nbr_row):
-            _line = _metadata_table.item(r, 0).text() + ' ' + str(_metadata_table.item(r, 1).text()) + ' '\
-                + str(_metadata_table.item(r, 2).text())
-
-            text.append(_line)
-        RefRed.utilities.write_ascii_file(filename, text)
+            _metadata_table = self.ui.metadataTable
+            nbr_row = _metadata_table.rowCount()
+            for r in range(nbr_row):
+                _line = _metadata_table.item(r, 0).text() + ' ' + str(_metadata_table.item(r, 1).text()) + ' '\
+                    + str(_metadata_table.item(r, 2).text())
+                text.append(_line)
+            RefRed.utilities.write_ascii_file(filename, text)
 
     def exportConfiguration(self):
         _filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
         _date = time.strftime("%d_%m_%Y")
-        _default_name = self.parent.path_config + '/' + _date + '_metadata.cfg'
+        _default_name = Path(self.parent.path_config) / f"{_date}_metadata.cfg"
+        _caption = 'Export Metadata Configuration'
+        filename, _ = getSaveFileName(self, _caption, str(_default_name), _filter)
 
-        rst = QFileDialog.getSaveFileName(self, 'Export Metadata Configuration', _default_name, filter=(_filter))
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
+        if filename:
+            self.parent.path_config = os.path.dirname(filename)
 
-        if filename == '':
-            return
+            list_metadata_selected = self.list_metadata_selected
+            text = []
+            for _name in list_metadata_selected:
+                text.append(_name)
 
-        self.parent.path_config = os.path.dirname(filename)
-
-        list_metadata_selected = self.list_metadata_selected
-        text = []
-        for _name in list_metadata_selected:
-            text.append(_name)
-
-        RefRed.utilities.write_ascii_file(filename, text)
+            RefRed.utilities.write_ascii_file(filename, text)
 
     def importConfiguration(self):
         _filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"

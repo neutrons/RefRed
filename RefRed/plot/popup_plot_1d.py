@@ -8,6 +8,7 @@ import bisect
 from RefRed.interfaces import load_ui
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.widgets import getSaveFileName
 import RefRed.colors
 import RefRed.utilities
 
@@ -89,34 +90,22 @@ class PopupPlot1d(QDialog):
         return o_gui_utility.is_row_with_highest_q()
 
     def export_counts_vs_pixel(self):
-
         _active_data = self.data
         run_number = _active_data.run_number
-        default_filename = "REFL_" + str(run_number) + "_rpx.txt"
-        _path = Path(self.parent.path_ascii)
-        default_filename = _path + default_filename
+        default_filename = Path(self.parent.path_ascii) / f"REFL_{run_number}_rpx.txt"
+        caption = "Create Counts vs Pixel ASCII File"
+        filename, _ = getSaveFileName(self, caption, str(default_filename))
 
-        rst = QFileDialog.getSaveFileName(
-            self, "Create Counts vs Pixel ASCII File", default_filename
-        )
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
+        if filename:
+            self.parent.path_ascii = os.path.dirname(filename)
 
-        # user canceled
-        if str(filename).strip() == "":
-            return
+            ycountsdata = _active_data.ycountsdata
+            pixelaxis = list(range(len(ycountsdata)))
 
-        self.parent.path_ascii = os.path.dirname(filename)
+            text = ["#Couns vs Pixels", "#Pixel - Counts"]
+            text += [f"{p} {y}" for p, y in zip(pixelaxis, ycountsdata)]
 
-        ycountsdata = _active_data.ycountsdata
-        pixelaxis = list(range(len(ycountsdata)))
-
-        text = ["#Couns vs Pixels", "#Pixel - Counts"]
-        text += [f"{p} {y}" for p, y in zip(pixelaxis, ycountsdata)]
-
-        RefRed.utilities.write_ascii_file(filename, text)
+            RefRed.utilities.write_ascii_file(filename, text)
 
     def leave_plot_counts_vs_pixel(self):
         [xmin, xmax] = self.ui.plot_counts_vs_pixel.canvas.ax.yaxis.get_view_interval()

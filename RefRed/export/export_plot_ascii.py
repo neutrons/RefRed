@@ -6,7 +6,7 @@ import RefRed.utilities
 from RefRed.export.output_reduced_data import OutputReducedData
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.utilities import makeSureFileHasExtension
-
+from RefRed.widgets import getSaveFileName
 
 class ExportPlotAscii:
 
@@ -40,22 +40,15 @@ class ExportPlotAscii:
         default_filename = f"REFL_{_data.run_number}_2dPxVsTof.txt"
         path = Path(parent.path_ascii)
         default_filename = path / default_filename
-        rst = QtWidgets.QFileDialog.getSaveFileName(
-            parent, "Create 2D Pixel VS TOF", str(default_filename)
-        )
+        caption = "Create 2D Pixel VS TOF"
+        filename, _ = getSaveFileName(parent, caption, str(default_filename))
 
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
-
-        if filename.strip() == "":
-            return
-
-        parent.path_ascii = os.path.dirname(filename)
-        filename = makeSureFileHasExtension(filename, default_ext=".txt")
-        image = _data.ytofdata
-        RefRed.utilities.output_2d_ascii_file(filename, image)
+        if filename.strip():
+            # valid filename, save the data
+            parent.path_ascii = os.path.dirname(filename)
+            filename = makeSureFileHasExtension(filename, default_ext=".txt")
+            image = _data.ytofdata
+            RefRed.utilities.output_2d_ascii_file(filename, image)
 
     def export_ix(self):
         parent = self.parent
@@ -65,29 +58,20 @@ class ExportPlotAscii:
         default_filename = f"REFL_{_data.run_number}_ix.txt"
         path = Path(parent.path_ascii)
         default_filename = path / default_filename
-        rst = QtWidgets.QFileDialog.getSaveFileName(
-            parent,
-            "Create Counts vs Pixel (low resolution range) ASCII File",
-            str(default_filename),
-        )
+        caption = "Create Counts vs Pixel (low resolution range) ASCII File"
+        filename, _ = getSaveFileName(parent, caption, str(default_filename))
 
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
+        if filename.strip():
+            # filename valid, save the data
+            parent.path_ascii = os.path.dirname(filename)
+            filename = makeSureFileHasExtension(filename, default_ext=".txt")
+            countsxdata = _data.countsxdata
+            pixelaxis = list(range(len(countsxdata)))
 
-        if filename.strip() == "":
-            return
+            text = ["#Counts vs Pixels (low resolution range)", "#Pixel - Counts"]
+            text += [f"{p} {c}" for p, c in zip(pixelaxis, countsxdata)]
 
-        parent.path_ascii = os.path.dirname(filename)
-        filename = makeSureFileHasExtension(filename, default_ext=".txt")
-        countsxdata = _data.countsxdata
-        pixelaxis = list(range(len(countsxdata)))
-
-        text = ["#Counts vs Pixels (low resolution range)", "#Pixel - Counts"]
-        text += [f"{p} {c}" for p, c in zip(pixelaxis, countsxdata)]
-
-        RefRed.utilities.write_ascii_file(filename, text)
+            RefRed.utilities.write_ascii_file(filename, text)
 
     def export_it(self):
         parent = self.parent
@@ -97,29 +81,22 @@ class ExportPlotAscii:
         default_filename = f"REFL_{_data.run_number}_yt.txt"
         path = Path(parent.path_ascii)
         default_filename = path / default_filename
-        rst = QtWidgets.QFileDialog.getSaveFileName(
-            parent, "Create Counts vs TOF ASCII File", str(default_filename)
-        )
+        caption = "Create Counts vs TOF ASCII File"
+        filename, _ = getSaveFileName(parent, caption, str(default_filename))
 
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
+        if filename.strip():
+            # valid filename, save now
+            parent.path_ascii = os.path.dirname(filename)
+            countstofdata = _data.countstofdata
+            filename = makeSureFileHasExtension(filename, default_ext=".txt")
+            tof = _data.tof_axis_auto_with_margin
+            if tof[-1] > 1000:
+                tof /= 1000.0
 
-        if filename.strip() == "":
-            return
-
-        parent.path_ascii = os.path.dirname(filename)
-        countstofdata = _data.countstofdata
-        filename = makeSureFileHasExtension(filename, default_ext=".txt")
-        tof = _data.tof_axis_auto_with_margin
-        if tof[-1] > 1000:
-            tof /= 1000.0
-
-        text = ["#Counts vs  TOF", "#TOF(ms) - Counts"]
-        text += [f"{t} {c}" for t, c in zip(tof[:-1], countstofdata)]
-        text.append(str(tof[-1]))
-        RefRed.utilities.write_ascii_file(filename, text)
+            text = ["#Counts vs  TOF", "#TOF(ms) - Counts"]
+            text += [f"{t} {c}" for t, c in zip(tof[:-1], countstofdata)]
+            text.append(str(tof[-1]))
+            RefRed.utilities.write_ascii_file(filename, text)
 
     def export_yi(self):
         parent = self.parent
@@ -129,27 +106,20 @@ class ExportPlotAscii:
         default_filename = f"REFL_{_data.run_number}_rpx.txt"
         path = Path(parent.path_ascii)
         default_filename = path / default_filename
-        rst = QtWidgets.QFileDialog.getSaveFileName(
-            parent, "Create Counts vs Pixel ASCII File", str(default_filename)
-        )
+        caption = "Create Counts vs Pixel ASCII File"
+        filename, _ = getSaveFileName(parent, caption, str(default_filename))
 
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
+        if filename.strip():
+            # valid filename, save now
+            parent.path_ascii = os.path.dirname(filename)
+            filename = makeSureFileHasExtension(filename, default_ext=".txt")
+            ycountsdata = _data.ycountsdata
+            pixelaxis = list(range(len(ycountsdata)))
 
-        if filename.strip() == "":
-            return
+            text = ["#Counts vs Pixels", "#Pixel - Counts"]
+            text += [f"{p} {c}" for p, c in zip(pixelaxis, ycountsdata)]
 
-        parent.path_ascii = os.path.dirname(filename)
-        filename = makeSureFileHasExtension(filename, default_ext=".txt")
-        ycountsdata = _data.ycountsdata
-        pixelaxis = list(range(len(ycountsdata)))
-
-        text = ["#Counts vs Pixels", "#Pixel - Counts"]
-        text += [f"{p} {c}" for p, c in zip(pixelaxis, ycountsdata)]
-
-        RefRed.utilities.write_ascii_file(filename, text)
+            RefRed.utilities.write_ascii_file(filename, text)
 
     def export_stitched(self):
         _tmp = OutputReducedData(parent=self.parent)

@@ -1,9 +1,11 @@
 from qtpy import QtWidgets
 import time
 import os
+from pathlib import Path
 from RefRed.reduction.individual_reduction_settings_handler import IndividualReductionSettingsHandler
 from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
 from RefRed.utilities import createAsciiFile
+from RefRed.widgets import getSaveFileName
 
 
 class ExportDataReductionScript(object):
@@ -48,20 +50,17 @@ class ExportDataReductionScript(object):
         big_table_data = parent.big_table_data
         _data = big_table_data[0, 0]
         run_number = _data.run_number
-        default_filename = 'REFL_' + run_number + '_data_reduction_script.py'
-        path = parent.path_ascii
-        default_filename = path + '/' + default_filename
+        path = Path(parent.path_ascii)
+        default_filename = path / f"REFL_{run_number}_data_reduction_script.py"
+        caption = "Python Script"
+        filename, _ = getSaveFileName(parent, caption, str(default_filename))
 
-        rst = str(QtWidgets.QFileDialog.getSaveFileName(parent, 'Python Script', default_filename))
-        if isinstance(rst):
-            filename, _ = rst
+        if filename:
+            self.export_filename = filename
+            self.parent.path_ascii = os.path.dirname(filename)
         else:
-            filename = rst
-
-        if filename == '':
-            return
-        self.export_filename = filename
-        self.parent.path_ascii = os.path.dirname(filename)
+            self.export_filename = ""
+            self.parent.path_ascii = str(path)
 
     def make_script(self):
         if self.export_filename == '':

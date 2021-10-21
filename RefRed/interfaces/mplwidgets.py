@@ -6,6 +6,7 @@ import matplotlib.cm
 import matplotlib.colors
 from matplotlib.colors import LogNorm, Normalize
 from RefRed.config import plotting
+from RefRed.widgets import getSaveFileName
 from matplotlib.figure import Figure
 
 
@@ -262,12 +263,8 @@ class NavigationToolbar(NavigationToolbar2QT):
             else:
                 filters.append(filter_)
         filters = ';;'.join(filters)
-
-        rst = QtWidgets.QFileDialog.getSaveFileName(self, "Choose a filename to save to", start, filters)
-        if isinstance(rst, tuple):
-            figname, _ = rst
-        else:
-            figname = rst
+        caption = "Choose a filename to save to"
+        figname, filters = getSaveFileName(self, caption, start, filters)
 
         if figname:
             try:

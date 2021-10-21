@@ -2,6 +2,7 @@ from qtpy.QtGui import QPalette
 from qtpy.QtWidgets import QDialog, QFileDialog
 from qtpy.QtCore import Qt
 import os
+from pathlib import Path
 
 from RefRed.interfaces import load_ui
 from RefRed.plot.display_plots import DisplayPlots
@@ -9,6 +10,7 @@ from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.colors
 import RefRed.utilities
 from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
+from RefRed.widgets import getSaveFileName
 
 
 class PopupPlot2d(QDialog):
@@ -75,44 +77,28 @@ class PopupPlot2d(QDialog):
     def export_yt(self):
         _active_data = self.data
         run_number = _active_data.run_number
-        default_filename = 'REFL_' + run_number + '_2dPxVsTof.txt'
-        path = self.parent.path_ascii
-        default_filename = path + '/' + default_filename
+        path = Path(self.parent.path_ascii)
+        default_filename = path / f"REFL_{run_number}_2dPxVsTof.txt"
+        caption = "Create 2D Pixel VS TOF"
+        filename, _ = getSaveFileName(self, caption, str(default_filename))
 
-        rst = QFileDialog.getSaveFileName(self, 'Create 2D Pixel VS TOF', default_filename)
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
-
-        if str(filename).strip() == '':
-            # 			info('User Canceled Outpout ASCII')
-            return
-
-        self.parent.path_ascii = os.path.dirname(filename)
-        image = _active_data.ytofdata
-        RefRed.utilities.output_2d_ascii_file(filename, image)
+        if filename:
+            self.parent.path_ascii = os.path.dirname(filename)
+            image = _active_data.ytofdata
+            RefRed.utilities.output_2d_ascii_file(filename, image)
 
     def export_detector_view(self):
         _active_data = self.data
         run_number = _active_data.run_number
-        default_filename = 'REFL_' + run_number + '_2dDetectorView.txt'
-        path = self.parent.path_ascii
-        default_filename = path + '/' + default_filename
+        path = Path(self.parent.path_ascii)
+        default_filename = path / f"REFL_{run_number}_2dDetectorView.txt"
+        caption = "Create 2D Y Pixel VS X Pixel (Detector View)"
+        filename, _ = getSaveFileName(self, caption, str(default_filename))
 
-        rst = QFileDialog.getSaveFileName(self, 'Create 2D Y Pixel VS X Pixel (Detector View)', default_filename)
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
-
-        if str(filename).strip() == '':
-            # 			info('User Canceled Outpout ASCII')
-            return
-
-        self.parent.path_ascii = os.path.dirname(filename)
-        image = _active_data.xydata
-        RefRed.utilities.output_2d_ascii_file(filename, image)
+        if filename:
+            self.parent.path_ascii = os.path.dirname(filename)
+            image = _active_data.xydata
+            RefRed.utilities.output_2d_ascii_file(filename, image)
 
     def leave_figure_plot(self):
         [xmin, xmax] = self.ui.y_pixel_vs_tof_plot.canvas.ax.xaxis.get_view_interval()
