@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from typing import List
 from qtpy import QtWidgets
 import RefRed.utilities
 from RefRed.export.output_reduced_data import OutputReducedData
@@ -7,12 +8,12 @@ from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.utilities import makeSureFileHasExtension
 
 
-class ExportPlotAscii(object):
+class ExportPlotAscii:
 
     parent = None
     data_type = "yt"
 
-    def __init__(self, parent=None, data_type="yt"):
+    def __init__(self, parent=None, data_type : str="yt"):
         self.parent = parent
         self.data_type = data_type
 
@@ -154,7 +155,7 @@ class ExportPlotAscii(object):
         _tmp = OutputReducedData(parent=self.parent)
         _tmp.show()
 
-    def get_current_row_col_displayed(self):
+    def get_current_row_col_displayed(self) -> List[int]:
         o_gui_utility = GuiUtility(parent=self.parent)
         row = o_gui_utility.get_current_table_reduction_check_box_checked()
         col = o_gui_utility.get_data_norm_tab_selected()
