@@ -21,10 +21,10 @@ class FillSFGuiTable(object):
         verticalHeader = [
             "Run #",
             "Nbr. Attenuator",
-            "\\u03bbmin(\\u00c5)",
-            "\\u03bbmax(\\u00c5)",
+            "\u03bbmin (\u00c5)",
+            "\u03bbmax (\u00c5)",
             "p Charge (mC)",
-            "\\u03bb requested (\\u00c5)",
+            "\u03bbrequested (\u00c5)",
             "S1W",
             "S1H",
             s2iw,

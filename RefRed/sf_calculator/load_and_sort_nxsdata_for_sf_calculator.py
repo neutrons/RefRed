@@ -29,20 +29,20 @@ class LoadAndSortNXSDataForSFcalculator(object):
     sf_gui = None
 
     def __init__(self, list_runs, parent=None, read_options=None, sort_by_metadata=False):
-        self.list_runs = list_runs
+        # parse input
+        self.list_runs = sorted(set(list_runs))
         self.read_options = read_options
         self.sf_gui = parent
         self._sort_by_metadata = sort_by_metadata
-        self.loadNXSData()
-        if self._sort_by_metadata:
-            self.sortNXSData()
-        self.fillTable()
-
-    def loadNXSData(self):
+        # local container
         self.list_NXSData = []
         self.big_table = []
-        _list_runs = self.list_runs
-        for _runs in _list_runs:
+        self.loaded_list_runs = []
+        # NOTE: sorting is done on the fly with the loading of each run
+        self.loadNXSData()
+
+    def loadNXSData(self):
+        for _runs in self.list_runs:
             _full_file_name = api.FileFinder.findRuns("%s_%d" % (INSTRUMENT_SHORT_NAME, int(_runs)))[0]
             if _full_file_name != '':
                 workspace = api.LoadEventNexus(
@@ -51,11 +51,15 @@ class LoadAndSortNXSDataForSFcalculator(object):
                 _data = LRData(workspace, read_options=self.read_options)
                 if _data is not None:
                     self.list_NXSData.append(_data)
-                    self.loaded_list_runs.append(_runs)
+                    #
+                    if _runs not in self.loaded_list_runs:
+                        self.loaded_list_runs.append(_runs)
+                    #
                     if self._sort_by_metadata:
                         self.sortNXSData()
                     else:
                         self.list_NXSData_sorted = self.list_NXSData
+                    #
                     self.fillTable()
                     self.sf_gui.update_table(self, False)
                     QtWidgets.QApplication.processEvents()
