@@ -423,8 +423,8 @@ class MetadataFinder(QMainWindow):
 
             _metadata_table = self.ui.metadataTable
             nbr_row = _metadata_table.rowCount()
-            text = [" ".join(
-                        [str(_metadata_table.item(r, i).text()) for i in range(3)]
-                        ) 
-                        for r in range(nbr_row)]
+            text = [
+                " ".join([str(_metadata_table.item(r, i).text()) for i in range(3)])
+                for r in range(nbr_row)
+            ]
             RefRed.utilities.write_ascii_file(filename, text)

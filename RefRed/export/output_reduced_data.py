@@ -86,7 +86,7 @@ class OutputReducedData(QDialog):
         _q_min = str(_gui_metadata["q_min"])
         self.ui.manual_qmin_value.setText(_q_min)
 
-    def auto_qmin_button_clicked(self, state : bool):
+    def auto_qmin_button_clicked(self, state: bool):
         self.ui.manual_qmin_frame.setEnabled(not state)
 
     def output_format_radio_buttons_event(self):
@@ -133,8 +133,11 @@ class OutputReducedData(QDialog):
         caption = "Select Location and Name"
         filter = "Reduced Ascii (*.txt);; All (*.*)"
         filename, filter = getSaveFileName(
-            self, caption, str(default_filename), filter,
-            )
+            self,
+            caption,
+            str(default_filename),
+            filter,
+        )
 
         if filename.strip():
             # valid filename, save now
@@ -191,7 +194,7 @@ class OutputReducedData(QDialog):
             self.format_data()
             self.create_file()
 
-    def format_n_filename(self, row : int=-1) -> str:
+    def format_n_filename(self, row: int = -1) -> str:
         folder = self.folder
         prefix = self.ui.prefix_name_value.text()
         suffix = self.ui.suffix_name_value.text()
@@ -224,7 +227,7 @@ class OutputReducedData(QDialog):
         self.apply_scaling_factor()
         self.create_output_file()
 
-    def generate_selected_sf(self, lconfig : 'LConfigDataset') -> int:
+    def generate_selected_sf(self, lconfig) -> int:
         o_gui = GuiUtility(parent=self.parent)
         stitching_type = o_gui.getStitchingType()
         if stitching_type == "absolute":
@@ -325,7 +328,7 @@ class OutputReducedData(QDialog):
 
         _dataObject.big_table_data = _big_table_data
 
-    def retrieve_sf(self, lconfigdataset : 'LConfigDataset') -> int:
+    def retrieve_sf(self, lconfigdataset) -> int:
         o_gui = GuiUtility(parent=self.parent)
         stitching_type = o_gui.getStitchingType()
         if stitching_type == "absolute":
@@ -335,7 +338,7 @@ class OutputReducedData(QDialog):
         else:
             return lconfigdataset.sf_manual
 
-    def retrieve_individual_metadata(self, row : int=-1) -> str:
+    def retrieve_individual_metadata(self, row: int = -1) -> str:
         reduction_table = self.parent.ui.reductionTable
         text = []
 
@@ -349,14 +352,20 @@ class OutputReducedData(QDialog):
             text.append(_entry)
         text.append("#")
 
-        _legend = "\t".join([
-            "# DataRun", "NormRun", "2theta(degrees)",
-            "LambdaMin(A)", "LambdaMax(A)",
-            "Qmin(1/A)", "Qmax(1/A)",
-            "ScalingFactor",
-            "Total Counts",
-            "pcCharge(mC)",
-        ])
+        _legend = "\t".join(
+            [
+                "# DataRun",
+                "NormRun",
+                "2theta(degrees)",
+                "LambdaMin(A)",
+                "LambdaMax(A)",
+                "Qmin(1/A)",
+                "Qmax(1/A)",
+                "ScalingFactor",
+                "Total Counts",
+                "pcCharge(mC)",
+            ]
+        )
 
         text.append(_legend)
         _data_run = str(reduction_table.item(row, 1).text())
@@ -468,13 +477,13 @@ class OutputReducedData(QDialog):
         total_counts = _lrdata.total_counts
         return total_counts
 
-    def retrieve_pcCharge(self, row : int) -> float:
+    def retrieve_pcCharge(self, row: int) -> float:
         _big_table_data = self.parent.big_table_data
         _lrdata = _big_table_data[row, 0]
         pcCharge = _lrdata.proton_charge
         return pcCharge
 
-    def retrieve_scaling_factor(self, row : int=-1) -> str:
+    def retrieve_scaling_factor(self, row: int = -1) -> str:
         o_reduced_data_hanlder = ReducedDataHandler(parent=self.parent)
         big_table_data = self.parent.big_table_data
         _lconfig = big_table_data[row, 2]
@@ -484,7 +493,7 @@ class OutputReducedData(QDialog):
     def create_file(self):
         RefRed.utilities.write_ascii_file(self.filename, self.text_data)
 
-    def produce_data_without_common_q_axis(self, row :int=-1):
+    def produce_data_without_common_q_axis(self, row: int = -1):
         _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
         _big_table_data = _dataObject.big_table_data
         _data = _big_table_data[row, 2]
@@ -607,10 +616,10 @@ class OutputReducedData(QDialog):
 
     def applySF(
         self,
-        _data : 'LConfigDataset',
-        y_array : List[float],
-        e_array : List[float],
-        ) -> List[np.ndarray]:
+        _data,
+        y_array: List[float],
+        e_array: List[float],
+    ) -> List[np.ndarray]:
         if self.parent.ui.absolute_normalization_button.isChecked():
             _sf = _data.sf_abs_normalization
         elif self.parent.ui.auto_switching_button.isChecked():

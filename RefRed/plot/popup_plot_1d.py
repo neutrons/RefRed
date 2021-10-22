@@ -1,5 +1,5 @@
 from qtpy.QtGui import QPalette
-from qtpy.QtWidgets import QDialog, QFileDialog
+from qtpy.QtWidgets import QDialog
 from qtpy.QtCore import Qt
 import os
 from pathlib import Path

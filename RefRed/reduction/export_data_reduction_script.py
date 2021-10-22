@@ -1,4 +1,3 @@
-from qtpy import QtWidgets
 import time
 import os
 from pathlib import Path

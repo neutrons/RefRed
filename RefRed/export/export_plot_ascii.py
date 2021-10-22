@@ -1,19 +1,19 @@
 import os
 from pathlib import Path
 from typing import List
-from qtpy import QtWidgets
 import RefRed.utilities
 from RefRed.export.output_reduced_data import OutputReducedData
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.utilities import makeSureFileHasExtension
 from RefRed.widgets import getSaveFileName
 
+
 class ExportPlotAscii:
 
     parent = None
     data_type = "yt"
 
-    def __init__(self, parent=None, data_type : str="yt"):
+    def __init__(self, parent=None, data_type: str = "yt"):
         self.parent = parent
         self.data_type = data_type
 

@@ -12,9 +12,9 @@ from qtpy import QtWidgets
 def getSaveFileName(
     parent,
     caption: str,
-    default_filename:str,
-    filter: str="All (*.*)",
-    )->Tuple[str]:
+    default_filename: str,
+    filter: str = "All (*.*)",
+) -> Tuple[str]:
     """
     Wrapper around QtWidgets.QFileDialog.getSaveFileName that returns
     the PyQt5 style output (filename and filter).
@@ -26,8 +26,8 @@ def getSaveFileName(
         parent,
         caption,
         default_filename,
-        filter
-        )
+        filter,
+    )
     # mock the Qt5 style
     if isinstance(rst, str):
         filename, filter = rst, ""
