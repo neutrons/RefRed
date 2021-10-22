@@ -1,7 +1,9 @@
 # for linting and formatting
 flake8
+mypy
 pre-commit
 pytest
+pytest-cov
 pytest-runner
 pytest-xdist
 pytest-cov
