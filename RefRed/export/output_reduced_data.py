@@ -1,7 +1,6 @@
 import os
 import logging
 import time
-from typing import List
 from pathlib import Path
 from qtpy.QtGui import QPalette
 from qtpy.QtWidgets import QDialog, QFileDialog
@@ -86,7 +85,7 @@ class OutputReducedData(QDialog):
         _q_min = str(_gui_metadata["q_min"])
         self.ui.manual_qmin_value.setText(_q_min)
 
-    def auto_qmin_button_clicked(self, state: bool):
+    def auto_qmin_button_clicked(self, state):
         self.ui.manual_qmin_frame.setEnabled(not state)
 
     def output_format_radio_buttons_event(self):
@@ -161,7 +160,7 @@ class OutputReducedData(QDialog):
         _export_stitching_ascii_settings.fourth_column_flag = _is_with_4th_column_flag
         self.parent.exportStitchingAsciiSettings = _export_stitching_ascii_settings
 
-    def is_folder_access_granted(self, filename: str) -> bool:
+    def is_folder_access_granted(self, filename):
         return os.access(filename, os.W_OK)
 
     def write_n_ascii(self):
@@ -194,7 +193,7 @@ class OutputReducedData(QDialog):
             self.format_data()
             self.create_file()
 
-    def format_n_filename(self, row: int = -1) -> str:
+    def format_n_filename(self, row = -1):
         folder = self.folder
         prefix = self.ui.prefix_name_value.text()
         suffix = self.ui.suffix_name_value.text()
@@ -227,7 +226,7 @@ class OutputReducedData(QDialog):
         self.apply_scaling_factor()
         self.create_output_file()
 
-    def generate_selected_sf(self, lconfig) -> int:
+    def generate_selected_sf(self, lconfig):
         o_gui = GuiUtility(parent=self.parent)
         stitching_type = o_gui.getStitchingType()
         if stitching_type == "absolute":
@@ -237,7 +236,7 @@ class OutputReducedData(QDialog):
         else:
             return lconfig.sf_manual
 
-    def apply_sf(self, list_wks: List) -> List:
+    def apply_sf(self, list_wks):
         big_table_data = self.parent.big_table_data
         for _index, _wks in enumerate(list_wks):
             _lconfig = big_table_data[_index, 2]
@@ -277,10 +276,10 @@ class OutputReducedData(QDialog):
             Metadata=_text_data,
         )
 
-    def format_metadata(self) -> str:
+    def format_metadata(self):
         return "\n".join(map(str, self.text_data))
 
-    def collect_list_wks(self) -> List:
+    def collect_list_wks(self):
         o_gui_utility = GuiUtility(parent=self.parent)
         nbr_row = o_gui_utility.reductionTable_nbr_row()
         _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
@@ -288,7 +287,7 @@ class OutputReducedData(QDialog):
 
         return [_big_table_data[_row, 2].wks for _row in range(nbr_row)]
 
-    def get_q_range(self) -> List[float]:
+    def get_q_range(self):
         o_gui_utility = GuiUtility(parent=self.parent)
         nbr_row = o_gui_utility.reductionTable_nbr_row()
 
@@ -328,7 +327,7 @@ class OutputReducedData(QDialog):
 
         _dataObject.big_table_data = _big_table_data
 
-    def retrieve_sf(self, lconfigdataset) -> int:
+    def retrieve_sf(self, lconfigdataset):
         o_gui = GuiUtility(parent=self.parent)
         stitching_type = o_gui.getStitchingType()
         if stitching_type == "absolute":
@@ -338,7 +337,7 @@ class OutputReducedData(QDialog):
         else:
             return lconfigdataset.sf_manual
 
-    def retrieve_individual_metadata(self, row: int = -1) -> str:
+    def retrieve_individual_metadata(self, row = -1):
         reduction_table = self.parent.ui.reductionTable
         text = []
 
@@ -404,7 +403,7 @@ class OutputReducedData(QDialog):
 
         return text
 
-    def retrieve_metadata(self) -> str:
+    def retrieve_metadata(self):
         reduction_table = self.parent.ui.reductionTable
         text = []
 
@@ -471,19 +470,19 @@ class OutputReducedData(QDialog):
 
         return text
 
-    def retrieve_total_counts(self, row: int) -> int:
+    def retrieve_total_counts(self, row):
         _big_table_data = self.parent.big_table_data
         _lrdata = _big_table_data[row, 0]
         total_counts = _lrdata.total_counts
         return total_counts
 
-    def retrieve_pcCharge(self, row: int) -> float:
+    def retrieve_pcCharge(self, row):
         _big_table_data = self.parent.big_table_data
         _lrdata = _big_table_data[row, 0]
         pcCharge = _lrdata.proton_charge
         return pcCharge
 
-    def retrieve_scaling_factor(self, row: int = -1) -> str:
+    def retrieve_scaling_factor(self, row = -1):
         o_reduced_data_hanlder = ReducedDataHandler(parent=self.parent)
         big_table_data = self.parent.big_table_data
         _lconfig = big_table_data[row, 2]
@@ -493,7 +492,7 @@ class OutputReducedData(QDialog):
     def create_file(self):
         RefRed.utilities.write_ascii_file(self.filename, self.text_data)
 
-    def produce_data_without_common_q_axis(self, row: int = -1):
+    def produce_data_without_common_q_axis(self, row = -1):
         _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
         _big_table_data = _dataObject.big_table_data
         _data = _big_table_data[row, 2]
@@ -614,12 +613,7 @@ class OutputReducedData(QDialog):
         self.y_axis = data_y
         self.e_axis = data_e
 
-    def applySF(
-        self,
-        _data,
-        y_array: List[float],
-        e_array: List[float],
-    ) -> List[np.ndarray]:
+    def applySF(self, _data, y_array, e_array):
         if self.parent.ui.absolute_normalization_button.isChecked():
             _sf = _data.sf_abs_normalization
         elif self.parent.ui.auto_switching_button.isChecked():
