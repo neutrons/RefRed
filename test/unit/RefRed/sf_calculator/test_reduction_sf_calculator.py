@@ -1,23 +1,75 @@
+import sys
+
 import pytest
-from pytest_mock import mocker
+from unittest import mock
+
+import qtpy.QtWidgets
+
 from RefRed.sf_calculator.reduction_sf_calculator import ReductionSfCalculator
-from RefRed.sf_calculator.sf_calculator import SFCalculator
 import numpy as np
-from qtpy.QtWidgets import QTableWidgetItem, QTableWidget
+import qtpy
+from qtpy.QtWidgets import (QTableWidgetItem, QTableWidget)
+import mantid.simpleapi
 
 
-def test_class_reduction_sf_calculator(mocker):
-    """Test class ReductionSfCalculator
+def mock_table_row_count(*args, **kwargs):
+    return GoldValues.gold_table_setting.shape[0]
+
+
+def mock_table_row_item(row, col):
+    # Map the real column to column that in the gold data
+    index_col = [0, 1, 5, 10, 11, 12, 13, 14, 15]
+    try:
+        real_col = index_col.index(col)
+    except ValueError:
+        assert False, f'Column {col} content are not float/int'
+
+    cell_value = str(GoldValues.gold_table_setting[row, real_col])
+
+    return QTableWidgetItem(cell_value)
+
+
+def mock_table_row_cell(row, col):
+    # Map the real column to column that in the gold data
+    index_col = [0, 1, 5, 10, 11, 12, 13, 14, 15]
+    try:
+        real_col = index_col.index(col)
+        cell_value = GoldValues.gold_table_setting[row, real_col]
+    except ValueError:
+        assert False, f'Column {col} content are not float/int'
+
+    spin_box_instance = qtpy.QtWidgets.QSpinBox()
+    spin_box_instance.setValue(int(cell_value))
+
+    return spin_box_instance
+
+
+@mock.patch('qtpy.QtWidgets.QApplication.processEvents')
+def test_init_reduction_sf_calculator(sf_process_events):
+    """Test reduction sf calculator
     """
-    # Set mockers
-    set_mockers(mocker)
+    # Set up QApplication
+    main_app = qtpy.QtWidgets.QApplication(sys.argv)
+    assert main_app
 
-    # Set up mocking class and etc.
-    sf_gui = SFCalculator()
+    # Mock SF calculation
+    sf_gui = mock.Mock()
+    sf_gui.tableWidget = mock.Mock()
+
+    sf_gui.tableWidget.rowCount = mock.MagicMock(side_effect=mock_table_row_count)
+    sf_gui.tableWidget.cellWidget = mock.MagicMock(side_effect=mock_table_row_cell)
+    sf_gui.tableWidget.item = mock.MagicMock(side_effect=mock_table_row_item)
+
+    sf_gui.incidentMediumComboBox = qtpy.QtWidgets.QComboBox()
+    sf_gui.incidentMediumComboBox.addItem('air')
+    sf_gui.incidentMediumComboBox.setCurrentIndex(0)
+    sf_gui.sfFileNameLabel = qtpy.QtWidgets.QLabel('/tmp/testscale.cfg')
+
+    # Set up mock for mantid LRScalingFactors
+    mantid.simpleapi.LRScalingFactors = mock.Mock(side_effect=mock_lr_scaling_factor)
 
     # Initialize
-    test_reducer = ReductionSfCalculator(sf_gui, False, test_mode=True)
-    # Validation
+    test_reducer = ReductionSfCalculator(sf_gui, False, True)
     assert test_reducer
 
     # Test: collect_table_information()
@@ -32,22 +84,8 @@ def test_class_reduction_sf_calculator(mocker):
     # Test: _handle_request
     test_reducer._handle_request()
 
-
-def set_mockers(mocker_fixture):
-    mocker_fixture.patch('RefRed.sf_calculator.sf_calculator.SFCalculator.__init__',
-                         MockSFCalculatorGui.init_sf_gui)
-    mocker_fixture.patch('RefRed.sf_calculator.sf_calculator.SFCalculator.updateProgressBar',
-                         MockSFCalculatorGui.sf_update_progress_bar)
-    mocker_fixture.patch('RefRed.sf_calculator.sf_calculator.SFCalculator.displayConfigFile',
-                         MockSFCalculatorGui.sf_display_config)
-    mocker_fixture.patch('qtpy.QtWidgets.QFileDialog.getSaveFileName', MockSFCalculatorGui.qt_get_save_file_name)
-    mocker_fixture.patch('qtpy.QtWidgets.QTableWidget.__init__', MockSFCalculatorGui.table_init)
-    mocker_fixture.patch('qtpy.QtWidgets.QTableWidget.rowCount', MockSFCalculatorGui.row_count)
-    mocker_fixture.patch('qtpy.QtWidgets.QTableWidget.item', MockSFCalculatorGui.table_item)
-    mocker_fixture.patch('qtpy.QtWidgets.QTableWidget.cellWidget', MockSFCalculatorGui.table_cell)
-    mocker_fixture.patch('qtpy.QtWidgets.QApplication.processEvents', MockSFCalculatorGui.process_events)
-
-    mocker_fixture.patch('mantid.simpleapi.LRScalingFactors', mock_lr_scaling_factor)
+    # Test
+    assert sf_process_events.iscalled
 
 
 class GoldValues:
@@ -76,129 +114,6 @@ class GoldValues:
         [6., 14.]])
 
     gold_nbr_scripts = 5
-
-
-class MockSFCalculatorGui:
-    """
-    Mocking SF_gui
-    """
-    def init_sf_gui(self):
-        """Mock SF_Calculator's constructor
-        Note:
-        # QComboBox
-        # from qtpy.QtWidgets import QComboBox
-        # self.incidentMediumComboBox = QComboBox()
-        # test/unit/RefRed/sf_calculator/test_reduction_sf_calculator.py Fatal Python error: Aborted
-
-        # Qlabel
-        # from qtpy.QtWidgets import QLabel
-        # self.sfFileNameLabel = QLabel()
-        """
-        self.name = 'Mock SF GUI'
-        self.tableWidget = QTableWidget()
-        self.incidentMediumComboBox = MockQComboBox('air')
-        self.sfFileNameLabel = MockQLabel()
-        self.sfFileNameLabel.setText('/tmp/testscale.cfg')
-
-    def sf_display_config(self, file_name):
-        """Mock SF_Calculator.displayConfigFile()
-        """
-        assert isinstance(file_name, str)
-
-    def sf_update_progress_bar(self, progress):
-        return
-
-    def qt_get_save_file_name(parent, name, path, filter):
-        return 'whatever.h5'
-
-    def row_count(self) -> int:
-        """Mock method QTableWidget.rowCount()
-        """
-        return GoldValues.gold_table_setting.shape[0]
-
-    def table_init(self):
-        return
-
-    def table_item(self, row, col):
-        """Mock method QTableWidget.item(row, col)
-
-        Parameters
-        ----------
-        row: int
-            row number
-        col: int
-            column number
-
-        Returns
-        -------
-        QTableWidgetItem
-            table widget time
-
-        """
-        # Map the real column to column that in the gold data
-        index_col = [0, 1, 5, 10, 11, 12, 13, 14, 15]
-        try:
-            real_col = index_col.index(col)
-        except ValueError:
-            assert False, f'Column {col} content are not float/int'
-
-        cell_value = str(GoldValues.gold_table_setting[row, real_col])
-
-        return QTableWidgetItem(cell_value)
-
-    def table_cell(self, row: int, col: int):
-        """Mock QTableWidget.cell(row, col)
-
-        Note: Not working!
-        ..  from qtpy.QtWidgets import QSpinBox
-        ..  spin_box = QSpinBox()
-        causing test/unit/RefRed/sf_calculator/test_reduction_sf_calculator.py Fatal Python error: Aborted
-
-        Returns
-        -------
-        MockQSpinBox
-            mocked QSpinBox
-        """
-        # Map the real column to column that in the gold data
-        index_col = [0, 1, 5, 10, 11, 12, 13, 14, 15]
-        try:
-            real_col = index_col.index(col)
-            cell_value = GoldValues.gold_table_setting[row, real_col]
-        except ValueError:
-            assert False, f'Column {col} content are not float/int'
-
-        return MockQSpinBox(cell_value)
-
-    @staticmethod
-    def process_events():
-        return
-
-
-class MockQSpinBox(object):
-    def __init__(self, value):
-        self._value = int(value)
-
-    def value(self):
-        return self._value
-
-
-class MockQComboBox(object):
-    def __init__(self, text):
-        self._text = text
-
-    def currentText(self):
-        return self._text
-
-
-class MockQLabel(object):
-    def __init__(self):
-        self._text = None
-
-    def setText(self, text):
-        self._text = str(text)
-
-    def text(self):
-        return self._text
 
 
 def mock_lr_scaling_factor(DirectBeamRuns, IncidentMedium, TOFRange, TOFSteps, SignalPeakPixelRange,
