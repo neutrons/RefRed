@@ -4,7 +4,6 @@ from qtpy.QtWidgets import (
     QMainWindow,
     QCheckBox,
     QTableWidgetItem,
-    QFileDialog,
     QMessageBox,
     QPushButton,
 )
@@ -17,7 +16,7 @@ import numpy as np
 from RefRed.interfaces import load_ui
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.decorators import waiting_effects
-from RefRed.widgets import getSaveFileName
+from RefRed.widgets import getOpenFileName, getSaveFileName
 import RefRed.utilities
 import RefRed.nexus_utilities
 
@@ -346,19 +345,14 @@ class MetadataFinder(QMainWindow):
     def importConfigurationClicked(self):
         _filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
         _default_path = self.parent.path_config
-
-        rst = QFileDialog.getOpenFileName(
+        filename, _ = getOpenFileName(
             self,
             "Import Metadata Configuration",
             directory=_default_path,
             filter=(_filter),
         )
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
 
-        if filename == "":
+        if not filename:  # user cancelled
             return
 
         data = RefRed.utilities.import_ascii_file(filename)

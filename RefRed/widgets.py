@@ -8,6 +8,8 @@ the API breaking changes between PyQt4 and PyQt5.
 from typing import Tuple, Union
 from qtpy import QtWidgets
 
+__all__ = ["getSaveFileName", "getOpenFileName"]
+
 # default filter is to show everything
 FILTER_ALL = "All (*.*)"
 

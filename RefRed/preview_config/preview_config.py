@@ -3,6 +3,7 @@ from xml.dom import minidom
 from numpy import empty
 from RefRed.interfaces import load_ui
 import RefRed.colors
+from RefRed.widgets import getOpenFileName
 
 
 class PreviewConfig(QtWidgets.QMainWindow):
@@ -226,16 +227,11 @@ class PreviewConfig(QtWidgets.QMainWindow):
         self.ui.systemTableWidget.resizeColumnsToContents()
 
     def _browse_file_name(self):
-        rst = QtWidgets.QFileDialog.getOpenFileName(
+        filename, _ = getOpenFileName(
             self,
             caption="Select Configuration File",
             directory=self.parent.path_config,
             filter="Config (*.xml)",
         )
-
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
 
         return str(filename)
