@@ -10,8 +10,6 @@ from RefRed.widgets import getSaveFileName
 
 class ExportPlotAscii:
 
-    parent = None
-    data_type = "yt"
     # NOTE:
     # figure layout as of 10-22-2021
     # ------------  main window ------------|
