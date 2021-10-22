@@ -5,10 +5,10 @@ Its current main purpose is to provide a uniformed way to deal with
 the API breaking changes between PyQt4 and PyQt5.
 """
 
-from typing import Tuple, Union
+from typing import List, Tuple, Union
 from qtpy import QtWidgets
 
-__all__ = ["getSaveFileName", "getOpenFileName"]
+__all__ = ["getSaveFileName", "getOpenFileName", "getOpenFileNames"]
 
 # default filter is to show everything
 FILTER_ALL = "All (*.*)"
@@ -61,3 +61,24 @@ def getOpenFileName(
 
     # mock the Qt5 style
     return _convertSingleReturn(rst)
+
+
+def getOpenFileNames(
+    parent, caption: str, path: str = "", filter: str = FILTER_ALL
+) -> Tuple[List[str], str]:
+    """
+    Wrapper around QtWidgets.QFileDialog.getSaveFileName that returns
+    the PyQt5 style output (filename and filter).
+    """
+    rst = QtWidgets.QFileDialog.getOpenFileNames(parent, caption, path, filter)
+
+    if isinstance(rst, tuple):
+        # NOTE: starting with Qt5, the return becomes a tuple of
+        #       ([filenames], extension_str)
+        filenames, selected_filter = rst
+    else:
+        # assume qt4
+        filenames, selected_filter = rst, ""
+
+    # mock the Qt5 style
+    return filenames, selected_filter
