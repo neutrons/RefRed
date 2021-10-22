@@ -193,7 +193,7 @@ class OutputReducedData(QDialog):
             self.format_data()
             self.create_file()
 
-    def format_n_filename(self, row = -1):
+    def format_n_filename(self, row=-1):
         folder = self.folder
         prefix = self.ui.prefix_name_value.text()
         suffix = self.ui.suffix_name_value.text()
@@ -337,7 +337,7 @@ class OutputReducedData(QDialog):
         else:
             return lconfigdataset.sf_manual
 
-    def retrieve_individual_metadata(self, row = -1):
+    def retrieve_individual_metadata(self, row=-1):
         reduction_table = self.parent.ui.reductionTable
         text = []
 
@@ -482,7 +482,7 @@ class OutputReducedData(QDialog):
         pcCharge = _lrdata.proton_charge
         return pcCharge
 
-    def retrieve_scaling_factor(self, row = -1):
+    def retrieve_scaling_factor(self, row=-1):
         o_reduced_data_hanlder = ReducedDataHandler(parent=self.parent)
         big_table_data = self.parent.big_table_data
         _lconfig = big_table_data[row, 2]
@@ -492,7 +492,7 @@ class OutputReducedData(QDialog):
     def create_file(self):
         RefRed.utilities.write_ascii_file(self.filename, self.text_data)
 
-    def produce_data_without_common_q_axis(self, row = -1):
+    def produce_data_without_common_q_axis(self, row=-1):
         _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
         _big_table_data = _dataObject.big_table_data
         _data = _big_table_data[row, 2]
