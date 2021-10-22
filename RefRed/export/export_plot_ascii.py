@@ -49,8 +49,8 @@ class ExportPlotAscii:
         """Generate a list of string used to export the it plot"""
         countstof = active_data.countstofdata
         tof = active_data.tof_axis_auto_with_margin
-        scale = 1000.0 if tof[-1] > 1000 else 1.0
-        tof /= scale
+        scale = 1000.0 if tof[-1] > 1000.0 else 1.0
+        tof = tof / scale
         text = ["#Counts vs  TOF", "#TOF(ms) - Counts"]
         text += [f"{t} {c}" for t, c in zip(tof[:-1], countstof)]
         text.append(str(tof[-1]))
@@ -89,7 +89,7 @@ class ExportPlotAscii:
             )
             # ask user
             caption = self.default_caption[self.data_type]
-            filename, _ = getSaveFileName(self.parent, caption, default_filename)
+            filename, _ = self.get_save_filename(caption, default_filename)
             # save data ONLY when filename is valid
             if filename.strip():
                 # update cached dir
@@ -119,6 +119,13 @@ class ExportPlotAscii:
     # behave exactly as they were intended due to the external dependency  #
     # nature.                                                              #
     # -------------------------------------------------------------------- #
+    def get_save_filename(self, caption, default_filename):
+        """wrapper around external getSaveFileName"""
+        # NOTE:
+        # current test framework cannot patch getSaveFileName, we have to shadow
+        # it for testing purpose.
+        return getSaveFileName(self.parent, caption, default_filename)
+
     def export_stitched(self):
         _tmp = OutputReducedData(parent=self.parent)
         _tmp.show()
