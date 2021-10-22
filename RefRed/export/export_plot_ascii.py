@@ -12,6 +12,27 @@ class ExportPlotAscii:
 
     parent = None
     data_type = "yt"
+    # NOTE:
+    # figure layout as of 10-22-2021
+    # ------------  main window ------------|
+    # |     yt_plot      |     yi_plot      |
+    # |------------------|------------------|
+    # |     it_plot      |     ix_plot      |
+    # |-------------------------------------|
+    # |                table                |
+    # |-------------------------------------|
+    default_suffix = {
+        "yt": "2dPxVsTof",
+        "ix": "ix",
+        "it": "yt",
+        "yi": "rpx",
+    }
+    default_caption = {
+        "yt": "Create 2D Pixel VS TOF",
+        "ix": "Create Counts vs Pixel (low resolution range) ASCII File",
+        "it": "Create Counts vs TOF ASCII File",
+        "yi": "Create Counts vs Pixel ASCII File",
+    }
 
     def __init__(self, parent=None, data_type: str = "yt"):
         self.parent = parent
@@ -19,22 +40,8 @@ class ExportPlotAscii:
 
     def get_default_filename(self, run_number: int, datatype: str) -> str:
         """Return a default filename based on run number and data/plot type"""
-        # NOTE:
-        # figure layout as of 10-22-2021
-        # ------------  main window ------------|
-        # |     yt_plot      |     yi_plot      |
-        # |------------------|------------------|
-        # |     it_plot      |     ix_plot      |
-        # |-------------------------------------|
-        # |                table                |
-        # |-------------------------------------|
         basepath = Path(self.parent.path_ascii)
-        suffix = {
-            "yt": "2dPxVsTof",
-            "ix": "ix",
-            "it": "yt",
-            "yi": "rpx",
-        }[datatype]
+        suffix = self.default_suffix[datatype]
         filename = f"REFL_{run_number}_{suffix}.txt"
         return str(basepath / filename)
 
@@ -65,108 +72,46 @@ class ExportPlotAscii:
         text += [f"{p} {c}" for p, c in zip(pixelaxis, ycounts)]
         return text
 
+    # --------------- #
+    # actual callback #
+    # --------------- #
     def export(self):
-        _data_type = self.data_type
-        if _data_type == "yt":
-            self.export_yt()
-        elif _data_type == "ix":
-            self.export_ix()
-        elif _data_type == "it":
-            self.export_it()
-        elif _data_type == "yi":
-            self.export_yi()
-        elif _data_type == "stitched":
-            self.export_stitched()
+        # sanity check
+        if self.data_type == "stitched":
+            self.export_stitched()  # out-source to external lib
+        elif self.data_type in ("yt", "ix", "it", "yi"):
+            # grab the active data
+            active_data = self.get_active_data()
+            # generate default filename for user
+            default_filename = self.get_default_filename(
+                active_data.run_number,
+                self.data_type,
+            )
+            # ask user
+            caption = self.default_caption[self.data_type]
+            filename, _ = getSaveFileName(self.parent, caption, default_filename)
+            # save data ONLY when filename is valid
+            if filename.strip():
+                # update cached dir
+                self.parent.path_ascii = os.path.dirname(filename)
+                # sanity check on extension
+                filename = makeSureFileHasExtension(filename, default_ext=".txt")
+                # get the data and save
+                if self.data_type == "yt":
+                    data_to_save = active_data.ytofdata
+                    RefRed.utilities.output_2d_ascii_file(filename, data_to_save)
+                else:
+                    # get data string list
+                    if self.data_type == "ix":
+                        outstrlist = self.get_counts_vs_pixel_datastr(active_data)
+                    elif self.data_type == "it":
+                        outstrlist = self.get_counts_vs_tof_datastr(active_data)
+                    elif self.data_type == "yi":
+                        outstrlist = self.get_ycounts_vs_pixel_datastr(active_data)
+                    # save to ASCII
+                    RefRed.utilities.write_ascii_file(filename, outstrlist)
         else:
-            raise ValueError(f"data type {_data_type} not supported.")
-
-    def export_yt(self):
-        # grab the active data
-        active_data = self.get_active_data()
-        # generate default filename for user
-        default_filename = self.get_default_filename(
-            active_data.run_number,
-            self.data_type,
-        )
-        # ask user
-        caption = "Create 2D Pixel VS TOF"
-        filename, _ = getSaveFileName(self.parent, caption, default_filename)
-        # save data ONLY when filename is valid
-        if filename.strip():
-            # update cached dir
-            self.parent.path_ascii = os.path.dirname(filename)
-            # sanity check on extension
-            filename = makeSureFileHasExtension(filename, default_ext=".txt")
-            # get data to save
-            data_to_save = active_data.ytofdata
-            # save to file
-            RefRed.utilities.output_2d_ascii_file(filename, data_to_save)
-
-    def export_ix(self):
-        # grab the activate data
-        active_data = self.get_active_data()
-        # generate the default filename for user
-        default_filename = self.get_default_filename(
-            active_data.run_number,
-            self.data_type,
-        )
-        # ask user input
-        caption = "Create Counts vs Pixel (low resolution range) ASCII File"
-        filename, _ = getSaveFileName(self.parent, caption, default_filename)
-        # save ONLY when given filename is valid
-        if filename.strip():
-            # update parent cached dir
-            self.parent.path_ascii = os.path.dirname(filename)
-            # sanitizing filename extension
-            filename = makeSureFileHasExtension(filename, default_ext=".txt")
-            # get data/str to save
-            outstrlist = self.get_counts_vs_pixel_datastr(active_data)
-            # save to file
-            RefRed.utilities.write_ascii_file(filename, outstrlist)
-
-    def export_it(self):
-        # grab the active data
-        active_data = self.get_active_data()
-        # generate the default filename for user
-        default_filename = self.get_default_filename(
-            active_data.run_number,
-            self.data_type,
-        )
-        # ask user for input
-        caption = "Create Counts vs TOF ASCII File"
-        filename, _ = getSaveFileName(self.parent, caption, default_filename)
-        # save ONLY when given filename is valid
-        if filename.strip():
-            # update parent cached dir
-            self.parent.path_ascii = os.path.dirname(filename)
-            # sanitizing filename extension
-            filename = makeSureFileHasExtension(filename, default_ext=".txt")
-            # get data/str to save
-            outstrlist = self.get_counts_vs_tof_datastr(active_data)
-            # save to file
-            RefRed.utilities.write_ascii_file(filename, outstrlist)
-
-    def export_yi(self):
-        # grab the active data
-        active_data = self.get_active_data()
-        # generate the default filename for user
-        default_filename = self.get_default_filename(
-            active_data.run_number,
-            self.data_type,
-        )
-        # ask user for input
-        caption = "Create Counts vs Pixel ASCII File"
-        filename, _ = getSaveFileName(self.parent, caption, default_filename)
-        # save ONLY when given filename is valid
-        if filename.strip():
-            # update parent cached dir
-            self.parent.path_ascii = os.path.dirname(filename)
-            # sanitizing filename extension
-            filename = makeSureFileHasExtension(filename, default_ext=".txt")
-            # get data/str to save
-            outstrlist = self.get_ycounts_vs_pixel_datastr(active_data)
-            # save to file
-            RefRed.utilities.write_ascii_file(filename, outstrlist)
+            raise ValueError(f"data type {self.data_type} not supported.")
 
     # -------------------------------------------------------------------- #
     # NOTE:                                                                #
