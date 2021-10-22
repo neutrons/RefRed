@@ -1,4 +1,5 @@
 import os
+from typing import List
 from pathlib import Path
 import RefRed.utilities
 from RefRed.export.output_reduced_data import OutputReducedData
@@ -36,6 +37,33 @@ class ExportPlotAscii:
         }[datatype]
         filename = f"REFL_{run_number}_{suffix}.txt"
         return str(basepath / filename)
+
+    def get_counts_vs_tof_datastr(self, active_data) -> List[str]:
+        """Generate a list of string used to export the it plot"""
+        countstof = active_data.countstofdata
+        tof = active_data.tof_axis_auto_with_margin
+        scale = 1000.0 if tof[-1] > 1000 else 1.0
+        tof /= scale
+        text = ["#Counts vs  TOF", "#TOF(ms) - Counts"]
+        text += [f"{t} {c}" for t, c in zip(tof[:-1], countstof)]
+        text.append(str(tof[-1]))
+        return text
+
+    def get_counts_vs_pixel_datastr(self, active_data) -> List[str]:
+        """Generate a list of string used to export the ix plot"""
+        countsx = active_data.countsxdata
+        pixelaxis = list(range(len(countsx)))
+        text = ["#Counts vs Pixels (low resolution range)", "#Pixel - Counts"]
+        text += [f"{p} {c}" for p, c in zip(pixelaxis, countsx)]
+        return text
+
+    def get_ycounts_vs_pixel_datastr(self, active_data) -> List[str]:
+        """Generate a list of string used to export the yi plot"""
+        ycounts = active_data.ycountsdata
+        pixelaxis = list(range(len(ycounts)))
+        text = ["#Counts vs Pixels", "#Pixel - Counts"]
+        text += [f"{p} {c}" for p, c in zip(pixelaxis, ycounts)]
+        return text
 
     def export(self):
         _data_type = self.data_type
@@ -92,12 +120,9 @@ class ExportPlotAscii:
             # sanitizing filename extension
             filename = makeSureFileHasExtension(filename, default_ext=".txt")
             # get data/str to save
-            countsx = active_data.countsxdata
-            pixelaxis = list(range(len(countsx)))
-            text = ["#Counts vs Pixels (low resolution range)", "#Pixel - Counts"]
-            text += [f"{p} {c}" for p, c in zip(pixelaxis, countsx)]
+            outstrlist = self.get_counts_vs_pixel_datastr(active_data)
             # save to file
-            RefRed.utilities.write_ascii_file(filename, text)
+            RefRed.utilities.write_ascii_file(filename, outstrlist)
 
     def export_it(self):
         # grab the active data
@@ -117,15 +142,9 @@ class ExportPlotAscii:
             # sanitizing filename extension
             filename = makeSureFileHasExtension(filename, default_ext=".txt")
             # get data/str to save
-            countstof = active_data.countstofdata
-            tof = active_data.tof_axis_auto_with_margin
-            scale = 1000.0 if tof[-1] > 1000 else 1.0
-            tof /= scale
-            text = ["#Counts vs  TOF", "#TOF(ms) - Counts"]
-            text += [f"{t} {c}" for t, c in zip(tof[:-1], countstof)]
-            text.append(str(tof[-1]))
+            outstrlist = self.get_counts_vs_tof_datastr(active_data)
             # save to file
-            RefRed.utilities.write_ascii_file(filename, text)
+            RefRed.utilities.write_ascii_file(filename, outstrlist)
 
     def export_yi(self):
         # grab the active data
@@ -145,12 +164,9 @@ class ExportPlotAscii:
             # sanitizing filename extension
             filename = makeSureFileHasExtension(filename, default_ext=".txt")
             # get data/str to save
-            ycounts = active_data.ycountsdata
-            pixelaxis = list(range(len(ycounts)))
-            text = ["#Counts vs Pixels", "#Pixel - Counts"]
-            text += [f"{p} {c}" for p, c in zip(pixelaxis, ycounts)]
+            outstrlist = self.get_ycounts_vs_pixel_datastr(active_data)
             # save to file
-            RefRed.utilities.write_ascii_file(filename, text)
+            RefRed.utilities.write_ascii_file(filename, outstrlist)
 
     # -------------------------------------------------------------------- #
     # NOTE:                                                                #
