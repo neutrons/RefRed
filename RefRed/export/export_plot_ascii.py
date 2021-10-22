@@ -34,7 +34,7 @@ class ExportPlotAscii:
         "yi": "Create Counts vs Pixel ASCII File",
     }
 
-    def __init__(self, parent=None, data_type: str = "yt"):
+    def __init__(self, parent, data_type: str = "yt"):
         self.parent = parent
         self.data_type = data_type
 
