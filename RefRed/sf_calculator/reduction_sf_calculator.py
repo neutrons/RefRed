@@ -6,7 +6,7 @@ import mantid.simpleapi as api
 from typing import Union
 
 import numpy as np
-from RefRed.utilities import convertTOF
+from RefRed.utilities import convert_tof_values_unit
 
 
 class ReductionSfCalculator(object):

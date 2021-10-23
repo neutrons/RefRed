@@ -24,7 +24,7 @@ from RefRed.sf_calculator.reduction_sf_calculator import ReductionSfCalculator
 from RefRed.sf_calculator.sf_calculator_right_click import SFCalculatorRightClick
 
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
-from RefRed.utilities import convertTOF
+from RefRed.utilities import convert_tof_values_unit
 
 
 def str2bool(v):
@@ -561,7 +561,7 @@ class SFCalculator(QtWidgets.QMainWindow):
             [tof1, tof2] = _nxsdata_row.tof_range_auto
         else:
             [tof1, tof2] = _nxsdata_row.tof_range
-        [tof1ms, tof2ms] = convertTOF([tof1, tof2])
+        [tof1ms, tof2ms] = convert_tof_values_unit([tof1, tof2])
         self.TOFmanualFromValue.setText("%.2f" % float(tof1ms))
         self.TOFmanualToValue.setText("%.2f" % float(tof2ms))
         self.manualTOFWidgetsEnabled(not _nxsdata_row.tof_auto_flag)
