@@ -7,5 +7,4 @@ pytest
 pytest-cov
 pytest-runner
 pytest-xdist
-pytest-cov
 pytest-qt
