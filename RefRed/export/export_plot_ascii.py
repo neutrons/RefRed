@@ -37,14 +37,42 @@ class ExportPlotAscii:
         self.data_type = data_type
 
     def get_default_filename(self, run_number: int, datatype: str) -> str:
-        """Return a default filename based on run number and data/plot type"""
+        """
+        Description
+        -----------
+        Return a default filename based on run number and data/plot type
+
+        Parameters
+        ----------
+        parent : Any
+            parent object
+        data_type : str
+            data type, one of "yt", "ix", "it", "yi"
+
+        Returns
+        -------
+        filename : str
+        """
         basepath = Path(self.parent.path_ascii)
         suffix = self.default_suffix[datatype]
         filename = f"REFL_{run_number}_{suffix}.txt"
         return str(basepath / filename)
 
     def get_counts_vs_tof_datastr(self, active_data) -> List[str]:
-        """Generate a list of string used to export the it plot"""
+        """
+        Description
+        -----------
+        Generate a list of string used to export the it plot
+
+        Parameters
+        ----------
+        active_data : Unknown
+            active data object selected from the table by user
+
+        Returns
+        -------
+        outstrlist : List[str]
+        """
         countstof = active_data.countstofdata
         tof = active_data.tof_axis_auto_with_margin
         scale = 1000.0 if tof[-1] > 1000.0 else 1.0
@@ -55,7 +83,20 @@ class ExportPlotAscii:
         return text
 
     def get_counts_vs_pixel_datastr(self, active_data) -> List[str]:
-        """Generate a list of string used to export the ix plot"""
+        """
+        Description
+        -----------
+        Generate a list of string used to export the ix plot
+
+        Parameters
+        ----------
+        active_data : Unknown
+            active data object selected from the table by user
+
+        Returns
+        -------
+        outstrlist : List[str]
+        """
         countsx = active_data.countsxdata
         pixelaxis = list(range(len(countsx)))
         text = ["#Counts vs Pixels (low resolution range)", "#Pixel - Counts"]
@@ -63,7 +104,20 @@ class ExportPlotAscii:
         return text
 
     def get_ycounts_vs_pixel_datastr(self, active_data) -> List[str]:
-        """Generate a list of string used to export the yi plot"""
+        """
+        Description
+        -----------
+        Generate a list of string used to export the yi plot
+
+        Parameters
+        ----------
+        active_data : Unknown
+            active data object selected from the table by user
+
+        Returns
+        -------
+        outstrlist : List[str]
+        """
         ycounts = active_data.ycountsdata
         pixelaxis = list(range(len(ycounts)))
         text = ["#Counts vs Pixels", "#Pixel - Counts"]
