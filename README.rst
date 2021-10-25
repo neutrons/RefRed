@@ -8,6 +8,11 @@
 
 .. |DOI| image:: https://zenodo.org/badge/39512610.svg
    :target: https://zenodo.org/badge/latestdoi/39512610
+   
+|CII Best Practices|
+
+.. |CII Best Practices| image:: https://bestpractices.coreinfrastructure.org/projects/5312/badge
+   :target: https://bestpractices.coreinfrastructure.org/projects/5312
 
 ------
 RefRed
