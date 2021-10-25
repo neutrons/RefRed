@@ -2,6 +2,5 @@
 configobj
 matplotlib
 numpy
-#PyQt4
-setuptools
 qtpy
+setuptools
