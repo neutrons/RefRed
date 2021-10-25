@@ -1,6 +1,6 @@
 import os
 from numpy import shape
-from RefRed.widgets import getOpenFileName
+from qtpy.QtWidgets import QFileDialog
 
 
 class ScalingFactorWidgetsHandler(object):
@@ -19,7 +19,7 @@ class ScalingFactorWidgetsHandler(object):
     def browse(self):
         _path = self.parent.path_ascii
         _filter = "sfConfig (*.cfg);;Ascii (*.txt);;All (*.*)"
-        filename, _ = getOpenFileName(
+        filename, _ = QFileDialog.getOpenFileName(
             self.parent, "Open scaling factor file", _path, _filter
         )
 

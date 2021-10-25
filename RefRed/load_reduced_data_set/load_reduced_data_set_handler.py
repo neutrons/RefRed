@@ -2,7 +2,6 @@ from qtpy import QtWidgets
 import os
 from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
 from RefRed.load_reduced_data_set.stitching_ascii_widget import StitchingAsciiWidget
-from RefRed.widgets import getOpenFileName
 
 
 class LoadReducedDataSetHandler(object):
@@ -15,7 +14,7 @@ class LoadReducedDataSetHandler(object):
     def run(self):
         _path = self.parent.path_ascii
         _filter = "Ascii File (*.txt);; All (*.*)"
-        filename, _ = getOpenFileName(
+        filename, _ = QtWidgets.QFileDialog.getOpenFileName(
             self.parent, "Open Reduced Data Set", directory=_path, filter=_filter
         )
 

@@ -3,6 +3,7 @@ from qtpy.QtGui import QPalette, QPixmap, QIcon
 from qtpy.QtWidgets import (
     QMainWindow,
     QCheckBox,
+    QFileDialog,
     QTableWidgetItem,
     QMessageBox,
     QPushButton,
@@ -16,7 +17,6 @@ import numpy as np
 from RefRed.interfaces import load_ui
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.decorators import waiting_effects
-from RefRed.widgets import getOpenFileName, getSaveFileName
 import RefRed.utilities
 import RefRed.nexus_utilities
 
@@ -345,7 +345,7 @@ class MetadataFinder(QMainWindow):
     def importConfigurationClicked(self):
         _filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
         _default_path = self.parent.path_config
-        filename, _ = getOpenFileName(
+        filename, _ = QFileDialog.getOpenFileName(
             self,
             "Import Metadata Configuration",
             directory=_default_path,
@@ -364,7 +364,12 @@ class MetadataFinder(QMainWindow):
         _date = time.strftime("%d_%m_%Y")
         _default_name = Path(self.parent.path_config) / f"{_date}_metadata.cfg"
         _caption = "Export Metadata Configuration"
-        filename, _ = getSaveFileName(self, _caption, str(_default_name), _filter)
+        filename, _ = QFileDialog.getSaveFileName(
+            self,
+            _caption,
+            str(_default_name),
+            _filter,
+        )
 
         if filename:
             self.parent.path_config = os.path.dirname(filename)
@@ -408,7 +413,12 @@ class MetadataFinder(QMainWindow):
         _run_number = str(self.list_runs[0])
         _default_name = Path(self.parent.path_ascii) / f"{_run_number}_metadata.txt"
         _caption = "Save Metadata into ASCII"
-        filename, _ = getSaveFileName(self, _caption, str(_default_name), _filter)
+        filename, _ = QFileDialog.getSaveFileName(
+            self,
+            _caption,
+            str(_default_name),
+            _filter,
+        )
 
         if filename:
             self.parent.path_config = os.path.dirname(filename)

@@ -23,7 +23,6 @@ from RefRed.configuration.export_stitching_ascii_settings import (
 from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
-from RefRed.widgets import getSaveFileName
 import RefRed.utilities
 
 
@@ -131,7 +130,7 @@ class OutputReducedData(QDialog):
         default_filename = path / default_filename
         caption = "Select Location and Name"
         filter = "Reduced Ascii (*.txt);; All (*.*)"
-        filename, filter = getSaveFileName(
+        filename, filter = QFileDialog.getSaveFileName(
             self,
             caption,
             str(default_filename),

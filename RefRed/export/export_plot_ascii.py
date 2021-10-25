@@ -1,11 +1,11 @@
 import os
-from typing import List
+from typing import List, Tuple
 from pathlib import Path
+from qtpy import QtWidgets
 import RefRed.utilities
 from RefRed.export.output_reduced_data import OutputReducedData
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.utilities import makeSureFileHasExtension
-from RefRed.widgets import getSaveFileName
 
 
 class ExportPlotAscii:
@@ -117,12 +117,20 @@ class ExportPlotAscii:
     # behave exactly as they were intended due to the external dependency  #
     # nature.                                                              #
     # -------------------------------------------------------------------- #
-    def get_save_filename(self, caption, default_filename):
+    def get_save_filename(
+        self,
+        caption: str,
+        default_filename: str,
+    ) -> Tuple[str, str]:
         """wrapper around external getSaveFileName"""
         # NOTE:
         # current test framework cannot patch getSaveFileName, we have to shadow
         # it for testing purpose.
-        return getSaveFileName(self.parent, caption, default_filename)
+        return QtWidgets.QFileDialog.getSaveFileName(
+            self.parent,
+            caption,
+            default_filename,
+        )
 
     def export_stitched(self):
         _tmp = OutputReducedData(parent=self.parent)

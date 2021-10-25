@@ -1,9 +1,9 @@
+from PyQt5.QtWidgets import QFileDialog
 from qtpy import QtGui, QtWidgets
 from xml.dom import minidom
 from numpy import empty
 from RefRed.interfaces import load_ui
 import RefRed.colors
-from RefRed.widgets import getOpenFileName
 
 
 class PreviewConfig(QtWidgets.QMainWindow):
@@ -227,7 +227,7 @@ class PreviewConfig(QtWidgets.QMainWindow):
         self.ui.systemTableWidget.resizeColumnsToContents()
 
     def _browse_file_name(self):
-        filename, _ = getOpenFileName(
+        filename, _ = QFileDialog.getOpenFileName(
             self,
             caption="Select Configuration File",
             directory=self.parent.path_config,

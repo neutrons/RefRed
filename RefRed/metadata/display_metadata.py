@@ -1,5 +1,5 @@
 from qtpy.QtGui import QPixmap, QIcon
-from qtpy.QtWidgets import QMainWindow, QCheckBox, QTableWidgetItem
+from qtpy.QtWidgets import QMainWindow, QCheckBox, QTableWidgetItem, QFileDialog
 from qtpy.QtCore import QSize, QSettings
 
 # from xml.dom import minidom
@@ -10,7 +10,6 @@ from pathlib import Path
 
 from RefRed.interfaces import load_ui
 from RefRed.gui_handling.gui_utility import GuiUtility
-from RefRed.widgets import getOpenFileName, getSaveFileName
 import RefRed.utilities
 
 
@@ -277,7 +276,12 @@ class DisplayMetadata(QMainWindow):
         _run_number = self.active_data.run_number
         _default_name = Path(self.parent.path_ascii) / f"{_run_number}_metadata.txt"
         _caption = "Save Metadata into ASCII"
-        filename, _ = getSaveFileName(self, _caption, str(_default_name), _filter)
+        filename, _ = QFileDialog.getSaveFileName(
+            self,
+            _caption,
+            str(_default_name),
+            _filter,
+        )
 
         if filename:
             self.parent.path_config = os.path.dirname(filename)
@@ -303,7 +307,12 @@ class DisplayMetadata(QMainWindow):
         _date = time.strftime("%d_%m_%Y")
         _default_name = Path(self.parent.path_config) / f"{_date}_metadata.cfg"
         _caption = "Export Metadata Configuration"
-        filename, _ = getSaveFileName(self, _caption, str(_default_name), _filter)
+        filename, _ = QFileDialog.getSaveFileName(
+            self,
+            _caption,
+            str(_default_name),
+            _filter,
+        )
 
         if filename:
             self.parent.path_config = os.path.dirname(filename)
@@ -319,7 +328,7 @@ class DisplayMetadata(QMainWindow):
         _filter = "Metadata Configuration (*_metadata.cfg);; All (*.*)"
         _default_path = self.parent.path_config
 
-        filename, _ = getOpenFileName(
+        filename, _ = QFileDialog.getOpenFileName(
             self,
             "Import Metadata Configuration",
             directory=_default_path,

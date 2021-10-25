@@ -1,5 +1,5 @@
 from qtpy.QtGui import QPalette
-from qtpy.QtWidgets import QDialog
+from qtpy.QtWidgets import QDialog, QFileDialog
 from qtpy.QtCore import Qt
 import os
 from pathlib import Path
@@ -8,7 +8,6 @@ import bisect
 from RefRed.interfaces import load_ui
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
-from RefRed.widgets import getSaveFileName
 import RefRed.colors
 import RefRed.utilities
 
@@ -94,7 +93,11 @@ class PopupPlot1d(QDialog):
         run_number = _active_data.run_number
         default_filename = Path(self.parent.path_ascii) / f"REFL_{run_number}_rpx.txt"
         caption = "Create Counts vs Pixel ASCII File"
-        filename, _ = getSaveFileName(self, caption, str(default_filename))
+        filename, _ = QFileDialog.getSaveFileName(
+            self,
+            caption,
+            str(default_filename),
+        )
 
         if filename:
             self.parent.path_ascii = os.path.dirname(filename)

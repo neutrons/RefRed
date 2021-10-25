@@ -1,5 +1,5 @@
 from qtpy.QtGui import QPalette
-from qtpy.QtWidgets import QDialog
+from qtpy.QtWidgets import QDialog, QFileDialog
 from qtpy.QtCore import Qt
 import os
 from pathlib import Path
@@ -12,7 +12,6 @@ import RefRed.utilities
 from RefRed.gui_handling.auto_tof_range_radio_button_handler import (
     AutoTofRangeRadioButtonHandler,
 )
-from RefRed.widgets import getSaveFileName
 
 
 class PopupPlot2d(QDialog):
@@ -84,7 +83,11 @@ class PopupPlot2d(QDialog):
         path = Path(self.parent.path_ascii)
         default_filename = path / f"REFL_{run_number}_2dPxVsTof.txt"
         caption = "Create 2D Pixel VS TOF"
-        filename, _ = getSaveFileName(self, caption, str(default_filename))
+        filename, _ = QFileDialog.getSaveFileName(
+            self,
+            caption,
+            str(default_filename),
+        )
 
         if filename:
             self.parent.path_ascii = os.path.dirname(filename)
@@ -97,7 +100,11 @@ class PopupPlot2d(QDialog):
         path = Path(self.parent.path_ascii)
         default_filename = path / f"REFL_{run_number}_2dDetectorView.txt"
         caption = "Create 2D Y Pixel VS X Pixel (Detector View)"
-        filename, _ = getSaveFileName(self, caption, str(default_filename))
+        filename, _ = QFileDialog.getSaveFileName(
+            self,
+            caption,
+            str(default_filename),
+        )
 
         if filename:
             self.parent.path_ascii = os.path.dirname(filename)
