@@ -44,8 +44,8 @@ class ExportPlotAscii:
 
         Parameters
         ----------
-        parent : Any
-            parent object
+        run_number : int
+            run number (IPTS run number)
         data_type : str
             data type, one of "yt", "ix", "it", "yi"
 
