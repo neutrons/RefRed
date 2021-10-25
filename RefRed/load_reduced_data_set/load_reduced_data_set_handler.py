@@ -14,31 +14,29 @@ class LoadReducedDataSetHandler(object):
     def run(self):
         _path = self.parent.path_ascii
         _filter = "Ascii File (*.txt);; All (*.*)"
-        rst = QtWidgets.QFileDialog.getOpenFileName(
+        filename, _ = QtWidgets.QFileDialog.getOpenFileName(
             self.parent, "Open Reduced Data Set", directory=_path, filter=_filter
         )
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
 
         QtWidgets.QApplication.processEvents()
-        if filename != "":
-            _new_path = os.path.dirname(filename)
-            self.parent.path_ascii = _new_path
+        if not filename:  # user cancelled
+            return
 
-            o_loaded_ascii = ReducedAsciiLoader(
-                parent=self.parent, ascii_file_name=filename
+        _new_path = os.path.dirname(filename)
+        self.parent.path_ascii = _new_path
+
+        o_loaded_ascii = ReducedAsciiLoader(
+            parent=self.parent, ascii_file_name=filename
+        )
+        if self.parent.o_stitching_ascii_widget is None:
+            self.parent.o_stitching_ascii_widget = StitchingAsciiWidget(
+                parent=self.parent, loaded_ascii=o_loaded_ascii
             )
-            if self.parent.o_stitching_ascii_widget is None:
-                self.parent.o_stitching_ascii_widget = StitchingAsciiWidget(
-                    parent=self.parent, loaded_ascii=o_loaded_ascii
-                )
-            else:
-                self.parent.o_stitching_ascii_widget.add_data(o_loaded_ascii)
+        else:
+            self.parent.o_stitching_ascii_widget.add_data(o_loaded_ascii)
 
-            self.last_row_loaded = self.parent.o_stitching_ascii_widget.row_of_this_file
-            self.plot()
+        self.last_row_loaded = self.parent.o_stitching_ascii_widget.row_of_this_file
+        self.plot()
 
     def plot(self):
         big_table_data = self.parent.big_table_data

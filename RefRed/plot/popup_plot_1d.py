@@ -89,34 +89,26 @@ class PopupPlot1d(QDialog):
         return o_gui_utility.is_row_with_highest_q()
 
     def export_counts_vs_pixel(self):
-
         _active_data = self.data
         run_number = _active_data.run_number
-        default_filename = "REFL_" + str(run_number) + "_rpx.txt"
-        _path = Path(self.parent.path_ascii)
-        default_filename = _path + default_filename
-
-        rst = QFileDialog.getSaveFileName(
-            self, "Create Counts vs Pixel ASCII File", default_filename
+        default_filename = Path(self.parent.path_ascii) / f"REFL_{run_number}_rpx.txt"
+        caption = "Create Counts vs Pixel ASCII File"
+        filename, _ = QFileDialog.getSaveFileName(
+            self,
+            caption,
+            str(default_filename),
         )
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
 
-        # user canceled
-        if str(filename).strip() == "":
-            return
+        if filename:
+            self.parent.path_ascii = os.path.dirname(filename)
 
-        self.parent.path_ascii = os.path.dirname(filename)
+            ycountsdata = _active_data.ycountsdata
+            pixelaxis = list(range(len(ycountsdata)))
 
-        ycountsdata = _active_data.ycountsdata
-        pixelaxis = list(range(len(ycountsdata)))
+            text = ["#Couns vs Pixels", "#Pixel - Counts"]
+            text += [f"{p} {y}" for p, y in zip(pixelaxis, ycountsdata)]
 
-        text = ["#Couns vs Pixels", "#Pixel - Counts"]
-        text += [f"{p} {y}" for p, y in zip(pixelaxis, ycountsdata)]
-
-        RefRed.utilities.write_ascii_file(filename, text)
+            RefRed.utilities.write_ascii_file(filename, text)
 
     def leave_plot_counts_vs_pixel(self):
         [xmin, xmax] = self.ui.plot_counts_vs_pixel.canvas.ax.yaxis.get_view_interval()

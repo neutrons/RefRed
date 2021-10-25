@@ -8,7 +8,7 @@ class BrowsingRuns(object):
     list_files = None
     list_runs = None
 
-    def __init__(self, parent=None, data_type='data'):
+    def __init__(self, parent=None, data_type="data"):
         self.parent = parent
         self.data_type = data_type
 
@@ -19,23 +19,18 @@ class BrowsingRuns(object):
         _path = self.parent.path_config
         _filter = "NeXus (*.nxs);;All (*.*)"
         _title = "Select %s NeXus files" % self.data_type
-        filenames = QtWidgets.QFileDialog.getOpenFileNames(self.parent, _title, _path, _filter)
-
-        if isinstance(filenames, tuple):
-            # NOTE: starting with Qt5, the return becomes a tuple of
-            #       ([fileames], extension_str)
-            filenames = filenames[0]
+        filenames, _ = QtWidgets.QFileDialog.getOpenFileNames(
+            self.parent, _title, _path, _filter
+        )
 
         QtWidgets.QApplication.processEvents()
 
         if len(filenames) == 0:
             self.parent.browsed_files[self.data_type] = None
         else:
-            # format list of full file name to string
-            _list_files = [str(_file) for _file in filenames]
-            self.list_files = _list_files
-            self.parent.browsed_files[self.data_type] = _list_files
-            self.parent.path_config = os.path.dirname(_list_files[0])
+            self.list_files = filenames
+            self.parent.browsed_files[self.data_type] = filenames
+            self.parent.path_config = os.path.dirname(filenames[0])
 
     def _populate_line_edit(self):
         # NOTE: skip for empty input
@@ -48,7 +43,7 @@ class BrowsingRuns(object):
 
         str_list = ",".join(_unique_list_runs) if len(_unique_list_runs) > 0 else ""
 
-        if self.data_type == 'data':
+        if self.data_type == "data":
             self.parent.ui.data_sequence_lineEdit.setText(str_list)
         else:
             self.parent.ui.norm_sequence_lineEdit.setText(str_list)

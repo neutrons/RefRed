@@ -2,13 +2,16 @@ from qtpy.QtGui import QPalette
 from qtpy.QtWidgets import QDialog, QFileDialog
 from qtpy.QtCore import Qt
 import os
+from pathlib import Path
 
 from RefRed.interfaces import load_ui
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.colors
 import RefRed.utilities
-from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
+from RefRed.gui_handling.auto_tof_range_radio_button_handler import (
+    AutoTofRangeRadioButtonHandler,
+)
 
 
 class PopupPlot2d(QDialog):
@@ -16,7 +19,7 @@ class PopupPlot2d(QDialog):
     parent = None
     _open_instances = []
     data = None
-    data_type = 'data'
+    data_type = "data"
     row = 0
 
     manual_min_tof = None
@@ -25,14 +28,14 @@ class PopupPlot2d(QDialog):
     auto_min_tof = None
     auto_max_tof = None
 
-    def __init__(self, parent=None, data_type='data', data=None, row=0):
+    def __init__(self, parent=None, data_type="data", data=None, row=0):
 
         self.parent = parent
         self.data = data
         self.data_type = data_type
         self.row = row
-        self.col = 0 if data_type == 'data' else 1
-        self.is_data = True if data_type == 'data' else False
+        self.col = 0 if data_type == "data" else 1
+        self.is_data = True if data_type == "data" else False
         self.is_row_with_highest_q = self.is_row_with_higest_q()
 
         QDialog.__init__(self, parent=parent)
@@ -40,7 +43,7 @@ class PopupPlot2d(QDialog):
         self._open_instances.append(self)
         self.ui = load_ui("plot2d_dialog_refl_interface.ui", self)
 
-        self.setWindowTitle('Detector and  Pixel vs TOF  views')
+        self.setWindowTitle("Detector and  Pixel vs TOF  views")
         self.init_gui()
         self.populate_widgets()
 
@@ -52,7 +55,9 @@ class PopupPlot2d(QDialog):
         self.ui.y_pixel_vs_tof_plot.toolbar.exportClicked.connect(self.export_yt)
 
         self.ui.detector_plot.leaveFigure.connect(self.leave_figure_detector_plot)
-        self.ui.detector_plot.toolbar.homeClicked.connect(self.home_clicked_detector_plot)
+        self.ui.detector_plot.toolbar.homeClicked.connect(
+            self.home_clicked_detector_plot
+        )
         self.ui.detector_plot.toolbar.exportClicked.connect(self.export_detector_view)
 
         self.widgets_to_show()
@@ -75,44 +80,36 @@ class PopupPlot2d(QDialog):
     def export_yt(self):
         _active_data = self.data
         run_number = _active_data.run_number
-        default_filename = 'REFL_' + run_number + '_2dPxVsTof.txt'
-        path = self.parent.path_ascii
-        default_filename = path + '/' + default_filename
+        path = Path(self.parent.path_ascii)
+        default_filename = path / f"REFL_{run_number}_2dPxVsTof.txt"
+        caption = "Create 2D Pixel VS TOF"
+        filename, _ = QFileDialog.getSaveFileName(
+            self,
+            caption,
+            str(default_filename),
+        )
 
-        rst = QFileDialog.getSaveFileName(self, 'Create 2D Pixel VS TOF', default_filename)
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
-
-        if str(filename).strip() == '':
-            # 			info('User Canceled Outpout ASCII')
-            return
-
-        self.parent.path_ascii = os.path.dirname(filename)
-        image = _active_data.ytofdata
-        RefRed.utilities.output_2d_ascii_file(filename, image)
+        if filename:
+            self.parent.path_ascii = os.path.dirname(filename)
+            image = _active_data.ytofdata
+            RefRed.utilities.output_2d_ascii_file(filename, image)
 
     def export_detector_view(self):
         _active_data = self.data
         run_number = _active_data.run_number
-        default_filename = 'REFL_' + run_number + '_2dDetectorView.txt'
-        path = self.parent.path_ascii
-        default_filename = path + '/' + default_filename
+        path = Path(self.parent.path_ascii)
+        default_filename = path / f"REFL_{run_number}_2dDetectorView.txt"
+        caption = "Create 2D Y Pixel VS X Pixel (Detector View)"
+        filename, _ = QFileDialog.getSaveFileName(
+            self,
+            caption,
+            str(default_filename),
+        )
 
-        rst = QFileDialog.getSaveFileName(self, 'Create 2D Y Pixel VS X Pixel (Detector View)', default_filename)
-        if isinstance(rst, tuple):
-            filename, _ = rst
-        else:
-            filename = rst
-
-        if str(filename).strip() == '':
-            # 			info('User Canceled Outpout ASCII')
-            return
-
-        self.parent.path_ascii = os.path.dirname(filename)
-        image = _active_data.xydata
-        RefRed.utilities.output_2d_ascii_file(filename, image)
+        if filename:
+            self.parent.path_ascii = os.path.dirname(filename)
+            image = _active_data.xydata
+            RefRed.utilities.output_2d_ascii_file(filename, image)
 
     def leave_figure_plot(self):
         [xmin, xmax] = self.ui.y_pixel_vs_tof_plot.canvas.ax.xaxis.get_view_interval()
@@ -153,27 +150,54 @@ class PopupPlot2d(QDialog):
         self.ui.detector_plot.draw()
 
         [ymax, xmax] = xydata.shape
-        self.ui.detector_plot.imshow(xydata, log=True, aspect='auto', origin='lower', extent=[0, xmax, 0, ymax])
-        self.ui.detector_plot.set_xlabel('x (pixel)')
-        self.ui.detector_plot.set_ylabel('y (pixel)')
+        self.ui.detector_plot.imshow(
+            xydata, log=True, aspect="auto", origin="lower", extent=[0, xmax, 0, ymax]
+        )
+        self.ui.detector_plot.set_xlabel("x (pixel)")
+        self.ui.detector_plot.set_ylabel("y (pixel)")
 
-        [lowres1, lowres2, lowresFlag, peak1, peak2, back1, back2, backFlag] = self.retrieveLowResPeakBack()
+        [
+            lowres1,
+            lowres2,
+            lowresFlag,
+            peak1,
+            peak2,
+            back1,
+            back2,
+            backFlag,
+        ] = self.retrieveLowResPeakBack()
         [clock1, clock2] = self.get_clocking_values()
 
         if lowresFlag:
-            self.ui.detector_plot.canvas.ax.axvline(lowres1, color=RefRed.colors.LOWRESOLUTION_SELECTION_COLOR)
-            self.ui.detector_plot.canvas.ax.axvline(lowres2, color=RefRed.colors.LOWRESOLUTION_SELECTION_COLOR)
+            self.ui.detector_plot.canvas.ax.axvline(
+                lowres1, color=RefRed.colors.LOWRESOLUTION_SELECTION_COLOR
+            )
+            self.ui.detector_plot.canvas.ax.axvline(
+                lowres2, color=RefRed.colors.LOWRESOLUTION_SELECTION_COLOR
+            )
 
-        self.ui.detector_plot.canvas.ax.axhline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
-        self.ui.detector_plot.canvas.ax.axhline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
+        self.ui.detector_plot.canvas.ax.axhline(
+            peak1, color=RefRed.colors.PEAK_SELECTION_COLOR
+        )
+        self.ui.detector_plot.canvas.ax.axhline(
+            peak2, color=RefRed.colors.PEAK_SELECTION_COLOR
+        )
 
         if self.is_data:
-            self.ui.detector_plot.canvas.ax.axhline(clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
-            self.ui.detector_plot.canvas.ax.axhline(clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
+            self.ui.detector_plot.canvas.ax.axhline(
+                clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR
+            )
+            self.ui.detector_plot.canvas.ax.axhline(
+                clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR
+            )
 
         if backFlag:
-            self.ui.detector_plot.canvas.ax.axhline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
-            self.ui.detector_plot.canvas.ax.axhline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
+            self.ui.detector_plot.canvas.ax.axhline(
+                back1, color=RefRed.colors.BACK_SELECTION_COLOR
+            )
+            self.ui.detector_plot.canvas.ax.axhline(
+                back2, color=RefRed.colors.BACK_SELECTION_COLOR
+            )
 
         if self.data.all_plot_axis.detector_data_interval is None:
             self.ui.detector_plot.draw()
@@ -201,33 +225,59 @@ class PopupPlot2d(QDialog):
 
         self.ui.y_pixel_vs_tof_plot.clear()
         self.ui.y_pixel_vs_tof_plot.imshow(
-            ytof, log=True, aspect='auto', origin='lower', extent=[tof_from, tof_to, pixel_from, pixel_to]
+            ytof,
+            log=True,
+            aspect="auto",
+            origin="lower",
+            extent=[tof_from, tof_to, pixel_from, pixel_to],
         )
-        self.ui.y_pixel_vs_tof_plot.set_xlabel('t (ms)')
-        self.ui.y_pixel_vs_tof_plot.set_ylabel('y (pixel)')
+        self.ui.y_pixel_vs_tof_plot.set_xlabel("t (ms)")
+        self.ui.y_pixel_vs_tof_plot.set_ylabel("y (pixel)")
 
         [tmin, tmax, peak1, peak2, back1, back2, backFlag] = self.retrieveTofPeakBack()
         [clock1, clock2] = self.get_clocking_values()
 
-        self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmin, color=RefRed.colors.TOF_SELECTION_COLOR)
-        self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmax, color=RefRed.colors.TOF_SELECTION_COLOR)
+        self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(
+            tmin, color=RefRed.colors.TOF_SELECTION_COLOR
+        )
+        self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(
+            tmax, color=RefRed.colors.TOF_SELECTION_COLOR
+        )
 
-        self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
-        self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
+        self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(
+            peak1, color=RefRed.colors.PEAK_SELECTION_COLOR
+        )
+        self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(
+            peak2, color=RefRed.colors.PEAK_SELECTION_COLOR
+        )
 
         if self.is_data:
-            self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
-            self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
+            self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(
+                clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR
+            )
+            self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(
+                clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR
+            )
 
         if backFlag:
-            self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
-            self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
+            self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(
+                back1, color=RefRed.colors.BACK_SELECTION_COLOR
+            )
+            self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(
+                back2, color=RefRed.colors.BACK_SELECTION_COLOR
+            )
 
         if self.data.all_plot_axis.yt_data_interval is None:
             self.ui.y_pixel_vs_tof_plot.canvas.ax.set_ylim(0, pixel_to)
             self.ui.y_pixel_vs_tof_plot.canvas.draw_idle()
-            [xmin, xmax] = self.ui.y_pixel_vs_tof_plot.canvas.ax.xaxis.get_view_interval()
-            [ymin, ymax] = self.ui.y_pixel_vs_tof_plot.canvas.ax.yaxis.get_view_interval()
+            [
+                xmin,
+                xmax,
+            ] = self.ui.y_pixel_vs_tof_plot.canvas.ax.xaxis.get_view_interval()
+            [
+                ymin,
+                ymax,
+            ] = self.ui.y_pixel_vs_tof_plot.canvas.ax.yaxis.get_view_interval()
             self.data.all_plot_axis.yt_data_interval = [xmin, xmax, ymin, ymax]
             self.data.all_plot_axis.yt_view_interval = [xmin, xmax, ymin, ymax]
             self.ui.y_pixel_vs_tof_plot.toolbar.home_settings = [xmin, xmax, ymin, ymax]
@@ -509,7 +559,7 @@ class PopupPlot2d(QDialog):
         self.parent.ui.TOFmanualFromValue.setText("%.2f" % tof1)
         self.parent.ui.TOFmanualToValue.setText("%.2f" % tof2)
 
-        if self.data_type == 'data':
+        if self.data_type == "data":
             self.parent.ui.dataPeakFromValue.setValue(peak1)
             self.parent.ui.dataPeakToValue.setValue(peak2)
             self.parent.ui.dataBackFromValue.setValue(back1)
