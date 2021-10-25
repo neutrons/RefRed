@@ -1,5 +1,6 @@
 #mantid-framework
 configobj
+h5py
 matplotlib
 numpy
 qtpy
