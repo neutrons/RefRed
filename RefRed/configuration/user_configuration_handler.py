@@ -1,5 +1,6 @@
 from qtpy.QtCore import QSettings
 import os
+from RefRed import ORGANIZATION, APPNAME
 from RefRed.configuration.user_configuration import UserConfiguration
 from RefRed.utilities import str2bool
 # from RefRed.settings.list_settings import ListSettings
@@ -9,7 +10,7 @@ class RetrieveUserConfiguration(object):
     def __init__(self, parent=None):
         self.parent = parent
 
-        settings = QSettings()
+        settings = QSettings(ORGANIZATION, APPNAME)
         self.parent.path_ascii = str(settings.value("path_ascii", os.path.expanduser('~')))
 
         self.parent.path_config = str(settings.value("path_config", os.path.expanduser('~')))
@@ -28,7 +29,7 @@ class SaveUserConfiguration(object):
     def __init__(self, parent=None):
         self.parent = parent
 
-        settings = QSettings()
+        settings = QSettings(ORGANIZATION, APPNAME)
         settings.setValue('path_ascii', self.parent.path_ascii)
         settings.setValue('path_config', self.parent.path_config)
 

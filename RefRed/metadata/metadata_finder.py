@@ -14,6 +14,7 @@ import os
 import time
 import numpy as np
 
+from RefRed import ORGANIZATION, APPNAME
 from RefRed.interfaces import load_ui
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.decorators import waiting_effects
@@ -94,7 +95,7 @@ class MetadataFinder(QMainWindow):
         self.populateconfigureTable()
 
     def retrieveListMetadataPreviouslySelected(self):
-        settings = QSettings()
+        settings = QSettings(ORGANIZATION, APPNAME)
         nbr_metadata = str(settings.value("nbr_metadata"))
         list_metadata_selected = []
         if nbr_metadata != "":
@@ -335,7 +336,7 @@ class MetadataFinder(QMainWindow):
 
     def saveListMetadataSelected(self):
         list_metadata_selected = self.list_metadata_selected
-        settings = QSettings()
+        settings = QSettings(ORGANIZATION, APPNAME)
         nbr_metadata = len(list_metadata_selected)
         settings.setValue("nbr_metadata", nbr_metadata)
         for index, metadata in enumerate(list_metadata_selected):
