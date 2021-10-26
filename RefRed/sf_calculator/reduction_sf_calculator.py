@@ -3,10 +3,10 @@ import time
 import os
 import logging
 import mantid.simpleapi as api
-from typing import Union
+from typing import Optional, Union
 
 import numpy as np
-from RefRed.utilities import convert_tof_values_unit
+from RefRed.utilities import convertTOF
 
 
 class ReductionSfCalculator(object):
@@ -23,8 +23,10 @@ class ReductionSfCalculator(object):
     nbr_scripts = 0
     new_sfcalculator_script = True
 
-    def __init__(self, parent, export_script_flag: Union[str, bool] = False,
-                 test_mode: bool = False):
+    def __init__(self,
+                 parent,
+                 export_script_flag: Union[str, bool] = False,
+                 test_mode: Optional[bool] = False):
         """Constructor and main execution body
 
         There is no need to call any methods other than initialize an object
@@ -242,7 +244,7 @@ class ReductionSfCalculator(object):
 
     def getListPeakBack(self, from_index, to_index):
         data = self.table_settings
-        return data[from_index : to_index + 1, 3:7]
+        return data[from_index: to_index + 1, 3:7]
 
     def getTofRange(self, from_index):
         data = self.table_settings

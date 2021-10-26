@@ -2,11 +2,11 @@
 from RefRed.interfaces.mytablewidget import MyTableWidget
 
 # third party packages
-from qtpy import QtWidgets
 from qtpy.QtCore import Qt
 
 import unittest.mock as mock
 import pytest
+
 
 class Event(object):
     val = None
@@ -14,13 +14,12 @@ class Event(object):
     def __init__(self, val=None):
         self.val = val
 
-
     def key(self):
         return self.val
 
+
 class TestMyTableWidget(object):
 
-    
     @mock.patch("qtpy.QtWidgets.QTableWidget.keyPressEvent")
     @mock.patch("qtpy.QtWidgets.QTableWidget.__init__")
     def test_keypress_event_no_enter_key(self, mockSuperInit, mockSuperKeyPressEvent):
@@ -39,6 +38,7 @@ class TestMyTableWidget(object):
         assert mockSuperInit.called
         assert not mockSuperKeyPressEvent.called
         m.table_reduction_cell_enter_pressed.assert_called()
+
 
 if __name__ == '__main__':
     pytest.main([__file__])

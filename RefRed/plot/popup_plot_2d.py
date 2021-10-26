@@ -1,4 +1,3 @@
-from numpy.lib.arraysetops import isin
 from qtpy.QtGui import QPalette
 from qtpy.QtWidgets import QDialog, QFileDialog
 from qtpy.QtCore import Qt

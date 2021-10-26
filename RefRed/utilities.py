@@ -68,7 +68,7 @@ def convert_tof_values_unit(tof_array: Union[None, list, np.ndarray],
         # convert from ms to micros
         return multiply_by_value(tof_array, 1000)
 
-    raise RuntimeError(f'Impossible')
+    raise RuntimeError('Impossible')
 
 
 def output_2d_ascii_file(filename, image):
