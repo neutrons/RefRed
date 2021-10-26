@@ -55,7 +55,14 @@ class SFCalculator(QtWidgets.QMainWindow):
     list_nxsdata_sorted = []
 
     def __init__(self, instrument=None, instrument_list=None, parent=None):
-        super(SFCalculator, self).__init__(parent)
+        super().__init__(parent)
+
+        # Application settings
+        settings = QtCore.QSettings()
+        self._save_directory = settings.value("save_directory", os.path.expanduser("~"))
+        self._xml_config_dir = settings.value("xml_config_dir", os.path.expanduser("~"))
+        self.current_loaded_file = os.path.expanduser("~/new_configuration.xml")
+
         self.ui = load_ui("sf_calculator_interface.ui", baseinstance=self)
         self.loaded_list_of_runs = []
 
@@ -66,12 +73,6 @@ class SFCalculator(QtWidgets.QMainWindow):
             "is_auto_peak_finder": True,
             "back_offset_from_peak": 3,
         }
-
-        # Application settings
-        settings = QtCore.QSettings()
-        self._save_directory = settings.value("save_directory", os.path.expanduser("~"))
-        self._xml_config_dir = settings.value("xml_config_dir", os.path.expanduser("~"))
-        self.current_loaded_file = os.path.expanduser("~/new_configuration.xml")
 
         self.initGui()
         self.checkGui()
