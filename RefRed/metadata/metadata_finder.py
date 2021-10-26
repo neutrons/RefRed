@@ -371,7 +371,6 @@ class MetadataFinder(QMainWindow):
             str(_default_name),
             _filter,
         )
-
         if filename:
             self.parent.path_config = os.path.dirname(filename)
 
@@ -420,7 +419,6 @@ class MetadataFinder(QMainWindow):
             str(_default_name),
             _filter,
         )
-
         if filename:
             self.parent.path_config = os.path.dirname(filename)
             text = ["# Metadata Selected for run " + _run_number]

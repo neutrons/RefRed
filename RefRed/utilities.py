@@ -2,7 +2,8 @@ import math
 import os
 import numpy as np
 from random import randint
-from . import nexus_utilities
+from RefRed import nexus_utilities
+from typing import Union
 
 
 def convert_angle(angle=0, from_units="degree", to_units="rad"):
@@ -49,6 +50,54 @@ def convertTOF(TOFarray=None, from_units="micros", to_units="ms"):
     except NameError:
         print("units not supported")
         return None
+
+
+def convert_tof_values_unit(tof_array: Union[None, list, np.ndarray],
+                            from_units: str = "micros", to_units: str = "ms"):
+    """Convert an array, supposed to be TOF values, from one unit to another
+
+    Parameters
+    ----------
+    tof_array: None or list or numpy.array
+        TOF array and it will be modified in place
+    from_units: str
+        current unit
+    to_units: str
+        target unit
+
+    Returns
+    -------
+    None, list, numpy.ndarray
+        array/list of TOF values
+
+    """
+    def multiply_by_value(array, value: Union[float, int]):
+        """Multiply an array (list, numpy.array) by a value and return new array with same type
+        """
+        for [index, _ele] in enumerate(array):
+            array[index] = float(array[index]) * value
+        return array
+
+    # Check input and output units
+    allowed_units = ['micros', 'ms']
+    if from_units not in allowed_units or to_units not in allowed_units:
+        raise NameError(f'Input and output units can be micros and ms only but '
+                        f'not {from_units} or {to_units}')
+
+    if tof_array is None or from_units == to_units:
+        # case 1: None input or
+        # case 2: to unit is equal to from unit
+        return tof_array
+
+    elif from_units == "micros":
+        # convert from micros to ms
+        return multiply_by_value(tof_array, 0.001)
+
+    elif from_units == "ms":
+        # convert from ms to micros
+        return multiply_by_value(tof_array, 1000)
+
+    raise RuntimeError('Impossible')
 
 
 def output_2d_ascii_file(filename, image):

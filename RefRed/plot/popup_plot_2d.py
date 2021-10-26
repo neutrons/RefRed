@@ -88,7 +88,6 @@ class PopupPlot2d(QDialog):
             caption,
             str(default_filename),
         )
-
         if filename:
             self.parent.path_ascii = os.path.dirname(filename)
             image = _active_data.ytofdata
@@ -105,7 +104,6 @@ class PopupPlot2d(QDialog):
             caption,
             str(default_filename),
         )
-
         if filename:
             self.parent.path_ascii = os.path.dirname(filename)
             image = _active_data.xydata

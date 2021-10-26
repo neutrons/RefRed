@@ -22,7 +22,6 @@ class ScalingFactorWidgetsHandler(object):
         filename, _ = QFileDialog.getOpenFileName(
             self.parent, "Open scaling factor file", _path, _filter
         )
-
         if not filename:  # user cancelled
             return
 

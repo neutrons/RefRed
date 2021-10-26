@@ -3,6 +3,7 @@ import time
 import os
 import logging
 import mantid.simpleapi as api
+from typing import Optional, Union
 
 import numpy as np
 from RefRed.utilities import convertTOF
@@ -22,10 +23,29 @@ class ReductionSfCalculator(object):
     nbr_scripts = 0
     new_sfcalculator_script = True
 
-    def __init__(self, parent=None, export_script_flag=False):
-        self.sf_gui = parent
-        self.export_script_flag = export_script_flag
+    def __init__(self,
+                 parent,
+                 export_script_flag: Union[str, bool] = False,
+                 test_mode: Optional[bool] = False):
+        """Constructor and main execution body
 
+        There is no need to call any methods other than initialize an object
+
+        Parameters
+        ----------
+        parent:
+            SF GUI
+        export_script_flag: bool, str
+            if str, then it is a script file name; if True, then launch dialog for file name; otherwise, do nothing
+        test_mode: bool
+            flag such that the class will be called in a non-GUI unit test mode
+        """
+        # Parse
+        self.sf_gui = parent
+        self.export_script_flag = True
+        self._unit_test_mode = test_mode
+
+        # FIXME TODO - is it good to mix presenter/model with view?
         if export_script_flag:
             _path = os.path.expanduser("~")
             _filter = "python (*.py);;All (*.*)"
@@ -40,9 +60,14 @@ class ReductionSfCalculator(object):
             if filename:
                 self.export_script_file = filename
             else:
+                # No file is specified: user cancel the operation
                 return
+        else:
+            # no file is given or required
+            self.export_script_flag = False
 
         self.collect_table_information()
+        # SF calculation or exporting script
         self._handle_request()
 
     def collect_table_information(self):
@@ -69,9 +94,12 @@ class ReductionSfCalculator(object):
 
     def _handle_request(self):
         from_to_index_same_lambda = self.generateIndexSameLambda()
+
         if from_to_index_same_lambda is None:
             self.sf_gui.updateProgressBar(0.0)
             pass
+        # # This is to expose for testing
+        # self._from_to_index_same_lambda = from_to_index_same_lambda
 
         nbr_scripts = self.nbr_scripts
 
@@ -108,7 +136,8 @@ class ReductionSfCalculator(object):
                     output_file_name=output_file_name,
                     tof_range=tof_range,
                 )
-                with open(self.export_script_file, "w") as fd:
+
+                with open(self.export_script_file, 'w') as fd:
                     fd.write(script)
 
             self.sf_gui.updateProgressBar(float(i + 1) / float(nbr_scripts))
@@ -215,7 +244,7 @@ class ReductionSfCalculator(object):
 
     def getListPeakBack(self, from_index, to_index):
         data = self.table_settings
-        return data[from_index : to_index + 1, 3:7]
+        return data[from_index: to_index + 1, 3:7]
 
     def getTofRange(self, from_index):
         data = self.table_settings
@@ -227,6 +256,14 @@ class ReductionSfCalculator(object):
         return tof_from_to_micros
 
     def generateIndexSameLambda(self):
+        """
+
+        Returns
+        -------
+        numpy.ndarray
+            2D array
+
+        """
         _data = self.table_settings
 
         lambda_list = _data[:, 2]
@@ -242,10 +279,7 @@ class ReductionSfCalculator(object):
             for i in range(1, self.nbr_row):
                 live_lambda = lambda_list[i]
                 if live_lambda != ref_lambda:
-                    from_to_index_same_lambda[index_script, :] = [
-                        first_index_lambda,
-                        i - 1,
-                    ]
+                    from_to_index_same_lambda[index_script, :] = [first_index_lambda, i - 1]
                     first_index_lambda = i
                     ref_lambda = live_lambda
                     index_script += 1
