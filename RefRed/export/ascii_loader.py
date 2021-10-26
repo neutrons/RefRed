@@ -1,20 +1,18 @@
 import numpy as np
+from typing import List
 
 
-class AsciiLoader(object):
-    filename = ''
-    data_col1 = []
-    data_col2 = []
-    data_col3 = []
-    data_col4 = []
-
-    def __init__(self, filename=None, nbr_col=3):
+class AsciiLoader:
+    def __init__(self, filename: str = "", nbr_col: int = 3):
+        # error handling
         if nbr_col != 3:
-            raise RuntimeError('only 3 supported for now!')
-        data = np.genfromtxt(filename, dtype=float, comments='#')
-        self.data_col1 = data[:, 0]
-        self.data_col2 = data[:, 1]
-        self.data_col3 = data[:, 2]
+            raise RuntimeError("only 3 supported for now!")
 
-    def data(self):
-        return [self.data_col1, self.data_col2, self.data_col3, self.data_col4]
+        if filename:
+            self.filename = filename
+        else:
+            raise RuntimeError("filename is empty!")
+
+    def data(self) -> List[np.ndarray]:
+        data = np.genfromtxt(self.filename, dtype=float, comments="#")
+        return [data[:, 0], data[:, 1], data[:, 2], []]
