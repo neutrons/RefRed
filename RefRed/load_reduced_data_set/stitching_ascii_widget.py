@@ -2,7 +2,6 @@ from qtpy import QtWidgets
 from qtpy.QtCore import Qt
 import numpy as np
 
-# from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
 from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.colors
 
@@ -138,9 +137,9 @@ class StitchingAsciiWidget(object):
                     self.stitchingPlot.draw()
 
     def __display_live_data(self, _data_object):
-        '''
+        """
         plot last reduced data set
-        '''
+        """
 
         # big_table_data = _data_object.big_table_data
         big_table_data = self.parent.big_table_data
@@ -239,9 +238,9 @@ class StitchingAsciiWidget(object):
         return o_gui_utility.get_reduced_yaxis_type()
 
     def display_loaded_ascii(self, _data_object):
-        '''
+        """
         plot data coming from ascii file loaded
-        '''
+        """
         _q_axis = _data_object.col1
         _y_axis = _data_object.col2
         _e_axis = _data_object.col3
