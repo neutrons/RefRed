@@ -39,8 +39,11 @@ class ReductionSfCalculator(object):
 
             if filename:
                 self.export_script_file = filename
-                self.collect_table_information()
-                self._handle_request()
+            else:
+                return
+
+        self.collect_table_information()
+        self._handle_request()
 
     def collect_table_information(self):
         nbr_row = self.sf_gui.tableWidget.rowCount()
