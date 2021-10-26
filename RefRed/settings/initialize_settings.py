@@ -1,4 +1,5 @@
 from qtpy.QtCore import QSettings
+from RefRed import ORGANIZATION, APPNAME
 from RefRed.settings.list_settings import ListSettings
 
 
@@ -12,7 +13,7 @@ class InitializeSettings(object):
         o_list_settings = ListSettings()
         _list_keys = list(o_list_settings.__dict__.keys())
 
-        _settings = QSettings()
+        _settings = QSettings(ORGANIZATION, APPNAME)
         _gui_metadata = {}
         for _key in _list_keys:
             if _key == 'clocking_pixel':

@@ -10,6 +10,7 @@ import numpy as np
 import logging
 import time
 
+from RefRed import ORGANIZATION, APPNAME
 import RefRed.colors
 from RefRed.interfaces import load_ui
 from RefRed.sf_calculator.fill_sf_gui_table import FillSFGuiTable
@@ -58,7 +59,7 @@ class SFCalculator(QtWidgets.QMainWindow):
         super().__init__(parent)
 
         # Application settings
-        settings = QtCore.QSettings()
+        settings = QtCore.QSettings(ORGANIZATION, APPNAME)
         self._save_directory = settings.value("save_directory", os.path.expanduser("~"))
         self._xml_config_dir = settings.value("xml_config_dir", os.path.expanduser("~"))
         self.current_loaded_file = os.path.expanduser("~/new_configuration.xml")
@@ -94,7 +95,7 @@ class SFCalculator(QtWidgets.QMainWindow):
     @save_directory.setter
     def save_directory(self, value):
         self._save_directory = value
-        settings = QtCore.QSettings()
+        settings = QtCore.QSettings(ORGANIZATION, APPNAME)
         settings.setValue("save_directory", value)
 
     @property
@@ -104,7 +105,7 @@ class SFCalculator(QtWidgets.QMainWindow):
     @xml_config_dir.setter
     def xml_config_dir(self, value):
         self._xml_config_dir = value
-        settings = QtCore.QSettings()
+        settings = QtCore.QSettings(ORGANIZATION, APPNAME)
         settings.setValue("xml_config_dir", value)
 
     def initConnections(self):
