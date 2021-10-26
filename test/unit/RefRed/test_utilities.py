@@ -60,4 +60,3 @@ def test_convert_tof_none():
 
 if __name__ == '__main__':
     pytest.main([__file__])
-

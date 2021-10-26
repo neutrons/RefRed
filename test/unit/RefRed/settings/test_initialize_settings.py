@@ -21,7 +21,6 @@ class TestInitializeSettings(object):
         assert self.gui_metadata['angle_offset'] == 0.016
         assert self.gui_metadata['angle_offset_error'] == 0.001
 
-
     @mock.patch("qtpy.QtCore.QSettings.value")
     def test_initialize_qsettings(self, mockValueMethod):
         values = {'q_min': 1.005,
@@ -32,6 +31,7 @@ class TestInitializeSettings(object):
                   'clocking_pixel': '1121, 1197',
                   'angle_offset': 1.016,
                   'angle_offset_error': 1.001}
+
         def side_effect(arg):
             return values[arg]
         mockValueMethod.side_effect = side_effect

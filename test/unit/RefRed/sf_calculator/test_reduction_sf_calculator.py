@@ -8,7 +8,7 @@ import qtpy.QtWidgets
 from RefRed.sf_calculator.reduction_sf_calculator import ReductionSfCalculator
 import numpy as np
 import qtpy
-from qtpy.QtWidgets import (QTableWidgetItem, QTableWidget)
+from qtpy.QtWidgets import QTableWidgetItem
 import mantid.simpleapi
 
 
