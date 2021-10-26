@@ -51,6 +51,7 @@ def convertTOF(TOFarray=None, from_units="micros", to_units="ms"):
         print("units not supported")
         return None
 
+
 def convert_tof_values_unit(tof_array: Union[None, list, np.ndarray],
                             from_units: str = "micros", to_units: str = "ms"):
     """Convert an array, supposed to be TOF values, from one unit to another
