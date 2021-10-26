@@ -1,16 +1,17 @@
 |Build Status|
-
-.. |Build Status| image:: https://travis-ci.org/neutrons/RefRed.svg?branch=master
-   :target: https://travis-ci.org/neutrons/RefRed
-
-
+|Codecov|
 |DOI|
+|CII Best Practices|
+
+.. |Build Status| image:: https://github.com/neutrons/RefRed/actions/workflows/test-and-deploy.yml/badge.svg?branch=next
+   :target: https://github.com/neutrons/RefRed/actions?query=branch:next
+
+.. |Codecov| image:: https://codecov.io/gh/neutrons/RefRed/branch/next/graph/badge.svg?token=U9MNp8N9Lc
+   :target: https://codecov.io/gh/neutrons/RefRed
 
 .. |DOI| image:: https://zenodo.org/badge/39512610.svg
    :target: https://zenodo.org/badge/latestdoi/39512610
    
-|CII Best Practices|
-
 .. |CII Best Practices| image:: https://bestpractices.coreinfrastructure.org/projects/5312/badge
    :target: https://bestpractices.coreinfrastructure.org/projects/5312
 
