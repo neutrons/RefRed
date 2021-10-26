@@ -9,7 +9,7 @@ class TestMainGui:
     def test_init(self, qtbot):
         window_main = MainGui()
         qtbot.addWidget(window_main)
-        assert window_main.windowTitle() == "Liquids Reflectometer Reduction - ~/tmp.xml*"
+        assert "Liquids Reflectometer Reduction" in window_main.windowTitle()
 
     def test_run_reduction_button(self, qtbot):
         window_main = MainGui()
