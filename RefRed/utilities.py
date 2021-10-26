@@ -23,6 +23,34 @@ def convert_angle(angle=0, from_units="degree", to_units="rad"):
     return float(angle) * coeff
 
 
+def arrayByValue(array, value):
+    for [index, _ele] in enumerate(array):
+        array[index] = float(array[index]) * value
+    return array
+
+
+def convertTOF(TOFarray=None, from_units="micros", to_units="ms"):
+    try:
+        if TOFarray is None:
+            return None
+        if from_units == to_units:
+            return TOFarray
+        if from_units == "micros":
+            if to_units == "ms":
+                return arrayByValue(TOFarray, 0.001)
+            else:
+                raise NameError(to_units)
+        elif from_units == "ms":
+            if to_units == "micros":
+                return arrayByValue(TOFarray, 1000)
+            else:
+                raise NameError(to_units)
+        else:
+            raise NameError(from_units)
+    except NameError:
+        print("units not supported")
+        return None
+
 def convert_tof_values_unit(tof_array: Union[None, list, np.ndarray],
                             from_units: str = "micros", to_units: str = "ms"):
     """Convert an array, supposed to be TOF values, from one unit to another
