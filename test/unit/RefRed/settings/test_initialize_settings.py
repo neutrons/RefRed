@@ -1,18 +1,31 @@
 # package imports
 from RefRed.settings.initialize_settings import InitializeSettings
 from RefRed.settings.list_settings import ListSettings
+from qtpy.QtCore import QSettings
 
 # third party packages
 import pytest
 import unittest.mock as mock
 
 
+class SettingsContext:
+    def __init__(self, suffix=''):
+        self.settings = QSettings('neutron', 'RefRed' + suffix)
+
+    def __enter__(self):
+        return self.settings
+
+    def __exit__(self, type, value, traceback):
+        self.settings.clear()
+
+
 class TestInitializeSettings(object):
     gui_metadata = {}
 
     def test_initialize_default_settings(self):
-        InitializeSettings(self)
-        assert ListSettings() == self.gui_metadata
+        with SettingsContext('-TestInitializeSettings') as settings:
+            InitializeSettings(self, settings)
+            assert self.gui_metadata == ListSettings()
 
     @mock.patch("qtpy.QtCore.QSettings.value")
     def test_initialize_qsettings(self, mockValueMethod):
