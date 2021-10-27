@@ -1,5 +1,4 @@
 import numpy as np
-from typing import List
 
 
 class AsciiLoader:
@@ -13,6 +12,6 @@ class AsciiLoader:
         else:
             raise RuntimeError("filename is empty!")
 
-    def data(self) -> List[np.ndarray]:
+    def data(self):
         data = np.genfromtxt(self.filename, dtype=float, comments="#")
         return [data[:, 0], data[:, 1], data[:, 2], []]
