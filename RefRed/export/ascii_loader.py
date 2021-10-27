@@ -1,8 +1,11 @@
 import numpy as np
 
 
+Filepath = str
+
+
 class AsciiLoader:
-    def __init__(self, filename: str = "", nbr_col: int = 3):
+    def __init__(self, filename: Filepath = "", nbr_col: int = 3):
         # error handling
         if nbr_col != 3:
             raise RuntimeError("only 3 supported for now!")
@@ -12,6 +15,8 @@ class AsciiLoader:
         else:
             raise RuntimeError("filename is empty!")
 
+        self.data = np.genfromtxt(self.filename, dtype=float, comments="#")
+
     def data(self):
-        data = np.genfromtxt(self.filename, dtype=float, comments="#")
+        data = self.data
         return [data[:, 0], data[:, 1], data[:, 2], []]
