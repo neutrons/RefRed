@@ -5,7 +5,4 @@ mypy
 pre-commit
 pytest
 pytest-cov
-pytest-mock
 pytest-qt
-pytest-runner
-pytest-xdist

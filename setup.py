@@ -20,9 +20,6 @@ def read_requirements_from_file(filepath):
 install_requires = read_requirements_from_file(
     os.path.join(THIS_DIR, 'requirements.txt')
 )
-test_requires = read_requirements_from_file(
-    os.path.join(THIS_DIR, 'requirements_dev.txt')
-)
 
 # TODO can this be safely substituted with setuptools.find_packages?
 __packages__ = ['RefRed',
@@ -63,6 +60,4 @@ setup(name='RefRed',
       package_dir={},
       package_data={'': ['*.ui', '*.png', '*.qrc']},
       install_requires=install_requires,
-      setup_requires=["pytest-runner"],
-      tests_require=test_requires,
       )
