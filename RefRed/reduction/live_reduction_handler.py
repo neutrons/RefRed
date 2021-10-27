@@ -146,6 +146,7 @@ class LiveReductionHandler(object):
             ScalingFactorFile=o_general.scaling_factor_file,
             CropFirstAndLastPoints=True,
             ApplyPrimaryFraction=True,
+            ErrorWeighting=True,
             PrimaryFractionRange=o_individual._data_clocking_range,
             SlitsWidthFlag=o_general.slits_width_flag,
             OutputWorkspace=o_individual._output_workspace_name,
