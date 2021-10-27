@@ -5,12 +5,13 @@ from qtpy.QtCore import QSettings
 
 # third party packages
 import pytest
-import unittest.mock as mock
 
 
 class SettingsContext:
-    def __init__(self, suffix=''):
+    def __init__(self, suffix='', items={}):
         self.settings = QSettings('neutron', 'RefRed' + suffix)
+        for key, value in items.items():
+            self.settings.setValue(key, str(value))
 
     def __enter__(self):
         return self.settings
@@ -27,8 +28,7 @@ class TestInitializeSettings(object):
             InitializeSettings(self, settings)
             assert self.gui_metadata == ListSettings()
 
-    @mock.patch("qtpy.QtCore.QSettings.value")
-    def test_initialize_qsettings(self, mockValueMethod):
+    def test_initialize_qsettings(self):
         values = {
             'q_min': 1.005,
             'd_q0': 1.0004,
@@ -40,17 +40,13 @@ class TestInitializeSettings(object):
             'angle_offset_error': 1.001,
         }
 
-        def side_effect(arg):
-            return values[arg]
-
-        mockValueMethod.side_effect = side_effect
-        InitializeSettings(self)
-        mockValueMethod.assert_has_calls([mock.call(k) for k in values.keys()])
-        for k in values.keys():
-            if k != "clocking_pixel":
-                assert self.gui_metadata[k] == values[k]
-            else:
-                assert self.gui_metadata[k] == [1121, 1197]
+        with SettingsContext('-TestInitializeSettings', values) as settings:
+            InitializeSettings(self, settings)
+            for k in values.keys():
+                if k == "clocking_pixel":
+                    assert self.gui_metadata[k] == [1121, 1197]
+                else:
+                    assert self.gui_metadata[k] == values[k], k
 
 
 if __name__ == '__main__':
