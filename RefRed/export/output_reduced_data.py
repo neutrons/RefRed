@@ -3,7 +3,7 @@ import logging
 import time
 from pathlib import Path
 from qtpy.QtGui import QPalette
-from qtpy.QtWidgets import QDialog, QFileDialog
+from qtpy import QtWidgets
 from qtpy.QtCore import Qt
 from mantid.api import mtd
 from mantid.simpleapi import (
@@ -26,7 +26,7 @@ from RefRed.reduction.reduced_data_handler import ReducedDataHandler
 import RefRed.utilities
 
 
-class OutputReducedData(QDialog):
+class OutputReducedData(QtWidgets.QDialog):
 
     _open_instances = []
     o_stitching_ascii_widget = None
@@ -47,7 +47,7 @@ class OutputReducedData(QDialog):
     use_lowest_error_value_flag = True
 
     def __init__(self, parent):
-        super.__init__(parent)
+        super().__init__(parent)
 
         self.setWindowModality(False)
         self._open_instances.append(self)
@@ -106,7 +106,7 @@ class OutputReducedData(QDialog):
 
     def create_n_files(self):
         path = self.parent.path_ascii
-        folder = str(QFileDialog.getExistingDirectory(self, "Select Location", directory=path))
+        folder = str(QtWidgets.QFileDialog.getExistingDirectory(self, "Select Location", directory=path))
         if folder == "":
             return
 
@@ -122,7 +122,7 @@ class OutputReducedData(QDialog):
         default_filename = path / default_filename
         caption = "Select Location and Name"
         filter = "Reduced Ascii (*.txt);; All (*.*)"
-        filename, filter = QFileDialog.getSaveFileName(
+        filename, filter = QtWidgets.QFileDialog.getSaveFileName(
             self,
             caption,
             str(default_filename),
@@ -150,39 +150,6 @@ class OutputReducedData(QDialog):
         _export_stitching_ascii_settings.fourth_column_dq_over_q = _dq_over_q
         _export_stitching_ascii_settings.fourth_column_flag = _is_with_4th_column_flag
         self.parent.exportStitchingAsciiSettings = _export_stitching_ascii_settings
-
-    def is_folder_access_granted(self, filename):
-        return os.access(filename, os.W_OK)
-
-    def write_n_ascii(self):
-        o_gui_utility = GuiUtility(parent=self.parent)
-        nbr_row = o_gui_utility.reductionTable_nbr_row()
-
-        self.is_with_4th_column_flag = self.ui.output4thColumnFlag.isChecked()
-        dq_over_q = self.ui.dQoverQvalue.text()
-        self.dq_over_q = float(dq_over_q)
-
-        for _row in range(nbr_row):
-            self.filename = self.format_n_filename(row=_row)
-            text = self.retrieve_individual_metadata(row=_row)
-
-            if self.is_with_4th_column_flag:
-                dq0 = self.ui.dq0Value.text()
-                self.dq0 = float(dq0)
-                line1 = "# dQ0[1/Angstroms]= " + dq0
-                line2 = "# dQ1/Q= " + dq_over_q
-                line3 = "# Q[1/Angstroms] R delta_R Precision"
-                text.append(line1)
-                text.append(line2)
-                text.append("#")
-                text.append(line3)
-            else:
-                text.append("# Q[1/Angstroms] R delta_R")
-
-            self.text_data = text
-            self.produce_data_without_common_q_axis(row=_row)
-            self.format_data()
-            self.create_file()
 
     def format_n_filename(self, row=-1):
         folder = self.folder
@@ -217,249 +184,8 @@ class OutputReducedData(QDialog):
         self.apply_scaling_factor()
         self.create_output_file()
 
-    def generate_selected_sf(self, lconfig):
-        o_gui = GuiUtility(parent=self.parent)
-        stitching_type = o_gui.getStitchingType()
-        if stitching_type == "absolute":
-            return lconfig.sf_abs_normalization
-        elif stitching_type == "auto":
-            return lconfig.sf_auto
-        else:
-            return lconfig.sf_manual
-
-    def apply_sf(self, list_wks):
-        big_table_data = self.parent.big_table_data
-        for _index, _wks in enumerate(list_wks):
-            _lconfig = big_table_data[_index, 2]
-            _sf = self.generate_selected_sf(_lconfig)
-            Scale(InputWorkspace=_wks, OutputWorkspace=_wks, Factor=_sf)
-            list_wks[_index] = _wks
-        return list_wks
-
-    def create_output_file(self):
-        [_q_min, _q_max] = self.get_q_range()
-        _q_bin = -1.0 * float(self.parent.ui.qStep.text())
-        _q_range = [_q_min, _q_bin, _q_max]
-
-        # collect list of workspaces
-        _list_wks = self.collect_list_wks()
-
-        _list_wks = self.apply_sf(_list_wks)
-
-        _text_data = self.format_metadata()
-
-        msg = (
-            f"Creating output file\n"
-            f"====================\n"
-            f"OutputBinning: {_q_range}\n"
-            f"DQConstant: {float(self.ui.dq0Value.text())}\n"
-            f"DQSlope: {float(self.ui.dQoverQvalue.text())}\n"
-        )
-        logging.info(msg)
-
-        LRReflectivityOutput(
-            ReducedWorkspaces=_list_wks,
-            OutputBinning=_q_range,
-            DQConstant=float(self.ui.dq0Value.text()),
-            DQSlope=float(self.ui.dQoverQvalue.text()),
-            OutputFilename=self.filename,
-            ScaleToUnity=False,
-            Metadata=_text_data,
-        )
-
     def format_metadata(self):
         return "\n".join(map(str, self.text_data))
-
-    def collect_list_wks(self):
-        o_gui_utility = GuiUtility(parent=self.parent)
-        nbr_row = o_gui_utility.reductionTable_nbr_row()
-        _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
-        _big_table_data = _dataObject.big_table_data
-
-        return [_big_table_data[_row, 2].wks for _row in range(nbr_row)]
-
-    def get_q_range(self):
-        o_gui_utility = GuiUtility(parent=self.parent)
-        nbr_row = o_gui_utility.reductionTable_nbr_row()
-
-        _auto_qmin_flag = self.ui.auto_qmin_button.isChecked()
-        if _auto_qmin_flag:
-            minQ = 100
-        else:
-            minQ = float(self.ui.manual_qmin_value.text())
-
-        maxQ = 0
-
-        _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
-        _big_table_data = _dataObject.big_table_data
-
-        for i in range(nbr_row):
-            _data = _big_table_data[i, 2]
-            _q_axis = _data.reduce_q_axis
-            if _auto_qmin_flag:
-                minQ = min([_q_axis[0], minQ])
-            maxQ = max([_q_axis[-1], maxQ])
-
-        return [minQ, maxQ]
-
-    def apply_scaling_factor(self):
-        o_gui_utility = GuiUtility(parent=self.parent)
-        nbr_row = o_gui_utility.reductionTable_nbr_row()
-        _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
-        _big_table_data = _dataObject.big_table_data
-
-        for _row in range(nbr_row):
-            _data = _big_table_data[_row, 2]
-            _wks = _data.wks
-            _sf = self.retrieve_sf(_data)
-            _wks_scaled = Scale(_wks, _sf, "Multiply")
-            _data.wks_scaled = _wks_scaled
-            _big_table_data[_row, 2]
-
-        _dataObject.big_table_data = _big_table_data
-
-    def retrieve_sf(self, lconfigdataset):
-        o_gui = GuiUtility(parent=self.parent)
-        stitching_type = o_gui.getStitchingType()
-        if stitching_type == "absolute":
-            return lconfigdataset.sf_abs_normalization
-        elif stitching_type == "auto":
-            return lconfigdataset.sf_auto
-        else:
-            return lconfigdataset.sf_manual
-
-    def retrieve_individual_metadata(self, row=-1):
-        reduction_table = self.parent.ui.reductionTable
-        text = []
-
-        o_gui_utility = GuiUtility(parent=self.parent)
-        _date = time.strftime("# Date: %d_%m_%Y")
-        _reduction_method = "# Reduction method: manual"
-        _reduction_engine = "# Reduction engine: RefRed"
-        _reduction_date = "# %s" % _date
-
-        for _entry in [_date, _reduction_method, _reduction_engine, _reduction_date]:
-            text.append(_entry)
-        text.append("#")
-
-        _legend = "\t".join(
-            [
-                "# DataRun",
-                "NormRun",
-                "2theta(degrees)",
-                "LambdaMin(A)",
-                "LambdaMax(A)",
-                "Qmin(1/A)",
-                "Qmax(1/A)",
-                "ScalingFactor",
-                "Total Counts",
-                "pcCharge(mC)",
-            ]
-        )
-
-        text.append(_legend)
-        _data_run = str(reduction_table.item(row, 1).text())
-        _norm_run = str(reduction_table.item(row, 2).text())
-        _2_theta = str(reduction_table.item(row, 3).text())
-        _lambda_min = str(reduction_table.item(row, 4).text())
-        _lambda_max = str(reduction_table.item(row, 5).text())
-        _q_min = str(reduction_table.item(row, 6).text())
-        _q_max = str(reduction_table.item(row, 7).text())
-        _scaling_factor = self.retrieve_scaling_factor(row=row)
-        _total_counts = self.retrieve_total_counts(row)
-        _pcCharge = self.retrieve_pcCharge(row)
-        _value = "# %s\t%s\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%f\t\t%f" % (
-            _data_run,
-            _norm_run,
-            _2_theta,
-            _lambda_min,
-            _lambda_max,
-            _q_min,
-            _q_max,
-            _scaling_factor,
-            _total_counts,
-            _pcCharge,
-        )
-        text.append(_value)
-
-        # clocking settings
-        text.append("#")
-        text.append("# Clocking Correction used")
-        o_gui_utility = GuiUtility(parent=self.parent)
-        last_row = o_gui_utility.get_row_with_highest_q()
-        big_table_data = self.parent.big_table_data
-        clocking = big_table_data[last_row, 0].clocking
-        text.append("# clock1: %s" % clocking[0])
-        text.append("# clock2: %s" % clocking[1])
-
-        return text
-
-    def retrieve_metadata(self):
-        reduction_table = self.parent.ui.reductionTable
-        text = []
-
-        o_gui_utility = GuiUtility(parent=self.parent)
-        _date = time.strftime("# Date: %d_%m_%Y")
-        _reduction_method = "# Reduction method: manual"
-        _reduction_engine = "# Reduction engine: RefRed"
-        _reduction_date = "# %s" % _date
-
-        for _entry in [_date, _reduction_method, _reduction_engine, _reduction_date]:
-            text.append(_entry)
-        text.append("#")
-
-        nbr_row = o_gui_utility.reductionTable_nbr_row()
-        _legend = "\t".join(
-            [
-                "# DataRun",
-                "NormRun",
-                "2theta(degrees)",
-                "LambdaMin(A)",
-                "LambdaMax(A)",
-                "Qmin(1/A)",
-                "Qmax(1/A)",
-                "ScalingFactor",
-                "Total Counts",
-                "pcCharge(mC)",
-            ]
-        )
-        text.append(_legend)
-        for _row in range(nbr_row):
-            _data_run = str(reduction_table.item(_row, 1).text())
-            _norm_run = str(reduction_table.item(_row, 2).text())
-            _2_theta = str(reduction_table.item(_row, 3).text())
-            _lambda_min = str(reduction_table.item(_row, 4).text())
-            _lambda_max = str(reduction_table.item(_row, 5).text())
-            _q_min = str(reduction_table.item(_row, 6).text())
-            _q_max = str(reduction_table.item(_row, 7).text())
-            _scaling_factor = self.retrieve_scaling_factor(row=_row)
-            _total_counts = self.retrieve_total_counts(_row)
-            _pcCharge = self.retrieve_pcCharge(_row)
-            _value = "# %s\t%s\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%f\t\t%f" % (
-                _data_run,
-                _norm_run,
-                _2_theta,
-                _lambda_min,
-                _lambda_max,
-                _q_min,
-                _q_max,
-                _scaling_factor,
-                _total_counts,
-                _pcCharge,
-            )
-            text.append(_value)
-
-        # clocking settings
-        text.append("#")
-        text.append("# Clocking Correction used")
-        o_gui_utility = GuiUtility(parent=self.parent)
-        last_row = o_gui_utility.get_row_with_highest_q()
-        big_table_data = self.parent.big_table_data
-        clocking = big_table_data[last_row, 0].clocking
-        text.append("# clock1: %s" % clocking[0])
-        text.append("# clock2: %s" % clocking[1])
-
-        return text
 
     def retrieve_total_counts(self, row):
         _big_table_data = self.parent.big_table_data
@@ -473,16 +199,6 @@ class OutputReducedData(QDialog):
         pcCharge = _lrdata.proton_charge
         return pcCharge
 
-    def retrieve_scaling_factor(self, row=-1):
-        o_reduced_data_hanlder = ReducedDataHandler(parent=self.parent)
-        big_table_data = self.parent.big_table_data
-        _lconfig = big_table_data[row, 2]
-        sf = o_reduced_data_hanlder.generate_selected_sf(lconfig=_lconfig)
-        return str(sf)
-
-    def create_file(self):
-        RefRed.utilities.write_ascii_file(self.filename, self.text_data)
-
     def produce_data_without_common_q_axis(self, row=-1):
         _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
         _big_table_data = _dataObject.big_table_data
@@ -495,112 +211,6 @@ class OutputReducedData(QDialog):
         self.q_axis = _q_axis
         self.y_axis = _y_axis
         self.e_axis = _e_axis
-
-    def produce_data_with_common_q_axis(self):
-        o_gui_utility = GuiUtility(parent=self.parent)
-        nbr_row = o_gui_utility.reductionTable_nbr_row()
-
-        _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
-        _big_table_data = _dataObject.big_table_data
-
-        _auto_qmin_flag = self.ui.auto_qmin_button.isChecked()
-        if _auto_qmin_flag:
-            minQ = 100
-        else:
-            minQ = float(self.ui.manual_qmin_value.text())
-
-        maxQ = 0
-
-        for i in range(nbr_row):
-            _data = _big_table_data[i, 2]
-
-            tmp_wks_name = "wks_" + str(i)
-
-            _q_axis = _data.reduce_q_axis
-            _y_axis = _data.reduce_y_axis[:-1]
-            _e_axis = _data.reduce_e_axis[:-1]
-
-            [_y_axis, _e_axis] = self.applySF(_data, _y_axis, _e_axis)
-
-            if _auto_qmin_flag:
-                minQ = min([_q_axis[0], minQ])
-            maxQ = max([_q_axis[-1], maxQ])
-
-            tmp_wks_name = CreateWorkspace(
-                DataX=_q_axis,
-                DataY=_y_axis,
-                DataE=_e_axis,
-                Nspec=1,
-                UnitX="Wavelength",
-                OutputWorkspace=tmp_wks_name,
-            )
-            tmp_wks_name.setDistribution(True)
-
-            # rebin everyting using the same Q binning parameters
-        binQ = self.parent.ui.qStep.text()
-        bin_parameters = str(minQ) + ",-" + str(binQ) + "," + str(maxQ)
-        for i in range(nbr_row):
-
-            tmp_wks_name = "wks_" + str(i)
-            ConvertToHistogram(InputWorkspace=tmp_wks_name, OutputWorkspace=tmp_wks_name)
-
-            Rebin(
-                InputWorkspace=tmp_wks_name,
-                Params=bin_parameters,
-                OutputWorkspace=tmp_wks_name,
-            )
-
-        # we use the first histo as output reference
-        data_y = mtd["wks_0"].dataY(0).copy()
-        data_e = mtd["wks_0"].dataE(0).copy()
-
-        skip_index = 0
-        point_to_skip = 2
-
-        for k in range(1, nbr_row):
-
-            skip_point = True
-            can_skip_last_point = False
-
-            data_y_k = mtd["wks_" + str(k)].dataY(0)
-            data_e_k = mtd["wks_" + str(k)].dataE(0)
-            for j in range(len(data_y_k) - 1):
-
-                if data_y_k[j] > 0:
-
-                    can_skip_last_point = True
-                    if skip_point:
-                        skip_index += 1
-                        if skip_index == point_to_skip:
-                            skip_point = False
-                            skip_index = 0
-                        else:
-                            continue
-
-                if can_skip_last_point and (data_y_k[j + 1] == 0):
-                    break
-
-                if data_y[j] > 0 and data_y_k[j] > 0:
-
-                    if self.use_lowest_error_value_flag:
-                        if data_e[j] > data_e_k[j]:
-                            data_y[j] = data_y_k[j]
-                            data_e[j] = data_e_k[j]
-
-                    else:
-                        [data_y[j], data_e[j]] = RefRed.utilities.weighted_mean(
-                            [data_y[j], data_y_k[j]], [data_e[j], data_e_k[j]]
-                        )
-
-                elif (data_y[j] == 0) and (data_y_k[j] > 0):
-                    data_y[j] = data_y_k[j]
-                    data_e[j] = data_e_k[j]
-
-        data_x = mtd["wks_1"].dataX(0)
-
-        self.q_axis = data_x
-        self.y_axis = data_y
-        self.e_axis = data_e
 
     def applySF(self, _data, y_array, e_array):
         if self.parent.ui.absolute_normalization_button.isChecked():
@@ -690,3 +300,397 @@ class OutputReducedData(QDialog):
         _q_min = str(self.ui.manual_qmin_value.text())
         _gui_metadata["q_min"] = _q_min
         self.parent.gui_metadata = _gui_metadata
+
+    # ---------------------------------------------------------------------- #
+    # The following functions are not mocked in unit testing as they rely on #
+    # other modules heavily.                                                 #
+    # ---------------------------------------------------------------------  #
+    def generate_selected_sf(self, lconfig):
+        o_gui = GuiUtility(parent=self.parent)
+        stitching_type = o_gui.getStitchingType()
+        if stitching_type == "absolute":
+            return lconfig.sf_abs_normalization
+        elif stitching_type == "auto":
+            return lconfig.sf_auto
+        else:
+            return lconfig.sf_manual
+
+    def apply_sf(self, list_wks):
+        big_table_data = self.parent.big_table_data
+        for _index, _wks in enumerate(list_wks):
+            _lconfig = big_table_data[_index, 2]
+            _sf = self.generate_selected_sf(_lconfig)
+            Scale(InputWorkspace=_wks, OutputWorkspace=_wks, Factor=_sf)
+            list_wks[_index] = _wks
+        return list_wks
+
+    def collect_list_wks(self):
+        o_gui_utility = GuiUtility(parent=self.parent)
+        nbr_row = o_gui_utility.reductionTable_nbr_row()
+        _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
+        _big_table_data = _dataObject.big_table_data
+
+        return [_big_table_data[_row, 2].wks for _row in range(nbr_row)]
+
+    def create_output_file(self):
+        [_q_min, _q_max] = self.get_q_range()
+        _q_bin = -1.0 * float(self.parent.ui.qStep.text())
+        _q_range = [_q_min, _q_bin, _q_max]
+
+        # collect list of workspaces
+        _list_wks = self.collect_list_wks()
+
+        _list_wks = self.apply_sf(_list_wks)
+
+        _text_data = self.format_metadata()
+
+        msg = (
+            f"Creating output file\n"
+            f"====================\n"
+            f"OutputBinning: {_q_range}\n"
+            f"DQConstant: {float(self.ui.dq0Value.text())}\n"
+            f"DQSlope: {float(self.ui.dQoverQvalue.text())}\n"
+        )
+        logging.info(msg)
+
+        LRReflectivityOutput(
+            ReducedWorkspaces=_list_wks,
+            OutputBinning=_q_range,
+            DQConstant=float(self.ui.dq0Value.text()),
+            DQSlope=float(self.ui.dQoverQvalue.text()),
+            OutputFilename=self.filename,
+            ScaleToUnity=False,
+            Metadata=_text_data,
+        )
+
+    def write_n_ascii(self):
+        o_gui_utility = GuiUtility(parent=self.parent)
+        nbr_row = o_gui_utility.reductionTable_nbr_row()
+
+        self.is_with_4th_column_flag = self.ui.output4thColumnFlag.isChecked()
+        dq_over_q = self.ui.dQoverQvalue.text()
+        self.dq_over_q = float(dq_over_q)
+
+        for _row in range(nbr_row):
+            self.filename = self.format_n_filename(row=_row)
+            text = self.retrieve_individual_metadata(row=_row)
+
+            if self.is_with_4th_column_flag:
+                dq0 = self.ui.dq0Value.text()
+                self.dq0 = float(dq0)
+                line1 = "# dQ0[1/Angstroms]= " + dq0
+                line2 = "# dQ1/Q= " + dq_over_q
+                line3 = "# Q[1/Angstroms] R delta_R Precision"
+                text.append(line1)
+                text.append(line2)
+                text.append("#")
+                text.append(line3)
+            else:
+                text.append("# Q[1/Angstroms] R delta_R")
+
+            self.text_data = text
+            self.produce_data_without_common_q_axis(row=_row)
+            self.format_data()
+            self.create_file()
+
+    def retrieve_metadata(self):
+        reduction_table = self.parent.ui.reductionTable
+        text = []
+
+        o_gui_utility = GuiUtility(parent=self.parent)
+        _date = time.strftime("# Date: %d_%m_%Y")
+        _reduction_method = "# Reduction method: manual"
+        _reduction_engine = "# Reduction engine: RefRed"
+        _reduction_date = "# %s" % _date
+
+        for _entry in [_date, _reduction_method, _reduction_engine, _reduction_date]:
+            text.append(_entry)
+        text.append("#")
+
+        nbr_row = o_gui_utility.reductionTable_nbr_row()
+        _legend = "\t".join(
+            [
+                "# DataRun",
+                "NormRun",
+                "2theta(degrees)",
+                "LambdaMin(A)",
+                "LambdaMax(A)",
+                "Qmin(1/A)",
+                "Qmax(1/A)",
+                "ScalingFactor",
+                "Total Counts",
+                "pcCharge(mC)",
+            ]
+        )
+        text.append(_legend)
+        for _row in range(nbr_row):
+            _data_run = str(reduction_table.item(_row, 1).text())
+            _norm_run = str(reduction_table.item(_row, 2).text())
+            _2_theta = str(reduction_table.item(_row, 3).text())
+            _lambda_min = str(reduction_table.item(_row, 4).text())
+            _lambda_max = str(reduction_table.item(_row, 5).text())
+            _q_min = str(reduction_table.item(_row, 6).text())
+            _q_max = str(reduction_table.item(_row, 7).text())
+            _scaling_factor = self.retrieve_scaling_factor(row=_row)
+            _total_counts = self.retrieve_total_counts(_row)
+            _pcCharge = self.retrieve_pcCharge(_row)
+            _value = "# %s\t%s\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%f\t\t%f" % (
+                _data_run,
+                _norm_run,
+                _2_theta,
+                _lambda_min,
+                _lambda_max,
+                _q_min,
+                _q_max,
+                _scaling_factor,
+                _total_counts,
+                _pcCharge,
+            )
+            text.append(_value)
+
+        # clocking settings
+        text.append("#")
+        text.append("# Clocking Correction used")
+        o_gui_utility = GuiUtility(parent=self.parent)
+        last_row = o_gui_utility.get_row_with_highest_q()
+        big_table_data = self.parent.big_table_data
+        clocking = big_table_data[last_row, 0].clocking
+        text.append("# clock1: %s" % clocking[0])
+        text.append("# clock2: %s" % clocking[1])
+
+        return text
+
+    def retrieve_individual_metadata(self, row: int = -1):
+        reduction_table = self.parent.ui.reductionTable
+        text = []
+
+        o_gui_utility = GuiUtility(parent=self.parent)
+        _date = time.strftime("# Date: %d_%m_%Y")
+        _reduction_method = "# Reduction method: manual"
+        _reduction_engine = "# Reduction engine: RefRed"
+        _reduction_date = "# %s" % _date
+
+        for _entry in [_date, _reduction_method, _reduction_engine, _reduction_date]:
+            text.append(_entry)
+        text.append("#")
+
+        _legend = "\t".join(
+            [
+                "# DataRun",
+                "NormRun",
+                "2theta(degrees)",
+                "LambdaMin(A)",
+                "LambdaMax(A)",
+                "Qmin(1/A)",
+                "Qmax(1/A)",
+                "ScalingFactor",
+                "Total Counts",
+                "pcCharge(mC)",
+            ]
+        )
+
+        text.append(_legend)
+        _data_run = str(reduction_table.item(row, 1).text())
+        _norm_run = str(reduction_table.item(row, 2).text())
+        _2_theta = str(reduction_table.item(row, 3).text())
+        _lambda_min = str(reduction_table.item(row, 4).text())
+        _lambda_max = str(reduction_table.item(row, 5).text())
+        _q_min = str(reduction_table.item(row, 6).text())
+        _q_max = str(reduction_table.item(row, 7).text())
+        _scaling_factor = self.retrieve_scaling_factor(row=row)
+        _total_counts = self.retrieve_total_counts(row)
+        _pcCharge = self.retrieve_pcCharge(row)
+        _value = "# %s\t%s\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t\t%f\t\t%f" % (
+            _data_run,
+            _norm_run,
+            _2_theta,
+            _lambda_min,
+            _lambda_max,
+            _q_min,
+            _q_max,
+            _scaling_factor,
+            _total_counts,
+            _pcCharge,
+        )
+        text.append(_value)
+
+        # clocking settings
+        text.append("#")
+        text.append("# Clocking Correction used")
+        o_gui_utility = GuiUtility(parent=self.parent)
+        last_row = o_gui_utility.get_row_with_highest_q()
+        big_table_data = self.parent.big_table_data
+        clocking = big_table_data[last_row, 0].clocking
+        text.append("# clock1: %s" % clocking[0])
+        text.append("# clock2: %s" % clocking[1])
+
+        return text
+
+    def produce_data_with_common_q_axis(self):
+        o_gui_utility = GuiUtility(parent=self.parent)
+        nbr_row = o_gui_utility.reductionTable_nbr_row()
+
+        _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
+        _big_table_data = _dataObject.big_table_data
+
+        _auto_qmin_flag = self.ui.auto_qmin_button.isChecked()
+        if _auto_qmin_flag:
+            minQ = 100
+        else:
+            minQ = float(self.ui.manual_qmin_value.text())
+
+        maxQ = 0
+
+        for i in range(nbr_row):
+            _data = _big_table_data[i, 2]
+
+            tmp_wks_name = "wks_" + str(i)
+
+            _q_axis = _data.reduce_q_axis
+            _y_axis = _data.reduce_y_axis[:-1]
+            _e_axis = _data.reduce_e_axis[:-1]
+
+            [_y_axis, _e_axis] = self.applySF(_data, _y_axis, _e_axis)
+
+            if _auto_qmin_flag:
+                minQ = min([_q_axis[0], minQ])
+            maxQ = max([_q_axis[-1], maxQ])
+
+            tmp_wks_name = CreateWorkspace(
+                DataX=_q_axis,
+                DataY=_y_axis,
+                DataE=_e_axis,
+                Nspec=1,
+                UnitX="Wavelength",
+                OutputWorkspace=tmp_wks_name,
+            )
+            tmp_wks_name.setDistribution(True)
+
+        # rebin everyting using the same Q binning parameters
+        binQ = self.parent.ui.qStep.text()
+        bin_parameters = str(minQ) + ",-" + str(binQ) + "," + str(maxQ)
+        for i in range(nbr_row):
+
+            tmp_wks_name = "wks_" + str(i)
+            ConvertToHistogram(InputWorkspace=tmp_wks_name, OutputWorkspace=tmp_wks_name)
+
+            Rebin(
+                InputWorkspace=tmp_wks_name,
+                Params=bin_parameters,
+                OutputWorkspace=tmp_wks_name,
+            )
+
+        # we use the first histo as output reference
+        data_y = mtd["wks_0"].dataY(0).copy()
+        data_e = mtd["wks_0"].dataE(0).copy()
+
+        skip_index = 0
+        point_to_skip = 2
+
+        for k in range(1, nbr_row):
+
+            skip_point = True
+            can_skip_last_point = False
+
+            data_y_k = mtd["wks_" + str(k)].dataY(0)
+            data_e_k = mtd["wks_" + str(k)].dataE(0)
+            for j in range(len(data_y_k) - 1):
+
+                if data_y_k[j] > 0:
+
+                    can_skip_last_point = True
+                    if skip_point:
+                        skip_index += 1
+                        if skip_index == point_to_skip:
+                            skip_point = False
+                            skip_index = 0
+                        else:
+                            continue
+
+                if can_skip_last_point and (data_y_k[j + 1] == 0):
+                    break
+
+                if data_y[j] > 0 and data_y_k[j] > 0:
+
+                    if self.use_lowest_error_value_flag:
+                        if data_e[j] > data_e_k[j]:
+                            data_y[j] = data_y_k[j]
+                            data_e[j] = data_e_k[j]
+
+                    else:
+                        [data_y[j], data_e[j]] = RefRed.utilities.weighted_mean(
+                            [data_y[j], data_y_k[j]], [data_e[j], data_e_k[j]]
+                        )
+
+                elif (data_y[j] == 0) and (data_y_k[j] > 0):
+                    data_y[j] = data_y_k[j]
+                    data_e[j] = data_e_k[j]
+
+        data_x = mtd["wks_1"].dataX(0)
+
+        self.q_axis = data_x
+        self.y_axis = data_y
+        self.e_axis = data_e
+
+    def create_file(self):
+        RefRed.utilities.write_ascii_file(self.filename, self.text_data)
+
+    def retrieve_sf(self, lconfigdataset):
+        o_gui = GuiUtility(parent=self.parent)
+        stitching_type = o_gui.getStitchingType()
+        if stitching_type == "absolute":
+            return lconfigdataset.sf_abs_normalization
+        elif stitching_type == "auto":
+            return lconfigdataset.sf_auto
+        else:
+            return lconfigdataset.sf_manual
+
+    def retrieve_scaling_factor(self, row=-1):
+        o_reduced_data_hanlder = ReducedDataHandler(parent=self.parent)
+        big_table_data = self.parent.big_table_data
+        _lconfig = big_table_data[row, 2]
+        sf = o_reduced_data_hanlder.generate_selected_sf(lconfig=_lconfig)
+        return str(sf)
+
+    def is_folder_access_granted(self, filename):
+        return os.access(filename, os.W_OK)
+
+    def apply_scaling_factor(self):
+        o_gui_utility = GuiUtility(parent=self.parent)
+        nbr_row = o_gui_utility.reductionTable_nbr_row()
+        _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
+        _big_table_data = _dataObject.big_table_data
+
+        for _row in range(nbr_row):
+            _data = _big_table_data[_row, 2]
+            _wks = _data.wks
+            _sf = self.retrieve_sf(_data)
+            _wks_scaled = Scale(_wks, _sf, "Multiply")
+            _data.wks_scaled = _wks_scaled
+            _big_table_data[_row, 2]
+
+        _dataObject.big_table_data = _big_table_data
+
+    def get_q_range(self):
+        o_gui_utility = GuiUtility(parent=self.parent)
+        nbr_row = o_gui_utility.reductionTable_nbr_row()
+
+        _auto_qmin_flag = self.ui.auto_qmin_button.isChecked()
+        if _auto_qmin_flag:
+            minQ = 100
+        else:
+            minQ = float(self.ui.manual_qmin_value.text())
+
+        maxQ = 0
+
+        _dataObject = self.parent.o_stitching_ascii_widget.loaded_ascii_array[0]
+        _big_table_data = _dataObject.big_table_data
+
+        for i in range(nbr_row):
+            _data = _big_table_data[i, 2]
+            _q_axis = _data.reduce_q_axis
+            if _auto_qmin_flag:
+                minQ = min([_q_axis[0], minQ])
+            maxQ = max([_q_axis[-1], maxQ])
+
+        return [minQ, maxQ]
