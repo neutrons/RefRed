@@ -42,18 +42,3 @@ def data_server():
     yield _DataServe()
     for key, val in _backup.items():
         config[key] = val
-
-
-@pytest.fixture(scope='function')
-def qfiledialog_handler(qtbot):
-    r"""Timer triggering a slot after a few miliseconds, giving a chance for the
-    file dialog to show up"""
-    def _inner(parent, filename, lapse=500):
-        def handler():
-            dialog = parent.findChild(QtWidgets.QFileDialog)
-            line_edit = dialog.findChild(QtWidgets.QLineEdit)
-            qtbot.keyClicks(line_edit, filename)
-            qtbot.wait(200)
-            qtbot.keyClick(line_edit, QtCore.Qt.Key_Enter)
-        QtCore.QTimer.singleShot(lapse, handler)
-    return _inner
