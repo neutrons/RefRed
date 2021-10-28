@@ -15,8 +15,8 @@ class AsciiLoader:
         else:
             raise RuntimeError("filename is empty!")
 
-        self.data = np.genfromtxt(self.filename, dtype=float, comments="#")
+        self.__data = np.genfromtxt(self.filename, dtype=float, comments="#")
 
     def data(self):
-        data = self.data
+        data = self.__data
         return [data[:, 0], data[:, 1], data[:, 2], []]
