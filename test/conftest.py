@@ -1,7 +1,6 @@
 # 3rd-party imports
 from mantid.simpleapi import config
 import pytest
-from qtpy import QtCore, QtWidgets
 
 # standard imports
 import os
