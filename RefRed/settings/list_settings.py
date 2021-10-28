@@ -12,23 +12,20 @@ class ListSettings(object):
 
     def __eq__(self, other) -> bool:
         if isinstance(other, dict):
-            if self.q_min != other["q_min"]:
-                return False
-            if self.d_q0 != other["d_q0"]:
-                return False
-            if self.dq_over_q != other["dq_over_q"]:
-                return False
-            if self.tof_bin != other["tof_bin"]:
-                return False
-            if self.q_bin != other["q_bin"]:
-                return False
-            if self.clocking_pixel != other["clocking_pixel"]:
-                return False
-            if self.angle_offset != other["angle_offset"]:
-                return False
-            if self.angle_offset_error != other["angle_offset_error"]:
-                return False
+            for attrname in [
+                "q_min",
+                "d_q0",
+                "dq_over_q",
+                "tof_bin",
+                "q_bin",
+                "clocking_pixel",
+                "angle_offset",
+                "angle_offset_error",
+            ]:
+                if getattr(self, attrname) != other[attrname]:
+                    return False
 
             return True
+
         # don't know how to compare so must be different
         return False
