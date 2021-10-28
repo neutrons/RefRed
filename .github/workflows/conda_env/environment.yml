@@ -10,3 +10,4 @@ dependencies:
 - pytest-cov
 - pytest-qt=3.3.0
 - qtpy
+- pyqt
