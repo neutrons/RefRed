@@ -9,11 +9,13 @@ class SettingsEditor(QtWidgets.QMainWindow):
 
     is_super_user = False
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, loadUI: bool = True):
         self.parent = parent
         QtWidgets.QMainWindow.__init__(self, parent=parent)
-        self.ui = load_ui("settings.ui", self)
-        self.populate_table()
+        if loadUI:
+            # in testing populate_table should be called once self.ui has been mocked
+            self.ui = load_ui("settings.ui", self)
+            self.populate_table()
 
     def populate_table(self):
         _gui_metadata = self.parent.gui_metadata

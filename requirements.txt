@@ -3,6 +3,7 @@ configobj
 h5py
 matplotlib
 numpy
+pyqt
 qtpy
 pyqt
 setuptools
