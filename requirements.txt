@@ -3,5 +3,8 @@ configobj
 h5py
 matplotlib
 numpy
+pyqt
 qtpy
 setuptools
+sphinx
+sphinx_rtd_theme
