@@ -6,3 +6,5 @@ numpy
 qtpy
 pyqt
 setuptools
+sphinx
+sphinx_rtd_theme

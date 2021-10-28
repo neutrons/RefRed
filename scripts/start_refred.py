@@ -23,7 +23,7 @@ def mantid_location(valid_versions, root_location='/opt'):
     mantid_path = None  # value to return by this function
 
     # Check for installed Mantid versions under /opt
-    short_version = {'5.1.0': '51'}  # dictionary translating a version to one of the /opt versions
+    short_version = {'6.1.0': '61', '6.0.0': '60', '5.1.0': '51'}
     for _version in valid_versions:
         install_path = os.path.join(root_location, 'mantid' + short_version[_version])  # e.g "/opt/mantid51"
         if os.path.isdir(install_path):  # check only for the existence of the directory, but not its contents

@@ -1,12 +1,15 @@
-from qtpy import QtWidgets
-import time
-import os
-import logging
-import mantid.simpleapi as api
-from typing import Optional, Union
-
-import numpy as np
+# package imports
 from RefRed.utilities import convertTOF
+
+# third-party imports
+import mantid.simpleapi as api
+import numpy as np
+from qtpy import QtWidgets
+
+# standard-library imports
+import logging
+import time
+from typing import Optional, Union
 
 
 class ReductionSfCalculator(object):
@@ -28,17 +31,12 @@ class ReductionSfCalculator(object):
                  export_script_flag: Union[str, bool] = False,
                  test_mode: Optional[bool] = False):
         """Constructor and main execution body
-
         There is no need to call any methods other than initialize an object
 
-        Parameters
-        ----------
-        parent:
-            SF GUI
-        export_script_flag: bool, str
-            if str, then it is a script file name; if True, then launch dialog for file name; otherwise, do nothing
-        test_mode: bool
-            flag such that the class will be called in a non-GUI unit test mode
+        :parent SFCalculator: the main widget for calculation of structure factors
+        :export_script_flag: if ``str`` then it is a script file name; if ``True``, then launch dialog for file name;
+         otherwise, do nothing
+        :test_mode: flag such that the class will be called in a non-GUI unit test mode
         """
         # Parse
         self.sf_gui = parent
@@ -47,16 +45,12 @@ class ReductionSfCalculator(object):
 
         # FIXME TODO - is it good to mix presenter/model with view?
         if export_script_flag:
-            _path = os.path.expanduser("~")
-            _filter = "python (*.py);;All (*.*)"
-            _caption = "Export Script File"
             filename, _ = QtWidgets.QFileDialog.getSaveFileName(
-                self.sf_gui,
-                _caption,
-                _path,
-                _filter,
+                self.sf_gui,  # parent widget
+                "Export Script File",  # dialog title
+                self.sf_gui.save_directory,  # opening directory
+                "Python (*.py);;All (*.*)"  # list of display-file filters
             )
-
             if filename:
                 self.export_script_file = filename
             else:
