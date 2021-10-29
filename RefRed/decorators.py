@@ -4,10 +4,25 @@
 from qtpy import QtGui, QtCore, QtWidgets
 from RefRed.version import window_title
 from functools import wraps
-from mantid.kernel import Logger
+from mantid.kernel import ConfigService, Logger
 
 
-_mantid_logger = Logger('RefRed')
+def _shouldShowLogs():
+    '''Determine whether logs will be shown on startup'''
+    levels = ['debug', 'information', 'notice', 'warning', 'error', 'critical', 'fatal']
+    log_level_str = ConfigService.getString('logging.loggers.root.level')
+    if log_level_str in levels:
+        return levels.index('debug') >= levels.index(log_level_str)
+    else:
+        # default behavior is to let mantid sort things out
+        return True
+
+
+# finish setting up determining whether to log
+SHOULD_LOG = _shouldShowLogs()
+del _shouldShowLogs
+_mantid_logger = Logger('RefRed')  # handle to the logger
+_write_log = _mantid_logger.debug  # pointer to the object's method
 
 #
 # Wrapper functions to make logging call signatures "easy"
@@ -19,11 +34,11 @@ def _to_call_signature(func_ptr, ref='', *args, **kwargs) -> str:
     result = func_ptr.__name__
     if ref:
         result = f'{ref}.{result}'
-    # TODO check for log level and skip converting values to string if level is too high
-    if True:
+    # check for log level and skip converting values to string if level is too high
+    if SHOULD_LOG:
         args_str = ', '.join([f'{item}' for item in args] + [f'{key}={value}' for key, value in kwargs.items()])
     else:
-        args_str = ''
+        args_str = 'NOT SHOWN'
     return f'{result}({args_str})'
 
 
@@ -32,7 +47,7 @@ def log_qtpy_slot(function):
 
     @wraps(function)
     def wrapper_func(ref):
-        _mantid_logger.information('qtpy slot ' + _to_call_signature(function, ref))
+        _write_log('qtpy slot ' + _to_call_signature(function, ref))
         return function(ref)
 
     return wrapper_func
@@ -41,7 +56,7 @@ def log_qtpy_slot(function):
 def log_function(function):
     @wraps(function)
     def wrapper_func(*args, **kwargs):
-        _mantid_logger.information(_to_call_signature(function, ref='', *args, **kwargs))
+        _write_log(_to_call_signature(function, ref='', *args, **kwargs))
         print()
         return function(*args, **kwargs)
 
@@ -51,7 +66,7 @@ def log_function(function):
 def log_method(function):
     @wraps(function)
     def wrapper_func(ref, *args, **kwargs):
-        _mantid_logger.information(_to_call_signature(function, ref=ref, *args, **kwargs))
+        _write_log(_to_call_signature(function, ref=ref, *args, **kwargs))
         return function(ref, *args, **kwargs)
 
     return wrapper_func
