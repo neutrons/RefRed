@@ -30,7 +30,6 @@ class OutputReducedData(QDialog):
 
     _open_instances = []
     o_stitching_ascii_widget = None
-    parent = None
     filename = ""
     folder = ""
 
@@ -47,8 +46,8 @@ class OutputReducedData(QDialog):
     dq_over_q = None
     use_lowest_error_value_flag = True
 
-    def __init__(self, parent=None):
-        QDialog.__init__(self, parent=parent)
+    def __init__(self, parent):
+        super().__init__(parent)
         self.setWindowModality(False)
         self._open_instances.append(self)
         self.ui = load_ui("output_reduced_data_dialog.ui", self)
@@ -59,22 +58,16 @@ class OutputReducedData(QDialog):
         palette.setColor(QPalette.Foreground, Qt.red)
         self.ui.folder_error.setPalette(palette)
 
-        o_loaded_ascii = ReducedAsciiLoader(
-            parent=parent, ascii_file_name="", is_live_reduction=True
-        )
+        o_loaded_ascii = ReducedAsciiLoader(parent=self.parent, ascii_file_name="", is_live_reduction=True)
         if parent.o_stitching_ascii_widget is None:
-            o_stitching_ascii_widget = StitchingAsciiWidget(
-                parent=self.parent, loaded_ascii=o_loaded_ascii
-            )
+            o_stitching_ascii_widget = StitchingAsciiWidget(parent=self.parent, loaded_ascii=o_loaded_ascii)
             parent.o_stitching_ascii_widget = o_stitching_ascii_widget
 
         # retrieve gui parameters
         _export_stitching_ascii_settings = ExportStitchingAsciiSettings()
         self.dq0 = str(_export_stitching_ascii_settings.fourth_column_dq0)
         self.dq_over_q = str(_export_stitching_ascii_settings.fourth_column_dq_over_q)
-        self.is_with_4th_column_flag = bool(
-            _export_stitching_ascii_settings.fourth_column_flag
-        )
+        self.is_with_4th_column_flag = bool(_export_stitching_ascii_settings.fourth_column_flag)
 
         self.ui.dq0Value.setText(self.dq0)
         self.ui.dQoverQvalue.setText(self.dq_over_q)
@@ -112,9 +105,7 @@ class OutputReducedData(QDialog):
 
     def create_n_files(self):
         path = self.parent.path_ascii
-        folder = str(
-            QFileDialog.getExistingDirectory(self, "Select Location", directory=path)
-        )
+        folder = str(QFileDialog.getExistingDirectory(self, "Select Location", directory=path))
         if folder == "":
             return
 
@@ -550,9 +541,7 @@ class OutputReducedData(QDialog):
         for i in range(nbr_row):
 
             tmp_wks_name = "wks_" + str(i)
-            ConvertToHistogram(
-                InputWorkspace=tmp_wks_name, OutputWorkspace=tmp_wks_name
-            )
+            ConvertToHistogram(InputWorkspace=tmp_wks_name, OutputWorkspace=tmp_wks_name)
 
             Rebin(
                 InputWorkspace=tmp_wks_name,
