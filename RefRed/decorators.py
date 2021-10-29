@@ -29,17 +29,17 @@ _write_log = _mantid_logger.debug  # pointer to the object's method
 #
 
 
-def _to_call_signature(func_ptr, ref='', *args, **kwargs) -> str:
+def _to_call_signature(func_ptr, ref_ptr=None, *args, **kwargs) -> str:
     '''Helper function to convert function call to an overly detailed string representation'''
-    result = func_ptr.__name__
-    if ref:
-        result = f'{ref}.{result}'
+    func_name = func_ptr.__name__
+    if ref_ptr:
+        func_name = f'{ref_ptr}.{func_name}'
     # check for log level and skip converting values to string if level is too high
     if SHOULD_LOG:
         args_str = ', '.join([f'{item}' for item in args] + [f'{key}={value}' for key, value in kwargs.items()])
     else:
         args_str = 'NOT SHOWN'
-    return f'{result}({args_str})'
+    return f'{func_name}({args_str})'
 
 
 def log_qtpy_slot(function):
@@ -56,8 +56,7 @@ def log_qtpy_slot(function):
 def log_function(function):
     @wraps(function)
     def wrapper_func(*args, **kwargs):
-        _write_log(_to_call_signature(function, ref='', *args, **kwargs))
-        print()
+        _write_log(_to_call_signature(function, ref_ptr='', *args, **kwargs))
         return function(*args, **kwargs)
 
     return wrapper_func
@@ -66,7 +65,7 @@ def log_function(function):
 def log_method(function):
     @wraps(function)
     def wrapper_func(ref, *args, **kwargs):
-        _write_log(_to_call_signature(function, ref=ref, *args, **kwargs))
+        _write_log(_to_call_signature(function, ref_ptr=ref, *args, **kwargs))
         return function(ref, *args, **kwargs)
 
     return wrapper_func
