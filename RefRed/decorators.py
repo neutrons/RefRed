@@ -32,7 +32,7 @@ def log_qtpy_slot(function):
 
     @wraps(function)
     def wrapper_func(ref):
-        _mantid_logger.information('qtpy slot ' + _to_call_signature(function, ref))  # TODO change to mantid logging
+        _mantid_logger.information('qtpy slot ' + _to_call_signature(function, ref))
         return function(ref)
 
     return wrapper_func
@@ -41,9 +41,7 @@ def log_qtpy_slot(function):
 def log_function(function):
     @wraps(function)
     def wrapper_func(*args, **kwargs):
-        _mantid_logger.information(
-            _to_call_signature(function, ref='', *args, **kwargs)
-        )  # TODO change to mantid logging
+        _mantid_logger.information(_to_call_signature(function, ref='', *args, **kwargs))
         print()
         return function(*args, **kwargs)
 
@@ -53,9 +51,7 @@ def log_function(function):
 def log_method(function):
     @wraps(function)
     def wrapper_func(ref, *args, **kwargs):
-        _mantid_logger.information(
-            _to_call_signature(function, ref=ref, *args, **kwargs)
-        )  # TODO change to mantid logging
+        _mantid_logger.information(_to_call_signature(function, ref=ref, *args, **kwargs))
         return function(ref, *args, **kwargs)
 
     return wrapper_func
