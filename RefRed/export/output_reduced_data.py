@@ -58,7 +58,7 @@ class OutputReducedData(QDialog):
         palette.setColor(QPalette.Foreground, Qt.red)
         self.ui.folder_error.setPalette(palette)
 
-        o_loaded_ascii = ReducedAsciiLoader(parent=parent, ascii_file_name="", is_live_reduction=True)
+        o_loaded_ascii = ReducedAsciiLoader(parent=self.parent, ascii_file_name="", is_live_reduction=True)
         if parent.o_stitching_ascii_widget is None:
             o_stitching_ascii_widget = StitchingAsciiWidget(parent=self.parent, loaded_ascii=o_loaded_ascii)
             parent.o_stitching_ascii_widget = o_stitching_ascii_widget
