@@ -604,7 +604,7 @@ class OutputReducedData(QtWidgets.QDialog):
     def applySF(self, _data, y_array, e_array):
         if self.parent.ui.absolute_normalization_button.isChecked():
             _sf = _data.sf_abs_normalization
-        elif self.parent.ui.auto_switching_button.isChecked():
+        elif self.parent.ui.auto_stitching_button.isChecked():
             _sf = _data.sf_auto
         else:
             _sf = _data.sf_manual
