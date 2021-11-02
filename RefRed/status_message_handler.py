@@ -19,7 +19,7 @@ class StatusMessageThreaded(QtCore.QThread):
         except RuntimeError:
             # race condition: pytest-qt fixture qtbot kills the main window but fails to kill this thread.
             # As a result, after five seconds there's no self.parent and the previous line raises
-            sys.stderr("Cannot find main GUI, no status bar to update.\n")
+            sys.stderr.write("Cannot find main GUI, no status bar to update.\n")
 
 
 class StatusMessageHandler(object):
