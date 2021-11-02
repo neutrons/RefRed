@@ -1,6 +1,7 @@
 """
     TODO: refactor this
 """
+import sys
 import time
 from qtpy import QtCore
 from RefRed.utilities import get_index_free_thread
@@ -12,7 +13,10 @@ class StatusMessageThreaded(QtCore.QThread):
 
     def run(self):
         time.sleep(5)
-        self.parent.ui.statusbar.showMessage('')
+        try:
+            self.parent.ui.statusbar.showMessage('')
+        except RuntimeError:
+            sys.stderr.write("Cannot find main GUI, no status bar to update.\n")
 
 
 class StatusMessageHandler(object):
