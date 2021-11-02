@@ -81,12 +81,12 @@ def main_gui(qtbot, data_server):
     r"""Spawn a MainGui object by loading a configuration file
     After loading the configuration, the first run-number will be plotted
 
-    :configuration : absolute path to XML configuration file. Default is test/data/REF_L_188298_configuration.xml
+    :configuration : absolute path to XML configuration file. Default is test/data/REF_L_188299_configuration.xml
     :show: whether to show the main window
     :return MainGUI: main window object
     """
 
-    def _main_gui(configuration: str = data_server.path_to("REF_L_188298_configuration.xml"), show: bool = False):
+    def _main_gui(configuration: str = data_server.path_to("REF_L_188299_configuration.xml"), show: bool = False):
         SECOND = 1000  # in miliseconds
         window = MainGui()
         qtbot.addWidget(window)
