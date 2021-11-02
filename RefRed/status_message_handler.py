@@ -12,7 +12,7 @@ class StatusMessageThreaded(QtCore.QThread):
 
     def run(self):
         time.sleep(5)
-        self.parent.ui.statusbar.showMessage('')
+        # self.parent.ui.statusbar.showMessage('')
 
 
 class StatusMessageHandler(object):
