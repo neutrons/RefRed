@@ -609,8 +609,8 @@ class OutputReducedData(QDialog):
         else:
             _sf = _data.sf_manual
 
-        y_array = np.array(y_array, dtype=np.float)
-        e_array = np.array(e_array, dtype=np.float)
+        y_array = np.array(y_array, dtype=float)
+        e_array = np.array(e_array, dtype=float)
         y_array *= _sf
         e_array *= _sf
 

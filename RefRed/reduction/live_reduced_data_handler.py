@@ -50,8 +50,8 @@ class LiveReducedDataHandler(object):
             _e_axis = _lconfig.e_axis_for_display.copy()
             sf = self.generate_selected_sf(lconfig=_lconfig)
 
-            _y_axis = np.array(_y_axis, dtype=np.float)
-            _e_axis = np.array(_e_axis, dtype=np.float)
+            _y_axis = np.array(_y_axis, dtype=float)
+            _e_axis = np.array(_e_axis, dtype=float)
 
             _y_axis = _y_axis * sf
             _e_axis = _e_axis * sf
@@ -127,8 +127,8 @@ class LiveReducedDataHandler(object):
         _e_axis = _lconfig.e_axis_for_display.copy()
         sf = self.generate_selected_sf(lconfig=_lconfig)
 
-        _y_axis = np.array(_y_axis, dtype=np.float)
-        _e_axis = np.array(_e_axis, dtype=np.float)
+        _y_axis = np.array(_y_axis, dtype=float)
+        _e_axis = np.array(_e_axis, dtype=float)
 
         _y_axis = _y_axis * sf
         _e_axis = _e_axis * sf
