@@ -14,7 +14,14 @@ import string
 SECOND = 1000  # 1000 miliseconds
 
 
-def test_sf_calculator(qtbot, data_server):
+# The run-set "184975-184989" overflows the RAM of the GitHub Actions runners
+test_cases = [("184977-184980", 4, "sf_export_script_184977_184980.py")]
+if not os.environ.get("GITHUB_ACTIONS", False):
+    test_cases.append(("184975-184989", 15, "sf_export_script_184975_184989.py"))
+
+
+@pytest.mark.parametrize("run_set, run_count, script_file", test_cases)
+def test_sf_calculator(qtbot, data_server, run_set, run_count, script_file):
     window_main = MainGui()
     qtbot.addWidget(window_main)
     window_main.launch_sf_calculator()
@@ -26,9 +33,9 @@ def test_sf_calculator(qtbot, data_server):
     q_rectangle = sfc.runSequenceLineEdit.geometry()
     qtbot.mouseClick(sfc.runSequenceLineEdit, QtCore.Qt.LeftButton, pos=q_rectangle.center())
     # enter run numbers
-    qtbot.keyClicks(sfc.runSequenceLineEdit, '184975-184989')
+    qtbot.keyClicks(sfc.runSequenceLineEdit, run_set)
     qtbot.keyClick(sfc.runSequenceLineEdit, QtCore.Qt.Key_Enter)
-    assert sfc.tableWidget.rowCount() == 15
+    assert sfc.tableWidget.rowCount() == run_count
 
     #
     # Generate the structure factors
@@ -40,6 +47,7 @@ def test_sf_calculator(qtbot, data_server):
             qtbot.keyClicks(line_edit, filename)
             qtbot.wait(200)
             qtbot.keyClick(line_edit, QtCore.Qt.Key_Enter)
+
         QtCore.QTimer.singleShot(lapse, handler)
 
     sfc._save_directory = "/tmp"  # force the location of saving directory
@@ -73,8 +81,9 @@ def test_sf_calculator(qtbot, data_server):
         This value depends on the path of the directory where the test is executed"""
         all = open(filename, "r").read().split('\n')[-1]
         return all.split('ScalingFactorFile')[0]
+
     cfg_file = os.path.join(sfc._save_directory, file_name)
-    assert to_compare(cfg_file) == to_compare(data_server.path_to("sf_export_script.py"))
+    assert to_compare(cfg_file) == to_compare(data_server.path_to(script_file))
     os.remove(cfg_file)
 
 
