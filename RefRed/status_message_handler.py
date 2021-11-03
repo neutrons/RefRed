@@ -3,7 +3,6 @@
 """
 import sys
 import time
-import sys
 from qtpy import QtCore
 from RefRed.utilities import get_index_free_thread
 
