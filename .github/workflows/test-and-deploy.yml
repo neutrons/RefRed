@@ -28,7 +28,7 @@ jobs:
       - name: mypy type annotations
         run: mypy RefRed test scripts
       - name: Run Tests
-        run: xvfb-run -a python -m pytest --cov=RefRed --cov-report=xml --cov-report=term test
+        run: xvfb-run -a python -m pytest -vv --cov=RefRed --cov-report=xml --cov-report=term test
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
 

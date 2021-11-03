@@ -1,12 +1,13 @@
 # package imports
-import os.path
-
 from RefRed.sf_preview.sf_preview import SFPreview
 from RefRed.main import MainGui
 
 # third party imports
 from qtpy import QtCore
 import pytest
+
+# standard imports
+import os
 
 
 SECOND = 1000  # 1000 miliseconds
