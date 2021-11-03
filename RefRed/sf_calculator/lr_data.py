@@ -229,19 +229,8 @@ class LRData(object):
         _tof_axis = nxs_histo.readX(0)[:].copy()
         nbr_tof = len(_tof_axis)
 
-        _y_axis = np.zeros((self.number_x_pixels, self.number_y_pixels, nbr_tof - 1))
-        _y_error_axis = np.zeros((self.number_x_pixels, self.number_y_pixels, nbr_tof - 1))
-
-        x_range = list(range(self.number_x_pixels))
-        y_range = list(range(self.number_y_pixels))
-
-        for x in x_range:
-            for y in y_range:
-                _index = int(self.number_y_pixels * x + y)
-                _tmp_data = nxs_histo.readY(_index)[:]
-                _y_axis[x, y, :] = _tmp_data
-                _tmp_error = nxs_histo.readE(_index)[:]
-                _y_error_axis[x, y, :] = _tmp_error
+        _y_axis = nxs_histo.extractY().reshape(self.number_x_pixels, self.number_y_pixels, nbr_tof - 1)
+        _y_error_axis = nxs_histo.extractE().reshape(self.number_x_pixels, self.number_y_pixels, nbr_tof - 1)
 
         return [_tof_axis, _y_axis, _y_error_axis]
 
@@ -249,6 +238,7 @@ class LRData(object):
         nxs_histo = Rebin(InputWorkspace=self.workspace, Params=self.binning, PreserveEvents=True)
         # retrieve 3D array
         [_tof_axis, Ixyt, Exyt] = self.getIxyt(nxs_histo)
+        nxs_histo.delete()
         self.tof_axis_auto_with_margin = _tof_axis
 
         # # keep only the low resolution range requested
@@ -269,12 +259,12 @@ class LRData(object):
         Iix = Ixy.sum(axis=1)
         Iyi = Iyt.sum(axis=1)
 
-        self.data = Ixyt.astype(float)  # 3D dataset
-        self.xydata = Ixy.transpose().astype(float)  # 2D dataset
-        self.ytofdata = Iyt.astype(float)  # 2D dataset
+        self.data = Ixyt  # 3D dataset
+        self.xydata = Ixy.transpose()  # 2D dataset
+        self.ytofdata = Iyt  # 2D dataset
 
-        self.countstofdata = Iit.astype(float)
-        self.countsxdata = Iix.astype(float)
-        self.ycountsdata = Iyi.astype(float)
+        self.countstofdata = Iit
+        self.countsxdata = Iix
+        self.ycountsdata = Iyi
 
         self.data_loaded = True
