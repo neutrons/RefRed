@@ -1,8 +1,8 @@
 """
     TODO: refactor this
 """
-import time
 import sys
+import time
 from qtpy import QtCore
 from RefRed.utilities import get_index_free_thread
 
