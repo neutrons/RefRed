@@ -13,7 +13,7 @@ def read_requirements_from_file(filepath):
     :param str filepath: Path to the file to read
     :return List[str]:
     """
-    with open(filepath, 'rU') as req_file:
+    with open(filepath, 'r') as req_file:
         return req_file.readlines()
 
 
@@ -22,29 +22,30 @@ install_requires = read_requirements_from_file(
 )
 
 # TODO can this be safely substituted with setuptools.find_packages?
-__packages__ = ['RefRed',
-                'RefRed.autopopulatemaintable',
-                'RefRed.configuration',
-                'RefRed.clocking_algorithms',
-                'RefRed.calculations',
-                'RefRed.config',
-                'RefRed.export',
-                'RefRed.gui_handling',
-                'RefRed.initialization',
-                'RefRed.interfaces',
-                'RefRed.load_reduced_data_set',
-                'RefRed.low_res_finder_algorithms',
-                'RefRed.metadata',
-                'RefRed.peak_finder_algorithms',
-                'RefRed.plot',
-                'RefRed.preview_config',
-                'RefRed.reduction',
-                'RefRed.reduction_table_handling',
-                'RefRed.settings',
-                'RefRed.sf_calculator',
-                'RefRed.sf_preview',
-                'RefRed.thread',
-                ]
+__packages__ = [
+    'RefRed',
+    'RefRed.autopopulatemaintable',
+    'RefRed.configuration',
+    'RefRed.clocking_algorithms',
+    'RefRed.calculations',
+    'RefRed.config',
+    'RefRed.export',
+    'RefRed.gui_handling',
+    'RefRed.initialization',
+    'RefRed.interfaces',
+    'RefRed.load_reduced_data_set',
+    'RefRed.low_res_finder_algorithms',
+    'RefRed.metadata',
+    'RefRed.peak_finder_algorithms',
+    'RefRed.plot',
+    'RefRed.preview_config',
+    'RefRed.reduction',
+    'RefRed.reduction_table_handling',
+    'RefRed.settings',
+    'RefRed.sf_calculator',
+    'RefRed.sf_preview',
+    'RefRed.thread',
+]
 
 setup(name='RefRed',
       version=versioneer.get_version(),
