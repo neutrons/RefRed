@@ -1,3 +1,0 @@
-ignore:
-  - "versioneer.py"
-  - "RefRed/_version.py"
