@@ -53,28 +53,16 @@ class PopupPlot1d(QDialog):
         self._open_instances.append(self)
         self.ui = load_ui("plot_dialog_refl_interface.ui", self)
 
-        self.setWindowTitle("Counts vs Y pixel (Jim and John views)")
+        self.setWindowTitle("Counts vs Y pixel")
         self.hide_and_format_invalid_widgets()
 
-        self.ui.plot_counts_vs_pixel.leaveFigure.connect(
-            self.leave_plot_counts_vs_pixel
-        )
-        self.ui.plot_counts_vs_pixel.toolbar.homeClicked.connect(
-            self.home_plot_counts_vs_pixel
-        )
-        self.ui.plot_counts_vs_pixel.toolbar.exportClicked.connect(
-            self.export_counts_vs_pixel
-        )
+        self.ui.plot_counts_vs_pixel.leaveFigure.connect(self.leave_plot_counts_vs_pixel)
+        self.ui.plot_counts_vs_pixel.toolbar.homeClicked.connect(self.home_plot_counts_vs_pixel)
+        self.ui.plot_counts_vs_pixel.toolbar.exportClicked.connect(self.export_counts_vs_pixel)
 
-        self.ui.plot_pixel_vs_counts.leaveFigure.connect(
-            self.leave_plot_pixel_vs_counts
-        )
-        self.ui.plot_pixel_vs_counts.toolbar.homeClicked.connect(
-            self.home_plot_pixel_vs_counts
-        )
-        self.ui.plot_pixel_vs_counts.toolbar.exportClicked.connect(
-            self.export_counts_vs_pixel
-        )
+        self.ui.plot_pixel_vs_counts.leaveFigure.connect(self.leave_plot_pixel_vs_counts)
+        self.ui.plot_pixel_vs_counts.toolbar.homeClicked.connect(self.home_plot_pixel_vs_counts)
+        self.ui.plot_pixel_vs_counts.toolbar.exportClicked.connect(self.export_counts_vs_pixel)
 
         _new_detector_geometry_flag = self.data.new_detector_geometry_flag
         if not _new_detector_geometry_flag:
@@ -327,12 +315,8 @@ class PopupPlot1d(QDialog):
         ui_plot1.canvas.ax.axhline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
 
         if self.is_data:
-            ui_plot1.canvas.ax.axhline(
-                clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR
-            )
-            ui_plot1.canvas.ax.axhline(
-                clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR
-            )
+            ui_plot1.canvas.ax.axhline(clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
+            ui_plot1.canvas.ax.axhline(clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
 
         if back_flag:
             ui_plot1.canvas.ax.axhline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
@@ -377,12 +361,8 @@ class PopupPlot1d(QDialog):
         ui_plot2.canvas.ax.axvline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
 
         if self.is_data:
-            ui_plot2.canvas.ax.axvline(
-                clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR
-            )
-            ui_plot2.canvas.ax.axvline(
-                clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR
-            )
+            ui_plot2.canvas.ax.axvline(clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
+            ui_plot2.canvas.ax.axvline(clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
 
         if back_flag:
             ui_plot2.canvas.ax.axvline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
