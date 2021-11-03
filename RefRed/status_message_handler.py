@@ -2,6 +2,7 @@
     TODO: refactor this
 """
 import time
+import sys
 from qtpy import QtCore
 from RefRed.utilities import get_index_free_thread
 
@@ -10,9 +11,15 @@ class StatusMessageThreaded(QtCore.QThread):
     def setup(self, parent):
         self.parent = parent
 
+    # TODO solve the race condition (see comment after statement "except RuntimeError")
     def run(self):
         time.sleep(5)
-        self.parent.ui.statusbar.showMessage('')
+        try:
+            self.parent.ui.statusbar.showMessage('')
+        except RuntimeError:
+            # race condition: pytest-qt fixture qtbot kills the main window but fails to kill this thread.
+            # As a result, after five seconds there's no self.parent and the previous line raises
+            sys.stderr.write("Cannot find main GUI, no status bar to update.\n")
 
 
 class StatusMessageHandler(object):

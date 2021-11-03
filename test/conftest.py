@@ -1,3 +1,6 @@
+# package imports
+from RefRed.main import MainGui
+
 # 3rd-party imports
 from mantid.simpleapi import config
 import pytest
@@ -71,3 +74,41 @@ def qfiledialog_opensave(qtbot):
         qtbot.mouseClick(browse_button, QtCore.Qt.LeftButton)  # open the QFileDialog
 
     return _qfiledialog_opensave
+
+
+@pytest.fixture(scope="function")
+def main_gui(qtbot, data_server):
+    r"""Spawn a MainGui object by loading a configuration file
+    After loading the configuration, the first run-number will be plotted
+
+    :configuration : absolute path to XML configuration file. Default is test/data/REF_L_188299_configuration.xml
+    :show: whether to show the main window
+    :return MainGUI: main window object
+    """
+
+    def _main_gui(configuration: str = data_server.path_to("REF_L_188299_configuration.xml"), show: bool = False):
+        SECOND = 1000  # in miliseconds
+        window = MainGui()
+        qtbot.addWidget(window)
+        if show:
+            window.show()
+        window.path_config = os.path.dirname(configuration)
+
+        def qfiledialog_handler():
+            def handler():
+                dialog = window.findChild(QtWidgets.QFileDialog)
+                line_edit = dialog.findChild(QtWidgets.QLineEdit)
+                qtbot.keyClicks(line_edit, os.path.basename(configuration))
+                qtbot.wait(0.1 * SECOND)
+                qtbot.keyClick(line_edit, QtCore.Qt.Key_Enter)
+
+            QtCore.QTimer.singleShot(0.5 * SECOND, handler)  # wait for `lapse` time, then execute `handler`
+
+        qfiledialog_handler()
+        window.load_configuration()
+        # plot the first run number
+        checkbox = window.ui.reductionTable.cellWidget(0, 0)
+        checkbox.click()
+        return window
+
+    return _main_gui
