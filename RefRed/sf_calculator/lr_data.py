@@ -83,8 +83,8 @@ class LRData(object):
             autotmin = tmin
             autotmax = tmax
         else:
-            autotmin = np.float(self.tof_range[0])
-            autotmax = np.float(self.tof_range[1])
+            autotmin = float(self.tof_range[0])
+            autotmax = float(self.tof_range[1])
 
         self.tof_range_auto = [autotmin, autotmax]  # microS
         self.tof_range_auto_with_margin = [tmin, tmax]  # microS
@@ -157,9 +157,9 @@ class LRData(object):
         return np.meshgrid(self.tof, self.x)
 
     def calculate_q_range(self):
-        '''
+        """
         calculate q range
-        '''
+        """
         theta_rad = self.theta
         dMD = self.dMD
 
@@ -177,9 +177,9 @@ class LRData(object):
         return [q_min, q_max]
 
     def calculate_lambda_range(self, tof_range=None):
-        '''
+        """
         calculate lambda range
-        '''
+        """
         _const = PLANCK_CONSTANT / (NEUTRON_MASS * self.dMD)
 
         # retrieve tof from GUI
@@ -197,9 +197,9 @@ class LRData(object):
         self.lambda_range = [lambda_min, lambda_max]
 
     def calculate_theta(self, with_offset=True):
-        '''
+        """
         calculate theta
-        '''
+        """
         tthd_value = self.tthd
         tthd_units = self.tthd_units
         thi_value = self.thi
@@ -223,9 +223,9 @@ class LRData(object):
         return theta + angle_offset_deg * math.pi / 180.0
 
     def getIxyt(self, nxs_histo):
-        '''
+        """
         will format the histogrma NeXus to retrieve the full 3D data set
-        '''
+        """
         _tof_axis = nxs_histo.readX(0)[:].copy()
         nbr_tof = len(_tof_axis)
 
