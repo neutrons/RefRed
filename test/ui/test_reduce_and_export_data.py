@@ -1,6 +1,7 @@
 from RefRed.main import MainGui
 from qtpy import QtCore, QtWidgets
 import os
+import pytest
 from unittest import mock
 import numpy as np
 
@@ -11,8 +12,9 @@ wait = 200
 def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server):
     # set mock return values for QFileDialog
     QFileDialog_mock().exec_.return_value = True
-    QFileDialog_mock().selectedFiles.return_value = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                                                 "../data/REF_L_188298_auto_template.xml")
+    QFileDialog_mock().selectedFiles.return_value = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "../data/REF_L_188298_auto_template.xml"
+    )
     QFileDialog_mock.getSaveFileName.return_value = (str(tmp_path / "output.txt"), "")
     QFileDialog_mock.getExistingDirectory.return_value = str(tmp_path)
 
@@ -33,9 +35,7 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server):
     qtbot.wait(wait)
 
     # Press button to plot first row of data
-    qtbot.mouseClick(window.ui.reductionTable.cellWidget(0, 0),
-                     QtCore.Qt.LeftButton,
-                     pos=QtCore.QPoint(10, 9))
+    qtbot.mouseClick(window.ui.reductionTable.cellWidget(0, 0), QtCore.Qt.LeftButton, pos=QtCore.QPoint(10, 9))
     qtbot.wait(wait)
 
     # Metadata table
@@ -80,8 +80,7 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server):
 
     # Change from Absolute Normalization to Auto. Stitching.
     (tmp_path / "output.txt").unlink()
-    qtbot.mouseClick(window.ui.auto_stitching_button, QtCore.Qt.LeftButton,
-                     pos=QtCore.QPoint(10, 9))
+    qtbot.mouseClick(window.ui.auto_stitching_button, QtCore.Qt.LeftButton, pos=QtCore.QPoint(10, 9))
     qtbot.wait(wait)
 
     export_ascii(qtbot, window)
@@ -103,8 +102,9 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server):
     qtbot.wait(wait)
 
     reduction_script = open(tmp_path / "output.txt").readlines()
-    expected_script = open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                        "../data/REFL_188298_data_reduction_script.py")).readlines()
+    expected_script = open(
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "../data/REFL_188298_data_reduction_script.py")
+    ).readlines()
 
     for value, expected in zip(reduction_script, expected_script):
         if value.startswith('#'):
@@ -114,18 +114,24 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server):
 
 def compare_results(results_file, expected_results_file, tmp_path):
     results = open(tmp_path / results_file).readlines()
-    expected_results = open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                         f'../data/{expected_results_file}')).readlines()
+    expected_results = open(
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), f'../data/{expected_results_file}')
+    ).readlines()
 
     for value, expected in zip(results, expected_results):
         if value.startswith("# Reduction time") or value.startswith("# Mantid version") or "# Date" in value:
             continue
 
-        if value.startswith('#'):
+        if value.startswith('# # 188'):
+            value_arr = value.replace('#', '').strip().split()
+            expected_arr = expected.replace('#', '').strip().split()
+            for i in range(2):  # DataRun and NormRun
+                assert value_arr[i] == expected_arr[i]
+            np.testing.assert_allclose(np.array(value_arr[2:], dtype=float), np.array(expected_arr[2:], dtype=float))
+        elif value.startswith('#'):
             assert value.strip() == expected.strip()
         else:
-            np.testing.assert_allclose(np.array(value.split(), dtype=float),
-                                       np.array(expected.split(), dtype=float))
+            np.testing.assert_allclose(np.array(value.split(), dtype=float), np.array(expected.split(), dtype=float))
 
 
 def export_ascii(qtbot, window, multiple=False):
@@ -145,3 +151,7 @@ def export_ascii(qtbot, window, multiple=False):
     # press "Create Ascii File ..."
     qtbot.mouseClick(outputReducedDataDialog.ui.createAsciiButton, QtCore.Qt.LeftButton)
     qtbot.wait(wait)
+
+
+if __name__ == '__main__':
+    pytest.main([__file__])
