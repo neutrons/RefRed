@@ -80,7 +80,8 @@ def qfiledialog_opensave(qtbot):
 def main_gui(qtbot, data_server):
     r"""Spawn a MainGui object by loading a configuration file
     After loading the configuration, the first run-number will be plotted
-
+    Usage:
+        main_gui(configuration=data_server.path_to("some_conf.xml"), show=False)
     :configuration : absolute path to XML configuration file. Default is test/data/REF_L_188299_configuration.xml
     :show: whether to show the main window
     :return MainGUI: main window object
