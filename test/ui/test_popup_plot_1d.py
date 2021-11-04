@@ -1,6 +1,5 @@
 # package imports
 from RefRed.plot.popup_plot_1d import PopupPlot1d
-from RefRed.constants import SECOND
 
 # third party imports
 import pytest
@@ -55,8 +54,11 @@ def test_popup_plot_1d(qtbot, main_gui):
     assert_boundary("background left boundary", popup.ui.jim_back1, 127, old_value=126)
     assert_boundary("background right boundary", popup.ui.jim_back2, 145, old_value=144)
 
-    # disable background options
-    qtbot.wait(SECOND)
+    # disable/enable background options. Assumed popup.ui.jim_back_flag is initially checked
+    for status in [False, True]:
+        qtbot.mouseClick(popup.ui.jim_back_flag, QtCore.Qt.LeftButton)
+        assert popup.ui.jim_back1.isEnabled() is status
+        assert popup.ui.jim_back2.isEnabled() is status
 
 
 if __name__ == '__main__':
