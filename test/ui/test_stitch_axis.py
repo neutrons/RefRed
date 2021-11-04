@@ -1,4 +1,5 @@
 import pytest
+import numpy as np
 from qtpy import QtCore, QtWidgets
 
 
@@ -21,6 +22,7 @@ def test_stitch_plot(qtbot, main_gui, data_server):
 
     #
     stitch_plot = main_window.findChild(QtWidgets.QWidget, "data_stitching_plot")
+    ax = stitch_plot.canvas.ax
     # mimic right click on the x-axis
     stitch_plot._singleClick(True, True, 0, 0)
     qtbot.wait(wait)
@@ -30,11 +32,13 @@ def test_stitch_plot(qtbot, main_gui, data_server):
     xmin_line_edit.setText("0.01")
     popup.x_min_event()
     qtbot.wait(wait)
+    np.testing.assert_equal(0.01, ax.get_xlim()[0])
     # - adjust xmax
     xmax_line_edit = popup.findChild(QtWidgets.QLineEdit, "x_max_value")
     xmax_line_edit.setText("0.03")
     popup.x_max_event()
     qtbot.wait(wait)
+    np.testing.assert_equal(0.03, ax.get_xlim()[1])
     # - toggle back to auto scale
     popup.x_auto_rescale_event()
     qtbot.wait(wait)
@@ -49,10 +53,12 @@ def test_stitch_plot(qtbot, main_gui, data_server):
     popup.ui.y_min_value.setText("0.3")
     popup.y_min_event()
     qtbot.wait(wait)
+    np.testing.assert_equal(0.3, ax.get_ylim()[0])
     # - adjust ymax
     popup.ui.y_max_value.setText("14.0")
     popup.y_max_event()
     qtbot.wait(wait)
+    np.testing.assert_equal(14.0, ax.get_ylim()[1])
     # - toggle back to auto scale
     popup.y_auto_rescale_event()
     qtbot.wait(wait)
