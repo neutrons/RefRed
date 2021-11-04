@@ -74,6 +74,8 @@ class NavigationToolbar(NavigationToolbar2QT):
     A small change to the original navigation toolbar.
     """
 
+    toolitems = []
+
     _auto_toggle = False
     logtogx = QtCore.Signal(str)
     logtogy = QtCore.Signal(str)
@@ -125,13 +127,11 @@ class NavigationToolbar(NavigationToolbar2QT):
         a = self.addAction(icon, "Pan", self.pan)
         a.setToolTip("Pan axes with left mouse, zoom with right")
         a.setCheckable(True)
-        self._actions["pan"] = a
 
         icon = getIcon("zoom-select.png")
         a = self.addAction(icon, "Zoom", self.zoom)
         a.setToolTip("Zoom to rectangle")
         a.setCheckable(True)
-        self._actions["zoom"] = a
 
         self.addSeparator()
 
@@ -284,7 +284,7 @@ class NavigationToolbar(NavigationToolbar2QT):
                     "Error saving file",
                     str(e),
                     QtWidgets.QMessageBox.Ok,
-                    QtGui.QMessageBox.NoButton,
+                    QtWidgets.QMessageBox.NoButton,
                 )
 
     def toggle_ylog(self, *args):

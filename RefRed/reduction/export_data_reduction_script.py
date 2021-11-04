@@ -1,6 +1,6 @@
 import time
 import os
-from qtpy.QtWidgets import QFileDialog
+from qtpy import QtWidgets
 from pathlib import Path
 from RefRed.reduction.individual_reduction_settings_handler import (
     IndividualReductionSettingsHandler,
@@ -56,7 +56,7 @@ class ExportDataReductionScript(object):
         path = Path(parent.path_ascii)
         default_filename = path / f"REFL_{run_number}_data_reduction_script.py"
         caption = "Python Script"
-        filename, _ = QFileDialog.getSaveFileName(
+        filename, _ = QtWidgets.QFileDialog.getSaveFileName(
             parent,
             caption,
             str(default_filename),
