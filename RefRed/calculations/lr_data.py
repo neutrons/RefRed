@@ -1,6 +1,7 @@
 import numpy as np
 import logging
 import math
+
 # import os
 import gc
 
@@ -124,8 +125,8 @@ class LRData(object):
         tof_coeff = 0.5 * 60 / self.frequency
 
         if lconfig is not None:
-            autotmin = np.float(lconfig.tof_range[0])
-            autotmax = np.float(lconfig.tof_range[1])
+            autotmin = float(lconfig.tof_range[0])
+            autotmax = float(lconfig.tof_range[1])
         else:
             if self.is_better_chopper_coverage:
                 autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - tof_coeff_narrow) * 1e-4
@@ -203,26 +204,26 @@ class LRData(object):
             # if we loaded a config that does not have the clocking info, we will have to retrieve once
             # everything has been loaded (before display)
             if lconfig.data_clocking[0] != '':
-                self.clocking = [np.float(lconfig.data_clocking[0]), np.float(lconfig.data_clocking[1])]
+                self.clocking = [float(lconfig.data_clocking[0]), float(lconfig.data_clocking[1])]
             else:
                 clocking_pf = LowResFinder(list(range(len(self.ycountsdata))), self.ycountsdata)
                 [clocking1, clocking2] = clocking_pf.get_low_res()
                 self.clocking = [str(clocking1), str(clocking2)]
 
-            self.tof_auto_flag = np.bool(lconfig.tof_auto_flag)
+            self.tof_auto_flag = bool(lconfig.tof_auto_flag)
 
             if is_data:
-                self.peak = [np.int(lconfig.data_peak[0]), np.int(lconfig.data_peak[1])]
-                self.back = [np.int(lconfig.data_back[0]), np.int(lconfig.data_back[1])]
-                self.low_res = [np.int(lconfig.data_low_res[0]), np.int(lconfig.data_low_res[1])]
-                self.low_res_flag = np.bool(lconfig.data_low_res_flag)
-                self.back_flag = np.bool(lconfig.data_back_flag)
+                self.peak = [int(lconfig.data_peak[0]), int(lconfig.data_peak[1])]
+                self.back = [int(lconfig.data_back[0]), int(lconfig.data_back[1])]
+                self.low_res = [int(lconfig.data_low_res[0]), int(lconfig.data_low_res[1])]
+                self.low_res_flag = bool(lconfig.data_low_res_flag)
+                self.back_flag = bool(lconfig.data_back_flag)
             else:
-                self.peak = [np.int(lconfig.norm_peak[0]), np.int(lconfig.norm_peak[1])]
-                self.back = [np.int(lconfig.norm_back[0]), np.int(lconfig.norm_back[1])]
-                self.low_res = [np.int(lconfig.norm_low_res[0]), np.int(lconfig.norm_low_res[1])]
-                self.low_res_flag = np.bool(lconfig.norm_low_res_flag)
-                self.back_flag = np.bool(lconfig.norm_back_flag)
+                self.peak = [int(lconfig.norm_peak[0]), int(lconfig.norm_peak[1])]
+                self.back = [int(lconfig.norm_back[0]), int(lconfig.norm_back[1])]
+                self.low_res = [int(lconfig.norm_low_res[0]), int(lconfig.norm_low_res[1])]
+                self.low_res_flag = bool(lconfig.norm_low_res_flag)
+                self.back_flag = bool(lconfig.norm_back_flag)
 
     # Properties for easy data access
     # return the size of the data stored in memory for this dataset
@@ -260,9 +261,9 @@ class LRData(object):
         return np.meshgrid(self.tof, self.x)
 
     def calculate_q_range(self):
-        '''
+        """
         calculate q range
-        '''
+        """
         [lambda_min, lambda_max] = self.lambda_range
         _const = float(4) * math.pi
         theta_rad = convert_angle(angle=self.incident_angle)
@@ -274,9 +275,9 @@ class LRData(object):
         self.q_range = [q_min, q_max]
 
     def calculate_lambda_range(self, tof_range=None):
-        '''
+        """
         calculate lambda range
-        '''
+        """
         _const = PLANCK_CONSTANT / (NEUTRON_MASS * self.dMD)
 
         # retrieve tof from GUI
@@ -294,9 +295,9 @@ class LRData(object):
         self.lambda_range = [lambda_min, lambda_max]
 
     def calculate_theta(self, with_offset=True):
-        '''
+        """
         calculate theta
-        '''
+        """
         tthd_value = self.tthd
         thi_value = self.thi
 
@@ -314,9 +315,9 @@ class LRData(object):
         return theta
 
     def getIxyt(self, nxs_histo):
-        '''
+        """
         will format the histogrma NeXus to retrieve the full 3D data set
-        '''
+        """
         self._tof_axis = nxs_histo.readX(0)[:].copy()
         nbr_tof = len(self._tof_axis)
 
@@ -373,9 +374,9 @@ class LRData(object):
         self.data_loaded = True
 
     def is_nexus_taken_after_refDate(self):
-        '''
+        """
         This function parses the output.date and returns true if this date is after the ref date
-        '''
+        """
         ref_date = constants.new_geometry_detector_date
         nexus_date = self.date
         nexus_date_acquistion = nexus_date.split('T')[0]
