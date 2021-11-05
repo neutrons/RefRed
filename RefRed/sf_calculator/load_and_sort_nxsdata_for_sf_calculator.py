@@ -48,6 +48,7 @@ class LoadAndSortNXSDataForSFcalculator(object):
                 workspace = api.LoadEventNexus(
                     Filename=_full_file_name, OutputWorkspace="__data_file_%s" % _runs, MetaDataOnly=False
                 )
+                workspace = api.CompressEvents(InputWorkspace=workspace, OutputWorkspace=workspace)
                 _data = LRData(workspace, read_options=self.read_options)
                 if _data is not None:
                     self.list_NXSData.append(_data)
