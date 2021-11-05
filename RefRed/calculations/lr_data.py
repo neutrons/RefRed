@@ -2,9 +2,6 @@ import numpy as np
 import logging
 import math
 
-# import os
-import gc
-
 from mantid.api import mtd
 from mantid.simpleapi import Rebin
 from RefRed.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
@@ -50,20 +47,13 @@ class LRData(object):
         self.parent = parent
         self._tof_axis = []
         self.Ixyt = []
-        self.Exyt = []
 
-        self.data = []
-        self.xydata = []
-        self.ytofdata = []
-
-        self.countstofdata = []
         self.countxdata = []
         self.ycountsdata = []
+        self.workspace_name = str(workspace)
+        workspace = mtd[self.workspace_name]  # convert to workspace pointer
 
-        self.workspace = mtd[workspace]
-        self.workspace_name = workspace
-
-        mt_run = self.workspace.getRun()
+        mt_run = workspace.getRun()
 
         self.ipts = mt_run.getProperty('experiment_identifier').value
         self.run_number = mt_run.getProperty('run_number').value
@@ -82,7 +72,7 @@ class LRData(object):
         self.S1W = mt_run.getProperty('S1HWidth').value[0]
         self.S1H = mt_run.getProperty('S1VHeight').value[0]
         self.parent.current_ipts = mt_run.getProperty('experiment_identifier').value
-        self.total_counts = self.workspace.getNumberEvents()
+        self.total_counts = workspace.getNumberEvents()
 
         try:
             self.SiW = mt_run.getProperty('SiHWidth').value[0]
@@ -96,19 +86,19 @@ class LRData(object):
         self.attenuatorNbr = mt_run.getProperty('vATT').value[0] - 1
         self.date = mt_run.getProperty('run_start').value
 
-        sample = self.workspace.getInstrument().getSample()
-        source = self.workspace.getInstrument().getSource()
+        sample = workspace.getInstrument().getSample()
+        source = workspace.getInstrument().getSource()
         self.dMS = sample.getDistance(source)
 
         # create array of distances pixel->sample
-        self.number_x_pixels = int(self.workspace.getInstrument().getNumberParameter("number-of-x-pixels")[0])  # 256
-        self.number_y_pixels = int(self.workspace.getInstrument().getNumberParameter("number-of-y-pixels")[0])
+        self.number_x_pixels = int(workspace.getInstrument().getNumberParameter("number-of-x-pixels")[0])  # 256
+        self.number_y_pixels = int(workspace.getInstrument().getNumberParameter("number-of-y-pixels")[0])
 
         dPS_array = np.zeros((self.number_x_pixels, self.number_y_pixels))
         for x in range(self.number_y_pixels):
             for y in range(self.number_x_pixels):
                 _index = self.number_x_pixels * x + y
-                detector = self.workspace.getDetector(_index)
+                detector = workspace.getDetector(_index)
                 dPS_array[y][x] = sample.getDistance(detector)
 
         # distance sample->center of detector
@@ -314,39 +304,26 @@ class LRData(object):
 
         return theta
 
-    def getIxyt(self, nxs_histo):
+    def _getIxyt(self, nxs_histo):
         """
         will format the histogrma NeXus to retrieve the full 3D data set
         """
         self._tof_axis = nxs_histo.readX(0)[:].copy()
         nbr_tof = len(self._tof_axis)
 
-        Ixyt = np.zeros((self.number_x_pixels, self.number_y_pixels, nbr_tof - 1))
-        Exyt = np.zeros((self.number_x_pixels, self.number_y_pixels, nbr_tof - 1))
-
-        x_range = range(self.number_x_pixels)
-        y_range = range(self.number_y_pixels)
-
-        for x in x_range:
-            for y in y_range:
-                _index = int(self.number_y_pixels * x + y)
-                Ixyt[x, y, :] = nxs_histo.readY(_index)[:].copy()
-                Exyt[x, y, :] = nxs_histo.readE(_index)[:].copy()
-        gc.collect()
-        self.Ixyt = Ixyt
-        self.Exyt = Exyt
+        self.Ixyt = nxs_histo.extractY().reshape(self.number_x_pixels, self.number_y_pixels, nbr_tof - 1)
 
     def read_data(self):
         output_workspace_name = self.workspace_name + '_rebin'
         nxs_histo = Rebin(
-            InputWorkspace=self.workspace,
+            InputWorkspace=self.workspace_name,
             OutputWorkspace=output_workspace_name,
             Params=self.binning,
             PreserveEvents=True,
         )
         # retrieve 3D array
-        nxs_histo = mtd[output_workspace_name]
-        self.getIxyt(nxs_histo)
+        self._getIxyt(nxs_histo)
+        nxs_histo.delete()
         self.tof_axis_auto_with_margin = self._tof_axis
 
         # # keep only the low resolution range requested
@@ -355,21 +332,14 @@ class LRData(object):
 
         # keep only low resolution range defined
         self.Ixyt = self.Ixyt[from_pixel:to_pixel, :, :]
-        self.Exyt = self.Exyt[from_pixel:to_pixel, :, :]
 
         # create projections for the 2D datasets
-        Ixy = self.Ixyt.sum(axis=2)
-        Iyt = self.Ixyt.sum(axis=0)
-        Iit = Iyt.sum(axis=0)
-        Iix = Ixy.sum(axis=1)
-        Iyi = Iyt.sum(axis=1)
+        self.xydata = self.Ixyt.sum(axis=2).transpose()  # 2D dataset
+        self.ytofdata = self.Ixyt.sum(axis=0)  # 2D dataset
 
-        self.xydata = Ixy.transpose().astype(float)  # 2D dataset
-        self.ytofdata = Iyt.astype(float)  # 2D dataset
-
-        self.countstofdata = Iit.astype(float)
-        self.countsxdata = Iix.astype(float)
-        self.ycountsdata = Iyi.astype(float)
+        self.countstofdata = self.Ixyt.sum(axis=0).sum(axis=0)
+        self.countsxdata = self.ytofdata.sum(axis=1)
+        self.ycountsdata = self.ytofdata.sum(axis=1)
 
         self.data_loaded = True
 

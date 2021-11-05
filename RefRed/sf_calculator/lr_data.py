@@ -23,9 +23,8 @@ class LRData(object):
     is_better_chopper_coverage = True
 
     def __init__(self, workspace, read_options):
-        self.workspace = workspace
         self.read_options = read_options
-        mt_run = self.workspace.getRun()
+        mt_run = workspace.getRun()
 
         self.run_number = mt_run.getProperty('run_number').value
 
@@ -51,19 +50,19 @@ class LRData(object):
         self.full_file_name = mt_run.getProperty('Filename').value[0]
         self.filename = os.path.basename(self.full_file_name)
 
-        sample = self.workspace.getInstrument().getSample()
-        source = self.workspace.getInstrument().getSource()
+        sample = workspace.getInstrument().getSample()
+        source = workspace.getInstrument().getSource()
         self.dMS = sample.getDistance(source)
 
         # create array of distances pixel->sample
-        self.number_x_pixels = int(self.workspace.getInstrument().getNumberParameter("number-of-x-pixels")[0])  # 256
-        self.number_y_pixels = int(self.workspace.getInstrument().getNumberParameter("number-of-y-pixels")[0])
+        self.number_x_pixels = int(workspace.getInstrument().getNumberParameter("number-of-x-pixels")[0])  # 256
+        self.number_y_pixels = int(workspace.getInstrument().getNumberParameter("number-of-y-pixels")[0])
 
         dPS_array = np.zeros((self.number_x_pixels, self.number_y_pixels))
         for x in range(self.number_y_pixels):
             for y in range(self.number_x_pixels):
                 _index = self.number_x_pixels * x + y
-                detector = self.workspace.getDetector(_index)
+                detector = workspace.getDetector(_index)
                 dPS_array[y][x] = sample.getDistance(detector)
 
         # distance sample->center of detector
@@ -109,7 +108,7 @@ class LRData(object):
         self.tof_auto_flag = True
         self.new_detector_geometry_flag = True
         self.data_loaded = False
-        self.read_data()
+        self._read_data(workspace)
 
         if self.read_options['is_auto_peak_finder']:
             pf = PeakFinderDerivation(list(range(len(self.ycountsdata))), self.ycountsdata)
@@ -130,10 +129,6 @@ class LRData(object):
     @property
     def ydata(self):
         return self.xydata.mean(axis=1)
-
-    @property
-    def tofdata(self):
-        return self.xtofdata.mean(axis=0)
 
     # coordinates corresponding to the data items
     @property
@@ -222,7 +217,7 @@ class LRData(object):
         angle_offset_deg = angle_offset
         return theta + angle_offset_deg * math.pi / 180.0
 
-    def getIxyt(self, nxs_histo):
+    def _getIxyt(self, nxs_histo):
         """
         will format the histogrma NeXus to retrieve the full 3D data set
         """
@@ -230,14 +225,13 @@ class LRData(object):
         nbr_tof = len(_tof_axis)
 
         _y_axis = nxs_histo.extractY().reshape(self.number_x_pixels, self.number_y_pixels, nbr_tof - 1)
-        _y_error_axis = nxs_histo.extractE().reshape(self.number_x_pixels, self.number_y_pixels, nbr_tof - 1)
 
-        return [_tof_axis, _y_axis, _y_error_axis]
+        return [_tof_axis, _y_axis]
 
-    def read_data(self):
-        nxs_histo = Rebin(InputWorkspace=self.workspace, Params=self.binning, PreserveEvents=True)
+    def _read_data(self, workspace):
+        nxs_histo = Rebin(InputWorkspace=workspace, Params=self.binning, PreserveEvents=True)
         # retrieve 3D array
-        [_tof_axis, Ixyt, Exyt] = self.getIxyt(nxs_histo)
+        [_tof_axis, Ixyt] = self._getIxyt(nxs_histo)
         nxs_histo.delete()
         self.tof_axis_auto_with_margin = _tof_axis
 
@@ -246,25 +240,7 @@ class LRData(object):
         to_pixel = self.number_x_pixels - 1
 
         # keep only low resolution range defined
-        Ixyt = Ixyt[from_pixel:to_pixel, :, :]
-        Exyt = Exyt[from_pixel:to_pixel, :, :]
-
-        self.Ixyt = Ixyt
-        self.Exyt = Exyt
-
         # create projections for the 2D datasets
-        Ixy = Ixyt.sum(axis=2)
-        Iyt = Ixyt.sum(axis=0)
-        Iit = Iyt.sum(axis=0)
-        Iix = Ixy.sum(axis=1)
-        Iyi = Iyt.sum(axis=1)
-
-        self.data = Ixyt  # 3D dataset
-        self.xydata = Ixy.transpose()  # 2D dataset
-        self.ytofdata = Iyt  # 2D dataset
-
-        self.countstofdata = Iit
-        self.countsxdata = Iix
-        self.ycountsdata = Iyi
+        self.xydata = Ixyt[from_pixel:to_pixel, :, :].sum(axis=2).transpose()  # 2D dataset
 
         self.data_loaded = True
