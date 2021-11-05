@@ -58,15 +58,12 @@ class LRData(object):
         self.number_x_pixels = int(workspace.getInstrument().getNumberParameter("number-of-x-pixels")[0])  # 256
         self.number_y_pixels = int(workspace.getInstrument().getNumberParameter("number-of-y-pixels")[0])
 
-        dPS_array = np.zeros((self.number_x_pixels, self.number_y_pixels))
-        for x in range(self.number_y_pixels):
-            for y in range(self.number_x_pixels):
-                _index = self.number_x_pixels * x + y
-                detector = workspace.getDetector(_index)
-                dPS_array[y][x] = sample.getDistance(detector)
-
         # distance sample->center of detector
-        self.dSD = dPS_array[int(self.number_x_pixels / 2), int(self.number_y_pixels / 2)]
+        x_index, y_index = int(self.number_x_pixels / 2), int(self.number_y_pixels / 2)
+        detector = workspace.getDetector(self.number_x_pixels * x_index + y_index)
+        self.dSD = sample.getDistance(detector)
+        del x_index, y_index, detector
+
         # distance source->center of detector
         self.dMD = self.dSD + self.dMS
 
