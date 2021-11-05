@@ -8,7 +8,6 @@ import numpy as np
 wait = 200
 
 
-@pytest.mark.skip(reason="too much memory usage")
 @mock.patch("qtpy.QtWidgets.QFileDialog")
 def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server):
     # set mock return values for QFileDialog
