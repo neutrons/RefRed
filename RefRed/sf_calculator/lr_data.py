@@ -240,7 +240,11 @@ class LRData(object):
         to_pixel = self.number_x_pixels - 1
 
         # keep only low resolution range defined
+        Ixyt = Ixyt[from_pixel:to_pixel, :, :]
+
         # create projections for the 2D datasets
-        self.xydata = Ixyt[from_pixel:to_pixel, :, :].sum(axis=2).transpose()  # 2D dataset
+        self.xydata = Ixyt.sum(axis=2).transpose()  # 2D dataset
+        self.ytofdata = Ixyt.sum(axis=0)  # 2D dataset
+        self.ycountsdata = Ixyt.sum(axis=0).sum(axis=1)
 
         self.data_loaded = True
