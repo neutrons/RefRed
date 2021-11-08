@@ -12,16 +12,35 @@ log and by doing so you agree to the above.
 
 Getting access to the main project
 ----------------------------------
+
 Direct commit access to the project is currently restricted to core developers.
-All other contributions should be done through
-`Merge Requests <https://docs.gitlab.com/ee/user/project/merge_requests/getting_started.html>`_.
+All other contributions should be done through pull requests using the standard github mechanisms.
 
 Creating a Local Environment for Development
 --------------------------------------------
 
-[To be completed]
+This project requires the `mantid-framework <https://anaconda.org/mantid/mantid-framework>`_ conda package, as well as python3.6+ and qt5.
+These can be installed using the commands
 
-* This project is configured to use the pre-commit framework. Please `configure the git hook <https://pre-commit.com/#3-install-the-git-hook-scripts>`_ by running ``pre-commit install``.
+.. code-block:: bash
+
+   conda create -n refred -c mantid/label/nightly mantid-framework --file requirements.txt --file requirements_dev.txt
+   conda activate refred
+
+Then the testsuite can be run via
+
+.. code-block:: bash
+
+   pytest --cov
+
+or ``python path/to/testfile.py`` to run an individual test.
+
+The main gui can be started via
+
+.. code-block:: bash
+
+   python scripts/start_refred.py
+
 
 Coding
 ------
@@ -33,9 +52,11 @@ A few markers:
 * `Numpy style <https://numpydoc.readthedocs.io/en/latest/format.html>`_ for docstrings
 * (recommended) `type hints <https://docs.python.org/3/library/typing.html>`_ for function signatures and return values
 
-For style details, consult the `PEP8 standard <https://www.python.org/dev/peps/pep-0008/>`_
+For style details, consult the `PEP8 standard <https://www.python.org/dev/peps/pep-0008/>`_.
+This is enforced through using the `black formatter <https://black.readthedocs.io/en/stable/>`_.
 
-It is highly recommended that you use the automatic code formatter by running once the command on your local repo:
+It is highly recommended that you use the automatic code formatting and some static analysis enabling `pre-commit <https://pre-commit.com>`_.
+Do so by running the following command once on your local clone:
 
 .. code-block:: bash
 
@@ -46,6 +67,12 @@ that `pre-commit` may change some of the files to be committed. When this happen
 by re-staging the files, then committing again. This gives you a chance to review the changes brought about by
 `pre-commit`.
 
+Testing Policy
+--------------
+
+The RefRed project make use of automated testing.
+Pull requests should bear this in mind and note that requests that increase the test coverage are heavily preferred.
+Requests will be automatically annotated with code coverage results to aid the contributor and development team.
 
 Contacting the Team
 -------------------
