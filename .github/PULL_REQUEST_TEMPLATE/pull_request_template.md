@@ -5,3 +5,5 @@ Fixes #
   -
   -
   -
+
+See [CONTRIBUTING.rst](CONTRIBUTING.rst>).
