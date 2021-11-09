@@ -33,13 +33,15 @@ Then the testsuite can be run via
 
    pytest --cov
 
-or ``python path/to/testfile.py`` to run an individual test.
+or ``pytest path/to/testfile.py`` to run an individual test.
 
 The main gui can be started via
 
 .. code-block:: bash
 
-   python scripts/start_refred.py
+   QT_API=pyqt5 python scripts/start_refred.py
+   
+The ``QT_API=pyqt5` tells qtpy to use the qt5 library.
 
 
 Coding
@@ -70,9 +72,15 @@ by re-staging the files, then committing again. This gives you a chance to revie
 Testing Policy
 --------------
 
-The RefRed project make use of automated testing.
+The RefRed project makes use of automated testing.
+Before submitting a pull-request the developer is encouraged to run the full testsuite.
 Pull requests should bear this in mind and note that requests that increase the test coverage are heavily preferred.
 Requests will be automatically annotated with code coverage results to aid the contributor and development team.
+
+While tests that use mock/fake data are preferred, it is understood that some may require actual data.
+These can be found in ``test/data`` and should be used rather than putting additional data into the repository.
+There are also some tests that are skipped on github either because of memory requirements/execution time, or that the input data is not being made available in the repository.
+These can generally be found by looking for ``os.environ.get("GITHUB_ACTIONS", False)`` nearby them.
 
 Contacting the Team
 -------------------
