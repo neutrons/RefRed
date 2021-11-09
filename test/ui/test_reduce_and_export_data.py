@@ -8,13 +8,54 @@ import numpy as np
 wait = 200
 
 
+if os.environ.get("GITHUB_ACTIONS", False):  # run small set in GitHub actions
+    test_cases = [{"conf": "REF_L_188299_to_188301_plus_norm_runs.xml",
+                   "ascii": "REF_L_188299_to_188301_plus_norm_runs.txt",
+                   "first reduced": "first_reduced_in_188299_188301_plus_norm_runs.txt",
+                   "stitch": "REFL_188299_to_188301_plus_norm_runs_auto_stitching.txt",
+                   "script": "REF_L_188299_to_188301_plus_norm_runs.py",
+                   "run set": [188299, 188300, 188301],
+                   "metadataRunNumber": "188299",
+                   "metadataProtonChargeValue": "1.06e+02",
+                   "metadataProtonChargeUnits": "mC",
+                   "metadataLambdaRequestedValue": "12.39",
+                   "metadataLambdaRequestedUnits": "A",
+                   "metadatathiValue": "-0.60",
+                   "metadatathiUnits": "degree",
+                   "metadatatthdValue": "-1.20",
+                   "metadatatthdUnits": "deg",
+                   "metadataS1WValue": "20.00",
+                   "metadataS2WValue": "20.00",
+                   "metadataS1HValue": "0.39",
+                   "metadataS2HValue.": "0.25"}]
+else:
+    test_cases = [{"conf": "REF_L_188298_auto_template.xml",
+                   "ascii": "REFL_188298_reduced_data.txt",
+                   "first reduced": "first_reduced_in_188298_188304.txt",
+                   "stitch": "REFL_188298_reduced_data_auto_stitching.txt",
+                   "script": "REFL_188298_data_reduction_script.py",
+                   "run set": [188298, 188299, 188300, 188301, 188302, 188303, 188304],
+                   "metadataRunNumber": "188298",
+                   "metadataProtonChargeValue": "4.31e+02",
+                   "metadataProtonChargeUnits": "mC",
+                   "metadataLambdaRequestedValue": "15.00",
+                   "metadataLambdaRequestedUnits": "A",
+                   "metadatathiValue": "-0.60",
+                   "metadatathiUnits": "degree",
+                   "metadatatthdValue": "-1.20",
+                   "metadatatthdUnits": "deg",
+                   "metadataS1WValue": "20.00",
+                   "metadataS2WValue": "20.00",
+                   "metadataS1HValue": "0.39",
+                   "metadataS2HValue.": "0.25"}]
+
+
+@pytest.mark.parametrize("case", test_cases)
 @mock.patch("qtpy.QtWidgets.QFileDialog")
-def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server):
+def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server, case):
     # set mock return values for QFileDialog
     QFileDialog_mock().exec_.return_value = True
-    QFileDialog_mock().selectedFiles.return_value = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "../data/REF_L_188298_auto_template.xml"
-    )
+    QFileDialog_mock().selectedFiles.return_value = data_server.path_to(case["conf"])
     QFileDialog_mock.getSaveFileName.return_value = (str(tmp_path / "output.txt"), "")
     QFileDialog_mock.getExistingDirectory.return_value = str(tmp_path)
 
@@ -39,22 +80,13 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server):
     qtbot.wait(wait)
 
     # Metadata table
-    assert window.ui.metadataRunNumber.text() == "188298"
-    assert window.ui.metadataProtonChargeValue.text() == "4.31e+02"
-    assert window.ui.metadataProtonChargeUnits.text() == "mC"
-    assert window.ui.metadataLambdaRequestedValue.text() == "15.00"
-    assert window.ui.metadataLambdaRequestedUnits.text() == "A"
-    assert window.ui.metadatathiValue.text() == "-0.60"
-    assert window.ui.metadatathiUnits.text() == "degree"
-    assert window.ui.metadatatthdValue.text() == "-1.20"
-    assert window.ui.metadatatthdUnits.text() == "deg"
-    assert window.ui.metadataS1WValue.text() == "20.00"
-    assert window.ui.metadataS2WValue.text() == "20.00"
-    assert window.ui.metadataS1HValue.text() == "0.39"
-    assert window.ui.metadataS2HValue.text() == "0.25"
+    for key, value in case.items():
+        try:
+            assert getattr(window.ui, key).text() == value
+        except AttributeError:  # example, key=="conf"
+            pass
 
     # Push Reduce button
-
     qtbot.mouseClick(window.ui.reduceButton, QtCore.Qt.LeftButton)
     qtbot.waitUntil(lambda: window.ui.statusbar.currentMessage() == "Done!")
 
@@ -67,16 +99,19 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server):
     export_ascii(qtbot, window)
 
     # compare results to expected
-    compare_results("output.txt", "REFL_188298_reduced_data.txt", tmp_path)
+    compare_results("output.txt", data_server.path_to(case["ascii"]), tmp_path)
 
     # Export data again but this time into multiple files
     export_ascii(qtbot, window, multiple=True)
 
-    for run in range(188299, 188305):
+    for run in case["run set"]:
         assert os.path.exists(tmp_path / f"REF_L_{run}_reduced_data.txt")
 
     # compare just the first file
-    compare_results("REF_L_188298_reduced_data.txt", "REF_L_188298_reduced_data.txt", tmp_path)
+    first_run = case["run set"][0]
+    compare_results(f"REF_L_{first_run}_reduced_data.txt",
+                    data_server.path_to(case["first reduced"]),
+                    tmp_path)
 
     # Change from Absolute Normalization to Auto. Stitching.
     (tmp_path / "output.txt").unlink()
@@ -86,7 +121,7 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server):
     export_ascii(qtbot, window)
 
     # compare results to expected
-    compare_results("output.txt", "REFL_188298_reduced_data_auto_stitching.txt", tmp_path)
+    compare_results("output.txt", data_server.path_to(case["stitch"]), tmp_path)
 
     # export the reduction script
     (tmp_path / "output.txt").unlink()
@@ -102,9 +137,7 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server):
     qtbot.wait(wait)
 
     reduction_script = open(tmp_path / "output.txt").readlines()
-    expected_script = open(
-        os.path.join(os.path.dirname(os.path.abspath(__file__)), "../data/REFL_188298_data_reduction_script.py")
-    ).readlines()
+    expected_script = open(data_server.path_to(case["script"])).readlines()
 
     for value, expected in zip(reduction_script, expected_script):
         if value.startswith('#'):
@@ -114,9 +147,7 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server):
 
 def compare_results(results_file, expected_results_file, tmp_path):
     results = open(tmp_path / results_file).readlines()
-    expected_results = open(
-        os.path.join(os.path.dirname(os.path.abspath(__file__)), f'../data/{expected_results_file}')
-    ).readlines()
+    expected_results = open(expected_results_file).readlines()
 
     for value, expected in zip(results, expected_results):
         if value.startswith("# Reduction time") or value.startswith("# Mantid version") or "# Date" in value:
