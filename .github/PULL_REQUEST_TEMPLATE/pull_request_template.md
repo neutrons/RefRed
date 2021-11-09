@@ -1,9 +1,8 @@
+<!-- remove if not associated with an issue -->
 Fixes #
 
-## Proposed Changes
+## Description
 
-  -
-  -
-  -
+## Work Done
 
 See [CONTRIBUTING.rst](CONTRIBUTING.rst>).
