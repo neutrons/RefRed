@@ -19,7 +19,7 @@
 RefRed
 ------
 
-Liquids Reflectometer Data Reduction Software
+Data Reduction Software for the Liquids Reflectometer at the Spallation Neutron Source at Oak Ridge National Laboratory (ORNL)
 
 ------------
 Contributing
