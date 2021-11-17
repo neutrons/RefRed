@@ -99,7 +99,6 @@ class DisplayPlots(object):
 
         self.peak = self.sortIntArray(_data.peak)
         self.back = self.sortIntArray(_data.back)
-        self.clocking = self.sortIntArray(_data.clocking)
 
         self.lowRes = self.sortIntArray(_data.low_res)
         self.backFlag = bool(_data.back_flag)
@@ -192,12 +191,8 @@ class DisplayPlots(object):
         self.ix_plot_ui.canvas.ax.set_xlim(0, self.xlim)
 
         if self.lowResFlag:
-            self.ix_plot_ui.canvas.ax.axvline(
-                self.lowRes[0], color=colors.LOWRESOLUTION_SELECTION_COLOR
-            )
-            self.ix_plot_ui.canvas.ax.axvline(
-                self.lowRes[1], color=colors.LOWRESOLUTION_SELECTION_COLOR
-            )
+            self.ix_plot_ui.canvas.ax.axvline(self.lowRes[0], color=colors.LOWRESOLUTION_SELECTION_COLOR)
+            self.ix_plot_ui.canvas.ax.axvline(self.lowRes[1], color=colors.LOWRESOLUTION_SELECTION_COLOR)
 
         if self._data.all_plot_axis.is_ix_ylog:
             self.ix_plot_ui.canvas.ax.set_yscale("log")
@@ -245,33 +240,17 @@ class DisplayPlots(object):
         if self._data.all_plot_axis.yi_data_interval is None:
             self.yi_plot_ui.canvas.ax.set_ylim(0, self.ylim)
 
-        self.yi_plot_ui.canvas.ax.axhline(
-            self.peak[0], color=colors.PEAK_SELECTION_COLOR
-        )
-        self.yi_plot_ui.canvas.ax.axhline(
-            self.peak[1], color=colors.PEAK_SELECTION_COLOR
-        )
+        self.yi_plot_ui.canvas.ax.axhline(self.peak[0], color=colors.PEAK_SELECTION_COLOR)
+        self.yi_plot_ui.canvas.ax.axhline(self.peak[1], color=colors.PEAK_SELECTION_COLOR)
 
         if self.backFlag:
-            self.yi_plot_ui.canvas.ax.axhline(
-                self.back[0], color=colors.BACK_SELECTION_COLOR
-            )
-            self.yi_plot_ui.canvas.ax.axhline(
-                self.back[1], color=colors.BACK_SELECTION_COLOR
-            )
+            self.yi_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR)
+            self.yi_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR)
 
         if self._data.all_plot_axis.is_yi_xlog:
             self.yi_plot_ui.canvas.ax.set_xscale("log")
         else:
             self.yi_plot_ui.canvas.ax.set_xscale("linear")
-
-        if self.is_data:
-            self.yi_plot_ui.canvas.ax.axhline(
-                self.clocking[0], color=colors.CLOCKING_SELECTION_COLOR
-            )
-            self.yi_plot_ui.canvas.ax.axhline(
-                self.clocking[1], color=colors.CLOCKING_SELECTION_COLOR
-            )
 
         if self._data.all_plot_axis.yi_data_interval is None:
             [xmin, xmax] = self.yi_plot_ui.canvas.ax.xaxis.get_view_interval()
@@ -323,9 +302,7 @@ class DisplayPlots(object):
         _isLog = True
         _tof_axis = self.tofAxis
         _extent = [_tof_axis[0], _tof_axis[1], 0, self.ylim]
-        self.yt_plot_ui.imshow(
-            _ytof, log=_isLog, aspect="auto", origin="lower", extent=_extent
-        )
+        self.yt_plot_ui.imshow(_ytof, log=_isLog, aspect="auto", origin="lower", extent=_extent)
         self.yt_plot_ui.set_xlabel("t (ms)")
         self.yt_plot_ui.set_ylabel("y (pixel)")
 
@@ -335,36 +312,12 @@ class DisplayPlots(object):
         [tmin, tmax] = self.getTOFrangeInMs([autotmin, autotmax])
         self.yt_plot_ui.canvas.ax.axvline(tmin, color=colors.TOF_SELECTION_COLOR)
         self.yt_plot_ui.canvas.ax.axvline(tmax, color=colors.TOF_SELECTION_COLOR)
-        self.yt_plot_ui.canvas.ax.axhline(
-            self.peak[0], color=colors.PEAK_SELECTION_COLOR
-        )
-        self.yt_plot_ui.canvas.ax.axhline(
-            self.peak[1], color=colors.PEAK_SELECTION_COLOR
-        )
-
-        if self.is_data:
-            self.yi_plot_ui.canvas.ax.axhline(
-                self.clocking[0], color=colors.CLOCKING_SELECTION_COLOR
-            )
-            self.yi_plot_ui.canvas.ax.axhline(
-                self.clocking[1], color=colors.CLOCKING_SELECTION_COLOR
-            )
+        self.yt_plot_ui.canvas.ax.axhline(self.peak[0], color=colors.PEAK_SELECTION_COLOR)
+        self.yt_plot_ui.canvas.ax.axhline(self.peak[1], color=colors.PEAK_SELECTION_COLOR)
 
         if self.backFlag:
-            self.yt_plot_ui.canvas.ax.axhline(
-                self.back[0], color=colors.BACK_SELECTION_COLOR
-            )
-            self.yt_plot_ui.canvas.ax.axhline(
-                self.back[1], color=colors.BACK_SELECTION_COLOR
-            )
-
-        if self.is_data:
-            self.yt_plot_ui.canvas.ax.axhline(
-                self.clocking[0], color=colors.CLOCKING_SELECTION_COLOR
-            )
-            self.yt_plot_ui.canvas.ax.axhline(
-                self.clocking[1], color=colors.CLOCKING_SELECTION_COLOR
-            )
+            self.yt_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR)
+            self.yt_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR)
 
         if self._data.all_plot_axis.is_yt_ylog:
             self.yt_plot_ui.canvas.ax.set_yscale("log")
@@ -443,10 +396,6 @@ class DisplayPlots(object):
             parent.ui.dataLowResFromValue.setValue(lowRes1)
             parent.ui.dataLowResToValue.setValue(lowRes2)
             parent.ui.dataLowResFlag.setChecked(self.lowResFlag)
-
-            [clocking1, clocking2] = self.clocking
-            parent.ui.dataPrimFromValue.setValue(clocking1)
-            parent.ui.dataPrimToValue.setValue(clocking2)
 
     def isDataSelected(self):
         if self.parent.ui.dataNormTabWidget.currentIndex() == 0:

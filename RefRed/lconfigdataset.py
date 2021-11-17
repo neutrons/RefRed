@@ -1,9 +1,9 @@
 class LConfigDataset(object):
-    '''
+    """
     This class will be used when loading an XML configuration file and will
     keep record of all the information loaded, such as peak, back, TOF range...
     until the data/norm file has been loaded
-    '''
+    """
 
     proton_charge = -1
 
@@ -17,10 +17,6 @@ class LConfigDataset(object):
     data_back_flag = True
     data_low_res_flag = True
     data_lambda_requested = -1
-
-    data_clocking = ['0', '0']
-    sf_clocking = 1
-    is_sf_clocking_used = False
 
     tof_range = ['0', '0']
     tof_units = 'ms'

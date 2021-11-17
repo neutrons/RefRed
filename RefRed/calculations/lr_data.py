@@ -6,7 +6,6 @@ from mantid.api import mtd
 from mantid.simpleapi import Rebin
 from RefRed.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
 from RefRed.low_res_finder_algorithms.low_res_finder import LowResFinder
-from RefRed.clocking_algorithms.clocking_finder import ClockingFinder
 import RefRed.constants as constants
 from RefRed.plot.all_plot_axis import AllPlotAxis
 from RefRed.utilities import convert_angle
@@ -156,7 +155,6 @@ class LRData(object):
 
         self.peak = [0, 0]
         self.back = [0, 0]
-        self.clocking = [0, 0]
         self.back_flag = True
         self.all_plot_axis = AllPlotAxis()
         self.tof_auto_flag = True
@@ -178,25 +176,7 @@ class LRData(object):
             [lowres1, lowres2] = lw_pf.get_low_res()
             self.low_res = [str(lowres1), str(lowres2)]
 
-            clocking_pf = ClockingFinder(
-                parent=self.parent, xdata=list(range(len(self.ycountsdata))), ydata=self.ycountsdata
-            )
-            [clocking1, clocking2] = clocking_pf.clocking
-
-            clock_array = [clocking1, clocking2]
-            clock_array.sort()
-
-            self.clocking = [str(clocking1), str(clocking2)]
         else:
-            # if we loaded a config that does not have the clocking info, we will have to retrieve once
-            # everything has been loaded (before display)
-            if lconfig.data_clocking[0] != '':
-                self.clocking = [float(lconfig.data_clocking[0]), float(lconfig.data_clocking[1])]
-            else:
-                clocking_pf = LowResFinder(list(range(len(self.ycountsdata))), self.ycountsdata)
-                [clocking1, clocking2] = clocking_pf.get_low_res()
-                self.clocking = [str(clocking1), str(clocking2)]
-
             self.tof_auto_flag = bool(lconfig.tof_auto_flag)
 
             if is_data:

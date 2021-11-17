@@ -76,15 +76,3 @@ class FillStitchingTable(ParentHandler):
         _widget_manual.setSingleStep(0.001)
         _widget_manual.valueChanged.connect(self.parent.data_stitching_table_manual_spin_box)
         self.parent.ui.dataStitchingTable.setCellWidget(self._row_index, 1, _widget_manual)
-
-    def fillTableForClocking(self):
-        sf_clock = "%.4f" % self._lconfig.sf_clocking
-        _item_clock = QtWidgets.QTableWidgetItem(sf_clock)
-        _item_clock.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-        _brush = QtGui.QBrush()
-        if self._lconfig.is_sf_clocking_used:
-            _brush.setColor(QtCore.Qt.darkGreen)
-        else:
-            _brush.setColor(QtCore.Qt.red)
-        _item_clock.setForeground(_brush)
-        self.parent.ui.dataStitchingTable.setItem(self._row_index, 2, _item_clock)

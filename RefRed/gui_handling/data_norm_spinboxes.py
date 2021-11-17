@@ -14,10 +14,7 @@ class SpinBox(object):
         if row == -1:
             return
 
-        if entry_type == 'clocking':
-            all_rows = gui_utility.get_all_rows()
-        else:
-            all_rows = gui_utility.get_other_row_with_same_run_number_as_row(row=row, is_data=is_data)
+        all_rows = gui_utility.get_other_row_with_same_run_number_as_row(row=row, is_data=is_data)
         for _row in all_rows:
 
             if is_data:
@@ -52,7 +49,7 @@ class SpinBox(object):
                 data.low_res = [str(val_min), str(val_max)]
                 data.low_res_flag = flag
             else:
-                data.clocking = [str(val_min), str(val_max)]
+                raise RuntimeError("unexpected entry type")
 
             big_table_data[_row, index] = data
             self.parent.big_table_data = big_table_data
@@ -152,10 +149,3 @@ class NormLowResSpinbox(object):
         lowres2 = self.parent.ui.normLowResToValue.value()
         flag = self.parent.ui.normLowResFlag.isChecked()
         NormSpinbox(parent=parent, entry_type='low_res', value_min=lowres1, value_max=lowres2, flag=flag)
-
-
-class DataClockingSpinbox(object):
-    def __init__(self, parent=None):
-        clock1 = parent.ui.dataPrimFromValue.value()
-        clock2 = parent.ui.dataPrimToValue.value()
-        SpinBox(parent=parent, is_data=True, entry_type='clocking', value_min=clock1, value_max=clock2)
