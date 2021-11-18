@@ -61,6 +61,12 @@ class LoadReductionTableFromLConfigDataSet(object):
             o_load_config_progressbar_handler.next_step()
 
         big_table_data = self.parent.big_table_data
+        for index_row, lconfig in enumerate(big_table_data[:, 2]):
+            if lconfig is None:
+                return
+            is_display_requested = self.display_of_this_row_checked(index_row)
+            if is_display_requested:
+                self.display_plots(row=index_row)
 
     def display_plots(self, row=0):
         o_gui_utility = GuiUtility(parent=self.parent)
