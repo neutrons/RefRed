@@ -17,7 +17,6 @@ class ListSettings(object):
                 "dq_over_q",
                 "tof_bin",
                 "q_bin",
-                "clocking_pixel",
                 "angle_offset",
                 "angle_offset_error",
             ]:

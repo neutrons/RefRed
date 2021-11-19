@@ -30,11 +30,7 @@ class SettingsEditor(QtWidgets.QMainWindow):
         for _index, _key in enumerate(_gui_metadata.keys()):
             _item = QtWidgets.QTableWidgetItem()
             _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
-            if _key == 'clocking_pixel':
-                [_pixel1, _pixel2] = _gui_metadata[_key]
-                _value = "%d, %d" % (_pixel1, _pixel2)
-            else:
-                _value = str(_gui_metadata[_key])
+            _value = str(_gui_metadata[_key])
             _item.setText(_value)
             self.ui.tableWidget.setItem(_index, 0, _item)
 
@@ -73,12 +69,7 @@ class SettingsEditor(QtWidgets.QMainWindow):
         _gui_metadata = {}
         for _row in range(nbr_row):
             _label = str(self.ui.tableWidget.verticalHeaderItem(_row).text())
-            if _label == 'clocking_pixel':
-                _value = str(self.ui.tableWidget.item(_row, 0).text())
-                [_pixel1, _pixel2] = _value.split(",")
-                _value = [int(_pixel1), int(_pixel2)]
-            else:
-                _value = float(self.ui.tableWidget.item(_row, 0).text())
+            _value = float(self.ui.tableWidget.item(_row, 0).text())
             _gui_metadata[_label] = _value
         self.parent.gui_metadata = _gui_metadata
         print(self.parent.gui_metadata)
