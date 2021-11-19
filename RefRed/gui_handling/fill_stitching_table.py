@@ -33,8 +33,6 @@ class FillStitchingTable(ParentHandler):
         else:
             self.fillTableForManualStitching()
 
-        self.fillTableForClocking()
-
     def fillTableRunNumber(self):
         _run_number = self.parent.ui.reductionTable.item(self._row_index, 1).text()
         _run_item = QtWidgets.QTableWidgetItem(_run_number)
