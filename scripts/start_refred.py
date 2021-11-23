@@ -6,6 +6,9 @@
 import os
 import sys
 
+# import mantid once before qt, this fixes some issues with running in production
+import mantid
+
 # must be imported through qtpy before any other gui imports
 from qtpy.QtWidgets import QApplication, QSplashScreen
 from qtpy.QtGui import QPixmap
