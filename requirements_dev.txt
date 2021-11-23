@@ -6,3 +6,5 @@ pre-commit
 pytest
 pytest-cov
 pytest-qt<=3.3.0
+sphinx
+sphinx_rtd_theme
