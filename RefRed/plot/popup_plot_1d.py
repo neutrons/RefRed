@@ -107,18 +107,6 @@ class PopupPlot1d(QDialog):
         self.ui.plot_counts_vs_pixel.canvas.ax.set_xlim([ymin, ymax])
         self.ui.plot_counts_vs_pixel.draw()
 
-    def leave_plot_pixel_vs_counts(self):
-        self.ui.plot_counts_vs_pixel.canvas.ax.xaxis.set_data_interval(ymin, ymax)
-        self.ui.plot_counts_vs_pixel.canvas.ax.yaxis.set_data_interval(xmin, xmax)
-        self.data.all_plot_axis.yi_view_interval = [xmin, xmax, ymin, ymax]
-        self.update_counts_vs_pixel_plot()
-
-    def home_plot_pixel_vs_counts(self):
-        [xmin, xmax, ymin, ymax] = self.data.all_plot_axis.yi_data_interval
-        self.ui.plot_counts_vs_pixel.canvas.ax.set_xlim([ymin, ymax])
-        self.ui.plot_counts_vs_pixel.canvas.ax.set_ylim([xmin, xmax])
-        self.ui.plot_counts_vs_pixel.draw()
-
     def hide_and_format_invalid_widgets(self):
         palette = QPalette()
         palette.setColor(QPalette.Foreground, Qt.red)
@@ -387,16 +375,6 @@ class PopupPlot1d(QDialog):
     def update_plots(self):
         self.update_pixel_vs_counts_plot()
         self.update_counts_vs_pixel_plot()
-
-    def update_pixel_vs_counts_plot(self):
-        peak1 = self.ui.plot_peak1.value()
-        peak2 = self.ui.plot_peak2.value()
-        back1 = self.ui.plot_back1.value()
-        back2 = self.ui.plot_back2.value()
-        clock1 = self.ui.plot_clock1.value()
-        clock2 = self.ui.plot_clock2.value()
-
-        _yaxis = self.ycountsdata
 
     def update_counts_vs_pixel_plot(self):
         self.ui.plot_counts_vs_pixel.clear()
