@@ -19,590 +19,9 @@
      <property name="currentIndex">
       <number>1</number>
      </property>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="tab_1">
       <attribute name="title">
-       <string>John</string>
-      </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="MPLWidgetXLog" name="plot_pixel_vs_counts" native="true"/>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox_4">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="title">
-          <string>PEAK</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_11">
-          <item>
-           <widget class="QFrame" name="frame">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_12">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_15">
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_13">
-                 <item>
-                  <spacer name="verticalSpacer_2">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="john_peak2_label">
-                   <property name="font">
-                    <font>
-                     <pointsize>20</pointsize>
-                     <weight>75</weight>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="accessibleDescription">
-                    <string/>
-                   </property>
-                   <property name="text">
-                    <string>*</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QSpinBox" name="john_peak2">
-                   <property name="palette">
-                    <palette>
-                     <active>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>0</red>
-                         <green>170</green>
-                         <blue>0</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </active>
-                     <inactive>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>0</red>
-                         <green>170</green>
-                         <blue>0</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </inactive>
-                     <disabled>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>118</red>
-                         <green>118</green>
-                         <blue>117</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </disabled>
-                    </palette>
-                   </property>
-                   <property name="maximum">
-                    <number>303</number>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_16">
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_14">
-                 <item>
-                  <widget class="QSpinBox" name="john_peak1">
-                   <property name="palette">
-                    <palette>
-                     <active>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>0</red>
-                         <green>170</green>
-                         <blue>0</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </active>
-                     <inactive>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>0</red>
-                         <green>170</green>
-                         <blue>0</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </inactive>
-                     <disabled>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>118</red>
-                         <green>118</green>
-                         <blue>117</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </disabled>
-                    </palette>
-                   </property>
-                   <property name="maximum">
-                    <number>303</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="john_peak1_label">
-                   <property name="font">
-                    <font>
-                     <pointsize>20</pointsize>
-                     <weight>75</weight>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="accessibleDescription">
-                    <string/>
-                   </property>
-                   <property name="text">
-                    <string>*</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer_7">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox_3">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="title">
-          <string>BACKGROUND</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_8">
-          <item>
-           <widget class="QFrame" name="frame_2">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_7">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_13">
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_9">
-                 <item>
-                  <widget class="QCheckBox" name="john_back_flag">
-                   <property name="text">
-                    <string>with Back.</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer_3">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="john_back2_label">
-                   <property name="font">
-                    <font>
-                     <pointsize>20</pointsize>
-                     <weight>75</weight>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="accessibleDescription">
-                    <string/>
-                   </property>
-                   <property name="text">
-                    <string>*</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QSpinBox" name="john_back2">
-                   <property name="palette">
-                    <palette>
-                     <active>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>255</red>
-                         <green>0</green>
-                         <blue>0</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </active>
-                     <inactive>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>255</red>
-                         <green>0</green>
-                         <blue>0</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </inactive>
-                     <disabled>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>118</red>
-                         <green>118</green>
-                         <blue>117</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </disabled>
-                    </palette>
-                   </property>
-                   <property name="maximum">
-                    <number>303</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer_4">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_14">
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_10">
-                 <item>
-                  <spacer name="verticalSpacer_5">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="QSpinBox" name="john_back1">
-                   <property name="palette">
-                    <palette>
-                     <active>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>255</red>
-                         <green>0</green>
-                         <blue>0</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </active>
-                     <inactive>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>255</red>
-                         <green>0</green>
-                         <blue>0</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </inactive>
-                     <disabled>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>118</red>
-                         <green>118</green>
-                         <blue>117</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </disabled>
-                    </palette>
-                   </property>
-                   <property name="maximum">
-                    <number>303</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="john_back1_label">
-                   <property name="font">
-                    <font>
-                     <pointsize>20</pointsize>
-                     <weight>75</weight>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="accessibleDescription">
-                    <string/>
-                   </property>
-                   <property name="text">
-                    <string>*</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer_6">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="john_clocking_box">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="title">
-          <string>CLOCKING</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_15">
-          <item>
-           <widget class="QFrame" name="frame_6">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_16">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_17">
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_17">
-                 <item>
-                  <widget class="QSpinBox" name="john_clock2">
-                   <property name="palette">
-                    <palette>
-                     <active>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>0</red>
-                         <green>0</green>
-                         <blue>255</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </active>
-                     <inactive>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>0</red>
-                         <green>0</green>
-                         <blue>255</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </inactive>
-                     <disabled>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>118</red>
-                         <green>118</green>
-                         <blue>117</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </disabled>
-                    </palette>
-                   </property>
-                   <property name="maximum">
-                    <number>303</number>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_18">
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_18">
-                 <item>
-                  <spacer name="verticalSpacer_8">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="QSpinBox" name="john_clock1">
-                   <property name="palette">
-                    <palette>
-                     <active>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>0</red>
-                         <green>0</green>
-                         <blue>255</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </active>
-                     <inactive>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>0</red>
-                         <green>0</green>
-                         <blue>255</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </inactive>
-                     <disabled>
-                      <colorrole role="Text">
-                       <brush brushstyle="SolidPattern">
-                        <color alpha="255">
-                         <red>118</red>
-                         <green>118</green>
-                         <blue>117</blue>
-                        </color>
-                       </brush>
-                      </colorrole>
-                     </disabled>
-                    </palette>
-                   </property>
-                   <property name="maximum">
-                    <number>303</number>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_2">
-      <attribute name="title">
-       <string>Jim</string>
+       <string>Plot</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
@@ -641,7 +60,7 @@
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QLabel" name="jim_peak1_label">
+                  <widget class="QLabel" name="plot_peak1_label">
                    <property name="font">
                     <font>
                      <pointsize>20</pointsize>
@@ -664,7 +83,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="jim_peak1">
+                  <widget class="QSpinBox" name="plot_peak1">
                    <property name="palette">
                     <palette>
                      <active>
@@ -708,7 +127,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="jim_peak2">
+                  <widget class="QSpinBox" name="plot_peak2">
                    <property name="palette">
                     <palette>
                      <active>
@@ -752,7 +171,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="jim_peak2_label">
+                  <widget class="QLabel" name="plot_peak2_label">
                    <property name="font">
                     <font>
                      <pointsize>20</pointsize>
@@ -810,7 +229,7 @@
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_5">
              <item>
-              <widget class="QCheckBox" name="jim_back_flag">
+              <widget class="QCheckBox" name="plot_back_flag">
                <property name="text">
                 <string>with Background</string>
                </property>
@@ -830,7 +249,7 @@
               </spacer>
              </item>
              <item>
-              <widget class="QLabel" name="jim_back1_label">
+              <widget class="QLabel" name="plot_back1_label">
                <property name="font">
                 <font>
                  <pointsize>20</pointsize>
@@ -850,7 +269,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSpinBox" name="jim_back1">
+              <widget class="QSpinBox" name="plot_back1">
                <property name="palette">
                 <palette>
                  <active>
@@ -907,7 +326,7 @@
               </spacer>
              </item>
              <item>
-              <widget class="QSpinBox" name="jim_back2">
+              <widget class="QSpinBox" name="plot_back2">
                <property name="palette">
                 <palette>
                  <active>
@@ -951,7 +370,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="jim_back2_label">
+              <widget class="QLabel" name="plot_back2_label">
                <property name="font">
                 <font>
                  <pointsize>20</pointsize>
@@ -990,7 +409,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="jim_clocking_box">
+        <widget class="QGroupBox" name="plot_clocking_box">
          <property name="title">
           <string>CLOCKING</string>
          </property>
@@ -1009,7 +428,7 @@
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_8">
                  <item>
-                  <widget class="QSpinBox" name="jim_clock1">
+                  <widget class="QSpinBox" name="plot_clock1">
                    <property name="palette">
                     <palette>
                      <active>
@@ -1066,7 +485,7 @@
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="jim_clock2">
+                  <widget class="QSpinBox" name="plot_clock2">
                    <property name="palette">
                     <palette>
                      <active>
@@ -1154,10 +573,10 @@
  </resources>
  <connections>
   <connection>
-   <sender>jim_peak1</sender>
+   <sender>plot_peak1</sender>
    <signal>editingFinished()</signal>
    <receiver>Dialog</receiver>
-   <slot>jim_peak1_spinbox_signal()</slot>
+   <slot>plot_peak1_spinbox_signal()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>587</x>
@@ -1170,26 +589,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>john_peak1</sender>
+   <sender>plot_peak2</sender>
    <signal>editingFinished()</signal>
    <receiver>Dialog</receiver>
-   <slot>john_peak1_spinbox_signal()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1027</x>
-     <y>540</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>615</x>
-     <y>500</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>jim_peak2</sender>
-   <signal>editingFinished()</signal>
-   <receiver>Dialog</receiver>
-   <slot>jim_peak2_spinbox_signal()</slot>
+   <slot>plot_peak2_spinbox_signal()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>652</x>
@@ -1202,26 +605,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>john_peak2</sender>
+   <sender>plot_back1</sender>
    <signal>editingFinished()</signal>
    <receiver>Dialog</receiver>
-   <slot>john_peak2_spinbox_signal()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1027</x>
-     <y>503</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>615</x>
-     <y>500</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>jim_back1</sender>
-   <signal>editingFinished()</signal>
-   <receiver>Dialog</receiver>
-   <slot>jim_back1_spinbox_signal()</slot>
+   <slot>plot_back1_spinbox_signal()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>327</x>
@@ -1234,26 +621,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>john_back1</sender>
+   <sender>plot_back2</sender>
    <signal>editingFinished()</signal>
    <receiver>Dialog</receiver>
-   <slot>john_back1_spinbox_signal()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1163</x>
-     <y>742</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>615</x>
-     <y>500</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>jim_back2</sender>
-   <signal>editingFinished()</signal>
-   <receiver>Dialog</receiver>
-   <slot>jim_back2_spinbox_signal()</slot>
+   <slot>plot_back2_spinbox_signal()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>913</x>
@@ -1266,26 +637,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>john_back2</sender>
-   <signal>editingFinished()</signal>
-   <receiver>Dialog</receiver>
-   <slot>john_back2_spinbox_signal()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1163</x>
-     <y>301</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>615</x>
-     <y>500</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>jim_back_flag</sender>
+   <sender>plot_back_flag</sender>
    <signal>clicked(bool)</signal>
    <receiver>Dialog</receiver>
-   <slot>jim_back_flag_clicked()</slot>
+   <slot>plot_back_flag_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>115</x>
@@ -1298,26 +653,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>john_back_flag</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>Dialog</receiver>
-   <slot>john_back_flag_clicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1142</x>
-     <y>96</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>615</x>
-     <y>500</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>jim_clock1</sender>
+   <sender>plot_clock1</sender>
    <signal>editingFinished()</signal>
    <receiver>Dialog</receiver>
-   <slot>jim_clock_spinbox_signal()</slot>
+   <slot>plot_clock_spinbox_signal()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>76</x>
@@ -1330,10 +669,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>jim_clock2</sender>
+   <sender>plot_clock2</sender>
    <signal>editingFinished()</signal>
    <receiver>Dialog</receiver>
-   <slot>jim_clock_spinbox_signal()</slot>
+   <slot>plot_clock_spinbox_signal()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>1163</x>
@@ -1345,55 +684,17 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>john_clock1</sender>
-   <signal>editingFinished()</signal>
-   <receiver>Dialog</receiver>
-   <slot>john_clock_spinbox_signal()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1163</x>
-     <y>919</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>615</x>
-     <y>499</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>john_clock2</sender>
-   <signal>editingFinished()</signal>
-   <receiver>Dialog</receiver>
-   <slot>john_clock_spinbox_signal()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1163</x>
-     <y>99</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>615</x>
-     <y>499</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+</connections>
  <slots>
   <slot>update_peak1_spinbox()</slot>
   <slot>update_peak2_spinbox()</slot>
   <slot>update_back1_spinbox()</slot>
   <slot>update_back2_spinbox()</slot>
-  <slot>jim_peak1_spinbox_signal()</slot>
-  <slot>jim_peak2_spinbox_signal()</slot>
-  <slot>john_peak1_spinbox_signal()</slot>
-  <slot>john_peak2_spinbox_signal()</slot>
-  <slot>jim_back1_spinbox_signal()</slot>
-  <slot>jim_back2_spinbox_signal()</slot>
-  <slot>john_back1_spinbox_signal()</slot>
-  <slot>john_back2_spinbox_signal()</slot>
-  <slot>jim_back_flag_clicked()</slot>
-  <slot>john_back_flag_clicked()</slot>
-  <slot>jim_clock_spinbox_signal()</slot>
-  <slot>john_clock_spinbox_signal()</slot>
+  <slot>plot_peak1_spinbox_signal()</slot>
+  <slot>plot_peak2_spinbox_signal()</slot>
+  <slot>plot_back1_spinbox_signal()</slot>
+  <slot>plot_back2_spinbox_signal()</slot>
+  <slot>plot_back_flag_clicked()</slot>
+  <slot>plot_clock_spinbox_signal()</slot>
  </slots>
 </ui>
