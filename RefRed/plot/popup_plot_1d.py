@@ -99,7 +99,6 @@ class PopupPlot1d(QDialog):
         self.ui.plot_counts_vs_pixel.canvas.ax.yaxis.set_data_interval(ymin, ymax)
         self.ui.plot_counts_vs_pixel.draw()
         self.data.all_plot_axis.yi_view_interval = [xmin, xmax, ymin, ymax]
-        self.update_pixel_vs_counts_plot()
 
     def home_plot_counts_vs_pixel(self):
         [xmin, xmax, ymin, ymax] = self.data.all_plot_axis.yi_data_interval
@@ -373,7 +372,6 @@ class PopupPlot1d(QDialog):
         self.update_plots()
 
     def update_plots(self):
-        self.update_pixel_vs_counts_plot()
         self.update_counts_vs_pixel_plot()
 
     def update_counts_vs_pixel_plot(self):
