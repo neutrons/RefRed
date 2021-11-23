@@ -283,7 +283,7 @@ class PopupPlot1d(QDialog):
         self.ui.plot_counts_vs_pixel.canvas.ax.set_ylim([xmin, xmax])
         ui_plot2.draw()
 
-        #Plot peak and back
+        # Plot peak and back
         self.set_peak_value(peak1, peak2)
         self.set_back_value(back1, back2)
         self.set_clock_value(clock1, clock2)
