@@ -31,6 +31,7 @@ __packages__ = [
     'RefRed.config',
     'RefRed.export',
     'RefRed.gui_handling',
+    'RefRed.icons',
     'RefRed.initialization',
     'RefRed.interfaces',
     'RefRed.load_reduced_data_set',
