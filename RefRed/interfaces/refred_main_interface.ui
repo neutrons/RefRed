@@ -3181,7 +3181,7 @@ p, li { white-space: pre-wrap; }
                    <number>39</number>
                   </property>
                   <attribute name="horizontalHeaderVisible">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </attribute>
                   <attribute name="horizontalHeaderMinimumSectionSize">
                    <number>25</number>
@@ -3199,7 +3199,7 @@ p, li { white-space: pre-wrap; }
                    <bool>false</bool>
                   </attribute>
                   <attribute name="verticalHeaderDefaultSectionSize">
-                   <number>21</number>
+                   <number>20</number>
                   </attribute>
                   <attribute name="verticalHeaderShowSortIndicator" stdset="0">
                    <bool>false</bool>
@@ -4214,7 +4214,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1696</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">

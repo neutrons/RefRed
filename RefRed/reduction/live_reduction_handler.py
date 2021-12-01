@@ -146,7 +146,6 @@ class LiveReductionHandler(object):
             ScalingFactorFile=o_general.scaling_factor_file,
             CropFirstAndLastPoints=True,
             ApplyPrimaryFraction=False,
-            PrimaryFractionRange=o_individual._data_clocking_range,
             SlitsWidthFlag=o_general.slits_width_flag,
             OutputWorkspace=o_individual._output_workspace_name,
         )
@@ -171,8 +170,6 @@ class LiveReductionHandler(object):
         _config.e_axis_for_display = mtd_workspace.readE(0)[:]
         try:
             _config.sf_auto_found_match = mtd_workspace.getRun().getProperty('isSFfound').value
-            _config.sf_clocking = float(mtd_workspace.getRun().getProperty('primary_fraction').value)
-            _config.is_sf_clocking_used = True
         except:
             pass
         big_table_data[row, 2] = _config

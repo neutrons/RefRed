@@ -27,8 +27,6 @@ class PreviewConfig(QtWidgets.QMainWindow):
         "back_roi1_to",
         "back_roi2_from",
         "back_roi2_to",
-        "clocking_from",
-        "clocking_to",
         "tof_range_flag",
         "from_tof_range",
         "to_tof_range",
@@ -94,9 +92,7 @@ class PreviewConfig(QtWidgets.QMainWindow):
 
         if geometry_parent:
             current_geometry = self.geometry()
-            current_geometry.setLeft(
-                geometry_parent.left() + geometry_parent.width() + window_offset[0]
-            )
+            current_geometry.setLeft(geometry_parent.left() + geometry_parent.width() + window_offset[0])
             current_geometry.setTop(geometry_parent.top() + window_offset[1])
             self.setGeometry(current_geometry)
 
@@ -228,10 +224,7 @@ class PreviewConfig(QtWidgets.QMainWindow):
 
     def _browse_file_name(self):
         filename, _ = QFileDialog.getOpenFileName(
-            self,
-            caption="Select Configuration File",
-            directory=self.parent.path_config,
-            filter="Config (*.xml)"
+            self, caption="Select Configuration File", directory=self.parent.path_config, filter="Config (*.xml)"
         )
 
         return str(filename)

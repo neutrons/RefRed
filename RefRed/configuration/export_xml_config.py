@@ -27,20 +27,16 @@ class ExportXMLConfig(object):
         self.str_array = []
 
     def prepare_big_table_data(self):
-        '''
+        """
         all data files used last data clocking values
-        '''
+        """
 
         big_table_data = self.parent.big_table_data
         o_gui_utility = GuiUtility(parent=self.parent)
         row_highest_q = o_gui_utility.get_row_with_highest_q()
 
-        _ref_lrdata = big_table_data[row_highest_q, 0]
-        _ref_clocking = _ref_lrdata.clocking if _ref_lrdata else ''
-
         for row in range(row_highest_q):
             _lrdata = big_table_data[row, 0]
-            _lrdata.clocking = _ref_clocking
             big_table_data[row, 0] = _lrdata
 
         self.parent.big_table_data = big_table_data
@@ -106,7 +102,6 @@ class ExportXMLConfig(object):
             data_back_flag = _data.back_flag
             data_low_res_flag = bool(_data.low_res_flag)
             data_lambda_requested = _data.lambda_requested
-            clocking = _data.clocking
             tof = _data.tof_range
             # tof_units = _data.tof_units
             # tof_auto_flag = _data.tof_auto_flag
@@ -144,8 +139,6 @@ class ExportXMLConfig(object):
             str_array.append('   <back_roi1_to>' + str(data_back[1]) + '</back_roi1_to>\n')
             str_array.append('   <back_roi2_from>0</back_roi2_from>\n')
             str_array.append('   <back_roi2_to>0</back_roi2_to>\n')
-            str_array.append('   <clocking_from>' + str(int(clocking[0])) + '</clocking_from>\n')
-            str_array.append('   <clocking_to>' + str(int(clocking[1])) + '</clocking_to>\n')
             str_array.append('   <tof_range_flag>True</tof_range_flag>\n')
             str_array.append('   <from_tof_range>' + str(tof[0]) + '</from_tof_range>\n')
             str_array.append('   <to_tof_range>' + str(tof[1]) + '</to_tof_range>\n')
