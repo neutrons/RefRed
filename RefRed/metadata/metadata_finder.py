@@ -96,13 +96,14 @@ class MetadataFinder(QMainWindow):
 
     def retrieveListMetadataPreviouslySelected(self):
         settings = QSettings(ORGANIZATION, APPNAME)
-        nbr_metadata = str(settings.value("nbr_metadata"))
         list_metadata_selected = []
-        if nbr_metadata != "":
-            for index in range(int(nbr_metadata)):
-                _name = "metadata_#%d" % index
-                _value = str(settings.value(_name))
-                list_metadata_selected.append(_value)
+        if settings.contains("nbr_metadata"):
+            nbr_metadata = str(settings.value("nbr_metadata"))
+            if nbr_metadata:
+                for index in range(int(nbr_metadata)):
+                    _name = "metadata_#%d" % index
+                    _value = str(settings.value(_name))
+                    list_metadata_selected.append(_value)
         self.list_metadata_selected = list_metadata_selected
         _list_values = self.list_values
         for idx, val in enumerate(self.list_keys):
@@ -242,9 +243,7 @@ class MetadataFinder(QMainWindow):
         _list_runs = oListRuns.getFinalList()
         if len(_list_runs) > self.WARNING_NBR_FILES:
             msgBox = QMessageBox()
-            _str = "Program is about to load {:%d} files. Do you want to continue ?".format(
-                len(_list_runs)
-            )
+            _str = "Program is about to load {:%d} files. Do you want to continue ?".format(len(_list_runs))
             msgBox.setText(_str)
             msgBox.addButton(QPushButton("NO"), QMessageBox.NoRole)
             msgBox.addButton(QPushButton("YES"), QMessageBox.YesRole)
@@ -275,12 +274,14 @@ class MetadataFinder(QMainWindow):
                 except RuntimeError:
                     self.ui.inputErrorLabel.setVisible(True)
                     return
+                if not _filename:
+                    # no file was found
+                    self.ui.inputErrorLabel.setVisible(True)
+                    return
                 self.list_filename.append(_filename)
                 randomString = RefRed.utilities.generate_random_workspace_name()
-                print(("About to load %s" % _filename))
-                _nxs = LoadEventNexus(
-                    Filename=_filename, OutputWorkspace=randomString, MetaDataOnly=True
-                )
+                print(f"About to load \"{_filename}\"")
+                _nxs = LoadEventNexus(Filename=_filename, OutputWorkspace=randomString, MetaDataOnly=True)
                 self.list_nxs.append(_nxs)
 
         self.ui.inputErrorLabel.setVisible(False)
@@ -379,9 +380,7 @@ class MetadataFinder(QMainWindow):
             for _name in list_metadata_selected:
                 text.append(_name)
 
-            filename = RefRed.utilities.makeSureFileHasExtension(
-                filename, default_ext=".cfg"
-            )
+            filename = RefRed.utilities.makeSureFileHasExtension(filename, default_ext=".cfg")
             RefRed.utilities.write_ascii_file(filename, text)
 
     def getIPTS(self, filename):
@@ -426,8 +425,5 @@ class MetadataFinder(QMainWindow):
 
             _metadata_table = self.ui.metadataTable
             nbr_row = _metadata_table.rowCount()
-            text = [
-                " ".join([str(_metadata_table.item(r, i).text()) for i in range(3)])
-                for r in range(nbr_row)
-            ]
+            text = [" ".join([str(_metadata_table.item(r, i).text()) for i in range(3)]) for r in range(nbr_row)]
             RefRed.utilities.write_ascii_file(filename, text)
