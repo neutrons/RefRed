@@ -24,10 +24,12 @@ def test_popup_plot_1d(qtbot, main_gui):
         r"""pixel coordinate for one of the vertical lines
         :boundary: the vertical line signaling peak or background boundary"""
         # dictionary translating the boundary to a Line2D index
-        index = {"peak left boundary": 1,
-                 "peak right boundary": 2,
-                 "background left boundary": 5,
-                 "background right boundary": 6}
+        index = {
+            "peak left boundary": 1,
+            "peak right boundary": 2,
+            "background left boundary": 3,
+            "background right boundary": 4,
+        }
         return figure.canvas.ax.lines[index[boundary]].get_data()[0][0]
 
     def assert_boundary(boundary, spinbox, value, old_value=None):
