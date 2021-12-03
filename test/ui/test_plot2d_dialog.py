@@ -73,12 +73,9 @@ def test_plot2d_dialog(qtbot, data_server):
     plot2d.manual_input_back1()
     plot2d.ui.back2.setValue(145)
     plot2d.manual_input_back2()
-    # 5. clock range
-    plot2d.ui.clock1.setValue(10)
-    plot2d.ui.clock2.setValue(95)
     plot2d.update_plots()
     qtbot.wait(wait)
-    # 6. back to auto
+    # 5. back to auto
     auto_button = plot2d.findChild(QtWidgets.QRadioButton, "tof_auto_flag")
     qtbot.mouseClick(auto_button, QtCore.Qt.LeftButton)
     qtbot.wait(wait)

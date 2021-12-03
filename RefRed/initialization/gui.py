@@ -136,16 +136,10 @@ class Gui(object):
                     )
                     _widget.stateChanged.connect(_signal_func)
 
-                    parent.ui.reductionTable.setCellWidget(
-                        row_index, col_index, _widget
-                    )
+                    parent.ui.reductionTable.setCellWidget(row_index, col_index, _widget)
                 elif (col_index == 1) or (col_index == 2):
                     _item = QtWidgets.QTableWidgetItem()
-                    _flags = (
-                        QtCore.Qt.ItemIsSelectable
-                        | QtCore.Qt.ItemIsEnabled
-                        | QtCore.Qt.ItemIsEditable
-                    )
+                    _flags = QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable
                     _item.setFlags(_flags)
                     parent.ui.reductionTable.setItem(row_index, col_index, _item)
 
@@ -173,14 +167,6 @@ class Gui(object):
         palette_red.setColor(QtGui.QPalette.Foreground, QtCore.Qt.red)
         parent.ui.sf_not_found_label.setPalette(palette_red)
 
-        palette_green = QtGui.QPalette()
-        palette_green.setColor(QtGui.QPalette.Foreground, QtCore.Qt.darkGreen)
-        parent.ui.clocking_found_label.setPalette(palette_green)
-
-        palette_red = QtGui.QPalette()
-        palette_red.setColor(QtGui.QPalette.Foreground, QtCore.Qt.red)
-        parent.ui.clocking_not_found_label.setPalette(palette_red)
-
     def set_reduced_table(self):
         """initialize the reduced table from the stitching tabe"""
         parent = self.parent
@@ -195,9 +181,7 @@ class Gui(object):
             _widget = QtWidgets.QCheckBox()
             _widget.setChecked(False)
             _widget.setEnabled(True)
-            _widget.stateChanged.connect(
-                self.parent.reduced_ascii_data_set_table_visibility_changed
-            )
+            _widget.stateChanged.connect(self.parent.reduced_ascii_data_set_table_visibility_changed)
             parent.ui.reducedAsciiDataSetTable.setCellWidget(row_index, 1, _widget)
 
     def set_export_stitching_settings(self):

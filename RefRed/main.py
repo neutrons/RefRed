@@ -13,13 +13,14 @@ from RefRed.export.export_plot_ascii import ExportPlotAscii
 from RefRed.gui_handling.data_norm_spinboxes import DataPeakSpinbox, NormPeakSpinbox
 from RefRed.gui_handling.data_norm_spinboxes import DataBackSpinbox, NormBackSpinbox
 from RefRed.gui_handling.data_norm_spinboxes import DataLowResSpinbox, NormLowResSpinbox
-from RefRed.gui_handling.data_norm_spinboxes import DataClockingSpinbox
 from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidgetsHandler
 from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.stitching_yscale_options_radio_button_handler import StitchingYScaleOptionsRadioButtonHandler
-from RefRed.gui_handling.first_angle_range_gui_handler import \
-    NormalizationOrStitchingButtonStatus, FirstAngleRangeGuiHandler
+from RefRed.gui_handling.first_angle_range_gui_handler import (
+    NormalizationOrStitchingButtonStatus,
+    FirstAngleRangeGuiHandler,
+)
 from RefRed.gui_handling.refred_interface_handler import RefRedInterfaceHandler
 from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
@@ -303,10 +304,6 @@ class MainGui(QtWidgets.QMainWindow):
     @config_file_has_been_modified
     def norm_low_res_checkbox(self, *args, **kwargs):
         NormLowResSpinbox(parent=self)
-
-    @config_file_has_been_modified
-    def clock_validation(self, *args, **kwargs):
-        DataClockingSpinbox(parent=self)
 
     @config_file_has_been_modified
     def auto_tof_range_radio_button(self, *args, **kwargs):

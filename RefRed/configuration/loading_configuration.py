@@ -157,10 +157,6 @@ class LoadingConfiguration(object):
         _low_res_flag = self.getNodeValue(node, 'x_range_flag')
         iMetadata.data_low_res_flag = _low_res_flag
 
-        _clocking_min = self.getNodeValue(node, 'clocking_from')
-        _clocking_max = self.getNodeValue(node, 'clocking_to')
-        iMetadata.data_clocking = [_clocking_min, _clocking_max]
-
         _tof_min = self.getNodeValue(node, 'from_tof_range')
         _tof_max = self.getNodeValue(node, 'to_tof_range')
         if float(_tof_min) < 500:  # ms

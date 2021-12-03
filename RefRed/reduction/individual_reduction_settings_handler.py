@@ -6,7 +6,6 @@
     is saved if it's not used here. It creates confusion as to where we should
     keep this information.
 """
-from RefRed.gui_handling.gui_utility import GuiUtility
 
 
 class IndividualReductionSettingsHandler(object):
@@ -30,7 +29,6 @@ class IndividualReductionSettingsHandler(object):
         self._data_back_range = self.get_data_back_range()
         self._data_low_res_flag = self.get_data_low_res_flag()
         self._data_low_res_range = self.get_data_low_res_range()
-        self._data_clocking_range = self.get_data_clocking_range()
 
         if self.norm is None:
             self._norm_flag = False
@@ -101,15 +99,6 @@ class IndividualReductionSettingsHandler(object):
     def get_data_low_res_range(self):
         _data = self.data
         return self.get_low_res_range(data=_data)
-
-    def get_data_clocking_range(self):
-        big_table_data = self.big_table_data
-        o_gui_utility = GuiUtility(parent=self.parent)
-        _last_row = o_gui_utility.get_row_with_highest_q()
-        _data = big_table_data[_last_row, 0]
-        clock1 = int(_data.clocking[0])
-        clock2 = int(_data.clocking[1])
-        return [clock1, clock2]
 
     def get_norm_low_res_range(self):
         _norm = self.norm

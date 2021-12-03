@@ -16,7 +16,6 @@ class TestEditSettings(object):
         'dq_over_q': DEFAULT_SETTINGS.dq_over_q,
         'tof_bin': DEFAULT_SETTINGS.tof_bin,
         'q_bin': DEFAULT_SETTINGS.q_bin,
-        'clocking_pixel': DEFAULT_SETTINGS.clocking_pixel,
         'angle_offset': DEFAULT_SETTINGS.angle_offset,
         'angle_offset_error': DEFAULT_SETTINGS.angle_offset_error,
     }
@@ -26,7 +25,6 @@ class TestEditSettings(object):
                   'dq_over_q': 1.005,
                   'tof_bin': 41,
                   'q_bin': 1.01,
-                  'clocking_pixel': '1121, 1197',
                   'angle_offset': 1.016,
                   'angle_offset_error': 1.001}
                   '''

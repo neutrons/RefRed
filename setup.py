@@ -17,16 +17,13 @@ def read_requirements_from_file(filepath):
         return req_file.readlines()
 
 
-install_requires = read_requirements_from_file(
-    os.path.join(THIS_DIR, 'requirements.txt')
-)
+install_requires = read_requirements_from_file(os.path.join(THIS_DIR, 'requirements.txt'))
 
 # TODO can this be safely substituted with setuptools.find_packages?
 __packages__ = [
     'RefRed',
     'RefRed.autopopulatemaintable',
     'RefRed.configuration',
-    'RefRed.clocking_algorithms',
     'RefRed.calculations',
     'RefRed.config',
     'RefRed.export',
@@ -48,18 +45,19 @@ __packages__ = [
     'RefRed.thread',
 ]
 
-setup(name='RefRed',
-      version=versioneer.get_version(),
-      cmdclass=versioneer.get_cmdclass(),
-      description='Liquids Reflectometer Data Reduction Software',
-      license='GPL version 3.0',
-      scripts=['scripts/RefRed', 'scripts/start_refred.py'],
-      author='Jean Bilheux',
-      author_email='bilheuxjm@ornl.gov',
-      packages=__packages__,
-      url='http://',
-      zip_safe=False,
-      package_dir={},
-      package_data={'': ['*.ui', '*.png', '*.qrc']},
-      install_requires=install_requires,
-      )
+setup(
+    name='RefRed',
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
+    description='Liquids Reflectometer Data Reduction Software',
+    license='GPL version 3.0',
+    scripts=['scripts/RefRed', 'scripts/start_refred.py'],
+    author='Jean Bilheux',
+    author_email='bilheuxjm@ornl.gov',
+    packages=__packages__,
+    url='http://',
+    zip_safe=False,
+    package_dir={},
+    package_data={'': ['*.ui', '*.png', '*.qrc']},
+    install_requires=install_requires,
+)

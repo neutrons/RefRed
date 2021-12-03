@@ -30,8 +30,6 @@ class PopupPlot1d(QDialog):
     _prev_peak2 = -1
     _prev_back1 = -1
     _prev_back2 = -1
-    _prev_clock1 = -1
-    _prev_clock2 = -1
 
     isPlotLog = True
 
@@ -64,7 +62,6 @@ class PopupPlot1d(QDialog):
             self.reset_max_ui_value()
             self.nbr_pixel_y_axis = 256  # TODO MAGIC NUMBER
 
-        self.widgets_to_show()
         self.init_plot()
 
     def is_row_with_higest_q(self):
@@ -157,20 +154,6 @@ class PopupPlot1d(QDialog):
 
         self.ui.invalid_selection_label.setVisible(_show_widgets_1 or _show_widgets_2)
 
-    # def widgets_to_show(self, widget, status):
-    def widgets_to_show(self):
-
-        if self.is_row_with_highest_q:
-            enable_status = True
-        else:
-            enable_status = False
-
-        if not self.is_data:
-            self.ui.plot_clocking_box.setVisible(False)
-            return
-
-        self.ui.plot_clocking_box.setEnabled(enable_status)
-
     def reset_max_ui_value(self):
         self.ui.plot_peak1.setMaximum(255)
         self.ui.plot_peak2.setMaximum(255)
@@ -219,11 +202,9 @@ class PopupPlot1d(QDialog):
 
         _peak = self.data.peak
         _back = self.data.back
-        _clock = self.data.clocking
 
         [peak1, peak2] = _peak
         [back1, back2] = _back
-        [clock1, clock2] = _clock
 
         back_flag = RefRed.utilities.str2bool(self.data.back_flag)
         self.ui.plot_back_flag.setChecked(back_flag)
@@ -232,15 +213,11 @@ class PopupPlot1d(QDialog):
         peak2 = int(peak2)
         back1 = int(back1)
         back2 = int(back2)
-        clock1 = int(clock1)
-        clock2 = int(clock2)
 
         self._prev_peak1 = peak1
         self._prev_peak2 = peak2
         self._prev_back1 = back1
         self._prev_back2 = back2
-        self._prev_clock1 = clock1
-        self._prev_clock2 = clock2
 
         [xmin, xmax, ymin, ymax] = self.data.all_plot_axis.yi_view_interval
 
@@ -258,10 +235,6 @@ class PopupPlot1d(QDialog):
         ui_plot2.canvas.ax.axvline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
         ui_plot2.canvas.ax.axvline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
 
-        if self.is_data:
-            ui_plot2.canvas.ax.axvline(clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
-            ui_plot2.canvas.ax.axvline(clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
-
         if back_flag:
             ui_plot2.canvas.ax.axvline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
             ui_plot2.canvas.ax.axvline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
@@ -273,7 +246,6 @@ class PopupPlot1d(QDialog):
         # Plot peak and back
         self.set_peak_value(peak1, peak2)
         self.set_back_value(back1, back2)
-        self.set_clock_value(clock1, clock2)
 
         ui_plot2.logtogy.connect(self.logtoggleylog)
 
@@ -300,10 +272,6 @@ class PopupPlot1d(QDialog):
         self.ui.plot_back1.setValue(back1)
         self.ui.plot_back2.setValue(back2)
         self.check_peak_back_input_validity()
-
-    def set_clock_value(self, clock1, clock2):
-        self.ui.plot_clock1.setValue(clock1)
-        self.ui.plot_clock2.setValue(clock2)
 
     # peak1
     def update_peak1(self, value, updatePlotSpinbox=True):
@@ -368,9 +336,6 @@ class PopupPlot1d(QDialog):
         self.check_peak_back_input_validity()
         self.update_plots()
 
-    def plot_clock_spinbox_signal(self):
-        self.update_plots()
-
     def update_plots(self):
         self.update_counts_vs_pixel_plot()
 
@@ -381,8 +346,6 @@ class PopupPlot1d(QDialog):
         peak2 = self.ui.plot_peak2.value()
         back1 = self.ui.plot_back1.value()
         back2 = self.ui.plot_back2.value()
-        clock1 = self.ui.plot_clock1.value()
-        clock2 = self.ui.plot_clock2.value()
 
         _yaxis = self.ycountsdata
 
@@ -397,9 +360,6 @@ class PopupPlot1d(QDialog):
 
         ui_plot2.canvas.ax.axvline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
         ui_plot2.canvas.ax.axvline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
-
-        ui_plot2.canvas.ax.axvline(clock1, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
-        ui_plot2.canvas.ax.axvline(clock2, color=RefRed.colors.CLOCKING_SELECTION_COLOR)
 
         if self.data.back_flag:
             ui_plot2.canvas.ax.axvline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
@@ -428,18 +388,12 @@ class PopupPlot1d(QDialog):
         big_table_data[self.row, self.col] = _data
 
         if self.is_row_with_highest_q:
-            _clock1 = self.ui.plot_clock1.value()
-            _clock2 = self.ui.plot_clock2.value()
-            _clocking = [str(_clock1), str(_clock2)]
             _data = big_table_data[0, 0]
             index = 0
             while _data is not None:
-                _data.clocking = _clocking
                 big_table_data[index, 0] = _data
                 _data = big_table_data[index + 1, 0]
                 index += 1
-            self.parent.ui.dataPrimFromValue.setValue(_clock1)
-            self.parent.ui.dataPrimToValue.setValue(_clock2)
 
         self.parent.big_table_data = big_table_data
 

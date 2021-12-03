@@ -35,7 +35,6 @@ class TestInitializeSettings(object):
             'dq_over_q': 1.005,
             'tof_bin': 41,
             'q_bin': 1.01,
-            'clocking_pixel': '1121, 1197',
             'angle_offset': 1.016,
             'angle_offset_error': 1.001,
         }
@@ -43,10 +42,7 @@ class TestInitializeSettings(object):
         with SettingsContext('-TestInitializeSettings', values) as settings:
             InitializeSettings(self, settings)
             for k in values.keys():
-                if k == "clocking_pixel":
-                    assert self.gui_metadata[k] == [1121, 1197]
-                else:
-                    assert self.gui_metadata[k] == values[k], k
+                assert self.gui_metadata[k] == values[k], k
 
 
 if __name__ == '__main__':

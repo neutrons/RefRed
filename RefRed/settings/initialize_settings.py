@@ -30,9 +30,6 @@ class InitializeSettings(object):
                 value = _value
 
             # convert to correct primative type
-            if key == 'clocking_pixel':  # split into two values
-                value = [int(val) for val in value.split(',')]
-            else:
-                value = float(value)
+            value = float(value)
 
         return value
