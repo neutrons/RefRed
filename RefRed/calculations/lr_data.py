@@ -315,7 +315,7 @@ class LRData(object):
         self.ytofdata = self.Ixyt.sum(axis=0)  # 2D dataset
 
         self.countstofdata = self.Ixyt.sum(axis=0).sum(axis=0)
-        self.countsxdata = self.ytofdata.sum(axis=1)
+        self.countsxdata = self.Ixyt.sum(axis=2).sum(axis=1)
         self.ycountsdata = self.ytofdata.sum(axis=1)
 
         self.data_loaded = True
