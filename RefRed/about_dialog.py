@@ -1,6 +1,6 @@
 from numpy.version import version as numpy_version_str
 from matplotlib import __version__ as matplotlib_version_str
-import RefRed.version
+from RefRed import __version__ as RefRed_version_str
 from qtpy import QtWidgets, QT_VERSION, PYQT_VERSION
 import sys
 import mantid
@@ -14,7 +14,6 @@ class AboutDialog(object):
         self.parent = parent
 
     def display(self):
-        RefRed_version = RefRed.version.str_version
         python_version = self.get_python_version()
         numpy_version = numpy_version_str
         mantid_version = mantid.__version__
@@ -33,7 +32,7 @@ class AboutDialog(object):
           - Matplotlib: %s
           - Qt: %s
           - PyQt: %s''' % (
-            RefRed_version,
+            RefRed_version_str,
             python_version,
             numpy_version,
             mantid_version,

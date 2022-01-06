@@ -3,7 +3,7 @@ from qtpy.QtCore import Qt
 import numpy as np
 from RefRed.plot.clear_plots import ClearPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
-from RefRed.version import window_title
+from RefRed import WINDOW_TITLE
 
 
 class ReductionTableHandler(object):
@@ -22,7 +22,7 @@ class ReductionTableHandler(object):
         self.__reset_default_config_file_name()
 
     def __reset_default_config_file_name(self):
-        str_new_window_title = "%s%s" % (window_title, self.parent.default_loaded_file)
+        str_new_window_title = "%s%s" % (WINDOW_TITLE, self.parent.default_loaded_file)
         self.parent.setWindowTitle(str_new_window_title)
         self.parent.ui.previewLive.setEnabled(False)
         self.parent.ui.actionExportScript.setEnabled(False)
@@ -57,17 +57,11 @@ class ReductionTableHandler(object):
                         state, row
                     )
                     _widget.stateChanged.connect(_sig_func)
-                    self.parent.ui.reductionTable.setCellWidget(
-                        row_index, col_index, _widget
-                    )
+                    self.parent.ui.reductionTable.setCellWidget(row_index, col_index, _widget)
 
                 elif (col_index == 1) or (col_index == 2):
                     _item = QtWidgets.QTableWidgetItem()
-                    _item.setFlags(
-                        QtCore.Qt.ItemIsSelectable
-                        | QtCore.Qt.ItemIsEnabled
-                        | QtCore.Qt.ItemIsEditable
-                    )
+                    _item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable)
                     self.parent.ui.reductionTable.setItem(row_index, col_index, _item)
 
                 else:
@@ -88,17 +82,11 @@ class ReductionTableHandler(object):
             _target_row_index = _from_row + _row_offset
             for col_index in range(_nbr_col):
                 if col_index == 0:
-                    _widget = self.parent.ui.reductionTable.cellWidget(
-                        _target_row_index, col_index
-                    )
+                    _widget = self.parent.ui.reductionTable.cellWidget(_target_row_index, col_index)
                     _widget.setChecked(self.__is_row_selected_checked(row_index))
                 else:
-                    _cell_value = self.parent.ui.reductionTable.item(
-                        row_index, col_index
-                    ).text()
-                    self.parent.ui.reductionTable.item(
-                        _target_row_index, col_index
-                    ).setText(_cell_value)
+                    _cell_value = self.parent.ui.reductionTable.item(row_index, col_index).text()
+                    self.parent.ui.reductionTable.item(_target_row_index, col_index).setText(_cell_value)
             _row_offset += 1
 
     def __is_row_selected_checked(self, row_selected):
@@ -110,9 +98,7 @@ class ReductionTableHandler(object):
             return True
 
     def __get_checkbox_signal_function(self, row_index):
-        root_function_name = "self.parent.reduction_table_visibility_changed_" + str(
-            row_index
-        )
+        root_function_name = "self.parent.reduction_table_visibility_changed_" + str(row_index)
         return root_function_name
 
     def __clear_rows_big_table_data(self):
@@ -171,6 +157,4 @@ class ReductionTableHandler(object):
                 self.parent.ui.reductionTable.item(_row, _col).setText("")
 
     def __clear_big_table_data(self):
-        self.parent.big_table_data = np.empty(
-            (self.parent.nbr_row_table_reduction, 3), dtype=object
-        )
+        self.parent.big_table_data = np.empty((self.parent.nbr_row_table_reduction, 3), dtype=object)

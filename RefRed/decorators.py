@@ -2,7 +2,7 @@
   Module for useful decorators
 '''
 from qtpy import QtGui, QtCore, QtWidgets
-from RefRed.version import window_title
+from RefRed import WINDOW_TITLE
 from functools import wraps
 from mantid.kernel import ConfigService, Logger
 
@@ -82,7 +82,7 @@ def config_file_modification_reset(function):
     def new_function(*args, **kw):
         mainwindow = args[0]  # first argument is the mainwindow
         current_loaded_file = mainwindow.current_loaded_file
-        str_new_window_title = "%s%s" % (window_title, current_loaded_file)
+        str_new_window_title = "%s%s" % (WINDOW_TITLE, current_loaded_file)
         mainwindow.setWindowTitle(str_new_window_title)
         function(*args, **kw)
 
@@ -95,7 +95,7 @@ def config_file_has_been_modified(function):
         mainwindow = args[0]  # first argument is the ui
         current_loaded_file = mainwindow.current_loaded_file
         mainwindow.ui.reduceButton.setEnabled(True)
-        str_new_window_title = "%s%s*" % (window_title, current_loaded_file)
+        str_new_window_title = "%s%s*" % (WINDOW_TITLE, current_loaded_file)
         mainwindow.setWindowTitle(str_new_window_title)
         function(*args, **kw)
 

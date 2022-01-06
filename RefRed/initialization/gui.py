@@ -1,7 +1,7 @@
 from qtpy import QtGui, QtCore, QtWidgets
 import socket
 
-from RefRed.version import window_title
+from RefRed import WINDOW_TITLE
 from RefRed.configuration.export_stitching_ascii_settings import (
     ExportStitchingAsciiSettings,
 )
@@ -90,7 +90,7 @@ class Gui(object):
         parent = self.parent
 
         # title = window_title
-        parent.setWindowTitle("%s%s" % (window_title, "~/tmp.xml"))
+        parent.setWindowTitle("%s%s" % (WINDOW_TITLE, "~/tmp.xml"))
 
     def set_gui_size(self):
         screen = QtWidgets.QDesktopWidget().screenGeometry()

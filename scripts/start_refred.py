@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf8 -*-
 '''
   Small program for quick access to SNS liquids reflectometer raw data.
 '''
@@ -34,7 +33,7 @@ def _run(argv=[]):
                        </div>
                        <div>Starting up...</div>
                        </html>"""
-        % version.str_version,
+        % version,
         alignment=Qt.AlignBottom | Qt.AlignHCenter,
     )
     splash.show()
@@ -48,7 +47,7 @@ def _run(argv=[]):
 
 if __name__ == '__main__':
     # from RefRed import config
-    from RefRed import version
+    from RefRed import __version__ as version
     from RefRed.main import MainGui
 
     sys.exit(_run(sys.argv[1:]))
