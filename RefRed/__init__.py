@@ -6,3 +6,4 @@ del get_versions
 
 ORGANIZATION = 'neutrons'
 APPNAME = 'RefRed'
+WINDOW_TITLE = 'Liquids Reflectometer Reduction - '

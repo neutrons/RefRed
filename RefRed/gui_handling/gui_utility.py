@@ -1,5 +1,5 @@
 from qtpy.QtCore import Qt
-from RefRed.version import window_title
+from RefRed import WINDOW_TITLE
 
 
 class GuiUtility(object):
@@ -148,16 +148,16 @@ class GuiUtility(object):
 
     def new_config_file_loaded(self, config_file_name=None):
         self.parent.current_loaded_file = config_file_name
-        dialog_title = window_title + self.parent.current_loaded_file
+        dialog_title = WINDOW_TITLE + self.parent.current_loaded_file
         self.parent.setWindowTitle(dialog_title)
 
     def gui_has_been_modified(self):
-        dialog_title = window_title + self.parent.current_loaded_file
+        dialog_title = WINDOW_TITLE + self.parent.current_loaded_file
         new_dialog_title = dialog_title + '*'
         self.parent.setWindowTitle(new_dialog_title)
 
     def gui_not_modified(self):
-        dialog_title = window_title + self.parent.current_loaded_file
+        dialog_title = WINDOW_TITLE + self.parent.current_loaded_file
         new_dialog_title = dialog_title
         self.parent.setWindowTitle(new_dialog_title)
 
