@@ -9,5 +9,5 @@ dependencies:
 - mypy
 - pytest-cov
 - pytest-qt=3.3.0
-- qtpy
+- qtpy<2
 - pyqt
