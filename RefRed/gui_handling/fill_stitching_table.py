@@ -48,16 +48,14 @@ class FillStitchingTable(ParentHandler):
         self.fillTableForAbsoluteAndAuto(_sf)
 
     def fillTableForAbsoluteAndAuto(self, _sf):
-        _brush = QtGui.QBrush()
+        _color = QtGui.QColor(QtCore.Qt.red)
         if strtobool(str(self._lconfig.sf_auto_found_match)):
-            _brush.setColor(QtCore.Qt.darkGreen)
-        else:
-            _brush.setColor(QtCore.Qt.red)
+            _color = QtGui.QColor(QtCore.Qt.darkGreen)
 
         sf = "%.4f" % _sf
         _auto_item = QtWidgets.QTableWidgetItem(sf)
         _auto_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-        _auto_item.setForeground(_brush)
+        _auto_item.setForeground(_color)
         self.parent.ui.dataStitchingTable.setItem(self._row_index, 1, _auto_item)
 
     def fillTableForManualStitching(self):
