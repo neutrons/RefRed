@@ -1,11 +1,11 @@
 name: Trigger ORNL GitLab Production Pipeline
+
 on:
-  push:
-    branches:
-      - main
-      - next
-      - qa
+  workflow_dispatch:
   pull_request:
+  push:
+    branches: [next]
+    tags: ['v*']
 
 jobs:
   test-and-deploy:
