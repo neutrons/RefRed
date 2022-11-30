@@ -23,6 +23,7 @@ class LRData(object):
     is_better_chopper_coverage = True
 
     def __init__(self, workspace, read_options):
+        self.workspace = workspace  # retain the pointer for 3rd party calls
         self.read_options = read_options
         mt_run = workspace.getRun()
 
