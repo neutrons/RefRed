@@ -189,6 +189,8 @@ class ExportXMLConfig(object):
             _exportStitchingAsciiSettings = ExportStitchingAsciiSettings()
             _overlap_lowest_error = _exportStitchingAsciiSettings.use_lowest_error_value_flag
             str_array.append('   <overlap_lowest_error>' + str(_overlap_lowest_error) + '</overlap_lowest_error>\n')
+            _overlap_mean_value = _exportStitchingAsciiSettings.overlap_mean_value_flag
+            str_array.append('   <overlap_mean_value>' + str(_overlap_mean_value) + '</overlap_mean_value>\n')
 
             angleValue = str(self.parent.ui.angleOffsetValue.text())
             angleError = str(self.parent.ui.angleOffsetError.text())
