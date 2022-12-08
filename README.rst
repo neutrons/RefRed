@@ -29,5 +29,8 @@ Contributing is done by adding to the source code base, as well writing tests an
 `Merge Requests <https://docs.gitlab.com/ee/user/project/merge_requests/getting_started.html>`_).
 See `CONTRIBUTING.rst <CONTRIBUTING.rst>`_ for more information.
 
+----------
+Deployment
+----------
 
-
+- The state of branch `next` is deployed on every push-commit with the CI of [conda-legacy-deploy](https://code.ornl.gov/sns-hfir-scse/deployments/conda-legacy-deploy), by automatically launching a pipeline of branch `main` with environment variables `PLAY=update` and `CONDA_ENV=refred-dev`
