@@ -19,12 +19,12 @@ All other contributions should be done through pull requests using the standard 
 Creating a Local Environment for Development
 --------------------------------------------
 
-This project requires the `mantid-framework <https://anaconda.org/mantid/mantid-framework>`_ conda package, as well as python3.6+ and qt5.
+This project requires the `mantid <https://anaconda.org/mantid/mantid>`_ conda package, as well as python3.6+ and qt5.
 These can be installed using the commands
 
 .. code-block:: bash
 
-   conda create -n refred -c mantid/label/nightly mantid-framework --file requirements.txt --file requirements_dev.txt
+   conda env create --file development.yml
    conda activate refred
 
 Then the testsuite can be run via
