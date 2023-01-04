@@ -46,7 +46,7 @@ from RefRed.sf_preview.sf_preview import SFPreview
 from RefRed.decorators import config_file_has_been_modified, config_file_modification_reset
 from RefRed.about_dialog import AboutDialog
 from RefRed.browsing_runs import BrowsingRuns
-
+from RefRed.utilities import amend_config
 
 class MainGui(QtWidgets.QMainWindow):
     '''Top class that handles the GUI'''
@@ -356,8 +356,9 @@ class MainGui(QtWidgets.QMainWindow):
         o_interface_handler.full_reset()
 
     def load_configuration(self):
-        o_load_config = LoadingConfiguration(parent=self)
-        o_load_config.run()
+        with amend_config({"default.instrument": "REF_L"}):
+            o_load_config = LoadingConfiguration(parent=self)
+            o_load_config.run()
 
     @config_file_modification_reset
     def save_configuration(self, *args, **kwargs):
