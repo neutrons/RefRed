@@ -489,7 +489,7 @@ def amend_config(new_config=None, data_dir=None):
         )
         key = "datasearch.directories"
         backup[key] = deepcopy(config[key])
-        [config.appendDataSearchDir(dd) for dd in data_dirs if isdir(dd)]
+        [config.appendDataSearchDir(dd) for dd in data_dirs if os.path.isdir(dd)]
         modified_keys.append(key)
     try:
         yield
