@@ -48,6 +48,7 @@ from RefRed.about_dialog import AboutDialog
 from RefRed.browsing_runs import BrowsingRuns
 from RefRed.utilities import amend_config
 
+
 class MainGui(QtWidgets.QMainWindow):
     '''Top class that handles the GUI'''
 

@@ -6,9 +6,8 @@ from RefRed import nexus_utilities
 from typing import Union
 from contextlib import contextmanager
 from copy import deepcopy
-
-import mantid
 from mantid.kernel import ConfigService
+
 
 def convert_angle(angle=0, from_units="degree", to_units="rad"):
     """
@@ -451,6 +450,7 @@ def weighted_mean_default(data_array, error_array, error_0):
 
     return [data_mean, mean_error]
 
+
 @contextmanager
 def amend_config(new_config=None, data_dir=None):
     r"""
@@ -465,12 +465,12 @@ def amend_config(new_config=None, data_dir=None):
         append one (when passing a string) or more (when passing a list)
         directories to the list of data search directories.
     """
-    modified_keys=list()
-    backup=dict()
+    modified_keys = list()
+    backup = dict()
     config = ConfigService.Instance()
     if new_config is not None:
         SEARCH_ARCHIVE = "datasearch.searcharchive"
-        if  SEARCH_ARCHIVE not in new_config:
+        if SEARCH_ARCHIVE not in new_config:
             new_config[SEARCH_ARCHIVE] = "hfir, sns"
         DEFAULT_FACILITY = "default.facility"
         if DEFAULT_FACILITY not in new_config:
