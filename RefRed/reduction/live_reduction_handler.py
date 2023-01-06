@@ -14,7 +14,6 @@ from RefRed.status_message_handler import StatusMessageHandler
 from RefRed.load_reduced_data_set.stitching_ascii_widget import StitchingAsciiWidget
 from mantid.api import AnalysisDataService, mtd
 from mantid.simpleapi import LiquidsReflectometryReduction
-from RefRed.utilities import amend_config
 
 
 class LiveReductionHandler(object):
@@ -122,37 +121,36 @@ class LiveReductionHandler(object):
         o_export_script.create_file()
 
     def launch_reduction(self, o_general=None, o_individual=None):
-        with amend_config({"default.instrument": "REF_L"}):
-            LiquidsReflectometryReduction(
-                RunNumbers=o_individual._data_run_numbers,
-                NormalizationRunNumber=o_individual._norm_run_numbers,
-                SignalPeakPixelRange=o_individual._data_peak_range,
-                SubtractSignalBackground=o_individual._data_back_flag,
-                SignalBackgroundPixelRange=o_individual._data_back_range,
-                NormFlag=o_individual._norm_flag,
-                NormPeakPixelRange=o_individual._norm_peak_range,
-                NormBackgroundPixelRange=o_individual._norm_back_range,
-                SubtractNormBackground=o_individual._norm_back_flag,
-                LowResDataAxisPixelRangeFlag=o_individual._data_low_res_flag,
-                LowResDataAxisPixelRange=o_individual._data_low_res_range,
-                LowResNormAxisPixelRangeFlag=o_individual._norm_low_res_flag,
-                LowResNormAxisPixelRange=o_individual._norm_low_res_range,
-                TOFRange=o_individual._tof_range,
-                IncidentMediumSelected=o_general.incident_medium_selected,
-                GeometryCorrectionFlag=o_general.geometry_correction_flag,
-                QMin=o_general.q_min,
-                QStep=o_general.q_step,
-                TOFSteps=o_general.tof_steps,
-                AngleOffset=o_general.angle_offset,
-                AngleOffsetError=o_general.angle_offset_error,
-                ScalingFactorFile=o_general.scaling_factor_file,
-                CropFirstAndLastPoints=True,
-                ApplyPrimaryFraction=False,
-                SlitsWidthFlag=o_general.slits_width_flag,
-                OutputWorkspace=o_individual._output_workspace_name,
-            )
-            self.list_reduced_workspace.append(o_individual._output_workspace_name)
-            self.remove_tmp_workspaces()
+        LiquidsReflectometryReduction(
+            RunNumbers=o_individual._data_run_numbers,
+            NormalizationRunNumber=o_individual._norm_run_numbers,
+            SignalPeakPixelRange=o_individual._data_peak_range,
+            SubtractSignalBackground=o_individual._data_back_flag,
+            SignalBackgroundPixelRange=o_individual._data_back_range,
+            NormFlag=o_individual._norm_flag,
+            NormPeakPixelRange=o_individual._norm_peak_range,
+            NormBackgroundPixelRange=o_individual._norm_back_range,
+            SubtractNormBackground=o_individual._norm_back_flag,
+            LowResDataAxisPixelRangeFlag=o_individual._data_low_res_flag,
+            LowResDataAxisPixelRange=o_individual._data_low_res_range,
+            LowResNormAxisPixelRangeFlag=o_individual._norm_low_res_flag,
+            LowResNormAxisPixelRange=o_individual._norm_low_res_range,
+            TOFRange=o_individual._tof_range,
+            IncidentMediumSelected=o_general.incident_medium_selected,
+            GeometryCorrectionFlag=o_general.geometry_correction_flag,
+            QMin=o_general.q_min,
+            QStep=o_general.q_step,
+            TOFSteps=o_general.tof_steps,
+            AngleOffset=o_general.angle_offset,
+            AngleOffsetError=o_general.angle_offset_error,
+            ScalingFactorFile=o_general.scaling_factor_file,
+            CropFirstAndLastPoints=True,
+            ApplyPrimaryFraction=False,
+            SlitsWidthFlag=o_general.slits_width_flag,
+            OutputWorkspace=o_individual._output_workspace_name,
+        )
+        self.list_reduced_workspace.append(o_individual._output_workspace_name)
+        self.remove_tmp_workspaces()
 
     def save_reduction(self, row=-1, workspace=None):
 

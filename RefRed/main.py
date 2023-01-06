@@ -131,6 +131,7 @@ class MainGui(QtWidgets.QMainWindow):
         self.file_loaded_signal.connect(self.file_loaded)
         log_file = os.path.expanduser("~") + '/.refred.log'
         logging.basicConfig(filename=log_file, level=logging.DEBUG)
+        amend_config({"default.instrument": "REF_L"})
 
     # home button of plots
     def home_clicked_yi_plot(self):
@@ -357,9 +358,8 @@ class MainGui(QtWidgets.QMainWindow):
         o_interface_handler.full_reset()
 
     def load_configuration(self):
-        with amend_config({"default.instrument": "REF_L"}):
-            o_load_config = LoadingConfiguration(parent=self)
-            o_load_config.run()
+        o_load_config = LoadingConfiguration(parent=self)
+        o_load_config.run()
 
     @config_file_modification_reset
     def save_configuration(self, *args, **kwargs):

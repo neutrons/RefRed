@@ -4,7 +4,6 @@ import numpy as np
 from random import randint
 from RefRed import nexus_utilities
 from typing import Union
-from contextlib import contextmanager
 from copy import deepcopy
 from mantid.kernel import ConfigService
 
@@ -451,7 +450,6 @@ def weighted_mean_default(data_array, error_array, error_0):
     return [data_mean, mean_error]
 
 
-@contextmanager
 def amend_config(new_config=None, data_dir=None):
     r"""
     Context manager to safely modify Mantid Configuration Service while the function
@@ -491,8 +489,3 @@ def amend_config(new_config=None, data_dir=None):
         backup[key] = deepcopy(config[key])
         [config.appendDataSearchDir(dd) for dd in data_dirs if os.path.isdir(dd)]
         modified_keys.append(key)
-    try:
-        yield
-    finally:
-        for key in modified_keys:
-            config[key] = backup[key]
