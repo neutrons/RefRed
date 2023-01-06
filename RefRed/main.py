@@ -46,7 +46,7 @@ from RefRed.sf_preview.sf_preview import SFPreview
 from RefRed.decorators import config_file_has_been_modified, config_file_modification_reset
 from RefRed.about_dialog import AboutDialog
 from RefRed.browsing_runs import BrowsingRuns
-from RefRed.utilities import amend_config
+from RefRed.config.mantid_config import MantidConfig
 
 
 class MainGui(QtWidgets.QMainWindow):
@@ -123,6 +123,7 @@ class MainGui(QtWidgets.QMainWindow):
         self.ui = load_ui("refred_main_interface.ui", self)
 
         InitializeSettings(self)
+        self.config = MantidConfig(self)
         InitializeGui(self)
         self.ui.reductionTable.setUI(self)
         MakeGuiConnections(parent=self)
@@ -131,7 +132,6 @@ class MainGui(QtWidgets.QMainWindow):
         self.file_loaded_signal.connect(self.file_loaded)
         log_file = os.path.expanduser("~") + '/.refred.log'
         logging.basicConfig(filename=log_file, level=logging.DEBUG)
-        amend_config({"default.instrument": "REF_L"})
 
     # home button of plots
     def home_clicked_yi_plot(self):
