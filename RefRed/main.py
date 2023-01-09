@@ -46,6 +46,7 @@ from RefRed.sf_preview.sf_preview import SFPreview
 from RefRed.decorators import config_file_has_been_modified, config_file_modification_reset
 from RefRed.about_dialog import AboutDialog
 from RefRed.browsing_runs import BrowsingRuns
+from RefRed.config.mantid_config import MantidConfig
 
 
 class MainGui(QtWidgets.QMainWindow):
@@ -122,6 +123,7 @@ class MainGui(QtWidgets.QMainWindow):
         self.ui = load_ui("refred_main_interface.ui", self)
 
         InitializeSettings(self)
+        self.config = MantidConfig(self)
         InitializeGui(self)
         self.ui.reductionTable.setUI(self)
         MakeGuiConnections(parent=self)
