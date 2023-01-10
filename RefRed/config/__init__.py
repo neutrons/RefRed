@@ -79,16 +79,26 @@ def _create_proxy():
         if 'config_path' in modi.__dict__:
             moddict = {}
             for key, value in modi.__dict__.items():
-                if key.startswith('_') or key == 'config_path' or hasattr(value, '__file__')\
-                        or hasattr(value, '__module__') or type(value).__name__ == 'module':
+                if (
+                    key.startswith('_')
+                    or key == 'config_path'
+                    or hasattr(value, '__file__')
+                    or hasattr(value, '__module__')
+                    or type(value).__name__ == 'module'
+                ):
                     continue
                 moddict[key] = value
             config_holder = proxy.add_path_config(name, moddict, modi.config_path)  # noqa F841
         elif 'config_file' in modi.__dict__:
             moddict = {}
             for key, value in modi.__dict__.items():
-                if key.startswith('_') or key == 'config_file' or hasattr(value, '__file__')\
-                        or hasattr(value, '__module__') or type(value).__name__ == 'module':
+                if (
+                    key.startswith('_')
+                    or key == 'config_file'
+                    or hasattr(value, '__file__')
+                    or hasattr(value, '__module__')
+                    or type(value).__name__ == 'module'
+                ):
                     continue
                 moddict[key] = value
             config_holder = proxy.add_config(name, moddict, storage=modi.config_file)

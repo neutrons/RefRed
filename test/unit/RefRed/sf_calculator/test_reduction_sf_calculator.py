@@ -46,8 +46,7 @@ def mock_table_row_cell(row, col):
 
 @mock.patch('qtpy.QtWidgets.QApplication.processEvents')
 def test_init_reduction_sf_calculator(sf_process_events):
-    """Test reduction sf calculator
-    """
+    """Test reduction sf calculator"""
     # Set up QApplication
     main_app = qtpy.QtWidgets.QApplication(sys.argv)
     assert main_app
@@ -89,35 +88,41 @@ def test_init_reduction_sf_calculator(sf_process_events):
 
 
 class GoldValues:
-    gold_table_setting = np.array([
-        [184975.0, 0.0, 15.0, 136.0, 144.0, 133.0, 147.0, 51.98, 65.27],
-        [184976.0, 0.0, 12.39, 136.0, 145.0, 133.0, 148.0, 41.76, 55.05],
-        [184977.0, 0.0, 9.74, 136.0, 145.0, 133.0, 148.0, 31.42, 44.71],
-        [184978.0, 0.0, 7.04, 136.0, 145.0, 133.0, 148.0, 20.88, 34.17],
-        [184979.0, 1.0, 7.04, 136.0, 145.0, 133.0, 148.0, 20.88, 34.17],
-        [184980.0, 1.0, 7.04, 136.0, 145.0, 133.0, 148.0, 20.88, 34.17],
-        [184981.0, 0.0, 4.25, 137.0, 145.0, 134.0, 148.0, 9.97, 23.25],
-        [184982.0, 1.0, 4.25, 137.0, 145.0, 134.0, 148.0, 9.97, 23.25],
-        [184983.0, 1.0, 4.25, 136.0, 145.0, 133.0, 148.0, 9.97, 23.25],
-        [184984.0, 2.0, 4.25, 136.0, 145.0, 133.0, 148.0, 9.97, 23.25],
-        [184985.0, 2.0, 4.25, 136.0, 145.0, 133.0, 148.0, 9.97, 23.25],
-        [184986.0, 2.0, 4.25, 136.0, 145.0, 133.0, 148.0, 9.97, 23.25],
-        [184987.0, 2.0, 4.25, 135.0, 147.0, 132.0, 150.0, 9.97, 23.25],
-        [184988.0, 3.0, 4.25, 135.0, 147.0, 132.0, 150.0, 9.97, 23.25],
-        [184989.0, 3.0, 4.25, 135.0, 147.0, 132.0, 150.0, 9.97, 23.25]])
+    gold_table_setting = np.array(
+        [
+            [184975.0, 0.0, 15.0, 136.0, 144.0, 133.0, 147.0, 51.98, 65.27],
+            [184976.0, 0.0, 12.39, 136.0, 145.0, 133.0, 148.0, 41.76, 55.05],
+            [184977.0, 0.0, 9.74, 136.0, 145.0, 133.0, 148.0, 31.42, 44.71],
+            [184978.0, 0.0, 7.04, 136.0, 145.0, 133.0, 148.0, 20.88, 34.17],
+            [184979.0, 1.0, 7.04, 136.0, 145.0, 133.0, 148.0, 20.88, 34.17],
+            [184980.0, 1.0, 7.04, 136.0, 145.0, 133.0, 148.0, 20.88, 34.17],
+            [184981.0, 0.0, 4.25, 137.0, 145.0, 134.0, 148.0, 9.97, 23.25],
+            [184982.0, 1.0, 4.25, 137.0, 145.0, 134.0, 148.0, 9.97, 23.25],
+            [184983.0, 1.0, 4.25, 136.0, 145.0, 133.0, 148.0, 9.97, 23.25],
+            [184984.0, 2.0, 4.25, 136.0, 145.0, 133.0, 148.0, 9.97, 23.25],
+            [184985.0, 2.0, 4.25, 136.0, 145.0, 133.0, 148.0, 9.97, 23.25],
+            [184986.0, 2.0, 4.25, 136.0, 145.0, 133.0, 148.0, 9.97, 23.25],
+            [184987.0, 2.0, 4.25, 135.0, 147.0, 132.0, 150.0, 9.97, 23.25],
+            [184988.0, 3.0, 4.25, 135.0, 147.0, 132.0, 150.0, 9.97, 23.25],
+            [184989.0, 3.0, 4.25, 135.0, 147.0, 132.0, 150.0, 9.97, 23.25],
+        ]
+    )
 
-    gold_index_same_lambda = np.array([
-        [0., 0.],
-        [1., 1.],
-        [2., 2.],
-        [3., 5.],
-        [6., 14.]])
+    gold_index_same_lambda = np.array([[0.0, 0.0], [1.0, 1.0], [2.0, 2.0], [3.0, 5.0], [6.0, 14.0]])
 
     gold_nbr_scripts = 5
 
 
-def mock_lr_scaling_factor(DirectBeamRuns, IncidentMedium, TOFRange, TOFSteps, SignalPeakPixelRange,
-                           SignalBackgroundPixelRange, LowResolutionPixelRange, ScalingFactorFile):
+def mock_lr_scaling_factor(
+    DirectBeamRuns,
+    IncidentMedium,
+    TOFRange,
+    TOFSteps,
+    SignalPeakPixelRange,
+    SignalBackgroundPixelRange,
+    LowResolutionPixelRange,
+    ScalingFactorFile,
+):
     """Verify the input parameters are correct
 
     It is assumed that the mantid algorithm is correct.
@@ -140,10 +145,46 @@ def mock_lr_scaling_factor(DirectBeamRuns, IncidentMedium, TOFRange, TOFSteps, S
         assert IncidentMedium == 'air'
         assert TOFRange == [9970.0, 23250.0]
         assert TOFSteps == 200
-        assert SignalPeakPixelRange == \
-               [137, 145, 137, 145, 136, 145, 136, 145, 136, 145, 136, 145, 135, 147, 135, 147, 135, 147]
-        assert SignalBackgroundPixelRange == \
-               [134, 148, 134, 148, 133, 148, 133, 148, 133, 148, 133, 148, 132, 150, 132, 150, 132, 150]
+        assert SignalPeakPixelRange == [
+            137,
+            145,
+            137,
+            145,
+            136,
+            145,
+            136,
+            145,
+            136,
+            145,
+            136,
+            145,
+            135,
+            147,
+            135,
+            147,
+            135,
+            147,
+        ]
+        assert SignalBackgroundPixelRange == [
+            134,
+            148,
+            134,
+            148,
+            133,
+            148,
+            133,
+            148,
+            133,
+            148,
+            133,
+            148,
+            132,
+            150,
+            132,
+            150,
+            132,
+            150,
+        ]
         assert LowResolutionPixelRange == [0, 256, 0, 256, 0, 256, 0, 256, 0, 256, 0, 256, 0, 256, 0, 256, 0, 256]
         assert ScalingFactorFile == '/tmp/testscale.cfg'
 

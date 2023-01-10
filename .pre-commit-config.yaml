@@ -4,10 +4,8 @@
 default_language_version:
   python: python3
 
-
-
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks.git
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
       - id: trailing-whitespace
@@ -15,8 +13,15 @@ repos:
       - id: check-added-large-files
         args: ['--maxkb=4096']
       - id: check-yaml
-  - repo: https://github.com/PyCQA/flake8.git
+
+  - repo: https://github.com/psf/black
+    rev: 22.12.0
+    hooks:
+      - id: black
+
+  - repo: https://github.com/PyCQA/flake8
     rev: 6.0.0
     hooks:
     - id: flake8
-    args: ['--extend-ignore=E999,F821,E402,E127']
+      exclude: dev-docs|docs|versioneer.py|RefRed/_version.py|create_graph.py|test/data
+      args: ['--extend-ignore=E999,F821,E402,E127']

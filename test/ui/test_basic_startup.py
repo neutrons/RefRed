@@ -94,6 +94,7 @@ def test_startup(qtbot):
         assert dialog.text().startswith(expected_text)
         qtbot.keyClick(dialog, QtCore.Qt.Key_Enter)
 
-    QtCore.QTimer.singleShot(500, functools.partial(handle_message_box,
-                                                    "RefRed - Liquids Reflectrometry Reduction program"))
+    QtCore.QTimer.singleShot(
+        500, functools.partial(handle_message_box, "RefRed - Liquids Reflectrometry Reduction program")
+    )
     qtbot.keyClick(window.ui.menuHelp, QtCore.Qt.Key_Enter)

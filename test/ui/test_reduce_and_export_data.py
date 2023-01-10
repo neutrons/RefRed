@@ -9,45 +9,53 @@ wait = 200
 
 
 if os.environ.get("GITHUB_ACTIONS", False):  # run small set in GitHub actions
-    test_cases = [{"conf": "REF_L_188299_to_188301_plus_norm_runs.xml",
-                   "ascii": "REF_L_188299_to_188301_plus_norm_runs.txt",
-                   "first reduced": "first_reduced_in_188299_188301_plus_norm_runs.txt",
-                   "stitch": "REFL_188299_to_188301_plus_norm_runs_auto_stitching.txt",
-                   "script": "REF_L_188299_to_188301_plus_norm_runs.py",
-                   "run set": [188299, 188300, 188301],
-                   "metadataRunNumber": "188299",
-                   "metadataProtonChargeValue": "1.06e+02",
-                   "metadataProtonChargeUnits": "mC",
-                   "metadataLambdaRequestedValue": "12.39",
-                   "metadataLambdaRequestedUnits": "A",
-                   "metadatathiValue": "-0.60",
-                   "metadatathiUnits": "degree",
-                   "metadatatthdValue": "-1.20",
-                   "metadatatthdUnits": "deg",
-                   "metadataS1WValue": "20.00",
-                   "metadataS2WValue": "20.00",
-                   "metadataS1HValue": "0.39",
-                   "metadataS2HValue.": "0.25"}]
+    test_cases = [
+        {
+            "conf": "REF_L_188299_to_188301_plus_norm_runs.xml",
+            "ascii": "REF_L_188299_to_188301_plus_norm_runs.txt",
+            "first reduced": "first_reduced_in_188299_188301_plus_norm_runs.txt",
+            "stitch": "REFL_188299_to_188301_plus_norm_runs_auto_stitching.txt",
+            "script": "REF_L_188299_to_188301_plus_norm_runs.py",
+            "run set": [188299, 188300, 188301],
+            "metadataRunNumber": "188299",
+            "metadataProtonChargeValue": "1.06e+02",
+            "metadataProtonChargeUnits": "mC",
+            "metadataLambdaRequestedValue": "12.39",
+            "metadataLambdaRequestedUnits": "A",
+            "metadatathiValue": "-0.60",
+            "metadatathiUnits": "degree",
+            "metadatatthdValue": "-1.20",
+            "metadatatthdUnits": "deg",
+            "metadataS1WValue": "20.00",
+            "metadataS2WValue": "20.00",
+            "metadataS1HValue": "0.39",
+            "metadataS2HValue.": "0.25",
+        }
+    ]
 else:
-    test_cases = [{"conf": "REF_L_188298_auto_template.xml",
-                   "ascii": "REFL_188298_reduced_data.txt",
-                   "first reduced": "first_reduced_in_188298_188304.txt",
-                   "stitch": "REFL_188298_reduced_data_auto_stitching.txt",
-                   "script": "REFL_188298_data_reduction_script.py",
-                   "run set": [188298, 188299, 188300, 188301, 188302, 188303, 188304],
-                   "metadataRunNumber": "188298",
-                   "metadataProtonChargeValue": "4.31e+02",
-                   "metadataProtonChargeUnits": "mC",
-                   "metadataLambdaRequestedValue": "15.00",
-                   "metadataLambdaRequestedUnits": "A",
-                   "metadatathiValue": "-0.60",
-                   "metadatathiUnits": "degree",
-                   "metadatatthdValue": "-1.20",
-                   "metadatatthdUnits": "deg",
-                   "metadataS1WValue": "20.00",
-                   "metadataS2WValue": "20.00",
-                   "metadataS1HValue": "0.39",
-                   "metadataS2HValue.": "0.25"}]
+    test_cases = [
+        {
+            "conf": "REF_L_188298_auto_template.xml",
+            "ascii": "REFL_188298_reduced_data.txt",
+            "first reduced": "first_reduced_in_188298_188304.txt",
+            "stitch": "REFL_188298_reduced_data_auto_stitching.txt",
+            "script": "REFL_188298_data_reduction_script.py",
+            "run set": [188298, 188299, 188300, 188301, 188302, 188303, 188304],
+            "metadataRunNumber": "188298",
+            "metadataProtonChargeValue": "4.31e+02",
+            "metadataProtonChargeUnits": "mC",
+            "metadataLambdaRequestedValue": "15.00",
+            "metadataLambdaRequestedUnits": "A",
+            "metadatathiValue": "-0.60",
+            "metadatathiUnits": "degree",
+            "metadatatthdValue": "-1.20",
+            "metadatatthdUnits": "deg",
+            "metadataS1WValue": "20.00",
+            "metadataS2WValue": "20.00",
+            "metadataS1HValue": "0.39",
+            "metadataS2HValue.": "0.25",
+        }
+    ]
 
 
 @pytest.mark.parametrize("case", test_cases)
@@ -109,9 +117,7 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server, 
 
     # compare just the first file
     first_run = case["run set"][0]
-    compare_results(f"REF_L_{first_run}_reduced_data.txt",
-                    data_server.path_to(case["first reduced"]),
-                    tmp_path)
+    compare_results(f"REF_L_{first_run}_reduced_data.txt", data_server.path_to(case["first reduced"]), tmp_path)
 
     # Change from Absolute Normalization to Auto. Stitching.
     (tmp_path / "output.txt").unlink()
