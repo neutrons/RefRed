@@ -47,9 +47,7 @@ class SFCalculator(QtWidgets.QMainWindow):
 
     data_list = []
     big_table = None
-    big_table_status = (
-        None  # only a fully True table will validate the GO_REDUCTION button
-    )
+    big_table_status = None  # only a fully True table will validate the GO_REDUCTION button
     big_table_nxdata = []
     is_using_si_slits = False
     loaded_list_of_runs = []
@@ -166,9 +164,7 @@ class SFCalculator(QtWidgets.QMainWindow):
 
     def update_table(self, sorter, finalize=True):
         if len(sorter.big_table) == 0:
-            QtWidgets.QMessageBox.information(
-                self, "No Files Loaded!", "Check The list of runs"
-            )
+            QtWidgets.QMessageBox.information(self, "No Files Loaded!", "Check The list of runs")
             return
 
         self.big_table = sorter.big_table
@@ -217,9 +213,7 @@ class SFCalculator(QtWidgets.QMainWindow):
         self.sfFileNamePreview.setEnabled(True)
 
     def tableWidgetRightClick(self, position):
-        o_sf_calculator_table_right_click = SFCalculatorRightClick(
-            parent=self, position=position
-        )
+        o_sf_calculator_table_right_click = SFCalculatorRightClick(parent=self, position=position)
         o_sf_calculator_table_right_click.run()
 
     def generateSFfile(self):
@@ -243,7 +237,7 @@ class SFCalculator(QtWidgets.QMainWindow):
             self,  # parent widget
             "Open Configuration File",  # dialog title
             self.save_directory,  # opening directory
-            "SF config (*.cfg);;All (*.*)"  # list of display-file filters
+            "SF config (*.cfg);;All (*.*)",  # list of display-file filters
         )
         if file_name:
             self.update_config_file(file_name)
@@ -477,13 +471,9 @@ class SFCalculator(QtWidgets.QMainWindow):
                 self.dataBackToValue.setValue(back_max)
 
         self.testPeakBackErrorWidgets()
-        self.updateNXSData(
-            row=self.current_table_row_selected, source="spinbox", type=type
-        )
+        self.updateNXSData(row=self.current_table_row_selected, source="spinbox", type=type)
         if with_plot_update:
-            self.displayPlot(
-                row=self.current_table_row_selected, yt_plot=True, yi_plot=True
-            )
+            self.displayPlot(row=self.current_table_row_selected, yt_plot=True, yi_plot=True)
         self.fileHasBeenModified()
         self.checkGui()
 
@@ -508,9 +498,7 @@ class SFCalculator(QtWidgets.QMainWindow):
             _nxsdata_row.back = [back1, back2]
         _list_nxsdata_sorted[row] = _nxsdata_row
         self.list_nxsdata_sorted = _list_nxsdata_sorted
-        self.updateTableWidgetPeakBackTof(
-            row, force_spinbox_source=(source == "spinbox")
-        )
+        self.updateTableWidgetPeakBackTof(row, force_spinbox_source=(source == "spinbox"))
 
     def checkRunReductionButton(self):
         _check_status_object = CheckSfRunReductionButtonStatus(parent=self)
@@ -522,9 +510,7 @@ class SFCalculator(QtWidgets.QMainWindow):
         self.fileHasBeenModified()
 
     def fillGuiTable(self):
-        FillSFGuiTable(
-            parent=self, table=self.big_table, is_using_si_slits=self.is_using_si_slits
-        )
+        FillSFGuiTable(parent=self, table=self.big_table, is_using_si_slits=self.is_using_si_slits)
 
     def fileHasBeenModified(self):
         dialog_title = self.window_title + self.current_loaded_file
@@ -778,13 +764,9 @@ class SFCalculator(QtWidgets.QMainWindow):
         self.yt_plot.canvas.ax.axvline(tof2, color=RefRed.colors.TOF_SELECTION_COLOR)
 
         if peak1 != -1:
-            self.yt_plot.canvas.ax.axhline(
-                peak1, color=RefRed.colors.PEAK_SELECTION_COLOR
-            )
+            self.yt_plot.canvas.ax.axhline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
         if peak2 != -1:
-            self.yt_plot.canvas.ax.axhline(
-                peak2, color=RefRed.colors.PEAK_SELECTION_COLOR
-            )
+            self.yt_plot.canvas.ax.axhline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
 
         if nxsdata.back_flag:
             [back1, back2] = nxsdata.back
@@ -792,13 +774,9 @@ class SFCalculator(QtWidgets.QMainWindow):
             back1 = int(back1)
             back2 = int(back2)
             if back1 != -1:
-                self.yt_plot.canvas.ax.axhline(
-                    back1, color=RefRed.colors.BACK_SELECTION_COLOR
-                )
+                self.yt_plot.canvas.ax.axhline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
             if back2 != -1:
-                self.yt_plot.canvas.ax.axhline(
-                    back2, color=RefRed.colors.BACK_SELECTION_COLOR
-                )
+                self.yt_plot.canvas.ax.axhline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
 
         if nxsdata.all_plot_axis.is_yt_ylog:
             self.yt_plot.canvas.ax.set_yscale("log")
@@ -839,13 +817,9 @@ class SFCalculator(QtWidgets.QMainWindow):
         peak1 = int(peak1)
         peak2 = int(peak2)
         if peak1 != -1:
-            self.yi_plot.canvas.ax.axhline(
-                peak1, color=RefRed.colors.PEAK_SELECTION_COLOR
-            )
+            self.yi_plot.canvas.ax.axhline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
         if peak2 != -1:
-            self.yi_plot.canvas.ax.axhline(
-                peak2, color=RefRed.colors.PEAK_SELECTION_COLOR
-            )
+            self.yi_plot.canvas.ax.axhline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
 
         if nxsdata.back_flag:
             [back1, back2] = nxsdata.back
@@ -853,13 +827,9 @@ class SFCalculator(QtWidgets.QMainWindow):
             back1 = int(back1)
             back2 = int(back2)
             if back1 != -1:
-                self.yi_plot.canvas.ax.axhline(
-                    back1, color=RefRed.colors.BACK_SELECTION_COLOR
-                )
+                self.yi_plot.canvas.ax.axhline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
             if back2 != -1:
-                self.yi_plot.canvas.ax.axhline(
-                    back2, color=RefRed.colors.BACK_SELECTION_COLOR
-                )
+                self.yi_plot.canvas.ax.axhline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
 
         if nxsdata.all_plot_axis.is_yi_xlog:
             self.yi_plot.canvas.ax.set_xscale("log")

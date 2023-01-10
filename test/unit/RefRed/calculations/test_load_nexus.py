@@ -23,9 +23,7 @@ class TestLoadNexus(object):
         assert load_obj.workspace.getNumberEvents() == 18203
 
     def test_load_nexus_metadata_only(self, data_server):
-        load_obj = LoadNexus(
-            filename=data_server.path_to("REF_L_188230.nxs.h5"), metadata_only=True
-        )
+        load_obj = LoadNexus(filename=data_server.path_to("REF_L_188230.nxs.h5"), metadata_only=True)
         assert load_obj.workspace
         # check that the workspace exists in mantid's ADS
         assert mtd.doesExist(load_obj.workspace.name())

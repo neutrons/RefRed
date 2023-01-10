@@ -250,8 +250,11 @@ class ConfigProxy(object):
             value = self.tmp_storages[storage][config][item]
         else:
             value = self.storages[storage][config][item]
-        if isinstance(value, str) and '%' in value\
-                and not self.storages[storage][config].get('NO_INTERPOLATION', False):
+        if (
+            isinstance(value, str)
+            and '%' in value
+            and not self.storages[storage][config].get('NO_INTERPOLATION', False)
+        ):
             # perform interpolation with constants if possible
             value = self.interpolate(config, value)
         return value
@@ -271,7 +274,7 @@ class ConfigProxy(object):
             match_str = match.group()
             match_key = match.groups()[0]
             match_end = match.span()[1]
-            match = self._KEYCRE.search(value[match_start + match_end:])
+            match = self._KEYCRE.search(value[match_start + match_end :])
             match_start += match_end
             if '.' not in match_key:
                 # search same config for value

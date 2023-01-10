@@ -19,7 +19,6 @@ class Event(object):
 
 
 class TestMyTableWidget(object):
-
     @mock.patch("qtpy.QtWidgets.QTableWidget.keyPressEvent")
     @mock.patch("qtpy.QtWidgets.QTableWidget.__init__")
     def test_keypress_event_no_enter_key(self, mockSuperInit, mockSuperKeyPressEvent):

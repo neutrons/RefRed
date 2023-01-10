@@ -25,9 +25,7 @@ class LoadReducedDataSetHandler(object):
         _new_path = os.path.dirname(filename)
         self.parent.path_ascii = _new_path
 
-        o_loaded_ascii = ReducedAsciiLoader(
-            parent=self.parent, ascii_file_name=filename
-        )
+        o_loaded_ascii = ReducedAsciiLoader(parent=self.parent, ascii_file_name=filename)
         if self.parent.o_stitching_ascii_widget is None:
             self.parent.o_stitching_ascii_widget = StitchingAsciiWidget(
                 parent=self.parent, loaded_ascii=o_loaded_ascii

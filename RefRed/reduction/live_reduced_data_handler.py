@@ -279,7 +279,7 @@ class ProducedSelectedOutputScaled(object):
 
         # RQ4 vs Q selected
         if self.axis_type == 'RQ4vsQ':
-            _q_axis_4 = input_q_axis ** 4
+            _q_axis_4 = input_q_axis**4
             self.output_y_axis = input_y_axis * _q_axis_4
             self.output_e_axis = input_e_axis * _q_axis_4
             return

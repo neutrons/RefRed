@@ -92,9 +92,7 @@ class NavigationToolbar(NavigationToolbar2QT):
     ylog = True
     xlog = False
 
-    def __init__(
-        self, canvas, parent, coordinates=False, with_logX=False, with_logY=False
-    ):
+    def __init__(self, canvas, parent, coordinates=False, with_logX=False, with_logY=False):
         # these properties must be set before parent constructor is called
         # which automatically runs self._init_toolbar()
         self._with_logX = with_logX
@@ -173,9 +171,7 @@ class NavigationToolbar(NavigationToolbar2QT):
         self.locLabel = QtWidgets.QLabel("", self)
         self.locLabel.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTop)
         self.locLabel.setSizePolicy(
-            QtWidgets.QSizePolicy(
-                QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Ignored
-            )
+            QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Ignored)
         )
         self.labelAction = self.addWidget(self.locLabel)
         if self.coordinates:
@@ -289,9 +285,7 @@ class NavigationToolbar(NavigationToolbar2QT):
 
     def toggle_ylog(self, *args):
         ax = self.canvas.ax
-        if len(ax.images) == 0 and all(
-            [c.__class__.__name__ != "QuadMesh" for c in ax.collections]
-        ):
+        if len(ax.images) == 0 and all([c.__class__.__name__ != "QuadMesh" for c in ax.collections]):
 
             #      logstate=ax.get_xscale()
             if self.ylog:
@@ -303,9 +297,7 @@ class NavigationToolbar(NavigationToolbar2QT):
             self.canvas.draw_idle()
             self.logtogy.emit(ax.get_yscale())
         else:
-            imgs = ax.images + [
-                c for c in ax.collections if c.__class__.__name__ == "QuadMesh"
-            ]
+            imgs = ax.images + [c for c in ax.collections if c.__class__.__name__ == "QuadMesh"]
             norm = imgs[0].norm
             if norm.__class__ is LogNorm:
                 for img in imgs:
@@ -317,9 +309,7 @@ class NavigationToolbar(NavigationToolbar2QT):
 
     def toggle_xlog(self, *args):
         ax = self.canvas.ax
-        if len(ax.images) == 0 and all(
-            [c.__class__.__name__ != "QuadMesh" for c in ax.collections]
-        ):
+        if len(ax.images) == 0 and all([c.__class__.__name__ != "QuadMesh" for c in ax.collections]):
 
             if self.xlog:
                 ax.set_xscale("linear")
@@ -330,9 +320,7 @@ class NavigationToolbar(NavigationToolbar2QT):
             self.canvas.draw_idle()
             self.logtogx.emit(ax.get_xscale())
         else:
-            imgs = ax.images + [
-                c for c in ax.collections if c.__class__.__name__ == "QuadMesh"
-            ]
+            imgs = ax.images + [c for c in ax.collections if c.__class__.__name__ == "QuadMesh"]
             norm = imgs[0].norm
             if norm.__class__ is LogNorm:
                 for img in imgs:
@@ -370,9 +358,7 @@ class MplCanvas(FigureCanvas):
         self.format_labels()
         FigureCanvas.__init__(self, self.fig)
         # self.fc = FigureCanvas(self.fig)
-        FigureCanvas.setSizePolicy(
-            self, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
-        )
+        FigureCanvas.setSizePolicy(self, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         FigureCanvas.updateGeometry(self)
 
         self.fig.canvas.mpl_connect("button_press_event", self.button_pressed)
@@ -445,9 +431,7 @@ class MPLWidgetMine(QtWidgets.QWidget):
             self.vbox.setMargin(1)
         self.vbox.addWidget(self.canvas)
         if with_toolbar:
-            self.toolbar = NavigationToolbar(
-                self.canvas, self, with_logX=with_logX, with_logY=with_logY
-            )
+            self.toolbar = NavigationToolbar(self.canvas, self, with_logX=with_logX, with_logY=with_logY)
             self.toolbar.coordinates = coordinates
             self.vbox.addWidget(self.toolbar)
             self.toolbar.logtogx.connect(self.logtogglex)
@@ -526,17 +510,13 @@ class MPLWidgetMine(QtWidgets.QWidget):
         """
         return self.canvas.ax.errorbar(*args, **opts)
 
-    def pcolormesh(
-        self, datax, datay, dataz, log=False, imin=None, imax=None, update=False, **opts
-    ):
+    def pcolormesh(self, datax, datay, dataz, log=False, imin=None, imax=None, update=False, **opts):
         """
         Convenience wrapper for self.canvas.ax.plot
         """
         if self.cplot is None or not update:
             if log:
-                self.cplot = self.canvas.ax.pcolormesh(
-                    datax, datay, dataz, norm=LogNorm(imin, imax), **opts
-                )
+                self.cplot = self.canvas.ax.pcolormesh(datax, datay, dataz, norm=LogNorm(imin, imax), **opts)
             else:
                 self.cplot = self.canvas.ax.pcolormesh(datax, datay, dataz, **opts)
         else:
@@ -549,9 +529,7 @@ class MPLWidgetMine(QtWidgets.QWidget):
         """
         if self.cplot is None or not update:
             if log:
-                self.cplot = self.canvas.ax.imshow(
-                    data, norm=LogNorm(imin, imax), **opts
-                )
+                self.cplot = self.canvas.ax.imshow(data, norm=LogNorm(imin, imax), **opts)
             else:
                 self.cplot = self.canvas.ax.imshow(data, **opts)
         else:

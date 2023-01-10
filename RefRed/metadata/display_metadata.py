@@ -106,9 +106,7 @@ class DisplayMetadata(QMainWindow):
             for _key in list_keys:
                 if _key in list_metadata_selected:
                     _name = _key
-                    if (search_string != "") and (
-                        not (search_string.lower() in _name.lower())
-                    ):
+                    if (search_string != "") and (not (search_string.lower() in _name.lower())):
                         continue
 
                     self.ui.metadataTable.insertRow(_index)
@@ -170,9 +168,7 @@ class DisplayMetadata(QMainWindow):
         elif isinstance(_value, str):
             _value = _value
         else:
-            _value = (
-                "[" + str(_value[0]) + ",...]" + "-> (" + str(len(_value)) + " entries)"
-            )
+            _value = "[" + str(_value[0]) + ",...]" + "-> (" + str(len(_value)) + " entries)"
         _units = mt_run.getProperty(_name).units
         return [_value, _units]
 

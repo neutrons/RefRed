@@ -3,25 +3,28 @@
 ci:
   autofix_prs: true
 
+default_language_version:
+  python: python3
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.0
+    rev: v4.4.0
     hooks:
       - id: trailing-whitespace
-      - id: check-docstring-first
-      - id: check-json
+        args: [--markdown-linebreak-ext=md]
       - id: check-added-large-files
+        args: ['--maxkb=4096']
       - id: check-yaml
-      - id: debug-statements
-      - id: requirements-txt-fixer
-      - id: check-merge-conflict
-      - id: end-of-file-fixer
-      - id: sort-simple-yaml
+
   - repo: https://github.com/psf/black
-    rev: 20.8b1
+    rev: 22.12.0
     hooks:
       - id: black
+        exclude: test/data
+
   - repo: https://github.com/PyCQA/flake8
-    rev: 3.9.0
+    rev: 6.0.0
     hooks:
     - id: flake8
+      exclude: dev-docs|docs|versioneer.py|RefRed/_version.py|create_graph.py|test/data
+      args: ['--extend-ignore=E999,F821,E402,E127']

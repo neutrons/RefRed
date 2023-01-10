@@ -26,10 +26,7 @@ class ReductionSfCalculator(object):
     nbr_scripts = 0
     new_sfcalculator_script = True
 
-    def __init__(self,
-                 parent,
-                 export_script_flag: Union[str, bool] = False,
-                 test_mode: Optional[bool] = False):
+    def __init__(self, parent, export_script_flag: Union[str, bool] = False, test_mode: Optional[bool] = False):
         """Constructor and main execution body
         There is no need to call any methods other than initialize an object
 
@@ -49,7 +46,7 @@ class ReductionSfCalculator(object):
                 self.sf_gui,  # parent widget
                 "Export Script File",  # dialog title
                 self.sf_gui.save_directory,  # opening directory
-                "Python (*.py);;All (*.*)"  # list of display-file filters
+                "Python (*.py);;All (*.*)",  # list of display-file filters
             )
             if filename:
                 self.export_script_file = filename
@@ -73,15 +70,9 @@ class ReductionSfCalculator(object):
         for _row in range(nbr_row):
             for _col in range(nbr_column):
                 if _col == 1:
-                    _value = str(
-                        self.sf_gui.tableWidget.cellWidget(
-                            _row, self.index_col[_col]
-                        ).value()
-                    )
+                    _value = str(self.sf_gui.tableWidget.cellWidget(_row, self.index_col[_col]).value())
                 else:
-                    _value = str(
-                        self.sf_gui.tableWidget.item(_row, self.index_col[_col]).text()
-                    )
+                    _value = str(self.sf_gui.tableWidget.item(_row, self.index_col[_col]).text())
                 _table_settings[_row, _col] = _value
 
         self.table_settings = _table_settings
@@ -171,9 +162,7 @@ class ReductionSfCalculator(object):
         """
         Create scaling factor file
         """
-        peak_ranges, bck_ranges, low_res_ranges, run_list = self._get_algorithm_params(
-            string_runs, list_peak_back
-        )
+        peak_ranges, bck_ranges, low_res_ranges, run_list = self._get_algorithm_params(string_runs, list_peak_back)
 
         api.LRScalingFactors(
             DirectBeamRuns=run_list,
@@ -203,24 +192,16 @@ class ReductionSfCalculator(object):
         script += "import mantid\n"
         script += "import mantid.simpleapi as api\n\n"
 
-        peak_ranges, bck_ranges, low_res_ranges, run_list = self._get_algorithm_params(
-            string_runs, list_peak_back
-        )
+        peak_ranges, bck_ranges, low_res_ranges, run_list = self._get_algorithm_params(string_runs, list_peak_back)
 
         str_run_list = ", ".join([str(x) for x in run_list])
         _script_exe = "api.LRScalingFactors(DirectBeamRuns=[%s], " % str_run_list
         _script_exe += 'IncidentMedium="%s", ' % incident_medium
         _script_exe += "TOFSteps=200, "
         _script_exe += "TOFRange=[%s], " % ", ".join([str(x) for x in tof_range])
-        _script_exe += "SignalPeakPixelRange=[%s], " % ", ".join(
-            [str(x) for x in peak_ranges]
-        )
-        _script_exe += "SignalBackgroundPixelRange=[%s], " % ", ".join(
-            [str(x) for x in bck_ranges]
-        )
-        _script_exe += "LowResolutionPixelRange=[%s], " % ", ".join(
-            [str(x) for x in low_res_ranges]
-        )
+        _script_exe += "SignalPeakPixelRange=[%s], " % ", ".join([str(x) for x in peak_ranges])
+        _script_exe += "SignalBackgroundPixelRange=[%s], " % ", ".join([str(x) for x in bck_ranges])
+        _script_exe += "LowResolutionPixelRange=[%s], " % ", ".join([str(x) for x in low_res_ranges])
         _script_exe += 'ScalingFactorFile="%s")' % output_file_name
 
         script += _script_exe
@@ -238,15 +219,13 @@ class ReductionSfCalculator(object):
 
     def getListPeakBack(self, from_index, to_index):
         data = self.table_settings
-        return data[from_index: to_index + 1, 3:7]
+        return data[from_index : to_index + 1, 3:7]
 
     def getTofRange(self, from_index):
         data = self.table_settings
         from_tof_ms = data[from_index, 7]
         to_tof_ms = data[from_index, 8]
-        tof_from_to_micros = convertTOF(
-            [from_tof_ms, to_tof_ms], from_units="ms", to_units="micros"
-        )
+        tof_from_to_micros = convertTOF([from_tof_ms, to_tof_ms], from_units="ms", to_units="micros")
         return tof_from_to_micros
 
     def generateIndexSameLambda(self):

@@ -1,7 +1,7 @@
 <Reduction>
   <instrument_name>REFL</instrument_name>
   <timestamp>Thu Sep  9 10:34:02 2021</timestamp>
-  <python_version>3.6.8 (default, Aug 13 2020, 07:46:32) 
+  <python_version>3.6.8 (default, Aug 13 2020, 07:46:32)
 [GCC 4.8.5 20150623 (Red Hat 4.8.5-39)]</python_version>
   <platform>Linux</platform>
   <architecture>('64bit', 'ELF')</architecture>

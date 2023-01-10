@@ -218,7 +218,7 @@ class StitchingAsciiWidget(object):
 
             # RQ4 vs Q selected
             if data_type == 'RQ4vsQ':
-                _q_axis_4 = _q_axis ** 4
+                _q_axis_4 = _q_axis**4
                 _final_y_axis = _y_axis * _q_axis_4
                 _final_e_axis = _e_axis * _q_axis_4
                 return [_final_y_axis, _final_e_axis]

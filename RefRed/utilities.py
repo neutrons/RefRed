@@ -52,8 +52,9 @@ def convertTOF(TOFarray=None, from_units="micros", to_units="ms"):
         return None
 
 
-def convert_tof_values_unit(tof_array: Union[None, list, np.ndarray],
-                            from_units: str = "micros", to_units: str = "ms"):
+def convert_tof_values_unit(
+    tof_array: Union[None, list, np.ndarray], from_units: str = "micros", to_units: str = "ms"
+):
     """Convert an array, supposed to be TOF values, from one unit to another
 
     Parameters
@@ -71,9 +72,9 @@ def convert_tof_values_unit(tof_array: Union[None, list, np.ndarray],
         array/list of TOF values
 
     """
+
     def multiply_by_value(array, value: Union[float, int]):
-        """Multiply an array (list, numpy.array) by a value and return new array with same type
-        """
+        """Multiply an array (list, numpy.array) by a value and return new array with same type"""
         for [index, _ele] in enumerate(array):
             array[index] = float(array[index]) * value
         return array
@@ -81,8 +82,7 @@ def convert_tof_values_unit(tof_array: Union[None, list, np.ndarray],
     # Check input and output units
     allowed_units = ['micros', 'ms']
     if from_units not in allowed_units or to_units not in allowed_units:
-        raise NameError(f'Input and output units can be micros and ms only but '
-                        f'not {from_units} or {to_units}')
+        raise NameError(f'Input and output units can be micros and ms only but ' f'not {from_units} or {to_units}')
 
     if tof_array is None or from_units == to_units:
         # case 1: None input or
@@ -138,14 +138,7 @@ def output_ascii_file(file_name, x_axis, y_axis, y_error_axis):
 
         sz_x_axis = len(x_axis)
         for i in range(sz_x_axis - 1):
-            f.write(
-                str(x_axis[i])
-                + ","
-                + str(y_axis[i])
-                + ","
-                + str(y_error_axis[i])
-                + "\n"
-            )
+            f.write(str(x_axis[i]) + "," + str(y_axis[i]) + "," + str(y_error_axis[i]) + "\n")
 
 
 def import_ascii_file(filename):
@@ -170,14 +163,7 @@ def output_big_Q_ascii_file(file_name, x_axis, y_axis, y_error_axis):
         for t in range(nbr_tof):
             _tmp_str = ""
             for x in range(nbr_pixel):
-                _tmp_str += (
-                    str(x_axis[x, t])
-                    + ","
-                    + str(y_axis[x, t])
-                    + " ,"
-                    + str(y_error_axis[x, t])
-                    + ",,"
-                )
+                _tmp_str += str(x_axis[x, t]) + "," + str(y_axis[x, t]) + " ," + str(y_error_axis[x, t]) + ",,"
             _tmp_str += "\n"
             f.write(_tmp_str)
 
@@ -268,9 +254,7 @@ def weighted_sum_dim3(dataArray, errorArray, axisToSum=0):
         sumErrorArray = np.zeros((_nbrElementAxis1, _nbrElementAxis2))
 
         for j in range(_nbrElementAxis2):
-            [_value, _error] = weighted_sum_dim2(
-                dataArray[:, :, j], errorArray[:, :, j], axisToSum
-            )
+            [_value, _error] = weighted_sum_dim2(dataArray[:, :, j], errorArray[:, :, j], axisToSum)
             sumValueArray[:, j] = _value
             sumErrorArray[:, j] = _error
     elif axisToSum == 1:
@@ -278,9 +262,7 @@ def weighted_sum_dim3(dataArray, errorArray, axisToSum=0):
         sumErrorArray = np.zeros((_nbrElementAxis0, _nbrElementAxis2))
 
         for j in range(_nbrElementAxis0):
-            [_value, _error] = weighted_sum_dim2(
-                dataArray[j, :, :], errorArray[j, :, :], axisToSum - 1
-            )
+            [_value, _error] = weighted_sum_dim2(dataArray[j, :, :], errorArray[j, :, :], axisToSum - 1)
             sumValueArray[j, :] = _value
             sumValueArray[j, :] = _value
 
@@ -289,9 +271,7 @@ def weighted_sum_dim3(dataArray, errorArray, axisToSum=0):
         sumErrorArray = np.zeros((_nbrElementAxis0, _nbrElementAxis1))
 
         for j in range(_nbrElementAxis0):
-            [_value, _error] = weighted_sum_dim2(
-                dataArray[j, :, :], errorArray[j, :, :], axisToSum - 1
-            )
+            [_value, _error] = weighted_sum_dim2(dataArray[j, :, :], errorArray[j, :, :], axisToSum - 1)
             sumValueArray[j, :] = _value
             sumValueArray[j, :] = _value
 

@@ -4,10 +4,9 @@ from RefRed.utilities import convert_tof_values_unit
 
 
 def test_convert_tof_list():
-    """Unit test on RefRed.utilities
-    """
+    """Unit test on RefRed.utilities"""
     # Gold input
-    tof_list = [2000., 32100.]
+    tof_list = [2000.0, 32100.0]
 
     # Test same unit
     same_list_micros = convert_tof_values_unit(tof_list, 'micros', 'micros')
@@ -19,15 +18,14 @@ def test_convert_tof_list():
     assert to_list_micros[0] == tof_list[0]
     assert to_list_micros[1] == tof_list[1]
     # the value will be increased by 1000 from previous
-    assert to_list_micros[0] == 2000. * 1000.
-    assert to_list_micros[1] == 32100. * 1000.
+    assert to_list_micros[0] == 2000.0 * 1000.0
+    assert to_list_micros[1] == 32100.0 * 1000.0
 
 
 def test_convert_tof_array():
-    """Unit test on RefRed.utilities
-    """
+    """Unit test on RefRed.utilities"""
     # Gold input
-    tof_list = np.array([2000., 32100.])
+    tof_list = np.array([2000.0, 32100.0])
 
     # Test same unit
     same_list_ms = convert_tof_values_unit(tof_list, 'ms', 'ms')
@@ -39,13 +37,12 @@ def test_convert_tof_array():
     assert to_list_ms[0] == tof_list[0]
     assert to_list_ms[1] == tof_list[1]
     # the value will be decreased by 1000 times from previous
-    assert to_list_ms[0] == 2.
+    assert to_list_ms[0] == 2.0
     assert to_list_ms[1] == 32.1
 
 
 def test_convert_tof_none():
-    """Unit test on RefRed.utilities
-    """
+    """Unit test on RefRed.utilities"""
     # Input
     none_tofs = None
 

@@ -8,9 +8,7 @@ class ReducedAsciiTableHandler(object):
 
     def __init__(self, parent=None):
         self.parent = parent
-        self.total_number_of_rows_in_table = (
-            self.parent.ui.reducedAsciiDataSetTable.rowCount()
-        )
+        self.total_number_of_rows_in_table = self.parent.ui.reducedAsciiDataSetTable.rowCount()
 
     def remove_rows(self):
         self.__get_range_row_selected()
@@ -28,19 +26,13 @@ class ReducedAsciiTableHandler(object):
             if self.parent.ui.reducedAsciiDataSetTable.item(row, 0) is None:
                 break
             self.parent.ui.reducedAsciiDataSetTable.removeRow(row)
-            self.parent.ui.reducedAsciiDataSetTable.insertRow(
-                self.total_number_of_rows_in_table - 1
-            )
+            self.parent.ui.reducedAsciiDataSetTable.insertRow(self.total_number_of_rows_in_table - 1)
             _widget = QtWidgets.QCheckBox()
             _widget.setChecked(False)
             _widget.setEnabled(True)
-            _widget.stateChanged.connect(
-                self.parent.reduced_ascii_data_set_table_visibility_changed
-            )
+            _widget.stateChanged.connect(self.parent.reduced_ascii_data_set_table_visibility_changed)
 
-            self.parent.ui.reducedAsciiDataSetTable.setCellWidget(
-                self.total_number_of_rows_in_table - 1, 1, _widget
-            )
+            self.parent.ui.reducedAsciiDataSetTable.setCellWidget(self.total_number_of_rows_in_table - 1, 1, _widget)
 
     def __clear_table_rows(self):
         if self.list_filename_to_remove == []:
@@ -51,20 +43,14 @@ class ReducedAsciiTableHandler(object):
         while _item is not None:
             if self.parent.ui.reducedAsciiDataSetTable.item(row, 0) is None:
                 break
-            _row_file_name = str(
-                self.parent.ui.reducedAsciiDataSetTable.item(row, 0).text()
-            )
+            _row_file_name = str(self.parent.ui.reducedAsciiDataSetTable.item(row, 0).text())
             if _row_file_name in self.list_filename_to_remove:
                 self.parent.ui.reducedAsciiDataSetTable.removeRow(row)
-                self.parent.ui.reducedAsciiDataSetTable.insertRow(
-                    self.total_number_of_rows_in_table - 1
-                )
+                self.parent.ui.reducedAsciiDataSetTable.insertRow(self.total_number_of_rows_in_table - 1)
                 _widget = QtWidgets.QCheckBox()
                 _widget.setChecked(False)
                 _widget.setEnabled(True)
-                _widget.stateChanged.connect(
-                    self.parent.reduced_ascii_data_set_table_visibility_changed
-                )
+                _widget.stateChanged.connect(self.parent.reduced_ascii_data_set_table_visibility_changed)
 
                 self.parent.ui.reducedAsciiDataSetTable.setCellWidget(
                     self.total_number_of_rows_in_table - 1, 1, _widget
@@ -87,9 +73,7 @@ class ReducedAsciiTableHandler(object):
 
     def __clear_o_stitching_ascii_widget(self):
         o_stitching_ascii_widget = self.parent.o_stitching_ascii_widget
-        o_stitching_ascii_widget.remove_data(
-            list_file_to_remove=self.list_filename_to_remove
-        )
+        o_stitching_ascii_widget.remove_data(list_file_to_remove=self.list_filename_to_remove)
         self.parent.o_stitching_ascii_widget = o_stitching_ascii_widget
 
     def __full_clear_o_stitching_ascii_widget(self):

@@ -89,10 +89,12 @@ FILE_HEADER = '''# Datafile created by QuickNXS %(version)s
 # %(column_units)s
 # Column Names:
 # %(column_names)s
-''' # noqa E501
-FILE_HEADER_PARAMS = '%(scale)-12g %(P0)-3i %(PN)-5i %(x_pos)-8g %(x_width)-12g %(y_pos)-8g %(y_width)-12g ' \
-                     '%(bg_pos)-8g %(bg_width)-12g %(dpix)-12g %(tth)-12g %(file_number)-12s %(norm_index)-9s ' \
-                     '%(extract_fan)-4i %(file_name)-12s '
+'''  # noqa E501
+FILE_HEADER_PARAMS = (
+    '%(scale)-12g %(P0)-3i %(PN)-5i %(x_pos)-8g %(x_width)-12g %(y_pos)-8g %(y_width)-12g '
+    '%(bg_pos)-8g %(bg_width)-12g %(dpix)-12g %(tth)-12g %(file_number)-12s %(norm_index)-9s '
+    '%(extract_fan)-4i %(file_name)-12s '
+)
 
 DICTIZE_CHANNELS = {
     'x': 'unpolarized',
