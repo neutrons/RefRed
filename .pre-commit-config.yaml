@@ -1,5 +1,7 @@
 # File introduces automated checks triggered on git events
 # to enable run `pip install pre-commit && pre-commit install`
+ci:
+  autofix_prs: true
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
