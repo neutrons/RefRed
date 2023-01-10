@@ -40,7 +40,7 @@ The main gui can be started via
 .. code-block:: bash
 
    QT_API=pyqt5 python scripts/start_refred.py
-   
+
 The ``QT_API=pyqt5` tells qtpy to use the qt5 library.
 
 
