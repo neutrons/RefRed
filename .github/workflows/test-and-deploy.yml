@@ -21,7 +21,7 @@ jobs:
         name: Setup Conda
         with:
           auto-update-conda: true
-          mamba-version: "*"
+          miniforge-version: latest
           environment-file: .github/workflows/conda_env/environment.yml
       - name: flake8
         run: flake8 --statistics RefRed test scripts
