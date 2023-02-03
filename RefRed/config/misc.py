@@ -7,7 +7,7 @@ config_file = ''
 
 ADMIN = 'Jean Bilheux'
 ADMIN_EMAIL = 'j35@ornl.gov'
-SMTP_SERVER = '160.91.4.26'
+SMTP_SERVER = '128.219.166.53'
 
 SCRIPT_VERSION = '1.0'
 
