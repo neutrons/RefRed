@@ -1,4 +1,5 @@
 import sys
+import numpy as np
 import logging
 from qtpy.QtWidgets import QApplication
 from RefRed.mantid_utility import MantidUtility
@@ -12,8 +13,6 @@ from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSe
 from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
 from RefRed.status_message_handler import StatusMessageHandler
 from RefRed.load_reduced_data_set.stitching_ascii_widget import StitchingAsciiWidget
-from mantid.api import AnalysisDataService, mtd
-from mantid.simpleapi import LiquidsReflectometryReduction
 
 
 class LiveReductionHandler(object):
@@ -55,19 +54,28 @@ class LiveReductionHandler(object):
         o_reduction_progressbar_handler = ProgressBarHandler(parent=self.parent)
         o_reduction_progressbar_handler.setup(nbr_reduction=self.nbr_reduction_process, label='Reduction Process ')
 
+        common_pars = o_general_settings.to_dict()
+
         for row_index in range(self.nbr_reduction_process):
             o_individual_settings = IndividualReductionSettingsHandler(parent=self.parent, row_index=row_index)
 
+            # Reduction options to pass as template data
+            reduction_pars = o_individual_settings.to_dict()
+            reduction_pars.update(common_pars)
+
             # run reduction
             try:
-                self.launch_reduction(o_general=o_general_settings, o_individual=o_individual_settings)
+                from lr_reduction import template
+                from lr_reduction import reduction_template_reader
+                template_data = reduction_template_reader.ReductionParameters()
+                template_data.from_dict(reduction_pars)
+                q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, info=True)
+                self.save_reduction(row_index, refl=[q,r,dr], info=info)
             except:
                 logging.error(sys.exc_info()[1])
                 self.parent.ui.reduceButton.setEnabled(True)
                 StatusMessageHandler(parent=self.parent, message='Failed!', is_threaded=True)
                 return
-
-            self.save_reduction(row=row_index, workspace=o_individual_settings._output_workspace_name)
 
             # scale
             o_calculate_sf = LiveCalculateSF(parent=self.parent, row_index=row_index)
@@ -120,66 +128,25 @@ class LiveReductionHandler(object):
         o_export_script.make_script()
         o_export_script.create_file()
 
-    def launch_reduction(self, o_general=None, o_individual=None):
-        LiquidsReflectometryReduction(
-            RunNumbers=o_individual._data_run_numbers,
-            NormalizationRunNumber=o_individual._norm_run_numbers,
-            SignalPeakPixelRange=o_individual._data_peak_range,
-            SubtractSignalBackground=o_individual._data_back_flag,
-            SignalBackgroundPixelRange=o_individual._data_back_range,
-            NormFlag=o_individual._norm_flag,
-            NormPeakPixelRange=o_individual._norm_peak_range,
-            NormBackgroundPixelRange=o_individual._norm_back_range,
-            SubtractNormBackground=o_individual._norm_back_flag,
-            LowResDataAxisPixelRangeFlag=o_individual._data_low_res_flag,
-            LowResDataAxisPixelRange=o_individual._data_low_res_range,
-            LowResNormAxisPixelRangeFlag=o_individual._norm_low_res_flag,
-            LowResNormAxisPixelRange=o_individual._norm_low_res_range,
-            TOFRange=o_individual._tof_range,
-            IncidentMediumSelected=o_general.incident_medium_selected,
-            QMin=o_general.q_min,
-            QStep=o_general.q_step,
-            TOFSteps=o_general.tof_steps,
-            AngleOffset=o_general.angle_offset,
-            AngleOffsetError=o_general.angle_offset_error,
-            ScalingFactorFile=o_general.scaling_factor_file,
-            CropFirstAndLastPoints=True,
-            ApplyPrimaryFraction=False,
-            SlitsWidthFlag=o_general.slits_width_flag,
-            OutputWorkspace=o_individual._output_workspace_name,
-        )
-        self.list_reduced_workspace.append(o_individual._output_workspace_name)
-        self.remove_tmp_workspaces()
-
-    def save_reduction(self, row=-1, workspace=None):
+    def save_reduction(self, row=-1, refl=None, info=None):
 
         big_table_data = self.big_table_data
         _config = big_table_data[row, 2]
         if _config is None:
             _config = LConfigDataset()
-        mtd_workspace = mtd[workspace]
 
-        _config.wks = workspace
-        _config.proton_charge = float(mtd_workspace.getRun().getProperty('gd_prtn_chrg').value)
-        _config.reduce_q_axis = mtd_workspace.readX(0)[:]
-        _config.reduce_y_axis = mtd_workspace.readY(0)[:]
-        _config.reduce_e_axis = mtd_workspace.readE(0)[:]
-        _config.q_axis_for_display = mtd_workspace.readX(0)[:]
-        _config.y_axis_for_display = mtd_workspace.readY(0)[:]
-        _config.e_axis_for_display = mtd_workspace.readE(0)[:]
-        try:
-            _config.sf_auto_found_match = mtd_workspace.getRun().getProperty('isSFfound').value
-        except:
-            pass
+        _config.reduce_q_axis = np.copy(refl[0])
+        _config.reduce_y_axis = np.copy(refl[1])
+        _config.reduce_e_axis = np.copy(refl[2])
+        _config.q_axis_for_display = refl[0]
+        _config.y_axis_for_display = refl[1]
+        _config.e_axis_for_display = refl[2]
+        _config.sf_auto_found_match = True
+        if info['scaling_factors']['a'] == 1 and info['scaling_factors']['err_a'] == 0:
+            _config.sf_auto_found_match = False
+
         big_table_data[row, 2] = _config
         self.big_table_data = big_table_data
-
-    def remove_tmp_workspaces(self):
-        list_mt = AnalysisDataService.getObjectNames()
-        for _mt in list_mt:
-            if _mt in self.list_reduced_workspace:
-                continue
-            AnalysisDataService.remove(_mt)
 
     def print_message(self, title, value):
         print('> %s ' % title)
