@@ -37,7 +37,6 @@ class ExportDataReductionScript(object):
         self._norm_low_res_range = []
         self._tof_range = []
         self._incident_medium_selected = ""
-        self._geometry_correction_flag = True
         self._q_min = -1
         self._q_step = -1
         self._tof_steps = -1
@@ -137,7 +136,6 @@ class ExportDataReductionScript(object):
         )
         script.append(" TOFRange=[%f, %f]," % (o_individual._tof_range[0], o_individual._tof_range[1]))
         script.append(' IncidentMediumSelected="%s",' % o_general.incident_medium_selected)
-        script.append(" GeometryCorrectionFlag=%s," % str(o_general.geometry_correction_flag))
         script.append(" QMin=%f," % o_general.q_min)
         script.append(" QStep=%f," % o_general.q_step)
         script.append(" TOFSteps=%f," % o_general.tof_steps)

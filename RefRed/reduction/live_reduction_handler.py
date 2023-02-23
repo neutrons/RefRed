@@ -137,7 +137,6 @@ class LiveReductionHandler(object):
             LowResNormAxisPixelRange=o_individual._norm_low_res_range,
             TOFRange=o_individual._tof_range,
             IncidentMediumSelected=o_general.incident_medium_selected,
-            GeometryCorrectionFlag=o_general.geometry_correction_flag,
             QMin=o_general.q_min,
             QStep=o_general.q_step,
             TOFSteps=o_general.tof_steps,
