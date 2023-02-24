@@ -54,6 +54,10 @@ class Gui(object):
         o_gui = GuiUtility(parent=self.parent)
         o_gui.init_widgets_value()
 
+        # This is the angle offset box, which is no longer needed
+        # but kept for advanced usage
+        self.parent.ui.groupBox_4.setVisible(False)
+
     def init_autopopulate_widgets(self):
         pixmap = QtGui.QPixmap(":/General/check_icon.png")
         self.parent.ui.check1.setFixedWidth(25)
