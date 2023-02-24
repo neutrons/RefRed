@@ -79,8 +79,21 @@ class LoadingConfiguration(object):
         self.populate_main_gui_general_settings()
 
     def populate_big_table_data_with_lconfig(self):
-        dom = self.dom
-        RefLData = dom.getElementsByTagName('RefLData')
+        # Get the version of the software and warn user if they are trying
+        # to load an older xml file.
+        version_tag = self.dom.getElementsByTagName('version')
+        if len(version_tag) == 0:
+            warning_msg = "The reduction parameters you are about to load are from "
+            warning_msg += "an older version of the reduction.\n\n"
+            warning_msg += "It is NOT advised to mix reduction versions.\n\n"
+            warning_msg += "You should either start refred version 1, or "
+            warning_msg += "reprocess all your data with the new version.\n\n"
+            warning_msg += "Please consult with your local contact for advise."
+            QtWidgets.QMessageBox.critical(self.parent, "Version warning",
+                                           warning_msg, QtWidgets.QMessageBox.Ok,
+            )
+
+        RefLData = self.dom.getElementsByTagName('RefLData')
 
         big_table_data = empty((self.parent.nbr_row_table_reduction, 3), dtype=object)
         _row = 0
