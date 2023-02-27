@@ -58,6 +58,11 @@ class Gui(object):
         # but kept for advanced usage
         self.parent.ui.groupBox_4.setVisible(False)
 
+        # This is the TOF steps, which we also don't need at the moment
+        self.parent.ui.eventTofBins.setVisible(False)
+        self.parent.ui.label_33.setVisible(False)
+        self.parent.ui.label_29.setVisible(False)
+
     def init_autopopulate_widgets(self):
         pixmap = QtGui.QPixmap(":/General/check_icon.png")
         self.parent.ui.check1.setFixedWidth(25)
