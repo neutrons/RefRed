@@ -25,16 +25,18 @@ class GlobalReductionSettingsHandler(object):
 
     def to_dict(self):
         """
-            Return a dictionary with all the options
+        Return a dictionary with all the options
         """
         self.retrieve()
-        pars = dict(incident_medium_selected = self.incident_medium_selected,
-                    q_step = self.q_step,
-                    scaling_factor_flag = self.scaling_factor_flag,
-                    scaling_factor_file = self.scaling_factor_file,
-                    angle_offset = self.angle_offset,
-                    angle_offset_error = self.angle_offset_error,
-                    tof_steps = self.tof_steps)
+        pars = dict(
+            incident_medium_selected=self.incident_medium_selected,
+            q_step=self.q_step,
+            scaling_factor_flag=self.scaling_factor_flag,
+            scaling_factor_file=self.scaling_factor_file,
+            angle_offset=self.angle_offset,
+            angle_offset_error=self.angle_offset_error,
+            tof_steps=self.tof_steps,
+        )
         return pars
 
     def get_tof_steps(self):

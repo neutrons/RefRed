@@ -89,8 +89,11 @@ class LoadingConfiguration(object):
             warning_msg += "You should either start refred version 1, or "
             warning_msg += "reprocess all your data with the new version.\n\n"
             warning_msg += "Please consult with your local contact for advise."
-            QtWidgets.QMessageBox.critical(self.parent, "Version warning",
-                                           warning_msg, QtWidgets.QMessageBox.Ok,
+            QtWidgets.QMessageBox.critical(
+                self.parent,
+                "Version warning",
+                warning_msg,
+                QtWidgets.QMessageBox.Ok,
             )
 
         RefLData = self.dom.getElementsByTagName('RefLData')

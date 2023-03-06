@@ -69,10 +69,11 @@ class LiveReductionHandler(object):
             try:
                 from lr_reduction import template
                 from lr_reduction import reduction_template_reader
+
                 template_data = reduction_template_reader.ReductionParameters()
                 template_data.from_dict(reduction_pars)
                 q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, info=True)
-                self.save_reduction(row_index, refl=[q,r,dr], info=info)
+                self.save_reduction(row_index, refl=[q, r, dr], info=info)
             except:
                 logging.error(sys.exc_info()[1])
                 self.parent.ui.reduceButton.setEnabled(True)
@@ -107,15 +108,12 @@ class LiveReductionHandler(object):
 
     def export(self):
         """
-            Export a basic script that will reduce every run
+        Export a basic script that will reduce every run
         """
         # Ask for the output file path
         run_number = self.parent.big_table_data[0, 0].run_number
-        default_filename = os.path.join(self.parent.path_ascii,
-                                        "REFL_%s_data_reduction_script.py" % run_number)
-        filename, _ = QFileDialog.getSaveFileName(self.parent,
-                                                  "Python script",
-                                                  default_filename)
+        default_filename = os.path.join(self.parent.path_ascii, "REFL_%s_data_reduction_script.py" % run_number)
+        filename, _ = QFileDialog.getSaveFileName(self.parent, "Python script", default_filename)
 
         # If the user hits the cancel button, just exit
         if not filename:
