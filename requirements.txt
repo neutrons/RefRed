@@ -6,3 +6,4 @@ numpy
 PyQt5
 qtpy
 setuptools
+git+https://github.com/neutrons/LiquidsReflectometer@v2.0.5
