@@ -28,13 +28,15 @@ class GlobalReductionSettingsHandler(object):
         Return a dictionary with all the options
         """
         self.retrieve()
-        keys = ["incident_medium_selected",
-                "q_step",
-                "scaling_factor_flag",
-                "scaling_factor_file",
-                "angle_offset",
-                "angle_offset_error",
-                "tof_steps"]
+        keys = [
+            "incident_medium_selected",
+            "q_step",
+            "scaling_factor_flag",
+            "scaling_factor_file",
+            "angle_offset",
+            "angle_offset_error",
+            "tof_steps",
+        ]
         return {k: getattr(self, k) for k in keys}
 
     def get_tof_steps(self):
