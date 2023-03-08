@@ -66,8 +66,8 @@ class LoadingConfiguration(object):
 
     def check_config_file(self, filename):
         """
-            Get the version of the software and warn user if they are trying
-            to load an older xml file.
+        Get the version of the software and warn user if they are trying
+        to load an older xml file.
         """
         dom = minidom.parse(filename)
         version_tag = dom.getElementsByTagName('version')
