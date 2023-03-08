@@ -8,7 +8,7 @@ import RefRed.colors
 
 class PreviewConfig(QtWidgets.QMainWindow):
 
-    system_name = ["instrument_name", "timestamp", "version"]
+    system_name = ["instrument_name", "timestamp", "version", "mantid_version", "generator"]
 
     data_name = [
         "peak_selection_type",
