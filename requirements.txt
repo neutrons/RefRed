@@ -1,0 +1,9 @@
+#mantid-framework
+configobj
+h5py
+matplotlib
+numpy
+PyQt5
+qtpy
+setuptools
+pip @ git+https://github.com/neutrons/LiquidsReflectometer.git@v2.0.5#egg=lr_reduction

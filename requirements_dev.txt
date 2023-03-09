@@ -1,0 +1,11 @@
+# for linting and formatting
+black
+flake8
+mypy
+pre-commit
+pytest
+pytest-cov
+pytest-qt<=3.3.0
+sphinx
+sphinx_rtd_theme
+pip @ git+https://github.com/neutrons/LiquidsReflectometer.git@v2.0.5#egg=lr_reduction
