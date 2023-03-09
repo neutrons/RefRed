@@ -12,4 +12,5 @@ dependencies:
 - pytest-qt
 - qtpy<2
 - pyqt=5.12
-- git+https://github.com/neutrons/LiquidsReflectometer@v2.0.5#egg=lr_reduction
+- pip:
+  - git+https://github.com/neutrons/LiquidsReflectometer.git@v2.0.5#egg=lr_reduction
