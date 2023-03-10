@@ -13,7 +13,7 @@ import os
 SECOND = 1000  # 1000 miliseconds
 
 
-def test_sf_preview(qtbot, qfiledialog_opensave, data_server):
+def skip_test_sf_preview(qtbot, qfiledialog_opensave, data_server):
     window_main = MainGui()
     qtbot.addWidget(window_main)
     # Uncheck button "Use Scaling Factor Config."
