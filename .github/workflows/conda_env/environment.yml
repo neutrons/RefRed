@@ -5,7 +5,7 @@ channels:
 dependencies:
 - configobj
 - flake8=3.9.2
-- mantid
+- mantid=6.5.0
 - matplotlib
 - mypy
 - pytest-cov
