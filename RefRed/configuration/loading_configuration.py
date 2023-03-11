@@ -43,12 +43,15 @@ class LoadingConfiguration(object):
         if not (filename == "") and os.path.isfile(filename):
             # Verify that the file is loadable
             if self.check_config_file(str(filename)):
-                self.loading()
-                message = 'Done!'
+                try:
+                    self.loading()
+                    message = 'Done!'
+                except:
+                    message = 'Error loading file: aborted'
             else:
                 message = "Loading aborted"
         else:
-            message = 'Loading aborted'
+            message = 'File not found'
 
         StatusMessageHandler(parent=self.parent, message=message, is_threaded=True)
 
@@ -69,7 +72,11 @@ class LoadingConfiguration(object):
         Get the version of the software and warn user if they are trying
         to load an older xml file.
         """
-        dom = minidom.parse(filename)
+        try:
+            dom = minidom.parse(filename)
+        except:
+            # If we can't parse the file, it's not a valid file
+            return False
         version_tag = dom.getElementsByTagName('version')
         if len(version_tag) == 0:
             warning_msg = "The reduction parameters you are about to load are from "

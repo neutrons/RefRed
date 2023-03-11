@@ -60,7 +60,7 @@ else:
 
 @pytest.mark.parametrize("case", test_cases)
 @mock.patch("qtpy.QtWidgets.QFileDialog")
-def skip_test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server, case):
+def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server, case):
     # set mock return values for QFileDialog
     QFileDialog_mock().exec_.return_value = True
     QFileDialog_mock().selectedFiles.return_value = data_server.path_to(case["conf"])

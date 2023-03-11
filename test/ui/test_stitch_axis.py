@@ -6,7 +6,7 @@ from qtpy import QtCore, QtWidgets
 wait = 100
 
 
-def skipt_test_stitch_plot(qtbot, main_gui, data_server):
+def test_stitch_plot(qtbot, main_gui, data_server):
     """Test the axis adjustment in stitching plot"""
     main_window = main_gui(
         configuration=data_server.path_to("REF_L_188299_to_188301.xml"),
