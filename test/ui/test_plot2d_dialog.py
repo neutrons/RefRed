@@ -7,7 +7,7 @@ from qtpy import QtCore, QtWidgets
 wait = 100
 
 
-def skip_test_plot2d_dialog(qtbot, data_server):
+def test_plot2d_dialog(qtbot, data_server):
     """Test the plot2d dialog."""
     # Create the main window
     window = MainGui()

@@ -1,5 +1,6 @@
 <Reduction>
  <instrument_name>REFL</instrument_name>
+ <version>2.0.0</version>
 <generator>RefRed</generator>
  <DataSeries>
   <RefLData>
