@@ -64,7 +64,7 @@ class TestLoadingConfiguration(object):
         mockFileDialog.selectedFiles.assert_called()
         not mockOsPathIsFile.called
         mockStatusMessageHandler.assert_called_with(
-            parent=loadingConfiguration.parent, message='User Canceled loading!', is_threaded=True
+            parent=loadingConfiguration.parent, message='Loading aborted', is_threaded=True
         )
         assert not mockLoading.called
 
