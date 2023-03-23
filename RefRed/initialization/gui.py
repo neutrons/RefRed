@@ -63,6 +63,8 @@ class Gui(object):
         self.parent.ui.label_33.setVisible(False)
         self.parent.ui.label_29.setVisible(False)
 
+        self.parent.ui.sf_button.setChecked(True)
+
     def init_autopopulate_widgets(self):
         pixmap = QtGui.QPixmap(":/General/check_icon.png")
         self.parent.ui.check1.setFixedWidth(25)

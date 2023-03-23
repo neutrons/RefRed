@@ -171,6 +171,7 @@ class LiveReductionHandler(object):
         _config.reduce_q_axis = np.copy(refl[0])
         _config.reduce_y_axis = np.copy(refl[1])
         _config.reduce_e_axis = np.copy(refl[2])
+        _config.meta_data = info
         _config.q_axis_for_display = refl[0]
         _config.y_axis_for_display = refl[1]
         _config.e_axis_for_display = refl[2]

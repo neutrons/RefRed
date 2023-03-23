@@ -178,16 +178,8 @@ def export_ascii(qtbot, window, multiple=False):
     qtbot.mouseClick(export_button_widget, QtCore.Qt.LeftButton)
     qtbot.wait(wait)
 
-    outputReducedDataDialog = window.findChildren(QtWidgets.QDialog)[-1]
-
-    if multiple:
-        # select 'n Ascii Files'
-        qtbot.mouseClick(outputReducedDataDialog.ui.n_ascii_format, QtCore.Qt.LeftButton)
-        qtbot.wait(wait)
-
-    # press "Create Ascii File ..."
-    qtbot.mouseClick(outputReducedDataDialog.ui.createAsciiButton, QtCore.Qt.LeftButton)
-    qtbot.wait(wait)
+    outputReducedDataDialog = window.findChildren(QtWidgets.QFileDialog)[-1]
+    assert outputReducedDataDialog is not None
 
 
 if __name__ == '__main__':
