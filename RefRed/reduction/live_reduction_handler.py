@@ -4,7 +4,8 @@ import numpy as np
 import logging
 import json
 import time
-from qtpy.QtWidgets import QApplication, QFileDialog
+import qtpy.QtWidgets
+from qtpy.QtWidgets import QApplication
 from RefRed.mantid_utility import MantidUtility
 from RefRed.lconfigdataset import LConfigDataset
 from RefRed.reduction.live_calculate_sf import LiveCalculateSF
@@ -118,7 +119,7 @@ class LiveReductionHandler(object):
         # Ask for the output file path
         run_number = self.parent.big_table_data[0, 0].run_number
         default_filename = os.path.join(self.parent.path_ascii, "REFL_%s_data_reduction_script.py" % run_number)
-        filename, _ = QFileDialog.getSaveFileName(self.parent, "Python script", default_filename)
+        filename, _ = qtpy.QtWidgets.QFileDialog.getSaveFileName(self.parent, "Python script", default_filename)
 
         # If the user hits the cancel button, just exit
         if not filename:
