@@ -29,6 +29,8 @@ class TestLoadingConfiguration(object):
         mockFileDialog.exec_.return_value = True
         mockFileDialog.selectedFiles.return_value = 'this is a filename'
 
+        # If we want to test the happy path, we should pass an actual file
+        # because the code now check the validity of the file.
         mockOsPathIsFile.return_value = True
 
         mockQFileDialog.return_value = mockFileDialog
@@ -39,10 +41,12 @@ class TestLoadingConfiguration(object):
         mockFileDialog.exec_.assert_called()
         mockFileDialog.selectedFiles.assert_called()
         mockOsPathIsFile.assert_called()
+        # The message returned will be "Loading aborted" because we didn't pass
+        # an actual file path
         mockStatusMessageHandler.assert_called_with(
-            parent=loadingConfiguration.parent, message='Done!', is_threaded=True
+            parent=loadingConfiguration.parent, message='Loading aborted', is_threaded=True
         )
-        mockLoading.assert_called()
+        assert not mockLoading.called
 
     @mock.patch('os.path.isfile')
     @mock.patch('RefRed.configuration.loading_configuration.StatusMessageHandler')
@@ -53,7 +57,7 @@ class TestLoadingConfiguration(object):
         mockFileDialog.exec_.return_value = True
         mockFileDialog.selectedFiles.return_value = ''
 
-        mockOsPathIsFile.return_value = True
+        mockOsPathIsFile.return_value = False
 
         mockQFileDialog.return_value = mockFileDialog
         loadingConfiguration = self.test_init()
@@ -64,13 +68,13 @@ class TestLoadingConfiguration(object):
         mockFileDialog.selectedFiles.assert_called()
         not mockOsPathIsFile.called
         mockStatusMessageHandler.assert_called_with(
-            parent=loadingConfiguration.parent, message='User Canceled loading!', is_threaded=True
+            parent=loadingConfiguration.parent, message='File not found', is_threaded=True
         )
         assert not mockLoading.called
 
     @mock.patch('os.path.isfile')
     @mock.patch('RefRed.configuration.loading_configuration.StatusMessageHandler')
-    @mock.patch('RefRed.configuration.loading_configuration.LoadingConfiguration.loading')
+    @mock.patch('RefRed.configuration.loading_configuration.LoadingConfiguration.check_config_file')
     @mock.patch('qtpy.QtWidgets.QFileDialog')
     def test_run_file_found_but_filename_is_list(
         self, mockQFileDialog, mockLoading, mockStatusMessageHandler, mockOsPathIsFile
@@ -90,7 +94,7 @@ class TestLoadingConfiguration(object):
         mockFileDialog.selectedFiles.assert_called()
         mockOsPathIsFile.assert_called()
         mockStatusMessageHandler.assert_called_with(
-            parent=loadingConfiguration.parent, message='Done!', is_threaded=True
+            parent=loadingConfiguration.parent, message='Error loading file: aborted', is_threaded=True
         )
         mockLoading.assert_called()
 

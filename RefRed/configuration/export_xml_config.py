@@ -1,8 +1,12 @@
 import os
 import logging
+import datetime
+import RefRed
 from RefRed.configuration.export_stitching_ascii_settings import ExportStitchingAsciiSettings
 from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
 from RefRed.gui_handling.gui_utility import GuiUtility
+import lr_reduction
+import mantid
 
 
 class ExportXMLConfig(object):
@@ -45,32 +49,10 @@ class ExportXMLConfig(object):
         str_array = self.str_array
         str_array.append('<Reduction>\n')
         str_array.append(' <instrument_name>REFL</instrument_name>\n')
-
-        # time stamp
-        import datetime
-
         str_array.append(' <timestamp>' + datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p") + '</timestamp>\n')
-
-        # python version
-        import sys
-
-        str_array.append(' <python_version>' + sys.version + '</python_version>\n')
-
-        # platform
-        import platform
-
-        str_array.append(' <platform>' + platform.system() + '</platform>\n')
-
-        # architecture
-        str_array.append(' <architecture>' + platform.machine() + '</architecture>\n')
-
-        # mantid version
-        import mantid
-
+        str_array.append(' <version>%s</version>\n' % lr_reduction.__version__)
         str_array.append(' <mantid_version>' + mantid.__version__ + '</mantid_version>\n')
-
-        # generator
-        str_array.append('<generator>RefRed</generator>\n')
+        str_array.append('<generator>RefRed-%s</generator>\n' % RefRed.__version__)
 
         # metadata
         str_array.append(' <DataSeries>\n')

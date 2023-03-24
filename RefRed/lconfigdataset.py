@@ -43,6 +43,7 @@ class LConfigDataset(object):
 
     wks = None
     wks_scaled = None
+    meta_data = None
 
     sf_auto = 1  # auto scaling calculated by program (auto stitching)
     sf_manual = 1  # manual scaling (manual stitching)

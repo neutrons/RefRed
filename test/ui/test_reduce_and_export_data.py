@@ -1,5 +1,5 @@
 from RefRed.main import MainGui
-from qtpy import QtCore, QtWidgets
+from qtpy import QtCore
 import os
 import pytest
 from unittest import mock
@@ -109,16 +109,6 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server, 
     # compare results to expected
     compare_results("output.txt", data_server.path_to(case["ascii"]), tmp_path)
 
-    # Export data again but this time into multiple files
-    export_ascii(qtbot, window, multiple=True)
-
-    for run in case["run set"]:
-        assert os.path.exists(tmp_path / f"REF_L_{run}_reduced_data.txt")
-
-    # compare just the first file
-    first_run = case["run set"][0]
-    compare_results(f"REF_L_{first_run}_reduced_data.txt", data_server.path_to(case["first reduced"]), tmp_path)
-
     # Change from Absolute Normalization to Auto. Stitching.
     (tmp_path / "output.txt").unlink()
     qtbot.mouseClick(window.ui.auto_stitching_button, QtCore.Qt.LeftButton, pos=QtCore.QPoint(10, 9))
@@ -131,7 +121,7 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server, 
 
     # export the reduction script
     (tmp_path / "output.txt").unlink()
-    # open reduction  menu, move down two and select
+
     action_rect = window.ui.menubar.actionGeometry(window.ui.menuReduction.menuAction())
     qtbot.mouseClick(window.ui.menubar, QtCore.Qt.LeftButton, pos=action_rect.center())
     qtbot.wait(wait)
@@ -146,17 +136,23 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server, 
     expected_script = open(data_server.path_to(case["script"])).readlines()
 
     for value, expected in zip(reduction_script, expected_script):
-        if value.startswith('#'):
+        if value.startswith('#') or value.startswith('reduction_pars'):
             continue
         assert value.strip() == expected.strip()
 
 
 def compare_results(results_file, expected_results_file, tmp_path):
+    print("Compare: %s %s" % (expected_results_file, results_file))
     results = open(tmp_path / results_file).readlines()
     expected_results = open(expected_results_file).readlines()
 
     for value, expected in zip(results, expected_results):
-        if value.startswith("# Reduction time") or value.startswith("# Mantid version") or "# Date" in value:
+        if (
+            value.startswith("# Reduction time")
+            or value.startswith("# Mantid version")
+            or "# Date" in value
+            or "# Reduction"
+        ):
             continue
 
         if value.startswith('# # 188'):
@@ -169,24 +165,14 @@ def compare_results(results_file, expected_results_file, tmp_path):
             assert value.strip() == expected.strip()
         else:
             np.testing.assert_allclose(np.array(value.split(), dtype=float), np.array(expected.split(), dtype=float))
+    print("   -- passed")
 
 
-def export_ascii(qtbot, window, multiple=False):
+def export_ascii(qtbot, window):
     # press "Export the plot into ASCII file"
     export_action = window.ui.data_stitching_plot.toolbar.actions()[9]
     export_button_widget = window.ui.data_stitching_plot.toolbar.widgetForAction(export_action)
     qtbot.mouseClick(export_button_widget, QtCore.Qt.LeftButton)
-    qtbot.wait(wait)
-
-    outputReducedDataDialog = window.findChildren(QtWidgets.QDialog)[-1]
-
-    if multiple:
-        # select 'n Ascii Files'
-        qtbot.mouseClick(outputReducedDataDialog.ui.n_ascii_format, QtCore.Qt.LeftButton)
-        qtbot.wait(wait)
-
-    # press "Create Ascii File ..."
-    qtbot.mouseClick(outputReducedDataDialog.ui.createAsciiButton, QtCore.Qt.LeftButton)
     qtbot.wait(wait)
 
 

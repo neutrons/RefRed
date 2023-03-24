@@ -50,6 +50,29 @@ class IndividualReductionSettingsHandler(object):
         self._tof_range = self.get_tof_range()
         self._output_workspace_name = self.define_output_workspace_name(run_numbers=self._data_run_numbers)
 
+    def to_dict(self):
+        """
+        Return a dictionary with the reduction options
+        """
+        self.retrieve()
+        pars = dict(
+            data_files=self._data_run_numbers,
+            norm_file=self._norm_run_numbers,
+            data_peak_range=self._data_peak_range,
+            substract_background=self._data_back_flag,
+            background_roi=self._data_back_range,
+            data_x_range_flag=self._data_low_res_flag,
+            data_x_range=self._data_low_res_range,
+            apply_normalization=self._norm_flag,
+            norm_peak_range=self._norm_peak_range,
+            subtract_norm_background=self._norm_back_flag,
+            norm_background_roi=self._norm_back_range,
+            norm_x_range_flag=self._norm_low_res_flag,
+            norm_x_range=self._norm_low_res_range,
+            tof_range=self._tof_range,
+        )
+        return pars
+
     def define_output_workspace_name(self, run_numbers=None):
         str_run_numbers = run_numbers
         return "reflectivity_%s" % str_run_numbers

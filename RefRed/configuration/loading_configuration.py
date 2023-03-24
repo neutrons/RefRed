@@ -41,11 +41,17 @@ class LoadingConfiguration(object):
             filename = filename[-1]
         QtWidgets.QApplication.processEvents()
         if not (filename == "") and os.path.isfile(filename):
-            self.filename = str(filename)
-            self.loading()
-            message = 'Done!'
+            # Verify that the file is loadable
+            if self.check_config_file(str(filename)):
+                try:
+                    self.loading()
+                    message = 'Done!'
+                except:
+                    message = 'Error loading file: aborted'
+            else:
+                message = "Loading aborted"
         else:
-            message = 'User Canceled loading!'
+            message = 'File not found'
 
         StatusMessageHandler(parent=self.parent, message=message, is_threaded=True)
 
@@ -54,11 +60,46 @@ class LoadingConfiguration(object):
         self.clear_reductionTable()
         self.clear_display()
         self.display_name_config_file()
-        self.load_config_in_big_table_data()
+        self.populate_big_table_data_with_lconfig()
+        self.populate_main_gui_general_settings()
         self.populate_reduction_table_from_lconfigdataset()
         self.load_reduction_table_from_lconfigdataset()
         self.reset_gui_modified_status()
         self.live_preview_config_status()
+
+    def check_config_file(self, filename):
+        """
+        Get the version of the software and warn user if they are trying
+        to load an older xml file.
+        """
+        try:
+            dom = minidom.parse(filename)
+        except:
+            # If we can't parse the file, it's not a valid file
+            return False
+        version_tag = dom.getElementsByTagName('version')
+        if len(version_tag) == 0:
+            warning_msg = "The reduction parameters you are about to load are from "
+            warning_msg += "an older version of the reduction.\n\n"
+            warning_msg += "It is NOT advised to mix reduction versions.\n\n"
+            warning_msg += "You should either start refred version 1, or "
+            warning_msg += "reprocess all your data with the new version.\n\n"
+            warning_msg += "Please consult with your local contact for advise."
+
+            box = QtWidgets.QMessageBox()
+            box.setIcon(QtWidgets.QMessageBox.Critical)
+            box.setText(warning_msg)
+            box.setWindowTitle("Version warning")
+            box.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+
+            return_value = box.exec()
+            if return_value == QtWidgets.QMessageBox.Cancel:
+                return False
+
+        # If the user wants to proceed. store the relevant information
+        self.filename = filename
+        self.dom = dom
+        return True
 
     def live_preview_config_status(self):
         self.parent.ui.previewLive.setEnabled(True)
@@ -72,15 +113,8 @@ class LoadingConfiguration(object):
         o_gui = GuiUtility(parent=self.parent)
         o_gui.new_config_file_loaded(config_file_name=self.filename)
 
-    def load_config_in_big_table_data(self):
-        filename = self.filename
-        self.dom = minidom.parse(filename)
-        self.populate_big_table_data_with_lconfig()
-        self.populate_main_gui_general_settings()
-
     def populate_big_table_data_with_lconfig(self):
-        dom = self.dom
-        RefLData = dom.getElementsByTagName('RefLData')
+        RefLData = self.dom.getElementsByTagName('RefLData')
 
         big_table_data = empty((self.parent.nbr_row_table_reduction, 3), dtype=object)
         _row = 0

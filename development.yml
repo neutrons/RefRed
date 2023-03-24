@@ -11,6 +11,10 @@ dependencies:
   - pip
   - configobj
   - matplotlib
+
+  - pip
+  - pip:
+    - git+https://github.com/neutrons/LiquidsReflectometer@master
 # documentation
   - sphinx
   - sphinx_rtd_theme

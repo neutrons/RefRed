@@ -3,9 +3,11 @@ from typing import List, Tuple
 from pathlib import Path
 from qtpy import QtWidgets
 import RefRed.utilities
-from RefRed.export.output_reduced_data import OutputReducedData
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.utilities import makeSureFileHasExtension
+from RefRed.reduction.reduced_data_handler import ReducedDataHandler
+
+from lr_reduction import output as lr_output
 
 
 class ExportPlotAscii:
@@ -187,8 +189,74 @@ class ExportPlotAscii:
         )
 
     def export_stitched(self):
-        _tmp = OutputReducedData(parent=self.parent)
-        _tmp.show()
+        """
+        Pop up a dialog to ask the user where the save the output file,
+        then proceed.
+        """
+        run_number = self.parent.ui.reductionTable.item(0, 1).text()
+        default_filename = "REFL_%s_reduced_data.txt" % run_number
+        path = Path(self.parent.path_ascii)
+        default_filename = path / default_filename
+        caption = "Select Location and Name"
+        filter = "Reduced Ascii (*.txt);; All (*.*)"
+        filename, filter = QtWidgets.QFileDialog.getSaveFileName(
+            self.parent,
+            caption,
+            str(default_filename),
+            filter,
+        )
+
+        if filename.strip():
+            # valid filename, save now
+            folder = os.path.dirname(filename)
+            if not os.access(folder, os.W_OK):
+                self.ui.folder_error.setVisible(True)
+                return
+
+            self.filename = filename
+            self.parent.path_ascii = os.path.dirname(filename)
+            self.write_output_file(self.filename)
+
+    def write_output_file(self, file_path):
+        """
+        Collect all the reduced data and create an output file.
+        """
+        # TODO: this should be an options. It's defaulted to 1 for the automated reduction workflow
+        # and we pick the same here.
+        pre_cut = 1
+        post_cut = 1
+
+        # Gather data
+        o_gui_utility = GuiUtility(parent=self.parent)
+        nbr_row = o_gui_utility.reductionTable_nbr_row()
+        o_reduced_data_hanlder = ReducedDataHandler(parent=self.parent)
+
+        coll = lr_output.RunCollection()
+        for row in range(nbr_row):
+            _data = self.parent.big_table_data[row, 2]
+
+            # Get the scaling factor, which may change in the UI
+            sf = o_reduced_data_hanlder.generate_selected_sf(lconfig=_data)
+
+            # Get the reduced data
+            qz_mid = _data.reduce_q_axis
+            refl = _data.reduce_y_axis
+            d_refl = _data.reduce_e_axis
+
+            _data.meta_data['scaling_factors']['a'] = sf * _data.meta_data['scaling_factors']['a']
+            _data.meta_data['scaling_factors']['err_a'] = sf * _data.meta_data['scaling_factors']['err_a']
+            _data.meta_data['scaling_factors']['b'] = sf * _data.meta_data['scaling_factors']['b']
+            _data.meta_data['scaling_factors']['err_b'] = sf * _data.meta_data['scaling_factors']['err_b']
+
+            npts = len(qz_mid)
+            coll.add(
+                qz_mid[pre_cut : npts - post_cut],
+                refl[pre_cut : npts - post_cut],
+                d_refl[pre_cut : npts - post_cut],
+                meta_data=_data.meta_data,
+            )
+
+        coll.save_ascii(file_path)
 
     def get_active_data(self):
         """Find the active/selected data from GUI"""

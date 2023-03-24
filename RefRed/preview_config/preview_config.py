@@ -8,14 +8,7 @@ import RefRed.colors
 
 class PreviewConfig(QtWidgets.QMainWindow):
 
-    system_name = [
-        "instrument_name",
-        "timestamp",
-        "python_version",
-        "platform",
-        "architecture",
-        "mantid_version",
-    ]
+    system_name = ["instrument_name", "timestamp", "version", "mantid_version", "generator"]
 
     data_name = [
         "peak_selection_type",
@@ -56,7 +49,6 @@ class PreviewConfig(QtWidgets.QMainWindow):
         "scaling_factor_flag",
         "scaling_factor_file",
         "slits_width_flag",
-        "geometry_correction_switch",
         "incident_medium_list",
         "incident_medium_index_selected",
         "fourth_column_flag",
@@ -119,8 +111,11 @@ class PreviewConfig(QtWidgets.QMainWindow):
         # system data
         _system_table = empty((len(self.system_name)), dtype=object)
         for _index, _name in enumerate(self.system_name):
-            _value = str(_dom.getElementsByTagName(_name)[0].childNodes[0].data)
-            _system_table[_index] = str(_value)
+            try:
+                _value = str(_dom.getElementsByTagName(_name)[0].childNodes[0].data)
+                _system_table[_index] = str(_value)
+            except:
+                _system_table[_index] = ""
 
             refl_data = _dom.getElementsByTagName("RefLData")
             nbr_row = len(refl_data)
@@ -169,8 +164,11 @@ class PreviewConfig(QtWidgets.QMainWindow):
         _data_table = empty((nbr_row, len(self.data_name)), dtype=object)
         for _row_index, _run_node in enumerate(refl_data):
             for _child_index, _child_name in enumerate(self.data_name):
-                _value = self.get_node_value(_run_node, _child_name)
-                _data_table[_row_index, _child_index] = str(_value)
+                try:
+                    _value = self.get_node_value(_run_node, _child_name)
+                    _data_table[_row_index, _child_index] = str(_value)
+                except:
+                    _data_table[_row_index, _child_index] = ""
         self._data_table = _data_table
 
     def _populate_runs_data(self):
@@ -203,8 +201,11 @@ class PreviewConfig(QtWidgets.QMainWindow):
     def _retrieve_runs_system(self, _dom):
         _system_table = empty((len(self.system_name)), dtype=object)
         for _index, _name in enumerate(self.system_name):
-            _value = str(_dom.getElementsByTagName(_name)[0].childNodes[0].data)
-            _system_table[_index] = str(_value)
+            try:
+                _value = str(_dom.getElementsByTagName(_name)[0].childNodes[0].data)
+                _system_table[_index] = str(_value)
+            except:
+                _system_table[_index] = ""
 
         self._system_table = _system_table
 

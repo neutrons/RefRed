@@ -38,8 +38,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1676</width>
-         <height>1179</height>
+         <width>1666</width>
+         <height>1205</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_68">
@@ -640,7 +640,7 @@ p, li { white-space: pre-wrap; }
                                  </size>
                                 </property>
                                 <property name="text">
-                                 <string>0.016</string>
+                                 <string>0</string>
                                 </property>
                                </widget>
                               </item>
@@ -3183,11 +3183,11 @@ p, li { white-space: pre-wrap; }
                   <attribute name="horizontalHeaderVisible">
                    <bool>true</bool>
                   </attribute>
-                  <attribute name="horizontalHeaderMinimumSectionSize">
-                   <number>25</number>
-                  </attribute>
                   <attribute name="horizontalHeaderDefaultSectionSize">
                    <number>50</number>
+                  </attribute>
+                  <attribute name="horizontalHeaderMinimumSectionSize">
+                   <number>25</number>
                   </attribute>
                   <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
                    <bool>false</bool>
@@ -4214,7 +4214,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1696</width>
-     <height>25</height>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">
@@ -4251,7 +4251,6 @@ p, li { white-space: pre-wrap; }
     </property>
     <addaction name="actionMetadataFinder"/>
     <addaction name="actionSF_Calculator"/>
-    <addaction name="actionTemplateManagement"/>
    </widget>
    <widget class="QMenu" name="menuReduction">
     <property name="title">
@@ -5476,22 +5475,6 @@ p, li { white-space: pre-wrap; }
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>action_new()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>784</x>
-     <y>563</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionTemplateManagement</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>launch_template_management()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

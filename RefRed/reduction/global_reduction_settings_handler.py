@@ -1,7 +1,6 @@
 class GlobalReductionSettingsHandler(object):
 
     incident_medium_selected = ''
-    geometry_correction_flag = False
     q_min = 0.005
     q_step = 50
     scaling_factor_file = ''
@@ -23,6 +22,22 @@ class GlobalReductionSettingsHandler(object):
         self.angle_offset = self.get_angle_offset()
         self.angle_offset_error = self.get_angle_offset_error()
         self.tof_steps = self.get_tof_steps()
+
+    def to_dict(self):
+        """
+        Return a dictionary with all the options
+        """
+        self.retrieve()
+        keys = [
+            "incident_medium_selected",
+            "q_step",
+            "scaling_factor_flag",
+            "scaling_factor_file",
+            "angle_offset",
+            "angle_offset_error",
+            "tof_steps",
+        ]
+        return {k: getattr(self, k) for k in keys}
 
     def get_tof_steps(self):
         return float(self.parent.ui.eventTofBins.text())
