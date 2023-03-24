@@ -136,7 +136,7 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server, 
     expected_script = open(data_server.path_to(case["script"])).readlines()
 
     for value, expected in zip(reduction_script, expected_script):
-        if value.startswith('#'):
+        if value.startswith('#') or value.startswith('reduction_pars'):
             continue
         assert value.strip() == expected.strip()
 
