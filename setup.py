@@ -13,11 +13,19 @@ def read_requirements_from_file(filepath):
     :param str filepath: Path to the file to read
     :return List[str]:
     """
-    with open(filepath, 'r') as req_file:
-        return req_file.readlines()
+    # with open(filepath, 'r') as req_file:
+    #    return req_file.readlines()
+    links, non_links = list(), list()
+    with open(filepath, "r") as req_file:
+        for line in req_file.readlines():
+            if "git+https" in line:
+                links += line
+            else:
+                non_links += line
+    return links, non_links
 
 
-install_requires = read_requirements_from_file(os.path.join(THIS_DIR, 'requirements.txt'))
+dependency_links, install_requires = read_requirements_from_file(os.path.join(THIS_DIR, 'requirements.txt'))
 
 # TODO can this be safely substituted with setuptools.find_packages?
 __packages__ = [
@@ -60,4 +68,5 @@ setup(
     package_dir={},
     package_data={'': ['*.ui', '*.png', '*.qrc']},
     install_requires=install_requires,
+    dependency_links=dependency_links
 )
