@@ -6,7 +6,7 @@ from RefRed.plot.launch_stitching_manual_axis import LaunchStitchingManualYAxis
 from RefRed.gui_handling.gui_utility import GuiUtility
 
 
-DOUBLE_CLICK_DELAY = 0.4 # seconds
+DOUBLE_CLICK_DELAY = 0.4  # seconds
 
 
 class SingleClickPlot(object):
