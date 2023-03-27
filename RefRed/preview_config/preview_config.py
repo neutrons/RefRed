@@ -42,8 +42,6 @@ class PreviewConfig(QtWidgets.QMainWindow):
         "q_min",
         "q_step",
         "auto_q_binning",
-        "overlap_lowest_error",
-        "overlap_mean_value",
         "angle_offset",
         "angle_offset_error",
         "scaling_factor_flag",
@@ -51,9 +49,6 @@ class PreviewConfig(QtWidgets.QMainWindow):
         "slits_width_flag",
         "incident_medium_list",
         "incident_medium_index_selected",
-        "fourth_column_flag",
-        "fourth_column_dq0",
-        "fourth_column_dq_over_q",
     ]
 
     _data_table = []

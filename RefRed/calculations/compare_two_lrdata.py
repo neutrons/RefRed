@@ -1,4 +1,4 @@
-import RefRed.constants
+THETA_TOLERANCE = 0.05
 
 
 class CompareTwoLRData(object):
@@ -64,7 +64,7 @@ class CompareTwoLRData(object):
         value_1 = _lrdata_1.theta
         value_2 = _lrdata_2.theta
 
-        if abs(value_1 - value_2) < RefRed.constants.precision_in_theta_when_matching_lrdata:
+        if abs(value_1 - value_2) < THETA_TOLERANCE:
             return 0
         else:
             if value_1 < value_2:
