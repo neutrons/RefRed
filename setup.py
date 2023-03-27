@@ -68,5 +68,5 @@ setup(
     package_dir={},
     package_data={'': ['*.ui', '*.png', '*.qrc']},
     install_requires=install_requires,
-    dependency_links=dependency_links
+    dependency_links=dependency_links,
 )
