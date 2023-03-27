@@ -223,13 +223,17 @@ class ExportPlotAscii:
         """
         # TODO: this should be an options. It's defaulted to 1 for the automated reduction workflow
         # and we pick the same here.
-        pre_cut = 1
-        post_cut = 1
+        pre_cut = 0
+        post_cut = 0
 
         # Gather data
         o_gui_utility = GuiUtility(parent=self.parent)
         nbr_row = o_gui_utility.reductionTable_nbr_row()
         o_reduced_data_hanlder = ReducedDataHandler(parent=self.parent)
+
+        # Check wheter we want to export each individual run
+        export_all = self.parent.ui.export_individual_checkbox.isChecked()
+        _root, _ext = os.path.splitext(file_path)
 
         coll = lr_output.RunCollection()
         for row in range(nbr_row):
@@ -255,6 +259,18 @@ class ExportPlotAscii:
                 d_refl[pre_cut : npts - post_cut],
                 meta_data=_data.meta_data,
             )
+
+            # At the user's request, save each individual run
+            if export_all:
+                run_file_path = "%s-%d%s" % (_root, row, _ext)
+                coll_run = lr_output.RunCollection()
+                coll_run.add(
+                    qz_mid[pre_cut : npts - post_cut],
+                    refl[pre_cut : npts - post_cut],
+                    d_refl[pre_cut : npts - post_cut],
+                    meta_data=_data.meta_data,
+                )
+                coll_run.save_ascii(run_file_path)
 
         coll.save_ascii(file_path)
 

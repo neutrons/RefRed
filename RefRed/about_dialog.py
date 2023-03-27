@@ -4,6 +4,7 @@ from RefRed import __version__ as RefRed_version_str
 from qtpy import QtWidgets, QT_VERSION, PYQT_VERSION
 import sys
 import mantid
+import lr_reduction
 
 
 class AboutDialog(object):
@@ -23,7 +24,8 @@ class AboutDialog(object):
 
         message = '''RefRed - Liquids Reflectrometry Reduction program
 
-        version %s
+        RefRed version %s
+        Reduction version %s
 
         Library versions:
           - Python: %s
@@ -33,6 +35,7 @@ class AboutDialog(object):
           - Qt: %s
           - PyQt: %s''' % (
             RefRed_version_str,
+            lr_reduction.__version__,
             python_version,
             numpy_version,
             mantid_version,
