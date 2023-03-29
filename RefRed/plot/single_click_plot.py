@@ -1,11 +1,12 @@
 import time
-
-import RefRed.constants
 from RefRed.plot.popup_plot_1d import PopupPlot1d
 from RefRed.plot.popup_plot_2d import PopupPlot2d
 from RefRed.plot.launch_stitching_manual_axis import LaunchStitchingManualXAxis
 from RefRed.plot.launch_stitching_manual_axis import LaunchStitchingManualYAxis
 from RefRed.gui_handling.gui_utility import GuiUtility
+
+
+DOUBLE_CLICK_DELAY = 0.4  # seconds
 
 
 class SingleClickPlot(object):
@@ -73,7 +74,7 @@ class SingleClickPlot(object):
         else:
             _time_click2 = time.time()
 
-        if (_time_click2 - parent.time_click1) <= RefRed.constants.double_click_if_within_time:
+        if (_time_click2 - parent.time_click1) <= DOUBLE_CLICK_DELAY:
             popup_plot = PopupPlot1d(parent=self.parent, data_type=data_type, data=self.data, row=self.row)
             popup_plot.show()
 
@@ -90,6 +91,6 @@ class SingleClickPlot(object):
         else:
             _time_click2 = time.time()
 
-        if (_time_click2 - parent.time_click1) <= RefRed.constants.double_click_if_within_time:
+        if (_time_click2 - parent.time_click1) <= DOUBLE_CLICK_DELAY:
             popup_plot = PopupPlot2d(parent=self.parent, data_type=data_type, data=self.data, row=self.row)
             popup_plot.show()

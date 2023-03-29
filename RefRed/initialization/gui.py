@@ -2,9 +2,6 @@ from qtpy import QtGui, QtCore, QtWidgets
 import socket
 
 from RefRed import WINDOW_TITLE
-from RefRed.configuration.export_stitching_ascii_settings import (
-    ExportStitchingAsciiSettings,
-)
 from RefRed.plot.all_plot_axis import AllPlotAxis
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
@@ -37,7 +34,6 @@ class Gui(object):
         self.set_main_table()
         self.set_stiching_table()
         self.set_reduced_table()
-        self.set_export_stitching_settings()
         self.set_default_path()
         self.init_error_label_widgets()
         parent.allPlotAxis = AllPlotAxis()
@@ -194,12 +190,6 @@ class Gui(object):
             _widget.setEnabled(True)
             _widget.stateChanged.connect(self.parent.reduced_ascii_data_set_table_visibility_changed)
             parent.ui.reducedAsciiDataSetTable.setCellWidget(row_index, 1, _widget)
-
-    def set_export_stitching_settings(self):
-        """set up the export stitching settings"""
-        parent = self.parent
-
-        parent.exportStitchingAsciiSettings = ExportStitchingAsciiSettings()
 
     def set_default_path(self):
         """set up the default path when looking for nexus"""

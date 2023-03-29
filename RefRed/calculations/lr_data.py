@@ -6,7 +6,6 @@ from mantid.api import mtd
 from mantid.simpleapi import Rebin
 from RefRed.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
 from RefRed.low_res_finder_algorithms.low_res_finder import LowResFinder
-import RefRed.constants as constants
 from RefRed.plot.all_plot_axis import AllPlotAxis
 from RefRed.utilities import convert_angle
 
@@ -16,6 +15,7 @@ H_OVER_M_NEUTRON = PLANCK_CONSTANT / NEUTRON_MASS
 
 # any run before, tmin and tmax will be used a different algorithm
 RUN_NUMBER_0_BETTER_CHOPPER_COVERAGE = 137261
+NEW_GEOMETRY_DATE = '2014-10-01'
 
 
 class LRData(object):
@@ -324,11 +324,6 @@ class LRData(object):
         """
         This function parses the output.date and returns true if this date is after the ref date
         """
-        ref_date = constants.new_geometry_detector_date
         nexus_date = self.date
         nexus_date_acquistion = nexus_date.split('T')[0]
-
-        if nexus_date_acquistion > ref_date:
-            return True
-        else:
-            return False
+        return nexus_date_acquistion > NEW_GEOMETRY_DATE

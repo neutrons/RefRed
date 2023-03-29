@@ -2,7 +2,6 @@ import os
 import logging
 import datetime
 import RefRed
-from RefRed.configuration.export_stitching_ascii_settings import ExportStitchingAsciiSettings
 from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
 from RefRed.gui_handling.gui_utility import GuiUtility
 import lr_reduction
@@ -168,11 +167,6 @@ class ExportXMLConfig(object):
             # str_array.append('   <norm_full_file_name>' + norm_full_file_name + '</norm_full_file_name>\n')
 
             str_array.append('   <auto_q_binning>False</auto_q_binning>\n')
-            _exportStitchingAsciiSettings = ExportStitchingAsciiSettings()
-            _overlap_lowest_error = _exportStitchingAsciiSettings.use_lowest_error_value_flag
-            str_array.append('   <overlap_lowest_error>' + str(_overlap_lowest_error) + '</overlap_lowest_error>\n')
-            _overlap_mean_value = _exportStitchingAsciiSettings.overlap_mean_value_flag
-            str_array.append('   <overlap_mean_value>' + str(_overlap_mean_value) + '</overlap_mean_value>\n')
 
             angleValue = str(self.parent.ui.angleOffsetValue.text())
             angleError = str(self.parent.ui.angleOffsetError.text())
@@ -202,16 +196,6 @@ class ExportXMLConfig(object):
             str_array.append(
                 '   <incident_medium_index_selected>' + str(imIndex - 1) + '</incident_medium_index_selected>\n'
             )
-
-            # output
-            fcFlag = _exportStitchingAsciiSettings.fourth_column_flag
-            str_array.append('   <fourth_column_flag>' + str(fcFlag) + '</fourth_column_flag>\n')
-
-            fcdq0 = _exportStitchingAsciiSettings.fourth_column_dq0
-            str_array.append('   <fourth_column_dq0>' + str(fcdq0) + '</fourth_column_dq0>\n')
-
-            fcdqoverq = _exportStitchingAsciiSettings.fourth_column_dq_over_q
-            str_array.append('   <fourth_column_dq_over_q>' + str(fcdqoverq) + '</fourth_column_dq_over_q>\n')
 
             str_array.append('   <slits_width_flag>True</slits_width_flag>\n')
             str_array.append('  </RefLData>\n')
