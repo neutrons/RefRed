@@ -16,6 +16,7 @@ class GlobalReductionSettingsHandler(object):
 
     def retrieve(self):
         self.incident_medium_selected = self.get_incident_medium_selected()
+        self.q_min = float(self.parent.gui_metadata['q_min'])
         self.q_step = self.get_q_step()
         self.scaling_factor_flag = self.get_scaling_factor_flag()
         self.scaling_factor_file = self.get_scaling_factor_file()
@@ -30,6 +31,7 @@ class GlobalReductionSettingsHandler(object):
         self.retrieve()
         keys = [
             "incident_medium_selected",
+            "q_min",
             "q_step",
             "scaling_factor_flag",
             "scaling_factor_file",
