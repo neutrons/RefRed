@@ -39,7 +39,7 @@ class GlobalReductionSettingsHandler(object):
             "angle_offset",
             "angle_offset_error",
             "tof_steps",
-            "apply_normalization"
+            "apply_normalization",
         ]
         return {k: getattr(self, k) for k in keys}
 
