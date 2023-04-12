@@ -171,7 +171,7 @@ class TestLoadingConfiguration(object):
             'tof_range_flag': 'tof_range_flag',
             # Applying normalization is a global setting in the application,
             # it should be treated that way when loading a template file.
-            #'norm_flag': 'norm_flag',
+            # 'norm_flag': 'norm_flag',
             'norm_from_peak_pixels': 13.013,
             'norm_to_peak_pixels': 14.014,
             'norm_from_back_pixels': 15.015,
