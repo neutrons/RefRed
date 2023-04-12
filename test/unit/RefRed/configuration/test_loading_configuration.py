@@ -120,6 +120,8 @@ class TestLoadingConfiguration(object):
         values = {
             'q_step': 1.001,
             'q_min': 2.002,
+            # Applying normalization is a global setting
+            'norm_flag': True,
             'angle_offset': 2.5025,
             'angle_offset_error': 3.003,
             'scaling_factor_file': 'scaling_factor_file',
@@ -167,7 +169,9 @@ class TestLoadingConfiguration(object):
             'to_lambda_range': 12.012,
             'data_sets': 'dataset1, dataset2',
             'tof_range_flag': 'tof_range_flag',
-            'norm_flag': 'norm_flag',
+            # Applying normalization is a global setting in the application,
+            # it should be treated that way when loading a template file.
+            #'norm_flag': 'norm_flag',
             'norm_from_peak_pixels': 13.013,
             'norm_to_peak_pixels': 14.014,
             'norm_from_back_pixels': 15.015,
@@ -200,6 +204,7 @@ class TestLoadingConfiguration(object):
 
         expectedValue = 1.001
         for key, value in metaDict.items():
+            print(key, value)
             if isinstance(value, list):
                 for item in value:
                     if key == 'tof_range':

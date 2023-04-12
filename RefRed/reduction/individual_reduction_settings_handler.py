@@ -31,7 +31,6 @@ class IndividualReductionSettingsHandler(object):
         self._data_low_res_range = self.get_data_low_res_range()
 
         if self.norm is None:
-            self._norm_flag = False
             self._norm_run_numbers = None
             self._norm_peak_range = None
             self._norm_back_flag = None
@@ -39,7 +38,6 @@ class IndividualReductionSettingsHandler(object):
             self._norm_low_res_flag = None
             self._norm_low_res_range = None
         else:
-            self._norm_flag = self.get_norm_flag()
             self._norm_run_numbers = self.get_norm_run_numbers()
             self._norm_peak_range = self.get_norm_peak_range()
             self._norm_back_flag = self.get_norm_back_flag()
@@ -59,11 +57,10 @@ class IndividualReductionSettingsHandler(object):
             data_files=self._data_run_numbers,
             norm_file=self._norm_run_numbers,
             data_peak_range=self._data_peak_range,
-            substract_background=self._data_back_flag,
+            subtract_background=self._data_back_flag,
             background_roi=self._data_back_range,
             data_x_range_flag=self._data_low_res_flag,
             data_x_range=self._data_low_res_range,
-            apply_normalization=self._norm_flag,
             norm_peak_range=self._norm_peak_range,
             subtract_norm_background=self._norm_back_flag,
             norm_background_roi=self._norm_back_range,
@@ -133,10 +130,6 @@ class IndividualReductionSettingsHandler(object):
         low_res_min = min([low_res1, low_res2])
         low_res_max = max([low_res1, low_res2])
         return [low_res_min, low_res_max]
-
-    def get_norm_flag(self):
-        _norm = self.norm
-        return _norm.use_it_flag
 
     def get_data_back_range(self):
         _data = self.data
