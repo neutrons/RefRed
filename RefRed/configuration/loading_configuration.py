@@ -148,6 +148,10 @@ class LoadingConfiguration(object):
         _gui_metadata['q_min'] = q_min
         self.parent.gui_metadata = _gui_metadata
 
+        # Applying normalization is a general setting for all runs
+        apply_normalization = str2bool(self.getNodeValue(node_0, 'norm_flag'))
+        self.parent.ui.useNormalizationFlag.setChecked(apply_normalization)
+
         angle_offset = self.getNodeValue(node_0, 'angle_offset')
         self.parent.ui.angleOffsetValue.setText(angle_offset)
 
@@ -185,10 +189,10 @@ class LoadingConfiguration(object):
         _low_res_max = self.getNodeValue(node, 'x_max_pixel')
         iMetadata.data_low_res = [_low_res_min, _low_res_max]
 
-        _back_flag = self.getNodeValue(node, 'background_flag')
+        _back_flag = str2bool(self.getNodeValue(node, 'background_flag'))
         iMetadata.data_back_flag = _back_flag
 
-        _low_res_flag = self.getNodeValue(node, 'x_range_flag')
+        _low_res_flag = str2bool(self.getNodeValue(node, 'x_range_flag'))
         iMetadata.data_low_res_flag = _low_res_flag
 
         _tof_min = self.getNodeValue(node, 'from_tof_range')
@@ -212,11 +216,8 @@ class LoadingConfiguration(object):
         _data_sets = _data_sets.split(',')
         iMetadata.data_sets = [str(x) for x in _data_sets]
 
-        _tof_auto = self.getNodeValue(node, 'tof_range_flag')
+        _tof_auto = str2bool(self.getNodeValue(node, 'tof_range_flag'))
         iMetadata.tof_auto_flag = _tof_auto
-
-        _norm_flag = self.getNodeValue(node, 'norm_flag')
-        iMetadata.norm_flag = _norm_flag
 
         _peak_min = self.getNodeValue(node, 'norm_from_peak_pixels')
         _peak_max = self.getNodeValue(node, 'norm_to_peak_pixels')
@@ -234,10 +235,10 @@ class LoadingConfiguration(object):
         _low_res_max = self.getNodeValue(node, 'norm_x_max')
         iMetadata.norm_low_res = [_low_res_min, _low_res_max]
 
-        _back_flag = self.getNodeValue(node, 'norm_background_flag')
+        _back_flag = str2bool(self.getNodeValue(node, 'norm_background_flag'))
         iMetadata.norm_back_flag = _back_flag
 
-        _low_res_flag = self.getNodeValue(node, 'norm_x_range_flag')
+        _low_res_flag = str2bool(self.getNodeValue(node, 'norm_x_range_flag'))
         iMetadata.norm_low_res_flag = _low_res_flag
 
         try:

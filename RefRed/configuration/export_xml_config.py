@@ -84,18 +84,13 @@ class ExportXMLConfig(object):
             data_low_res_flag = bool(_data.low_res_flag)
             data_lambda_requested = _data.lambda_requested
             tof = _data.tof_range
-            # tof_units = _data.tof_units
-            # tof_auto_flag = _data.tof_auto_flag
             q_range = _data.q_range
             lambda_range = _data.lambda_range
             incident_angle = _data.incident_angle
 
             _norm = _big_table_data[row, 1]
             if _norm is not None:
-                # norm_full_file_name = _norm.full_file_name
-                # if type(norm_full_file_name) == type([]):
-                # norm_full_file_name = ','.join(norm_full_file_name)
-                norm_flag = _norm.use_it_flag
+                norm_flag = o_general_settings.apply_normalization
                 norm_peak = _norm.peak
                 norm_back = _norm.back
                 norm_back_flag = _norm.back_flag
@@ -103,7 +98,6 @@ class ExportXMLConfig(object):
                 norm_low_res_flag = _norm.low_res_flag
                 norm_lambda_requested = _norm.lambda_requested
             else:
-                # norm_full_file_name = ''
                 norm_flag = False
                 norm_peak = [0, 255]
                 norm_back = [0, 255]

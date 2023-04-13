@@ -23,6 +23,7 @@ class GlobalReductionSettingsHandler(object):
         self.angle_offset = self.get_angle_offset()
         self.angle_offset_error = self.get_angle_offset_error()
         self.tof_steps = self.get_tof_steps()
+        self.apply_normalization = self.parent.ui.useNormalizationFlag.isChecked()
 
     def to_dict(self):
         """
@@ -38,6 +39,7 @@ class GlobalReductionSettingsHandler(object):
             "angle_offset",
             "angle_offset_error",
             "tof_steps",
+            "apply_normalization",
         ]
         return {k: getattr(self, k) for k in keys}
 

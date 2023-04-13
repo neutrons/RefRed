@@ -3599,7 +3599,7 @@ p, li { white-space: pre-wrap; }
                    <number>39</number>
                   </property>
                   <attribute name="horizontalHeaderVisible">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </attribute>
                   <attribute name="horizontalHeaderDefaultSectionSize">
                    <number>50</number>
@@ -4913,6 +4913,9 @@ p, li { white-space: pre-wrap; }
   <action name="actionSettings">
    <property name="text">
     <string>Settings ...</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionNew">
