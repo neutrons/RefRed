@@ -44,7 +44,6 @@ class GuiConnections(object):
         parent.ui.norm_ix_plot.toolbar.homeClicked.connect(parent.home_clicked_ix_plot)
         parent.ui.norm_ix_plot.toolbar.exportClicked.connect(parent.export_ix)
 
-        parent.ui.data_stitching_plot.singleClick.connect(parent.single_click_data_stitching_plot)
         parent.ui.data_stitching_plot.leaveFigure.connect(parent.leave_figure_data_stitching_plot)
         parent.ui.data_stitching_plot.toolbar.homeClicked.connect(parent.home_clicked_data_stitching_plot)
         parent.ui.data_stitching_plot.logtogx.connect(parent.logx_toggle_data_stitching)
