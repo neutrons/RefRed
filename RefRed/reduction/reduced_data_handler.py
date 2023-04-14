@@ -39,9 +39,6 @@ class ReducedDataHandler(object):
         o_gui_utility.clear_table(self.parent.ui.dataStitchingTable)
 
     def plot(self):
-        self.plot_live_reduced_data()
-
-    def plot_live_reduced_data(self):
         self.parent.ui.data_stitching_plot.clear()
         self.parent.ui.data_stitching_plot.draw()
 
@@ -82,59 +79,10 @@ class ReducedDataHandler(object):
 
             self.parent.ui.data_stitching_plot.draw()
 
-        o_gui_utility = GuiUtility(parent=self.parent)
-        yaxis_type = o_gui_utility.get_reduced_yaxis_type()
-        if yaxis_type == 'RvsQ':
-            if _data.all_plot_axis.reduced_plot_RQuserView_y is None:
-                [xmin, xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
-                [ymin, ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
-                _data.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin, xmax]
-                _data.all_plot_axis.reduced_plot_RQuserView_y = [ymin, ymax]
-                _data.all_plot_axis.reduced_plot_RQQ4autoView_x = [xmin, xmax]
-                _data.all_plot_axis.reduced_plot_RQautoView_y = [ymin, ymax]
-            else:
-                [xmin, xmax] = _data.all_plot_axis.reduced_plot_RQQ4userView_x
-                [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQuserView_y
-                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin, xmax])
-                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin, ymax])
-        else:
-            if _data.all_plot_axis.reduced_plot_RQ4userView_y is None:
-                [xmin, xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
-                [ymin, ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
-
-                _data.all_plot_axis.reduced_plot_RQQ4userView_x = [xmin, xmax]
-                _data.all_plot_axis.reduced_plot_RQ4userView_y = [ymin, ymax]
-                _data.all_plot_axis.reduced_plot_RQQ4autoView_x = [xmin, xmax]
-                _data.all_plot_axis.reduced_plot_RQ4autoView_y = [ymin, ymax]
-            else:
-                [xmin, xmax] = _data.all_plot_axis.reduced_plot_RQQ4userView_x
-                [ymin, ymax] = _data.all_plot_axis.reduced_plot_RQ4userView_y
-
-                self.parent.ui.data_stitching_plot.canvas.ax.set_xlim([xmin, xmax])
-                self.parent.ui.data_stitching_plot.canvas.ax.set_ylim([ymin, ymax])
-
         self.parent.ui.data_stitching_plot.canvas.draw_idle()
 
         big_table_data[0, 0] = _data
         self.parent.big_table_data = big_table_data
-
-    def plot_reduced_ascii_files(self):
-        big_table_data = self.parent.big_table_data
-        data = big_table_data[0, 0]
-        if data is None:
-            o_user_configuration = self.parent.o_user_configuration
-            _isylog = o_user_configuration.is_reduced_plot_stitching_tab_ylog
-            _isxlog = o_user_configuration.is_reduced_plot_stitching_tab_xlog
-        else:
-            _isylog = data.all_plot_axis.is_reduced_plot_stitching_tab_ylog
-            _isxlog = data.all_plot_axis.is_reduced_plot_stitching_tab_xlog
-
-        if self.parent.o_stitching_ascii_widget is None:
-            return
-
-        self.parent.o_stitching_ascii_widget.update_display(
-            isxlog=_isxlog, isylog=_isylog, display_live_reduced_flag=False
-        )
 
     def generate_selected_sf(self, lconfig=None):
         o_gui = GuiUtility(parent=self.parent)

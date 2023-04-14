@@ -189,19 +189,6 @@ class MainGui(QtWidgets.QMainWindow):
     def single_click_data_ix_plot(self, isPanOrZoomActivated):
         SingleClickPlot(self, data_type='data', plot_type='ix')
 
-    def single_click_data_stitching_plot(
-        self, isPanOrZoomActivated, is_manual_zoom_requested, is_x_axis_manual_zoom_requested, mouse_x, mouse_y
-    ):
-        SingleClickPlot(
-            self,
-            data_type='data',
-            plot_type='stitching',
-            is_manual_zoom_requested=is_manual_zoom_requested,
-            is_x_axis_manual_zoom_requested=is_x_axis_manual_zoom_requested,
-            mouse_x=mouse_x,
-            mouse_y=mouse_y,
-        )
-
     # toggle log
     def logy_toggle_yt_plot(self, checked):
         LogPlotToggle(parent=self, status=checked, plot_type='yt', is_y_log=True)
@@ -463,8 +450,9 @@ class MainGui(QtWidgets.QMainWindow):
 
     # display row of reduced ascii table
     def reduced_ascii_data_set_table_visibility_changed(self, state):
-        o_load_reduced = LoadReducedDataSetHandler(parent=self)
-        o_load_reduced.plot()
+        # Clear and replot the reduced data, which includes the file data
+        live_reduction = LiveReductionHandler(parent=self)
+        live_reduction.recalculate(replot_only=True)
 
     def reduced_ascii_data_set_table_right_click(self, position):
         o_reduced_ascii_right_click = ReducedAsciiDataRightClick(parent=self, position=position)

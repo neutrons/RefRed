@@ -27,29 +27,12 @@ class LoadReducedDataSetHandler(object):
 
         o_loaded_ascii = ReducedAsciiLoader(parent=self.parent, ascii_file_name=filename)
         if self.parent.o_stitching_ascii_widget is None:
-            self.parent.o_stitching_ascii_widget = StitchingAsciiWidget(
-                parent=self.parent, loaded_ascii=o_loaded_ascii
-            )
-        else:
-            self.parent.o_stitching_ascii_widget.add_data(o_loaded_ascii)
+            self.parent.o_stitching_ascii_widget = StitchingAsciiWidget(parent=self.parent)
+        self.parent.o_stitching_ascii_widget.add_data(o_loaded_ascii)
 
         self.last_row_loaded = self.parent.o_stitching_ascii_widget.row_of_this_file
         self.plot()
 
     def plot(self):
-        big_table_data = self.parent.big_table_data
-        data = big_table_data[0, 0]
-        if data is None:
-            o_user_configuration = self.parent.o_user_configuration
-            _isylog = o_user_configuration.is_reduced_plot_stitching_tab_ylog
-            _isxlog = o_user_configuration.is_reduced_plot_stitching_tab_xlog
-        else:
-            _isylog = data.all_plot_axis.is_reduced_plot_stitching_tab_ylog
-            _isxlog = data.all_plot_axis.is_reduced_plot_stitching_tab_xlog
-
-        if self.parent.o_stitching_ascii_widget is None:
-            return
-
-        self.parent.o_stitching_ascii_widget.update_display(
-            isxlog=_isxlog, isylog=_isylog, force_row=self.last_row_loaded
-        )
+        if self.parent.o_stitching_ascii_widget is not None:
+            self.parent.o_stitching_ascii_widget.update_display()
