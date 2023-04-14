@@ -31,8 +31,9 @@ class LiveReductionHandler(object):
         for row_index in range(self.nbr_reduction_process):
             # scale
             if not replot_only:
-                o_calculate_sf = LiveCalculateSF(parent=self.parent, row_index=row_index,
-                                                 n_runs=self.nbr_reduction_process)
+                o_calculate_sf = LiveCalculateSF(
+                    parent=self.parent, row_index=row_index, n_runs=self.nbr_reduction_process
+                )
                 o_calculate_sf.run()
 
             # plot

@@ -37,22 +37,19 @@ class LiveCalculateSF(object):
         '''
         will perform the absolute normalization
         '''
-        o_abs_norm = AbsoluteNormalization(parent=self.parent, row_index=row_index,
-                                           n_runs=self.n_runs)
+        o_abs_norm = AbsoluteNormalization(parent=self.parent, row_index=row_index, n_runs=self.n_runs)
         o_abs_norm.run()
 
     def auto_stitching_calculation(self, row_index=row_index):
         '''
         will perform the auto stitching normalization
         '''
-        o_auto_stit = AutomaticStitching(parent=self.parent, row_index=row_index,
-                                         n_runs=self.n_runs)
+        o_auto_stit = AutomaticStitching(parent=self.parent, row_index=row_index, n_runs=self.n_runs)
         o_auto_stit.run()
 
     def manual_stitching_calculation(self, row_index=row_index):
         '''
         will perform the manual stitching normalization
         '''
-        o_manual_stit = ManualStitching(parent=self.parent, row_index=row_index,
-                                        n_runs=self.n_runs)
+        o_manual_stit = ManualStitching(parent=self.parent, row_index=row_index, n_runs=self.n_runs)
         o_manual_stit.run()

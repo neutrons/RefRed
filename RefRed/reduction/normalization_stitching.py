@@ -30,14 +30,13 @@ class ParentHandler(object):
             _errors_i = self.parent.big_table_data[row_index, 2].reduce_e_axis[indices]
             errors = np.concatenate((errors, _errors_i))
 
-        if len(values)>1:
-            _sf = 1/np.average(values, weights=1/errors**2)
+        if len(values) > 1:
+            _sf = 1 / np.average(values, weights=1 / errors**2)
         else:
             _sf = 1
 
         # Save the SF in first run
-        self.saveSFinLConfig(self.parent.big_table_data[0, 2],
-                             _sf, data_type=data_type)
+        self.saveSFinLConfig(self.parent.big_table_data[0, 2], _sf, data_type=data_type)
 
     def saveSFinLConfig(self, lconfig, sf, data_type='absolute'):
         if data_type == 'absolute':
@@ -61,8 +60,7 @@ class AbsoluteNormalization(ParentHandler):
     '''
 
     def __init__(self, parent=None, row_index=0, n_runs=1):
-        super(AbsoluteNormalization, self).__init__(parent=parent, row_index=row_index,
-                                                    n_runs=n_runs)
+        super(AbsoluteNormalization, self).__init__(parent=parent, row_index=row_index, n_runs=n_runs)
 
     def run(self):
         if self.row_index == 0:
@@ -91,8 +89,7 @@ class AutomaticStitching(ParentHandler):
     '''
 
     def __init__(self, parent=None, row_index=0, n_runs=1):
-        super(AutomaticStitching, self).__init__(parent=parent, row_index=row_index,
-                                                 n_runs=n_runs)
+        super(AutomaticStitching, self).__init__(parent=parent, row_index=row_index, n_runs=n_runs)
 
     def run(self):
         self.use_first_angle_range()
@@ -123,8 +120,7 @@ class ManualStitching(ParentHandler):
     '''
 
     def __init__(self, parent=None, row_index=0, n_runs=1):
-        super(ManualStitching, self).__init__(parent=parent, row_index=row_index,
-                                              n_runs=n_runs)
+        super(ManualStitching, self).__init__(parent=parent, row_index=row_index, n_runs=n_runs)
 
     def run(self):
         ce_lconfig = self.getLConfig(self.row_index)
