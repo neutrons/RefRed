@@ -463,8 +463,9 @@ class MainGui(QtWidgets.QMainWindow):
 
     # display row of reduced ascii table
     def reduced_ascii_data_set_table_visibility_changed(self, state):
-        o_load_reduced = LoadReducedDataSetHandler(parent=self)
-        o_load_reduced.plot()
+        # Clear and replot the reduced data, which includes the file data
+        live_reduction = LiveReductionHandler(parent=self)
+        live_reduction.recalculate(replot_only=True)
 
     def reduced_ascii_data_set_table_right_click(self, position):
         o_reduced_ascii_right_click = ReducedAsciiDataRightClick(parent=self, position=position)

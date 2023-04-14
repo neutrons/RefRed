@@ -1,11 +1,13 @@
+import numpy as np
+
 from RefRed.reduction.calculate_sf_overlap_range import CalculateSFoverlapRange
-from RefRed.reduction.calculate_sf_critical_edge import CalculateSFCE
 
 
 class ParentHandler(object):
-    def __init__(self, parent=None, row_index=0):
+    def __init__(self, parent=None, row_index=0, n_runs=1):
         self.parent = parent
         self.row_index = row_index
+        self.n_runs = n_runs
 
     def _calculateSFCE(self, data_type="absolute"):
         '''
@@ -14,12 +16,28 @@ class ParentHandler(object):
         _q_min = float(str(self.parent.ui.sf_qmin_value.text()))
         _q_max = float(str(self.parent.ui.sf_qmax_value.text()))
 
-        data_set = self.getLConfig(0)
-        q_range = [_q_min, _q_max]
-        calculate_sf = CalculateSFCE(q_range, data_set)
-        _sf = 1.0 / calculate_sf.getSF()
-        new_data_set = self.saveSFinLConfig(data_set, _sf, data_type=data_type)
-        self.saveLConfig(new_data_set, 0)
+        values = np.zeros(0)
+        errors = np.zeros(0)
+
+        for row_index in range(self.n_runs):
+            low_bound = self.parent.big_table_data[row_index, 2].reduce_q_axis >= _q_min
+            high_bound = self.parent.big_table_data[row_index, 2].reduce_q_axis <= _q_max
+            indices = np.argwhere(low_bound & high_bound).T[0]
+
+            _values_i = self.parent.big_table_data[row_index, 2].reduce_y_axis[indices]
+            values = np.concatenate((values, _values_i))
+
+            _errors_i = self.parent.big_table_data[row_index, 2].reduce_e_axis[indices]
+            errors = np.concatenate((errors, _errors_i))
+
+        if len(values)>1:
+            _sf = 1/np.average(values, weights=1/errors**2)
+        else:
+            _sf = 1
+
+        # Save the SF in first run
+        self.saveSFinLConfig(self.parent.big_table_data[0, 2],
+                             _sf, data_type=data_type)
 
     def saveSFinLConfig(self, lconfig, sf, data_type='absolute'):
         if data_type == 'absolute':
@@ -30,11 +48,6 @@ class ParentHandler(object):
             lconfig.sf_manual = sf
 
         return lconfig
-
-    def saveLConfig(self, lconfig, row_index):
-        big_table_data = self.parent.big_table_data
-        big_table_data[row_index, 2] = lconfig
-        self.parent.big_table_data = big_table_data
 
     def getLConfig(self, row_index):
         big_table_data = self.parent.big_table_data
@@ -47,8 +60,9 @@ class AbsoluteNormalization(ParentHandler):
     this class performs the absolute normalization of reduced data
     '''
 
-    def __init__(self, parent=None, row_index=0):
-        super(AbsoluteNormalization, self).__init__(parent=parent, row_index=row_index)
+    def __init__(self, parent=None, row_index=0, n_runs=1):
+        super(AbsoluteNormalization, self).__init__(parent=parent, row_index=row_index,
+                                                    n_runs=n_runs)
 
     def run(self):
         if self.row_index == 0:
@@ -63,14 +77,12 @@ class AbsoluteNormalization(ParentHandler):
         _sf = float(str(self.parent.ui.sf_value.text()))
         data_set = self.getLConfig(0)
         data_set.sf_abs_normalization = _sf
-        self.saveLConfig(data_set, 0)
 
     def copySFtoOtherAngles(self):
         ce_lconfig = self.getLConfig(0)
         _sf = ce_lconfig.sf_abs_normalization
         lconfig = self.getLConfig(self.row_index)
         lconfig = self.saveSFinLConfig(lconfig, _sf, data_type='absolute')
-        self.saveLConfig = lconfig
 
 
 class AutomaticStitching(ParentHandler):
@@ -78,8 +90,9 @@ class AutomaticStitching(ParentHandler):
     automatic stiching of the reduced data using the Q range to calculate the CE
     '''
 
-    def __init__(self, parent=None, row_index=0):
-        super(AutomaticStitching, self).__init__(parent=parent, row_index=row_index)
+    def __init__(self, parent=None, row_index=0, n_runs=1):
+        super(AutomaticStitching, self).__init__(parent=parent, row_index=row_index,
+                                                 n_runs=n_runs)
 
     def run(self):
         self.use_first_angle_range()
@@ -101,7 +114,6 @@ class AutomaticStitching(ParentHandler):
         calculate_sf = CalculateSFoverlapRange(left_lconfig, right_lconfig)
         _sf = 1.0 / calculate_sf.getSF()
         right_lconfig.sf_auto = _sf
-        self.saveLConfig(right_lconfig, _row_index)
 
 
 class ManualStitching(ParentHandler):
@@ -110,12 +122,12 @@ class ManualStitching(ParentHandler):
     in the main table to scaled the data
     '''
 
-    def __init__(self, parent=None, row_index=0):
-        super(ManualStitching, self).__init__(parent=parent, row_index=row_index)
+    def __init__(self, parent=None, row_index=0, n_runs=1):
+        super(ManualStitching, self).__init__(parent=parent, row_index=row_index,
+                                              n_runs=n_runs)
 
     def run(self):
         ce_lconfig = self.getLConfig(self.row_index)
         _sf = ce_lconfig.sf_manual
         lconfig = self.getLConfig(self.row_index)
         lconfig = self.saveSFinLConfig(lconfig, _sf, data_type='manual')
-        self.saveLConfig = lconfig

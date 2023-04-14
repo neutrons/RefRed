@@ -27,11 +27,8 @@ class LoadReducedDataSetHandler(object):
 
         o_loaded_ascii = ReducedAsciiLoader(parent=self.parent, ascii_file_name=filename)
         if self.parent.o_stitching_ascii_widget is None:
-            self.parent.o_stitching_ascii_widget = StitchingAsciiWidget(
-                parent=self.parent, loaded_ascii=o_loaded_ascii
-            )
-        else:
-            self.parent.o_stitching_ascii_widget.add_data(o_loaded_ascii)
+            self.parent.o_stitching_ascii_widget = StitchingAsciiWidget(parent=self.parent)
+        self.parent.o_stitching_ascii_widget.add_data(o_loaded_ascii)
 
         self.last_row_loaded = self.parent.o_stitching_ascii_widget.row_of_this_file
         self.plot()
@@ -50,6 +47,4 @@ class LoadReducedDataSetHandler(object):
         if self.parent.o_stitching_ascii_widget is None:
             return
 
-        self.parent.o_stitching_ascii_widget.update_display(
-            isxlog=_isxlog, isylog=_isylog, force_row=self.last_row_loaded
-        )
+        self.parent.o_stitching_ascii_widget.update_display()

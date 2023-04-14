@@ -13,9 +13,7 @@ from RefRed.reduction.live_reduced_data_handler import LiveReducedDataHandler
 from RefRed.gui_handling.progressbar_handler import ProgressBarHandler
 from RefRed.reduction.individual_reduction_settings_handler import IndividualReductionSettingsHandler
 from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
-from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
 from RefRed.status_message_handler import StatusMessageHandler
-from RefRed.load_reduced_data_set.stitching_ascii_widget import StitchingAsciiWidget
 
 
 class LiveReductionHandler(object):
@@ -29,17 +27,23 @@ class LiveReductionHandler(object):
         self.big_table_data = self.parent.big_table_data
         self.nbr_reduction_process = self.calculate_nbr_reduction_process()
 
-    def recalculate(self):
+    def recalculate(self, replot_only=False):
         for row_index in range(self.nbr_reduction_process):
             # scale
-            o_calculate_sf = LiveCalculateSF(parent=self.parent, row_index=row_index)
-            o_calculate_sf.run()
+            if not replot_only:
+                o_calculate_sf = LiveCalculateSF(parent=self.parent, row_index=row_index,
+                                                 n_runs=self.nbr_reduction_process)
+                o_calculate_sf.run()
 
             # plot
             o_reduced_plot = LiveReducedDataHandler(parent=self.parent, row_index=row_index)
             o_reduced_plot.populate_table()
             o_reduced_plot.live_plot()
-            o_reduced_plot.set_axis()
+
+        # Overplot loaded data files
+        self.parent.o_stitching_ascii_widget.update_display()
+
+        self.parent.ui.data_stitching_plot.canvas.draw_idle()
 
     def run(self):
         _big_table_data = self.big_table_data
@@ -99,13 +103,9 @@ class LiveReductionHandler(object):
 
             o_reduction_progressbar_handler.next_step()
 
-        o_reduced_plot.save_xy_axis()
         self.parent.big_table_data = self.big_table_data
         o_reduction_progressbar_handler.end()
         self.parent.ui.reduceButton.setEnabled(True)
-
-        # save reduced data
-        self.save_reduced_for_ascii_loaded()
 
         # save size of view for home button
         self.save_stitching_plot_view()
@@ -156,16 +156,6 @@ class LiveReductionHandler(object):
         data.all_plot_axis.reduced_plot_stitching_tab_data_interval = [xmin, xmax, ymin, ymax]
         big_table_data[0, 0] = data
         self.parent.big_table_data = big_table_data
-
-    def save_reduced_for_ascii_loaded(self):
-        o_loaded_ascii = ReducedAsciiLoader(parent=self.parent, is_live_reduction=True)
-        if self.parent.o_stitching_ascii_widget is None:
-            self.parent.o_stitching_ascii_widget = StitchingAsciiWidget(
-                parent=self.parent, loaded_ascii=o_loaded_ascii
-            )
-        else:
-            self.parent.o_stitching_ascii_widget.add_data(o_loaded_ascii)
-        self.parent.o_stitching_ascii_widget.update_display()
 
     def save_reduction(self, row=-1, refl=None, info=None):
 

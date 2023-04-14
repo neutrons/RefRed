@@ -221,11 +221,6 @@ class ExportPlotAscii:
         """
         Collect all the reduced data and create an output file.
         """
-        # TODO: this should be an options. It's defaulted to 1 for the automated reduction workflow
-        # and we pick the same here.
-        pre_cut = 0
-        post_cut = 0
-
         # Gather data
         o_gui_utility = GuiUtility(parent=self.parent)
         nbr_row = o_gui_utility.reductionTable_nbr_row()
@@ -244,8 +239,8 @@ class ExportPlotAscii:
 
             # Get the reduced data
             qz_mid = _data.reduce_q_axis
-            refl = _data.reduce_y_axis
-            d_refl = _data.reduce_e_axis
+            refl = sf * _data.reduce_y_axis
+            d_refl = sf * _data.reduce_e_axis
 
             _data.meta_data['scaling_factors']['a'] = sf * _data.meta_data['scaling_factors']['a']
             _data.meta_data['scaling_factors']['err_a'] = sf * _data.meta_data['scaling_factors']['err_a']
@@ -253,23 +248,13 @@ class ExportPlotAscii:
             _data.meta_data['scaling_factors']['err_b'] = sf * _data.meta_data['scaling_factors']['err_b']
 
             npts = len(qz_mid)
-            coll.add(
-                qz_mid[pre_cut : npts - post_cut],
-                refl[pre_cut : npts - post_cut],
-                d_refl[pre_cut : npts - post_cut],
-                meta_data=_data.meta_data,
-            )
+            coll.add(qz_mid, refl, d_refl, meta_data=_data.meta_data)
 
             # At the user's request, save each individual run
             if export_all:
                 run_file_path = "%s-%d%s" % (_root, row, _ext)
                 coll_run = lr_output.RunCollection()
-                coll_run.add(
-                    qz_mid[pre_cut : npts - post_cut],
-                    refl[pre_cut : npts - post_cut],
-                    d_refl[pre_cut : npts - post_cut],
-                    meta_data=_data.meta_data,
-                )
+                coll_run.add(qz_mid, refl, d_refl, meta_data=_data.meta_data)
                 coll_run.save_ascii(run_file_path)
 
         coll.save_ascii(file_path)

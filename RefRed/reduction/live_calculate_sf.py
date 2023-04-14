@@ -13,10 +13,11 @@ class LiveCalculateSF(object):
     parent = None
     row_index = 0
 
-    def __init__(self, parent=None, row_index=0):
+    def __init__(self, parent=None, row_index=0, n_runs=1):
         self.parent = parent
         self.big_table_data = self.parent.big_table_data
         self.row_index = row_index
+        self.n_runs = n_runs
 
     def run(self):
         '''
@@ -36,19 +37,22 @@ class LiveCalculateSF(object):
         '''
         will perform the absolute normalization
         '''
-        o_abs_norm = AbsoluteNormalization(parent=self.parent, row_index=row_index)
+        o_abs_norm = AbsoluteNormalization(parent=self.parent, row_index=row_index,
+                                           n_runs=self.n_runs)
         o_abs_norm.run()
 
     def auto_stitching_calculation(self, row_index=row_index):
         '''
         will perform the auto stitching normalization
         '''
-        o_auto_stit = AutomaticStitching(parent=self.parent, row_index=row_index)
+        o_auto_stit = AutomaticStitching(parent=self.parent, row_index=row_index,
+                                         n_runs=self.n_runs)
         o_auto_stit.run()
 
     def manual_stitching_calculation(self, row_index=row_index):
         '''
         will perform the manual stitching normalization
         '''
-        o_manual_stit = ManualStitching(parent=self.parent, row_index=row_index)
+        o_manual_stit = ManualStitching(parent=self.parent, row_index=row_index,
+                                        n_runs=self.n_runs)
         o_manual_stit.run()

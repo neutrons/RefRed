@@ -17,10 +17,9 @@ class StitchingAsciiWidget(object):
     yaxistype = 'RvsQ'
     row_of_this_file = 0
 
-    def __init__(self, parent=None, loaded_ascii=None):
+    def __init__(self, parent=None):
 
         self.parent = parent
-        self.loaded_ascii_array.append(loaded_ascii)
         self.tableUi = parent.ui.reducedAsciiDataSetTable
         self.stitchingPlot = parent.ui.data_stitching_plot
 
@@ -35,6 +34,13 @@ class StitchingAsciiWidget(object):
             # replace
             self.loaded_ascii_array[row_of_this_file] = newloaded_ascii
         self.row_of_this_file = row_of_this_file
+
+        # Update the table
+        _item = QtWidgets.QTableWidgetItem(str(newloaded_ascii.short_ascii_file_name))
+        self.tableUi.setItem(row_of_this_file, 0, _item)
+        _widget = self.tableUi.cellWidget(row_of_this_file, 1)
+        _widget.setEnabled(True)
+        _widget.setCheckState(Qt.Checked)
 
     def remove_data(self, list_file_to_remove=None):
         if list_file_to_remove is None:
@@ -67,7 +73,7 @@ class StitchingAsciiWidget(object):
 
     def update_status(self):
 
-        nbrRow = len(self.loaded_ascii_Array)
+        nbrRow = len(self.loaded_ascii_array)
         for i in range(nbrRow):
 
             _data_object = self.loaded_ascii_array[i]
@@ -80,128 +86,19 @@ class StitchingAsciiWidget(object):
 
             self.loaded_ascii_array[i] = _data_object
 
-    def update_display(self, isylog=True, isxlog=True, force_row=-1, display_live_reduced_flag=True):
-
+    def update_display(self):
         if self.loaded_ascii_array == []:
             return
 
-        self.isylog = isylog
-        self.isxlog = isxlog
-        self.yaxistype = self.get_selected_reduced_output()
+        for i in range(len(self.loaded_ascii_array)):
+            if self.tableUi.cellWidget(i, 1).checkState():
+                _q_axis = self.loaded_ascii_array[i].col1
+                _y_axis = self.loaded_ascii_array[i].col2
+                _e_axis = self.loaded_ascii_array[i].col3
 
-        if display_live_reduced_flag:
-            self.stitchingPlot.clear()
-            self.stitchingPlot.draw()
+                [_y_axis_red, _e_axis_red] = self.format_data_from_ymode_selected(_q_axis, _y_axis, _e_axis)
 
-        nbrRow = len(self.loaded_ascii_array)
-        for i in range(nbrRow):
-
-            _data_object = self.loaded_ascii_array[i]
-
-            _item = QtWidgets.QTableWidgetItem(str(_data_object.short_ascii_file_name))
-            self.tableUi.setItem(i, 0, _item)
-
-            _widget = self.tableUi.cellWidget(i, 1)
-            if _data_object.is_live_reduction:
-                _widget.setCheckState(Qt.Checked)
-                _widget.setEnabled(False)
-                _status = True
-            elif force_row == i:
-                _widget.setCheckState(Qt.Checked)
-                _status = True
-            else:
-                _status = _widget.checkState()
-                _widget.setEnabled(True)
-
-            if _status:
-
-                if _data_object.is_live_reduction and display_live_reduced_flag:
-                    self.__display_live_data(_data_object)
-                else:
-                    _q_axis = _data_object.col1
-                    _y_axis = _data_object.col2
-                    _e_axis = _data_object.col3
-
-                    [_y_axis_red, _e_axis_red] = self.format_data_from_ymode_selected(_q_axis, _y_axis, _e_axis)
-
-                    self.stitchingPlot.errorbar(_q_axis, _y_axis_red, yerr=_e_axis_red)
-                    if isylog:
-                        self.stitchingPlot.set_yscale('log')
-                    else:
-                        self.stitchingPlot.set_yscale('linear')
-
-                    if isxlog:
-                        self.stitchingPlot.set_xscale('log')
-                    else:
-                        self.stitchingPlot.set_xscale('linear')
-                    self.stitchingPlot.draw()
-
-    def __display_live_data(self, _data_object):
-        """
-        plot last reduced data set
-        """
-
-        # big_table_data = _data_object.big_table_data
-        big_table_data = self.parent.big_table_data
-
-        _colors = RefRed.colors.COLOR_LIST
-        _colors.append(_colors)
-
-        # _data0 = big_table_data[0,0]
-
-        i = 0
-        while big_table_data[i, 2] is not None:
-
-            _data = big_table_data[i, 2]
-            _q_axis = _data.q_axis_for_display
-            _y_axis = _data.y_axis_for_display
-            _e_axis = _data.e_axis_for_display
-
-            sf = _data.sf
-
-            _y_axis = _y_axis / sf
-            _e_axis = _e_axis / sf
-
-            [y_axis_red, e_axis_red] = self.format_data_from_ymode_selected(_q_axis, _y_axis, _e_axis)
-
-            self.stitchingPlot.errorbar(_q_axis, y_axis_red, yerr=e_axis_red, color=_colors[i])
-            if self.isylog:
-                self.stitchingPlot.set_yscale('log')
-            else:
-                self.stitchingPlot.set_yscale('linear')
-            if self.isxlog:
-                self.stitchingPlot.set_xscale('log')
-            else:
-                self.stitchingPlot.set_xscale('linear')
-
-            self.stitchingPlot.draw()
-
-            i += 1
-
-        # if _data0.all_plot_axis.reduced_plot_stitching_tab_data_interval is None:
-        # [xmin,xmax] = self.stitchingPlot.canvas.ax.xaxis.get_view_interval()
-        # [ymin,ymax] = self.stitchingPlot.canvas.ax.yaxis.get_view_interval()
-        # _data0.all_plot_axis.reduced_plot_stitching_tab_data_interval = [xmin,xmax,ymin,ymax]
-        # _data0.all_plot_axis.reduced_plot_stitching_tab_view_interval = [xmin,xmax,ymin,ymax]
-        # self.stitchingPlot.toolbar.home_settings = [xmin,xmax,ymin,ymax]
-        # else:
-        # [xmin,xmax,ymin,ymax] = _data0.all_plot_axis.reduced_plot_stitching_tab_view_interval
-        # self.stitchingPlot.canvas.ax.set_xlim([xmin,xmax])
-        # self.stitchingPlot.canvas.ax.set_ylim([ymin,ymax])
-        # self.stitchingPlot.draw()
-
-        # big_table_data[0,0] = _data0
-        # self.parent.big_table_data = big_table_data
-
-        self.stitchingPlot.set_xlabel('Q (1/Angstroms)')
-        type = self.get_selected_reduced_output()
-        if type == 'RvsQ':
-            self.stitchingPlot.set_ylabel('R')
-        elif type == 'RQ4vsQ':
-            self.stitchingPlot.set_ylabel('RQ4')
-        else:
-            self.stitchingPlot.set_ylabel('Log(Q))')
-        self.stitchingPlot.draw()
+                self.stitchingPlot.errorbar(_q_axis, _y_axis_red, yerr=_e_axis_red)
 
     def format_data_from_ymode_selected(self, q_axis, y_axis, e_axis):
 
