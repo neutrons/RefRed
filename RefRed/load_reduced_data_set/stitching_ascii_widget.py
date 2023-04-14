@@ -3,7 +3,6 @@ from qtpy.QtCore import Qt
 import numpy as np
 
 from RefRed.gui_handling.gui_utility import GuiUtility
-import RefRed.colors
 
 
 class StitchingAsciiWidget(object):

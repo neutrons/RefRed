@@ -247,7 +247,6 @@ class ExportPlotAscii:
             _data.meta_data['scaling_factors']['b'] = sf * _data.meta_data['scaling_factors']['b']
             _data.meta_data['scaling_factors']['err_b'] = sf * _data.meta_data['scaling_factors']['err_b']
 
-            npts = len(qz_mid)
             coll.add(qz_mid, refl, d_refl, meta_data=_data.meta_data)
 
             # At the user's request, save each individual run
