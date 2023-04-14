@@ -10,3 +10,4 @@
     - The table headers on the main page were missing.
     - The Settings panel is no longer useful and has been hidden until we refactor the configuration.
     - A typo made the background subtraction option default to true.
+    - Scaling to a Q region under Q_c now works for any Q range. It used to apply only to the first run.
