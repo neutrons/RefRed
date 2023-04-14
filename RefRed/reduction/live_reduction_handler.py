@@ -42,7 +42,8 @@ class LiveReductionHandler(object):
             o_reduced_plot.live_plot()
 
         # Overplot loaded data files
-        self.parent.o_stitching_ascii_widget.update_display()
+        if self.parent.o_stitching_ascii_widget is not None:
+            self.parent.o_stitching_ascii_widget.update_display()
 
         self.parent.ui.data_stitching_plot.canvas.draw_idle()
 
