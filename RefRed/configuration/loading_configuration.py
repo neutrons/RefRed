@@ -82,8 +82,10 @@ class LoadingConfiguration(object):
             warning_msg = "The reduction parameters you are about to load are from "
             warning_msg += "an older version of the reduction.\n\n"
             warning_msg += "It is NOT advised to mix reduction versions.\n\n"
-            warning_msg += "You should either start refred version 1, or "
+            warning_msg += "You should either start refred version 4, or "
             warning_msg += "reprocess all your data with the new version.\n\n"
+            warning_msg += "Use the following to start version 4:\n\n"
+            warning_msg += "    refred --v4\n\n"
             warning_msg += "Please consult with your local contact for advise."
 
             box = QtWidgets.QMessageBox()
