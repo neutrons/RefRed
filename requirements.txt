@@ -6,5 +6,5 @@ numpy
 PyQt5
 qtpy
 setuptools
-lr_reduction@git+https://github.com/neutrons/LiquidsReflectometer.git@v2.0.11#egg=lr_reduction
+lr_reduction@git+https://github.com/neutrons/LiquidsReflectometer.git@v2.0.12#egg=lr_reduction
 
