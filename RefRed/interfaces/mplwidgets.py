@@ -36,6 +36,8 @@ def set_matplotlib_backend():
             backend = "Qt4Agg"
         elif backend.endswith("workbench") or backend.endswith("qt5agg"):
             backend = "Qt5Agg"
+        elif backend.endswith("backend_interagg"):  # start RefRed from PyCharm (useful for debugging)
+            backend = "Qt5Agg"
     else:
         from qtpy import PYQT4, PYQT5  # noqa
 
