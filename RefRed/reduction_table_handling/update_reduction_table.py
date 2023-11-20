@@ -3,8 +3,8 @@ from qtpy.QtCore import QObject, Slot
 from qtpy.QtWidgets import QApplication
 
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
-from RefRed.calculations.check_list_run_compatibility_and_display_thread import (
-    CheckListRunCompatibilityAndDisplayThread,
+from RefRed.calculations.check_list_run_compatibility_thread import (
+    CheckListRunCompatibilityThread,
 )
 import RefRed.colors
 from RefRed.calculations.locate_list_run import LocateListRun
@@ -62,7 +62,7 @@ class UpdateReductionTable(QObject):
 
         list_nexus_found = list_run_object.list_nexus_found
         thread_index = (self.col - 1) + 2 * self.row
-        self.parent.loading_nxs_thread[thread_index] = CheckListRunCompatibilityAndDisplayThread()
+        self.parent.loading_nxs_thread[thread_index] = CheckListRunCompatibilityThread()
         self.parent.loading_nxs_thread[thread_index].setup(
             parent=self.parent,
             list_run=list_run_found,

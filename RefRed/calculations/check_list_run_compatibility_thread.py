@@ -20,7 +20,7 @@ from RefRed.calculations.lr_data import LRData
 from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
 
 
-class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
+class CheckListRunCompatibilityThread(QtCore.QThread):
 
     updated_data = Signal()
 
