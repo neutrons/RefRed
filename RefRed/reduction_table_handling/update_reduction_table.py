@@ -2,8 +2,8 @@ from qtpy import QtGui
 from qtpy.QtWidgets import QApplication
 
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
-from RefRed.calculations.check_list_run_compatibility_and_display_thread import (
-    CheckListRunCompatibilityAndDisplayThread,
+from RefRed.calculations.check_list_run_compatibility_thread import (
+    CheckListRunCompatibilityThread,
 )
 import RefRed.colors
 from RefRed.calculations.locate_list_run import LocateListRun
@@ -59,7 +59,7 @@ class UpdateReductionTable(object):
 
         list_nexus_found = list_run_object.list_nexus_found
         thread_index = (self.col - 1) + 2 * self.row
-        self.parent.loading_nxs_thread[thread_index] = CheckListRunCompatibilityAndDisplayThread()
+        self.parent.loading_nxs_thread[thread_index] = CheckListRunCompatibilityThread()
         self.parent.loading_nxs_thread[thread_index].setup(
             parent=self.parent,
             list_run=list_run_found,
@@ -68,6 +68,7 @@ class UpdateReductionTable(object):
             is_working_with_data_column=self.is_data_displayed,
             is_display_requested=self.display_of_this_row_checked(),
         )
+        self.parent.loading_nxs_thread[thread_index].updated_data.connect(self.parent.file_loaded)
         self.parent.loading_nxs_thread[thread_index].start()
 
     def clear_cell(self, row, col):

@@ -10,17 +10,18 @@
 # import logging
 import RefRed.colors
 from qtpy import QtCore, QtGui
-from qtpy.QtWidgets import QApplication
+from qtpy.QtCore import Signal
 
 from RefRed.reduction_table_handling.check_list_run_compatibility import CheckListRunCompatibility
 from RefRed.calculations.add_list_nexus import AddListNexus
 from RefRed.lconfigdataset import LConfigDataset
 from RefRed.calculations.lr_data import LRData
-from RefRed.plot.display_plots import DisplayPlots
 from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
 
 
-class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
+class CheckListRunCompatibilityThread(QtCore.QThread):
+
+    updated_data = Signal(int, bool, bool)
 
     runs_are_compatible = False
     wks = None
@@ -72,11 +73,8 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
         # if runs_are_compatible:
         self.loading_lr_data()
         self.updating_reductionTable_metadata()
-        if self.is_display_requested:
-            self.display_plots()
 
-        self.parent.file_loaded_signal.emit()
-        QApplication.processEvents()
+        self.updated_data.emit(self.row, self.is_working_with_data_column, self.is_display_requested)
 
     def updating_reductionTable_metadata(self):
         is_working_with_data_column = self.is_working_with_data_column
@@ -116,6 +114,3 @@ class CheckListRunCompatibilityAndDisplayThread(QtCore.QThread):
         col_index = 0 if self.is_working_with_data_column else 1
         big_table_data[self.row, col_index] = lrdata
         self.parent.big_table_data = big_table_data
-
-    def display_plots(self):
-        DisplayPlots(parent=self.parent, row=self.row, is_data=self.is_working_with_data_column)
