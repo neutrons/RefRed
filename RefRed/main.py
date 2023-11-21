@@ -27,6 +27,7 @@ from RefRed.interfaces import load_ui
 from RefRed.load_reduced_data_set.load_reduced_data_set_handler import LoadReducedDataSetHandler
 from RefRed.load_reduced_data_set.reduced_ascii_data_right_click import ReducedAsciiDataRightClick
 from RefRed.metadata.metadata_finder import MetadataFinder
+from RefRed.plot.display_plots import DisplayPlots
 from RefRed.plot.single_click_plot import SingleClickPlot
 from RefRed.plot.home_plot_button_clicked import HomePlotButtonClicked
 from RefRed.plot.mouse_leave_plot import MouseLeavePlot
@@ -212,8 +213,10 @@ class MainGui(QtWidgets.QMainWindow):
     def reduction_table_visibility_changed_test(self, state, row):
         ReductionTableCheckBox(parent=self, row_selected=row)
 
-    def file_loaded(self):
-        """Event call-back used to re-enable the reduction table after loading"""
+    def file_loaded(self, row, is_data_displayed, is_display_requested):
+        """Event call-back used to display plots and re-enable the reduction table after loading"""
+        if is_display_requested:
+            DisplayPlots(parent=self, row=row, is_data=is_data_displayed)
         self.ui.reductionTable.setEnabled(True)
 
     def table_reduction_cell_enter_pressed(self):

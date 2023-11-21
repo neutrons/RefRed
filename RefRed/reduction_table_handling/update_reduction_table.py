@@ -1,5 +1,4 @@
 from qtpy import QtGui
-from qtpy.QtCore import QObject, Slot
 from qtpy.QtWidgets import QApplication
 
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
@@ -8,16 +7,14 @@ from RefRed.calculations.check_list_run_compatibility_thread import (
 )
 import RefRed.colors
 from RefRed.calculations.locate_list_run import LocateListRun
-from RefRed.plot.display_plots import DisplayPlots
 
 
-class UpdateReductionTable(QObject):
+class UpdateReductionTable(object):
 
     raw_runs = None
     is_data_displayed = True
 
     def __init__(self, parent=None, row=0, col=1, runs=None):
-        super().__init__(parent)
         self.parent = parent
         self.row = row
         self.col = col
@@ -69,8 +66,9 @@ class UpdateReductionTable(QObject):
             list_nexus=list_nexus_found,
             row=row,
             is_working_with_data_column=self.is_data_displayed,
+            is_display_requested=self.display_of_this_row_checked(),
         )
-        self.parent.loading_nxs_thread[thread_index].updated_data.connect(self.update_ui)
+        self.parent.loading_nxs_thread[thread_index].updated_data.connect(self.parent.file_loaded)
         self.parent.loading_nxs_thread[thread_index].start()
 
     def clear_cell(self, row, col):
@@ -99,10 +97,3 @@ class UpdateReductionTable(QObject):
         if _button_status == 2:
             return True
         return False
-
-    @Slot()
-    def update_ui(self):
-        """Callback function that updates the UI when the thread is done loading the data"""
-        DisplayPlots(parent=self.parent, row=self.row, is_data=self.is_data_displayed)
-        # re-enable the reduction table
-        self.parent.file_loaded()

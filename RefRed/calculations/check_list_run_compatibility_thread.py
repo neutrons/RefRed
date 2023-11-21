@@ -22,7 +22,7 @@ from RefRed.calculations.update_reduction_table_metadata import UpdateReductionT
 
 class CheckListRunCompatibilityThread(QtCore.QThread):
 
-    updated_data = Signal()
+    updated_data = Signal(int, bool, bool)
 
     runs_are_compatible = False
     wks = None
@@ -35,6 +35,7 @@ class CheckListRunCompatibilityThread(QtCore.QThread):
         list_nexus=None,
         row=-1,
         is_working_with_data_column=True,
+        is_display_requested=False,
     ):
 
         self.parent = parent
@@ -43,6 +44,7 @@ class CheckListRunCompatibilityThread(QtCore.QThread):
         self.row = row
         self.col = 1 if is_working_with_data_column else 2
         self.is_working_with_data_column = is_working_with_data_column
+        self.is_display_requested = is_display_requested
         self.runs_are_compatible = False
         self.lrdata = None
 
@@ -73,7 +75,7 @@ class CheckListRunCompatibilityThread(QtCore.QThread):
         self.loading_lr_data()
         self.updating_reductionTable_metadata()
 
-        self.updated_data.emit()
+        self.updated_data.emit(self.row, self.is_working_with_data_column, self.is_display_requested)
         QApplication.processEvents()
 
     def updating_reductionTable_metadata(self):
