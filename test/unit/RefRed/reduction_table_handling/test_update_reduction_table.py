@@ -5,7 +5,7 @@ import pytest
 from qtpy.QtCore import Qt
 import unittest.mock as mock
 
-wait = 5000
+wait = 200
 
 
 class Event(object):
