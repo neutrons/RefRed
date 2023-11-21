@@ -10,7 +10,6 @@
 # import logging
 import RefRed.colors
 from qtpy import QtCore, QtGui
-from qtpy.QtWidgets import QApplication
 from qtpy.QtCore import Signal
 
 from RefRed.reduction_table_handling.check_list_run_compatibility import CheckListRunCompatibility
@@ -76,7 +75,6 @@ class CheckListRunCompatibilityThread(QtCore.QThread):
         self.updating_reductionTable_metadata()
 
         self.updated_data.emit(self.row, self.is_working_with_data_column, self.is_display_requested)
-        QApplication.processEvents()
 
     def updating_reductionTable_metadata(self):
         is_working_with_data_column = self.is_working_with_data_column
