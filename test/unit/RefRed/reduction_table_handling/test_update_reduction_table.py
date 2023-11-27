@@ -83,3 +83,37 @@ def test_update_reduction_table_thread(
 
     # check that the reduction table was re-enabled after the thread returned
     assert window_main.ui.reductionTable.isEnabled()
+
+
+@pytest.mark.parametrize("column", [1, 2])  # data run column, normalization run column
+@mock.patch("RefRed.reduction_table_handling.update_reduction_table.LocateListRun")
+def test_update_reduction_table_clear_cell(mock_locate_list_run, data_server, qtbot, column):
+    """Test pressing Enter in empty cell in the reduction table"""
+    mock_locate_list_run.return_value = MockLocateListRun()
+
+    window_main = MainGui()
+    qtbot.addWidget(window_main)
+
+    # test pressing Enter in empty cell before any data has been loaded
+    window_main.ui.reductionTable.setCurrentCell(0, column)
+    window_main.ui.table_reduction_cell_enter_pressed()
+    qtbot.wait(wait)
+    # check that the reduction table was re-enabled after the function returned
+    assert window_main.ui.reductionTable.isEnabled()
+
+    # test first loading a run, then clearing the cell and pressing Enter to clear loaded data
+    window_main.ui.reductionTable.setCurrentCell(0, column)
+    window_main.ui.reductionTable.currentItem().setText("184975")
+    window_main.ui.table_reduction_cell_enter_pressed()
+    qtbot.wait(5000)
+    # check that the data has been loaded
+    assert window_main.big_table_data[0, column - 1] is not None
+    # clear the cell and press Enter to clear the data
+    window_main.ui.reductionTable.setCurrentCell(0, column)
+    window_main.ui.reductionTable.currentItem().setText("")
+    window_main.ui.table_reduction_cell_enter_pressed()
+    qtbot.wait(wait)
+    # check that the reduction table was re-enabled after the function returned
+    assert window_main.ui.reductionTable.isEnabled()
+    # check that the data has been cleared
+    assert window_main.big_table_data[0, column - 1] is None
