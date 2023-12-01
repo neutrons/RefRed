@@ -2,80 +2,34 @@ from RefRed.main import MainGui
 
 # third party packages
 import pytest
-from qtpy.QtCore import Qt
 import unittest.mock as mock
 
-wait = 200
+wait = 1000
 
 
-class Event(object):
-    val = None
-
-    def __init__(self, val=None):
-        self.val = val
-
-    def key(self):
-        return self.val
-
-
-class MockLocateListRun(object):
-    """Mock return value for LocateListRun"""
-
-    list_run = []
-    list_nexus_found = ['/SNS/REF_L/IPTS-26776/nexus/REF_L_184975.nxs.h5']
-    list_run_found = [184975]
-    list_run_not_found = []
+def load_run_from_reduction_table(window_main, row: int, col: int, run: str):
+    """Add run number in reduction table cell and press Enter to load a run"""
+    window_main.ui.reductionTable.setCurrentCell(row, col)
+    window_main.ui.reductionTable.currentItem().setText(run)
+    window_main.ui.table_reduction_cell_enter_pressed()
 
 
 @pytest.mark.parametrize("is_display_checked", [True, False])
-@mock.patch(
-    "RefRed.calculations.check_list_run_compatibility_thread.CheckListRunCompatibilityThread.updating_reductionTable_metadata"  # noqa E501
-)
-@mock.patch("RefRed.calculations.check_list_run_compatibility_thread.CheckListRunCompatibilityThread.loading_lr_data")
-@mock.patch(
-    "RefRed.calculations.check_list_run_compatibility_thread.CheckListRunCompatibilityThread.update_lconfigdataset"
-)
-@mock.patch("RefRed.calculations.check_list_run_compatibility_thread.AddListNexus")
-@mock.patch("RefRed.main.ReductionTableCheckBox")
 @mock.patch("RefRed.main.DisplayPlots")
-@mock.patch("RefRed.reduction_table_handling.update_reduction_table.LocateListRun")
+@mock.patch("RefRed.calculations.locate_list_run.FileFinder.findRuns")
 def test_update_reduction_table_thread(
-    mock_locate_list_run,
-    mock_display_plots,
-    mock_reduction_table_checkbox,
-    mock_add_list_nexus,
-    mock_update_lconfigdataset,
-    mock_loading_lr_data,
-    mock_updating_reductionTable_metadata,
-    is_display_checked,
-    qtbot,
+    mock_file_finder_find_runs, mock_display_plots, is_display_checked, qtbot, file_finder_find_runs
 ):
-    """Test of the communication between the main thread and CheckListRunCompatibilityThread
-
-    Note: This only tests the signalling between the main thread and the thread spawned by
-    CheckListRunCompatibilityThread. The actual logic updating run data and plots is mocked.
-    """
-    mock_locate_list_run.return_value = MockLocateListRun()
-    mock_add_list_nexus.return_value = mock.Mock(ws=True)
+    """Test of the communication between the main thread and CheckListRunCompatibilityThread"""
+    mock_file_finder_find_runs.side_effect = file_finder_find_runs
 
     window_main = MainGui()
     qtbot.addWidget(window_main)
-    # set the display checkbox to the desired value
-    window_main.ui.reductionTable.cellWidget(0, 0).setChecked(is_display_checked)
-    # set a run number in the reduction table
-    window_main.ui.reductionTable.setCurrentCell(0, 1)
-    window_main.ui.reductionTable.currentItem().setText("184975")
 
-    # press Enter in run number cell to trigger update_reduction_table
-    window_main.ui.reductionTable.keyPressEvent(Event(Qt.Key_Return))
+    window_main.ui.reductionTable.cellWidget(0, 0).setChecked(is_display_checked)
+    load_run_from_reduction_table(window_main, 0, 1, "184975")
     qtbot.wait(wait)
 
-    # check mocked functions in the spawned thread
-    mock_update_lconfigdataset.assert_called_once()
-    mock_loading_lr_data.assert_called_once()
-    mock_updating_reductionTable_metadata.assert_called_once()
-
-    # check that display plots is only called if the checkbox is checked
     if is_display_checked:
         mock_display_plots.assert_called_once()
     else:
@@ -85,35 +39,76 @@ def test_update_reduction_table_thread(
     assert window_main.ui.reductionTable.isEnabled()
 
 
-@pytest.mark.parametrize("column", [1, 2])  # data run column, normalization run column
-@mock.patch("RefRed.reduction_table_handling.update_reduction_table.LocateListRun")
-def test_update_reduction_table_clear_cell(mock_locate_list_run, data_server, qtbot, column):
-    """Test pressing Enter in empty cell in the reduction table"""
-    mock_locate_list_run.return_value = MockLocateListRun()
+@pytest.mark.parametrize("col", [1, 2])  # data run column, normalization run column
+@mock.patch("RefRed.calculations.locate_list_run.FileFinder.findRuns")
+def test_empty_cell_press_enter(mock_file_finder_find_runs, col, qtbot, file_finder_find_runs):
+    """Test pressing Enter in empty cell in the reduction table before and after data has been loaded"""
+    mock_file_finder_find_runs.side_effect = file_finder_find_runs
 
     window_main = MainGui()
     qtbot.addWidget(window_main)
 
     # test pressing Enter in empty cell before any data has been loaded
-    window_main.ui.reductionTable.setCurrentCell(0, column)
-    window_main.ui.table_reduction_cell_enter_pressed()
+    load_run_from_reduction_table(window_main, 0, col, "")
     qtbot.wait(wait)
     # check that the reduction table was re-enabled after the function returned
     assert window_main.ui.reductionTable.isEnabled()
 
     # test first loading a run, then clearing the cell and pressing Enter to clear loaded data
-    window_main.ui.reductionTable.setCurrentCell(0, column)
-    window_main.ui.reductionTable.currentItem().setText("184975")
-    window_main.ui.table_reduction_cell_enter_pressed()
-    qtbot.wait(5000)
-    # check that the data has been loaded
-    assert window_main.big_table_data[0, column - 1] is not None
-    # clear the cell and press Enter to clear the data
-    window_main.ui.reductionTable.setCurrentCell(0, column)
-    window_main.ui.reductionTable.currentItem().setText("")
-    window_main.ui.table_reduction_cell_enter_pressed()
+    load_run_from_reduction_table(window_main, 0, col, "184975")
     qtbot.wait(wait)
-    # check that the reduction table was re-enabled after the function returned
-    assert window_main.ui.reductionTable.isEnabled()
+    # check that the data has been loaded
+    assert window_main.big_table_data[0, col - 1] is not None
+    # clear the cell and press Enter to clear the data
+    load_run_from_reduction_table(window_main, 0, col, "")
+    qtbot.wait(wait)
     # check that the data has been cleared
-    assert window_main.big_table_data[0, column - 1] is None
+    assert window_main.big_table_data[0, col - 1] is None
+    assert window_main.ui.reductionTable.isEnabled()
+
+
+@mock.patch("RefRed.main.DisplayPlots")
+@mock.patch("RefRed.calculations.locate_list_run.FileFinder.findRuns")
+def test_load_run_auto_peak_finder(mock_file_finder_find_runs, mock_display_plots, qtbot, file_finder_find_runs):
+    """Test that the auto-peak finder is only enabled if a new run is loaded"""
+    mock_file_finder_find_runs.side_effect = file_finder_find_runs
+
+    window_main = MainGui()
+    qtbot.addWidget(window_main)
+
+    run1 = "188300"
+    expected_peak_run1 = ["130", "141"]
+    expected_back_run1 = ["127", "144"]
+    run2 = "188301"
+    expected_peak_run2 = ["130", "139"]
+    expected_back_run2 = ["127", "142"]
+
+    # load the first run
+    load_run_from_reduction_table(window_main, row=0, col=1, run=run1)
+    qtbot.wait(wait)
+    # check the result of the auto-peak finder
+    assert window_main.big_table_data[0, 0].peak == expected_peak_run1
+    assert window_main.big_table_data[0, 0].back == expected_back_run1
+
+    # modify the peak and background ranges (users can change these in the UI)
+    user_set_peak = ["132", "143"]
+    user_set_back = ["128", "147"]
+    window_main.big_table_data[0, 0].peak = user_set_peak
+    window_main.big_table_data[0, 0].back = user_set_back
+    # reload the same run
+    load_run_from_reduction_table(window_main, row=0, col=1, run=run1)
+    qtbot.wait(wait)
+    # check that the auto-peak finder did not change the peak and background ranges
+    assert window_main.big_table_data[0, 0].peak == user_set_peak
+    assert window_main.big_table_data[0, 0].back == user_set_back
+
+    # load a different run in the cell
+    load_run_from_reduction_table(window_main, row=0, col=1, run=run2)
+    qtbot.wait(wait)
+    # check that the peak and background ranges were updated
+    assert window_main.big_table_data[0, 0].peak == expected_peak_run2
+    assert window_main.big_table_data[0, 0].back == expected_back_run2
+
+
+if __name__ == '__main__':
+    pytest.main([__file__])

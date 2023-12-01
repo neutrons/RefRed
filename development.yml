@@ -1,12 +1,13 @@
 name: refred
 channels:
-  - mantid
+  - mantid/label/main
   - conda-forge
   - defaults
 dependencies:
-  - mantid==6.4
+  - python=3.8
+  - mantidworkbench>=6.7.0
   - qt>=5.12.9,<6
-  - pyqt>=5.12.3,<5.15
+  - pyqt>=5.12.3
   - qtpy>=1.9.0
   - pip
   - configobj
