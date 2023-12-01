@@ -77,37 +77,41 @@ def test_load_run_auto_peak_finder(mock_file_finder_find_runs, mock_display_plot
     qtbot.addWidget(window_main)
 
     run1 = "188300"
-    expected_peak_run1 = ["130", "141"]
-    expected_back_run1 = ["127", "144"]
     run2 = "188301"
-    expected_peak_run2 = ["130", "139"]
-    expected_back_run2 = ["127", "142"]
+    expected_peak = ["130", "141"]
+    expected_back = ["127", "144"]
+    expected_tof_range_auto = [31420.7610, 44712.6203]
 
     # load the first run
     load_run_from_reduction_table(window_main, row=0, col=1, run=run1)
     qtbot.wait(wait)
     # check the result of the auto-peak finder
-    assert window_main.big_table_data[0, 0].peak == expected_peak_run1
-    assert window_main.big_table_data[0, 0].back == expected_back_run1
+    assert window_main.big_table_data[0, 0].peak == expected_peak
+    assert window_main.big_table_data[0, 0].back == expected_back
+    assert window_main.big_table_data[0, 0].tof_range_auto == pytest.approx(expected_tof_range_auto, 1e-6)
 
     # modify the peak and background ranges (users can change these in the UI)
     user_set_peak = ["132", "143"]
     user_set_back = ["128", "147"]
+    user_set_tof = [31500.0, 44700.0]
     window_main.big_table_data[0, 0].peak = user_set_peak
     window_main.big_table_data[0, 0].back = user_set_back
+    window_main.big_table_data[0, 0].tof_range_auto = user_set_tof
     # reload the same run
     load_run_from_reduction_table(window_main, row=0, col=1, run=run1)
     qtbot.wait(wait)
     # check that the auto-peak finder did not change the peak and background ranges
     assert window_main.big_table_data[0, 0].peak == user_set_peak
     assert window_main.big_table_data[0, 0].back == user_set_back
+    assert window_main.big_table_data[0, 0].tof_range_auto == pytest.approx(user_set_tof, 1e-6)
 
     # load a different run in the cell
     load_run_from_reduction_table(window_main, row=0, col=1, run=run2)
     qtbot.wait(wait)
     # check that the peak and background ranges were updated
-    assert window_main.big_table_data[0, 0].peak == expected_peak_run2
-    assert window_main.big_table_data[0, 0].back == expected_back_run2
+    assert window_main.big_table_data[0, 0].peak == user_set_peak
+    assert window_main.big_table_data[0, 0].back == user_set_back
+    assert window_main.big_table_data[0, 0].tof_range_auto == pytest.approx(user_set_tof, 1e-6)
 
 
 if __name__ == '__main__':

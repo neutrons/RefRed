@@ -40,9 +40,21 @@ class LRData(object):
     is_better_chopper_coverage = True
     total_counts = 0
 
-    def __init__(self, workspace, lconfig=None, is_data=True, parent=None):
+    def __init__(self, workspace, lconfig=None, is_data=True, parent=None, reduction_table_cell=None):
+        """
+        Constructor for LRData class
+
+        :param workspace: run workspace
+        :param lconfig: if defined, use for peak, background, low res, TOF range
+        :param is_data: if True, this is the data run, otherwise it is the normalization run
+        :param parent: parent object
+        :param reduction_table_cell: if defined, use for peak, background, low res, TOF range
+        """
         # TODO: there appears to be duplicate instances of this class being
         #      created when loading a file.
+        if lconfig and reduction_table_cell:
+            raise ValueError("Can't use both lconfig and reduction_table_cell")
+
         self.parent = parent
         self._tof_axis = []
         self.Ixyt = []
@@ -162,21 +174,7 @@ class LRData(object):
         self.data_loaded = False
         self.read_data()
 
-        if lconfig is None:
-            pf = PeakFinderDerivation(list(range(len(self.ycountsdata))), self.ycountsdata)
-            [peak1, peak2] = pf.getPeaks()
-            self.peak = [str(peak1), str(peak2)]
-
-            backOffsetFromPeak = self.read_options['back_offset_from_peak']
-            back1 = int(peak1 - backOffsetFromPeak)
-            back2 = int(peak2 + backOffsetFromPeak)
-            self.back = [str(back1), str(back2)]
-
-            lw_pf = LowResFinder(list(range(len(self.countsxdata))), self.countsxdata)
-            [lowres1, lowres2] = lw_pf.get_low_res()
-            self.low_res = [str(lowres1), str(lowres2)]
-
-        else:
+        if lconfig is not None:
             self.tof_auto_flag = bool(lconfig.tof_auto_flag)
 
             if is_data:
@@ -191,6 +189,31 @@ class LRData(object):
                 self.low_res = [int(lconfig.norm_low_res[0]), int(lconfig.norm_low_res[1])]
                 self.low_res_flag = bool(lconfig.norm_low_res_flag)
                 self.back_flag = bool(lconfig.norm_back_flag)
+
+        elif reduction_table_cell is not None:
+            self.tof_auto_flag = reduction_table_cell.tof_auto_flag
+            self.tof_range_auto = reduction_table_cell.tof_range_auto
+            self.tof_range = reduction_table_cell.tof_range_auto
+            self.tof_range_manual = reduction_table_cell.tof_range_auto
+            self.peak = reduction_table_cell.peak
+            self.back = reduction_table_cell.back
+            self.low_res = reduction_table_cell.low_res
+            self.low_res_flag = reduction_table_cell.low_res_flag
+            self.back_flag = reduction_table_cell.back_flag
+
+        else:
+            pf = PeakFinderDerivation(list(range(len(self.ycountsdata))), self.ycountsdata)
+            [peak1, peak2] = pf.getPeaks()
+            self.peak = [str(peak1), str(peak2)]
+
+            backOffsetFromPeak = self.read_options['back_offset_from_peak']
+            back1 = int(peak1 - backOffsetFromPeak)
+            back2 = int(peak2 + backOffsetFromPeak)
+            self.back = [str(back1), str(back2)]
+
+            lw_pf = LowResFinder(list(range(len(self.countsxdata))), self.countsxdata)
+            [lowres1, lowres2] = lw_pf.get_low_res()
+            self.low_res = [str(lowres1), str(lowres2)]
 
     # Properties for easy data access
     # return the size of the data stored in memory for this dataset
