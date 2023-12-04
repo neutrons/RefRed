@@ -104,29 +104,14 @@ class CheckListRunCompatibilityThread(QtCore.QThread):
             _lconfig.norm_runs_compatible = runs_are_compatible
 
         big_table_data[self.row, 2] = _lconfig
-        self.parent.big_table_data = big_table_data
 
     def loading_lr_data(self):
         """Updates data table with the new run."""
         wks = self.wks
-        lrdata = LRData(wks, parent=self.parent)
-        self.lrdata = lrdata
         big_table_data = self.parent.big_table_data
         col_index = 0 if self.is_working_with_data_column else 1
-        # keep existing user config if the new run number is the same as the old one
-        if self.is_reloading_same_run():
-            lrdata.peak = big_table_data[self.row, col_index].peak
-            lrdata.back = big_table_data[self.row, col_index].back
-            lrdata.low_res = big_table_data[self.row, col_index].low_res
+        big_table_cell = big_table_data[self.row, col_index]
+        # when loading a run in an existing cell, big_table_cell is not None and LRData will copy existing config
+        lrdata = LRData(wks, parent=self.parent, reduction_table_cell=big_table_cell)
+        self.lrdata = lrdata
         big_table_data[self.row, col_index] = lrdata
-        self.parent.big_table_data = big_table_data
-
-    def is_reloading_same_run(self):
-        """Checks if the new run number is the same as the old, i.e. the run is being reloaded."""
-        col_index = 0 if self.is_working_with_data_column else 1
-        big_table_data_run = self.parent.big_table_data[self.row, col_index]
-        if big_table_data_run is not None and (
-            big_table_data_run.run_number == self.parent.ui.reductionTable.item(self.row, self.col).text()
-        ):
-            return True
-        return False
