@@ -19,15 +19,15 @@ class UpdateReductionTable(object):
         self.row = row
         self.col = col
 
+        data_type = 'data' if col == 1 else 'norm'
+        self.is_data_displayed = True if (col == 1) else False
+
         item = self.parent.ui.reductionTable.item(row, col)
         if item.text() == '':
             self.clear_cell(row, col)
-            self.parent.file_loaded_signal.emit()
+            self.parent.file_loaded_signal.emit(row, self.is_data_displayed, self.display_of_this_row_checked())
             QApplication.processEvents()
             return
-
-        data_type = 'data' if col == 1 else 'norm'
-        self.is_data_displayed = True if (col == 1) else False
 
         self.raw_runs = str(runs)
         run_breaker = RunSequenceBreaker(run_sequence=self.raw_runs)
@@ -85,6 +85,9 @@ class UpdateReductionTable(object):
         # Note: there is a Mantid process cleaning process elsewhere in the code
         # so we don't have to deal with it here.
         config = self.parent.big_table_data[self.row, 2]
+        if config is None:
+            # no data loaded in this row
+            return
         if col == 1:
             self.parent.big_table_data[self.row, 0] = None
             config.clear_data()

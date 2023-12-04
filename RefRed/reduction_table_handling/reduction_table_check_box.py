@@ -57,6 +57,9 @@ class ReductionTableCheckBox(object):
         if self.is_row_selected_checked(_row_selected):
             _big_table_data = self.parent.big_table_data
             _lconfig = _big_table_data[_row_selected, 2]
+            if not _lconfig:
+                # no data loaded on this row
+                return
             if bool(_lconfig.tof_auto_flag):
                 self.parent.ui.dataTOFautoMode.setChecked(True)
             else:

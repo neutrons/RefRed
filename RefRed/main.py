@@ -52,7 +52,7 @@ from RefRed.config.mantid_config import MantidConfig
 class MainGui(QtWidgets.QMainWindow):
     '''Top class that handles the GUI'''
 
-    file_loaded_signal = QtCore.Signal()
+    file_loaded_signal = QtCore.Signal(int, bool, bool)
 
     # default location
     path_ascii = '.'  # ascii file such as scaling factor file
