@@ -384,12 +384,12 @@ class DisplayPlots(object):
         if update_reduction_table:
 
             [peak1, peak2] = self.peak
-            parent.ui.dataPeakFromValue.setValue(peak1)
-            parent.ui.dataPeakToValue.setValue(peak2)
+            parent.ui.peakFromValue.setValue(peak1)
+            parent.ui.peakToValue.setValue(peak2)
 
             [back1, back2] = self.back
-            parent.ui.dataBackFromValue.setValue(back1)
-            parent.ui.dataBackToValue.setValue(back2)
+            parent.ui.backFromValue.setValue(back1)
+            parent.ui.backToValue.setValue(back2)
             parent.ui.dataBackgroundFlag.setChecked(self.backFlag)
 
             [lowRes1, lowRes2] = self.lowRes

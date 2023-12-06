@@ -398,15 +398,15 @@ class PopupPlot1d(QDialog):
         self.parent.big_table_data = big_table_data
 
         if self.data_type == "data":
-            self.parent.ui.dataPeakFromValue.setValue(peak1)
-            self.parent.ui.dataPeakToValue.setValue(peak2)
-            self.parent.ui.dataBackFromValue.setValue(back1)
-            self.parent.ui.dataBackToValue.setValue(back2)
+            self.parent.ui.peakFromValue.setValue(peak1)
+            self.parent.ui.peakToValue.setValue(peak2)
+            self.parent.ui.backFromValue.setValue(back1)
+            self.parent.ui.backToValue.setValue(back2)
             self.parent.ui.dataBackgroundFlag.setChecked(backFlag)
             self.parent.ui.dataBackFromLabel.setEnabled(backFlag)
-            self.parent.ui.dataBackFromValue.setEnabled(backFlag)
+            self.parent.ui.backFromValue.setEnabled(backFlag)
             self.parent.ui.dataBackToLabel.setEnabled(backFlag)
-            self.parent.ui.dataBackToValue.setEnabled(backFlag)
+            self.parent.ui.backToValue.setEnabled(backFlag)
 
         else:
             self.parent.ui.normPeakFromValue.setValue(peak1)

@@ -25,8 +25,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1188</width>
-         <height>942</height>
+         <width>1187</width>
+         <height>914</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -157,7 +157,7 @@
                       <bool>false</bool>
                      </property>
                      <property name="text">
-                      <string>Back2</string>
+                      <string>BackUpper</string>
                      </property>
                     </widget>
                    </item>
@@ -178,11 +178,29 @@
                           </color>
                          </brush>
                         </colorrole>
+                        <colorrole role="PlaceholderText">
+                         <brush brushstyle="NoBrush">
+                          <color alpha="128">
+                           <red>170</red>
+                           <green>85</green>
+                           <blue>0</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
                        </active>
                        <inactive>
                         <colorrole role="Text">
                          <brush brushstyle="SolidPattern">
                           <color alpha="255">
+                           <red>170</red>
+                           <green>85</green>
+                           <blue>0</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                        <colorrole role="PlaceholderText">
+                         <brush brushstyle="NoBrush">
+                          <color alpha="128">
                            <red>170</red>
                            <green>85</green>
                            <blue>0</blue>
@@ -197,6 +215,15 @@
                            <red>118</red>
                            <green>118</green>
                            <blue>117</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                        <colorrole role="PlaceholderText">
+                         <brush brushstyle="NoBrush">
+                          <color alpha="128">
+                           <red>170</red>
+                           <green>85</green>
+                           <blue>0</blue>
                           </color>
                          </brush>
                         </colorrole>
@@ -244,7 +271,7 @@
                       <bool>false</bool>
                      </property>
                      <property name="text">
-                      <string>Peak2</string>
+                      <string>PeakUpper</string>
                      </property>
                     </widget>
                    </item>
@@ -265,11 +292,29 @@
                           </color>
                          </brush>
                         </colorrole>
+                        <colorrole role="PlaceholderText">
+                         <brush brushstyle="NoBrush">
+                          <color alpha="128">
+                           <red>0</red>
+                           <green>0</green>
+                           <blue>127</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
                        </active>
                        <inactive>
                         <colorrole role="Text">
                          <brush brushstyle="SolidPattern">
                           <color alpha="255">
+                           <red>0</red>
+                           <green>0</green>
+                           <blue>127</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                        <colorrole role="PlaceholderText">
+                         <brush brushstyle="NoBrush">
+                          <color alpha="128">
                            <red>0</red>
                            <green>0</green>
                            <blue>127</blue>
@@ -284,6 +329,15 @@
                            <red>118</red>
                            <green>118</green>
                            <blue>117</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                        <colorrole role="PlaceholderText">
+                         <brush brushstyle="NoBrush">
+                          <color alpha="128">
+                           <red>0</red>
+                           <green>0</green>
+                           <blue>127</blue>
                           </color>
                          </brush>
                         </colorrole>
@@ -331,7 +385,7 @@
                       <bool>false</bool>
                      </property>
                      <property name="text">
-                      <string>Peak1</string>
+                      <string>PeakLower</string>
                      </property>
                     </widget>
                    </item>
@@ -352,11 +406,29 @@
                           </color>
                          </brush>
                         </colorrole>
+                        <colorrole role="PlaceholderText">
+                         <brush brushstyle="NoBrush">
+                          <color alpha="128">
+                           <red>0</red>
+                           <green>0</green>
+                           <blue>127</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
                        </active>
                        <inactive>
                         <colorrole role="Text">
                          <brush brushstyle="SolidPattern">
                           <color alpha="255">
+                           <red>0</red>
+                           <green>0</green>
+                           <blue>127</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                        <colorrole role="PlaceholderText">
+                         <brush brushstyle="NoBrush">
+                          <color alpha="128">
                            <red>0</red>
                            <green>0</green>
                            <blue>127</blue>
@@ -371,6 +443,15 @@
                            <red>118</red>
                            <green>118</green>
                            <blue>117</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                        <colorrole role="PlaceholderText">
+                         <brush brushstyle="NoBrush">
+                          <color alpha="128">
+                           <red>0</red>
+                           <green>0</green>
+                           <blue>127</blue>
                           </color>
                          </brush>
                         </colorrole>
@@ -418,7 +499,7 @@
                       <bool>false</bool>
                      </property>
                      <property name="text">
-                      <string>Back1</string>
+                      <string>BackLower</string>
                      </property>
                     </widget>
                    </item>
@@ -439,11 +520,29 @@
                           </color>
                          </brush>
                         </colorrole>
+                        <colorrole role="PlaceholderText">
+                         <brush brushstyle="NoBrush">
+                          <color alpha="128">
+                           <red>170</red>
+                           <green>85</green>
+                           <blue>0</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
                        </active>
                        <inactive>
                         <colorrole role="Text">
                          <brush brushstyle="SolidPattern">
                           <color alpha="255">
+                           <red>170</red>
+                           <green>85</green>
+                           <blue>0</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                        <colorrole role="PlaceholderText">
+                         <brush brushstyle="NoBrush">
+                          <color alpha="128">
                            <red>170</red>
                            <green>85</green>
                            <blue>0</blue>
@@ -458,6 +557,15 @@
                            <red>118</red>
                            <green>118</green>
                            <blue>117</blue>
+                          </color>
+                         </brush>
+                        </colorrole>
+                        <colorrole role="PlaceholderText">
+                         <brush brushstyle="NoBrush">
+                          <color alpha="128">
+                           <red>170</red>
+                           <green>85</green>
+                           <blue>0</blue>
                           </color>
                          </brush>
                         </colorrole>
@@ -1002,7 +1110,7 @@
      <x>0</x>
      <y>0</y>
      <width>1221</width>
-     <height>28</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

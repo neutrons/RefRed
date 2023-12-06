@@ -1,4 +1,5 @@
 from qtpy import QtGui, QtCore, QtWidgets
+
 import socket
 
 from RefRed import WINDOW_TITLE
@@ -210,14 +211,19 @@ class Gui(object):
         parent = self.parent
         palette = QtGui.QPalette()
         palette.setColor(QtGui.QPalette.Foreground, QtCore.Qt.red)
-        parent.ui.data_peak1_error.setVisible(False)
-        parent.ui.data_peak1_error.setPalette(palette)
-        parent.ui.data_peak2_error.setVisible(False)
-        parent.ui.data_peak2_error.setPalette(palette)
-        parent.ui.data_back1_error.setVisible(False)
-        parent.ui.data_back1_error.setPalette(palette)
-        parent.ui.data_back2_error.setVisible(False)
-        parent.ui.data_back2_error.setPalette(palette)
+
+        for label_text in (
+            "peakFromError",
+            "peakToError",
+            "backFromError",
+            "backToError",
+            "back2FromError",
+            "back2ToError",
+        ):
+            label: QtWidgets.QLabel = getattr(parent.ui, label_text)
+            label.setVisible(False)
+            label.setPalette(palette)
+
         parent.ui.norm_peak1_error.setVisible(False)
         parent.ui.norm_peak1_error.setPalette(palette)
         parent.ui.norm_peak2_error.setVisible(False)
