@@ -49,18 +49,18 @@ def test_popup_plot_1d(qtbot, main_gui):
         assert pixel(boundary) == pytest.approx(value)
 
     # test changing the peak boundaries
-    assert_boundary("peak left boundary", popup.ui.plot_peak1, 130, old_value=129)
-    assert_boundary("peak right boundary", popup.ui.plot_peak2, 142, old_value=141)
+    assert_boundary("peak left boundary", popup.ui.plotPeakFromSpinBox, 130, old_value=129)
+    assert_boundary("peak right boundary", popup.ui.plotPeakToSpinBox, 142, old_value=141)
 
     # test changing the background boundaries
-    assert_boundary("background left boundary", popup.ui.plot_back1, 127, old_value=126)
-    assert_boundary("background right boundary", popup.ui.plot_back2, 145, old_value=144)
+    assert_boundary("background left boundary", popup.ui.plotBackFromSpinBox, 127, old_value=126)
+    assert_boundary("background right boundary", popup.ui.plotBackToSpinBox, 145, old_value=144)
 
     # disable/enable background options. Assumed popup.ui.plot_back_flag is initially checked
     for status in [False, True]:
         qtbot.mouseClick(popup.ui.plot_back_flag, QtCore.Qt.LeftButton)
-        assert popup.ui.plot_back1.isEnabled() is status
-        assert popup.ui.plot_back2.isEnabled() is status
+        assert popup.ui.plotBackFromSpinBox.isEnabled() is status
+        assert popup.ui.plotBackToSpinBox.isEnabled() is status
 
 
 if __name__ == '__main__':
