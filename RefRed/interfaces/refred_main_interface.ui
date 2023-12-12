@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1696</width>
+    <width>1748</width>
     <height>1400</height>
    </rect>
   </property>
@@ -38,7 +38,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1676</width>
+         <width>1728</width>
          <height>1319</height>
         </rect>
        </property>
@@ -5050,7 +5050,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1696</width>
+     <width>1748</width>
      <height>22</height>
     </rect>
    </property>
@@ -6323,6 +6323,70 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>784</x>
      <y>563</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>peakFromValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_peak_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1635</x>
+     <y>466</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>873</x>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>peakToValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_peak_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1635</x>
+     <y>502</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>873</x>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>backFromValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_back_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1635</x>
+     <y>546</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>873</x>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>backToValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_back_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1635</x>
+     <y>582</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>873</x>
+     <y>699</y>
     </hint>
    </hints>
   </connection>

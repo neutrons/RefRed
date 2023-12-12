@@ -651,6 +651,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>plotPeakFromSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>plot_peak_from_spinbox_signal()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>613</x>
+     <y>197</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>383</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plotPeakToSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>plot_peak_to_spinbox_signal()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>613</x>
+     <y>237</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>383</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plotBackFromSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>plot_back_from_spinbox_signal()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>613</x>
+     <y>281</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>383</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plotBackToSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>plot_back_to_spinbox_signal()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>613</x>
+     <y>321</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>383</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>update_peak1_spinbox()</slot>

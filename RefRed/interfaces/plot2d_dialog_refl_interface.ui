@@ -1289,6 +1289,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>plot2dPeakFromSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>manual_input_peak1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1282</x>
+     <y>357</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>671</x>
+     <y>487</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plot2dPeakToSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>manual_input_peak2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1282</x>
+     <y>397</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>671</x>
+     <y>487</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plot2dBackFromValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>manual_input_back1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1282</x>
+     <y>441</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>671</x>
+     <y>487</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plot2dBackToValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>manual_input_back2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1282</x>
+     <y>481</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>671</x>
+     <y>487</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>activate_or_not_low_res_widgets()</slot>
