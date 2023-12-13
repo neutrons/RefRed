@@ -87,8 +87,8 @@ class DataPeakSpinbox(object):
 
     def __init__(self, parent=None):
         self.parent = parent
-        peak1 = self.parent.ui.dataPeakFromValue.value()
-        peak2 = self.parent.ui.dataPeakToValue.value()
+        peak1 = self.parent.ui.peakFromValue.value()
+        peak2 = self.parent.ui.peakToValue.value()
         DataSpinbox(parent=parent, entry_type='peak', value_min=peak1, value_max=peak2)
 
 
@@ -98,8 +98,8 @@ class DataBackSpinbox(object):
 
     def __init__(self, parent=None):
         self.parent = parent
-        back1 = self.parent.ui.dataBackFromValue.value()
-        back2 = self.parent.ui.dataBackToValue.value()
+        back1 = self.parent.ui.backFromValue.value()
+        back2 = self.parent.ui.backToValue.value()
         back_flag = self.parent.ui.dataBackgroundFlag.isChecked()
         DataSpinbox(parent=parent, entry_type='back', value_min=back1, value_max=back2, flag=back_flag)
 

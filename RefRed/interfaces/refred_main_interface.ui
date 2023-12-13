@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1696</width>
+    <width>1748</width>
     <height>1400</height>
    </rect>
   </property>
@@ -38,8 +38,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1680</width>
-         <height>1317</height>
+         <width>1728</width>
+         <height>1319</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_68">
@@ -603,6 +603,15 @@
                                </color>
                               </brush>
                              </colorrole>
+                             <colorrole role="PlaceholderText">
+                              <brush brushstyle="NoBrush">
+                               <color alpha="128">
+                                <red>0</red>
+                                <green>0</green>
+                                <blue>0</blue>
+                               </color>
+                              </brush>
+                             </colorrole>
                             </active>
                             <inactive>
                              <colorrole role="WindowText">
@@ -740,6 +749,15 @@
                                </color>
                               </brush>
                              </colorrole>
+                             <colorrole role="PlaceholderText">
+                              <brush brushstyle="NoBrush">
+                               <color alpha="128">
+                                <red>0</red>
+                                <green>0</green>
+                                <blue>0</blue>
+                               </color>
+                              </brush>
+                             </colorrole>
                             </inactive>
                             <disabled>
                              <colorrole role="WindowText">
@@ -871,6 +889,15 @@
                              <colorrole role="ToolTipText">
                               <brush brushstyle="SolidPattern">
                                <color alpha="255">
+                                <red>0</red>
+                                <green>0</green>
+                                <blue>0</blue>
+                               </color>
+                              </brush>
+                             </colorrole>
+                             <colorrole role="PlaceholderText">
+                              <brush brushstyle="NoBrush">
+                               <color alpha="128">
                                 <red>0</red>
                                 <green>0</green>
                                 <blue>0</blue>
@@ -1927,11 +1954,431 @@ p, li { white-space: pre-wrap; }
                             <item>
                              <layout class="QVBoxLayout" name="verticalLayout_28">
                               <item>
-                               <layout class="QHBoxLayout" name="horizontalLayout_32">
+                               <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="0,0,0">
                                 <item>
-                                 <widget class="QLabel" name="dataBackFromLabel">
-                                  <property name="enabled">
-                                   <bool>true</bool>
+                                 <widget class="QLabel" name="peakBoundariesLabel">
+                                  <property name="minimumSize">
+                                   <size>
+                                    <width>44</width>
+                                    <height>0</height>
+                                   </size>
+                                  </property>
+                                  <property name="maximumSize">
+                                   <size>
+                                    <width>16777215</width>
+                                    <height>16777215</height>
+                                   </size>
+                                  </property>
+                                  <property name="text">
+                                   <string>Peak</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <layout class="QVBoxLayout" name="verticalLayout_13">
+                                  <item>
+                                   <widget class="QSpinBox" name="peakFromValue">
+                                    <property name="enabled">
+                                     <bool>true</bool>
+                                    </property>
+                                    <property name="palette">
+                                     <palette>
+                                      <active>
+                                       <colorrole role="Text">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="255">
+                                          <red>0</red>
+                                          <green>255</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="128">
+                                          <red>0</red>
+                                          <green>255</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                      </active>
+                                      <inactive>
+                                       <colorrole role="Text">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="255">
+                                          <red>0</red>
+                                          <green>255</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="128">
+                                          <red>0</red>
+                                          <green>255</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                      </inactive>
+                                      <disabled>
+                                       <colorrole role="Text">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="255">
+                                          <red>190</red>
+                                          <green>190</green>
+                                          <blue>190</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="128">
+                                          <red>0</red>
+                                          <green>0</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                      </disabled>
+                                     </palette>
+                                    </property>
+                                    <property name="maximum">
+                                     <number>255</number>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QSpinBox" name="peakToValue">
+                                    <property name="palette">
+                                     <palette>
+                                      <active>
+                                       <colorrole role="Text">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="255">
+                                          <red>0</red>
+                                          <green>255</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="128">
+                                          <red>0</red>
+                                          <green>255</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                      </active>
+                                      <inactive>
+                                       <colorrole role="Text">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="255">
+                                          <red>0</red>
+                                          <green>255</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="128">
+                                          <red>0</red>
+                                          <green>255</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                      </inactive>
+                                      <disabled>
+                                       <colorrole role="Text">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="255">
+                                          <red>190</red>
+                                          <green>190</green>
+                                          <blue>190</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="128">
+                                          <red>0</red>
+                                          <green>0</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                      </disabled>
+                                     </palette>
+                                    </property>
+                                    <property name="maximum">
+                                     <number>255</number>
+                                    </property>
+                                    <property name="value">
+                                     <number>255</number>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </item>
+                                <item>
+                                 <layout class="QVBoxLayout" name="verticalLayout_9">
+                                  <item>
+                                   <widget class="QLabel" name="peakFromError">
+                                    <property name="font">
+                                     <font>
+                                      <pointsize>20</pointsize>
+                                      <weight>75</weight>
+                                      <bold>true</bold>
+                                     </font>
+                                    </property>
+                                    <property name="text">
+                                     <string>*</string>
+                                    </property>
+                                    <property name="alignment">
+                                     <set>Qt::AlignCenter</set>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QLabel" name="peakToError">
+                                    <property name="font">
+                                     <font>
+                                      <pointsize>20</pointsize>
+                                      <weight>75</weight>
+                                      <bold>true</bold>
+                                     </font>
+                                    </property>
+                                    <property name="text">
+                                     <string>*</string>
+                                    </property>
+                                    <property name="alignment">
+                                     <set>Qt::AlignCenter</set>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </item>
+                               </layout>
+                              </item>
+                              <item>
+                               <layout class="QHBoxLayout" name="horizontalLayout">
+                                <item>
+                                 <widget class="QLabel" name="backBoundariesLabel">
+                                  <property name="minimumSize">
+                                   <size>
+                                    <width>44</width>
+                                    <height>0</height>
+                                   </size>
+                                  </property>
+                                  <property name="text">
+                                   <string>Back</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <layout class="QVBoxLayout" name="verticalLayout_19">
+                                  <item>
+                                   <widget class="QSpinBox" name="backFromValue">
+                                    <property name="palette">
+                                     <palette>
+                                      <active>
+                                       <colorrole role="Text">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="255">
+                                          <red>255</red>
+                                          <green>15</green>
+                                          <blue>29</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="128">
+                                          <red>255</red>
+                                          <green>15</green>
+                                          <blue>29</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                      </active>
+                                      <inactive>
+                                       <colorrole role="Text">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="255">
+                                          <red>255</red>
+                                          <green>15</green>
+                                          <blue>29</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="128">
+                                          <red>255</red>
+                                          <green>15</green>
+                                          <blue>29</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                      </inactive>
+                                      <disabled>
+                                       <colorrole role="Text">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="255">
+                                          <red>190</red>
+                                          <green>190</green>
+                                          <blue>190</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="128">
+                                          <red>0</red>
+                                          <green>0</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                      </disabled>
+                                     </palette>
+                                    </property>
+                                    <property name="maximum">
+                                     <number>255</number>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QSpinBox" name="backToValue">
+                                    <property name="palette">
+                                     <palette>
+                                      <active>
+                                       <colorrole role="Text">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="255">
+                                          <red>255</red>
+                                          <green>15</green>
+                                          <blue>29</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="128">
+                                          <red>255</red>
+                                          <green>15</green>
+                                          <blue>29</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                      </active>
+                                      <inactive>
+                                       <colorrole role="Text">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="255">
+                                          <red>255</red>
+                                          <green>15</green>
+                                          <blue>29</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="128">
+                                          <red>255</red>
+                                          <green>15</green>
+                                          <blue>29</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                      </inactive>
+                                      <disabled>
+                                       <colorrole role="Text">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="255">
+                                          <red>190</red>
+                                          <green>190</green>
+                                          <blue>190</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="SolidPattern">
+                                         <color alpha="128">
+                                          <red>0</red>
+                                          <green>0</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                      </disabled>
+                                     </palette>
+                                    </property>
+                                    <property name="maximum">
+                                     <number>255</number>
+                                    </property>
+                                    <property name="value">
+                                     <number>255</number>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </item>
+                                <item>
+                                 <layout class="QVBoxLayout" name="verticalLayout_25">
+                                  <item>
+                                   <widget class="QLabel" name="backFromError">
+                                    <property name="font">
+                                     <font>
+                                      <pointsize>20</pointsize>
+                                      <weight>75</weight>
+                                      <bold>true</bold>
+                                     </font>
+                                    </property>
+                                    <property name="text">
+                                     <string>*</string>
+                                    </property>
+                                    <property name="alignment">
+                                     <set>Qt::AlignCenter</set>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QLabel" name="backToError">
+                                    <property name="font">
+                                     <font>
+                                      <pointsize>20</pointsize>
+                                      <weight>75</weight>
+                                      <bold>true</bold>
+                                     </font>
+                                    </property>
+                                    <property name="text">
+                                     <string>*</string>
+                                    </property>
+                                    <property name="alignment">
+                                     <set>Qt::AlignCenter</set>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </item>
+                               </layout>
+                              </item>
+                              <item>
+                               <layout class="QHBoxLayout" name="horizontalLayout_16">
+                                <item>
+                                 <widget class="QLabel" name="back2BoundariesLabel">
+                                  <property name="minimumSize">
+                                   <size>
+                                    <width>44</width>
+                                    <height>0</height>
+                                   </size>
                                   </property>
                                   <property name="text">
                                    <string>Back2</string>
@@ -1939,314 +2386,69 @@ p, li { white-space: pre-wrap; }
                                  </widget>
                                 </item>
                                 <item>
-                                 <widget class="QSpinBox" name="dataBackToValue">
-                                  <property name="palette">
-                                   <palette>
-                                    <active>
-                                     <colorrole role="Text">
-                                      <brush brushstyle="SolidPattern">
-                                       <color alpha="255">
-                                        <red>255</red>
-                                        <green>0</green>
-                                        <blue>0</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
-                                    </active>
-                                    <inactive>
-                                     <colorrole role="Text">
-                                      <brush brushstyle="SolidPattern">
-                                       <color alpha="255">
-                                        <red>255</red>
-                                        <green>0</green>
-                                        <blue>0</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
-                                    </inactive>
-                                    <disabled>
-                                     <colorrole role="Text">
-                                      <brush brushstyle="SolidPattern">
-                                       <color alpha="255">
-                                        <red>118</red>
-                                        <green>118</green>
-                                        <blue>117</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
-                                    </disabled>
-                                   </palette>
-                                  </property>
-                                  <property name="maximum">
-                                   <number>255</number>
-                                  </property>
-                                  <property name="value">
-                                   <number>255</number>
-                                  </property>
-                                 </widget>
+                                 <layout class="QVBoxLayout" name="verticalLayout_27">
+                                  <item>
+                                   <widget class="QSpinBox" name="back2FromValue">
+                                    <property name="enabled">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="maximum">
+                                     <number>255</number>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QSpinBox" name="back2ToValue">
+                                    <property name="enabled">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="maximum">
+                                     <number>255</number>
+                                    </property>
+                                    <property name="value">
+                                     <number>255</number>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
                                 </item>
                                 <item>
-                                 <widget class="QLabel" name="data_back2_error">
-                                  <property name="font">
-                                   <font>
-                                    <pointsize>20</pointsize>
-                                    <weight>75</weight>
-                                    <bold>true</bold>
-                                   </font>
-                                  </property>
-                                  <property name="accessibleDescription">
-                                   <string/>
-                                  </property>
-                                  <property name="text">
-                                   <string>*</string>
-                                  </property>
-                                  <property name="alignment">
-                                   <set>Qt::AlignCenter</set>
-                                  </property>
-                                 </widget>
-                                </item>
-                               </layout>
-                              </item>
-                              <item>
-                               <layout class="QHBoxLayout" name="horizontalLayout_33">
-                                <item>
-                                 <widget class="QLabel" name="dataPeakFromLabel">
-                                  <property name="text">
-                                   <string>Peak2</string>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <widget class="QSpinBox" name="dataPeakToValue">
-                                  <property name="enabled">
-                                   <bool>true</bool>
-                                  </property>
-                                  <property name="palette">
-                                   <palette>
-                                    <active>
-                                     <colorrole role="Text">
-                                      <brush brushstyle="SolidPattern">
-                                       <color alpha="255">
-                                        <red>0</red>
-                                        <green>255</green>
-                                        <blue>0</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
-                                    </active>
-                                    <inactive>
-                                     <colorrole role="Text">
-                                      <brush brushstyle="SolidPattern">
-                                       <color alpha="255">
-                                        <red>0</red>
-                                        <green>255</green>
-                                        <blue>0</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
-                                    </inactive>
-                                    <disabled>
-                                     <colorrole role="Text">
-                                      <brush brushstyle="SolidPattern">
-                                       <color alpha="255">
-                                        <red>118</red>
-                                        <green>118</green>
-                                        <blue>117</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
-                                    </disabled>
-                                   </palette>
-                                  </property>
-                                  <property name="maximum">
-                                   <number>255</number>
-                                  </property>
-                                  <property name="value">
-                                   <number>255</number>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <widget class="QLabel" name="data_peak2_error">
-                                  <property name="font">
-                                   <font>
-                                    <pointsize>20</pointsize>
-                                    <weight>75</weight>
-                                    <bold>true</bold>
-                                   </font>
-                                  </property>
-                                  <property name="accessibleDescription">
-                                   <string/>
-                                  </property>
-                                  <property name="text">
-                                   <string>*</string>
-                                  </property>
-                                  <property name="alignment">
-                                   <set>Qt::AlignCenter</set>
-                                  </property>
-                                 </widget>
-                                </item>
-                               </layout>
-                              </item>
-                              <item>
-                               <layout class="QHBoxLayout" name="horizontalLayout_34">
-                                <item>
-                                 <widget class="QLabel" name="dataPeakToLabel">
-                                  <property name="enabled">
-                                   <bool>true</bool>
-                                  </property>
-                                  <property name="text">
-                                   <string>Peak1</string>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <widget class="QSpinBox" name="dataPeakFromValue">
-                                  <property name="enabled">
-                                   <bool>true</bool>
-                                  </property>
-                                  <property name="palette">
-                                   <palette>
-                                    <active>
-                                     <colorrole role="Text">
-                                      <brush brushstyle="SolidPattern">
-                                       <color alpha="255">
-                                        <red>0</red>
-                                        <green>255</green>
-                                        <blue>0</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
-                                    </active>
-                                    <inactive>
-                                     <colorrole role="Text">
-                                      <brush brushstyle="SolidPattern">
-                                       <color alpha="255">
-                                        <red>0</red>
-                                        <green>255</green>
-                                        <blue>0</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
-                                    </inactive>
-                                    <disabled>
-                                     <colorrole role="Text">
-                                      <brush brushstyle="SolidPattern">
-                                       <color alpha="255">
-                                        <red>118</red>
-                                        <green>118</green>
-                                        <blue>117</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
-                                    </disabled>
-                                   </palette>
-                                  </property>
-                                  <property name="maximum">
-                                   <number>255</number>
-                                  </property>
-                                  <property name="value">
-                                   <number>0</number>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <widget class="QLabel" name="data_peak1_error">
-                                  <property name="font">
-                                   <font>
-                                    <pointsize>20</pointsize>
-                                    <weight>75</weight>
-                                    <bold>true</bold>
-                                   </font>
-                                  </property>
-                                  <property name="accessibleDescription">
-                                   <string/>
-                                  </property>
-                                  <property name="text">
-                                   <string>*</string>
-                                  </property>
-                                  <property name="alignment">
-                                   <set>Qt::AlignCenter</set>
-                                  </property>
-                                 </widget>
-                                </item>
-                               </layout>
-                              </item>
-                              <item>
-                               <layout class="QHBoxLayout" name="horizontalLayout_35">
-                                <item>
-                                 <widget class="QLabel" name="dataBackToLabel">
-                                  <property name="text">
-                                   <string>Back1</string>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <widget class="QSpinBox" name="dataBackFromValue">
-                                  <property name="palette">
-                                   <palette>
-                                    <active>
-                                     <colorrole role="Text">
-                                      <brush brushstyle="SolidPattern">
-                                       <color alpha="255">
-                                        <red>255</red>
-                                        <green>0</green>
-                                        <blue>0</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
-                                    </active>
-                                    <inactive>
-                                     <colorrole role="Text">
-                                      <brush brushstyle="SolidPattern">
-                                       <color alpha="255">
-                                        <red>255</red>
-                                        <green>0</green>
-                                        <blue>0</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
-                                    </inactive>
-                                    <disabled>
-                                     <colorrole role="Text">
-                                      <brush brushstyle="SolidPattern">
-                                       <color alpha="255">
-                                        <red>118</red>
-                                        <green>118</green>
-                                        <blue>117</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
-                                    </disabled>
-                                   </palette>
-                                  </property>
-                                  <property name="maximum">
-                                   <number>255</number>
-                                  </property>
-                                  <property name="value">
-                                   <number>0</number>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <widget class="QLabel" name="data_back1_error">
-                                  <property name="font">
-                                   <font>
-                                    <pointsize>20</pointsize>
-                                    <weight>75</weight>
-                                    <bold>true</bold>
-                                   </font>
-                                  </property>
-                                  <property name="accessibleDescription">
-                                   <string/>
-                                  </property>
-                                  <property name="text">
-                                   <string>*</string>
-                                  </property>
-                                  <property name="alignment">
-                                   <set>Qt::AlignCenter</set>
-                                  </property>
-                                 </widget>
+                                 <layout class="QVBoxLayout" name="verticalLayout_35">
+                                  <item>
+                                   <widget class="QLabel" name="back2FromError">
+                                    <property name="font">
+                                     <font>
+                                      <pointsize>20</pointsize>
+                                      <weight>75</weight>
+                                      <bold>true</bold>
+                                     </font>
+                                    </property>
+                                    <property name="text">
+                                     <string>*</string>
+                                    </property>
+                                    <property name="alignment">
+                                     <set>Qt::AlignCenter</set>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QLabel" name="back2ToError">
+                                    <property name="font">
+                                     <font>
+                                      <pointsize>20</pointsize>
+                                      <weight>75</weight>
+                                      <bold>true</bold>
+                                     </font>
+                                    </property>
+                                    <property name="text">
+                                     <string>*</string>
+                                    </property>
+                                    <property name="alignment">
+                                     <set>Qt::AlignCenter</set>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
                                 </item>
                                </layout>
                               </item>
@@ -2400,11 +2602,29 @@ p, li { white-space: pre-wrap; }
                                      </color>
                                     </brush>
                                    </colorrole>
+                                   <colorrole role="PlaceholderText">
+                                    <brush brushstyle="NoBrush">
+                                     <color alpha="128">
+                                      <red>0</red>
+                                      <green>0</green>
+                                      <blue>255</blue>
+                                     </color>
+                                    </brush>
+                                   </colorrole>
                                   </active>
                                   <inactive>
                                    <colorrole role="Text">
                                     <brush brushstyle="SolidPattern">
                                      <color alpha="255">
+                                      <red>0</red>
+                                      <green>0</green>
+                                      <blue>255</blue>
+                                     </color>
+                                    </brush>
+                                   </colorrole>
+                                   <colorrole role="PlaceholderText">
+                                    <brush brushstyle="NoBrush">
+                                     <color alpha="128">
                                       <red>0</red>
                                       <green>0</green>
                                       <blue>255</blue>
@@ -2419,6 +2639,15 @@ p, li { white-space: pre-wrap; }
                                       <red>118</red>
                                       <green>118</green>
                                       <blue>117</blue>
+                                     </color>
+                                    </brush>
+                                   </colorrole>
+                                   <colorrole role="PlaceholderText">
+                                    <brush brushstyle="NoBrush">
+                                     <color alpha="128">
+                                      <red>0</red>
+                                      <green>0</green>
+                                      <blue>255</blue>
                                      </color>
                                     </brush>
                                    </colorrole>
@@ -2473,11 +2702,29 @@ p, li { white-space: pre-wrap; }
                                      </color>
                                     </brush>
                                    </colorrole>
+                                   <colorrole role="PlaceholderText">
+                                    <brush brushstyle="NoBrush">
+                                     <color alpha="128">
+                                      <red>0</red>
+                                      <green>0</green>
+                                      <blue>255</blue>
+                                     </color>
+                                    </brush>
+                                   </colorrole>
                                   </active>
                                   <inactive>
                                    <colorrole role="Text">
                                     <brush brushstyle="SolidPattern">
                                      <color alpha="255">
+                                      <red>0</red>
+                                      <green>0</green>
+                                      <blue>255</blue>
+                                     </color>
+                                    </brush>
+                                   </colorrole>
+                                   <colorrole role="PlaceholderText">
+                                    <brush brushstyle="NoBrush">
+                                     <color alpha="128">
                                       <red>0</red>
                                       <green>0</green>
                                       <blue>255</blue>
@@ -2492,6 +2739,15 @@ p, li { white-space: pre-wrap; }
                                       <red>118</red>
                                       <green>118</green>
                                       <blue>117</blue>
+                                     </color>
+                                    </brush>
+                                   </colorrole>
+                                   <colorrole role="PlaceholderText">
+                                    <brush brushstyle="NoBrush">
+                                     <color alpha="128">
+                                      <red>0</red>
+                                      <green>0</green>
+                                      <blue>255</blue>
                                      </color>
                                     </brush>
                                    </colorrole>
@@ -2692,11 +2948,29 @@ p, li { white-space: pre-wrap; }
                                          </color>
                                         </brush>
                                        </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="NoBrush">
+                                         <color alpha="128">
+                                          <red>255</red>
+                                          <green>0</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
                                       </active>
                                       <inactive>
                                        <colorrole role="Text">
                                         <brush brushstyle="SolidPattern">
                                          <color alpha="255">
+                                          <red>255</red>
+                                          <green>0</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="NoBrush">
+                                         <color alpha="128">
                                           <red>255</red>
                                           <green>0</green>
                                           <blue>0</blue>
@@ -2711,6 +2985,15 @@ p, li { white-space: pre-wrap; }
                                           <red>118</red>
                                           <green>118</green>
                                           <blue>117</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="NoBrush">
+                                         <color alpha="128">
+                                          <red>255</red>
+                                          <green>0</green>
+                                          <blue>0</blue>
                                          </color>
                                         </brush>
                                        </colorrole>
@@ -2770,11 +3053,29 @@ p, li { white-space: pre-wrap; }
                                          </color>
                                         </brush>
                                        </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="NoBrush">
+                                         <color alpha="128">
+                                          <red>0</red>
+                                          <green>255</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
                                       </active>
                                       <inactive>
                                        <colorrole role="Text">
                                         <brush brushstyle="SolidPattern">
                                          <color alpha="255">
+                                          <red>0</red>
+                                          <green>255</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="NoBrush">
+                                         <color alpha="128">
                                           <red>0</red>
                                           <green>255</green>
                                           <blue>0</blue>
@@ -2789,6 +3090,15 @@ p, li { white-space: pre-wrap; }
                                           <red>118</red>
                                           <green>118</green>
                                           <blue>117</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="NoBrush">
+                                         <color alpha="128">
+                                          <red>0</red>
+                                          <green>255</green>
+                                          <blue>0</blue>
                                          </color>
                                         </brush>
                                        </colorrole>
@@ -2848,11 +3158,29 @@ p, li { white-space: pre-wrap; }
                                          </color>
                                         </brush>
                                        </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="NoBrush">
+                                         <color alpha="128">
+                                          <red>0</red>
+                                          <green>255</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
                                       </active>
                                       <inactive>
                                        <colorrole role="Text">
                                         <brush brushstyle="SolidPattern">
                                          <color alpha="255">
+                                          <red>0</red>
+                                          <green>255</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="NoBrush">
+                                         <color alpha="128">
                                           <red>0</red>
                                           <green>255</green>
                                           <blue>0</blue>
@@ -2867,6 +3195,15 @@ p, li { white-space: pre-wrap; }
                                           <red>118</red>
                                           <green>118</green>
                                           <blue>117</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="NoBrush">
+                                         <color alpha="128">
+                                          <red>0</red>
+                                          <green>255</green>
+                                          <blue>0</blue>
                                          </color>
                                         </brush>
                                        </colorrole>
@@ -2935,6 +3272,15 @@ p, li { white-space: pre-wrap; }
                                          </color>
                                         </brush>
                                        </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="NoBrush">
+                                         <color alpha="128">
+                                          <red>255</red>
+                                          <green>0</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
                                       </active>
                                       <inactive>
                                        <colorrole role="Text">
@@ -2955,6 +3301,15 @@ p, li { white-space: pre-wrap; }
                                          </color>
                                         </brush>
                                        </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="NoBrush">
+                                         <color alpha="128">
+                                          <red>255</red>
+                                          <green>0</green>
+                                          <blue>0</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
                                       </inactive>
                                       <disabled>
                                        <colorrole role="Text">
@@ -2972,6 +3327,15 @@ p, li { white-space: pre-wrap; }
                                           <red>255</red>
                                           <green>255</green>
                                           <blue>255</blue>
+                                         </color>
+                                        </brush>
+                                       </colorrole>
+                                       <colorrole role="PlaceholderText">
+                                        <brush brushstyle="NoBrush">
+                                         <color alpha="128">
+                                          <red>255</red>
+                                          <green>0</green>
+                                          <blue>0</blue>
                                          </color>
                                         </brush>
                                        </colorrole>
@@ -3168,11 +3532,29 @@ p, li { white-space: pre-wrap; }
                                        </color>
                                       </brush>
                                      </colorrole>
+                                     <colorrole role="PlaceholderText">
+                                      <brush brushstyle="NoBrush">
+                                       <color alpha="128">
+                                        <red>0</red>
+                                        <green>0</green>
+                                        <blue>255</blue>
+                                       </color>
+                                      </brush>
+                                     </colorrole>
                                     </active>
                                     <inactive>
                                      <colorrole role="Text">
                                       <brush brushstyle="SolidPattern">
                                        <color alpha="255">
+                                        <red>0</red>
+                                        <green>0</green>
+                                        <blue>255</blue>
+                                       </color>
+                                      </brush>
+                                     </colorrole>
+                                     <colorrole role="PlaceholderText">
+                                      <brush brushstyle="NoBrush">
+                                       <color alpha="128">
                                         <red>0</red>
                                         <green>0</green>
                                         <blue>255</blue>
@@ -3187,6 +3569,15 @@ p, li { white-space: pre-wrap; }
                                         <red>118</red>
                                         <green>118</green>
                                         <blue>117</blue>
+                                       </color>
+                                      </brush>
+                                     </colorrole>
+                                     <colorrole role="PlaceholderText">
+                                      <brush brushstyle="NoBrush">
+                                       <color alpha="128">
+                                        <red>0</red>
+                                        <green>0</green>
+                                        <blue>255</blue>
                                        </color>
                                       </brush>
                                      </colorrole>
@@ -3241,11 +3632,29 @@ p, li { white-space: pre-wrap; }
                                        </color>
                                       </brush>
                                      </colorrole>
+                                     <colorrole role="PlaceholderText">
+                                      <brush brushstyle="NoBrush">
+                                       <color alpha="128">
+                                        <red>0</red>
+                                        <green>0</green>
+                                        <blue>255</blue>
+                                       </color>
+                                      </brush>
+                                     </colorrole>
                                     </active>
                                     <inactive>
                                      <colorrole role="Text">
                                       <brush brushstyle="SolidPattern">
                                        <color alpha="255">
+                                        <red>0</red>
+                                        <green>0</green>
+                                        <blue>255</blue>
+                                       </color>
+                                      </brush>
+                                     </colorrole>
+                                     <colorrole role="PlaceholderText">
+                                      <brush brushstyle="NoBrush">
+                                       <color alpha="128">
                                         <red>0</red>
                                         <green>0</green>
                                         <blue>255</blue>
@@ -3260,6 +3669,15 @@ p, li { white-space: pre-wrap; }
                                         <red>118</red>
                                         <green>118</green>
                                         <blue>117</blue>
+                                       </color>
+                                      </brush>
+                                     </colorrole>
+                                     <colorrole role="PlaceholderText">
+                                      <brush brushstyle="NoBrush">
+                                       <color alpha="128">
+                                        <red>0</red>
+                                        <green>0</green>
+                                        <blue>255</blue>
                                        </color>
                                       </brush>
                                      </colorrole>
@@ -3601,11 +4019,11 @@ p, li { white-space: pre-wrap; }
                   <attribute name="horizontalHeaderVisible">
                    <bool>true</bool>
                   </attribute>
-                  <attribute name="horizontalHeaderDefaultSectionSize">
-                   <number>50</number>
-                  </attribute>
                   <attribute name="horizontalHeaderMinimumSectionSize">
                    <number>25</number>
+                  </attribute>
+                  <attribute name="horizontalHeaderDefaultSectionSize">
+                   <number>50</number>
                   </attribute>
                   <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
                    <bool>false</bool>
@@ -3617,7 +4035,7 @@ p, li { white-space: pre-wrap; }
                    <bool>false</bool>
                   </attribute>
                   <attribute name="verticalHeaderDefaultSectionSize">
-                   <number>20</number>
+                   <number>21</number>
                   </attribute>
                   <attribute name="verticalHeaderShowSortIndicator" stdset="0">
                    <bool>false</bool>
@@ -4632,8 +5050,8 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1696</width>
-     <height>28</height>
+     <width>1748</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">
@@ -5067,8 +5485,8 @@ p, li { white-space: pre-wrap; }
    <slot>load_reduced_data_set_button()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>170</x>
-     <y>657</y>
+     <x>182</x>
+     <y>915</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5083,8 +5501,8 @@ p, li { white-space: pre-wrap; }
    <slot>widget_modified()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>273</x>
-     <y>519</y>
+     <x>238</x>
+     <y>661</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5099,8 +5517,8 @@ p, li { white-space: pre-wrap; }
    <slot>widget_modified()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>625</y>
+     <x>121</x>
+     <y>819</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5115,8 +5533,8 @@ p, li { white-space: pre-wrap; }
    <slot>widget_modified()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>256</x>
-     <y>856</y>
+     <x>299</x>
+     <y>1084</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5131,8 +5549,8 @@ p, li { white-space: pre-wrap; }
    <slot>data_norm_sequence_event()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>307</x>
-     <y>197</y>
+     <x>373</x>
+     <y>246</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5147,8 +5565,8 @@ p, li { white-space: pre-wrap; }
    <slot>data_norm_sequence_event()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>307</x>
-     <y>144</y>
+     <x>373</x>
+     <y>215</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5163,8 +5581,8 @@ p, li { white-space: pre-wrap; }
    <slot>browse_scaling_factor_button()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>256</x>
-     <y>719</y>
+     <x>470</x>
+     <y>1015</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5179,8 +5597,8 @@ p, li { white-space: pre-wrap; }
    <slot>use_scaling_factor_checkbox()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>256</x>
-     <y>643</y>
+     <x>289</x>
+     <y>906</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5195,8 +5613,8 @@ p, li { white-space: pre-wrap; }
    <slot>manual_tof_range_line_edit_validation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1284</x>
-     <y>700</y>
+     <x>1319</x>
+     <y>1032</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5211,8 +5629,8 @@ p, li { white-space: pre-wrap; }
    <slot>run_reduction_button()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1016</x>
-     <y>1048</y>
+     <x>493</x>
+     <y>467</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5227,8 +5645,8 @@ p, li { white-space: pre-wrap; }
    <slot>auto_tof_range_radio_button()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>782</x>
-     <y>700</y>
+     <x>790</x>
+     <y>1031</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5243,8 +5661,8 @@ p, li { white-space: pre-wrap; }
    <slot>manual_tof_range_line_edit_validation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1087</x>
-     <y>700</y>
+     <x>1120</x>
+     <y>1032</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5259,8 +5677,8 @@ p, li { white-space: pre-wrap; }
    <slot>auto_tof_range_radio_button()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>901</x>
-     <y>700</y>
+     <x>918</x>
+     <y>1031</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5275,8 +5693,8 @@ p, li { white-space: pre-wrap; }
    <slot>stitching_yscale_options_radio_button_1()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1299</x>
-     <y>1121</y>
+     <x>1197</x>
+     <y>1348</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5291,8 +5709,8 @@ p, li { white-space: pre-wrap; }
    <slot>stitching_yscale_options_radio_button_2()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1390</x>
-     <y>1121</y>
+     <x>1299</x>
+     <y>1348</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5307,8 +5725,8 @@ p, li { white-space: pre-wrap; }
    <slot>widget_modified()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>273</x>
-     <y>486</y>
+     <x>238</x>
+     <y>586</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5323,8 +5741,8 @@ p, li { white-space: pre-wrap; }
    <slot>widget_modified()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>289</x>
-     <y>625</y>
+     <x>329</x>
+     <y>819</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5339,8 +5757,8 @@ p, li { white-space: pre-wrap; }
    <slot>preview_scaling_factor_button()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>411</x>
-     <y>822</y>
+     <x>454</x>
+     <y>947</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5371,8 +5789,8 @@ p, li { white-space: pre-wrap; }
    <slot>reduced_ascii_data_set_table_right_click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>180</x>
-     <y>900</y>
+     <x>192</x>
+     <y>1315</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5387,8 +5805,8 @@ p, li { white-space: pre-wrap; }
    <slot>reduction_table_right_click()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1016</x>
-     <y>878</y>
+     <x>1508</x>
+     <y>1348</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5403,8 +5821,8 @@ p, li { white-space: pre-wrap; }
    <slot>norm_back_spinbox_validation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1453</x>
-     <y>429</y>
+     <x>1604</x>
+     <y>647</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5413,14 +5831,14 @@ p, li { white-space: pre-wrap; }
    </hints>
   </connection>
   <connection>
-   <sender>dataBackFromValue</sender>
+   <sender>backFromValue</sender>
    <signal>editingFinished()</signal>
    <receiver>MainWindow</receiver>
    <slot>data_back_spinbox_validation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1437</x>
-     <y>414</y>
+     <x>1566</x>
+     <y>597</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5435,8 +5853,8 @@ p, li { white-space: pre-wrap; }
    <slot>norm_low_res_checkbox()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1141</x>
-     <y>634</y>
+     <x>1297</x>
+     <y>965</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5451,8 +5869,8 @@ p, li { white-space: pre-wrap; }
    <slot>norm_back_spinbox_validation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1453</x>
-     <y>309</y>
+     <x>1604</x>
+     <y>527</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5461,14 +5879,14 @@ p, li { white-space: pre-wrap; }
    </hints>
   </connection>
   <connection>
-   <sender>dataPeakFromValue</sender>
+   <sender>peakFromValue</sender>
    <signal>editingFinished()</signal>
    <receiver>MainWindow</receiver>
    <slot>data_peak_spinbox_validation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1437</x>
-     <y>374</y>
+     <x>1566</x>
+     <y>517</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5493,14 +5911,14 @@ p, li { white-space: pre-wrap; }
    </hints>
   </connection>
   <connection>
-   <sender>dataBackToValue</sender>
+   <sender>backToValue</sender>
    <signal>editingFinished()</signal>
    <receiver>MainWindow</receiver>
    <slot>data_back_spinbox_validation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1437</x>
-     <y>294</y>
+     <x>1566</x>
+     <y>633</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5515,8 +5933,8 @@ p, li { white-space: pre-wrap; }
    <slot>data_low_res_validation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1308</x>
-     <y>636</y>
+     <x>1486</x>
+     <y>968</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5531,8 +5949,8 @@ p, li { white-space: pre-wrap; }
    <slot>norm_low_res_validation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1318</x>
-     <y>635</y>
+     <x>1445</x>
+     <y>967</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5547,8 +5965,8 @@ p, li { white-space: pre-wrap; }
    <slot>norm_low_res_validation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1441</x>
-     <y>635</y>
+     <x>1578</x>
+     <y>967</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5563,8 +5981,8 @@ p, li { white-space: pre-wrap; }
    <slot>norm_peak_spinbox_validation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1453</x>
-     <y>349</y>
+     <x>1605</x>
+     <y>567</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5579,24 +5997,8 @@ p, li { white-space: pre-wrap; }
    <slot>norm_peak_spinbox_validation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1453</x>
-     <y>389</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dataPeakToValue</sender>
-   <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>data_peak_spinbox_validation()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1437</x>
-     <y>334</y>
+     <x>1605</x>
+     <y>607</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5611,8 +6013,8 @@ p, li { white-space: pre-wrap; }
    <slot>norm_back_checkbox()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1446</x>
-     <y>476</y>
+     <x>1642</x>
+     <y>680</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5627,8 +6029,8 @@ p, li { white-space: pre-wrap; }
    <slot>data_low_res_validation()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1021</x>
-     <y>636</y>
+     <x>1167</x>
+     <y>968</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5643,8 +6045,8 @@ p, li { white-space: pre-wrap; }
    <slot>data_back_checkbox()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1436</x>
-     <y>490</y>
+     <x>1643</x>
+     <y>761</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5659,8 +6061,8 @@ p, li { white-space: pre-wrap; }
    <slot>data_low_res_checkbox()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>734</x>
-     <y>635</y>
+     <x>848</x>
+     <y>966</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>
@@ -5691,8 +6093,8 @@ p, li { white-space: pre-wrap; }
    <slot>sf_absolute_normalization_button()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>183</x>
-     <y>483</y>
+     <x>207</x>
+     <y>613</y>
     </hint>
     <hint type="destinationlabel">
      <x>784</x>
@@ -5707,8 +6109,8 @@ p, li { white-space: pre-wrap; }
    <slot>sf_auto_stitching_button()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>183</x>
-     <y>511</y>
+     <x>207</x>
+     <y>642</y>
     </hint>
     <hint type="destinationlabel">
      <x>784</x>
@@ -5723,8 +6125,8 @@ p, li { white-space: pre-wrap; }
    <slot>sf_manual_stitching_button()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>183</x>
-     <y>539</y>
+     <x>207</x>
+     <y>671</y>
     </hint>
     <hint type="destinationlabel">
      <x>784</x>
@@ -5739,8 +6141,8 @@ p, li { white-space: pre-wrap; }
    <slot>sf_button_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>70</x>
-     <y>608</y>
+     <x>85</x>
+     <y>769</y>
     </hint>
     <hint type="destinationlabel">
      <x>784</x>
@@ -5755,8 +6157,8 @@ p, li { white-space: pre-wrap; }
    <slot>sf_absolute_normalization_button()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>137</x>
-     <y>609</y>
+     <x>171</x>
+     <y>770</y>
     </hint>
     <hint type="destinationlabel">
      <x>784</x>
@@ -5771,8 +6173,8 @@ p, li { white-space: pre-wrap; }
    <slot>first_angle_range_button_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>147</x>
-     <y>640</y>
+     <x>171</x>
+     <y>800</y>
     </hint>
     <hint type="destinationlabel">
      <x>784</x>
@@ -5787,8 +6189,8 @@ p, li { white-space: pre-wrap; }
    <slot>sf_qmin_value_field()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>189</x>
-     <y>674</y>
+     <x>219</x>
+     <y>834</y>
     </hint>
     <hint type="destinationlabel">
      <x>784</x>
@@ -5803,8 +6205,8 @@ p, li { white-space: pre-wrap; }
    <slot>sf_qmax_value_field()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>191</x>
-     <y>709</y>
+     <x>219</x>
+     <y>867</y>
     </hint>
     <hint type="destinationlabel">
      <x>784</x>
@@ -5908,13 +6310,97 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>peakToValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>data_peak_spinbox_validation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1635</x>
+     <y>502</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>873</x>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>backFromValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>back_from_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1635</x>
+     <y>546</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>873</x>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>backToValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>back_to_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1635</x>
+     <y>582</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>873</x>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>peakFromValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>peak_from_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1635</x>
+     <y>466</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>873</x>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>peakToValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>peak_to_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1635</x>
+     <y>502</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>873</x>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
   <slot>norm_back_spinbox_validation()</slot>
   <slot>data_back_spinbox_validation()</slot>
+  <slot>back_from_value_changed()</slot>
+  <slot>back_to_value_changed()</slot>
   <slot>norm_peak_spinbox_validation()</slot>
   <slot>data_peak_spinbox_validation()</slot>
+  <slot>peak_from_value_changed()</slot>
+  <slot>peak_to_value_changed()</slot>
   <slot>table_reduction_cell_changed()</slot>
   <slot>data_norm_tab_changed()</slot>
   <slot>load_configuration()</slot>

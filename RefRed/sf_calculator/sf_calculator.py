@@ -441,29 +441,29 @@ class SFCalculator(QtWidgets.QMainWindow):
     def back2SpinBoxValueChanged(self):
         self.peakBackSpinBoxValueChanged("back2")
 
-    def peakBackSpinBoxValueChanged(self, type, with_plot_update=True):
-        if "peak" in type:
+    def peakBackSpinBoxValueChanged(self, kind, with_plot_update=True):
+        if "peak" in kind:
             peak1 = self.dataPeakFromValue.value()
             peak2 = self.dataPeakToValue.value()
             peak_min = min([peak1, peak2])
             peak_max = max([peak1, peak2])
 
             if peak1 == peak_max:
-                if type == "peak1":
+                if kind == "peak1":
                     self.dataPeakToValue.setFocus()
                 else:
                     self.dataPeakFromValue.setFocus()
                 self.dataPeakFromValue.setValue(peak_min)
                 self.dataPeakToValue.setValue(peak_max)
 
-        if "back" in type:
+        if "back" in kind:
             back1 = self.dataBackFromValue.value()
             back2 = self.dataBackToValue.value()
             back_min = min([back1, back2])
             back_max = max([back1, back2])
 
             if back1 == back_max:
-                if type == "back1":
+                if kind == "back1":
                     self.dataBackToValue.setFocus()
                 else:
                     self.dataBackFromValue.setFocus()
@@ -471,16 +471,16 @@ class SFCalculator(QtWidgets.QMainWindow):
                 self.dataBackToValue.setValue(back_max)
 
         self.testPeakBackErrorWidgets()
-        self.updateNXSData(row=self.current_table_row_selected, source="spinbox", type=type)
+        self.updateNXSData(row=self.current_table_row_selected, source="spinbox", kind=kind)
         if with_plot_update:
             self.displayPlot(row=self.current_table_row_selected, yt_plot=True, yi_plot=True)
         self.fileHasBeenModified()
         self.checkGui()
 
-    def updateNXSData(self, row=0, source="spinbox", type=["peak"]):
+    def updateNXSData(self, row=0, source="spinbox", kind=["peak"]):
         _list_nxsdata_sorted = self.list_nxsdata_sorted
         _nxsdata_row = _list_nxsdata_sorted[row]
-        if "peak" in type:
+        if "peak" in kind:
             if source == "spinbox":
                 peak1 = str(self.dataPeakFromValue.value())
                 peak2 = str(self.dataPeakToValue.value())
@@ -488,7 +488,7 @@ class SFCalculator(QtWidgets.QMainWindow):
                 peak1 = self.tableWidget.item(row, 10).text()
                 peak2 = self.tableWidget.item(row, 11).text()
             _nxsdata_row.peak = [peak1, peak2]
-        if "back" in type:
+        if "back" in kind:
             if source == "spinbox":
                 back1 = str(self.dataBackFromValue.value())
                 back2 = str(self.dataBackToValue.value())
