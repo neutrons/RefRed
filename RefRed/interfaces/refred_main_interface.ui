@@ -6007,22 +6007,6 @@ p, li { white-space: pre-wrap; }
    </hints>
   </connection>
   <connection>
-   <sender>peakToValue</sender>
-   <signal>editingFinished()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>data_peak_spinbox_validation()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1566</x>
-     <y>553</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>normBackgroundFlag</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
@@ -6327,24 +6311,8 @@ p, li { white-space: pre-wrap; }
    </hints>
   </connection>
   <connection>
-   <sender>peakFromValue</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>data_peak_spinbox_validation()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1635</x>
-     <y>466</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>873</x>
-     <y>699</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>peakToValue</sender>
-   <signal>valueChanged(int)</signal>
+   <signal>editingFinished()</signal>
    <receiver>MainWindow</receiver>
    <slot>data_peak_spinbox_validation()</slot>
    <hints>
@@ -6362,7 +6330,7 @@ p, li { white-space: pre-wrap; }
    <sender>backFromValue</sender>
    <signal>valueChanged(int)</signal>
    <receiver>MainWindow</receiver>
-   <slot>data_back_spinbox_validation()</slot>
+   <slot>back_from_value_changed()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>1635</x>
@@ -6378,11 +6346,43 @@ p, li { white-space: pre-wrap; }
    <sender>backToValue</sender>
    <signal>valueChanged(int)</signal>
    <receiver>MainWindow</receiver>
-   <slot>data_back_spinbox_validation()</slot>
+   <slot>back_to_value_changed()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>1635</x>
      <y>582</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>873</x>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>peakFromValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>peak_from_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1635</x>
+     <y>466</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>873</x>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>peakToValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>peak_to_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1635</x>
+     <y>502</y>
     </hint>
     <hint type="destinationlabel">
      <x>873</x>
@@ -6395,8 +6395,12 @@ p, li { white-space: pre-wrap; }
   <signal>signal1()</signal>
   <slot>norm_back_spinbox_validation()</slot>
   <slot>data_back_spinbox_validation()</slot>
+  <slot>back_from_value_changed()</slot>
+  <slot>back_to_value_changed()</slot>
   <slot>norm_peak_spinbox_validation()</slot>
   <slot>data_peak_spinbox_validation()</slot>
+  <slot>peak_from_value_changed()</slot>
+  <slot>peak_to_value_changed()</slot>
   <slot>table_reduction_cell_changed()</slot>
   <slot>data_norm_tab_changed()</slot>
   <slot>load_configuration()</slot>

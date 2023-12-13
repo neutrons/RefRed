@@ -1293,7 +1293,7 @@
    <sender>plot2dPeakFromSpinBox</sender>
    <signal>valueChanged(int)</signal>
    <receiver>Dialog</receiver>
-   <slot>manual_input_peak1()</slot>
+   <slot>plot2d_peak_from_spinbox_value_changed()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>1282</x>
@@ -1309,7 +1309,7 @@
    <sender>plot2dPeakToSpinBox</sender>
    <signal>valueChanged(int)</signal>
    <receiver>Dialog</receiver>
-   <slot>manual_input_peak2()</slot>
+   <slot>plot2d_peak_to_spinbox_value_changed()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>1282</x>
@@ -1325,7 +1325,7 @@
    <sender>plot2dBackFromValue</sender>
    <signal>valueChanged(int)</signal>
    <receiver>Dialog</receiver>
-   <slot>manual_input_back1()</slot>
+   <slot>plot2d_back_from_spinbox_value_changed()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>1282</x>
@@ -1341,7 +1341,7 @@
    <sender>plot2dBackToValue</sender>
    <signal>valueChanged(int)</signal>
    <receiver>Dialog</receiver>
-   <slot>manual_input_back2()</slot>
+   <slot>plot2d_back_to_spinbox_value_changed()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>1282</x>
@@ -1362,12 +1362,12 @@
   <slot>manual_input_of_tof_field()</slot>
   <slot>manual_auto_tof_clicked()</slot>
   <slot>manual_input_peak1()</slot>
+  <slot>plot2d_peak_from_spinbox_value_changed()</slot>
   <slot>manual_input_peak2()</slot>
-  <slot>manual_input_peak1_2()</slot>
-  <slot>manual_input_peak2_2()</slot>
+  <slot>plot2d_peak_to_spinbox_value_changed()</slot>
   <slot>manual_input_back1()</slot>
-  <slot>manual_input_back1_2()</slot>
+  <slot>plot2d_back_from_spinbox_value_changed()</slot>
   <slot>manual_input_back2()</slot>
-  <slot>manual_input_back2_2()</slot>
+  <slot>plot2d_back_to_spinbox_value_changed()</slot>
  </slots>
 </ui>

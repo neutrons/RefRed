@@ -7,6 +7,7 @@ from pathlib import Path
 from RefRed.interfaces import load_ui
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.gui_handling.observer import SpinBoxObserver
 import RefRed.colors
 import RefRed.utilities
 from RefRed.gui_handling.auto_tof_range_radio_button_handler import (
@@ -37,6 +38,7 @@ class PopupPlot2d(QDialog):
         self.col = 0 if data_type == "data" else 1
         self.is_data = True if data_type == "data" else False
         self.is_row_with_highest_q = self.is_row_with_higest_q()
+        self.spinbox_observer = SpinBoxObserver()  # backup for spinbox values
 
         QDialog.__init__(self, parent=parent)
         self.setWindowModality(False)
@@ -357,17 +359,49 @@ class PopupPlot2d(QDialog):
         self.sort_and_check_widgets()
         self.update_plots()
 
+    def plot2d_peak_from_spinbox_value_changed(self):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox plot2dPeakFromSpinBox.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
+        if self.spinbox_observer.quantum_change(self.ui.plot2dPeakFromSpinBox):
+            self.manual_input_peak1()
+
     def manual_input_peak2(self):
         self.sort_and_check_widgets()
         self.update_plots()
+
+    def plot2d_peak_to_spinbox_value_changed(self):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox plot2dPeakToSpinBox.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
+        if self.spinbox_observer.quantum_change(self.ui.plot2dPeakToSpinBox):
+            self.manual_input_peak2()
 
     def manual_input_back1(self):
         self.sort_and_check_widgets()
         self.update_plots()
 
+    def plot2d_back_from_spinbox_value_changed(self):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox plot2dBackFromValue.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
+        if self.spinbox_observer.quantum_change(self.ui.plot2dBackFromValue):
+            self.manual_input_back1()
+
     def manual_input_back2(self):
         self.sort_and_check_widgets()
         self.update_plots()
+
+    def plot2d_back_to_spinbox_value_changed(self):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox plot2dBackToValue.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
+        if self.spinbox_observer.quantum_change(self.ui.plot2dBackToValue):
+            self.manual_input_back2()
 
     def sort_and_check_widgets(self):
         self.sort_peak_back_input()

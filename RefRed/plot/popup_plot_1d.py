@@ -203,8 +203,8 @@ class PopupPlot1d(QDialog):
         _peak = self.data.peak
         _back = self.data.back
 
-        [peak1, peak2] = _peak
-        [back1, back2] = _back
+        [peak1, peak2] = _peak  # lower and upper boundaries for the peak
+        [back1, back2] = _back  # lower and upper boundaries for the background
 
         back_flag = RefRed.utilities.str2bool(self.data.back_flag)
         self.ui.plot_back_flag.setChecked(back_flag)
@@ -214,10 +214,10 @@ class PopupPlot1d(QDialog):
         back1 = int(back1)
         back2 = int(back2)
 
-        self._prev_peak1 = peak1
-        self._prev_peak2 = peak2
-        self._prev_back1 = back1
-        self._prev_back2 = back2
+        self._prev_peak1 = peak1  # backup for lower peak boundary
+        self._prev_peak2 = peak2  # backup for upper peak boundary
+        self._prev_back1 = back1  # backup for lower background boundary
+        self._prev_back2 = back2  # backup for upper background boundary
 
         [xmin, xmax, ymin, ymax] = self.data.all_plot_axis.yi_view_interval
 
@@ -288,6 +288,15 @@ class PopupPlot1d(QDialog):
         self.check_peak_back_input_validity()
         self.update_plots()
 
+    def plot_peak_from_spinbox_value_changed(self):
+        r"""Slot associated to signal QSpinBox.valueChanged(int) for QSpinBox plotPeakFromSpinBox.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox
+        """
+        value: int = self.ui.plotPeakFromSpinBox.value()
+        if abs(value - self._prev_peak1) == 1:
+            self.plot_peak_from_spinbox_signal()
+
     # peak2
     def update_peak2(self, value, updatePlotSpinbox=True):
         if updatePlotSpinbox:
@@ -303,6 +312,15 @@ class PopupPlot1d(QDialog):
         self.sort_peak_back_input()
         self.check_peak_back_input_validity()
         self.update_plots()
+
+    def plot_peak_to_spinbox_value_changed(self):
+        r"""Slot associated to signal QSpinBox.valueChanged(int) for QSpinBox plotPeakToSpinBox.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox
+        """
+        value: int = self.ui.plotPeakToSpinBox.value()
+        if abs(value - self._prev_peak2) == 1:
+            self.plot_peak_to_spinbox_signal()
 
     # back1
     def update_back1(self, value, updatePlotSpinbox=True):
@@ -320,6 +338,15 @@ class PopupPlot1d(QDialog):
         self.check_peak_back_input_validity()
         self.update_plots()
 
+    def plot_back_from_spinbox_value_changed(self):
+        r"""Slot associated to signal QSpinBox.valueChanged(int) for QSpinBox plotBackFromSpinBox.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox
+        """
+        value: int = self.ui.plotBackFromSpinBox.value()
+        if abs(value - self._prev_back1) == 1:
+            self.plot_back_from_spinbox_signal()
+
     # back2
     def update_back2(self, value, updatePlotSpinbox=True):
         if updatePlotSpinbox:
@@ -335,6 +362,15 @@ class PopupPlot1d(QDialog):
         self.sort_peak_back_input()
         self.check_peak_back_input_validity()
         self.update_plots()
+
+    def plot_back_to_spinbox_value_changed(self):
+        r"""Slot associated to signal QSpinBox.valueChanged(int) for QSpinBox plotBackToSpinBox.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox
+        """
+        value: int = self.ui.plotBackToSpinBox.value()
+        if abs(value - self._prev_back2) == 1:
+            self.plot_back_to_spinbox_signal()
 
     def update_plots(self):
         self.update_counts_vs_pixel_plot()

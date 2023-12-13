@@ -21,6 +21,7 @@ from RefRed.gui_handling.first_angle_range_gui_handler import (
     FirstAngleRangeGuiHandler,
 )
 from RefRed.gui_handling.refred_interface_handler import RefRedInterfaceHandler
+from RefRed.gui_handling.observer import SpinBoxObserver
 from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
 from RefRed.interfaces import load_ui
@@ -132,6 +133,8 @@ class MainGui(QtWidgets.QMainWindow):
         self.file_loaded_signal.connect(self.file_loaded)
         log_file = os.path.expanduser("~") + '/.refred.log'
         logging.basicConfig(filename=log_file, level=logging.DEBUG)
+
+        self.spinbox_observer = SpinBoxObserver()  # backup the last value for each spinbox in this widget
 
     # home button of plots
     def home_clicked_yi_plot(self):
@@ -260,6 +263,14 @@ class MainGui(QtWidgets.QMainWindow):
     def data_back_spinbox_validation(self, *args, **kwargs):
         DataBackSpinbox(parent=self)
 
+    def back_from_value_changed(self, *args, **kwargs):
+        if self.spinbox_observer.quantum_change(self.ui.backFromValue):
+            self.data_back_spinbox_validation(*args, **kwargs)
+
+    def back_to_value_changed(self, *args, **kwargs):
+        if self.spinbox_observer.quantum_change(self.ui.backToValue):
+            self.data_back_spinbox_validation(*args, **kwargs)
+
     @config_file_has_been_modified
     def data_back_checkbox(self, *args, **kwargs):
         DataBackSpinbox(parent=self)
@@ -267,6 +278,14 @@ class MainGui(QtWidgets.QMainWindow):
     @config_file_has_been_modified
     def data_peak_spinbox_validation(self, *args, **kwargs):
         DataPeakSpinbox(parent=self)
+
+    def peak_from_value_changed(self, *args, **kwargs):
+        if self.spinbox_observer.quantum_change(self.ui.peakFromValue):
+            self.data_peak_spinbox_validation(*args, **kwargs)
+
+    def peak_to_value_changed(self, *args, **kwargs):
+        if self.spinbox_observer.quantum_change(self.ui.peakToValue):
+            self.data_peak_spinbox_validation(*args, **kwargs)
 
     @config_file_has_been_modified
     def norm_back_spinbox_validation(self, *args, **kwargs):
