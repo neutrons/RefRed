@@ -1,17 +1,20 @@
-from qtpy.QtGui import QPixmap, QIcon
-from qtpy.QtWidgets import QMainWindow, QCheckBox, QTableWidgetItem, QFileDialog
-from qtpy.QtCore import QSize, QSettings
-
-# from xml.dom import minidom
-import numpy as np
+# standard imports
 import os
 import time
 from pathlib import Path
 
+# third party imports
+from qtpy.QtGui import QPixmap, QIcon
+from qtpy.QtWidgets import QMainWindow, QCheckBox, QTableWidgetItem, QFileDialog
+from qtpy.QtCore import QSize, QSettings
+import numpy as np
+
+# application imports
 from RefRed import ORGANIZATION, APPNAME
 from RefRed.interfaces import load_ui
 from RefRed.gui_handling.gui_utility import GuiUtility
 import RefRed.utilities
+from RefRed.tabledata import TableData
 
 
 class DisplayMetadata(QMainWindow):
@@ -60,7 +63,7 @@ class DisplayMetadata(QMainWindow):
         row_selected = o_gui_utility.get_current_table_reduction_row_selected()
         self.col = col_selected
         self.row = row_selected
-        big_table_data = self.parent.big_table_data
+        big_table_data: TableData = self.parent.big_table_data
         self.lrdata = big_table_data[row_selected, col_selected - 1]
 
     def initListMetadata(self):

@@ -62,7 +62,7 @@ class ExportXMLConfig(object):
 
         str_array = self.str_array
         _big_table_data = self.parent.big_table_data
-        nbr_row = self.parent.nbr_row_table_reduction
+        nbr_row = self.parent.REDUCTIONTABLE_MAX_ROWCOUNT
         o_general_settings = GlobalReductionSettingsHandler(parent=self.parent)
 
         for row in range(nbr_row):

@@ -1,5 +1,12 @@
+# standard imports
+from enum import Enum
+
+# third party imports
 from qtpy import QtWidgets
 from qtpy.QtCore import Qt
+
+# application imports
+#
 
 
 class MyTableWidget(QtWidgets.QTableWidget):
@@ -20,3 +27,22 @@ class MyTableWidget(QtWidgets.QTableWidget):
 
     def setUI(self, ui_parent):
         self.parent = ui_parent
+
+
+class ReductionTableColumIndex(Enum):
+    """
+    Enumeration class associating a column index to a word easy to understand what the column index is for
+    """
+
+    PLOTTED = 0
+    DATA_RUN = 1
+    NORM_RUN = 2
+    TWO_THETA = 3
+    LAMBDA_MIN = 4
+    LAMBDA_MAX = 5
+    Q_MIN = 6
+    Q_MAX = 7
+    COMMENTS = 8
+
+    def __int__(self):
+        return self.value

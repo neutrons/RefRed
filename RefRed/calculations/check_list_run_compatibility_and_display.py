@@ -1,12 +1,17 @@
-import RefRed.colors
+# standard imports
+
+# third party imports
 from qtpy import QtGui
 
-from RefRed.reduction_table_handling.check_list_run_compatibility import CheckListRunCompatibility
+# application imports
 from RefRed.calculations.add_list_nexus import AddListNexus
-from RefRed.lconfigdataset import LConfigDataset
 from RefRed.calculations.lr_data import LRData
-from RefRed.plot.display_plots import DisplayPlots
 from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
+import RefRed.colors
+from RefRed.lconfigdataset import LConfigDataset
+from RefRed.plot.display_plots import DisplayPlots
+from RefRed.reduction_table_handling.check_list_run_compatibility import CheckListRunCompatibility
+from RefRed.tabledata import TableData
 
 
 class CheckListRunCompatibilityAndDisplay(object):
@@ -84,8 +89,8 @@ class CheckListRunCompatibilityAndDisplay(object):
 
     def update_lconfigdataset(self):
         runs_are_compatible = self.runs_are_compatible
-        big_table_data = self.parent.big_table_data
-        _lconfig = big_table_data[self.row, 2]
+        big_table_data: TableData = self.parent.big_table_data
+        _lconfig = big_table_data.reduction_config(self.row)
         if _lconfig is None:
             _lconfig = LConfigDataset()
 
@@ -100,7 +105,7 @@ class CheckListRunCompatibilityAndDisplay(object):
             _lconfig.norm_wks = self.wks
             _lconfig.norm_runs_compatible = runs_are_compatible
 
-        big_table_data[self.row, 2] = _lconfig
+        big_table_data.set_reduction_config(self.row, _lconfig)
         self.parent.big_table_data = big_table_data
 
     def loading_lr_data(self):

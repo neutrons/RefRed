@@ -101,7 +101,7 @@ class TestLoadingConfiguration(object):
     @mock.patch('RefRed.configuration.loading_configuration.LoadingConfiguration.getMetadataObject')
     def test_populate_big_table_data_with_lconfig(self, mockGetMetadataObject):
         loadingConfiguration = self.test_init()
-        loadingConfiguration.parent.nbr_row_table_reduction = 1
+        loadingConfiguration.parent.REDUCTIONTABLE_MAX_ROWCOUNT = 1
         loadingConfiguration.parent.big_table_data = [[0]]
 
         mockGetMetadataObject.return_value = mock.Mock()

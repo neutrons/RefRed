@@ -2,13 +2,16 @@ from qtpy.QtWidgets import QMainWindow
 from RefRed.interfaces import load_ui
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
 from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.tabledata import TableData
 
 
 class ChangeStitchingDataInterval(object):
     def __init__(self, parent=None, yaxis_type='RvsQ', x_min=None, x_max=None, y_min=None, y_max=None):
 
         self.parent = parent
-        _lrdata = self.parent.big_table_data[0, 0]
+        row = 0
+        big_table_data: TableData = parent.big_table_data
+        _lrdata = big_table_data.reflectometry_data(row)
 
         if yaxis_type == 'RvsQ':
             [xmin_user, xmax_user] = _lrdata.all_plot_axis.reduced_plot_RQQ4userView_x
@@ -34,8 +37,7 @@ class ChangeStitchingDataInterval(object):
                 _lrdata.all_plot_axis.reduced_plot_RQ4userView_y = [ymin_user, ymax_user]
                 _lrdata.all_plot_axis.reduced_plot_RQQ4userView_x = [x_min, x_max]
 
-        big_table_data = parent.big_table_data
-        big_table_data[0, 0] = _lrdata
+        big_table_data.set_reflectometry_data(row, _lrdata)
         parent.big_table_data = big_table_data
 
         self.plot()

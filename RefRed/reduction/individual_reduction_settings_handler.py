@@ -6,6 +6,7 @@
     is saved if it's not used here. It creates confusion as to where we should
     keep this information.
 """
+from RefRed.tabledata import TableData
 
 
 class IndividualReductionSettingsHandler(object):
@@ -17,9 +18,9 @@ class IndividualReductionSettingsHandler(object):
     def __init__(self, parent=None, row_index=-1):
         self.parent = parent
         self.row_index = row_index
-        self.big_table_data = self.parent.big_table_data
-        self.data = self.big_table_data[row_index, 0]
-        self.norm = self.big_table_data[row_index, 1]
+        self.big_table_data: TableData = self.parent.big_table_data
+        self.data = self.big_table_data.reflectometry_data(row_index)
+        self.norm = self.big_table_data.normalization_data(row_index)
         self.retrieve()
 
     def retrieve(self):

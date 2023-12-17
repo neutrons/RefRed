@@ -1,20 +1,26 @@
-import os
+# standard imports
 import logging
-from qtpy import QtGui, QtCore, QtWidgets
+import os
 from xml.dom import minidom
-from numpy import empty
-from RefRed.lconfigdataset import LConfigDataset
-from RefRed.configuration.populate_reduction_table_from_lconfigdataset import (
-    PopulateReductionTableFromLConfigDataSet as PopulateReductionTable,
-)
+
+# third party imports
+from qtpy import QtGui, QtCore, QtWidgets
+
+# application imports
 from RefRed.configuration.load_reduction_table_from_lconfigdataset import (
     LoadReductionTableFromLConfigDataSet as LoadReductionTable,
 )
-from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidgetsHandler
-from RefRed.plot.clear_plots import ClearPlots
+
+from RefRed.configuration.populate_reduction_table_from_lconfigdataset import (
+    PopulateReductionTableFromLConfigDataSet as PopulateReductionTable,
+)
 from RefRed.gui_handling.gui_utility import GuiUtility
-from RefRed.utilities import str2bool
+from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidgetsHandler
+from RefRed.lconfigdataset import LConfigDataset
+from RefRed.plot.clear_plots import ClearPlots
 from RefRed.status_message_handler import StatusMessageHandler
+from RefRed.tabledata import TableData
+from RefRed.utilities import str2bool
 
 
 class LoadingConfiguration(object):
@@ -117,14 +123,9 @@ class LoadingConfiguration(object):
 
     def populate_big_table_data_with_lconfig(self):
         RefLData = self.dom.getElementsByTagName('RefLData')
-
-        big_table_data = empty((self.parent.nbr_row_table_reduction, 3), dtype=object)
-        _row = 0
-        for node in RefLData:
-            _metadataObject = self.getMetadataObject(node)
-            big_table_data[_row, 2] = _metadataObject
-            _row += 1
-
+        big_table_data = TableData(self.parent.REDUCTIONTABLE_MAX_ROWCOUNT)
+        for row_index, node in enumerate(RefLData):
+            big_table_data.set_reduction_config(row_index, self.getMetadataObject(node))
         self.parent.big_table_data = big_table_data
 
     def populate_main_gui_general_settings(self):

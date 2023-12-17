@@ -1,13 +1,20 @@
+# standard imports
+from distutils.util import strtobool
+from typing import Optional
+
+# third party imports
 from qtpy import QtGui, QtCore
 from qtpy import QtWidgets
+
+# application imports
 from RefRed.gui_handling.gui_utility import GuiUtility
-from distutils.util import strtobool
+from RefRed.tabledata import TableData
 
 
 class ParentHandler(object):
     def __init__(self, parent=None):
         self.parent = parent
-        self.big_table_data = self.parent.big_table_data
+        self.big_table_data: Optional[TableData] = self.parent.big_table_data if parent else None
 
 
 class FillStitchingTable(ParentHandler):
@@ -17,7 +24,7 @@ class FillStitchingTable(ParentHandler):
 
     def fillRow(self, row_index=0):
         self._row_index = row_index
-        self._lconfig = self.big_table_data[self._row_index, 2]
+        self._lconfig = self.big_table_data.reduction_config(self._row_index)
         if self._lconfig is None:
             return
 
