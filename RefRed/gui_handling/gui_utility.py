@@ -8,15 +8,15 @@ from qtpy.QtCore import Qt
 # application imports
 from RefRed import WINDOW_TITLE
 from RefRed.interfaces.mytablewidget import ReductionTableColumIndex
+from RefRed.main import MainGui
 from RefRed.tabledata import TableData
 
 
 class GuiUtility(object):
 
-    parent = None
     NULL_ACTIVE_ROW = -1  # fake row index when no active row found in the reduction table
 
-    def __init__(self, parent=None):
+    def __init__(self, parent: MainGui):
         self.parent = parent
 
     def get_ipts(self, row=-1):

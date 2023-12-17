@@ -16,7 +16,7 @@ class SpinBox(object):
     def __init__(self, parent=None, is_data=True, entry_type='peak', value_min=-1, value_max=-1, flag=True):
         self.parent = parent
         big_table_data: TableData = parent.big_table_data
-        gui_utility = GuiUtility(self.parent)
+        gui_utility = GuiUtility(parent=self.parent)
 
         # Find the active row in the reduction table
         active_row_index = gui_utility.get_current_table_reduction_check_box_checked()
