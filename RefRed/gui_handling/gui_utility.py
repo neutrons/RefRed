@@ -1,5 +1,6 @@
 # standard imports
 from typing import List
+from typing import TYPE_CHECKING
 
 # third party imports
 from qtpy import QtWidgets
@@ -8,15 +9,17 @@ from qtpy.QtCore import Qt
 # application imports
 from RefRed import WINDOW_TITLE
 from RefRed.interfaces.mytablewidget import ReductionTableColumIndex
-from RefRed.main import MainGui
 from RefRed.tabledata import TableData
+
+if TYPE_CHECKING:  # imported only when running mypy but not imported when the application is running
+    from RefRed.main import MainGui
 
 
 class GuiUtility(object):
 
     NULL_ACTIVE_ROW = -1  # fake row index when no active row found in the reduction table
 
-    def __init__(self, parent: MainGui):
+    def __init__(self, parent: "MainGui"):
         self.parent = parent
 
     def get_ipts(self, row=-1):
