@@ -29,12 +29,8 @@ class TableData(np.ndarray):
         obj = np.empty((max_row_count, len(TableDataColumIndex)), dtype).view(cls)
         return obj
 
-    def get_data_by_column_enum(self, row_index: int, column: TableDataColumIndex):
-        return self[row_index, int(column)]
-
-    def set_data_by_column_enum(
-        self, row_index: int, column: TableDataColumIndex, value: Optional[Union[LRData, LConfigDataset]]
-    ):
+    @staticmethod
+    def _validate_type(column: TableDataColumIndex, value: Optional[Union[LRData, LConfigDataset]]):
         valid_types = {
             TableDataColumIndex.LR_DATA: (type(None), LRData),
             TableDataColumIndex.LR_NORM: (type(None), LRData),
@@ -42,6 +38,14 @@ class TableData(np.ndarray):
         }
         if not isinstance(value, valid_types[column]):
             raise TypeError(f"Wrong type for {value}. Valid types are {valid_types[column]}")
+
+    def get_data_by_column_enum(self, row_index: int, column: TableDataColumIndex):
+        return self[row_index, int(column)]
+
+    def set_data_by_column_enum(
+        self, row_index: int, column: TableDataColumIndex, value: Optional[Union[LRData, LConfigDataset]]
+    ):
+        self._validate_type(column, value)
         self[row_index, int(column)] = value
 
     def reflectometry_data(self, row_index: int) -> LRData:
