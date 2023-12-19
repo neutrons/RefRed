@@ -64,6 +64,12 @@ class TestTableData:
         # remove rows with indexes 4 to 9, then collect the counters
         row_begin, row_end = 4, 10
         self.table.expunge_rows(row_begin, row_end)
+        # check the size of the table is preserved
+        assert len(self.table) == self.ROW_COUNT
+        # check the last items in the table are None
+        first_index = self.ROW_COUNT - (row_end - row_begin)
+        for row_index in range(first_index, self.ROW_COUNT):
+            assert self.table.reduction_config(row_index) is None
         new_counters = list()
         for row_index in range(len(self.table)):
             config = self.table.reduction_config(row_index)
