@@ -17,7 +17,7 @@ class TestTableData:
         self.table = TableData(42)
 
     def test_init(self):
-        assert self.table.shape == (self.ROW_COUNT, 3)
+        assert self.table.shape == (self.ROW_COUNT, len(TableDataColumIndex))
 
     def test_set_data_by_column_enum_raises(self):
         for column in TableDataColumIndex:
