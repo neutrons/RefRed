@@ -1,4 +1,11 @@
+# standard imports
+
+# third party imports
 import numpy as np
+
+# application imports
+from RefRed.interfaces.mytablewidget import ReductionTableColumIndex
+from RefRed.tabledata import TableData
 
 
 class PopulateReductionTableFromListLRData(object):
@@ -26,14 +33,11 @@ class PopulateReductionTableFromListLRData(object):
             self.list_runs_sorted = None
             self.list_nexus_sorted = None
 
-        self.big_table_data = self.parent.big_table_data
+        self.big_table_data: TableData = self.parent.big_table_data
 
-        if self.is_data:
-            self.reductionTable_col = 1
-            self.big_table_data_col = 0
-        else:
-            self.reductionTable_col = 2
-            self.big_table_data_col = 1
+        self.reductionTable_col = (
+            int(ReductionTableColumIndex.DATA_RUN) if self.is_data else int(ReductionTableColumIndex.NORM_RUN)
+        )
 
         if is_data:
             self.clear_reductionTable()
@@ -47,15 +51,15 @@ class PopulateReductionTableFromListLRData(object):
         self.parent.big_table_data = self.big_table_data
 
     def update_big_table_data(self):
-        list_lrdata = self.list_lrdata
-        big_table_data = self.big_table_data
         for _index, _wks in enumerate(self.list_wks):
             if isinstance(_wks, list):
                 pass
             else:
-                _lrdata = list_lrdata[_index]
-                big_table_data[_index, self.big_table_data_col] = _lrdata
-        self.big_table_data = big_table_data
+                _lrdata = self.list_lrdata[_index]
+                if self.is_data:
+                    self.big_table_data.set_reflectometry_data(_index, _lrdata)
+                else:
+                    self.big_table_data.set_normalization_data(_index, _lrdata)
 
     def insert_runs_into_table(self):
         if self.is_data:
@@ -127,4 +131,4 @@ class PopulateReductionTableFromListLRData(object):
                 self.parent.ui.reductionTable.item(_row, _col).setText("")
 
     def clear_big_table_data(self):
-        self.big_table_data = np.empty((self.parent.nbr_row_table_reduction, 3), dtype=object)
+        self.big_table_data = TableData(self.parent.REDUCTIONTABLE_MAX_ROWCOUNT)

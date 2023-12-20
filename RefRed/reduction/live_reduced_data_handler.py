@@ -4,6 +4,7 @@ import numpy as np
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.fill_stitching_table import FillStitchingTable
 import RefRed.colors
+from RefRed.tabledata import TableData
 
 
 class LiveReducedDataHandler(object):
@@ -14,7 +15,7 @@ class LiveReducedDataHandler(object):
 
     def __init__(self, parent=None, row_index=0):
         self.parent = parent
-        self.big_table_data = self.parent.big_table_data
+        self.big_table_data: TableData = self.parent.big_table_data
         self.colors = RefRed.colors.COLOR_LIST
         self.row_index = row_index
 
@@ -41,7 +42,7 @@ class LiveReducedDataHandler(object):
         _data = big_table_data[0, 0]
 
         for index_row in range(self.row_index + 1):
-            _lconfig = big_table_data[index_row, 2]
+            _lconfig = big_table_data.reduction_config(index_row)
             if _lconfig is None:
                 return
 

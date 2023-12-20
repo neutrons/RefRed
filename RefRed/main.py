@@ -48,6 +48,7 @@ from RefRed.decorators import config_file_has_been_modified, config_file_modific
 from RefRed.about_dialog import AboutDialog
 from RefRed.browsing_runs import BrowsingRuns
 from RefRed.config.mantid_config import MantidConfig
+from RefRed.tabledata import TableData
 
 
 class MainGui(QtWidgets.QMainWindow):
@@ -71,11 +72,11 @@ class MainGui(QtWidgets.QMainWindow):
     manual_x_axis_dialog = None
     manual_y_axis_dialog = None
 
-    nbr_row_table_reduction = 39
+    REDUCTIONTABLE_MAX_ROWCOUNT = 39  # the maximum number of runs to be reduced
     nbr_row_table_ascii = 8
     prev_table_reduction_row_selected = -1
     current_table_reduction_row_selected = -1
-    reduction_table_check_box_state = np.zeros((nbr_row_table_reduction), dtype=bool)
+    reduction_table_check_box_state = np.zeros((REDUCTIONTABLE_MAX_ROWCOUNT), dtype=bool)
     loading_nxs_thread = {
         'thread1': None,
         'thread2': None,
@@ -110,8 +111,7 @@ class MainGui(QtWidgets.QMainWindow):
 
     time_click1 = 0  # use by double click of plots
 
-    # [data, norm, lconfig]
-    big_table_data = np.empty((nbr_row_table_reduction, 3), dtype=object)
+    big_table_data = TableData(REDUCTIONTABLE_MAX_ROWCOUNT)
 
     # various metadata such as q_min (for output reduced ascii)
     gui_metadata = {}
@@ -264,10 +264,21 @@ class MainGui(QtWidgets.QMainWindow):
         DataBackSpinbox(parent=self)
 
     def back_from_value_changed(self, *args, **kwargs):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox backFromValue, denoting
+        the lower boundary of the background region.
+
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
         if self.spinbox_observer.quantum_change(self.ui.backFromValue):
             self.data_back_spinbox_validation(*args, **kwargs)
 
     def back_to_value_changed(self, *args, **kwargs):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox `backToValue`, denoting
+        the upper boundary of the background region.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
         if self.spinbox_observer.quantum_change(self.ui.backToValue):
             self.data_back_spinbox_validation(*args, **kwargs)
 
@@ -280,10 +291,20 @@ class MainGui(QtWidgets.QMainWindow):
         DataPeakSpinbox(parent=self)
 
     def peak_from_value_changed(self, *args, **kwargs):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox `peakFromValue`, denoting
+        the lower boundary of the peak region.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
         if self.spinbox_observer.quantum_change(self.ui.peakFromValue):
             self.data_peak_spinbox_validation(*args, **kwargs)
 
     def peak_to_value_changed(self, *args, **kwargs):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox peakToValue, denoting
+        the upper boundary of the peak region.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
         if self.spinbox_observer.quantum_change(self.ui.peakToValue):
             self.data_peak_spinbox_validation(*args, **kwargs)
 

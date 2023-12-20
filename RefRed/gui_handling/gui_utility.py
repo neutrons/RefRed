@@ -1,20 +1,32 @@
+# standard imports
+from typing import List
+from typing import TYPE_CHECKING
+
+# third party imports
+from qtpy import QtWidgets
 from qtpy.QtCore import Qt
+
+# application imports
 from RefRed import WINDOW_TITLE
+from RefRed.interfaces.mytablewidget import ReductionTableColumIndex
+from RefRed.tabledata import TableData
+
+if TYPE_CHECKING:  # imported only when running mypy but not imported when the application is running
+    from RefRed.main import MainGui
 
 
 class GuiUtility(object):
 
-    parent = None
+    NULL_ACTIVE_ROW = -1  # fake row index when no active row found in the reduction table
 
-    def __init__(self, parent=None):
+    def __init__(self, parent: "MainGui"):
         self.parent = parent
 
     def get_ipts(self, row=-1):
-        big_table_data = self.parent.big_table_data
-        _data0 = big_table_data[row, 0]
-        if _data0 is None:
-            return 'N/A'
         if row == -1:
+            return 'N/A'
+        _data0 = self.parent.big_table_data.reflectometry_data(row)
+        if _data0 is None:
             return 'N/A'
         return _data0.ipts
 
@@ -38,11 +50,11 @@ class GuiUtility(object):
         self.parent.ui.angleOffsetError.setText(_angle_offset_error)
 
     def get_row_with_highest_q(self):
-        big_table_data = self.parent.big_table_data
+        big_table_data: TableData = self.parent.big_table_data
         index = 0
-        _lrdata = big_table_data[0, 2]
+        _lrdata = big_table_data.reduction_config(index)
         while _lrdata is not None:
-            _lrdata = big_table_data[index + 1, 2]
+            _lrdata = big_table_data.reduction_config(index + 1)
             index += 1
         return index - 1
 
@@ -62,14 +74,19 @@ class GuiUtility(object):
     def get_current_table_reduction_column_selected(self):
         return int(self.parent.ui.reductionTable.currentColumn())
 
-    def get_current_table_reduction_check_box_checked(self):
-        nbr_row_table_reduction = self.parent.nbr_row_table_reduction
-        for row in range(nbr_row_table_reduction):
-            _widget = self.parent.ui.reductionTable.cellWidget(row, 0)
-            _state = _widget.checkState()
-            if _state == Qt.Checked:
-                return row
-        return -1
+    def get_current_table_reduction_check_box_checked(self) -> int:
+        r"""Find the active row in the reduction table, understood as the row having the checkbox enabled.
+
+        Returns
+        -------
+        Row index, or `NULL_ACTIVE_ROW` if no row is active
+        """
+        column_index = int(ReductionTableColumIndex.PLOTTED)
+        for row_index in range(self.parent.REDUCTIONTABLE_MAX_ROWCOUNT):
+            check_box: QtWidgets.QCheckBox = self.parent.ui.reductionTable.cellWidget(row_index, column_index)
+            if check_box.checkState() == Qt.Checked:
+                return row_index
+        return self.NULL_ACTIVE_ROW
 
     def get_all_rows(self):
         nbr_row = self.parent.ui.reductionTable.rowCount()
@@ -82,22 +99,40 @@ class GuiUtility(object):
             all_rows.append(_row)
         return all_rows
 
-    def get_other_row_with_same_run_number_as_row(self, row=0, is_data=False, auto_mode=False):
+    def get_other_row_with_same_run_number_as_row(
+        self, row: int = 0, is_data: bool = False, auto_mode: bool = False
+    ) -> List[int]:
+        r"""Find rows sharing the same run number as that of the input `row_index`
+
+        Parameters
+        ----------
+        row
+            The row number for which to find other rows with the same run number. Default is 0.
+        is_data
+            Flag indicating if the row represents reflectometry data (`True) or direct beam data (`False`).
+        auto_mode
+            TODO: add docstring here
+        """
+
+        def get_norm_runnumber(table_row_index: int) -> str:
+            r"""run number of the direct beam run stored in row `index` of the reduction table"""
+            table_column_index = int(ReductionTableColumIndex.NORM_RUN)
+            return str(self.parent.ui.reductionTable.item(table_row_index, table_column_index).text())
+
         all_rows = [row]
-        if is_data:
+        if is_data:  # there can be only one reflectometry (data) entry in the reduction table for any given run number
             return all_rows
 
-        if self.parent.ui.TOFmanualApplyOnlyToRow.isChecked() and (not auto_mode):
+        if self.parent.ui.TOFmanualApplyOnlyToRow.isChecked() and auto_mode is False:  # TODO: explain this
             return all_rows
 
-        nbr_row = self.parent.ui.reductionTable.rowCount()
-        ref_run_number = str(self.parent.ui.reductionTable.item(row, 2).text())
-        for _row in range(nbr_row):
-            if _row == row:
-                continue
-            _item = str(self.parent.ui.reductionTable.item(_row, 2).text())
-            if _item == ref_run_number:
-                all_rows.append(_row)
+        # Scan the direct beam runs (normalization runs) for their run number (guaranteed here that `is_data` == False)
+        ref_runnumber = get_norm_runnumber(row)
+        for row_index in range(self.parent.ui.reductionTable.rowCount()):
+            if row_index == row:
+                continue  # avoid counting it twice, since `row` already in `all_rows`
+            if get_norm_runnumber(row_index) == ref_runnumber:
+                all_rows.append(row_index)
         all_rows.sort()
         return all_rows
 

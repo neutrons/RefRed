@@ -132,7 +132,7 @@ class Gui(object):
         for index, width in enumerate(column_widths):
             parent.ui.reductionTable.setColumnWidth(index, width)
 
-        for row_index in range(self.parent.nbr_row_table_reduction):
+        for row_index in range(self.parent.REDUCTIONTABLE_MAX_ROWCOUNT):
             for col_index in range(len(self.column_widths)):
                 if col_index == 0:
                     _widget = QtWidgets.QCheckBox()

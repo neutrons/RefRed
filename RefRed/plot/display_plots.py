@@ -1,9 +1,13 @@
-import RefRed.colors as colors
+# standard imports
 import bisect
-from RefRed.plot.clear_plots import ClearPlots
-from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
 
-# from RefRed.gui_handling.gui_utility import GuiUtility
+# third party imports
+
+# application imports
+import RefRed.colors as colors
+from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
+from RefRed.plot.clear_plots import ClearPlots
+from RefRed.tabledata import TableData
 
 
 class DisplayPlots(object):
@@ -38,13 +42,16 @@ class DisplayPlots(object):
         self.is_data = is_data
 
         if is_data:
-            col = 0
+            self.col = 0
         else:
-            col = 1
+            self.col = 1
         self.row = row
-        self.col = col
 
-        _data = self.parent.big_table_data[row, col]
+        big_table_data: TableData = self.parent.big_table_data
+        if is_data:
+            _data = big_table_data.reflectometry_data(row)
+        else:
+            _data = big_table_data.normalization_data(row)
 
         if _data is None:
             ClearPlots(
@@ -76,7 +83,7 @@ class DisplayPlots(object):
 
         # _active_data = self._data
         # _data.active_data = _active_data
-        # parent.bigTableData[row,col] = _data
+        # parent.bigTableData[row, self.col] = _data
 
         if _data.tof_range_auto_flag:
             self.tofRangeAuto = self.getTOFrangeInMs(_data.tof_range_auto)

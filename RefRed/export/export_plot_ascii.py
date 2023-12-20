@@ -232,7 +232,7 @@ class ExportPlotAscii:
 
         coll = lr_output.RunCollection()
         for row in range(nbr_row):
-            _data = self.parent.big_table_data[row, 2]
+            _data = self.parent.big_table_data.reduction_config(row)
 
             # Get the scaling factor, which may change in the UI
             sf = o_reduced_data_hanlder.generate_selected_sf(lconfig=_data)

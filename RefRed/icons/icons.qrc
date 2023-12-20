@@ -1,6 +1,7 @@
 <RCC>
   <qresource prefix="General">
     <file>clear_icon.png</file>
+    <file>cogwheel.png</file>
     <file>check_icon.png</file>
     <file>export_ascii.png</file>
     <file>logo_refl.png</file>

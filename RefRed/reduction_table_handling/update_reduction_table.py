@@ -1,12 +1,15 @@
+# standard imports
+
+# third party imports
 from qtpy import QtGui
 from qtpy.QtWidgets import QApplication
 
-from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
-from RefRed.calculations.check_list_run_compatibility_thread import (
-    CheckListRunCompatibilityThread,
-)
-import RefRed.colors
+# application imports
+from RefRed.calculations.check_list_run_compatibility_thread import CheckListRunCompatibilityThread
 from RefRed.calculations.locate_list_run import LocateListRun
+from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
+import RefRed.colors
+from RefRed.tabledata import TableData
 
 
 class UpdateReductionTable(object):
@@ -84,15 +87,16 @@ class UpdateReductionTable(object):
         # Clear the data and configuration
         # Note: there is a Mantid process cleaning process elsewhere in the code
         # so we don't have to deal with it here.
-        config = self.parent.big_table_data[self.row, 2]
+        big_table_data: TableData = self.parent.big_table_data
+        config = big_table_data.reduction_config(self.row)
         if config is None:
             # no data loaded in this row
             return
         if col == 1:
-            self.parent.big_table_data[self.row, 0] = None
+            big_table_data.set_reflectometry_data(self.row, None)
             config.clear_data()
         elif col == 2:
-            self.parent.big_table_data[self.row, 1] = None
+            big_table_data.set_normalization_data(self.row, None)
             config.clear_normalization()
 
     def display_of_this_row_checked(self):

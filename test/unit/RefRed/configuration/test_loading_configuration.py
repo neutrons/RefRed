@@ -1,5 +1,6 @@
 # package imports
 from RefRed.configuration.loading_configuration import LoadingConfiguration
+from RefRed.tabledata import TableData
 
 # third party packages
 import unittest.mock as mock
@@ -98,19 +99,21 @@ class TestLoadingConfiguration(object):
         )
         mockLoading.assert_called()
 
+    @mock.patch('RefRed.tabledata.TableData._validate_type')
     @mock.patch('RefRed.configuration.loading_configuration.LoadingConfiguration.getMetadataObject')
-    def test_populate_big_table_data_with_lconfig(self, mockGetMetadataObject):
-        loadingConfiguration = self.test_init()
-        loadingConfiguration.parent.nbr_row_table_reduction = 1
-        loadingConfiguration.parent.big_table_data = [[0]]
-
+    def test_populate_big_table_data_with_lconfig(self, mockGetMetadataObject, mock_validate_type):
         mockGetMetadataObject.return_value = mock.Mock()
+        mock_validate_type.return_value = None  # don't check the type of elements when inserted in the table
+
+        loadingConfiguration = self.test_init()
+        REDUCTIONTABLE_MAX_ROWCOUNT = 1
+        loadingConfiguration.parent.REDUCTIONTABLE_MAX_ROWCOUNT = REDUCTIONTABLE_MAX_ROWCOUNT
+        loadingConfiguration.parent.big_table_data = TableData(REDUCTIONTABLE_MAX_ROWCOUNT)
 
         loadingConfiguration.dom = mock.Mock()
         loadingConfiguration.dom.getElementsByTagName.return_value = [mock.Mock()]
-
         loadingConfiguration.populate_big_table_data_with_lconfig()
-        assert loadingConfiguration.parent.big_table_data[0, 2] == mockGetMetadataObject.return_value
+        assert loadingConfiguration.parent.big_table_data.reduction_config(0) == mockGetMetadataObject.return_value
 
     def test_populate_main_gui_general_settings(self):
         loadingConfiguration = self.test_init()

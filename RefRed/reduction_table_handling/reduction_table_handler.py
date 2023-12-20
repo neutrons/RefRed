@@ -1,9 +1,14 @@
+# standard imports
+
+# third party imports
 from qtpy import QtWidgets, QtCore
 from qtpy.QtCore import Qt
-import numpy as np
-from RefRed.plot.clear_plots import ClearPlots
-from RefRed.gui_handling.gui_utility import GuiUtility
+
+# application imports
 from RefRed import WINDOW_TITLE
+from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.plot.clear_plots import ClearPlots
+from RefRed.tabledata import TableData
 
 
 class ReductionTableHandler(object):
@@ -70,7 +75,7 @@ class ReductionTableHandler(object):
                     self.parent.ui.reductionTable.setItem(row_index, col_index, _item)
 
     def __shifs_none_empty_rows_reduction_table(self):
-        _nbr_row = self.parent.nbr_row_table_reduction
+        _nbr_row = self.parent.REDUCTIONTABLE_MAX_ROWCOUNT
         _to_row = self.to_row
         if _to_row == (_nbr_row - 1):
             return
@@ -102,11 +107,12 @@ class ReductionTableHandler(object):
         return root_function_name
 
     def __clear_rows_big_table_data(self):
-        big_table_data = self.parent.big_table_data
-        for row in range(self.from_row, self.to_row + 1):
-            big_table_data = np.delete(big_table_data, (self.from_row), axis=0)
-            big_table_data = np.append(big_table_data, [[None, None, None]], axis=0)
-        self.parent.big_table_data = big_table_data
+        r"""Delete rows with indexes in the range [self.from_row, self.to_row]
+
+        The table is appended with as many rows as deleted to keep the size unchanged. The
+        elements of the appended rows are all `None`
+        """
+        self.parent.big_table_data.expunge_rows(self.from_row, self.to_row + 1)
 
     def __is_row_displayed_in_range_selected(self):
         _range_selected = list(range(self.from_row, self.to_row + 1))
@@ -157,4 +163,4 @@ class ReductionTableHandler(object):
                 self.parent.ui.reductionTable.item(_row, _col).setText("")
 
     def __clear_big_table_data(self):
-        self.parent.big_table_data = np.empty((self.parent.nbr_row_table_reduction, 3), dtype=object)
+        self.parent.big_table_data = TableData(self.parent.REDUCTIONTABLE_MAX_ROWCOUNT)

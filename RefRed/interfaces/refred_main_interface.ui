@@ -2453,6 +2453,17 @@ p, li { white-space: pre-wrap; }
                                </layout>
                               </item>
                               <item>
+                               <widget class="QPushButton" name="pushButton">
+                                <property name="text">
+                                 <string>Background</string>
+                                </property>
+                                <property name="icon">
+                                 <iconset resource="../icons/icons.qrc">
+                                  <normaloff>:/General/cogwheel.png</normaloff>:/General/cogwheel.png</iconset>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
                                <widget class="QCheckBox" name="dataBackgroundFlag">
                                 <property name="text">
                                  <string>with background</string>

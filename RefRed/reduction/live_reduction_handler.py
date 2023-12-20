@@ -185,11 +185,10 @@ class LiveReductionHandler(object):
         print('-> value: ', value, '-> type: ', type(value))
 
     def calculate_nbr_reduction_process(self):
-        nbr_row_table_reduction = self.parent.nbr_row_table_reduction
         _big_table_data = self.big_table_data
         nbr_reduction = 0
-        for row in range(nbr_row_table_reduction):
-            if _big_table_data[row, 0] is None:
+        for row_index in range(self.parent.REDUCTIONTABLE_MAX_ROWCOUNT):
+            if _big_table_data[row_index, 0] is None:
                 return nbr_reduction
             nbr_reduction += 1
         return nbr_reduction

@@ -1,5 +1,12 @@
-from RefRed.plot.display_plots import DisplayPlots
+# standard imports
+from typing import List
+
+# third party imports
+
+# application imports
 from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.plot.display_plots import DisplayPlots
+from RefRed.tabledata import TableData
 
 
 class SpinBox(object):
@@ -8,20 +15,25 @@ class SpinBox(object):
 
     def __init__(self, parent=None, is_data=True, entry_type='peak', value_min=-1, value_max=-1, flag=True):
         self.parent = parent
-        big_table_data = parent.big_table_data
-        gui_utility = GuiUtility(self.parent)
-        row = gui_utility.get_current_table_reduction_check_box_checked()
-        if row == -1:
+        big_table_data: TableData = parent.big_table_data
+        gui_utility = GuiUtility(parent=self.parent)
+
+        # Find the active row in the reduction table
+        active_row_index = gui_utility.get_current_table_reduction_check_box_checked()
+        if active_row_index == gui_utility.NULL_ACTIVE_ROW:  # no active row
             return
 
-        all_rows = gui_utility.get_other_row_with_same_run_number_as_row(row=row, is_data=is_data)
-        for _row in all_rows:
+        # find all indexes in the table for rows having the same run number as that stored in row `active_row_index`
+        # for reflectometry data (is_data==True) there can be only one row
+        all_rows: List[int] = gui_utility.get_other_row_with_same_run_number_as_row(
+            row=active_row_index, is_data=is_data
+        )
+        for row_index in all_rows:
 
             if is_data:
-                index = 0
+                data = big_table_data.reflectometry_data(row_index)
             else:
-                index = 1
-            data = big_table_data[_row, index]
+                data = big_table_data.normalization_data(row_index)
 
             val1 = value_min
             val2 = value_max
@@ -51,13 +63,16 @@ class SpinBox(object):
             else:
                 raise RuntimeError("unexpected entry type")
 
-            big_table_data[_row, index] = data
+            if is_data:
+                big_table_data.set_reflectometry_data(row_index, data)
+            else:
+                big_table_data.set_normalization_data(row_index, data)
             self.parent.big_table_data = big_table_data
 
-            if row == _row:
+            if active_row_index == row_index:
                 DisplayPlots(
                     parent=self.parent,
-                    row=row,
+                    row=active_row_index,
                     is_data=is_data,
                     plot_yt=is_plot_yt,
                     plot_yi=is_plot_yi,
@@ -93,7 +108,7 @@ class DataPeakSpinbox(object):
 
 
 class DataBackSpinbox(object):
-
+    r"""TODO: document this class"""
     parent = None
 
     def __init__(self, parent=None):

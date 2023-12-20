@@ -20,14 +20,15 @@ class ParentHandler(object):
         errors = np.zeros(0)
 
         for row_index in range(self.n_runs):
-            low_bound = self.parent.big_table_data[row_index, 2].reduce_q_axis >= _q_min
-            high_bound = self.parent.big_table_data[row_index, 2].reduce_q_axis <= _q_max
+            reduction_config = self.parent.big_table_data.reduction_config(row_index)
+            low_bound = reduction_config.reduce_q_axis >= _q_min
+            high_bound = reduction_config.reduce_q_axis <= _q_max
             indices = np.argwhere(low_bound & high_bound).T[0]
 
-            _values_i = self.parent.big_table_data[row_index, 2].reduce_y_axis[indices]
+            _values_i = reduction_config.reduce_y_axis[indices]
             values = np.concatenate((values, _values_i))
 
-            _errors_i = self.parent.big_table_data[row_index, 2].reduce_e_axis[indices]
+            _errors_i = reduction_config.reduce_e_axis[indices]
             errors = np.concatenate((errors, _errors_i))
 
         if len(values) > 1:
