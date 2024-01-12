@@ -33,6 +33,7 @@ from RefRed.plot.single_click_plot import SingleClickPlot
 from RefRed.plot.home_plot_button_clicked import HomePlotButtonClicked
 from RefRed.plot.mouse_leave_plot import MouseLeavePlot
 from RefRed.plot.log_plot_toggle import LogPlotToggle
+from RefRed.plot.background_settings import BackgroundSettingsModel, BackgroundSettingsView
 from RefRed.preview_config.preview_config import PreviewConfig
 from RefRed.reduction.live_reduction_handler import LiveReductionHandler
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
@@ -135,6 +136,7 @@ class MainGui(QtWidgets.QMainWindow):
         logging.basicConfig(filename=log_file, level=logging.DEBUG)
 
         self.spinbox_observer = SpinBoxObserver()  # backup the last value for each spinbox in this widget
+        self.background_settings = BackgroundSettingsModel(main_window=self)
 
     # home button of plots
     def home_clicked_yi_plot(self):
@@ -262,6 +264,10 @@ class MainGui(QtWidgets.QMainWindow):
     @config_file_has_been_modified
     def data_back_spinbox_validation(self, *args, **kwargs):
         DataBackSpinbox(parent=self)
+
+    @config_file_has_been_modified
+    def display_background_settings(self, *args, **kwargs):
+        BackgroundSettingsView(parent=self).show()
 
     def back_from_value_changed(self, *args, **kwargs):
         r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox backFromValue, denoting

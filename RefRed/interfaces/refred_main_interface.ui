@@ -2453,7 +2453,7 @@ p, li { white-space: pre-wrap; }
                                </layout>
                               </item>
                               <item>
-                               <widget class="QPushButton" name="pushButton">
+                               <widget class="QPushButton" name="mainBackgroundSettingsPushButton">
                                 <property name="text">
                                  <string>Background</string>
                                 </property>
@@ -6401,6 +6401,22 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>mainBackgroundSettingsPushButton</sender>
+   <signal>pressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>display_background_settings</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1626</x>
+     <y>684</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>873</x>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -6408,6 +6424,7 @@ p, li { white-space: pre-wrap; }
   <slot>data_back_spinbox_validation()</slot>
   <slot>back_from_value_changed()</slot>
   <slot>back_to_value_changed()</slot>
+  <slot>display_background_settings</slot>
   <slot>norm_peak_spinbox_validation()</slot>
   <slot>data_peak_spinbox_validation()</slot>
   <slot>peak_from_value_changed()</slot>
