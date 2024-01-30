@@ -1,18 +1,21 @@
+# standard imports
+from pathlib import Path
+import os
+
+# third-party imports
+from qtpy.QtCore import Qt
 from qtpy.QtGui import QPalette
 from qtpy.QtWidgets import QDialog, QFileDialog
-from qtpy.QtCore import Qt
-import os
-from pathlib import Path
 
-from RefRed.interfaces import load_ui
-from RefRed.plot.display_plots import DisplayPlots
+# package imports
+import RefRed.colors
+from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.observer import SpinBoxObserver
-import RefRed.colors
+from RefRed.interfaces import load_ui
+from RefRed.plot.background_settings import backgrounds_settings, BackgroundSettingsView
+from RefRed.plot.display_plots import DisplayPlots
 import RefRed.utilities
-from RefRed.gui_handling.auto_tof_range_radio_button_handler import (
-    AutoTofRangeRadioButtonHandler,
-)
 
 
 class PopupPlot2d(QDialog):
@@ -39,7 +42,7 @@ class PopupPlot2d(QDialog):
         self.is_data = True if data_type == "data" else False
         self.is_row_with_highest_q = self.is_row_with_higest_q()
         self.spinbox_observer = SpinBoxObserver()  # backup for spinbox values
-
+        self.background_settings = backgrounds_settings[data_type]
         QDialog.__init__(self, parent=parent)
         self.setWindowModality(False)
         self._open_instances.append(self)
@@ -273,12 +276,17 @@ class PopupPlot2d(QDialog):
         self.ui.plot2dBackToError.setVisible(False)
         self.ui.plot2dBackToError.setPalette(palette)
 
+        self.background_settings.control_spinboxes_visibility(
+            self.ui,
+            first_background=("plot2dBackFromValue", "plot2dBackToValue"),
+            second_background=("plot2dBack2FromValue", "plot2dBack2ToValue"),
+        )
+
     def populate_widgets(self):
         _data = self.data
 
         peak = _data.peak
         back = _data.back
-        back_flag = RefRed.utilities.str2bool(_data.back_flag)
         low_res = _data.low_res
         low_res_flag = RefRed.utilities.str2bool(_data.low_res_flag)
         tof_auto_flag = RefRed.utilities.str2bool(_data.tof_auto_flag)
@@ -314,16 +322,18 @@ class PopupPlot2d(QDialog):
         self.ui.plot2dBackFromValue.setValue(int(back[0]))
         self.ui.plot2dBackToValue.setValue(int(back[1]))
 
-        self.activate_or_not_back_widgets(back_flag)
+        self.activate_or_not_back_widgets()
 
         self.ui.low_res1.setValue(int(low_res[0]))
         self.ui.low_res2.setValue(int(low_res[1]))
         self.activate_or_not_low_res_widgets(low_res_flag)
 
-    def activate_or_not_back_widgets(self, back_flag):
-        self.ui.plot2d_back_flag.setChecked(back_flag)
-        self.ui.plot2dBackFromValue.setEnabled(back_flag)
-        self.ui.plot2dBackToValue.setEnabled(back_flag)
+    def activate_or_not_back_widgets(self):
+        self.background_settings.control_spinboxes_visibility(
+            parent=self.ui,
+            first_background=("plot2dBackFromValue", "plot2dBackToValue"),
+            second_background=("plot2dBack2FromValue", "plot2dBack2ToValue"),
+        )
         self.check_peak_back_input_validity()
         self.update_plots()
 
@@ -382,6 +392,9 @@ class PopupPlot2d(QDialog):
     def manual_input_back1(self):
         self.sort_and_check_widgets()
         self.update_plots()
+
+    def display_background_settings(self, *args, **kwargs):
+        BackgroundSettingsView(parent=self, run_type=self.data_type).show()
 
     def plot2d_back_from_spinbox_value_changed(self):
         r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox plot2dBackFromValue.
@@ -534,9 +547,7 @@ class PopupPlot2d(QDialog):
             self.parent.ui.normBackToValue.setValue(back2)
             self.parent.ui.normBackgroundFlag.setChecked(backFlag)
             # self.parent.norm_peak_and_back_validation(False)
-            self.parent.ui.normBackFromLabel.setEnabled(backFlag)
             self.parent.ui.normBackFromValue.setEnabled(backFlag)
-            self.parent.ui.normBackToLabel.setEnabled(backFlag)
             self.parent.ui.normBackToValue.setEnabled(backFlag)
             self.parent.ui.normLowResFromValue.setValue(lowres1)
             self.parent.ui.normLowResToValue.setValue(lowres2)

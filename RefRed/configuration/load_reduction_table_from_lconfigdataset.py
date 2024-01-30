@@ -98,6 +98,8 @@ class LoadReductionTableFromLConfigDataSet(object):
             back1 = int(lconfig.data_back[0])
             back2 = int(lconfig.data_back[1])
             back_flag = lconfig.data_back_flag
+            functional_background = lconfig.data_functional_background
+            two_backgrounds = lconfig.data_two_backgrounds
             low_res1 = int(lconfig.data_low_res[0])
             low_res2 = int(lconfig.data_low_res[1])
             low_res_flag = lconfig.data_low_res_flag
@@ -109,6 +111,8 @@ class LoadReductionTableFromLConfigDataSet(object):
             back1 = int(lconfig.norm_back[0])
             back2 = int(lconfig.norm_back[1])
             back_flag = lconfig.norm_back_flag
+            functional_background = lconfig.norm_functional_background
+            two_backgrounds = lconfig.norm_two_backgrounds
             low_res1 = int(lconfig.norm_low_res[0])
             low_res2 = int(lconfig.norm_low_res[1])
             low_res_flag = lconfig.norm_low_res_flag
@@ -121,6 +125,8 @@ class LoadReductionTableFromLConfigDataSet(object):
         lrdata.peak = [peak1, peak2]
         lrdata.back = [back1, back2]
         lrdata.back_flag = back_flag
+        lrdata.functional_background = functional_background
+        lrdata.two_backgrounds = two_backgrounds
         lrdata.low_res = [low_res1, low_res2]
         lrdata.low_res_flag = low_res_flag
         lrdata.tof_range = tof_range

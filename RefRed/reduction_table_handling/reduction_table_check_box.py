@@ -1,10 +1,15 @@
+# standard imports
+
+# third-party imports
 import numpy as np
 from qtpy.QtCore import Qt
 
-from RefRed.plot.display_plots import DisplayPlots
-from RefRed.plot.clear_plots import ClearPlots
-from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
+# package imports
 from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
+from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
+from RefRed.plot.background_settings import backgrounds_settings
+from RefRed.plot.clear_plots import ClearPlots
+from RefRed.plot.display_plots import DisplayPlots
 
 
 class ReductionTableCheckBox(object):
@@ -67,6 +72,7 @@ class ReductionTableCheckBox(object):
             o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent=self.parent)
             o_auto_tof_range.setup()
             o_auto_tof_range.radio_button_handler()
+            backgrounds_settings.update_from_table()
 
     def launch_update_of_plot(self):
         _row_selected = self.row_selected

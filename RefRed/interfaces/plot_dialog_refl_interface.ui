@@ -326,6 +326,9 @@
                  </item>
                  <item>
                   <widget class="QLabel" name="plotBackFromLabel">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
                    <property name="font">
                     <font>
                      <pointsize>20</pointsize>
@@ -452,7 +455,7 @@
                  <item>
                   <widget class="QSpinBox" name="plotBack2FromSpinBox">
                    <property name="enabled">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </property>
                    <property name="maximum">
                     <number>255</number>
@@ -483,7 +486,7 @@
                  <item>
                   <widget class="QSpinBox" name="plotBack2ToSpinBox">
                    <property name="enabled">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </property>
                    <property name="maximum">
                     <number>255</number>
@@ -517,23 +520,16 @@
             </layout>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton">
+            <widget class="QPushButton" name="backgroundSettingsPushButton">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;opens the backgrounds-settings dialog&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
              <property name="text">
               <string>Background</string>
              </property>
              <property name="icon">
               <iconset resource="../icons/icons.qrc">
                <normaloff>:/General/cogwheel.png</normaloff>:/General/cogwheel.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="plot_back_flag">
-             <property name="text">
-              <string>with background</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -647,22 +643,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>plot_back_flag</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>Dialog</receiver>
-   <slot>plot_back_flag_clicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>566</x>
-     <y>348</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>615</x>
-     <y>500</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>plotPeakFromSpinBox</sender>
    <signal>valueChanged(int)</signal>
    <receiver>Dialog</receiver>
@@ -726,12 +706,29 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>backgroundSettingsPushButton</sender>
+   <signal>pressed()</signal>
+   <receiver>Dialog</receiver>
+   <slot>display_background_settings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>566</x>
+     <y>428</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>383</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>update_peak1_spinbox()</slot>
   <slot>update_peak2_spinbox()</slot>
   <slot>update_back1_spinbox()</slot>
   <slot>update_back2_spinbox()</slot>
+  <slot>display_background_settings()</slot>
   <slot>plot_peak_from_spinbox_signal()</slot>
   <slot>plot_peak_from_spinbox_value_changed()</slot>
   <slot>plot_peak_to_spinbox_signal()</slot>

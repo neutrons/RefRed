@@ -33,7 +33,7 @@ from RefRed.plot.single_click_plot import SingleClickPlot
 from RefRed.plot.home_plot_button_clicked import HomePlotButtonClicked
 from RefRed.plot.mouse_leave_plot import MouseLeavePlot
 from RefRed.plot.log_plot_toggle import LogPlotToggle
-from RefRed.plot.background_settings import BackgroundSettingsModel, BackgroundSettingsView
+from RefRed.plot.background_settings import backgrounds_settings, BackgroundSettingsView
 from RefRed.preview_config.preview_config import PreviewConfig
 from RefRed.reduction.live_reduction_handler import LiveReductionHandler
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
@@ -135,8 +135,21 @@ class MainGui(QtWidgets.QMainWindow):
         log_file = os.path.expanduser("~") + '/.refred.log'
         logging.basicConfig(filename=log_file, level=logging.DEBUG)
 
-        self.spinbox_observer = SpinBoxObserver()  # backup the last value for each spinbox in this widget
-        self.background_settings = BackgroundSettingsModel(main_window=self)
+        # backup the last value for each spinbox in this widget
+        self.spinbox_observer = SpinBoxObserver()
+
+        # initialize background settings' main GUI and background-related control spinbox visibilities
+        backgrounds_settings.set_maingui(self)
+        backgrounds_settings["data"].control_spinboxes_visibility(
+            parent=self.ui,
+            first_background=("backFromValue", "backToValue"),
+            second_background=("back2FromValue", "back2ToValue"),
+        )
+        backgrounds_settings["norm"].control_spinboxes_visibility(
+            parent=self.ui,
+            first_background=("normBackFromValue", "normBackToValue"),
+            second_background=("normBack2FromValue", "normBack2ToValue"),
+        )
 
     # home button of plots
     def home_clicked_yi_plot(self):
@@ -266,8 +279,12 @@ class MainGui(QtWidgets.QMainWindow):
         DataBackSpinbox(parent=self)
 
     @config_file_has_been_modified
-    def display_background_settings(self, *args, **kwargs):
-        BackgroundSettingsView(parent=self).show()
+    def display_data_background_settings(self, *args, **kwargs):
+        BackgroundSettingsView(parent=self, run_type="data").show()
+
+    @config_file_has_been_modified
+    def display_norm_background_settings(self, *args, **kwargs):
+        BackgroundSettingsView(parent=self, run_type="norm").show()
 
     def back_from_value_changed(self, *args, **kwargs):
         r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox backFromValue, denoting

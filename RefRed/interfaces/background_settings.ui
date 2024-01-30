@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Background Settings</string>
   </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
@@ -133,4 +136,7 @@
  </widget>
  <resources/>
  <connections/>
+ <slots>
+  <slot>_update_model(&quot;subtract_background&quot;)</slot>
+ </slots>
 </ui>

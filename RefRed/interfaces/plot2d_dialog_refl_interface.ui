@@ -985,7 +985,7 @@
              <item>
               <widget class="QSpinBox" name="plot2dBack2FromValue">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="maximum">
                 <number>255</number>
@@ -1013,7 +1013,7 @@
              <item>
               <widget class="QSpinBox" name="plot2dBack2ToValue">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="maximum">
                 <number>255</number>
@@ -1044,7 +1044,10 @@
         </layout>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="backgroundSettingsPushButton">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;opens the backgrounds-settings dialog&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
          <property name="text">
           <string>Background</string>
          </property>
@@ -1364,6 +1367,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>backgroundSettingsPushButton</sender>
+   <signal>pressed()</signal>
+   <receiver>Dialog</receiver>
+   <slot>display_background_settings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1252</x>
+     <y>587</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>671</x>
+     <y>487</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>activate_or_not_low_res_widgets()</slot>
@@ -1373,6 +1392,7 @@
   <slot>manual_input_of_tof_field()</slot>
   <slot>manual_auto_tof_clicked()</slot>
   <slot>manual_input_peak1()</slot>
+  <slot>display_background_settings()</slot>
   <slot>plot2d_peak_from_spinbox_value_changed()</slot>
   <slot>manual_input_peak2()</slot>
   <slot>plot2d_peak_to_spinbox_value_changed()</slot>

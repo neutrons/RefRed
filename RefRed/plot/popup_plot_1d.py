@@ -1,14 +1,19 @@
+# standard imports
+import bisect
+from pathlib import Path
+import os
+
+# third-party imports
+from qtpy.QtCore import Qt
 from qtpy.QtGui import QPalette
 from qtpy.QtWidgets import QDialog, QFileDialog
-from qtpy.QtCore import Qt
-import os
-from pathlib import Path
-import bisect
 
-from RefRed.interfaces import load_ui
-from RefRed.plot.display_plots import DisplayPlots
-from RefRed.gui_handling.gui_utility import GuiUtility
+# package imports
 import RefRed.colors
+from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.interfaces import load_ui
+from RefRed.plot.background_settings import backgrounds_settings, BackgroundSettingsView
+from RefRed.plot.display_plots import DisplayPlots
 import RefRed.utilities
 
 
@@ -44,7 +49,7 @@ class PopupPlot1d(QDialog):
         self.col = 0 if data_type == "data" else 1
         self.is_data = True if data_type == "data" else False
         self.is_row_with_highest_q = self.is_row_with_higest_q()
-
+        self.background_settings = backgrounds_settings[data_type]
         QDialog.__init__(self, parent=parent)
         self.setWindowModality(False)
         self._open_instances.append(self)
@@ -56,6 +61,13 @@ class PopupPlot1d(QDialog):
         self.ui.plot_counts_vs_pixel.leaveFigure.connect(self.leave_plot_counts_vs_pixel)
         self.ui.plot_counts_vs_pixel.toolbar.homeClicked.connect(self.home_plot_counts_vs_pixel)
         self.ui.plot_counts_vs_pixel.toolbar.exportClicked.connect(self.export_counts_vs_pixel)
+
+        self.background_settings.control_spinboxes_visibility(
+            parent=self.ui,
+            first_background=("plotBackFromSpinBox", "plotBackToSpinBox"),
+            second_background=("plotBack2FromSpinBox", "plotBack2ToSpinBox"),
+        )
+        self.background_settings.signal_first_background.connect(self.plot_back_flag_clicked)
 
         _new_detector_geometry_flag = self.data.new_detector_geometry_flag
         if not _new_detector_geometry_flag:
@@ -141,7 +153,7 @@ class PopupPlot1d(QDialog):
         _show_widgets_1 = False
         _show_widgets_2 = False
 
-        if self.ui.plot_back_flag.isChecked():
+        if self.data.back_flag:
             if back1 > peak1:
                 _show_widgets_1 = True
             if back2 < peak2:
@@ -206,9 +218,6 @@ class PopupPlot1d(QDialog):
         [peak1, peak2] = _peak  # lower and upper boundaries for the peak
         [back1, back2] = _back  # lower and upper boundaries for the background
 
-        back_flag = RefRed.utilities.str2bool(self.data.back_flag)
-        self.ui.plot_back_flag.setChecked(back_flag)
-
         peak1 = int(peak1)
         peak2 = int(peak2)
         back1 = int(back1)
@@ -235,9 +244,10 @@ class PopupPlot1d(QDialog):
         ui_plot2.canvas.ax.axvline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
         ui_plot2.canvas.ax.axvline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
 
-        if back_flag:
+        if self.background_settings.subtract_background:
             ui_plot2.canvas.ax.axvline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
-            ui_plot2.canvas.ax.axvline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
+            if self.background_settings.two_backgrounds:
+                ui_plot2.canvas.ax.axvline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
 
         self.ui.plot_counts_vs_pixel.canvas.ax.set_xlim([ymin, ymax])
         self.ui.plot_counts_vs_pixel.canvas.ax.set_ylim([xmin, xmax])
@@ -252,16 +262,13 @@ class PopupPlot1d(QDialog):
     def logtoggleylog(self, status):
         self.isPlotLog = status == "log"
 
+    def display_background_settings(self, *args, **kwargs):
+        BackgroundSettingsView(parent=self, run_type=self.data_type).show()
+
     def plot_back_flag_clicked(self, status):
         self.data.back_flag = status
         self.update_plots()
-        self.update_back_flag_widgets()
         self.check_peak_back_input_validity()
-
-    def update_back_flag_widgets(self):
-        status_flag = self.ui.plot_back_flag.isChecked()
-        self.ui.plotBackFromSpinBox.setEnabled(status_flag)
-        self.ui.plotBackToSpinBox.setEnabled(status_flag)
 
     def set_peak_value(self, peak1, peak2):
         self.ui.plotPeakFromSpinBox.setValue(peak1)
@@ -412,7 +419,7 @@ class PopupPlot1d(QDialog):
         peak2 = self.ui.plotPeakToSpinBox.value()
         back1 = self.ui.plotBackFromSpinBox.value()
         back2 = self.ui.plotBackToSpinBox.value()
-        backFlag = self.ui.plot_back_flag.isChecked()
+        backFlag = self.data.back_flag
 
         big_table_data = self.parent.big_table_data
 
@@ -436,24 +443,15 @@ class PopupPlot1d(QDialog):
         if self.data_type == "data":
             self.parent.ui.peakFromValue.setValue(peak1)
             self.parent.ui.peakToValue.setValue(peak2)
-
             self.parent.ui.backFromValue.setValue(back1)
-            self.parent.ui.backFromValue.setEnabled(backFlag)
             self.parent.ui.backToValue.setValue(back2)
-            self.parent.ui.backToValue.setEnabled(backFlag)
-
-            self.parent.ui.dataBackgroundFlag.setChecked(backFlag)
-            self.parent.ui.backBoundariesLabel.setEnabled(backFlag)
-
         else:
             self.parent.ui.normPeakFromValue.setValue(peak1)
             self.parent.ui.normPeakToValue.setValue(peak2)
             self.parent.ui.normBackFromValue.setValue(back1)
             self.parent.ui.normBackToValue.setValue(back2)
             self.parent.ui.normBackgroundFlag.setChecked(backFlag)
-            self.parent.ui.normBackFromLabel.setEnabled(backFlag)
             self.parent.ui.normBackFromValue.setEnabled(backFlag)
-            self.parent.ui.normBackToLabel.setEnabled(backFlag)
             self.parent.ui.normBackToValue.setEnabled(backFlag)
 
         DisplayPlots(

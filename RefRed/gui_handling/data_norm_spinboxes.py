@@ -7,6 +7,7 @@ from typing import List
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.tabledata import TableData
+from RefRed.plot.background_settings import backgrounds_settings
 
 
 class SpinBox(object):
@@ -115,7 +116,7 @@ class DataBackSpinbox(object):
         self.parent = parent
         back1 = self.parent.ui.backFromValue.value()
         back2 = self.parent.ui.backToValue.value()
-        back_flag = self.parent.ui.dataBackgroundFlag.isChecked()
+        back_flag = backgrounds_settings["data"].subtract_background
         DataSpinbox(parent=parent, entry_type='back', value_min=back1, value_max=back2, flag=back_flag)
 
 
@@ -138,7 +139,7 @@ class NormBackSpinbox(object):
         self.parent = parent
         back1 = self.parent.ui.normBackFromValue.value()
         back2 = self.parent.ui.normBackToValue.value()
-        back_flag = self.parent.ui.normBackgroundFlag.isChecked()
+        back_flag = backgrounds_settings["norm"].subtract_background
         NormSpinbox(parent=parent, entry_type='back', value_min=back1, value_max=back2, flag=back_flag)
 
 
