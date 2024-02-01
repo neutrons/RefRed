@@ -4,8 +4,10 @@ import bisect
 # third party imports
 
 # application imports
+from RefRed.calculations.lr_data import LRData
 import RefRed.colors as colors
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
+from RefRed.plot.background_settings import backgrounds_settings
 from RefRed.plot.clear_plots import ClearPlots
 from RefRed.tabledata import TableData
 
@@ -40,6 +42,7 @@ class DisplayPlots(object):
         self.parent = parent
         is_norm = not is_data
         self.is_data = is_data
+        self.data_type = "data" if is_norm else "norm"
 
         if is_data:
             self.col = 0
@@ -49,9 +52,9 @@ class DisplayPlots(object):
 
         big_table_data: TableData = self.parent.big_table_data
         if is_data:
-            _data = big_table_data.reflectometry_data(row)
+            _data: LRData = big_table_data.reflectometry_data(row)
         else:
-            _data = big_table_data.normalization_data(row)
+            _data: LRData = big_table_data.normalization_data(row)
 
         if _data is None:
             ClearPlots(
@@ -108,7 +111,6 @@ class DisplayPlots(object):
         self.back = self.sortIntArray(_data.back)
 
         self.lowRes = self.sortIntArray(_data.low_res)
-        self.backFlag = bool(_data.back_flag)
         self.lowResFlag = bool(_data.low_res_flag)
 
         o_update_plot_widgets = UpdatePlotWidgetStatus(parent=parent)
@@ -250,7 +252,7 @@ class DisplayPlots(object):
         self.yi_plot_ui.canvas.ax.axhline(self.peak[0], color=colors.PEAK_SELECTION_COLOR)
         self.yi_plot_ui.canvas.ax.axhline(self.peak[1], color=colors.PEAK_SELECTION_COLOR)
 
-        if self.backFlag:
+        if backgrounds_settings[self.data_type].subtract_background:
             self.yi_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR)
             self.yi_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR)
 
@@ -322,7 +324,7 @@ class DisplayPlots(object):
         self.yt_plot_ui.canvas.ax.axhline(self.peak[0], color=colors.PEAK_SELECTION_COLOR)
         self.yt_plot_ui.canvas.ax.axhline(self.peak[1], color=colors.PEAK_SELECTION_COLOR)
 
-        if self.backFlag:
+        if backgrounds_settings[self.data_type].subtract_background:
             self.yt_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR)
             self.yt_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR)
 
@@ -374,7 +376,6 @@ class DisplayPlots(object):
             [back1, back2] = self.back
             parent.ui.normBackFromValue.setValue(back1)
             parent.ui.normBackToValue.setValue(back2)
-            parent.ui.normBackgroundFlag.setChecked(self.backFlag)
 
             [lowRes1, lowRes2] = self.lowRes
             parent.ui.normLowResFromValue.setValue(lowRes1)
@@ -397,7 +398,6 @@ class DisplayPlots(object):
             [back1, back2] = self.back
             parent.ui.backFromValue.setValue(back1)
             parent.ui.backToValue.setValue(back2)
-            parent.ui.dataBackgroundFlag.setChecked(self.backFlag)
 
             [lowRes1, lowRes2] = self.lowRes
             parent.ui.dataLowResFromValue.setValue(lowRes1)

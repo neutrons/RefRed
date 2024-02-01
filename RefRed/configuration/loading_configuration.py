@@ -178,6 +178,9 @@ class LoadingConfiguration(object):
         o_scaling_factor_widget.set_enabled(status=scaling_factor_flag)
 
     def getMetadataObject(self, node):
+        def get_item_boolean(item_name: str) -> bool:
+            return str2bool(self.getNodeValue(node, item_name))
+
         iMetadata = LConfigDataset()
 
         _peak_min = self.getNodeValue(node, 'from_peak_pixels')
@@ -192,8 +195,12 @@ class LoadingConfiguration(object):
         _low_res_max = self.getNodeValue(node, 'x_max_pixel')
         iMetadata.data_low_res = [_low_res_min, _low_res_max]
 
-        _back_flag = str2bool(self.getNodeValue(node, 'background_flag'))
-        iMetadata.data_back_flag = _back_flag
+        # background settings for reflectivity data
+        for attribute, item in zip(
+            ["data_back_flag", "data_functional_background", "data_two_backgrounds"],
+            ["background_flag", "functional_background", "two_backgrounds"],
+        ):
+            setattr(iMetadata, attribute, get_item_boolean(item))
 
         _low_res_flag = str2bool(self.getNodeValue(node, 'x_range_flag'))
         iMetadata.data_low_res_flag = _low_res_flag
@@ -238,8 +245,12 @@ class LoadingConfiguration(object):
         _low_res_max = self.getNodeValue(node, 'norm_x_max')
         iMetadata.norm_low_res = [_low_res_min, _low_res_max]
 
-        _back_flag = str2bool(self.getNodeValue(node, 'norm_background_flag'))
-        iMetadata.norm_back_flag = _back_flag
+        # background settings for normalization data
+        for attribute, item in zip(
+            ["norm_back_flag", "norm_functional_background", "norm_two_backgrounds"],
+            ["norm_background_flag", "norm_functional_background", "norm_two_backgrounds"],
+        ):
+            setattr(iMetadata, attribute, get_item_boolean(item))
 
         _low_res_flag = str2bool(self.getNodeValue(node, 'norm_x_range_flag'))
         iMetadata.norm_low_res_flag = _low_res_flag

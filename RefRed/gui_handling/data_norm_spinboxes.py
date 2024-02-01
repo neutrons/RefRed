@@ -7,7 +7,6 @@ from typing import List
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.tabledata import TableData
-from RefRed.plot.background_settings import backgrounds_settings
 
 
 class SpinBox(object):
@@ -54,7 +53,6 @@ class SpinBox(object):
                 data.peak = [str(val_min), str(val_max)]
             elif entry_type == 'back':
                 data.back = [str(val_min), str(val_max)]
-                data.back_flag = flag
             elif entry_type == 'low_res':
                 is_plot_yt = False
                 is_plot_yi = False
@@ -116,8 +114,7 @@ class DataBackSpinbox(object):
         self.parent = parent
         back1 = self.parent.ui.backFromValue.value()
         back2 = self.parent.ui.backToValue.value()
-        back_flag = backgrounds_settings["data"].subtract_background
-        DataSpinbox(parent=parent, entry_type='back', value_min=back1, value_max=back2, flag=back_flag)
+        DataSpinbox(parent=parent, entry_type='back', value_min=back1, value_max=back2)
 
 
 class NormPeakSpinbox(object):
@@ -139,8 +136,7 @@ class NormBackSpinbox(object):
         self.parent = parent
         back1 = self.parent.ui.normBackFromValue.value()
         back2 = self.parent.ui.normBackToValue.value()
-        back_flag = backgrounds_settings["norm"].subtract_background
-        NormSpinbox(parent=parent, entry_type='back', value_min=back1, value_max=back2, flag=back_flag)
+        NormSpinbox(parent=parent, entry_type='back', value_min=back1, value_max=back2)
 
 
 class DataLowResSpinbox(object):

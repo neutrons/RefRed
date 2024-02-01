@@ -56,12 +56,6 @@ def test_popup_plot_1d(qtbot, main_gui):
     assert_boundary("background left boundary", popup.ui.plotBackFromSpinBox, 127, old_value=126)
     assert_boundary("background right boundary", popup.ui.plotBackToSpinBox, 145, old_value=144)
 
-    # disable/enable background options. Assumed popup.ui.plot_back_flag is initially checked
-    for status in [False, True]:
-        qtbot.mouseClick(popup.ui.plot_back_flag, QtCore.Qt.LeftButton)
-        assert popup.ui.plotBackFromSpinBox.isEnabled() is status
-        assert popup.ui.plotBackToSpinBox.isEnabled() is status
-
 
 if __name__ == '__main__':
     pytest.main([__file__])

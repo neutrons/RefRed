@@ -1849,7 +1849,7 @@ p, li { white-space: pre-wrap; }
                    <bool>true</bool>
                   </property>
                   <property name="currentIndex">
-                   <number>1</number>
+                   <number>0</number>
                   </property>
                   <widget class="QWidget" name="tab">
                    <property name="enabled">
@@ -2463,16 +2463,6 @@ p, li { white-space: pre-wrap; }
                                 <property name="icon">
                                  <iconset resource="../icons/icons.qrc">
                                   <normaloff>:/General/cogwheel.png</normaloff>:/General/cogwheel.png</iconset>
-                                </property>
-                               </widget>
-                              </item>
-                              <item>
-                               <widget class="QCheckBox" name="dataBackgroundFlag">
-                                <property name="text">
-                                 <string>with background</string>
-                                </property>
-                                <property name="checked">
-                                 <bool>true</bool>
                                 </property>
                                </widget>
                               </item>
@@ -3410,16 +3400,6 @@ p, li { white-space: pre-wrap; }
                                   <property name="icon">
                                    <iconset resource="../icons/icons.qrc">
                                     <normaloff>:/General/cogwheel.png</normaloff>:/General/cogwheel.png</iconset>
-                                  </property>
-                                 </widget>
-                                </item>
-                                <item>
-                                 <widget class="QCheckBox" name="normBackgroundFlag">
-                                  <property name="text">
-                                   <string>with background</string>
-                                  </property>
-                                  <property name="checked">
-                                   <bool>true</bool>
                                   </property>
                                  </widget>
                                 </item>
@@ -6032,22 +6012,6 @@ p, li { white-space: pre-wrap; }
    </hints>
   </connection>
   <connection>
-   <sender>normBackgroundFlag</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>norm_back_checkbox()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1642</x>
-     <y>680</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>dataLowResFromValue</sender>
    <signal>editingFinished()</signal>
    <receiver>MainWindow</receiver>
@@ -6056,22 +6020,6 @@ p, li { white-space: pre-wrap; }
     <hint type="sourcelabel">
      <x>1167</x>
      <y>968</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>778</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>dataBackgroundFlag</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>data_back_checkbox()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1643</x>
-     <y>761</y>
     </hint>
     <hint type="destinationlabel">
      <x>778</x>

@@ -45,7 +45,6 @@ class UpdatePlotWidgetStatus(object):
         parent.ui.backFromValue.setEnabled(status)
         parent.ui.peakToValue.setEnabled(status)
         parent.ui.peakFromValue.setEnabled(status)
-        parent.ui.dataBackgroundFlag.setEnabled(status)
 
         self.parent.ui.dataTOFmanualLabel.setEnabled(status)
         self.parent.ui.dataTOFautoMode.setEnabled(status)
@@ -74,7 +73,6 @@ class UpdatePlotWidgetStatus(object):
         parent.ui.normBackFromValue.setEnabled(status)
         parent.ui.normPeakToValue.setEnabled(status)
         parent.ui.normPeakFromValue.setEnabled(status)
-        parent.ui.normBackgroundFlag.setEnabled(status)
 
         self.parent.ui.dataTOFmanualLabel.setEnabled(status)
         self.parent.ui.dataTOFautoMode.setEnabled(status)

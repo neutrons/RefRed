@@ -2,6 +2,7 @@
 import bisect
 from pathlib import Path
 import os
+from typing import Optional
 
 # third-party imports
 from qtpy.QtCore import Qt
@@ -9,6 +10,7 @@ from qtpy.QtGui import QPalette
 from qtpy.QtWidgets import QDialog, QFileDialog
 
 # package imports
+from RefRed.calculations.lr_data import LRData
 import RefRed.colors
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.interfaces import load_ui
@@ -40,7 +42,7 @@ class PopupPlot1d(QDialog):
 
     nbr_pixel_y_axis = 304
 
-    def __init__(self, parent=None, data_type="data", data=None, row=0):
+    def __init__(self, parent: "MainGui" = None, data_type: str = "data", data: Optional[LRData] = None, row: int = 0):
 
         self.data_type = data_type
         self.parent = parent
@@ -153,7 +155,7 @@ class PopupPlot1d(QDialog):
         _show_widgets_1 = False
         _show_widgets_2 = False
 
-        if self.data.back_flag:
+        if backgrounds_settings[self.data_type].subtract_background:
             if back1 > peak1:
                 _show_widgets_1 = True
             if back2 < peak2:
@@ -265,8 +267,7 @@ class PopupPlot1d(QDialog):
     def display_background_settings(self, *args, **kwargs):
         BackgroundSettingsView(parent=self, run_type=self.data_type).show()
 
-    def plot_back_flag_clicked(self, status):
-        self.data.back_flag = status
+    def plot_back_flag_clicked(self, _):
         self.update_plots()
         self.check_peak_back_input_validity()
 
@@ -404,7 +405,7 @@ class PopupPlot1d(QDialog):
         ui_plot2.canvas.ax.axvline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
         ui_plot2.canvas.ax.axvline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
 
-        if self.data.back_flag:
+        if backgrounds_settings[self.data_type].subtract_background:
             ui_plot2.canvas.ax.axvline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
             ui_plot2.canvas.ax.axvline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
 
@@ -419,14 +420,12 @@ class PopupPlot1d(QDialog):
         peak2 = self.ui.plotPeakToSpinBox.value()
         back1 = self.ui.plotBackFromSpinBox.value()
         back2 = self.ui.plotBackToSpinBox.value()
-        backFlag = self.data.back_flag
 
         big_table_data = self.parent.big_table_data
 
         _data = big_table_data[self.row, self.col]
         _data.peak = [str(peak1), str(peak2)]
         _data.back = [str(back1), str(back2)]
-        _data.back_flag = backFlag
 
         big_table_data[self.row, self.col] = _data
 
@@ -450,9 +449,6 @@ class PopupPlot1d(QDialog):
             self.parent.ui.normPeakToValue.setValue(peak2)
             self.parent.ui.normBackFromValue.setValue(back1)
             self.parent.ui.normBackToValue.setValue(back2)
-            self.parent.ui.normBackgroundFlag.setChecked(backFlag)
-            self.parent.ui.normBackFromValue.setEnabled(backFlag)
-            self.parent.ui.normBackToValue.setEnabled(backFlag)
 
         DisplayPlots(
             parent=self.parent,

@@ -66,10 +66,8 @@ class LiveReductionHandler(object):
         common_pars = o_general_settings.to_dict()
 
         for row_index in range(self.nbr_reduction_process):
-            o_individual_settings = IndividualReductionSettingsHandler(parent=self.parent, row_index=row_index)
-
             # Reduction options to pass as template data
-            reduction_pars = o_individual_settings.to_dict()
+            reduction_pars = IndividualReductionSettingsHandler(parent=self.parent, row_index=row_index).to_dict()
             reduction_pars.update(common_pars)
 
             # run reduction
@@ -137,8 +135,7 @@ class LiveReductionHandler(object):
         script += "from lr_reduction import reduction_template_reader\n\n"
 
         for row_index in range(self.nbr_reduction_process):
-            o_individual_settings = IndividualReductionSettingsHandler(parent=self.parent, row_index=row_index)
-            reduction_pars = o_individual_settings.to_dict()
+            reduction_pars = IndividualReductionSettingsHandler(parent=self.parent, row_index=row_index).to_dict()
             reduction_pars.update(common_pars)
 
             json_pars = json.dumps(reduction_pars)

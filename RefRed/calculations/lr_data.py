@@ -1,11 +1,17 @@
-import numpy as np
+# standard imports
 import logging
 import math
+from typing import Optional, Type
 
+# third-party imports
 from mantid.api import mtd
 from mantid.simpleapi import Rebin
-from RefRed.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
+import numpy as np
+
+# package imports
+from RefRed.lconfigdataset import LConfigDataset
 from RefRed.low_res_finder_algorithms.low_res_finder import LowResFinder
+from RefRed.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
 from RefRed.plot.all_plot_axis import AllPlotAxis
 from RefRed.utilities import convert_angle
 
@@ -40,7 +46,14 @@ class LRData(object):
     is_better_chopper_coverage = True
     total_counts = 0
 
-    def __init__(self, workspace, lconfig=None, is_data=True, parent=None, reduction_table_cell=None):
+    def __init__(
+        self,
+        workspace,
+        lconfig: Optional[LConfigDataset] = None,
+        is_data=True,
+        parent=None,
+        reduction_table_cell: Optional[Type["LRData"]] = None,
+    ):
         """
         Constructor for LRData class
 
@@ -165,8 +178,9 @@ class LRData(object):
         self.proton_charge = _proton_charge * 3.6  # to go from microA/h to mC
         self.proton_charge_units = new_proton_charge_units
 
-        self.peak = [0, 0]
-        self.back = [0, 0]
+        self.peak = [0, 0]  # lower and upper boundaries for the peak
+        self.back = [0, 0]  # lower and upper boundaries for the first background
+        self.back2 = [0, 0]  # lower and upper boundaries for the second background
         self.back_flag: bool = True
         self.functional_background: bool = False
         self.two_backgrounds: bool = False
@@ -186,12 +200,16 @@ class LRData(object):
                 self.low_res = [int(lconfig.data_low_res[0]), int(lconfig.data_low_res[1])]
                 self.low_res_flag = bool(lconfig.data_low_res_flag)
                 self.back_flag = bool(lconfig.data_back_flag)
+                self.functional_background = bool(lconfig.data_functional_background)
+                self.two_backgrounds = bool(lconfig.data_two_backgrounds)
             else:
                 self.peak = [int(lconfig.norm_peak[0]), int(lconfig.norm_peak[1])]
                 self.back = [int(lconfig.norm_back[0]), int(lconfig.norm_back[1])]
                 self.low_res = [int(lconfig.norm_low_res[0]), int(lconfig.norm_low_res[1])]
                 self.low_res_flag = bool(lconfig.norm_low_res_flag)
                 self.back_flag = bool(lconfig.norm_back_flag)
+                self.functional_background = bool(lconfig.norm_functional_background)
+                self.two_backgrounds = bool(lconfig.norm_two_backgrounds)
 
         elif reduction_table_cell is not None:
             self.tof_auto_flag = reduction_table_cell.tof_auto_flag
@@ -203,6 +221,8 @@ class LRData(object):
             self.low_res = reduction_table_cell.low_res
             self.low_res_flag = reduction_table_cell.low_res_flag
             self.back_flag = reduction_table_cell.back_flag
+            self.functional_background = reduction_table_cell.functional_background
+            self.two_backgrounds = reduction_table_cell.two_backgrounds
 
         else:
             pf = PeakFinderDerivation(list(range(len(self.ycountsdata))), self.ycountsdata)

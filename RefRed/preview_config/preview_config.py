@@ -16,6 +16,8 @@ class PreviewConfig(QtWidgets.QMainWindow):
         "to_peak_pixels",
         "peak_discrete_selection",
         "background_flag",
+        "functional_background",
+        "two_backgrounds",
         "back_roi1_from",
         "back_roi1_to",
         "back_roi2_from",
@@ -36,6 +38,8 @@ class PreviewConfig(QtWidgets.QMainWindow):
         "norm_from_peak_pixels",
         "norm_to_peak_pixels",
         "norm_background_flag",
+        "norm_functional_background",
+        "norm_two_backgrounds",
         "norm_from_back_pixels",
         "norm_to_back_pixels",
         "norm_dataset",
@@ -50,6 +54,16 @@ class PreviewConfig(QtWidgets.QMainWindow):
         "incident_medium_list",
         "incident_medium_index_selected",
     ]
+
+    # For backwards compatibility, entries in `PreviewConfig.data_name` added at a later time
+    # may have default values. This way we will load configuration files missing these entries
+    # and preview them with the default values.
+    data_name_defaults = {
+        "functional_background": False,
+        "two_backgrounds": False,
+        "norm_functional_background": False,
+        "norm_two_backgrounds": False,
+    }
 
     _data_table = []
     _system_table = []
@@ -181,12 +195,12 @@ class PreviewConfig(QtWidgets.QMainWindow):
 
     #        self.ui.previewTableWidget.resizeColumnsToContents()
 
-    def get_node_value(self, node, flag):
+    def get_node_value(self, node, flag: str):
         try:
             _tmp = node.getElementsByTagName(flag)
             _value = _tmp[0].childNodes[0].nodeValue
         except RuntimeError:
-            _value = ""
+            _value = self.data_name_defaults.get(flag, "")
         return _value
 
     def _work_on_system_data(self, _dom):

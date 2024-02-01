@@ -137,16 +137,7 @@ class PopupPlot2d(QDialog):
         self.ui.detector_plot.set_xlabel("x (pixel)")
         self.ui.detector_plot.set_ylabel("y (pixel)")
 
-        [
-            lowres1,
-            lowres2,
-            lowresFlag,
-            peak1,
-            peak2,
-            back1,
-            back2,
-            backFlag,
-        ] = self.retrieveLowResPeakBack()
+        [lowres1, lowres2, lowresFlag, peak1, peak2, back1, back2] = self.retrieveLowResPeakBack()
 
         if lowresFlag:
             self.ui.detector_plot.canvas.ax.axvline(lowres1, color=RefRed.colors.LOWRESOLUTION_SELECTION_COLOR)
@@ -155,7 +146,7 @@ class PopupPlot2d(QDialog):
         self.ui.detector_plot.canvas.ax.axhline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
         self.ui.detector_plot.canvas.ax.axhline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
 
-        if backFlag:
+        if backgrounds_settings[self.data_type].subtract_background:
             self.ui.detector_plot.canvas.ax.axhline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
             self.ui.detector_plot.canvas.ax.axhline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
 
@@ -194,7 +185,7 @@ class PopupPlot2d(QDialog):
         self.ui.y_pixel_vs_tof_plot.set_xlabel("t (ms)")
         self.ui.y_pixel_vs_tof_plot.set_ylabel("y (pixel)")
 
-        [tmin, tmax, peak1, peak2, back1, back2, backFlag] = self.retrieveTofPeakBack()
+        [tmin, tmax, peak1, peak2, back1, back2] = self.retrieveTofPeakBack()
 
         self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmin, color=RefRed.colors.TOF_SELECTION_COLOR)
         self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmax, color=RefRed.colors.TOF_SELECTION_COLOR)
@@ -202,7 +193,7 @@ class PopupPlot2d(QDialog):
         self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
         self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
 
-        if backFlag:
+        if backgrounds_settings[self.data_type].subtract_background:
             self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
             self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
 
@@ -229,15 +220,15 @@ class PopupPlot2d(QDialog):
     def retrieveTofPeakBack(self):
         tmin = float(self.ui.tof_from.text())
         tmax = float(self.ui.tof_to.text())
-        [peak1, peak2, back1, back2, backFlag] = self.retrievePeakBack()
-        return [tmin, tmax, peak1, peak2, back1, back2, backFlag]
+        [peak1, peak2, back1, back2] = self.retrievePeakBack()
+        return [tmin, tmax, peak1, peak2, back1, back2]
 
     def retrieveLowResPeakBack(self):
         lowres1 = self.ui.low_res1.value()
         lowres2 = self.ui.low_res2.value()
         lowresFlag = self.ui.low_res_flag.isChecked()
-        [peak1, peak2, back1, back2, backFlag] = self.retrievePeakBack()
-        return [lowres1, lowres2, lowresFlag, peak1, peak2, back1, back2, backFlag]
+        [peak1, peak2, back1, back2] = self.retrievePeakBack()
+        return [lowres1, lowres2, lowresFlag, peak1, peak2, back1, back2]
 
     def retrieveLowRes(self):
         lowres1 = self.ui.low_res1.value()
@@ -250,8 +241,7 @@ class PopupPlot2d(QDialog):
         peak2 = self.ui.plot2dPeakToSpinBox.value()
         back1 = self.ui.plot2dBackFromValue.value()
         back2 = self.ui.plot2dBackToValue.value()
-        backFlag = self.ui.plot2d_back_flag.isChecked()
-        return [peak1, peak2, back1, back2, backFlag]
+        return [peak1, peak2, back1, back2]
 
     def init_gui(self):
         palette = QPalette()
@@ -356,7 +346,6 @@ class PopupPlot2d(QDialog):
         back1 = self.ui.plot2dBackFromValue.value()
         back2 = self.ui.plot2dBackToValue.value()
         back_min = min([back1, back2])
-        # back_max = max([back1, back2])
         if back_min != back1:
             self.ui.plot2dBackFromValue.setValue(back2)
             self.ui.plot2dBackToValue.setValue(back1)
@@ -488,7 +477,7 @@ class PopupPlot2d(QDialog):
 
     def closeEvent(self, event=None):
         [lowres1, lowres2, lowresFlag] = self.retrieveLowRes()
-        [tof1, tof2, peak1, peak2, back1, back2, backFlag] = self.retrieveTofPeakBack()
+        [tof1, tof2, peak1, peak2, back1, back2] = self.retrieveTofPeakBack()
         tof_auto_switch = self.ui.tof_auto_flag.isChecked()
 
         big_table_data = self.parent.big_table_data
@@ -496,7 +485,6 @@ class PopupPlot2d(QDialog):
         _data = big_table_data[self.row, self.col]
         _data.peak = [str(peak1), str(peak2)]
         _data.back = [str(back1), str(back2)]
-        _data.back_flag = backFlag
 
         _data.tof_range_auto = [self.auto_min_tof * 1000, self.auto_max_tof * 1000]
         _data.tof_range = [self.manual_min_tof * 1000, self.manual_max_tof * 1000]
@@ -529,11 +517,6 @@ class PopupPlot2d(QDialog):
             self.parent.ui.peakToValue.setValue(peak2)
             self.parent.ui.backFromValue.setValue(back1)
             self.parent.ui.backToValue.setValue(back2)
-            self.parent.ui.dataBackgroundFlag.setChecked(backFlag)
-            # self.parent.data_peak_and_back_validation(False)
-            self.parent.ui.backBoundariesLabel.setEnabled(backFlag)
-            self.parent.ui.backFromValue.setEnabled(backFlag)
-            self.parent.ui.backToValue.setEnabled(backFlag)
             self.parent.ui.dataLowResFromValue.setValue(lowres1)
             self.parent.ui.dataLowResToValue.setValue(lowres2)
             self.parent.ui.dataLowResFromLabel.setEnabled(lowresFlag)
@@ -545,10 +528,6 @@ class PopupPlot2d(QDialog):
             self.parent.ui.normPeakToValue.setValue(peak2)
             self.parent.ui.normBackFromValue.setValue(back1)
             self.parent.ui.normBackToValue.setValue(back2)
-            self.parent.ui.normBackgroundFlag.setChecked(backFlag)
-            # self.parent.norm_peak_and_back_validation(False)
-            self.parent.ui.normBackFromValue.setEnabled(backFlag)
-            self.parent.ui.normBackToValue.setEnabled(backFlag)
             self.parent.ui.normLowResFromValue.setValue(lowres1)
             self.parent.ui.normLowResToValue.setValue(lowres2)
             self.parent.ui.normLowResFromLabel.setEnabled(lowresFlag)

@@ -1058,16 +1058,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="plot2d_back_flag">
-         <property name="text">
-          <string>with background</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QLabel" name="error_label">
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>
@@ -1111,22 +1101,6 @@
   <include location="../icons/icons.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>plot2d_back_flag</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>Dialog</receiver>
-   <slot>activate_or_not_back_widgets()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1212</x>
-     <y>274</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>689</x>
-     <y>593</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>tof_from</sender>
    <signal>editingFinished()</signal>
