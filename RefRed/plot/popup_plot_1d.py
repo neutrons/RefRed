@@ -68,11 +68,13 @@ class PopupPlot1d(QDialog):
         self.ui.plot_counts_vs_pixel.toolbar.homeClicked.connect(self.home_plot_counts_vs_pixel)
         self.ui.plot_counts_vs_pixel.toolbar.exportClicked.connect(self.export_counts_vs_pixel)
 
+        # enable/disable background spinboxes based on the background settings
         self.background_settings.control_spinboxes_visibility(
             parent=self.ui,
             first_background=("plotBackFromSpinBox", "plotBackToSpinBox"),
             second_background=("plotBack2FromSpinBox", "plotBack2ToSpinBox"),
         )
+        # hide/show the background lines on the plots based on the background settings
         self.background_settings.signal_first_background.connect(self.plot_back_flag_clicked)
         self.background_settings.signal_second_background.connect(self.plot_back_flag_clicked)
 

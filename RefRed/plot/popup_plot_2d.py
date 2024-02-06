@@ -156,10 +156,10 @@ class PopupPlot2d(QDialog):
         self.ui.detector_plot.canvas.ax.axhline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
         self.ui.detector_plot.canvas.ax.axhline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
 
-        if backgrounds_settings[self.data_type].subtract_background:
+        if self.background_settings.subtract_background:
             self.ui.detector_plot.canvas.ax.axhline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
             self.ui.detector_plot.canvas.ax.axhline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
-            if backgrounds_settings[self.data_type].two_backgrounds:
+            if self.background_settings.two_backgrounds:
                 self.ui.detector_plot.canvas.ax.axhline(back2_from, color=RefRed.colors.BACK2_SELECTION_COLOR)
                 self.ui.detector_plot.canvas.ax.axhline(back2_to, color=RefRed.colors.BACK2_SELECTION_COLOR)
 
@@ -206,10 +206,10 @@ class PopupPlot2d(QDialog):
         self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
         self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
 
-        if backgrounds_settings[self.data_type].subtract_background:
+        if self.background_settings.subtract_background:
             self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
             self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
-            if backgrounds_settings[self.data_type].two_backgrounds:
+            if self.background_settings.two_backgrounds:
                 self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back2_from, color=RefRed.colors.BACK2_SELECTION_COLOR)
                 self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back2_to, color=RefRed.colors.BACK2_SELECTION_COLOR)
 
@@ -286,11 +286,15 @@ class PopupPlot2d(QDialog):
         self.ui.plot2dBack2ToError.setVisible(False)
         self.ui.plot2dBack2ToError.setPalette(palette)
 
+        # enable/disable background spinboxes based on the background settings
         self.background_settings.control_spinboxes_visibility(
             self.ui,
             first_background=("plot2dBackFromValue", "plot2dBackToValue"),
             second_background=("plot2dBack2FromValue", "plot2dBack2ToValue"),
         )
+        # hide/show the background lines on the plots based on the background settings
+        self.background_settings.signal_first_background.connect(self.update_plots)
+        self.background_settings.signal_second_background.connect(self.update_plots)
 
     def populate_widgets(self):
         _data = self.data
@@ -534,6 +538,7 @@ class PopupPlot2d(QDialog):
         _data = big_table_data[self.row, self.col]
         _data.peak = [str(peak1), str(peak2)]
         _data.back = [str(back1), str(back2)]
+        _data.back2 = [str(back2_from), str(back2_to)]
 
         _data.tof_range_auto = [self.auto_min_tof * 1000, self.auto_max_tof * 1000]
         _data.tof_range = [self.manual_min_tof * 1000, self.manual_max_tof * 1000]
