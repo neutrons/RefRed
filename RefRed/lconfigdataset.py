@@ -1,3 +1,7 @@
+# standard imports
+from typing import List
+
+
 class LConfigDataset(object):
     """
     This class will be used when loading an XML configuration file and will
@@ -11,8 +15,9 @@ class LConfigDataset(object):
     data_wks = None
     data_sets = ['']
     data_full_file_name = ['']
-    data_peak = ['0', '0']
-    data_back = ['0', '0']
+    data_peak: List[int] = ['0', '0']  # lower and upper boundaries for the peak
+    data_back: List[int] = ['0', '0']  # lower and upper boundaries for the first background
+    data_back2: List[int] = ['0', '0']  # lower and upper boundaries for the second background
     data_low_res = ['50', '200']
     data_back_flag: bool = True
     data_functional_background: bool = False
@@ -31,6 +36,7 @@ class LConfigDataset(object):
     norm_flag = True
     norm_peak = ['0', '0']
     norm_back = ['0', '0']
+    norm_back2: List[int] = ['0', '0']  # lower and upper boundaries for the second background
     norm_back_flag: bool = True
     norm_functional_background: bool = False
     norm_two_backgrounds: bool = False

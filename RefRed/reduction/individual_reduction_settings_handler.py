@@ -7,6 +7,7 @@
     keep this information.
 """
 # standard imports
+import copy
 from typing import Any, Optional
 
 # package imports
@@ -69,6 +70,7 @@ class IndividualReductionSettingsHandler(object):
             functional_background=self.data.functional_background,
             two_backgrounds=self.data.two_backgrounds,
             background_roi=self._data_back_range,
+            background_roi2=copy.deepcopy(self.data.back2),  # lower and upper boundaries of the second background
             data_x_range_flag=self._data_low_res_flag,
             data_x_range=self._data_low_res_range,
             norm_peak_range=self._norm_peak_range,
@@ -76,6 +78,7 @@ class IndividualReductionSettingsHandler(object):
             functional_norm_background=norm_setting("functional_background"),
             two_norm_backgrounds=norm_setting("two_backgrounds"),
             norm_background_roi=self._norm_back_range,
+            norm_background_roi2=self.norm.back2,  # lower and upper boundaries of the second background
             norm_x_range_flag=self._norm_low_res_flag,
             norm_x_range=self._norm_low_res_range,
             tof_range=self._tof_range,

@@ -1,7 +1,7 @@
 # standard imports
 import logging
 import math
-from typing import Optional, Type
+from typing import List, Optional, Type
 
 # third-party imports
 from mantid.api import mtd
@@ -178,9 +178,9 @@ class LRData(object):
         self.proton_charge = _proton_charge * 3.6  # to go from microA/h to mC
         self.proton_charge_units = new_proton_charge_units
 
-        self.peak = [0, 0]  # lower and upper boundaries for the peak
-        self.back = [0, 0]  # lower and upper boundaries for the first background
-        self.back2 = [0, 0]  # lower and upper boundaries for the second background
+        self.peak: List[int] = [0, 0]  # lower and upper boundaries for the peak
+        self.back: List[int] = [0, 0]  # lower and upper boundaries for the first background
+        self.back2: List[int] = [0, 0]  # lower and upper boundaries for the second background
         self.back_flag: bool = True
         self.functional_background: bool = False
         self.two_backgrounds: bool = False
@@ -197,6 +197,8 @@ class LRData(object):
             if is_data:
                 self.peak = [int(lconfig.data_peak[0]), int(lconfig.data_peak[1])]
                 self.back = [int(lconfig.data_back[0]), int(lconfig.data_back[1])]
+                self.back2 = [int(lconfig.data_back2[0]), int(lconfig.data_back2[1])]
+
                 self.low_res = [int(lconfig.data_low_res[0]), int(lconfig.data_low_res[1])]
                 self.low_res_flag = bool(lconfig.data_low_res_flag)
                 self.back_flag = bool(lconfig.data_back_flag)
@@ -205,6 +207,7 @@ class LRData(object):
             else:
                 self.peak = [int(lconfig.norm_peak[0]), int(lconfig.norm_peak[1])]
                 self.back = [int(lconfig.norm_back[0]), int(lconfig.norm_back[1])]
+                self.back2 = [int(lconfig.norm_back2[0]), int(lconfig.norm_back2[1])]
                 self.low_res = [int(lconfig.norm_low_res[0]), int(lconfig.norm_low_res[1])]
                 self.low_res_flag = bool(lconfig.norm_low_res_flag)
                 self.back_flag = bool(lconfig.norm_back_flag)
@@ -218,6 +221,7 @@ class LRData(object):
             self.tof_range_manual = reduction_table_cell.tof_range_auto
             self.peak = reduction_table_cell.peak
             self.back = reduction_table_cell.back
+            self.back2 = reduction_table_cell.back2
             self.low_res = reduction_table_cell.low_res
             self.low_res_flag = reduction_table_cell.low_res_flag
             self.back_flag = reduction_table_cell.back_flag

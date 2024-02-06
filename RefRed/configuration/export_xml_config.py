@@ -85,6 +85,7 @@ class ExportXMLConfig(object):
             # data_full_file_name = ','.join(data_full_file_name)
             data_peak = _data.peak
             data_back = _data.back
+            data_back2 = _data.back2
             data_low_res = _data.low_res
             data_back_flag = _data.back_flag
             data_functional_background = _data.functional_background
@@ -101,6 +102,7 @@ class ExportXMLConfig(object):
                 norm_flag = o_general_settings.apply_normalization
                 norm_peak = _norm.peak
                 norm_back = _norm.back
+                norm_back2 = _norm.back2
                 norm_back_flag = _norm.back_flag
                 norm_functional_background = _norm.functional_background
                 norm_two_backgrounds = _norm.two_backgrounds
@@ -129,8 +131,8 @@ class ExportXMLConfig(object):
             str_array.append('   <two_backgrounds>' + str(data_two_backgrounds) + '</two_backgrounds>\n')
             str_array.append('   <back_roi1_from>' + str(data_back[0]) + '</back_roi1_from>\n')
             str_array.append('   <back_roi1_to>' + str(data_back[1]) + '</back_roi1_to>\n')
-            str_array.append('   <back_roi2_from>0</back_roi2_from>\n')
-            str_array.append('   <back_roi2_to>0</back_roi2_to>\n')
+            str_array.append('   <back_roi2_from>' + str(data_back2[0]) + '</back_roi2_from>\n')
+            str_array.append('   <back_roi2_to>' + str(data_back2[0]) + '</back_roi2_to>\n')
             str_array.append('   <tof_range_flag>True</tof_range_flag>\n')
             str_array.append('   <from_tof_range>' + str(tof[0]) + '</from_tof_range>\n')
             str_array.append('   <to_tof_range>' + str(tof[1]) + '</to_tof_range>\n')
@@ -169,6 +171,8 @@ class ExportXMLConfig(object):
             str_array.append('   <norm_two_backgrounds>' + str(norm_two_backgrounds) + '</norm_two_backgrounds>\n')
             str_array.append('   <norm_from_back_pixels>' + str(norm_back[0]) + '</norm_from_back_pixels>\n')
             str_array.append('   <norm_to_back_pixels>' + str(norm_back[1]) + '</norm_to_back_pixels>\n')
+            str_array.append('   <norm_from_back2_pixels>' + str(norm_back2[0]) + '</norm_from_back2_pixels>\n')
+            str_array.append('   <norm_to_back2_pixels>' + str(norm_back2[1]) + '</norm_to_back2_pixels>\n')
             str_array.append('   <norm_lambda_requested>' + str(norm_lambda_requested) + '</norm_lambda_requested>\n')
 
             _norm_run_number_cell = self.parent.ui.reductionTable.item(row, 2).text()

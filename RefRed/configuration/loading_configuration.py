@@ -2,6 +2,7 @@
 import logging
 import os
 from xml.dom import minidom
+from typing import Any
 
 # third party imports
 from qtpy import QtGui, QtCore, QtWidgets
@@ -191,6 +192,10 @@ class LoadingConfiguration(object):
         _back_max = self.getNodeValue(node, 'back_roi1_to')
         iMetadata.data_back = [_back_min, _back_max]
 
+        _back2_min = self.getNodeValue(node, 'back2_roi1_from', default=0)
+        _back2_max = self.getNodeValue(node, 'back2_roi1_to', default=0)
+        iMetadata.data_back2 = [_back2_min, _back2_max]
+
         _low_res_min = self.getNodeValue(node, 'x_min_pixel')
         _low_res_max = self.getNodeValue(node, 'x_max_pixel')
         iMetadata.data_low_res = [_low_res_min, _low_res_max]
@@ -237,6 +242,10 @@ class LoadingConfiguration(object):
         _back_max = self.getNodeValue(node, 'norm_to_back_pixels')
         iMetadata.norm_back = [_back_min, _back_max]
 
+        _back2_min = self.getNodeValue(node, 'norm_from_back2_pixels', default=0)
+        _back2_max = self.getNodeValue(node, 'norm_to_back2_pixels', default=0)
+        iMetadata.norm_back2 = [_back2_min, _back2_max]
+
         _norm_sets = self.getNodeValue(node, 'norm_dataset')
         _norm_sets = _norm_sets.split(',')
         iMetadata.norm_sets = [str(x) for x in _norm_sets]
@@ -273,12 +282,12 @@ class LoadingConfiguration(object):
 
         return iMetadata
 
-    def getNodeValue(self, node, flag):
+    def getNodeValue(self, node, flag, default: Any = ""):
         try:
             _tmp = node.getElementsByTagName(flag)
             _value = _tmp[0].childNodes[0].nodeValue
         except:
-            _value = ''
+            _value = default
         return _value
 
     def clear_display(self):

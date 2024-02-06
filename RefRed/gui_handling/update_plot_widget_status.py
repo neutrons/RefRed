@@ -43,6 +43,8 @@ class UpdatePlotWidgetStatus(object):
         parent.ui.dataLowResToValue.setEnabled(status)
         parent.ui.backToValue.setEnabled(status)
         parent.ui.backFromValue.setEnabled(status)
+        parent.ui.back2ToValue.setEnabled(status)
+        parent.ui.back2FromValue.setEnabled(status)
         parent.ui.peakToValue.setEnabled(status)
         parent.ui.peakFromValue.setEnabled(status)
 
@@ -71,6 +73,8 @@ class UpdatePlotWidgetStatus(object):
         parent.ui.normLowResToValue.setEnabled(status)
         parent.ui.normBackToValue.setEnabled(status)
         parent.ui.normBackFromValue.setEnabled(status)
+        parent.ui.normBack2ToValue.setEnabled(status)
+        parent.ui.normBack2FromValue.setEnabled(status)
         parent.ui.normPeakToValue.setEnabled(status)
         parent.ui.normPeakFromValue.setEnabled(status)
 

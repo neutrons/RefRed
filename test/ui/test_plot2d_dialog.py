@@ -70,9 +70,9 @@ def test_plot2d_dialog(qtbot, data_server):
     # 4. background range
     plot2d.activate_or_not_back_widgets(True)
     plot2d.ui.plot2dBackFromValue.setValue(125)
-    plot2d.manual_input_back1()
+    plot2d.manual_input_background()
     plot2d.ui.plot2dBackToValue.setValue(145)
-    plot2d.manual_input_back2()
+    plot2d.manual_input_background()
     plot2d.update_plots()
     qtbot.wait(wait)
     # 5. back to auto

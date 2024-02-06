@@ -42,6 +42,8 @@ class PreviewConfig(QtWidgets.QMainWindow):
         "norm_two_backgrounds",
         "norm_from_back_pixels",
         "norm_to_back_pixels",
+        "norm_from_back2_pixels",
+        "norm_to_back2_pixels",
         "norm_dataset",
         "q_min",
         "q_step",

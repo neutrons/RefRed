@@ -276,7 +276,11 @@ class MainGui(QtWidgets.QMainWindow):
 
     @config_file_has_been_modified
     def data_back_spinbox_validation(self, *args, **kwargs):
-        DataBackSpinbox(parent=self)
+        DataBackSpinbox(parent=self, entry_type="back")
+
+    @config_file_has_been_modified
+    def data_back2_spinbox_validation(self, *args, **kwargs):
+        DataBackSpinbox(parent=self, entry_type="back2")
 
     @config_file_has_been_modified
     def display_data_background_settings(self, *args, **kwargs):
@@ -303,6 +307,25 @@ class MainGui(QtWidgets.QMainWindow):
         clicked on the Up or Down arrows of the QSpinBox.
         """
         if self.spinbox_observer.quantum_change(self.ui.backToValue):
+            self.data_back_spinbox_validation(*args, **kwargs)
+
+    def back2_from_value_changed(self, *args, **kwargs):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox back2FromValue, denoting
+        the lower boundary of the second background region.
+
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
+        if self.spinbox_observer.quantum_change(self.ui.back2FromValue):
+            self.data_back_spinbox_validation(*args, **kwargs)
+
+    def back2_to_value_changed(self, *args, **kwargs):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox `back2ToValue`, denoting
+        the upper boundary of the second background region.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
+        if self.spinbox_observer.quantum_change(self.ui.back2ToValue):
             self.data_back_spinbox_validation(*args, **kwargs)
 
     @config_file_has_been_modified

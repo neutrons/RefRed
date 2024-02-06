@@ -109,6 +109,7 @@ class DisplayPlots(object):
 
         self.peak = self.sortIntArray(_data.peak)
         self.back = self.sortIntArray(_data.back)
+        self.back2 = self.sortIntArray(_data.back2)
 
         self.lowRes = self.sortIntArray(_data.low_res)
         self.lowResFlag = bool(_data.low_res_flag)
@@ -255,6 +256,9 @@ class DisplayPlots(object):
         if backgrounds_settings[self.data_type].subtract_background:
             self.yi_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR)
             self.yi_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR)
+            if backgrounds_settings[self.data_type].two_backgrounds:
+                self.yi_plot_ui.canvas.ax.axhline(self.back2[0], color=colors.BACK2_SELECTION_COLOR)
+                self.yi_plot_ui.canvas.ax.axhline(self.back2[1], color=colors.BACK2_SELECTION_COLOR)
 
         if self._data.all_plot_axis.is_yi_xlog:
             self.yi_plot_ui.canvas.ax.set_xscale("log")
@@ -327,6 +331,9 @@ class DisplayPlots(object):
         if backgrounds_settings[self.data_type].subtract_background:
             self.yt_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR)
             self.yt_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR)
+            if backgrounds_settings[self.data_type].two_backgrounds:
+                self.yt_plot_ui.canvas.ax.axhline(self.back2[0], color=colors.BACK2_SELECTION_COLOR)
+                self.yt_plot_ui.canvas.ax.axhline(self.back2[1], color=colors.BACK2_SELECTION_COLOR)
 
         if self._data.all_plot_axis.is_yt_ylog:
             self.yt_plot_ui.canvas.ax.set_yscale("log")
@@ -373,9 +380,11 @@ class DisplayPlots(object):
             parent.ui.normPeakFromValue.setValue(peak1)
             parent.ui.normPeakToValue.setValue(peak2)
 
-            [back1, back2] = self.back
-            parent.ui.normBackFromValue.setValue(back1)
-            parent.ui.normBackToValue.setValue(back2)
+            parent.ui.normBackFromValue.setValue(self.back[0])
+            parent.ui.normBackToValue.setValue(self.back[1])
+
+            parent.ui.normBack2FromValue.setValue(self.back2[0])
+            parent.ui.normBack2ToValue.setValue(self.back2[1])
 
             [lowRes1, lowRes2] = self.lowRes
             parent.ui.normLowResFromValue.setValue(lowRes1)
@@ -395,9 +404,11 @@ class DisplayPlots(object):
             parent.ui.peakFromValue.setValue(peak1)
             parent.ui.peakToValue.setValue(peak2)
 
-            [back1, back2] = self.back
-            parent.ui.backFromValue.setValue(back1)
-            parent.ui.backToValue.setValue(back2)
+            parent.ui.backFromValue.setValue(self.back[0])
+            parent.ui.backToValue.setValue(self.back[1])
+
+            parent.ui.back2FromValue.setValue(self.back2[0])
+            parent.ui.back2ToValue.setValue(self.back2[1])
 
             [lowRes1, lowRes2] = self.lowRes
             parent.ui.dataLowResFromValue.setValue(lowRes1)
