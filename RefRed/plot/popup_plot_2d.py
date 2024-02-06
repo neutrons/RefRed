@@ -332,8 +332,8 @@ class PopupPlot2d(QDialog):
         self.ui.plot2dBackFromValue.setValue(int(back[0]))
         self.ui.plot2dBackToValue.setValue(int(back[1]))
 
-        self.ui.plot2dBackFromValue.setValue(int(_data.back2[0]))
-        self.ui.plot2dBackToValue.setValue(int(_data.back2[1]))
+        self.ui.plot2dBack2FromValue.setValue(int(_data.back2[0]))
+        self.ui.plot2dBack2ToValue.setValue(int(_data.back2[1]))
 
         self.activate_or_not_back_widgets()
 
