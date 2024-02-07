@@ -317,7 +317,7 @@ class MainGui(QtWidgets.QMainWindow):
         clicked on the Up or Down arrows of the QSpinBox.
         """
         if self.spinbox_observer.quantum_change(self.ui.back2FromValue):
-            self.data_back_spinbox_validation(*args, **kwargs)
+            self.data_back2_spinbox_validation(*args, **kwargs)
 
     def back2_to_value_changed(self, *args, **kwargs):
         r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox `back2ToValue`, denoting
@@ -326,7 +326,7 @@ class MainGui(QtWidgets.QMainWindow):
         clicked on the Up or Down arrows of the QSpinBox.
         """
         if self.spinbox_observer.quantum_change(self.ui.back2ToValue):
-            self.data_back_spinbox_validation(*args, **kwargs)
+            self.data_back2_spinbox_validation(*args, **kwargs)
 
     @config_file_has_been_modified
     def data_back_checkbox(self, *args, **kwargs):
@@ -355,16 +355,34 @@ class MainGui(QtWidgets.QMainWindow):
             self.data_peak_spinbox_validation(*args, **kwargs)
 
     @config_file_has_been_modified
+    def norm_peak_spinbox_validation(self, *args, **kwargs):
+        NormPeakSpinbox(parent=self)
+
+    def norm_peak_from_value_changed(self, *args, **kwargs):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox `normPeakFromValue`, denoting
+        the lower boundary of the peak region.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
+        if self.spinbox_observer.quantum_change(self.ui.normPeakFromValue):
+            self.norm_peak_spinbox_validation(*args, **kwargs)
+
+    def norm_peak_to_value_changed(self, *args, **kwargs):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox normPeakToValue, denoting
+        the upper boundary of the peak region.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
+        if self.spinbox_observer.quantum_change(self.ui.normPeakToValue):
+            self.norm_peak_spinbox_validation(*args, **kwargs)
+
+    @config_file_has_been_modified
     def norm_back_spinbox_validation(self, *args, **kwargs):
         NormBackSpinbox(parent=self)
 
     @config_file_has_been_modified
     def norm_back_checkbox(self, *args, **kwargs):
         NormBackSpinbox(parent=self)
-
-    @config_file_has_been_modified
-    def norm_peak_spinbox_validation(self, *args, **kwargs):
-        NormPeakSpinbox(parent=self)
 
     @config_file_has_been_modified
     def data_low_res_validation(self, *args, **kwargs):

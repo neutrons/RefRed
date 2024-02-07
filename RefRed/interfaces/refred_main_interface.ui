@@ -6731,6 +6731,38 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>normPeakFromValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_peak_from_value_changed</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1457</x>
+     <y>469</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>779</x>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normPeakToValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_peak_to_value_changed</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1457</x>
+     <y>509</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>779</x>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
@@ -6743,6 +6775,8 @@ p, li { white-space: pre-wrap; }
   <slot>back2_to_value_changed()</slot>
   <slot>display_data_background_settings</slot>
   <slot>norm_peak_spinbox_validation()</slot>
+  <slot>norm_peak_from_value_changed</slot>
+  <slot>norm_peak_to_value_changed</slot>
   <slot>data_peak_spinbox_validation()</slot>
   <slot>peak_from_value_changed()</slot>
   <slot>peak_to_value_changed()</slot>

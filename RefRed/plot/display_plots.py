@@ -42,7 +42,7 @@ class DisplayPlots(object):
         self.parent = parent
         is_norm = not is_data
         self.is_data = is_data
-        self.data_type = "data" if is_norm else "norm"
+        self.data_type = "data" if is_data else "norm"
 
         if is_data:
             self.col = 0

@@ -226,12 +226,22 @@ class Gui(object):
 
         parent.ui.normPeakFromError.setVisible(False)
         parent.ui.normPeakFromError.setPalette(palette)
+
         parent.ui.normPeakToError.setVisible(False)
         parent.ui.normPeakToError.setPalette(palette)
+
         parent.ui.normBackFromError.setVisible(False)
         parent.ui.normBackFromError.setPalette(palette)
+
         parent.ui.normBackToError.setVisible(False)
         parent.ui.normBackToError.setPalette(palette)
+
+        parent.ui.normBack2FromError.setVisible(False)
+        parent.ui.normBack2FromError.setPalette(palette)
+
+        parent.ui.normBack2ToError.setVisible(False)
+        parent.ui.normBack2ToError.setPalette(palette)
+
         parent.ui.data_selection_error_label.setVisible(False)
         parent.ui.data_selection_error_label.setPalette(palette)
         parent.ui.norm_selection_error_label.setVisible(False)
