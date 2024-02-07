@@ -380,6 +380,24 @@ class MainGui(QtWidgets.QMainWindow):
     def norm_back_spinbox_validation(self, *args, **kwargs):
         NormBackSpinbox(parent=self)
 
+    def norm_back_from_value_changed(self, *args, **kwargs):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox `normBackFromValue`, denoting
+        the lower boundary of the peak region.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
+        if self.spinbox_observer.quantum_change(self.ui.normBackFromValue):
+            self.norm_back_spinbox_validation(*args, **kwargs)
+
+    def norm_back_to_value_changed(self, *args, **kwargs):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox normBackToValue, denoting
+        the upper boundary of the peak region.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
+        if self.spinbox_observer.quantum_change(self.ui.normBackToValue):
+            self.norm_back_spinbox_validation(*args, **kwargs)
+
     @config_file_has_been_modified
     def norm_back_checkbox(self, *args, **kwargs):
         NormBackSpinbox(parent=self)
