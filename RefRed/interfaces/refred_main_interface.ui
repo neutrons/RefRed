@@ -6795,12 +6795,45 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>normBack2FromValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_back2_spinbox_validation</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1457</x>
+     <y>637</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>779</x>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>normBack2ToValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>norm_back2_spinbox_validation</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1457</x>
+     <y>677</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>779</x>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>signal1()</signal>
   <slot>norm_back_spinbox_validation()</slot>
   <slot>norm_back_from_value_changed</slot>
   <slot>norm_back_to_value_changed</slot>
+  <slot>norm_back2_spinbox_validation</slot>
   <slot>data_back_spinbox_validation()</slot>
   <slot>data_back2_spinbox_validation()</slot>
   <slot>back_from_value_changed()</slot>

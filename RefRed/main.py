@@ -399,6 +399,10 @@ class MainGui(QtWidgets.QMainWindow):
             self.norm_back_spinbox_validation(*args, **kwargs)
 
     @config_file_has_been_modified
+    def norm_back2_spinbox_validation(self, *args, **kwargs):
+        NormBackSpinbox(parent=self, entry_type="back2")
+
+    @config_file_has_been_modified
     def norm_back_checkbox(self, *args, **kwargs):
         NormBackSpinbox(parent=self)
 
