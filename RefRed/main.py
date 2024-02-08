@@ -266,6 +266,7 @@ class MainGui(QtWidgets.QMainWindow):
             self.ui.reductionTable.setCurrentCell(current_row + 1, current_col - 1)
 
     def data_norm_tab_changed(self, index):
+        r"""Slot called upon User clicking in the 'DATA' or 'NORMALIZATION' tabs"""
         o_gui_utility = GuiUtility(parent=self)
         _current_table_reduction_row_selected = o_gui_utility.get_current_table_reduction_check_box_checked()
         ReductionTableCheckBox(parent=self, row_selected=_current_table_reduction_row_selected)
@@ -401,6 +402,24 @@ class MainGui(QtWidgets.QMainWindow):
     @config_file_has_been_modified
     def norm_back2_spinbox_validation(self, *args, **kwargs):
         NormBackSpinbox(parent=self, entry_type="back2")
+
+    def norm_back2_from_value_changed(self, *args, **kwargs):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox `normBack2FromValue`, denoting
+        the lower boundary of the peak region.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
+        if self.spinbox_observer.quantum_change(self.ui.normBack2FromValue):
+            self.norm_back2_spinbox_validation(*args, **kwargs)
+
+    def norm_back2_to_value_changed(self, *args, **kwargs):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox normBack2ToValue, denoting
+        the upper boundary of the peak region.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
+        if self.spinbox_observer.quantum_change(self.ui.normBack2ToValue):
+            self.norm_back2_spinbox_validation(*args, **kwargs)
 
     @config_file_has_been_modified
     def norm_back_checkbox(self, *args, **kwargs):
