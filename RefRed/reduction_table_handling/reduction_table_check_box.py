@@ -14,6 +14,7 @@ from RefRed.plot.display_plots import DisplayPlots
 
 class ReductionTableCheckBox(object):
 
+    BOX_CHECKED = 2  # value emited by qtpy.QtWidgets.QCheckBox.stateChanged when checked
     row_selected = -1
     prev_row_selected = -1
     size_check_box_state_table = None
@@ -56,6 +57,17 @@ class ReductionTableCheckBox(object):
 
             self.parent.prev_table_reduction_row_selected = self.row_selected
 
+    def launch_update_of_plot(self):
+        _row_selected = self.row_selected
+        _is_data_selected = self.is_data_tab_selected()
+        if self.is_row_selected_checked(_row_selected):
+            backgrounds_settings.update_from_table(_row_selected, is_data=_is_data_selected)
+            DisplayPlots(parent=self.parent, row=self.row_selected, is_data=self.is_data_tab_selected())
+        else:
+            update_obj = UpdatePlotWidgetStatus(parent=self.parent)
+            update_obj.disable_all()
+            ClearPlots(self.parent, is_data=_is_data_selected, is_norm=not (_is_data_selected), all_plots=True)
+
     def update_gui(self):
         """will update widgets such as TOF auto/manual"""
         _row_selected = self.row_selected
@@ -72,17 +84,6 @@ class ReductionTableCheckBox(object):
             o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent=self.parent)
             o_auto_tof_range.setup()
             o_auto_tof_range.radio_button_handler()
-            backgrounds_settings.update_from_table()
-
-    def launch_update_of_plot(self):
-        _row_selected = self.row_selected
-        _is_data_selected = self.is_data_tab_selected()
-        if self.is_row_selected_checked(_row_selected):
-            DisplayPlots(parent=self.parent, row=self.row_selected, is_data=self.is_data_tab_selected())
-        else:
-            update_obj = UpdatePlotWidgetStatus(parent=self.parent)
-            update_obj.disable_all()
-            ClearPlots(self.parent, is_data=_is_data_selected, is_norm=not (_is_data_selected), all_plots=True)
 
     def is_data_tab_selected(self):
         if self.parent.ui.dataNormTabWidget.currentIndex() == 0:

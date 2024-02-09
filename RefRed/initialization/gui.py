@@ -138,7 +138,7 @@ class Gui(object):
                     _widget = QtWidgets.QCheckBox()
                     _widget.setChecked(False)
                     _widget.setEnabled(True)
-
+                    # action to take when a checkbox is either unchecked (state==0) or checked (state==2)
                     _signal_func = lambda state=0, row=row_index: self.parent.reduction_table_visibility_changed_test(  # noqa: E501, E731
                         state, row
                     )

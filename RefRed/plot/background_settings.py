@@ -78,13 +78,23 @@ class BackgroundSettingsModel(QObject):
             slot = getattr(parent, spinbox).setEnabled
             self.signal_second_background.connect(slot)
 
+    def emit_backgrounds_state(self):
+        r"""Emit signals corresponding to whether the first and/or second backgrounds are active"""
+        self.signal_first_background.emit(self.subtract_background)
+        self.signal_second_background.emit(self.subtract_background and self.two_backgrounds)
+
 
 class CompositeBackgroundSettings:
     _instance = None
-    r"""Singleton class storing settings for the backgrounds of a reflectivity and direct-beam run pair
+    r"""Singleton class storing settings for the backgrounds of the reflectivity and direct-beam runs
+    currently selected in the reduction table
 
-    The singleton updates its background settings every time User selects a different row in the reduction table.
-    Every time User updates any of the background settings, this object passes the new value to `big_table_data`.
+    Responsibilities:
+    1. Automatically updates the background settings stored for the currently selected row of data structure
+       `big_table_data` whenever User modifies any background settings.
+    2. Automatically updates the the visibility of the different spinboxes than control the lower and upper
+       boundaries for the two backgrounds (either for reflectivity or normalization data)
+    3. Automatically updates itself when the user clicks on a different row in the reduction table.
     """
 
     def __new__(cls, *args, **kwargs):
@@ -109,28 +119,25 @@ class CompositeBackgroundSettings:
         self.maingui = maingui
         self._initialize_reduction_table_updaters()
 
-    def update_from_table(self):
-        r"""Update settings with  the`LRData` instances from the currently active row in the reduction table.
-
-        Invoked when User selects a different row in the reduction table.
+    def update_from_table(self, active_row_index: int, is_data: bool):
+        r"""Update all background settings for the reflectivity or normalization data with  the`LRData`
+        instances from the currently active row in the reduction table.
 
         Parameters
         ----------
-        lconfig
-            configuration parameters for the reflectivity/direct-beam pair selected in the reduction table
+        active_row_index
+            Currently selected row in the reduction table
+        is_data
+            Update background settings for the reflectivity (True) or normalization (False) data
         """
-        if self.maingui is None:
-            return RuntimeError("MainGui unitialized in CompositeBackgroundSettings")
-        gui_utility = GuiUtility(parent=self.maingui)
-        active_row_index = gui_utility.get_current_table_reduction_check_box_checked()
+        data_fetcher = {
+            True: self.maingui.big_table_data.reflectometry_data,
+            False: self.maingui.big_table_data.normalization_data,
+        }
+        data: LRData = data_fetcher[is_data](active_row_index)
 
-        # fetch background settings from the reflectometry data
-        data: LRData = self.maingui.big_table_data.reflectometry_data(active_row_index)
-        self.data.update_all_settings(data.back_flag, data.functional_background, data.two_backgrounds)
-
-        # fetch background settings from the normalization data
-        norm: LRData = self.maingui.big_table_data.normalization_data(active_row_index)
-        self.norm.update_all_settings(norm.back_flag, norm.functional_background, norm.two_backgrounds)
+        updater = {True: self.data.update_all_settings, False: self.norm.update_all_settings}
+        updater[is_data](data.back_flag, data.functional_background, data.two_backgrounds)
 
     def table_updater_factory(self, setting: str, data_type: str):
         r"""Generate anonymous functions to serve as callback when any of the background settings
@@ -178,8 +185,10 @@ class CompositeBackgroundSettings:
         return table_updater
 
     def _initialize_reduction_table_updaters(self):
-        r"""Create a set of callbacks in charge of updating the background settings in `big_table_data` whenever any of
-        the background settings values are updated either in the `data` or `norm` BackgroundSettingsModel instances"""
+        r"""Create a set of callbacks in charge of updating the background settings for the active row
+        in `big_table_data` whenever any of the background settings values are updated, either in the
+        `data` or `norm` BackgroundSettingsModel instances.
+        """
         # names of some of the signals emitted by self.data and self.norm
         signal_names = ["signal_first_background", "signal_functional_background", "signal_two_backgrounds"]
         # names of the background settings attributes in the LRData instaces of `big_table_data`

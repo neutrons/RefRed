@@ -50,6 +50,8 @@ class DisplayPlots(object):
             self.col = 1
         self.row = row
 
+        self.backgrounds_settings = backgrounds_settings[self.data_type]
+
         big_table_data: TableData = self.parent.big_table_data
         if is_data:
             _data: LRData = big_table_data.reflectometry_data(row)
@@ -118,10 +120,11 @@ class DisplayPlots(object):
 
         if is_data:
             self.workWithData(update_reduction_table=refresh_reduction_table)
-            o_update_plot_widgets.enable_data()
+            o_update_plot_widgets.enable_data()  # set all widgets accessible
         else:
             self.workWithNorm(update_reduction_table=refresh_reduction_table)
-            o_update_plot_widgets.enable_norm()
+            o_update_plot_widgets.enable_norm()  # set all widgets accessible
+        self.backgrounds_settings.emit_backgrounds_state()  # set proper accessibility of background-related widgets
 
         if plot_yt:
             ClearPlots(self.parent, plot_yt=True, is_data=is_data, is_norm=is_norm)
@@ -253,10 +256,10 @@ class DisplayPlots(object):
         self.yi_plot_ui.canvas.ax.axhline(self.peak[0], color=colors.PEAK_SELECTION_COLOR)
         self.yi_plot_ui.canvas.ax.axhline(self.peak[1], color=colors.PEAK_SELECTION_COLOR)
 
-        if backgrounds_settings[self.data_type].subtract_background:
+        if self.backgrounds_settings.subtract_background:
             self.yi_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR)
             self.yi_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR)
-            if backgrounds_settings[self.data_type].two_backgrounds:
+            if self.backgrounds_settings.two_backgrounds:
                 self.yi_plot_ui.canvas.ax.axhline(self.back2[0], color=colors.BACK2_SELECTION_COLOR)
                 self.yi_plot_ui.canvas.ax.axhline(self.back2[1], color=colors.BACK2_SELECTION_COLOR)
 
@@ -328,10 +331,10 @@ class DisplayPlots(object):
         self.yt_plot_ui.canvas.ax.axhline(self.peak[0], color=colors.PEAK_SELECTION_COLOR)
         self.yt_plot_ui.canvas.ax.axhline(self.peak[1], color=colors.PEAK_SELECTION_COLOR)
 
-        if backgrounds_settings[self.data_type].subtract_background:
+        if self.backgrounds_settings.subtract_background:
             self.yt_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR)
             self.yt_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR)
-            if backgrounds_settings[self.data_type].two_backgrounds:
+            if self.backgrounds_settings.two_backgrounds:
                 self.yt_plot_ui.canvas.ax.axhline(self.back2[0], color=colors.BACK2_SELECTION_COLOR)
                 self.yt_plot_ui.canvas.ax.axhline(self.back2[1], color=colors.BACK2_SELECTION_COLOR)
 
