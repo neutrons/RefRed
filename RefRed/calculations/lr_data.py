@@ -36,7 +36,7 @@ class LRData(object):
     tof_range_auto_flag = True
     tof_range_auto_with_margin = []
 
-    low_res = ['0', '255']
+    low_res = [0, 255]
     low_res_flag = True
     use_it_flag = True
     full_file_name = ['']
@@ -69,11 +69,11 @@ class LRData(object):
             raise ValueError("Can't use both lconfig and reduction_table_cell")
 
         self.parent = parent
-        self._tof_axis = []
-        self.Ixyt = []
+        self._tof_axis: List[float] = []
+        self.Ixyt: List[float] = []
 
-        self.countxdata = []
-        self.ycountsdata = []
+        self.countxdata: List[int] = []
+        self.ycountsdata: List[int] = []
         self.workspace_name = str(workspace)
         workspace = mtd[self.workspace_name]  # convert to workspace pointer
 
@@ -231,16 +231,16 @@ class LRData(object):
         else:
             pf = PeakFinderDerivation(list(range(len(self.ycountsdata))), self.ycountsdata)
             [peak1, peak2] = pf.getPeaks()
-            self.peak = [str(peak1), str(peak2)]
+            self.peak = [int(peak1), int(peak2)]
 
             backOffsetFromPeak = self.read_options['back_offset_from_peak']
             back1 = int(peak1 - backOffsetFromPeak)
             back2 = int(peak2 + backOffsetFromPeak)
-            self.back = [str(back1), str(back2)]
+            self.back = [back1, back2]
 
             lw_pf = LowResFinder(list(range(len(self.countsxdata))), self.countsxdata)
             [lowres1, lowres2] = lw_pf.get_low_res()
-            self.low_res = [str(lowres1), str(lowres2)]
+            self.low_res = [int(lowres1), int(lowres2)]
 
     # Properties for easy data access
     # return the size of the data stored in memory for this dataset

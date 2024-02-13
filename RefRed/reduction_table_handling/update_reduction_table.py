@@ -27,7 +27,7 @@ class UpdateReductionTable(object):
 
         item = self.parent.ui.reductionTable.item(row, col)
         if item.text() == '':
-            self.clear_cell(row, col)
+            self.clear_cell()
             self.parent.file_loaded_signal.emit(row, self.is_data_displayed, self.display_of_this_row_checked())
             QApplication.processEvents()
             return
@@ -74,7 +74,7 @@ class UpdateReductionTable(object):
         self.parent.loading_nxs_thread[thread_index].updated_data.connect(self.parent.file_loaded)
         self.parent.loading_nxs_thread[thread_index].start()
 
-    def clear_cell(self, row, col):
+    def clear_cell(self):
         """
         Clear a reduction table cell, and clean up what is left behind.
         The main "big_table_data" array has three entries per row,
@@ -92,10 +92,10 @@ class UpdateReductionTable(object):
         if config is None:
             # no data loaded in this row
             return
-        if col == 1:
+        if self.col == 1:
             big_table_data.set_reflectometry_data(self.row, None)
             config.clear_data()
-        elif col == 2:
+        elif self.col == 2:
             big_table_data.set_normalization_data(self.row, None)
             config.clear_normalization()
 
