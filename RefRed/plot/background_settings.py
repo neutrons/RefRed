@@ -23,7 +23,7 @@ class BackgroundSettingsModel(QObject):
         self._subtract_background = True
         self._functional_background = False
         self._two_backgrounds = False
-        self.maingui: "MainGui" = None
+        self.maingui = None
 
     @property
     def subtract_background(self) -> bool:

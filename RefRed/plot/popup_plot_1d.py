@@ -45,7 +45,7 @@ class PopupPlot1d(QDialog):
 
     nbr_pixel_y_axis = 304
 
-    def __init__(self, parent: "MainGui" = None, data_type: str = "data", data: Optional[LRData] = None, row: int = 0):
+    def __init__(self, parent=None, data_type: str = "data", data: Optional[LRData] = None, row: int = 0):
 
         self.data_type = data_type
         self.parent = parent

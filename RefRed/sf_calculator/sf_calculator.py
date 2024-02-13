@@ -561,7 +561,7 @@ class SFCalculator(QtWidgets.QMainWindow):
             back_from = int(self.dataBackFromValue.text())
             peak_to = int(self.dataPeakToValue.text())
             peak_from = int(self.dataPeakFromValue.text())
-
+            back_flag = bool(self.dataBackgroundFlag.isChecked())
             _show_widgets_1 = False
             _show_widgets_2 = False
 
