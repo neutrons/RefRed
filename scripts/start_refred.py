@@ -11,7 +11,7 @@ import mantid  # noqa: F401
 # must be imported through qtpy before any other gui imports
 from qtpy.QtWidgets import QApplication, QSplashScreen
 from qtpy.QtGui import QPixmap
-from qtpy.QtCore import Qt
+from qtpy.QtCore import Qt  # type: ignore
 
 # if script was run from commandline
 try:

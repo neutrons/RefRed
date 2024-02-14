@@ -206,11 +206,11 @@ class Gui(object):
             parent.path_ascii = local_data_base
         print("Using database in", parent.path_ascii)
 
-    def init_error_label_widgets(self):
+    def init_error_label_widgets(self) -> None:
         """will hide the error label by default"""
-        parent = self.parent
+        parent: QtWidgets.QWidget = self.parent
         palette = QtGui.QPalette()
-        palette.setColor(QtGui.QPalette.Foreground, QtCore.Qt.red)
+        palette.setColor(QtGui.QPalette.Foreground, QtCore.Qt.red)  # type: ignore
 
         for label_text in (
             "peakFromError",

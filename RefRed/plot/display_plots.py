@@ -35,7 +35,7 @@ class DisplayPlots(object):
         plot_ix=True,
         plot_stitched=False,
         refresh_reduction_table=True,
-    ):
+    ) -> None:
         if row == -1:
             return
 
@@ -56,7 +56,8 @@ class DisplayPlots(object):
         if is_data:
             _data: LRData = big_table_data.reflectometry_data(row)
         else:
-            _data: LRData = big_table_data.normalization_data(row)
+            _data = big_table_data.normalization_data(row)  # type: ignore
+            assert _data is not None
 
         if _data is None:
             ClearPlots(

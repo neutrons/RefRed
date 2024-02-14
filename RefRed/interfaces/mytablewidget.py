@@ -3,7 +3,7 @@ from enum import Enum
 
 # third party imports
 from qtpy import QtWidgets
-from qtpy.QtCore import Qt
+from qtpy.QtCore import Qt  # type: ignore
 
 # application imports
 #

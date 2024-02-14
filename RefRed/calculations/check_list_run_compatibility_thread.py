@@ -19,7 +19,7 @@ from RefRed.calculations.lr_data import LRData
 from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
 
 
-class CheckListRunCompatibilityThread(QtCore.QThread):
+class CheckListRunCompatibilityThread(QtCore.QThread):  # type: ignore
 
     updated_data = Signal(int, bool, bool)
 

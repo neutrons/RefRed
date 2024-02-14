@@ -2,6 +2,7 @@
 import datetime
 import logging
 import os
+from typing import Optional
 
 # third-party imports
 import lr_reduction
@@ -97,7 +98,7 @@ class ExportXMLConfig(object):
             lambda_range = _data.lambda_range
             incident_angle = _data.incident_angle
 
-            _norm: LRData = _big_table_data[row, 1]
+            _norm: Optional[LRData] = _big_table_data[row, 1]
             if _norm is not None:
                 norm_flag = o_general_settings.apply_normalization
                 norm_peak = _norm.peak

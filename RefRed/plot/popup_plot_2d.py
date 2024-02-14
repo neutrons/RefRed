@@ -3,7 +3,7 @@ from pathlib import Path
 import os
 
 # third-party imports
-from qtpy.QtCore import Qt
+from qtpy.QtCore import Qt  # type: ignore
 from qtpy.QtGui import QPalette
 from qtpy.QtWidgets import QDialog, QFileDialog
 

@@ -34,7 +34,8 @@ class SpinBox(object):
             if is_data:
                 data = big_table_data.reflectometry_data(row_index)
             else:
-                data = big_table_data.normalization_data(row_index)
+                data = big_table_data.normalization_data(row_index)  # type: ignore
+                assert data is not None
 
             val1 = value_min
             val2 = value_max
@@ -51,16 +52,16 @@ class SpinBox(object):
             is_plot_it = False
             is_plot_ix = False
             if entry_type == 'peak':
-                data.peak = [str(val_min), str(val_max)]
+                data.peak = [val_min, val_max]
             elif entry_type == 'back':
-                data.back = [str(val_min), str(val_max)]
+                data.back = [val_min, val_max]
             elif entry_type == 'back2':
-                data.back2 = [str(val_min), str(val_max)]
+                data.back2 = [val_min, val_max]
             elif entry_type == 'low_res':
                 is_plot_yt = False
                 is_plot_yi = False
                 is_plot_ix = True
-                data.low_res = [str(val_min), str(val_max)]
+                data.low_res = [val_min, val_max]
                 data.low_res_flag = flag
             else:
                 raise RuntimeError("unexpected entry type")

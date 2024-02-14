@@ -73,7 +73,7 @@ class AutoFillWidgetsHandler(object):
         QApplication.processEvents()
 
 
-class DelayClosing(QtCore.QThread):
+class DelayClosing(QtCore.QThread):  # type: ignore
     def setup(self, parent, delay=3):
         self.parent = parent
         self.delay = delay

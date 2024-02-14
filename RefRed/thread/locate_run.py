@@ -2,7 +2,7 @@ from qtpy import QtCore
 import RefRed.nexus_utilities
 
 
-class LocateRunThread(QtCore.QThread):
+class LocateRunThread(QtCore.QThread):  # type: ignore
     def setup(self, parent, run_number, index):
         self.parent = parent
         self.run_number = run_number

@@ -2,7 +2,7 @@
 from typing import List, Optional, Tuple
 
 # third-party imports
-from qtpy.QtCore import Qt, QObject, Signal
+from qtpy.QtCore import Qt, QObject, Signal  # type: ignore
 from qtpy.QtWidgets import QDialog, QCheckBox, QWidget
 
 # application imports
@@ -130,6 +130,8 @@ class CompositeBackgroundSettings:
         is_data
             Update background settings for the reflectivity (True) or normalization (False) data
         """
+        if self.maingui is None:
+            return RuntimeError("MainGui unitialized in CompositeBackgroundSettings")
         data_fetcher = {
             True: self.maingui.big_table_data.reflectometry_data,
             False: self.maingui.big_table_data.normalization_data,
@@ -159,10 +161,10 @@ class CompositeBackgroundSettings:
         -------
 
         """
-        if self.maingui is None:
-            return RuntimeError("MainGui unitialized in CompositeBackgroundSettings")
 
         def table_updater(value: bool):
+            if self.maingui is None:
+                return RuntimeError("MainGui unitialized in CompositeBackgroundSettings")
             gui_utility = GuiUtility(parent=self.maingui)
             # Find the active row in the reduction table
             active_row_index = gui_utility.get_current_table_reduction_check_box_checked()
@@ -177,9 +179,10 @@ class CompositeBackgroundSettings:
             big_table_data: TableData = self.maingui.big_table_data
             for row_index in all_rows:
                 if is_data:
-                    data: LRData = big_table_data.reflectometry_data(row_index)
+                    data: Optional[LRData] = big_table_data.reflectometry_data(row_index)
                 else:
-                    data: LRData = big_table_data.normalization_data(row_index)
+                    data = big_table_data.normalization_data(row_index)
+                assert data is not None
                 setattr(data, setting, value)
 
         return table_updater
@@ -223,7 +226,7 @@ class BackgroundSettingsView(QDialog):
             # `option=box_name` in effect allows us to define a different lambda` function for each checkbox
             checkbox.stateChanged.connect(lambda state, option=box_name: self._update_model(option, state))
 
-    def _update_view(self, option: str = None):
+    def _update_view(self, option: Optional[str] = None):
         r"""Fetch current boolean option(s) from the model"""
         options = self.options if option is None else [option]
         for _option in options:

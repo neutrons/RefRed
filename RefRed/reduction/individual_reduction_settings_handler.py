@@ -33,6 +33,7 @@ class IndividualReductionSettingsHandler(object):
         self._data_run_numbers = self.get_data_run_numbers()
         self._data_peak_range = self.get_data_peak_range()
         self._data_back_range = self.get_data_back_range()
+        self._data_back2_range = copy.deepcopy(self.data.back2)
         self._data_low_res_flag = self.get_data_low_res_flag()
         self._data_low_res_range = self.get_data_low_res_range()
 
@@ -70,7 +71,7 @@ class IndividualReductionSettingsHandler(object):
             functional_background=self.data.functional_background,
             two_backgrounds=self.data.two_backgrounds,
             background_roi=self._data_back_range,
-            background_roi2=copy.deepcopy(self.data.back2),  # lower and upper boundaries of the second background
+            background_roi2=self._data_back2_range,  # lower and upper boundaries of the second background
             data_x_range_flag=self._data_low_res_flag,
             data_x_range=self._data_low_res_range,
             norm_peak_range=self._norm_peak_range,

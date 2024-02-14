@@ -7,7 +7,7 @@ from qtpy import QtCore
 from RefRed.utilities import get_index_free_thread
 
 
-class StatusMessageThreaded(QtCore.QThread):
+class StatusMessageThreaded(QtCore.QThread):  # type: ignore
     def setup(self, parent):
         self.parent = parent
 

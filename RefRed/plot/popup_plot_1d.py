@@ -5,7 +5,7 @@ import os
 from typing import Optional
 
 # third-party imports
-from qtpy.QtCore import Qt
+from qtpy.QtCore import Qt  # type: ignore
 from qtpy.QtGui import QPalette
 from qtpy.QtWidgets import QDialog, QFileDialog
 
@@ -49,6 +49,8 @@ class PopupPlot1d(QDialog):
 
         self.data_type = data_type
         self.parent = parent
+        # argument data is optional for historical reasons but it should always be passed, never use the default value
+        assert data is not None
         self.data = data
         self.row = row
         self.col = 0 if data_type == "data" else 1

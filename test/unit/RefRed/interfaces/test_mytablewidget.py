@@ -2,7 +2,7 @@
 from RefRed.interfaces.mytablewidget import MyTableWidget
 
 # third party packages
-from qtpy.QtCore import Qt
+from qtpy.QtCore import Qt  # type: ignore
 
 import unittest.mock as mock
 import pytest

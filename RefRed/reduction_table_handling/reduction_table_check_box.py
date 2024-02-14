@@ -2,7 +2,7 @@
 
 # third-party imports
 import numpy as np
-from qtpy.QtCore import Qt
+from qtpy.QtCore import Qt  # type: ignore
 
 # package imports
 from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
