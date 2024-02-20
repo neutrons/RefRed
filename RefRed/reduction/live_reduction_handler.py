@@ -82,6 +82,7 @@ class LiveReductionHandler(object):
                     template_data,
                     info=True,
                     normalize=reduction_pars['apply_normalization'],
+                    functional_background=reduction_pars['functional_background'],
                 )
                 self.save_reduction(row_index, refl=[q, r, dr], info=info)
             except:
