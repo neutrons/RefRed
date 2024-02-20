@@ -24,7 +24,7 @@ These can be installed using the commands
 
 .. code-block:: bash
 
-   conda env create --file development.yml
+   conda env create --file environment.yml
    conda activate refred
 
 Then the testsuite can be run via
