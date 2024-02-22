@@ -1,8 +1,13 @@
-import os
+# standard imports
+from unittest.mock import patch as mock_patch
+
+# third-party imports
 import pytest
-from RefRed.main import MainGui
 from qtpy import QtCore, QtWidgets
 
+# RefRed imports
+from RefRed.main import MainGui
+from RefRed.plot.popup_plot_2d import PopupPlot2d
 
 wait = 100
 
@@ -10,44 +15,36 @@ wait = 100
 def test_plot2d_dialog(qtbot, data_server):
     """Test the plot2d dialog."""
     # Create the main window
-    window = MainGui()
-    qtbot.addWidget(window)
-
+    window_main = MainGui()
+    qtbot.addWidget(window_main)
     # window.show()  # Only for human inspection. This line should be commented once the test passes.
 
-    # Load data
-    xmlfilename = data_server.path_to("REF_L_188298_tiny_template.xml")
-    window.path_config = os.path.dirname(xmlfilename)
+    def mock_file_dialog_opens(self):  # `self` is just one input argument, emphasizing we're mocking one class method
+        r"""mock opening QFileDialog and selecting one file for reading"""
+        return True
 
-    def qfiledialog_handler():
-        def handler():
-            dialog = window.findChild(QtWidgets.QFileDialog)
-            line_edit = dialog.findChild(QtWidgets.QLineEdit)
-            qtbot.keyClicks(line_edit, os.path.basename(xmlfilename))
-            qtbot.wait(wait)
-            qtbot.keyClick(line_edit, QtCore.Qt.Key_Enter)
+    def mock_file_dialog_returns(self):
+        r"""mock returning the path to the file that's been opened for reading"""
+        return data_server.path_to("REF_L_188298_tiny_template.xml")
 
-        QtCore.QTimer.singleShot(5 * wait, handler)  # wait for `lapse` time, then execute `handler`
-
-    qfiledialog_handler()
-    window.load_configuration()
-    qtbot.wait(wait)
+    with mock_patch("RefRed.configuration.loading_configuration.QFileDialog.exec_", new=mock_file_dialog_opens):
+        with mock_patch(
+            "RefRed.configuration.loading_configuration.QFileDialog.selectedFiles", new=mock_file_dialog_returns
+        ):
+            window_main.load_configuration()  # load one data set, populates the first row in the reduction table
 
     # Toggle the plot up
-    window.reduction_table_visibility_changed_test(1, 0)
-    qtbot.wait(wait)
+    window_main.reduction_table_visibility_changed_test(state=1, row=0)
 
     # Trigger the plot2d dialog
     # NOTE: somehow RefRed is not utilizing the built-in double
     #       click from Qt, so we need to trigger the single click
     #       twice within a short period
-    window.single_click_data_yt_plot(True)
-    qtbot.wait(0.1 * wait)
-    window.single_click_data_yt_plot(True)
-    qtbot.wait(wait)
+    window_main.single_click_data_yt_plot(True)
+    window_main.single_click_data_yt_plot(True)  # two single clicks emulate a double-click, instantiates a PopupPlot2d
 
     # Check the plot2d dialog has correct settings
-    plot2d = window.findChild(QtWidgets.QDialog)
+    plot2d = PopupPlot2d._open_instances[-1]  # reference to the recently instantiated PopupPlot2d object
     assert plot2d
     assert plot2d.data_type == "data"
     # --------- pixel_vs_tof_tab ---------- #
@@ -68,7 +65,7 @@ def test_plot2d_dialog(qtbot, data_server):
     plot2d.ui.plot2dPeakToSpinBox.setValue(140)
     plot2d.manual_input_peak2()
     # 4. background range
-    plot2d.activate_or_not_back_widgets(True)
+    plot2d.activate_or_not_back_widgets()
     plot2d.ui.plot2dBackFromValue.setValue(125)
     plot2d.manual_input_background()
     plot2d.ui.plot2dBackToValue.setValue(145)

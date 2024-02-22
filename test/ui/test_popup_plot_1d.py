@@ -13,7 +13,7 @@ from RefRed.main import MainGui
 def test_popup_plot_1d(qtbot, data_server):
     window_main = MainGui()
     qtbot.addWidget(window_main)
-    window_main.show()
+    # window_main.show()  # Only for human inspection. This line should be commented once the test passes.
 
     def mock_file_dialog_opens(self):  # `self` is just one input argument, emphasizing we're mocking one class method
         r"""mock opening QFileDialog and selecting one file for reading"""
@@ -29,9 +29,7 @@ def test_popup_plot_1d(qtbot, data_server):
         ):
             window_main.load_configuration()  # load one data set, populates the first row in the reduction table
 
-    # "click" on the
-    checkbox = window_main.ui.reductionTable.cellWidget(0, 0)
-    checkbox.setChecked(True)  # select the first row in the reduction table
+    window_main.reduction_table_visibility_changed_test(state=1, row=0)  # click the first row in reduction-table
     window_main.single_click_data_yi_plot(True)
     window_main.single_click_data_yi_plot(True)  # two single clicks emulate a double-click, instantiates a PopupPlot1d
     popup = PopupPlot1d._open_instances[-1]  # reference to the recently instantiated PopupPlot1d object

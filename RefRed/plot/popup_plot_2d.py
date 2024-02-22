@@ -21,7 +21,7 @@ import RefRed.utilities
 class PopupPlot2d(QDialog):
 
     parent = None
-    _open_instances = []
+    _open_instances = []  # registry of PopupPlot2d instances
     data = None
     data_type = "data"
     row = 0
@@ -618,3 +618,5 @@ class PopupPlot2d(QDialog):
             o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent=self.parent)
             o_auto_tof_range.setup()
             o_auto_tof_range.line_edit_validation()
+
+        self._open_instances.remove(self)  # remove this plot from the registry
