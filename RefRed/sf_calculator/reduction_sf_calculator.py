@@ -1,15 +1,16 @@
-# package imports
-from RefRed.utilities import convertTOF
+# standard-library imports
+import logging
+import time
+from typing import Optional, Union
 
 # third-party imports
 import mantid.simpleapi as api
 import numpy as np
 from qtpy import QtWidgets
+from qtpy.QtWidgets import QFileDialog
 
-# standard-library imports
-import logging
-import time
-from typing import Optional, Union
+# RefRed imports
+from RefRed.utilities import convertTOF
 
 
 class ReductionSfCalculator(object):
@@ -42,7 +43,7 @@ class ReductionSfCalculator(object):
 
         # FIXME TODO - is it good to mix presenter/model with view?
         if export_script_flag:
-            filename, _ = QtWidgets.QFileDialog.getSaveFileName(
+            filename, _ = QFileDialog.getSaveFileName(
                 self.sf_gui,  # parent widget
                 "Export Script File",  # dialog title
                 self.sf_gui.save_directory,  # opening directory

@@ -1,14 +1,15 @@
-# package imports
-from RefRed.main import MainGui
-
-# third party imports
-from qtpy import QtCore, QtWidgets
-import pytest
-
 # standard imports
 import random
 import os
 import string
+from unittest.mock import patch as mock_patch
+
+# third party imports
+from qtpy import QtCore
+import pytest
+
+# RefRed imports
+from RefRed.main import MainGui
 
 
 SECOND = 1000  # 1000 miliseconds
@@ -40,26 +41,16 @@ def test_sf_calculator(qtbot, data_server, run_set, run_count, script_file):
     #
     # Generate the structure factors
     #
-    def qfiledialog_handler(filename, lapse=500):
-        def handler():
-            dialog = sfc.findChild(QtWidgets.QFileDialog)
-            line_edit = dialog.findChild(QtWidgets.QLineEdit)
-            qtbot.keyClicks(line_edit, filename)
-            qtbot.wait(200)
-            qtbot.keyClick(line_edit, QtCore.Qt.Key_Enter)
-
-        QtCore.QTimer.singleShot(lapse, handler)
-
     sfc._save_directory = "/tmp"  # force the location of saving directory
-    # do not use mkstemp since we don't want to actually create an empty file. Creating an empty file
-    # would result in the QFileDialog poping the question if we want to replace the file.
     file_name = ''.join([random.choice(string.ascii_letters) for i in range(10)]) + ".cfg"
+    with mock_patch("RefRed.sf_calculator.sf_calculator.QFileDialog.getSaveFileName") as mock_getSaveFileName:
+        mock_getSaveFileName.return_value = os.path.join(sfc._save_directory, file_name), ""
+        qtbot.mouseClick(sfc.sfFileNameBrowseButton, QtCore.Qt.LeftButton)
 
-    qfiledialog_handler(file_name, lapse=0.5 * SECOND)
-    qtbot.mouseClick(sfc.sfFileNameBrowseButton, QtCore.Qt.LeftButton)
     with qtbot.waitSignal(sfc.sfFileNamePreview.textChanged, timeout=10 * SECOND):
         qtbot.mouseClick(sfc.generateSFfileButton, QtCore.Qt.LeftButton)
 
+    qtbot.mouseClick(sfc.generateSFfileButton, QtCore.Qt.LeftButton)
     # Compare the contents of the file preview and the actual saved file
     cfg_file = os.path.join(sfc._save_directory, file_name)
     cfg = sfc.sfFileNamePreview.toPlainText()
@@ -71,8 +62,12 @@ def test_sf_calculator(qtbot, data_server, run_set, run_count, script_file):
     # Export Python Script
     #
     file_name = ''.join([random.choice(string.ascii_letters) for i in range(10)]) + ".py"
-    qfiledialog_handler(file_name, lapse=0.5 * SECOND)
-    qtbot.mouseClick(sfc.exportButton, QtCore.Qt.LeftButton)
+    with mock_patch(
+        "RefRed.sf_calculator.reduction_sf_calculator.QFileDialog.getSaveFileName"
+    ) as mock_getSaveFileName:
+        mock_getSaveFileName.return_value = os.path.join(sfc._save_directory, file_name), ""
+        qtbot.mouseClick(sfc.exportButton, QtCore.Qt.LeftButton)
+
     qtbot.wait(3 * SECOND)  # it takes time for the script exporter to complete
 
     # compare the contents of the script
