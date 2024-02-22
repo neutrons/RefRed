@@ -62,6 +62,9 @@ class Gui(object):
 
         self.parent.ui.sf_button.setChecked(True)
 
+        # Select the `DATA` tab as the currently active one
+        self.parent.ui.dataNormTabWidget.setCurrentIndex(0)  # 0: DATA, 1: NORMALIZATION
+
     def init_autopopulate_widgets(self):
         pixmap = QtGui.QPixmap(":/General/check_icon.png")
         self.parent.ui.check1.setFixedWidth(25)
