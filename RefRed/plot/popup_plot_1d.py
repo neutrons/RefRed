@@ -29,7 +29,7 @@ class PopupPlot1d(QDialog):
     row = 0
     col = 0  # 0 for data, 1 for norm
 
-    _open_instances = []
+    _open_instances = []  # registry of PopupPlot1d instances
     yaxis = None
     peak = None
     back = None
@@ -476,3 +476,4 @@ class PopupPlot1d(QDialog):
             plot_ix=False,
             refresh_reduction_table=True,
         )
+        self._open_instances.remove(self)  # remove this plot from the registry

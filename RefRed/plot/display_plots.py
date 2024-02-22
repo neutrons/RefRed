@@ -57,7 +57,6 @@ class DisplayPlots(object):
             _data: LRData = big_table_data.reflectometry_data(row)
         else:
             _data = big_table_data.normalization_data(row)  # type: ignore
-            assert _data is not None
 
         if _data is None:
             ClearPlots(

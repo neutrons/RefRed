@@ -6,6 +6,7 @@ from typing import Any
 
 # third party imports
 from qtpy import QtGui, QtCore, QtWidgets
+from qtpy.QtWidgets import QFileDialog
 
 # application imports
 from RefRed.configuration.load_reduction_table_from_lconfigdataset import (
@@ -40,8 +41,8 @@ class LoadingConfiguration(object):
         _path = self.parent.path_config
         _filter = "XML (*.xml);; All Files (*.*)"
         filename = ""
-        file_dialog = QtWidgets.QFileDialog(self.parent, 'Open Configuration File', _path, _filter)
-        file_dialog.setViewMode(QtWidgets.QFileDialog.List)
+        file_dialog = QFileDialog(self.parent, 'Open Configuration File', _path, _filter)
+        file_dialog.setViewMode(QFileDialog.List)
         if file_dialog.exec_():
             filename = file_dialog.selectedFiles()
         if isinstance(filename, list):
