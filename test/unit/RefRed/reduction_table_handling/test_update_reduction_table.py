@@ -78,8 +78,8 @@ def test_load_run_auto_peak_finder(mock_file_finder_find_runs, mock_display_plot
 
     run1 = "188300"
     run2 = "188301"
-    expected_peak = ["130", "141"]
-    expected_back = ["127", "144"]
+    expected_peak = [130, 141]
+    expected_back = [127, 144]
     expected_tof_range_auto = [31420.7610, 44712.6203]
 
     # load the first run
