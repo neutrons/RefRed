@@ -1,7 +1,12 @@
+# standard imports
 import os
-from typing import List, Tuple
 from pathlib import Path
-from qtpy import QtWidgets
+from typing import List, Tuple
+
+# third-party imorts
+from qtpy.QtWidgets import QFileDialog
+
+# RefRed imports
 import RefRed.utilities
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.utilities import makeSureFileHasExtension
@@ -182,7 +187,7 @@ class ExportPlotAscii:
         # NOTE:
         # current test framework cannot patch getSaveFileName, we have to shadow
         # it for testing purpose.
-        return QtWidgets.QFileDialog.getSaveFileName(
+        return QFileDialog.getSaveFileName(
             self.parent,
             caption,
             default_filename,
@@ -199,7 +204,7 @@ class ExportPlotAscii:
         default_filename = path / default_filename
         caption = "Select Location and Name"
         filter = "Reduced Ascii (*.txt);; All (*.*)"
-        filename, filter = QtWidgets.QFileDialog.getSaveFileName(
+        filename, filter = QFileDialog.getSaveFileName(
             self.parent,
             caption,
             str(default_filename),

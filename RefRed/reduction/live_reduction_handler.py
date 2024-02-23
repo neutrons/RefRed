@@ -1,18 +1,23 @@
-import sys
-import os
-import numpy as np
-import logging
+# standard imports
 import json
+import logging
+import os
+import sys
 import time
-import qtpy.QtWidgets
+
+# third-party imports
+import numpy as np
+from qtpy.QtWidgets import QFileDialog
 from qtpy.QtWidgets import QApplication
-from RefRed.mantid_utility import MantidUtility
+
+# RefRed imports
+from RefRed.gui_handling.progressbar_handler import ProgressBarHandler
 from RefRed.lconfigdataset import LConfigDataset
+from RefRed.mantid_utility import MantidUtility
+from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
+from RefRed.reduction.individual_reduction_settings_handler import IndividualReductionSettingsHandler
 from RefRed.reduction.live_calculate_sf import LiveCalculateSF
 from RefRed.reduction.live_reduced_data_handler import LiveReducedDataHandler
-from RefRed.gui_handling.progressbar_handler import ProgressBarHandler
-from RefRed.reduction.individual_reduction_settings_handler import IndividualReductionSettingsHandler
-from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
 from RefRed.status_message_handler import StatusMessageHandler
 
 
@@ -76,7 +81,7 @@ class LiveReductionHandler(object):
                 from lr_reduction import reduction_template_reader
 
                 template_data = reduction_template_reader.ReductionParameters()
-                template_data.from_dict(reduction_pars)
+                template_data.from_dict(reduction_pars, permissible=True)
                 q, r, dr, info = template.process_from_template(
                     reduction_pars['data_files'],
                     template_data,
@@ -120,7 +125,7 @@ class LiveReductionHandler(object):
         # Ask for the output file path
         run_number = self.parent.big_table_data[0, 0].run_number
         default_filename = os.path.join(self.parent.path_ascii, "REFL_%s_data_reduction_script.py" % run_number)
-        filename, _ = qtpy.QtWidgets.QFileDialog.getSaveFileName(self.parent, "Python script", default_filename)
+        filename, _ = QFileDialog.getSaveFileName(self.parent, "Python script", default_filename)
 
         # If the user hits the cancel button, just exit
         if not filename:

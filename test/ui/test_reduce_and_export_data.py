@@ -1,9 +1,16 @@
-from RefRed.main import MainGui
-from qtpy import QtCore
+# standard imports
 import os
-import pytest
+from pathlib import Path
 from unittest import mock
+
+# third-party imports
 import numpy as np
+from qtpy import QtCore
+import pytest
+
+# RefRed imports
+from RefRed.main import MainGui
+
 
 wait = 200
 
@@ -59,17 +66,15 @@ else:
 
 
 @pytest.mark.parametrize("case", test_cases)
-@mock.patch("qtpy.QtWidgets.QFileDialog")
-def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server, case):
-    # set mock return values for QFileDialog
-    QFileDialog_mock().exec_.return_value = True
-    QFileDialog_mock().selectedFiles.return_value = data_server.path_to(case["conf"])
-    QFileDialog_mock.getSaveFileName.return_value = (str(tmp_path / "output.txt"), "")
-    QFileDialog_mock.getExistingDirectory.return_value = str(tmp_path)
+def test_reduce_and_export_data(qtbot, tmp_path, data_server, case):
+
+    # set the current working directory as the root of the repo. Required because the path of scaling factor file
+    # stored in the template file is 'test/data/sf_186529_Si_auto.cfg', thus relative to the root of the repo.
+    os.chdir(Path(data_server.directory).parent.parent)
 
     window = MainGui()
     qtbot.addWidget(window)
-    window.show()
+    window.show()  # Only for human inspection. This line should be commented once the test passes
 
     # Open file menu, move down two and select Load
     action_rect = window.ui.menubar.actionGeometry(window.ui.menuFile.menuAction())
@@ -79,8 +84,12 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server, 
     qtbot.wait(wait)
     qtbot.keyClick(window.ui.menuFile, QtCore.Qt.Key_Down)
     qtbot.wait(wait)
-    qtbot.keyClick(window.ui.menuFile, QtCore.Qt.Key_Enter)
-    qtbot.waitUntil(lambda: window.ui.statusbar.currentMessage() == "Done!")
+    with mock.patch("RefRed.configuration.loading_configuration.QFileDialog.exec_") as mock_exec:
+        mock_exec.return_value = True
+        with mock.patch("RefRed.configuration.loading_configuration.QFileDialog.selectedFiles") as mock_selectedFiles:
+            mock_selectedFiles.return_value = data_server.path_to(case["conf"])
+            qtbot.keyClick(window.ui.menuFile, QtCore.Qt.Key_Enter)  # trigger execution of LoadingConfiguration.run()
+            qtbot.waitUntil(lambda: window.ui.statusbar.currentMessage() == "Done!")
     qtbot.wait(wait)
 
     # Press button to plot first row of data
@@ -104,7 +113,8 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server, 
     qtbot.wait(wait)
 
     # Export data and compare
-    export_ascii(qtbot, window)
+
+    export_ascii(qtbot, window, results_file=str(tmp_path / "output.txt"))
 
     # compare results to expected
     compare_results("output.txt", data_server.path_to(case["ascii"]), tmp_path)
@@ -114,7 +124,7 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server, 
     qtbot.mouseClick(window.ui.auto_stitching_button, QtCore.Qt.LeftButton, pos=QtCore.QPoint(10, 9))
     qtbot.wait(wait)
 
-    export_ascii(qtbot, window)
+    export_ascii(qtbot, window, results_file=str(tmp_path / "output.txt"))
 
     # compare results to expected
     compare_results("output.txt", data_server.path_to(case["stitch"]), tmp_path)
@@ -122,6 +132,7 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server, 
     # export the reduction script
     (tmp_path / "output.txt").unlink()
 
+    # In the Menu bar of the main window, click on "Reduction", then in "Export Script"
     action_rect = window.ui.menubar.actionGeometry(window.ui.menuReduction.menuAction())
     qtbot.mouseClick(window.ui.menubar, QtCore.Qt.LeftButton, pos=action_rect.center())
     qtbot.wait(wait)
@@ -129,7 +140,9 @@ def test_reduce_and_export_data(QFileDialog_mock, qtbot, tmp_path, data_server, 
     qtbot.wait(wait)
     qtbot.keyClick(window.ui.menuReduction, QtCore.Qt.Key_Down)
     qtbot.wait(wait)
-    qtbot.keyClick(window.ui.menuReduction, QtCore.Qt.Key_Enter)
+    with mock.patch("RefRed.export.export_plot_ascii.QFileDialog.getSaveFileName") as mock_getSaveFileName:
+        mock_getSaveFileName.return_value = (str(tmp_path / "output.txt"), "")
+        qtbot.keyClick(window.ui.menuReduction, QtCore.Qt.Key_Enter)
     qtbot.wait(wait)
 
     reduction_script = open(tmp_path / "output.txt").readlines()
@@ -168,11 +181,13 @@ def compare_results(results_file, expected_results_file, tmp_path):
     print("   -- passed")
 
 
-def export_ascii(qtbot, window):
+def export_ascii(qtbot, window, results_file):
     # press "Export the plot into ASCII file"
     export_action = window.ui.data_stitching_plot.toolbar.actions()[9]
     export_button_widget = window.ui.data_stitching_plot.toolbar.widgetForAction(export_action)
-    qtbot.mouseClick(export_button_widget, QtCore.Qt.LeftButton)
+    with mock.patch("RefRed.export.export_plot_ascii.QFileDialog.getSaveFileName") as mock_getSaveFileName:
+        mock_getSaveFileName.return_value = (results_file, "")
+        qtbot.mouseClick(export_button_widget, QtCore.Qt.LeftButton)
     qtbot.wait(wait)
 
 
