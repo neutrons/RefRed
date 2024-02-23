@@ -44,8 +44,8 @@ def mock_table_row_cell(row, col):
     return spin_box_instance
 
 
-@mock.patch('qtpy.QtWidgets.QApplication.processEvents')
-def test_init_reduction_sf_calculator(sf_process_events):
+@mock.patch('RefRed.sf_calculator.reduction_sf_calculator.QApplication.processEvents')
+def test_init_reduction_sf_calculator(processEvents_mock):
     """Test reduction sf calculator"""
     # Set up QApplication
     main_app = qtpy.QtWidgets.QApplication(sys.argv)
@@ -84,7 +84,7 @@ def test_init_reduction_sf_calculator(sf_process_events):
     test_reducer._handle_request()
 
     # Test
-    assert sf_process_events.iscalled
+    assert processEvents_mock.iscalled
 
 
 class GoldValues:

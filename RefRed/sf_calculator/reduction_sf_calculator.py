@@ -6,7 +6,7 @@ from typing import Optional, Union
 # third-party imports
 import mantid.simpleapi as api
 import numpy as np
-from qtpy import QtWidgets
+from qtpy.QtWidgets import QApplication
 from qtpy.QtWidgets import QFileDialog
 
 # RefRed imports
@@ -127,7 +127,7 @@ class ReductionSfCalculator(object):
                     fd.write(script)
 
             self.sf_gui.updateProgressBar(float(i + 1) / float(nbr_scripts))
-            QtWidgets.QApplication.processEvents()
+            QApplication.processEvents()
 
     def _get_algorithm_params(self, run_string, list_peak_back):
         """
