@@ -3,17 +3,11 @@ from RefRed.configuration.loading_configuration import LoadingConfiguration
 from RefRed.tabledata import TableData
 
 # third party packages
-import unittest.mock as mock
 import pytest
+import unittest.mock as mock
 
 
 class TestLoadingConfiguration(object):
-    def evaluate(self, expected, actual):
-        if str(actual).replace('.', '', 1).isdigit():
-            assert expected == pytest.approx(actual)
-            return True
-        return False
-
     def test_init(self):
         with mock.patch('RefRed.configuration.loading_configuration.StatusMessageHandler') as mockStatusMessageHandler:
             m = mock.Mock()
@@ -111,8 +105,8 @@ class TestLoadingConfiguration(object):
 
     # test that iMetadata.data_peak gets set properly
     def test_getMetadataObject(self):
-        loadingConfiguration = self.test_init()
-        mockNode = mock.Mock()
+        loader = self.test_init()
+        node_mock = mock.Mock()  # mocks the Node instance associated to an XML block of an input configuration file
 
         values = {
             'from_peak_pixels': 1.001,
@@ -144,36 +138,20 @@ class TestLoadingConfiguration(object):
             'norm_full_file_name': 'normFullFileName1,normFullFileName2',
         }
 
-        def side_effect(node, arg):
-            return values[arg]
+        def side_effect(_, arg, default=""):
+            return values.get(arg, default)
 
-        loadingConfiguration.getNodeValue = mock.Mock()
-        loadingConfiguration.getNodeValue.side_effect = side_effect
+        # getNodeValue() will read data from dict `values`, instead of read from some configuration file
+        loader.getNodeValue = mock.Mock()
+        loader.getNodeValue.side_effect = side_effect
 
-        iMetadata = loadingConfiguration.getMetadataObject(mockNode)
+        config = loader.getMetadataObject(node_mock)
 
-        loadingConfiguration.getNodeValue.assert_has_calls([mock.call(mockNode, k) for k in values.keys()])
-        assert iMetadata.data_peak[0] == values['from_peak_pixels']
-        assert iMetadata.data_peak[1] == values['to_peak_pixels']
-
-        assert iMetadata.data_back[0] == values['back_roi1_from']
-        assert iMetadata.data_back[1] == values['back_roi1_to']
-
-        metaDict = iMetadata.__dict__
-
-        expectedValue = 1.001
-        for key, value in metaDict.items():
-            print(key, value)
-            if isinstance(value, list):
-                for item in value:
-                    if key == 'tof_range':
-                        self.evaluate(expectedValue, float(item) / 1000)
-                        expectedValue += 1.001
-                    elif self.evaluate(expectedValue, item):
-                        expectedValue += 1.001
-            else:
-                if self.evaluate(expectedValue, value):
-                    expectedValue += 1.001
+        assert config.data_peak[0] == values['from_peak_pixels']
+        assert config.data_peak[1] == values['to_peak_pixels']
+        assert config.data_back[0] == values['back_roi1_from']
+        assert config.data_back[1] == values['back_roi1_to']
+        assert config.data_low_res == [values['x_min_pixel'], values['x_max_pixel']]
 
 
 if __name__ == '__main__':

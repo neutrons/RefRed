@@ -179,7 +179,10 @@ class LoadingConfiguration(object):
         o_scaling_factor_widget.checkbox(status=scaling_factor_flag)
         o_scaling_factor_widget.set_enabled(status=scaling_factor_flag)
 
-    def getMetadataObject(self, node):
+    def getMetadataObject(self, node) -> LConfigDataset:
+        r"""Populate an instance of type LConfigDataset using the information contained in one of the
+        'RefLData    XML blocks within a configuration file."""
+
         def get_item_boolean(item_name: str) -> bool:
             return str2bool(self.getNodeValue(node, item_name))
 
