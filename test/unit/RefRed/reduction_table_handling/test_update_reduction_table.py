@@ -26,8 +26,8 @@ def test_update_reduction_table_thread(
     window_main = MainGui()
     qtbot.addWidget(window_main)
 
-    window_main.ui.reductionTable.cellWidget(0, 0).setChecked(is_display_checked)
-    load_run_from_reduction_table(window_main, 0, 1, "184975")
+    window_main.ui.reductionTable.cellWidget(0, 0).setChecked(is_display_checked)  # click "Plotted" checkbox
+    load_run_from_reduction_table(window_main, 0, 1, "184975")  # type 184975 in "Data Run #" column and press Enter
     qtbot.wait(wait)
 
     if is_display_checked:

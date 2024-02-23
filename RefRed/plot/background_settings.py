@@ -137,7 +137,7 @@ class CompositeBackgroundSettings:
             False: self.maingui.big_table_data.normalization_data,
         }
         data: LRData = data_fetcher[is_data](active_row_index)
-        if is_data is False and data is None:  # we landed in a row with no normalization data
+        if data is None:  # the active row in the reduction table has no reflectivity and/or direct-beam data
             return
         updater = {True: self.data.update_all_settings, False: self.norm.update_all_settings}
         updater[is_data](data.back_flag, data.functional_background, data.two_backgrounds)
