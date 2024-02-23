@@ -1,9 +1,9 @@
-# local imports
-from RefRed.main import MainGui
-
-# third party packages.
+# third-party imports
 import unittest.mock as mock
 import pytest
+
+# RefRed imports
+from RefRed.main import MainGui
 
 
 class TestMainGui:
