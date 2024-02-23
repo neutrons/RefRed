@@ -21,9 +21,27 @@ class TestLoadingConfiguration(object):
             mockStatusMessageHandler.assert_called()
             return loadingConfiguration
 
+    @pytest.mark.parametrize(
+        "filepath, message",
+        [
+            ("REF_L_188298_tiny_template.xml", "Done!"),
+            (["other", "REF_L_188298_tiny_template.xml"], "Done!"),
+            ("", "File not found"),
+        ],
+    )
     @mock.patch('RefRed.configuration.loading_configuration.QFileDialog')
     @mock.patch('RefRed.configuration.loading_configuration.StatusMessageHandler')
-    def test_run_file_found(self, StatusMessageHandlerMock, QFileDialogMock, data_server):
+    def test_run_file_search(self, StatusMessageHandlerMock, QFileDialogMock, filepath, message, data_server):
+        def add_abspath(input_filepath):
+            r"""helper to add the absolute path to file REF_L_188298_tiny_template.xml"""
+            if input_filepath:
+                if isinstance(input_filepath, str):
+                    return data_server.path_to(input_filepath)
+                elif isinstance(input_filepath, list):
+                    return input_filepath[:-1] + [add_abspath(input_filepath[-1])]
+            else:
+                return input_filepath  # an empty string
+
         # instantiate a LoadingConfiguration object
         parent = mock.Mock()  # mock MainGui
         loader = LoadingConfiguration(parent=parent)
@@ -33,61 +51,12 @@ class TestLoadingConfiguration(object):
         # When QFileDialog is called within loadingConfiguration.run(), it will return this mock file dialog object
         file_dialog_mock = mock.Mock()
         file_dialog_mock.exec_.return_value = True  # need to mock QFileDialog.exec_()
-        file_dialog_mock.selectedFiles.return_value = data_server.path_to("REF_L_188298_tiny_template.xml")
+        filepath = add_abspath(filepath)
+        file_dialog_mock.selectedFiles.return_value = filepath
         QFileDialogMock.return_value = file_dialog_mock  # now QFileDialog(...) should return out file_dialog_mock
 
         loader.run()  # test is the file is found
-        StatusMessageHandlerMock.assert_called_with(parent=parent, message="Done!", is_threaded=True)
-
-    @mock.patch('os.path.isfile')
-    @mock.patch('RefRed.configuration.loading_configuration.StatusMessageHandler')
-    @mock.patch('RefRed.configuration.loading_configuration.LoadingConfiguration.loading')
-    @mock.patch('qtpy.QtWidgets.QFileDialog')
-    def test_run_file_not_found(self, mockQFileDialog, mockLoading, mockStatusMessageHandler, mockOsPathIsFile):
-        mockFileDialog = mock.Mock()
-        mockFileDialog.exec_.return_value = True
-        mockFileDialog.selectedFiles.return_value = ''
-
-        mockOsPathIsFile.return_value = False
-
-        mockQFileDialog.return_value = mockFileDialog
-        loadingConfiguration = self.test_init()
-        loadingConfiguration.run()
-
-        mockQFileDialog.assert_called()
-        mockFileDialog.exec_.assert_called()
-        mockFileDialog.selectedFiles.assert_called()
-        not mockOsPathIsFile.called
-        mockStatusMessageHandler.assert_called_with(
-            parent=loadingConfiguration.parent, message='File not found', is_threaded=True
-        )
-        assert not mockLoading.called
-
-    @mock.patch('os.path.isfile')
-    @mock.patch('RefRed.configuration.loading_configuration.StatusMessageHandler')
-    @mock.patch('RefRed.configuration.loading_configuration.LoadingConfiguration.check_config_file')
-    @mock.patch('qtpy.QtWidgets.QFileDialog')
-    def test_run_file_found_but_filename_is_list(
-        self, mockQFileDialog, mockLoading, mockStatusMessageHandler, mockOsPathIsFile
-    ):
-        mockFileDialog = mock.Mock()
-        mockFileDialog.exec_.return_value = True
-        mockFileDialog.selectedFiles.return_value = ['', 'this is a filename']
-
-        mockOsPathIsFile.return_value = True
-
-        mockQFileDialog.return_value = mockFileDialog
-        loadingConfiguration = self.test_init()
-        loadingConfiguration.run()
-
-        mockQFileDialog.assert_called()
-        mockFileDialog.exec_.assert_called()
-        mockFileDialog.selectedFiles.assert_called()
-        mockOsPathIsFile.assert_called()
-        mockStatusMessageHandler.assert_called_with(
-            parent=loadingConfiguration.parent, message='Error loading file: aborted', is_threaded=True
-        )
-        mockLoading.assert_called()
+        StatusMessageHandlerMock.assert_called_with(parent=parent, message=message, is_threaded=True)
 
     @mock.patch('RefRed.tabledata.TableData._validate_type')
     @mock.patch('RefRed.configuration.loading_configuration.LoadingConfiguration.getMetadataObject')
