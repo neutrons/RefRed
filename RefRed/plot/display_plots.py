@@ -124,7 +124,6 @@ class DisplayPlots(object):
         else:
             self.workWithNorm(update_reduction_table=refresh_reduction_table)
             o_update_plot_widgets.enable_norm()  # set all widgets accessible
-        self.backgrounds_settings.emit_backgrounds_state()  # set proper accessibility of background-related widgets
 
         if plot_yt:
             ClearPlots(self.parent, plot_yt=True, is_data=is_data, is_norm=is_norm)

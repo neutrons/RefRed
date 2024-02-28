@@ -31,9 +31,11 @@ class BackgroundSettingsModel(QObject):
 
     @subtract_background.setter
     def subtract_background(self, value: bool):
+        previous = self._subtract_background  # backup
         self._subtract_background = value
-        self.signal_first_background.emit(value)
-        self.signal_second_background.emit(value and self.two_backgrounds)
+        if previous != value:  # emit changes
+            self.signal_first_background.emit(value)
+            self.signal_second_background.emit(value and self.two_backgrounds)
 
     @property
     def functional_background(self) -> bool:
@@ -41,8 +43,10 @@ class BackgroundSettingsModel(QObject):
 
     @functional_background.setter
     def functional_background(self, value: bool):
+        previous = self._functional_background  # backup
         self._functional_background = value
-        self.signal_functional_background.emit(value)
+        if previous != value:  # emit changes
+            self.signal_functional_background.emit(value)
 
     @property
     def two_backgrounds(self) -> bool:
@@ -50,9 +54,11 @@ class BackgroundSettingsModel(QObject):
 
     @two_backgrounds.setter
     def two_backgrounds(self, value: bool):
+        previous = self._two_backgrounds  # backup
         self._two_backgrounds = value
         self.signal_two_backgrounds.emit(value)
-        self.signal_second_background.emit(self.subtract_background and value)
+        if previous != value:  # emit changes
+            self.signal_second_background.emit(self.subtract_background and value)
 
     def update_all_settings(
         self, subtract_background: bool = True, functional_background: bool = False, two_backgrounds: bool = False
@@ -72,10 +78,10 @@ class BackgroundSettingsModel(QObject):
     ):
         self.set_spinbox_visibilities(parent, first_background, second_background)
         for spinbox in first_background:
-            slot = getattr(parent, spinbox).setEnabled
+            slot = getattr(parent, spinbox).setEnabled  # QSpinBox.setEnabled
             self.signal_first_background.connect(slot)
         for spinbox in second_background:
-            slot = getattr(parent, spinbox).setEnabled
+            slot = getattr(parent, spinbox).setEnabled  # QSpinBox.setEnabled
             self.signal_second_background.connect(slot)
 
     def emit_backgrounds_state(self):
@@ -195,7 +201,7 @@ class CompositeBackgroundSettings:
         """
         # names of some of the signals emitted by self.data and self.norm
         signal_names = ["signal_first_background", "signal_functional_background", "signal_two_backgrounds"]
-        # names of the background settings attributes in the LRData instaces of `big_table_data`
+        # names of the background settings attributes in the LRData instances of `big_table_data`
         setting_names = ["back_flag", "functional_background", "two_backgrounds"]
         # connect the signals to dedicated slots that will update the LRData instances
         for signal_name, setting_name in zip(signal_names, setting_names):

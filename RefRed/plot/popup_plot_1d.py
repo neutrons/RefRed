@@ -331,7 +331,7 @@ class PopupPlot1d(QDialog):
         self.check_peak_back_input_validity()
 
     def act_upon_changed_boundaries(self):
-        r"""Actions after User changes any boundary value (peak or background) inthe QSpinBox widgets"""
+        r"""Actions after User changes any boundary value (peak or background) in the QSpinBox widgets"""
         self.sort_peak_back_input()
         self.check_peak_back_input_validity()
         self.update_plots()

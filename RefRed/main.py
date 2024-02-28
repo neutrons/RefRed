@@ -138,18 +138,14 @@ class MainGui(QtWidgets.QMainWindow):
         # backup the last value for each spinbox in this widget
         self.spinbox_observer = SpinBoxObserver()
 
-        # initialize background settings' main GUI and background-related control spinbox visibilities
+        # initialize background settings' main GUI
         backgrounds_settings.set_maingui(self)
-        backgrounds_settings["data"].control_spinboxes_visibility(
-            parent=self.ui,
-            first_background=("backFromValue", "backToValue"),
-            second_background=("back2FromValue", "back2ToValue"),
-        )
-        backgrounds_settings["norm"].control_spinboxes_visibility(
-            parent=self.ui,
-            first_background=("normBackFromValue", "normBackToValue"),
-            second_background=("normBack2FromValue", "normBack2ToValue"),
-        )
+
+        # show/hide the red and orange background boundary lines  depending on the background settings
+        backgrounds_settings["data"].signal_first_background.connect(self.data_back_checkbox)
+        backgrounds_settings["data"].signal_second_background.connect(self.data_back_checkbox)
+        backgrounds_settings["norm"].signal_first_background.connect(self.norm_back_checkbox)
+        backgrounds_settings["norm"].signal_second_background.connect(self.norm_back_checkbox)
 
     # home button of plots
     def home_clicked_yi_plot(self):
