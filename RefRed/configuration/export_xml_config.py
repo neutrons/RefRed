@@ -133,7 +133,7 @@ class ExportXMLConfig(object):
             str_array.append('   <back_roi1_from>' + str(data_back[0]) + '</back_roi1_from>\n')
             str_array.append('   <back_roi1_to>' + str(data_back[1]) + '</back_roi1_to>\n')
             str_array.append('   <back_roi2_from>' + str(data_back2[0]) + '</back_roi2_from>\n')
-            str_array.append('   <back_roi2_to>' + str(data_back2[0]) + '</back_roi2_to>\n')
+            str_array.append('   <back_roi2_to>' + str(data_back2[1]) + '</back_roi2_to>\n')
             str_array.append('   <tof_range_flag>True</tof_range_flag>\n')
             str_array.append('   <from_tof_range>' + str(tof[0]) + '</from_tof_range>\n')
             str_array.append('   <to_tof_range>' + str(tof[1]) + '</to_tof_range>\n')

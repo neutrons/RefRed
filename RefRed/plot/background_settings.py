@@ -63,9 +63,11 @@ class BackgroundSettingsModel(QObject):
     def update_all_settings(
         self, subtract_background: bool = True, functional_background: bool = False, two_backgrounds: bool = False
     ):
-        self.subtract_background = subtract_background
-        self.functional_background = functional_background
-        self.two_backgrounds = two_backgrounds
+        # we access the private attributes to prevent emitting any of the signals that could be emitted by
+        # the setter functions of the associated properties
+        self._subtract_background = subtract_background
+        self._functional_background = functional_background
+        self._two_backgrounds = two_backgrounds
 
     def set_spinbox_visibilities(self, parent: QWidget, first_background: Tuple[str], second_background: Tuple[str]):
         for spinbox in first_background:
