@@ -109,10 +109,10 @@ class TestLoadingConfiguration(object):
         node_mock = mock.Mock()  # mocks the Node instance associated to an XML block of an input configuration file
 
         values = {
-            'from_peak_pixels': 1.001,
-            'to_peak_pixels': 2.002,
-            'back_roi1_from': 3.003,
-            'back_roi1_to': 4.004,
+            'from_peak_pixels': 1,
+            'to_peak_pixels': 2,
+            'back_roi1_from': 3,
+            'back_roi1_to': 4,
             'x_min_pixel': 5.005,
             'x_max_pixel': 6.006,
             'background_flag': 'background_flag',

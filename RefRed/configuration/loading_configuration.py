@@ -236,12 +236,12 @@ class LoadingConfiguration(object):
         _tof_auto = str2bool(self.getNodeValue(node, 'tof_range_flag'))
         iMetadata.tof_auto_flag = _tof_auto
 
-        _peak_min = self.getNodeValue(node, 'norm_from_peak_pixels')
-        _peak_max = self.getNodeValue(node, 'norm_to_peak_pixels')
+        _peak_min = self.getNodeValue(node, 'norm_from_peak_pixels', default=0)
+        _peak_max = self.getNodeValue(node, 'norm_to_peak_pixels', default=0)
         iMetadata.norm_peak = [int(_peak_min), int(_peak_max)]
 
-        _back_min = self.getNodeValue(node, 'norm_from_back_pixels')
-        _back_max = self.getNodeValue(node, 'norm_to_back_pixels')
+        _back_min = self.getNodeValue(node, 'norm_from_back_pixels', default=0)
+        _back_max = self.getNodeValue(node, 'norm_to_back_pixels', default=0)
         iMetadata.norm_back = [int(_back_min), int(_back_max)]
 
         _back2_min = self.getNodeValue(node, 'norm_from_back2_pixels', default=0)
