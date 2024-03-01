@@ -75,7 +75,7 @@ class TableData(np.ndarray):
         """
         self.set_data_by_column_enum(row_index, TableDataColumIndex.LR_DATA, value)
 
-    def normalization_data(self, row_index: int) -> LRData:
+    def normalization_data(self, row_index: int) -> Optional[LRData]:
         r"""Information about the direct beam run
 
         Parameters

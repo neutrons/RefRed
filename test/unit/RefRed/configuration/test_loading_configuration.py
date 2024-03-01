@@ -3,17 +3,11 @@ from RefRed.configuration.loading_configuration import LoadingConfiguration
 from RefRed.tabledata import TableData
 
 # third party packages
-import unittest.mock as mock
 import pytest
+import unittest.mock as mock
 
 
 class TestLoadingConfiguration(object):
-    def evaluate(self, expected, actual):
-        if str(actual).replace('.', '', 1).isdigit():
-            assert expected == pytest.approx(actual)
-            return True
-        return False
-
     def test_init(self):
         with mock.patch('RefRed.configuration.loading_configuration.StatusMessageHandler') as mockStatusMessageHandler:
             m = mock.Mock()
@@ -21,83 +15,42 @@ class TestLoadingConfiguration(object):
             mockStatusMessageHandler.assert_called()
             return loadingConfiguration
 
-    @mock.patch('os.path.isfile')
+    @pytest.mark.parametrize(
+        "filepath, message",
+        [
+            ("REF_L_188298_tiny_template.xml", "Done!"),
+            (["other", "REF_L_188298_tiny_template.xml"], "Done!"),
+            ("", "File not found"),
+        ],
+    )
+    @mock.patch('RefRed.configuration.loading_configuration.QFileDialog')
     @mock.patch('RefRed.configuration.loading_configuration.StatusMessageHandler')
-    @mock.patch('RefRed.configuration.loading_configuration.LoadingConfiguration.loading')
-    @mock.patch('qtpy.QtWidgets.QFileDialog')
-    def test_run_file_found(self, mockQFileDialog, mockLoading, mockStatusMessageHandler, mockOsPathIsFile):
-        mockFileDialog = mock.Mock()
-        mockFileDialog.exec_.return_value = True
-        mockFileDialog.selectedFiles.return_value = 'this is a filename'
+    def test_run_file_search(self, StatusMessageHandlerMock, QFileDialogMock, filepath, message, data_server):
+        def add_abspath(input_filepath):
+            r"""helper to add the absolute path to file REF_L_188298_tiny_template.xml"""
+            if input_filepath:
+                if isinstance(input_filepath, str):
+                    return data_server.path_to(input_filepath)
+                elif isinstance(input_filepath, list):
+                    return input_filepath[:-1] + [add_abspath(input_filepath[-1])]
+            else:
+                return input_filepath  # an empty string
 
-        # If we want to test the happy path, we should pass an actual file
-        # because the code now check the validity of the file.
-        mockOsPathIsFile.return_value = True
+        # instantiate a LoadingConfiguration object
+        parent = mock.Mock()  # mock MainGui
+        loader = LoadingConfiguration(parent=parent)
+        loader.loading = lambda: None  # we're not interested in loading the file, thus override this method
+        StatusMessageHandlerMock.assert_called()
 
-        mockQFileDialog.return_value = mockFileDialog
-        loadingConfiguration = self.test_init()
-        loadingConfiguration.run()
+        # When QFileDialog is called within loadingConfiguration.run(), it will return this mock file dialog object
+        file_dialog_mock = mock.Mock()
+        file_dialog_mock.exec_.return_value = True  # need to mock QFileDialog.exec_()
+        filepath = add_abspath(filepath)
+        file_dialog_mock.selectedFiles.return_value = filepath
+        QFileDialogMock.return_value = file_dialog_mock  # now QFileDialog(...) should return out file_dialog_mock
 
-        mockQFileDialog.assert_called()
-        mockFileDialog.exec_.assert_called()
-        mockFileDialog.selectedFiles.assert_called()
-        mockOsPathIsFile.assert_called()
-        # The message returned will be "Loading aborted" because we didn't pass
-        # an actual file path
-        mockStatusMessageHandler.assert_called_with(
-            parent=loadingConfiguration.parent, message='Loading aborted', is_threaded=True
-        )
-        assert not mockLoading.called
-
-    @mock.patch('os.path.isfile')
-    @mock.patch('RefRed.configuration.loading_configuration.StatusMessageHandler')
-    @mock.patch('RefRed.configuration.loading_configuration.LoadingConfiguration.loading')
-    @mock.patch('qtpy.QtWidgets.QFileDialog')
-    def test_run_file_not_found(self, mockQFileDialog, mockLoading, mockStatusMessageHandler, mockOsPathIsFile):
-        mockFileDialog = mock.Mock()
-        mockFileDialog.exec_.return_value = True
-        mockFileDialog.selectedFiles.return_value = ''
-
-        mockOsPathIsFile.return_value = False
-
-        mockQFileDialog.return_value = mockFileDialog
-        loadingConfiguration = self.test_init()
-        loadingConfiguration.run()
-
-        mockQFileDialog.assert_called()
-        mockFileDialog.exec_.assert_called()
-        mockFileDialog.selectedFiles.assert_called()
-        not mockOsPathIsFile.called
-        mockStatusMessageHandler.assert_called_with(
-            parent=loadingConfiguration.parent, message='File not found', is_threaded=True
-        )
-        assert not mockLoading.called
-
-    @mock.patch('os.path.isfile')
-    @mock.patch('RefRed.configuration.loading_configuration.StatusMessageHandler')
-    @mock.patch('RefRed.configuration.loading_configuration.LoadingConfiguration.check_config_file')
-    @mock.patch('qtpy.QtWidgets.QFileDialog')
-    def test_run_file_found_but_filename_is_list(
-        self, mockQFileDialog, mockLoading, mockStatusMessageHandler, mockOsPathIsFile
-    ):
-        mockFileDialog = mock.Mock()
-        mockFileDialog.exec_.return_value = True
-        mockFileDialog.selectedFiles.return_value = ['', 'this is a filename']
-
-        mockOsPathIsFile.return_value = True
-
-        mockQFileDialog.return_value = mockFileDialog
-        loadingConfiguration = self.test_init()
-        loadingConfiguration.run()
-
-        mockQFileDialog.assert_called()
-        mockFileDialog.exec_.assert_called()
-        mockFileDialog.selectedFiles.assert_called()
-        mockOsPathIsFile.assert_called()
-        mockStatusMessageHandler.assert_called_with(
-            parent=loadingConfiguration.parent, message='Error loading file: aborted', is_threaded=True
-        )
-        mockLoading.assert_called()
+        loader.run()  # test is the file is found
+        StatusMessageHandlerMock.assert_called_with(parent=parent, message=message, is_threaded=True)
 
     @mock.patch('RefRed.tabledata.TableData._validate_type')
     @mock.patch('RefRed.configuration.loading_configuration.LoadingConfiguration.getMetadataObject')
@@ -152,14 +105,14 @@ class TestLoadingConfiguration(object):
 
     # test that iMetadata.data_peak gets set properly
     def test_getMetadataObject(self):
-        loadingConfiguration = self.test_init()
-        mockNode = mock.Mock()
+        loader = self.test_init()
+        node_mock = mock.Mock()  # mocks the Node instance associated to an XML block of an input configuration file
 
         values = {
-            'from_peak_pixels': 1.001,
-            'to_peak_pixels': 2.002,
-            'back_roi1_from': 3.003,
-            'back_roi1_to': 4.004,
+            'from_peak_pixels': 1,
+            'to_peak_pixels': 2,
+            'back_roi1_from': 3,
+            'back_roi1_to': 4,
             'x_min_pixel': 5.005,
             'x_max_pixel': 6.006,
             'background_flag': 'background_flag',
@@ -185,36 +138,20 @@ class TestLoadingConfiguration(object):
             'norm_full_file_name': 'normFullFileName1,normFullFileName2',
         }
 
-        def side_effect(node, arg):
-            return values[arg]
+        def side_effect(_, arg, default=""):
+            return values.get(arg, default)
 
-        loadingConfiguration.getNodeValue = mock.Mock()
-        loadingConfiguration.getNodeValue.side_effect = side_effect
+        # getNodeValue() will read data from dict `values`, instead of read from some configuration file
+        loader.getNodeValue = mock.Mock()
+        loader.getNodeValue.side_effect = side_effect
 
-        iMetadata = loadingConfiguration.getMetadataObject(mockNode)
+        config = loader.getMetadataObject(node_mock)
 
-        loadingConfiguration.getNodeValue.assert_has_calls([mock.call(mockNode, k) for k in values.keys()])
-        assert iMetadata.data_peak[0] == values['from_peak_pixels']
-        assert iMetadata.data_peak[1] == values['to_peak_pixels']
-
-        assert iMetadata.data_back[0] == values['back_roi1_from']
-        assert iMetadata.data_back[1] == values['back_roi1_to']
-
-        metaDict = iMetadata.__dict__
-
-        expectedValue = 1.001
-        for key, value in metaDict.items():
-            print(key, value)
-            if isinstance(value, list):
-                for item in value:
-                    if key == 'tof_range':
-                        self.evaluate(expectedValue, float(item) / 1000)
-                        expectedValue += 1.001
-                    elif self.evaluate(expectedValue, item):
-                        expectedValue += 1.001
-            else:
-                if self.evaluate(expectedValue, value):
-                    expectedValue += 1.001
+        assert config.data_peak[0] == values['from_peak_pixels']
+        assert config.data_peak[1] == values['to_peak_pixels']
+        assert config.data_back[0] == values['back_roi1_from']
+        assert config.data_back[1] == values['back_roi1_to']
+        assert config.data_low_res == [values['x_min_pixel'], values['x_max_pixel']]
 
 
 if __name__ == '__main__':

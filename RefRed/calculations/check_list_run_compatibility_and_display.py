@@ -87,7 +87,7 @@ class CheckListRunCompatibilityAndDisplay(object):
         lrdata = self.lrdata
         UpdateReductionTableMetadata(parent=self.parent, lrdata=lrdata, row=row)
 
-    def update_lconfigdataset(self):
+    def update_lconfigdataset(self) -> None:
         runs_are_compatible = self.runs_are_compatible
         big_table_data: TableData = self.parent.big_table_data
         _lconfig = big_table_data.reduction_config(self.row)
@@ -95,12 +95,12 @@ class CheckListRunCompatibilityAndDisplay(object):
             _lconfig = LConfigDataset()
 
         if self.is_working_with_data_column:
-            _lconfig.data_full_file_anme = self.list_nexus
+            _lconfig.data_full_file_name = self.list_nexus
             _lconfig.data_sets = self.list_run
             _lconfig.data_wks = self.wks
             _lconfig.data_runs_compatible = runs_are_compatible
         else:
-            _lconfig.norm_full_file_anme = self.list_nexus
+            _lconfig.norm_full_file_name = self.list_nexus
             _lconfig.norm_sets = self.list_run
             _lconfig.norm_wks = self.wks
             _lconfig.norm_runs_compatible = runs_are_compatible

@@ -6,6 +6,7 @@ import sys
 import os
 from pathlib import Path
 from qtpy import QtGui, QtCore, QtWidgets
+from qtpy.QtWidgets import QFileDialog
 import numpy as np
 import logging
 import time
@@ -233,7 +234,7 @@ class SFCalculator(QtWidgets.QMainWindow):
         self.fileHasBeenModified()
 
     def browseFile(self):
-        file_name, _ = QtWidgets.QFileDialog.getSaveFileName(
+        file_name, _ = QFileDialog.getSaveFileName(
             self,  # parent widget
             "Open Configuration File",  # dialog title
             self.save_directory,  # opening directory
@@ -561,8 +562,7 @@ class SFCalculator(QtWidgets.QMainWindow):
             back_from = int(self.dataBackFromValue.text())
             peak_to = int(self.dataPeakToValue.text())
             peak_from = int(self.dataPeakFromValue.text())
-            back_flag = self.dataBackgroundFlag.isChecked()
-
+            back_flag = bool(self.dataBackgroundFlag.isChecked())
             _show_widgets_1 = False
             _show_widgets_2 = False
 

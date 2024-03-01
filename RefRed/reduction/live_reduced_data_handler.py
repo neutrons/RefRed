@@ -15,7 +15,7 @@ class LiveReducedDataHandler(object):
 
     def __init__(self, parent=None, row_index=0):
         self.parent = parent
-        self.big_table_data: TableData = self.parent.big_table_data
+        self.big_table_data: TableData = self.parent.big_table_data  # type: ignore
         self.colors = RefRed.colors.COLOR_LIST
         self.row_index = row_index
 

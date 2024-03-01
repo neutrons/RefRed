@@ -1,5 +1,5 @@
 from qtpy import QtWidgets
-from qtpy.QtCore import Qt
+from qtpy.QtCore import Qt  # type: ignore
 import numpy as np
 
 from RefRed.gui_handling.gui_utility import GuiUtility

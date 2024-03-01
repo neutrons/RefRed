@@ -1,15 +1,17 @@
-import sys
-
-import pytest
+# standard imports
 from unittest import mock
 
-import qtpy.QtWidgets
-
-from RefRed.sf_calculator.reduction_sf_calculator import ReductionSfCalculator
-import numpy as np
-import qtpy
-from qtpy.QtWidgets import QTableWidgetItem
+# third-party imports
 import mantid.simpleapi
+import numpy as np
+import pytest
+import qtpy
+import qtpy.QtWidgets
+from qtpy.QtWidgets import QTableWidgetItem
+
+# RefRed imports
+from RefRed.main import MainGui
+from RefRed.sf_calculator.reduction_sf_calculator import ReductionSfCalculator
 
 
 def mock_table_row_count(*args, **kwargs):
@@ -44,12 +46,11 @@ def mock_table_row_cell(row, col):
     return spin_box_instance
 
 
-@mock.patch('qtpy.QtWidgets.QApplication.processEvents')
-def test_init_reduction_sf_calculator(sf_process_events):
+@mock.patch('RefRed.sf_calculator.reduction_sf_calculator.QApplication.processEvents')
+def test_init_reduction_sf_calculator(processEvents_mock, qtbot):
     """Test reduction sf calculator"""
-    # Set up QApplication
-    main_app = qtpy.QtWidgets.QApplication(sys.argv)
-    assert main_app
+    main_app = MainGui()
+    qtbot.addWidget(main_app)
 
     # Mock SF calculation
     sf_gui = mock.Mock()
@@ -84,7 +85,7 @@ def test_init_reduction_sf_calculator(sf_process_events):
     test_reducer._handle_request()
 
     # Test
-    assert sf_process_events.iscalled
+    assert processEvents_mock.iscalled
 
 
 class GoldValues:

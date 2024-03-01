@@ -985,7 +985,71 @@
              <item>
               <widget class="QSpinBox" name="plot2dBack2FromValue">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
+               </property>
+               <property name="palette">
+                <palette>
+                 <active>
+                  <colorrole role="Text">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="255">
+                     <red>255</red>
+                     <green>120</green>
+                     <blue>0</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                  <colorrole role="PlaceholderText">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="128">
+                     <red>255</red>
+                     <green>120</green>
+                     <blue>0</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                 </active>
+                 <inactive>
+                  <colorrole role="Text">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="255">
+                     <red>255</red>
+                     <green>120</green>
+                     <blue>0</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                  <colorrole role="PlaceholderText">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="128">
+                     <red>255</red>
+                     <green>120</green>
+                     <blue>0</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                 </inactive>
+                 <disabled>
+                  <colorrole role="Text">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="255">
+                     <red>190</red>
+                     <green>190</green>
+                     <blue>190</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                  <colorrole role="PlaceholderText">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="128">
+                     <red>0</red>
+                     <green>0</green>
+                     <blue>0</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                 </disabled>
+                </palette>
                </property>
                <property name="maximum">
                 <number>255</number>
@@ -1013,7 +1077,71 @@
              <item>
               <widget class="QSpinBox" name="plot2dBack2ToValue">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
+               </property>
+               <property name="palette">
+                <palette>
+                 <active>
+                  <colorrole role="Text">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="255">
+                     <red>255</red>
+                     <green>120</green>
+                     <blue>0</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                  <colorrole role="PlaceholderText">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="128">
+                     <red>255</red>
+                     <green>120</green>
+                     <blue>0</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                 </active>
+                 <inactive>
+                  <colorrole role="Text">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="255">
+                     <red>255</red>
+                     <green>120</green>
+                     <blue>0</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                  <colorrole role="PlaceholderText">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="128">
+                     <red>255</red>
+                     <green>120</green>
+                     <blue>0</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                 </inactive>
+                 <disabled>
+                  <colorrole role="Text">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="255">
+                     <red>190</red>
+                     <green>190</green>
+                     <blue>190</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                  <colorrole role="PlaceholderText">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="128">
+                     <red>0</red>
+                     <green>0</green>
+                     <blue>0</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                 </disabled>
+                </palette>
                </property>
                <property name="maximum">
                 <number>255</number>
@@ -1044,7 +1172,10 @@
         </layout>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="backgroundSettingsPushButton">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;opens the backgrounds-settings dialog&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
          <property name="text">
           <string>Background</string>
          </property>
@@ -1052,15 +1183,8 @@
           <iconset resource="../icons/icons.qrc">
            <normaloff>:/General/cogwheel.png</normaloff>:/General/cogwheel.png</iconset>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="plot2d_back_flag">
-         <property name="text">
-          <string>with background</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
+         <property name="autoDefault">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -1108,22 +1232,6 @@
   <include location="../icons/icons.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>plot2d_back_flag</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>Dialog</receiver>
-   <slot>activate_or_not_back_widgets()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1212</x>
-     <y>274</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>689</x>
-     <y>593</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>tof_from</sender>
    <signal>editingFinished()</signal>
@@ -1272,7 +1380,7 @@
    <sender>plot2dBackFromValue</sender>
    <signal>editingFinished()</signal>
    <receiver>Dialog</receiver>
-   <slot>manual_input_back1()</slot>
+   <slot>manual_input_background()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>1244</x>
@@ -1288,7 +1396,7 @@
    <sender>plot2dBackToValue</sender>
    <signal>editingFinished()</signal>
    <receiver>Dialog</receiver>
-   <slot>manual_input_back2()</slot>
+   <slot>manual_input_background()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>1244</x>
@@ -1364,6 +1472,86 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>backgroundSettingsPushButton</sender>
+   <signal>pressed()</signal>
+   <receiver>Dialog</receiver>
+   <slot>display_background_settings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1252</x>
+     <y>587</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>671</x>
+     <y>487</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plot2dBack2FromValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>Dialog</receiver>
+   <slot>manual_input_background()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1282</x>
+     <y>524</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>671</x>
+     <y>487</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plot2dBack2FromValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>plot2d_back2_from_spinbox_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1282</x>
+     <y>524</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>671</x>
+     <y>487</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plot2dBack2ToValue</sender>
+   <signal>editingFinished()</signal>
+   <receiver>Dialog</receiver>
+   <slot>manual_input_background()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1282</x>
+     <y>564</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>671</x>
+     <y>487</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plot2dBack2ToValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>plot2d_back2_to_spinbox_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1282</x>
+     <y>564</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>671</x>
+     <y>487</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>activate_or_not_low_res_widgets()</slot>
@@ -1373,12 +1561,14 @@
   <slot>manual_input_of_tof_field()</slot>
   <slot>manual_auto_tof_clicked()</slot>
   <slot>manual_input_peak1()</slot>
+  <slot>display_background_settings()</slot>
   <slot>plot2d_peak_from_spinbox_value_changed()</slot>
   <slot>manual_input_peak2()</slot>
   <slot>plot2d_peak_to_spinbox_value_changed()</slot>
-  <slot>manual_input_back1()</slot>
+  <slot>manual_input_background()</slot>
   <slot>plot2d_back_from_spinbox_value_changed()</slot>
-  <slot>manual_input_back2()</slot>
   <slot>plot2d_back_to_spinbox_value_changed()</slot>
+  <slot>plot2d_back2_from_spinbox_value_changed()</slot>
+  <slot>plot2d_back2_to_spinbox_value_changed()</slot>
  </slots>
 </ui>

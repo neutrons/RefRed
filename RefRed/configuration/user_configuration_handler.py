@@ -1,4 +1,4 @@
-from qtpy.QtCore import QSettings
+from qtpy.QtCore import QSettings  # type: ignore
 import os
 from RefRed import ORGANIZATION, APPNAME
 from RefRed.configuration.user_configuration import UserConfiguration

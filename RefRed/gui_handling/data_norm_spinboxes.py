@@ -2,6 +2,7 @@
 from typing import List
 
 # third party imports
+from qtpy.QtWidgets import QWidget
 
 # application imports
 from RefRed.gui_handling.gui_utility import GuiUtility
@@ -13,7 +14,7 @@ class SpinBox(object):
 
     parent = None
 
-    def __init__(self, parent=None, is_data=True, entry_type='peak', value_min=-1, value_max=-1, flag=True):
+    def __init__(self, parent=None, is_data=True, entry_type: str = 'peak', value_min=-1, value_max=-1, flag=True):
         self.parent = parent
         big_table_data: TableData = parent.big_table_data
         gui_utility = GuiUtility(parent=self.parent)
@@ -33,7 +34,8 @@ class SpinBox(object):
             if is_data:
                 data = big_table_data.reflectometry_data(row_index)
             else:
-                data = big_table_data.normalization_data(row_index)
+                data = big_table_data.normalization_data(row_index)  # type: ignore
+                assert data is not None
 
             val1 = value_min
             val2 = value_max
@@ -50,15 +52,16 @@ class SpinBox(object):
             is_plot_it = False
             is_plot_ix = False
             if entry_type == 'peak':
-                data.peak = [str(val_min), str(val_max)]
+                data.peak = [val_min, val_max]
             elif entry_type == 'back':
-                data.back = [str(val_min), str(val_max)]
-                data.back_flag = flag
+                data.back = [val_min, val_max]
+            elif entry_type == 'back2':
+                data.back2 = [val_min, val_max]
             elif entry_type == 'low_res':
                 is_plot_yt = False
                 is_plot_yi = False
                 is_plot_ix = True
-                data.low_res = [str(val_min), str(val_max)]
+                data.low_res = [val_min, val_max]
                 data.low_res_flag = flag
             else:
                 raise RuntimeError("unexpected entry type")
@@ -108,15 +111,26 @@ class DataPeakSpinbox(object):
 
 
 class DataBackSpinbox(object):
-    r"""TODO: document this class"""
+    r"""Validator for the SpinBoxes holding the lower and upper boundaries for the two backgrounds of the
+    reflectivity data.
+
+    Parameters
+    ----------
+    parent
+        Widget owning the spinbox
+    entry_type
+        One of "back" or "back2", denoting the first or the second background ROI's
+    """
     parent = None
 
-    def __init__(self, parent=None):
-        self.parent = parent
-        back1 = self.parent.ui.backFromValue.value()
-        back2 = self.parent.ui.backToValue.value()
-        back_flag = self.parent.ui.dataBackgroundFlag.isChecked()
-        DataSpinbox(parent=parent, entry_type='back', value_min=back1, value_max=back2, flag=back_flag)
+    def __init__(self, parent: QWidget, entry_type: str = 'back'):
+        if entry_type == 'back':
+            back1, back2 = parent.ui.backFromValue.value(), parent.ui.backToValue.value()
+        elif entry_type == 'back2':
+            back1, back2 = parent.ui.back2FromValue.value(), parent.ui.back2ToValue.value()
+        else:
+            raise ValueError("Valid `entry_type` options are 'back', 'back2'")
+        DataSpinbox(parent=parent, entry_type=entry_type, value_min=back1, value_max=back2)
 
 
 class NormPeakSpinbox(object):
@@ -131,15 +145,26 @@ class NormPeakSpinbox(object):
 
 
 class NormBackSpinbox(object):
+    r"""Validator for the SpinBoxes holding the lower and upper boundaries for the two backgrounds of the
+    normalization data.
 
+    Parameters
+    ----------
+    parent
+        Widget owning the spinbox
+    entry_type
+        One of "back" or "back2", denoting the first or the second background ROI's
+    """
     parent = None
 
-    def __init__(self, parent=None):
-        self.parent = parent
-        back1 = self.parent.ui.normBackFromValue.value()
-        back2 = self.parent.ui.normBackToValue.value()
-        back_flag = self.parent.ui.normBackgroundFlag.isChecked()
-        NormSpinbox(parent=parent, entry_type='back', value_min=back1, value_max=back2, flag=back_flag)
+    def __init__(self, parent: QWidget, entry_type: str = "back"):
+        if entry_type == 'back':
+            back1, back2 = parent.ui.normBackFromValue.value(), parent.ui.normBackToValue.value()
+        elif entry_type == 'back2':
+            back1, back2 = parent.ui.normBack2FromValue.value(), parent.ui.normBack2ToValue.value()
+        else:
+            raise ValueError(f"entry_type '{entry_type}' is not valid. Valid options are 'back', 'back2'")
+        NormSpinbox(parent=parent, entry_type=entry_type, value_min=back1, value_max=back2)
 
 
 class DataLowResSpinbox(object):

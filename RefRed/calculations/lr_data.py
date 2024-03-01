@@ -1,11 +1,17 @@
-import numpy as np
+# standard imports
 import logging
 import math
+from typing import List, Optional, Type
 
+# third-party imports
 from mantid.api import mtd
 from mantid.simpleapi import Rebin
-from RefRed.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
+import numpy as np
+
+# package imports
+from RefRed.lconfigdataset import LConfigDataset
 from RefRed.low_res_finder_algorithms.low_res_finder import LowResFinder
+from RefRed.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
 from RefRed.plot.all_plot_axis import AllPlotAxis
 from RefRed.utilities import convert_angle
 
@@ -30,7 +36,7 @@ class LRData(object):
     tof_range_auto_flag = True
     tof_range_auto_with_margin = []
 
-    low_res = ['0', '255']
+    low_res = [0, 255]
     low_res_flag = True
     use_it_flag = True
     full_file_name = ['']
@@ -40,7 +46,14 @@ class LRData(object):
     is_better_chopper_coverage = True
     total_counts = 0
 
-    def __init__(self, workspace, lconfig=None, is_data=True, parent=None, reduction_table_cell=None):
+    def __init__(
+        self,
+        workspace,
+        lconfig: Optional[LConfigDataset] = None,
+        is_data=True,
+        parent=None,
+        reduction_table_cell: Optional[Type["LRData"]] = None,
+    ):
         """
         Constructor for LRData class
 
@@ -56,11 +69,11 @@ class LRData(object):
             raise ValueError("Can't use both lconfig and reduction_table_cell")
 
         self.parent = parent
-        self._tof_axis = []
-        self.Ixyt = []
+        self._tof_axis: List[float] = []
+        self.Ixyt: List[float] = []
 
-        self.countxdata = []
-        self.ycountsdata = []
+        self.countxdata: List[int] = []
+        self.ycountsdata: List[int] = []
         self.workspace_name = str(workspace)
         workspace = mtd[self.workspace_name]  # convert to workspace pointer
 
@@ -165,9 +178,13 @@ class LRData(object):
         self.proton_charge = _proton_charge * 3.6  # to go from microA/h to mC
         self.proton_charge_units = new_proton_charge_units
 
-        self.peak = [0, 0]
-        self.back = [0, 0]
-        self.back_flag = True
+        self.peak: List[int] = [0, 0]  # lower and upper boundaries for the peak
+        self.back: List[int] = [0, 0]  # lower and upper boundaries for the first background
+        self.back2: List[int] = [0, 0]  # lower and upper boundaries for the second background
+        self.back_flag: bool = True
+        self.functional_background: bool = False
+        self.two_backgrounds: bool = False
+
         self.all_plot_axis = AllPlotAxis()
         self.tof_auto_flag = True
         self.new_detector_geometry_flag = self.is_nexus_taken_after_refDate()
@@ -180,15 +197,22 @@ class LRData(object):
             if is_data:
                 self.peak = [int(lconfig.data_peak[0]), int(lconfig.data_peak[1])]
                 self.back = [int(lconfig.data_back[0]), int(lconfig.data_back[1])]
+                self.back2 = [int(lconfig.data_back2[0]), int(lconfig.data_back2[1])]
+
                 self.low_res = [int(lconfig.data_low_res[0]), int(lconfig.data_low_res[1])]
                 self.low_res_flag = bool(lconfig.data_low_res_flag)
                 self.back_flag = bool(lconfig.data_back_flag)
+                self.functional_background = bool(lconfig.data_functional_background)
+                self.two_backgrounds = bool(lconfig.data_two_backgrounds)
             else:
                 self.peak = [int(lconfig.norm_peak[0]), int(lconfig.norm_peak[1])]
                 self.back = [int(lconfig.norm_back[0]), int(lconfig.norm_back[1])]
+                self.back2 = [int(lconfig.norm_back2[0]), int(lconfig.norm_back2[1])]
                 self.low_res = [int(lconfig.norm_low_res[0]), int(lconfig.norm_low_res[1])]
                 self.low_res_flag = bool(lconfig.norm_low_res_flag)
                 self.back_flag = bool(lconfig.norm_back_flag)
+                self.functional_background = bool(lconfig.norm_functional_background)
+                self.two_backgrounds = bool(lconfig.norm_two_backgrounds)
 
         elif reduction_table_cell is not None:
             self.tof_auto_flag = reduction_table_cell.tof_auto_flag
@@ -197,23 +221,26 @@ class LRData(object):
             self.tof_range_manual = reduction_table_cell.tof_range_auto
             self.peak = reduction_table_cell.peak
             self.back = reduction_table_cell.back
+            self.back2 = reduction_table_cell.back2
             self.low_res = reduction_table_cell.low_res
             self.low_res_flag = reduction_table_cell.low_res_flag
             self.back_flag = reduction_table_cell.back_flag
+            self.functional_background = reduction_table_cell.functional_background
+            self.two_backgrounds = reduction_table_cell.two_backgrounds
 
         else:
             pf = PeakFinderDerivation(list(range(len(self.ycountsdata))), self.ycountsdata)
             [peak1, peak2] = pf.getPeaks()
-            self.peak = [str(peak1), str(peak2)]
+            self.peak = [int(peak1), int(peak2)]
 
             backOffsetFromPeak = self.read_options['back_offset_from_peak']
             back1 = int(peak1 - backOffsetFromPeak)
             back2 = int(peak2 + backOffsetFromPeak)
-            self.back = [str(back1), str(back2)]
+            self.back = [back1, back2]
 
             lw_pf = LowResFinder(list(range(len(self.countsxdata))), self.countsxdata)
             [lowres1, lowres2] = lw_pf.get_low_res()
-            self.low_res = [str(lowres1), str(lowres2)]
+            self.low_res = [int(lowres1), int(lowres2)]
 
     # Properties for easy data access
     # return the size of the data stored in memory for this dataset

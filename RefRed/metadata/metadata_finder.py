@@ -8,7 +8,7 @@ from qtpy.QtWidgets import (
     QMessageBox,
     QPushButton,
 )
-from qtpy.QtCore import Qt, QSize, QSettings
+from qtpy.QtCore import Qt, QSize, QSettings  # type: ignore
 from mantid.simpleapi import LoadEventNexus
 import os
 import time

@@ -6,7 +6,7 @@ from pathlib import Path
 # third party imports
 from qtpy.QtGui import QPixmap, QIcon
 from qtpy.QtWidgets import QMainWindow, QCheckBox, QTableWidgetItem, QFileDialog
-from qtpy.QtCore import QSize, QSettings
+from qtpy.QtCore import QSize, QSettings  # type: ignore
 import numpy as np
 
 # application imports

@@ -62,6 +62,9 @@ class Gui(object):
 
         self.parent.ui.sf_button.setChecked(True)
 
+        # Select the `DATA` tab as the currently active one
+        self.parent.ui.dataNormTabWidget.setCurrentIndex(0)  # 0: DATA, 1: NORMALIZATION
+
     def init_autopopulate_widgets(self):
         pixmap = QtGui.QPixmap(":/General/check_icon.png")
         self.parent.ui.check1.setFixedWidth(25)
@@ -138,7 +141,7 @@ class Gui(object):
                     _widget = QtWidgets.QCheckBox()
                     _widget.setChecked(False)
                     _widget.setEnabled(True)
-
+                    # action to take when a checkbox is either unchecked (state==0) or checked (state==2)
                     _signal_func = lambda state=0, row=row_index: self.parent.reduction_table_visibility_changed_test(  # noqa: E501, E731
                         state, row
                     )
@@ -206,11 +209,11 @@ class Gui(object):
             parent.path_ascii = local_data_base
         print("Using database in", parent.path_ascii)
 
-    def init_error_label_widgets(self):
+    def init_error_label_widgets(self) -> None:
         """will hide the error label by default"""
-        parent = self.parent
+        parent: QtWidgets.QWidget = self.parent
         palette = QtGui.QPalette()
-        palette.setColor(QtGui.QPalette.Foreground, QtCore.Qt.red)
+        palette.setColor(QtGui.QPalette.Foreground, QtCore.Qt.red)  # type: ignore
 
         for label_text in (
             "peakFromError",
@@ -224,14 +227,24 @@ class Gui(object):
             label.setVisible(False)
             label.setPalette(palette)
 
-        parent.ui.norm_peak1_error.setVisible(False)
-        parent.ui.norm_peak1_error.setPalette(palette)
-        parent.ui.norm_peak2_error.setVisible(False)
-        parent.ui.norm_peak2_error.setPalette(palette)
-        parent.ui.norm_back1_error.setVisible(False)
-        parent.ui.norm_back1_error.setPalette(palette)
-        parent.ui.norm_back2_error.setVisible(False)
-        parent.ui.norm_back2_error.setPalette(palette)
+        parent.ui.normPeakFromError.setVisible(False)
+        parent.ui.normPeakFromError.setPalette(palette)
+
+        parent.ui.normPeakToError.setVisible(False)
+        parent.ui.normPeakToError.setPalette(palette)
+
+        parent.ui.normBackFromError.setVisible(False)
+        parent.ui.normBackFromError.setPalette(palette)
+
+        parent.ui.normBackToError.setVisible(False)
+        parent.ui.normBackToError.setPalette(palette)
+
+        parent.ui.normBack2FromError.setVisible(False)
+        parent.ui.normBack2FromError.setPalette(palette)
+
+        parent.ui.normBack2ToError.setVisible(False)
+        parent.ui.normBack2ToError.setPalette(palette)
+
         parent.ui.data_selection_error_label.setVisible(False)
         parent.ui.data_selection_error_label.setPalette(palette)
         parent.ui.norm_selection_error_label.setVisible(False)

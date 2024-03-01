@@ -4,8 +4,10 @@ import bisect
 # third party imports
 
 # application imports
+from RefRed.calculations.lr_data import LRData
 import RefRed.colors as colors
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
+from RefRed.plot.background_settings import backgrounds_settings
 from RefRed.plot.clear_plots import ClearPlots
 from RefRed.tabledata import TableData
 
@@ -33,13 +35,14 @@ class DisplayPlots(object):
         plot_ix=True,
         plot_stitched=False,
         refresh_reduction_table=True,
-    ):
+    ) -> None:
         if row == -1:
             return
 
         self.parent = parent
         is_norm = not is_data
         self.is_data = is_data
+        self.data_type = "data" if is_data else "norm"
 
         if is_data:
             self.col = 0
@@ -47,11 +50,13 @@ class DisplayPlots(object):
             self.col = 1
         self.row = row
 
+        self.backgrounds_settings = backgrounds_settings[self.data_type]
+
         big_table_data: TableData = self.parent.big_table_data
         if is_data:
-            _data = big_table_data.reflectometry_data(row)
+            _data: LRData = big_table_data.reflectometry_data(row)
         else:
-            _data = big_table_data.normalization_data(row)
+            _data = big_table_data.normalization_data(row)  # type: ignore
 
         if _data is None:
             ClearPlots(
@@ -106,19 +111,19 @@ class DisplayPlots(object):
 
         self.peak = self.sortIntArray(_data.peak)
         self.back = self.sortIntArray(_data.back)
+        self.back2 = self.sortIntArray(_data.back2)
 
         self.lowRes = self.sortIntArray(_data.low_res)
-        self.backFlag = bool(_data.back_flag)
         self.lowResFlag = bool(_data.low_res_flag)
 
         o_update_plot_widgets = UpdatePlotWidgetStatus(parent=parent)
 
         if is_data:
             self.workWithData(update_reduction_table=refresh_reduction_table)
-            o_update_plot_widgets.enable_data()
+            o_update_plot_widgets.enable_data()  # set all widgets accessible
         else:
             self.workWithNorm(update_reduction_table=refresh_reduction_table)
-            o_update_plot_widgets.enable_norm()
+            o_update_plot_widgets.enable_norm()  # set all widgets accessible
 
         if plot_yt:
             ClearPlots(self.parent, plot_yt=True, is_data=is_data, is_norm=is_norm)
@@ -250,9 +255,12 @@ class DisplayPlots(object):
         self.yi_plot_ui.canvas.ax.axhline(self.peak[0], color=colors.PEAK_SELECTION_COLOR)
         self.yi_plot_ui.canvas.ax.axhline(self.peak[1], color=colors.PEAK_SELECTION_COLOR)
 
-        if self.backFlag:
+        if self.backgrounds_settings.subtract_background:
             self.yi_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR)
             self.yi_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR)
+            if self.backgrounds_settings.two_backgrounds:
+                self.yi_plot_ui.canvas.ax.axhline(self.back2[0], color=colors.BACK2_SELECTION_COLOR)
+                self.yi_plot_ui.canvas.ax.axhline(self.back2[1], color=colors.BACK2_SELECTION_COLOR)
 
         if self._data.all_plot_axis.is_yi_xlog:
             self.yi_plot_ui.canvas.ax.set_xscale("log")
@@ -322,9 +330,12 @@ class DisplayPlots(object):
         self.yt_plot_ui.canvas.ax.axhline(self.peak[0], color=colors.PEAK_SELECTION_COLOR)
         self.yt_plot_ui.canvas.ax.axhline(self.peak[1], color=colors.PEAK_SELECTION_COLOR)
 
-        if self.backFlag:
+        if self.backgrounds_settings.subtract_background:
             self.yt_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR)
             self.yt_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR)
+            if self.backgrounds_settings.two_backgrounds:
+                self.yt_plot_ui.canvas.ax.axhline(self.back2[0], color=colors.BACK2_SELECTION_COLOR)
+                self.yt_plot_ui.canvas.ax.axhline(self.back2[1], color=colors.BACK2_SELECTION_COLOR)
 
         if self._data.all_plot_axis.is_yt_ylog:
             self.yt_plot_ui.canvas.ax.set_yscale("log")
@@ -371,10 +382,11 @@ class DisplayPlots(object):
             parent.ui.normPeakFromValue.setValue(peak1)
             parent.ui.normPeakToValue.setValue(peak2)
 
-            [back1, back2] = self.back
-            parent.ui.normBackFromValue.setValue(back1)
-            parent.ui.normBackToValue.setValue(back2)
-            parent.ui.normBackgroundFlag.setChecked(self.backFlag)
+            parent.ui.normBackFromValue.setValue(self.back[0])
+            parent.ui.normBackToValue.setValue(self.back[1])
+
+            parent.ui.normBack2FromValue.setValue(self.back2[0])
+            parent.ui.normBack2ToValue.setValue(self.back2[1])
 
             [lowRes1, lowRes2] = self.lowRes
             parent.ui.normLowResFromValue.setValue(lowRes1)
@@ -394,10 +406,11 @@ class DisplayPlots(object):
             parent.ui.peakFromValue.setValue(peak1)
             parent.ui.peakToValue.setValue(peak2)
 
-            [back1, back2] = self.back
-            parent.ui.backFromValue.setValue(back1)
-            parent.ui.backToValue.setValue(back2)
-            parent.ui.dataBackgroundFlag.setChecked(self.backFlag)
+            parent.ui.backFromValue.setValue(self.back[0])
+            parent.ui.backToValue.setValue(self.back[1])
+
+            parent.ui.back2FromValue.setValue(self.back2[0])
+            parent.ui.back2ToValue.setValue(self.back2[1])
 
             [lowRes1, lowRes2] = self.lowRes
             parent.ui.dataLowResFromValue.setValue(lowRes1)

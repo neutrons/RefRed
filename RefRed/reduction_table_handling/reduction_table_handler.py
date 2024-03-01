@@ -2,7 +2,7 @@
 
 # third party imports
 from qtpy import QtWidgets, QtCore
-from qtpy.QtCore import Qt
+from qtpy.QtCore import Qt  # type: ignore
 
 # application imports
 from RefRed import WINDOW_TITLE

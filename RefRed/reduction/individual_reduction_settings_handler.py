@@ -6,6 +6,11 @@
     is saved if it's not used here. It creates confusion as to where we should
     keep this information.
 """
+# standard imports
+from typing import Any, List, Optional
+
+# package imports
+from RefRed.calculations.lr_data import LRData
 from RefRed.tabledata import TableData
 
 
@@ -19,14 +24,13 @@ class IndividualReductionSettingsHandler(object):
         self.parent = parent
         self.row_index = row_index
         self.big_table_data: TableData = self.parent.big_table_data
-        self.data = self.big_table_data.reflectometry_data(row_index)
-        self.norm = self.big_table_data.normalization_data(row_index)
+        self.data: LRData = self.big_table_data.reflectometry_data(row_index)
+        self.norm: Optional[LRData] = self.big_table_data.normalization_data(row_index)
         self.retrieve()
 
     def retrieve(self):
         self._data_run_numbers = self.get_data_run_numbers()
         self._data_peak_range = self.get_data_peak_range()
-        self._data_back_flag = self.get_data_back_flag()
         self._data_back_range = self.get_data_back_range()
         self._data_low_res_flag = self.get_data_low_res_flag()
         self._data_low_res_range = self.get_data_low_res_range()
@@ -34,14 +38,12 @@ class IndividualReductionSettingsHandler(object):
         if self.norm is None:
             self._norm_run_numbers = None
             self._norm_peak_range = None
-            self._norm_back_flag = None
             self._norm_back_range = None
             self._norm_low_res_flag = None
             self._norm_low_res_range = None
         else:
             self._norm_run_numbers = self.get_norm_run_numbers()
             self._norm_peak_range = self.get_norm_peak_range()
-            self._norm_back_flag = self.get_norm_back_flag()
             self._norm_back_range = self.get_norm_back_range()
             self._norm_low_res_flag = self.get_norm_low_res_flag()
             self._norm_low_res_range = self.get_norm_low_res_range()
@@ -54,16 +56,23 @@ class IndividualReductionSettingsHandler(object):
         Return a dictionary with the reduction options
         """
         self.retrieve()
+
+        def norm_setting(setting: str) -> Optional[Any]:
+            r"""Normalization data item, or None if we have no normalization"""
+            return None if self.norm is None else getattr(self.norm, setting)
+
         pars = dict(
             data_files=self._data_run_numbers,
             norm_file=self._norm_run_numbers,
             data_peak_range=self._data_peak_range,
-            subtract_background=self._data_back_flag,
+            subtract_background=self.data.back_flag,
+            two_backgrounds=self.data.two_backgrounds,  # should we use both background regions?
+            functional_background=self.data.functional_background,
             background_roi=self._data_back_range,
             data_x_range_flag=self._data_low_res_flag,
             data_x_range=self._data_low_res_range,
             norm_peak_range=self._norm_peak_range,
-            subtract_norm_background=self._norm_back_flag,
+            subtract_norm_background=norm_setting("back_flag"),
             norm_background_roi=self._norm_back_range,
             norm_x_range_flag=self._norm_low_res_flag,
             norm_x_range=self._norm_low_res_range,
@@ -134,29 +143,38 @@ class IndividualReductionSettingsHandler(object):
 
     def get_data_back_range(self):
         _data = self.data
-        return self.get_back_range(data=_data)
+        return self.get_back_range(data=_data, is_data=True)
 
     def get_norm_back_range(self):
         _norm = self.norm
-        return self.get_back_range(data=_norm)
+        return self.get_back_range(data=_norm, is_data=False)
 
-    def get_back_range(self, data=None):
-        back1 = int(data.back[0])
-        back2 = int(data.back[1])
-        back_min = min([back1, back2])
-        back_max = max([back1, back2])
-        return [back_min, back_max]
+    def get_back_range(self, data=None, is_data: bool = True) -> List[int]:
+        r"""
+        Genenerate a list containing the lower and upper bounds of the background regions.
 
-    def get_data_back_flag(self):
-        _data = self.data
-        return self.get_back_flag(data=_data)
+        For reflectivity data we return two background regions, and only one region for direct-beam data.
 
-    def get_norm_back_flag(self):
-        _norm = self.norm
-        return self.get_back_flag(data=_norm)
+        Parameters
+        ----------
+        data: LRData
+            either reflectivity or direct-beam data
+        is_data: bool
+            `True` for reflectivity data and `False` for direct-beam data
 
-    def get_back_flag(self, data=None):
-        return bool(data.back_flag)
+        Returns
+        -------
+            Single list containing the lower and upper ranges for the background regions
+        """
+        assert data
+
+        def sort_background(back: List[Any]):
+            return sorted([int(back[0]), int(back[1])])
+
+        if is_data:
+            return sort_background(data.back) + sort_background(data.back2)
+        else:
+            return sort_background(data.back)  # for direct-beam data, fetch only the first background
 
     def get_data_peak_range(self):
         _data = self.data

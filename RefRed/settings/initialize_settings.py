@@ -1,4 +1,4 @@
-from qtpy.QtCore import QSettings
+from qtpy.QtCore import QSettings  # type: ignore
 from RefRed import ORGANIZATION, APPNAME
 from RefRed.settings.list_settings import ListSettings
 

@@ -1,23 +1,38 @@
-# package imports
-from RefRed.plot.popup_plot_1d import PopupPlot1d
+# standard imports
+from unittest.mock import patch as mock_patch
 
-# third party imports
+# third-party imports
 import pytest
 from qtpy import QtCore
 
+# RefRed imports
+from RefRed.plot.popup_plot_1d import PopupPlot1d
+from RefRed.main import MainGui
 
-def test_popup_plot_1d(qtbot, main_gui):
-    window_main = main_gui(show=True)
 
-    # Using qtbot.mouseClick twice to emulate a double bring is not instantiating up the popup
-    # q_rectangle = yi_plot.contentsRect()
-    # qtbot.mouseClick(yi_plot, QtCore.Qt.LeftButton, pos=q_rectangle.center())
-    # qtbot.mouseClick(yi_plot, QtCore.Qt.LeftButton, pos=q_rectangle.center())
+def test_popup_plot_1d(qtbot, data_server):
+    window_main = MainGui()
+    qtbot.addWidget(window_main)
+    # window_main.show()  # Only for human inspection. This line should be commented once the test passes.
 
-    # resort to manually invoking the callback
+    def mock_file_dialog_opens(self):  # `self` is just one input argument, emphasizing we're mocking one class method
+        r"""mock opening QFileDialog and selecting one file for reading"""
+        return True
+
+    def mock_file_dialog_returns(self):
+        r"""mock returning the path to the file that's been opened for reading"""
+        return data_server.path_to("REF_L_188299_configuration.xml")
+
+    with mock_patch("RefRed.configuration.loading_configuration.QFileDialog.exec_", new=mock_file_dialog_opens):
+        with mock_patch(
+            "RefRed.configuration.loading_configuration.QFileDialog.selectedFiles", new=mock_file_dialog_returns
+        ):
+            window_main.load_configuration()  # load one data set, populates the first row in the reduction table
+
+    window_main.reduction_table_visibility_changed_test(state=1, row=0)  # click the first row in reduction-table
     window_main.single_click_data_yi_plot(True)
-    window_main.single_click_data_yi_plot(True)  # two single clicks emulating a double-click
-    popup = window_main.findChild(PopupPlot1d)
+    window_main.single_click_data_yi_plot(True)  # two single clicks emulate a double-click, instantiates a PopupPlot1d
+    popup = PopupPlot1d._open_instances[-1]  # reference to the recently instantiated PopupPlot1d object
     figure = popup.ui.plot_counts_vs_pixel  # an instance of MPLWidget
 
     def pixel(boundary: str):
@@ -55,12 +70,6 @@ def test_popup_plot_1d(qtbot, main_gui):
     # test changing the background boundaries
     assert_boundary("background left boundary", popup.ui.plotBackFromSpinBox, 127, old_value=126)
     assert_boundary("background right boundary", popup.ui.plotBackToSpinBox, 145, old_value=144)
-
-    # disable/enable background options. Assumed popup.ui.plot_back_flag is initially checked
-    for status in [False, True]:
-        qtbot.mouseClick(popup.ui.plot_back_flag, QtCore.Qt.LeftButton)
-        assert popup.ui.plotBackFromSpinBox.isEnabled() is status
-        assert popup.ui.plotBackToSpinBox.isEnabled() is status
 
 
 if __name__ == '__main__':

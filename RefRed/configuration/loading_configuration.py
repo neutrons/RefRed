@@ -2,9 +2,11 @@
 import logging
 import os
 from xml.dom import minidom
+from typing import Any
 
 # third party imports
 from qtpy import QtGui, QtCore, QtWidgets
+from qtpy.QtWidgets import QFileDialog
 
 # application imports
 from RefRed.configuration.load_reduction_table_from_lconfigdataset import (
@@ -39,8 +41,8 @@ class LoadingConfiguration(object):
         _path = self.parent.path_config
         _filter = "XML (*.xml);; All Files (*.*)"
         filename = ""
-        file_dialog = QtWidgets.QFileDialog(self.parent, 'Open Configuration File', _path, _filter)
-        file_dialog.setViewMode(QtWidgets.QFileDialog.List)
+        file_dialog = QFileDialog(self.parent, 'Open Configuration File', _path, _filter)
+        file_dialog.setViewMode(QFileDialog.List)
         if file_dialog.exec_():
             filename = file_dialog.selectedFiles()
         if isinstance(filename, list):
@@ -177,23 +179,35 @@ class LoadingConfiguration(object):
         o_scaling_factor_widget.checkbox(status=scaling_factor_flag)
         o_scaling_factor_widget.set_enabled(status=scaling_factor_flag)
 
-    def getMetadataObject(self, node):
+    def getMetadataObject(self, node) -> LConfigDataset:
+        r"""Populate an instance of type LConfigDataset using the information contained in one of the
+        'RefLData    XML blocks within a configuration file."""
+
+        def get_item_boolean(item_name: str, default) -> bool:
+            return str2bool(self.getNodeValue(node, item_name, default))
+
         iMetadata = LConfigDataset()
 
         _peak_min = self.getNodeValue(node, 'from_peak_pixels')
         _peak_max = self.getNodeValue(node, 'to_peak_pixels')
-        iMetadata.data_peak = [_peak_min, _peak_max]
+        iMetadata.data_peak = [int(_peak_min), int(_peak_max)]
 
         _back_min = self.getNodeValue(node, 'back_roi1_from')
         _back_max = self.getNodeValue(node, 'back_roi1_to')
-        iMetadata.data_back = [_back_min, _back_max]
+        iMetadata.data_back = [int(_back_min), int(_back_max)]
+
+        _back2_min = self.getNodeValue(node, 'back_roi2_from', default=0)
+        _back2_max = self.getNodeValue(node, 'back_roi2_to', default=0)
+        iMetadata.data_back2 = [int(_back2_min), (_back2_max)]
 
         _low_res_min = self.getNodeValue(node, 'x_min_pixel')
         _low_res_max = self.getNodeValue(node, 'x_max_pixel')
         iMetadata.data_low_res = [_low_res_min, _low_res_max]
 
-        _back_flag = str2bool(self.getNodeValue(node, 'background_flag'))
-        iMetadata.data_back_flag = _back_flag
+        # background settings for reflectivity data
+        iMetadata.data_back_flag = get_item_boolean("background_flag", default=True)
+        iMetadata.data_functional_background = get_item_boolean("functional_background", default=False)
+        iMetadata.data_two_backgrounds = get_item_boolean("two_backgrounds", default=False)
 
         _low_res_flag = str2bool(self.getNodeValue(node, 'x_range_flag'))
         iMetadata.data_low_res_flag = _low_res_flag
@@ -222,13 +236,17 @@ class LoadingConfiguration(object):
         _tof_auto = str2bool(self.getNodeValue(node, 'tof_range_flag'))
         iMetadata.tof_auto_flag = _tof_auto
 
-        _peak_min = self.getNodeValue(node, 'norm_from_peak_pixels')
-        _peak_max = self.getNodeValue(node, 'norm_to_peak_pixels')
-        iMetadata.norm_peak = [_peak_min, _peak_max]
+        _peak_min = self.getNodeValue(node, 'norm_from_peak_pixels', default=0)
+        _peak_max = self.getNodeValue(node, 'norm_to_peak_pixels', default=0)
+        iMetadata.norm_peak = [int(_peak_min), int(_peak_max)]
 
-        _back_min = self.getNodeValue(node, 'norm_from_back_pixels')
-        _back_max = self.getNodeValue(node, 'norm_to_back_pixels')
-        iMetadata.norm_back = [_back_min, _back_max]
+        _back_min = self.getNodeValue(node, 'norm_from_back_pixels', default=0)
+        _back_max = self.getNodeValue(node, 'norm_to_back_pixels', default=0)
+        iMetadata.norm_back = [int(_back_min), int(_back_max)]
+
+        _back2_min = self.getNodeValue(node, 'norm_from_back2_pixels', default=0)
+        _back2_max = self.getNodeValue(node, 'norm_to_back2_pixels', default=0)
+        iMetadata.norm_back2 = [int(_back2_min), int(_back2_max)]
 
         _norm_sets = self.getNodeValue(node, 'norm_dataset')
         _norm_sets = _norm_sets.split(',')
@@ -238,8 +256,10 @@ class LoadingConfiguration(object):
         _low_res_max = self.getNodeValue(node, 'norm_x_max')
         iMetadata.norm_low_res = [_low_res_min, _low_res_max]
 
-        _back_flag = str2bool(self.getNodeValue(node, 'norm_background_flag'))
-        iMetadata.norm_back_flag = _back_flag
+        # background settings for normalization data
+        iMetadata.norm_back_flag = get_item_boolean("norm_background_flag", default=True)
+        iMetadata.norm_functional_background = get_item_boolean("norm_functional_background", default=False)
+        iMetadata.norm_two_backgrounds = get_item_boolean("norm_two_backgrounds", default=False)
 
         _low_res_flag = str2bool(self.getNodeValue(node, 'norm_x_range_flag'))
         iMetadata.norm_low_res_flag = _low_res_flag
@@ -262,12 +282,12 @@ class LoadingConfiguration(object):
 
         return iMetadata
 
-    def getNodeValue(self, node, flag):
+    def getNodeValue(self, node, flag, default: Any = ""):
         try:
             _tmp = node.getElementsByTagName(flag)
             _value = _tmp[0].childNodes[0].nodeValue
         except:
-            _value = ''
+            _value = default
         return _value
 
     def clear_display(self):

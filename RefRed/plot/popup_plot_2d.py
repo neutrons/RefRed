@@ -1,24 +1,27 @@
+# standard imports
+from pathlib import Path
+import os
+
+# third-party imports
+from qtpy.QtCore import Qt  # type: ignore
 from qtpy.QtGui import QPalette
 from qtpy.QtWidgets import QDialog, QFileDialog
-from qtpy.QtCore import Qt
-import os
-from pathlib import Path
 
-from RefRed.interfaces import load_ui
-from RefRed.plot.display_plots import DisplayPlots
+# package imports
+import RefRed.colors
+from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.observer import SpinBoxObserver
-import RefRed.colors
+from RefRed.interfaces import load_ui
+from RefRed.plot.background_settings import backgrounds_settings, BackgroundSettingsView
+from RefRed.plot.display_plots import DisplayPlots
 import RefRed.utilities
-from RefRed.gui_handling.auto_tof_range_radio_button_handler import (
-    AutoTofRangeRadioButtonHandler,
-)
 
 
 class PopupPlot2d(QDialog):
 
     parent = None
-    _open_instances = []
+    _open_instances = []  # registry of PopupPlot2d instances
     data = None
     data_type = "data"
     row = 0
@@ -39,7 +42,7 @@ class PopupPlot2d(QDialog):
         self.is_data = True if data_type == "data" else False
         self.is_row_with_highest_q = self.is_row_with_higest_q()
         self.spinbox_observer = SpinBoxObserver()  # backup for spinbox values
-
+        self.background_settings = backgrounds_settings[data_type]
         QDialog.__init__(self, parent=parent)
         self.setWindowModality(False)
         self._open_instances.append(self)
@@ -142,7 +145,8 @@ class PopupPlot2d(QDialog):
             peak2,
             back1,
             back2,
-            backFlag,
+            back2_from,
+            back2_to,
         ] = self.retrieveLowResPeakBack()
 
         if lowresFlag:
@@ -152,9 +156,12 @@ class PopupPlot2d(QDialog):
         self.ui.detector_plot.canvas.ax.axhline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
         self.ui.detector_plot.canvas.ax.axhline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
 
-        if backFlag:
+        if self.background_settings.subtract_background:
             self.ui.detector_plot.canvas.ax.axhline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
             self.ui.detector_plot.canvas.ax.axhline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
+            if self.background_settings.two_backgrounds:
+                self.ui.detector_plot.canvas.ax.axhline(back2_from, color=RefRed.colors.BACK2_SELECTION_COLOR)
+                self.ui.detector_plot.canvas.ax.axhline(back2_to, color=RefRed.colors.BACK2_SELECTION_COLOR)
 
         if self.data.all_plot_axis.detector_data_interval is None:
             self.ui.detector_plot.draw()
@@ -191,7 +198,7 @@ class PopupPlot2d(QDialog):
         self.ui.y_pixel_vs_tof_plot.set_xlabel("t (ms)")
         self.ui.y_pixel_vs_tof_plot.set_ylabel("y (pixel)")
 
-        [tmin, tmax, peak1, peak2, back1, back2, backFlag] = self.retrieveTofPeakBack()
+        [tmin, tmax, peak1, peak2, back1, back2, back2_from, back2_to] = self.retrieveTofPeakBack()
 
         self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmin, color=RefRed.colors.TOF_SELECTION_COLOR)
         self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmax, color=RefRed.colors.TOF_SELECTION_COLOR)
@@ -199,9 +206,12 @@ class PopupPlot2d(QDialog):
         self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak1, color=RefRed.colors.PEAK_SELECTION_COLOR)
         self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak2, color=RefRed.colors.PEAK_SELECTION_COLOR)
 
-        if backFlag:
+        if self.background_settings.subtract_background:
             self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back1, color=RefRed.colors.BACK_SELECTION_COLOR)
             self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back2, color=RefRed.colors.BACK_SELECTION_COLOR)
+            if self.background_settings.two_backgrounds:
+                self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back2_from, color=RefRed.colors.BACK2_SELECTION_COLOR)
+                self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back2_to, color=RefRed.colors.BACK2_SELECTION_COLOR)
 
         if self.data.all_plot_axis.yt_data_interval is None:
             self.ui.y_pixel_vs_tof_plot.canvas.ax.set_ylim(0, pixel_to)
@@ -223,32 +233,26 @@ class PopupPlot2d(QDialog):
             self.ui.y_pixel_vs_tof_plot.canvas.ax.set_ylim([ymin, ymax])
             self.ui.y_pixel_vs_tof_plot.draw()
 
+    def retrievePeakBack(self):
+        return [
+            self.ui.plot2dPeakFromSpinBox.value(),
+            self.ui.plot2dPeakToSpinBox.value(),
+            self.ui.plot2dBackFromValue.value(),
+            self.ui.plot2dBackToValue.value(),
+            self.ui.plot2dBack2FromValue.value(),
+            self.ui.plot2dBack2ToValue.value(),
+        ]
+
     def retrieveTofPeakBack(self):
         tmin = float(self.ui.tof_from.text())
         tmax = float(self.ui.tof_to.text())
-        [peak1, peak2, back1, back2, backFlag] = self.retrievePeakBack()
-        return [tmin, tmax, peak1, peak2, back1, back2, backFlag]
-
-    def retrieveLowResPeakBack(self):
-        lowres1 = self.ui.low_res1.value()
-        lowres2 = self.ui.low_res2.value()
-        lowresFlag = self.ui.low_res_flag.isChecked()
-        [peak1, peak2, back1, back2, backFlag] = self.retrievePeakBack()
-        return [lowres1, lowres2, lowresFlag, peak1, peak2, back1, back2, backFlag]
+        return [tmin, tmax] + self.retrievePeakBack()
 
     def retrieveLowRes(self):
-        lowres1 = self.ui.low_res1.value()
-        lowres2 = self.ui.low_res2.value()
-        lowresFlag = self.ui.low_res_flag.isChecked()
-        return [lowres1, lowres2, lowresFlag]
+        return [self.ui.low_res1.value(), self.ui.low_res2.value(), self.ui.low_res_flag.isChecked()]
 
-    def retrievePeakBack(self):
-        peak1 = self.ui.plot2dPeakFromSpinBox.value()
-        peak2 = self.ui.plot2dPeakToSpinBox.value()
-        back1 = self.ui.plot2dBackFromValue.value()
-        back2 = self.ui.plot2dBackToValue.value()
-        backFlag = self.ui.plot2d_back_flag.isChecked()
-        return [peak1, peak2, back1, back2, backFlag]
+    def retrieveLowResPeakBack(self):
+        return self.retrieveLowRes() + self.retrievePeakBack()
 
     def init_gui(self):
         palette = QPalette()
@@ -266,19 +270,37 @@ class PopupPlot2d(QDialog):
 
         self.ui.plot2dPeakFromError.setVisible(False)
         self.ui.plot2dPeakFromError.setPalette(palette)
+
         self.ui.plot2dPeakToError.setVisible(False)
         self.ui.plot2dPeakToError.setPalette(palette)
+
         self.ui.plot2dBackFromError.setVisible(False)
         self.ui.plot2dBackFromError.setPalette(palette)
+
         self.ui.plot2dBackToError.setVisible(False)
         self.ui.plot2dBackToError.setPalette(palette)
+
+        self.ui.plot2dBack2FromError.setVisible(False)
+        self.ui.plot2dBack2FromError.setPalette(palette)
+
+        self.ui.plot2dBack2ToError.setVisible(False)
+        self.ui.plot2dBack2ToError.setPalette(palette)
+
+        # enable/disable background spinboxes based on the background settings
+        self.background_settings.control_spinboxes_visibility(
+            self.ui,
+            first_background=("plot2dBackFromValue", "plot2dBackToValue"),
+            second_background=("plot2dBack2FromValue", "plot2dBack2ToValue"),
+        )
+        # hide/show the background lines on the plots based on the background settings
+        self.background_settings.signal_first_background.connect(self.update_plots)
+        self.background_settings.signal_second_background.connect(self.update_plots)
 
     def populate_widgets(self):
         _data = self.data
 
         peak = _data.peak
         back = _data.back
-        back_flag = RefRed.utilities.str2bool(_data.back_flag)
         low_res = _data.low_res
         low_res_flag = RefRed.utilities.str2bool(_data.low_res_flag)
         tof_auto_flag = RefRed.utilities.str2bool(_data.tof_auto_flag)
@@ -314,16 +336,21 @@ class PopupPlot2d(QDialog):
         self.ui.plot2dBackFromValue.setValue(int(back[0]))
         self.ui.plot2dBackToValue.setValue(int(back[1]))
 
-        self.activate_or_not_back_widgets(back_flag)
+        self.ui.plot2dBack2FromValue.setValue(int(_data.back2[0]))
+        self.ui.plot2dBack2ToValue.setValue(int(_data.back2[1]))
+
+        self.activate_or_not_back_widgets()
 
         self.ui.low_res1.setValue(int(low_res[0]))
         self.ui.low_res2.setValue(int(low_res[1]))
         self.activate_or_not_low_res_widgets(low_res_flag)
 
-    def activate_or_not_back_widgets(self, back_flag):
-        self.ui.plot2d_back_flag.setChecked(back_flag)
-        self.ui.plot2dBackFromValue.setEnabled(back_flag)
-        self.ui.plot2dBackToValue.setEnabled(back_flag)
+    def activate_or_not_back_widgets(self):
+        self.background_settings.control_spinboxes_visibility(
+            parent=self.ui,
+            first_background=("plot2dBackFromValue", "plot2dBackToValue"),
+            second_background=("plot2dBack2FromValue", "plot2dBack2ToValue"),
+        )
         self.check_peak_back_input_validity()
         self.update_plots()
 
@@ -346,16 +373,26 @@ class PopupPlot2d(QDialog):
         back1 = self.ui.plot2dBackFromValue.value()
         back2 = self.ui.plot2dBackToValue.value()
         back_min = min([back1, back2])
-        # back_max = max([back1, back2])
         if back_min != back1:
             self.ui.plot2dBackFromValue.setValue(back2)
             self.ui.plot2dBackToValue.setValue(back1)
+
+        back1 = self.ui.plot2dBack2FromValue.value()
+        back2 = self.ui.plot2dBack2ToValue.value()
+        back_min = min([back1, back2])
+        if back_min != back1:
+            self.ui.plot2dBack2FromValue.setValue(back2)
+            self.ui.plot2dBack2ToValue.setValue(back1)
 
     def update_plots(self):
         self.update_pixel_vs_tof_tab_plot()
         self.update_detector_tab_plot()
 
     def manual_input_peak1(self):
+        self.sort_and_check_widgets()
+        self.update_plots()
+
+    def manual_input_peak2(self):
         self.sort_and_check_widgets()
         self.update_plots()
 
@@ -367,10 +404,6 @@ class PopupPlot2d(QDialog):
         if self.spinbox_observer.quantum_change(self.ui.plot2dPeakFromSpinBox):
             self.manual_input_peak1()
 
-    def manual_input_peak2(self):
-        self.sort_and_check_widgets()
-        self.update_plots()
-
     def plot2d_peak_to_spinbox_value_changed(self):
         r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox plot2dPeakToSpinBox.
         Only effect changes when the new value differs from the previous by one, indicating User
@@ -379,9 +412,12 @@ class PopupPlot2d(QDialog):
         if self.spinbox_observer.quantum_change(self.ui.plot2dPeakToSpinBox):
             self.manual_input_peak2()
 
-    def manual_input_back1(self):
+    def manual_input_background(self):
         self.sort_and_check_widgets()
         self.update_plots()
+
+    def display_background_settings(self, *args, **kwargs):
+        BackgroundSettingsView(parent=self, run_type=self.data_type).show()
 
     def plot2d_back_from_spinbox_value_changed(self):
         r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox plot2dBackFromValue.
@@ -389,11 +425,7 @@ class PopupPlot2d(QDialog):
         clicked on the Up or Down arrows of the QSpinBox.
         """
         if self.spinbox_observer.quantum_change(self.ui.plot2dBackFromValue):
-            self.manual_input_back1()
-
-    def manual_input_back2(self):
-        self.sort_and_check_widgets()
-        self.update_plots()
+            self.manual_input_background()
 
     def plot2d_back_to_spinbox_value_changed(self):
         r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox plot2dBackToValue.
@@ -401,7 +433,23 @@ class PopupPlot2d(QDialog):
         clicked on the Up or Down arrows of the QSpinBox.
         """
         if self.spinbox_observer.quantum_change(self.ui.plot2dBackToValue):
-            self.manual_input_back2()
+            self.manual_input_background()
+
+    def plot2d_back2_from_spinbox_value_changed(self):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox plot2dBack2FromValue.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
+        if self.spinbox_observer.quantum_change(self.ui.plot2dBack2FromValue):
+            self.manual_input_background()
+
+    def plot2d_back2_to_spinbox_value_changed(self):
+        r"""Slot handing signal QSpinBox.valueChanged(int) for QSpinBox plot2dBack2ToValue.
+        Only effect changes when the new value differs from the previous by one, indicating User
+        clicked on the Up or Down arrows of the QSpinBox.
+        """
+        if self.spinbox_observer.quantum_change(self.ui.plot2dBack2ToValue):
+            self.manual_input_background()
 
     def sort_and_check_widgets(self):
         self.sort_peak_back_input()
@@ -415,20 +463,27 @@ class PopupPlot2d(QDialog):
 
         _show_widgets_1 = False
         _show_widgets_2 = False
+        second_background_boundaries_unsorted = False
 
-        if self.ui.plot2d_back_flag.isChecked():
+        if self.background_settings.subtract_background:
             if back1 > peak1:
                 _show_widgets_1 = True
             if back2 < peak2:
                 _show_widgets_2 = True
+            if self.background_settings.two_backgrounds:
+                if self.data.back2[0] > self.data.back2[1]:
+                    second_background_boundaries_unsorted = True
 
-        self.ui.plot2dBackFromError.setVisible(_show_widgets_1)
         self.ui.plot2dPeakFromError.setVisible(_show_widgets_1)
+        self.ui.plot2dBackFromError.setVisible(_show_widgets_1)
+        self.ui.plot2dBack2FromError.setVisible(second_background_boundaries_unsorted)
 
-        self.ui.plot2dBackToError.setVisible(_show_widgets_2)
         self.ui.plot2dPeakToError.setVisible(_show_widgets_2)
+        self.ui.plot2dBackToError.setVisible(_show_widgets_2)
+        self.ui.plot2dBack2ToError.setVisible(second_background_boundaries_unsorted)
 
-        self.ui.error_label.setVisible(_show_widgets_1 or _show_widgets_2)
+        any_error = _show_widgets_1 or _show_widgets_2 or second_background_boundaries_unsorted
+        self.ui.error_label.setVisible(any_error)
 
     def manual_input_of_low_res_field(self):
         value1 = self.ui.low_res1.value()
@@ -475,7 +530,7 @@ class PopupPlot2d(QDialog):
 
     def closeEvent(self, event=None):
         [lowres1, lowres2, lowresFlag] = self.retrieveLowRes()
-        [tof1, tof2, peak1, peak2, back1, back2, backFlag] = self.retrieveTofPeakBack()
+        [tof1, tof2, peak1, peak2, back1, back2, back2_from, back2_to] = self.retrieveTofPeakBack()
         tof_auto_switch = self.ui.tof_auto_flag.isChecked()
 
         big_table_data = self.parent.big_table_data
@@ -483,7 +538,7 @@ class PopupPlot2d(QDialog):
         _data = big_table_data[self.row, self.col]
         _data.peak = [str(peak1), str(peak2)]
         _data.back = [str(back1), str(back2)]
-        _data.back_flag = backFlag
+        _data.back2 = [str(back2_from), str(back2_to)]
 
         _data.tof_range_auto = [self.auto_min_tof * 1000, self.auto_max_tof * 1000]
         _data.tof_range = [self.manual_min_tof * 1000, self.manual_max_tof * 1000]
@@ -514,34 +569,37 @@ class PopupPlot2d(QDialog):
         if self.data_type == "data":
             self.parent.ui.peakFromValue.setValue(peak1)
             self.parent.ui.peakToValue.setValue(peak2)
+
             self.parent.ui.backFromValue.setValue(back1)
             self.parent.ui.backToValue.setValue(back2)
-            self.parent.ui.dataBackgroundFlag.setChecked(backFlag)
-            # self.parent.data_peak_and_back_validation(False)
-            self.parent.ui.backBoundariesLabel.setEnabled(backFlag)
-            self.parent.ui.backFromValue.setEnabled(backFlag)
-            self.parent.ui.backToValue.setEnabled(backFlag)
+
+            self.parent.ui.back2FromValue.setValue(back2_from)
+            self.parent.ui.back2ToValue.setValue(back2_to)
+
             self.parent.ui.dataLowResFromValue.setValue(lowres1)
             self.parent.ui.dataLowResToValue.setValue(lowres2)
+
             self.parent.ui.dataLowResFromLabel.setEnabled(lowresFlag)
             self.parent.ui.dataLowResFromValue.setEnabled(lowresFlag)
+
             self.parent.ui.dataLowResToLabel.setEnabled(lowresFlag)
             self.parent.ui.dataLowResToValue.setEnabled(lowresFlag)
         else:
             self.parent.ui.normPeakFromValue.setValue(peak1)
             self.parent.ui.normPeakToValue.setValue(peak2)
+
             self.parent.ui.normBackFromValue.setValue(back1)
             self.parent.ui.normBackToValue.setValue(back2)
-            self.parent.ui.normBackgroundFlag.setChecked(backFlag)
-            # self.parent.norm_peak_and_back_validation(False)
-            self.parent.ui.normBackFromLabel.setEnabled(backFlag)
-            self.parent.ui.normBackFromValue.setEnabled(backFlag)
-            self.parent.ui.normBackToLabel.setEnabled(backFlag)
-            self.parent.ui.normBackToValue.setEnabled(backFlag)
+
+            self.parent.ui.normBack2FromValue.setValue(back2_from)
+            self.parent.ui.normBack2ToValue.setValue(back2_to)
+
             self.parent.ui.normLowResFromValue.setValue(lowres1)
             self.parent.ui.normLowResToValue.setValue(lowres2)
+
             self.parent.ui.normLowResFromLabel.setEnabled(lowresFlag)
             self.parent.ui.normLowResFromValue.setEnabled(lowresFlag)
+
             self.parent.ui.normLowResToLabel.setEnabled(lowresFlag)
             self.parent.ui.normLowResToValue.setEnabled(lowresFlag)
 
@@ -560,3 +618,5 @@ class PopupPlot2d(QDialog):
             o_auto_tof_range = AutoTofRangeRadioButtonHandler(parent=self.parent)
             o_auto_tof_range.setup()
             o_auto_tof_range.line_edit_validation()
+
+        self._open_instances.remove(self)  # remove this plot from the registry

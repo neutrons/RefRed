@@ -1,3 +1,5 @@
+# RefRed imports
+from RefRed.plot.background_settings import backgrounds_settings
 from RefRed.gui_handling.gui_utility import GuiUtility
 
 
@@ -41,11 +43,20 @@ class UpdatePlotWidgetStatus(object):
         parent.ui.dataLowResFromValue.setEnabled(status)
         parent.ui.dataLowResToLabel.setEnabled(status)
         parent.ui.dataLowResToValue.setEnabled(status)
-        parent.ui.backToValue.setEnabled(status)
-        parent.ui.backFromValue.setEnabled(status)
         parent.ui.peakToValue.setEnabled(status)
         parent.ui.peakFromValue.setEnabled(status)
-        parent.ui.dataBackgroundFlag.setEnabled(status)
+
+        # let the background settings ultimately control the spinboxes visibility
+        status_custom = status and backgrounds_settings["data"].subtract_background
+        parent.ui.backToValue.setEnabled(status_custom)
+        parent.ui.backFromValue.setEnabled(status_custom)
+        status_custom = (
+            status
+            and backgrounds_settings["data"].subtract_background
+            and backgrounds_settings["data"].two_backgrounds
+        )
+        parent.ui.back2ToValue.setEnabled(status_custom)
+        parent.ui.back2FromValue.setEnabled(status_custom)
 
         self.parent.ui.dataTOFmanualLabel.setEnabled(status)
         self.parent.ui.dataTOFautoMode.setEnabled(status)
@@ -70,11 +81,20 @@ class UpdatePlotWidgetStatus(object):
         parent.ui.normLowResFromValue.setEnabled(status)
         parent.ui.normLowResToLabel.setEnabled(status)
         parent.ui.normLowResToValue.setEnabled(status)
-        parent.ui.normBackToValue.setEnabled(status)
-        parent.ui.normBackFromValue.setEnabled(status)
         parent.ui.normPeakToValue.setEnabled(status)
         parent.ui.normPeakFromValue.setEnabled(status)
-        parent.ui.normBackgroundFlag.setEnabled(status)
+
+        # let the background settings ultimately control the spinboxes visibility
+        status_custom = status and backgrounds_settings["norm"].subtract_background
+        parent.ui.normBackToValue.setEnabled(status_custom)
+        parent.ui.normBackFromValue.setEnabled(status_custom)
+        status_custom = (
+            status
+            and backgrounds_settings["norm"].subtract_background
+            and backgrounds_settings["norm"].two_backgrounds
+        )
+        parent.ui.normBack2ToValue.setEnabled(status_custom)
+        parent.ui.normBack2FromValue.setEnabled(status_custom)
 
         self.parent.ui.dataTOFmanualLabel.setEnabled(status)
         self.parent.ui.dataTOFautoMode.setEnabled(status)

@@ -1,7 +1,7 @@
 # package imports
 from RefRed.settings.initialize_settings import InitializeSettings
 from RefRed.settings.list_settings import ListSettings
-from qtpy.QtCore import QSettings
+from qtpy.QtCore import QSettings  # type: ignore
 
 # third party packages
 import pytest

@@ -40,7 +40,7 @@ class ProgressBarHandler(object):
         QApplication.processEvents()
 
 
-class DelayClosing(QtCore.QThread):
+class DelayClosing(QtCore.QThread):  # type: ignore
     def setup(self, parent=None, delay=3):
         self.parent = parent
         self.delay = delay
