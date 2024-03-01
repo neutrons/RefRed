@@ -74,7 +74,7 @@ def test_reduce_and_export_data(qtbot, tmp_path, data_server, case):
 
     window = MainGui()
     qtbot.addWidget(window)
-    window.show()  # Only for human inspection. This line should be commented once the test passes
+    # window.show()  # Only for human inspection. This line should be commented once the test passes
 
     # Open file menu, move down two and select Load
     action_rect = window.ui.menubar.actionGeometry(window.ui.menuFile.menuAction())

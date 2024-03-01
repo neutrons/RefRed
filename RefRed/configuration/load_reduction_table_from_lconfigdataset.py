@@ -95,8 +95,10 @@ class LoadReductionTableFromLConfigDataSet(object):
         if type == 'data':
             peak1 = int(lconfig.data_peak[0])
             peak2 = int(lconfig.data_peak[1])
-            back1 = int(lconfig.data_back[0])
-            back2 = int(lconfig.data_back[1])
+            back1_1 = int(lconfig.data_back[0])
+            back1_2 = int(lconfig.data_back[1])
+            back2_1 = int(lconfig.data_back2[0])
+            back2_2 = int(lconfig.data_back2[1])
             back_flag = lconfig.data_back_flag
             functional_background = lconfig.data_functional_background
             two_backgrounds = lconfig.data_two_backgrounds
@@ -108,8 +110,10 @@ class LoadReductionTableFromLConfigDataSet(object):
         else:
             peak1 = int(lconfig.norm_peak[0])
             peak2 = int(lconfig.norm_peak[1])
-            back1 = int(lconfig.norm_back[0])
-            back2 = int(lconfig.norm_back[1])
+            back1_1 = int(lconfig.norm_back[0])
+            back1_2 = int(lconfig.norm_back[1])
+            back2_1 = int(lconfig.norm_back2[0])
+            back2_2 = int(lconfig.norm_back2[1])
             back_flag = lconfig.norm_back_flag
             functional_background = lconfig.norm_functional_background
             two_backgrounds = lconfig.norm_two_backgrounds
@@ -123,7 +127,8 @@ class LoadReductionTableFromLConfigDataSet(object):
 
         # using lconfig values
         lrdata.peak = [peak1, peak2]
-        lrdata.back = [back1, back2]
+        lrdata.back = [back1_1, back1_2]
+        lrdata.back2 = [back2_1, back2_2]
         lrdata.back_flag = back_flag
         lrdata.functional_background = functional_background
         lrdata.two_backgrounds = two_backgrounds
