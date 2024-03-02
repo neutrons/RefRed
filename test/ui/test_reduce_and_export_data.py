@@ -91,9 +91,9 @@ def test_reduce_and_export_data(qtbot, tmp_path, data_server, case):
         except AttributeError:  # example, key=="conf"
             pass
 
-    # Push Reduce button
-    qtbot.mouseClick(window.ui.reduceButton, QtCore.Qt.LeftButton)
-    qtbot.waitUntil(lambda: window.ui.statusbar.currentMessage() == "Done!")
+    # Push Reduce button, wait 10000 miliseconds for reduction to finish
+    window.ui.reduceButton.click()
+    qtbot.waitUntil(lambda: window.ui.statusbar.currentMessage() == "Done!", timeout=10000)  # wait for one minute
 
     # check that we have moved to the "Data Stitching" tab
     assert window.ui.plotTab.currentIndex() == 1
@@ -120,17 +120,9 @@ def test_reduce_and_export_data(qtbot, tmp_path, data_server, case):
     # export the reduction script
     (tmp_path / "output.txt").unlink()
 
-    # In the Menu bar of the main window, click on "Reduction", then in "Export Script"
-    action_rect = window.ui.menubar.actionGeometry(window.ui.menuReduction.menuAction())
-    qtbot.mouseClick(window.ui.menubar, QtCore.Qt.LeftButton, pos=action_rect.center())
-    qtbot.wait(wait)
-    qtbot.keyClick(window.ui.menuReduction, QtCore.Qt.Key_Down)
-    qtbot.wait(wait)
-    qtbot.keyClick(window.ui.menuReduction, QtCore.Qt.Key_Down)
-    qtbot.wait(wait)
     with mock.patch("RefRed.export.export_plot_ascii.QFileDialog.getSaveFileName") as mock_getSaveFileName:
         mock_getSaveFileName.return_value = (str(tmp_path / "output.txt"), "")
-        qtbot.keyClick(window.ui.menuReduction, QtCore.Qt.Key_Enter)
+        window.export_reduction_script_button()
     qtbot.wait(wait)
 
     reduction_script = open(tmp_path / "output.txt").readlines()
