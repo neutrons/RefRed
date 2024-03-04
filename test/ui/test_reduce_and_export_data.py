@@ -10,6 +10,7 @@ import pytest
 
 # RefRed imports
 from RefRed.main import MainGui
+from RefRed.configuration.loading_configuration import LoadingConfiguration
 
 
 wait = 200
@@ -74,23 +75,10 @@ def test_reduce_and_export_data(qtbot, tmp_path, data_server, case):
 
     window = MainGui()
     qtbot.addWidget(window)
-    window.show()  # Only for human inspection. This line should be commented once the test passes
-
-    # Open file menu, move down two and select Load
-    action_rect = window.ui.menubar.actionGeometry(window.ui.menuFile.menuAction())
-    qtbot.mouseClick(window.ui.menubar, QtCore.Qt.LeftButton, pos=action_rect.center())
-    qtbot.wait(wait)
-    qtbot.keyClick(window.ui.menuFile, QtCore.Qt.Key_Down)
-    qtbot.wait(wait)
-    qtbot.keyClick(window.ui.menuFile, QtCore.Qt.Key_Down)
-    qtbot.wait(wait)
-    with mock.patch("RefRed.configuration.loading_configuration.QFileDialog.exec_") as mock_exec:
-        mock_exec.return_value = True
-        with mock.patch("RefRed.configuration.loading_configuration.QFileDialog.selectedFiles") as mock_selectedFiles:
-            mock_selectedFiles.return_value = data_server.path_to(case["conf"])
-            qtbot.keyClick(window.ui.menuFile, QtCore.Qt.Key_Enter)  # trigger execution of LoadingConfiguration.run()
-            qtbot.waitUntil(lambda: window.ui.statusbar.currentMessage() == "Done!")
-    qtbot.wait(wait)
+    # window.show()  # Only for human inspection. This line should be commented once the test passes
+    loader = LoadingConfiguration(parent=window)
+    loader.check_config_file(data_server.path_to(case["conf"]))
+    loader.loading()
 
     # Press button to plot first row of data
     qtbot.mouseClick(window.ui.reductionTable.cellWidget(0, 0), QtCore.Qt.LeftButton, pos=QtCore.QPoint(10, 9))
@@ -103,9 +91,9 @@ def test_reduce_and_export_data(qtbot, tmp_path, data_server, case):
         except AttributeError:  # example, key=="conf"
             pass
 
-    # Push Reduce button
-    qtbot.mouseClick(window.ui.reduceButton, QtCore.Qt.LeftButton)
-    qtbot.waitUntil(lambda: window.ui.statusbar.currentMessage() == "Done!")
+    # Push Reduce button, wait 10000 miliseconds for reduction to finish
+    window.ui.reduceButton.click()
+    qtbot.waitUntil(lambda: window.ui.statusbar.currentMessage() == "Done!", timeout=10000)  # wait for one minute
 
     # check that we have moved to the "Data Stitching" tab
     assert window.ui.plotTab.currentIndex() == 1
@@ -132,17 +120,9 @@ def test_reduce_and_export_data(qtbot, tmp_path, data_server, case):
     # export the reduction script
     (tmp_path / "output.txt").unlink()
 
-    # In the Menu bar of the main window, click on "Reduction", then in "Export Script"
-    action_rect = window.ui.menubar.actionGeometry(window.ui.menuReduction.menuAction())
-    qtbot.mouseClick(window.ui.menubar, QtCore.Qt.LeftButton, pos=action_rect.center())
-    qtbot.wait(wait)
-    qtbot.keyClick(window.ui.menuReduction, QtCore.Qt.Key_Down)
-    qtbot.wait(wait)
-    qtbot.keyClick(window.ui.menuReduction, QtCore.Qt.Key_Down)
-    qtbot.wait(wait)
     with mock.patch("RefRed.export.export_plot_ascii.QFileDialog.getSaveFileName") as mock_getSaveFileName:
         mock_getSaveFileName.return_value = (str(tmp_path / "output.txt"), "")
-        qtbot.keyClick(window.ui.menuReduction, QtCore.Qt.Key_Enter)
+        window.export_reduction_script_button()
     qtbot.wait(wait)
 
     reduction_script = open(tmp_path / "output.txt").readlines()
