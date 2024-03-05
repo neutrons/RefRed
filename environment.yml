@@ -5,7 +5,7 @@ channels:
   - defaults
 dependencies:
   - python=3.8
-  - mantidworkbench>=6.7.0
+  - mantid=6.7.0
   - qt>=5.12.9,<6
   - pyqt>=5.12.3
   - qtpy>=1.9.0
@@ -13,7 +13,7 @@ dependencies:
   - matplotlib
   - pip
   - pip:
-    - git+https://github.com/neutrons/LiquidsReflectometer.git@v2.0.16#egg=lr_reduction
+    - git+https://github.com/neutrons/LiquidsReflectometer.git@v2.0.18#egg=lr_reduction
 # documentation
   - sphinx
   - sphinx_rtd_theme
