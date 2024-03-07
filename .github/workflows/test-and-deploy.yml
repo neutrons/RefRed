@@ -27,6 +27,8 @@ jobs:
         run: flake8 --statistics RefRed test scripts
       - name: mypy type annotations
         run: mypy RefRed test scripts
+      - name: dependencies synced
+        run: python ./scripts/sync_dependencies.py
       - name: Run Tests
         run: xvfb-run -a python -m pytest -vv --cov=RefRed --cov-report=xml --cov-report=term test
       - name: Upload coverage to Codecov
