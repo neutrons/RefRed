@@ -20,7 +20,6 @@ class LConfigDataset(object):
     data_back2: List[int] = [0, 0]  # lower and upper boundaries for the second background
     data_low_res = [50, 200]
     data_back_flag: bool = True
-    data_functional_background: bool = False
     data_two_backgrounds: bool = False
     data_low_res_flag = True
     data_lambda_requested = -1
@@ -38,7 +37,6 @@ class LConfigDataset(object):
     norm_back = [0, 0]
     norm_back2: List[int] = [0, 0]  # lower and upper boundaries for the second background
     norm_back_flag: bool = True
-    norm_functional_background: bool = False
     norm_two_backgrounds: bool = False
 
     norm_low_res = [50, 200]

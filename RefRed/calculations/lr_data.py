@@ -182,7 +182,6 @@ class LRData(object):
         self.back: List[int] = [0, 0]  # lower and upper boundaries for the first background
         self.back2: List[int] = [0, 0]  # lower and upper boundaries for the second background
         self.back_flag: bool = True
-        self.functional_background: bool = False
         self.two_backgrounds: bool = False
 
         self.all_plot_axis = AllPlotAxis()
@@ -202,7 +201,6 @@ class LRData(object):
                 self.low_res = [int(lconfig.data_low_res[0]), int(lconfig.data_low_res[1])]
                 self.low_res_flag = bool(lconfig.data_low_res_flag)
                 self.back_flag = bool(lconfig.data_back_flag)
-                self.functional_background = bool(lconfig.data_functional_background)
                 self.two_backgrounds = bool(lconfig.data_two_backgrounds)
             else:
                 self.peak = [int(lconfig.norm_peak[0]), int(lconfig.norm_peak[1])]
@@ -211,7 +209,6 @@ class LRData(object):
                 self.low_res = [int(lconfig.norm_low_res[0]), int(lconfig.norm_low_res[1])]
                 self.low_res_flag = bool(lconfig.norm_low_res_flag)
                 self.back_flag = bool(lconfig.norm_back_flag)
-                self.functional_background = bool(lconfig.norm_functional_background)
                 self.two_backgrounds = bool(lconfig.norm_two_backgrounds)
 
         elif reduction_table_cell is not None:
@@ -225,7 +222,6 @@ class LRData(object):
             self.low_res = reduction_table_cell.low_res
             self.low_res_flag = reduction_table_cell.low_res_flag
             self.back_flag = reduction_table_cell.back_flag
-            self.functional_background = reduction_table_cell.functional_background
             self.two_backgrounds = reduction_table_cell.two_backgrounds
 
         else:

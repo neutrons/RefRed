@@ -16,7 +16,6 @@ class PreviewConfig(QtWidgets.QMainWindow):
         "to_peak_pixels",
         "peak_discrete_selection",
         "background_flag",
-        "functional_background",
         "two_backgrounds",
         "back_roi1_from",
         "back_roi1_to",
@@ -38,7 +37,6 @@ class PreviewConfig(QtWidgets.QMainWindow):
         "norm_from_peak_pixels",
         "norm_to_peak_pixels",
         "norm_background_flag",
-        "norm_functional_background",
         "norm_two_backgrounds",
         "norm_from_back_pixels",
         "norm_to_back_pixels",
@@ -61,9 +59,7 @@ class PreviewConfig(QtWidgets.QMainWindow):
     # may have default values. This way we will load configuration files missing these entries
     # and preview them with the default values.
     data_name_defaults = {
-        "functional_background": False,
         "two_backgrounds": False,
-        "norm_functional_background": False,
         "norm_two_backgrounds": False,
     }
 

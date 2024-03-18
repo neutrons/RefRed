@@ -15,13 +15,11 @@ from RefRed.tabledata import TableData
 class BackgroundSettingsModel(QObject):
     signal_first_background = Signal(bool)
     signal_second_background = Signal(bool)
-    signal_functional_background = Signal(bool)
     signal_two_backgrounds = Signal(bool)
 
     def __init__(self):
         super(BackgroundSettingsModel, self).__init__()
         self._subtract_background = True
-        self._functional_background = False
         self._two_backgrounds = False
         self.maingui = None
 
@@ -38,17 +36,6 @@ class BackgroundSettingsModel(QObject):
             self.signal_second_background.emit(value and self.two_backgrounds)
 
     @property
-    def functional_background(self) -> bool:
-        return self._functional_background
-
-    @functional_background.setter
-    def functional_background(self, value: bool):
-        previous = self._functional_background  # backup
-        self._functional_background = value
-        if previous != value:  # emit changes
-            self.signal_functional_background.emit(value)
-
-    @property
     def two_backgrounds(self) -> bool:
         return self._two_backgrounds
 
@@ -60,13 +47,10 @@ class BackgroundSettingsModel(QObject):
         if previous != value:  # emit changes
             self.signal_second_background.emit(self.subtract_background and value)
 
-    def update_all_settings(
-        self, subtract_background: bool = True, functional_background: bool = False, two_backgrounds: bool = False
-    ):
+    def update_all_settings(self, subtract_background: bool = True, two_backgrounds: bool = False):
         # we access the private attributes to prevent emitting any of the signals that could be emitted by
         # the setter functions of the associated properties
         self._subtract_background = subtract_background
-        self._functional_background = functional_background
         self._two_backgrounds = two_backgrounds
 
     def set_spinbox_visibilities(self, parent: QWidget, first_background: Tuple[str], second_background: Tuple[str]):
@@ -148,7 +132,7 @@ class CompositeBackgroundSettings:
         if data is None:  # the active row in the reduction table has no reflectivity and/or direct-beam data
             return
         updater = {True: self.data.update_all_settings, False: self.norm.update_all_settings}
-        updater[is_data](data.back_flag, data.functional_background, data.two_backgrounds)
+        updater[is_data](data.back_flag, data.two_backgrounds)
 
     def table_updater_factory(self, setting: str, data_type: str):
         r"""Generate anonymous functions to serve as callback when any of the background settings
@@ -161,8 +145,7 @@ class CompositeBackgroundSettings:
         Parameters
         ----------
         setting
-            the background setting in `big_table` to update. One of `back_flag`, `functional_background`,
-            `two_backgrounds`
+            the background setting in `big_table` to update. One of `back_flag` and `two_backgrounds`
         data_type
             whether to update the reflectivity or the normalization `LRData` instances for the currently active
             row in the reduction table
@@ -202,9 +185,9 @@ class CompositeBackgroundSettings:
         `data` or `norm` BackgroundSettingsModel instances.
         """
         # names of some of the signals emitted by self.data and self.norm
-        signal_names = ["signal_first_background", "signal_functional_background", "signal_two_backgrounds"]
+        signal_names = ["signal_first_background", "signal_two_backgrounds"]
         # names of the background settings attributes in the LRData instances of `big_table_data`
-        setting_names = ["back_flag", "functional_background", "two_backgrounds"]
+        setting_names = ["back_flag", "two_backgrounds"]
         # connect the signals to dedicated slots that will update the LRData instances
         for signal_name, setting_name in zip(signal_names, setting_names):
             signal = getattr(self.data, signal_name)
@@ -219,7 +202,7 @@ backgrounds_settings = CompositeBackgroundSettings()  # singleton instance
 class BackgroundSettingsView(QDialog):
 
     # checkbox names as well as names for the model properties
-    options = ["subtract_background", "functional_background", "two_backgrounds"]
+    options = ["subtract_background", "two_backgrounds"]
 
     def __init__(self, parent: QWidget, run_type="data"):
         super().__init__(parent)
@@ -229,7 +212,7 @@ class BackgroundSettingsView(QDialog):
         self._set_connections()
 
     def _set_connections(self):
-        for box_name in ["subtract_background", "functional_background", "two_backgrounds"]:
+        for box_name in ["subtract_background", "two_backgrounds"]:
             checkbox: QCheckBox = getattr(self.ui, box_name)
             # signal stateChanged emits `state`, which we pass to our anonymous `lambda`
             # `option=box_name` in effect allows us to define a different lambda` function for each checkbox
