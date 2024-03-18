@@ -89,7 +89,6 @@ class ExportXMLConfig(object):
             data_back2 = _data.back2
             data_low_res = _data.low_res
             data_back_flag = _data.back_flag
-            data_functional_background = _data.functional_background
             data_two_backgrounds = _data.two_backgrounds
             data_low_res_flag = bool(_data.low_res_flag)
             data_lambda_requested = _data.lambda_requested
@@ -105,7 +104,6 @@ class ExportXMLConfig(object):
                 norm_back = _norm.back
                 norm_back2 = _norm.back2
                 norm_back_flag = _norm.back_flag
-                norm_functional_background = _norm.functional_background
                 norm_two_backgrounds = _norm.two_backgrounds
 
                 norm_low_res = _norm.low_res
@@ -116,7 +114,6 @@ class ExportXMLConfig(object):
                 norm_peak = [0, 255]
                 norm_back = [0, 255]
                 norm_back_flag = False
-                norm_functional_background = False
                 norm_two_backgrounds = False
                 norm_low_res = [0, 255]
                 norm_low_res_flag = False
@@ -126,9 +123,6 @@ class ExportXMLConfig(object):
             str_array.append('   <to_peak_pixels>' + str(data_peak[1]) + '</to_peak_pixels>\n')
             str_array.append('   <peak_discrete_selection>N/A</peak_discrete_selection>\n')
             str_array.append('   <background_flag>' + str(data_back_flag) + '</background_flag>\n')
-            str_array.append(
-                '   <functional_background>' + str(data_functional_background) + '</functional_background>\n'
-            )
             str_array.append('   <two_backgrounds>' + str(data_two_backgrounds) + '</two_backgrounds>\n')
             str_array.append('   <back_roi1_from>' + str(data_back[0]) + '</back_roi1_from>\n')
             str_array.append('   <back_roi1_to>' + str(data_back[1]) + '</back_roi1_to>\n')
@@ -166,9 +160,6 @@ class ExportXMLConfig(object):
             str_array.append('   <norm_from_peak_pixels>' + str(norm_peak[0]) + '</norm_from_peak_pixels>\n')
             str_array.append('   <norm_to_peak_pixels>' + str(norm_peak[1]) + '</norm_to_peak_pixels>\n')
             str_array.append('   <norm_background_flag>' + str(norm_back_flag) + '</norm_background_flag>\n')
-            str_array.append(
-                '   <norm_functional_background>' + str(norm_functional_background) + '</norm_functional_background>\n'
-            )
             str_array.append('   <norm_two_backgrounds>' + str(norm_two_backgrounds) + '</norm_two_backgrounds>\n')
             str_array.append('   <norm_from_back_pixels>' + str(norm_back[0]) + '</norm_from_back_pixels>\n')
             str_array.append('   <norm_to_back_pixels>' + str(norm_back[1]) + '</norm_to_back_pixels>\n')

@@ -206,7 +206,6 @@ class LoadingConfiguration(object):
 
         # background settings for reflectivity data
         iMetadata.data_back_flag = get_item_boolean("background_flag", default=True)
-        iMetadata.data_functional_background = get_item_boolean("functional_background", default=False)
         iMetadata.data_two_backgrounds = get_item_boolean("two_backgrounds", default=False)
 
         _low_res_flag = str2bool(self.getNodeValue(node, 'x_range_flag'))
@@ -258,7 +257,6 @@ class LoadingConfiguration(object):
 
         # background settings for normalization data
         iMetadata.norm_back_flag = get_item_boolean("norm_background_flag", default=True)
-        iMetadata.norm_functional_background = get_item_boolean("norm_functional_background", default=False)
         iMetadata.norm_two_backgrounds = get_item_boolean("norm_two_backgrounds", default=False)
 
         _low_res_flag = str2bool(self.getNodeValue(node, 'norm_x_range_flag'))

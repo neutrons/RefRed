@@ -67,7 +67,7 @@ class IndividualReductionSettingsHandler(object):
             data_peak_range=self._data_peak_range,
             subtract_background=self.data.back_flag,
             two_backgrounds=self.data.two_backgrounds,  # should we use both background regions?
-            functional_background=self.data.functional_background,
+            functional_background=self.data.two_backgrounds,  # should have same value as `two_backgrounds`
             background_roi=self._data_back_range,
             data_x_range_flag=self._data_low_res_flag,
             data_x_range=self._data_low_res_range,
