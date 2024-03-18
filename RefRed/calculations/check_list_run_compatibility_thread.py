@@ -7,6 +7,7 @@
         1: Direct beam data <class 'RefRed.calculations.lr_data.LRData'>
         2: Reduction options <class 'RefRed.lconfigdataset.LConfigDataset'>
 """
+
 # import logging
 import RefRed.colors
 from qtpy import QtCore, QtGui

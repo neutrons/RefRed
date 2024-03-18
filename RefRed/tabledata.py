@@ -12,6 +12,7 @@ from RefRed.lconfigdataset import LConfigDataset
 
 class TableDataColumIndex(Enum):
     r"""Enumeration to associate each column index of a TableData instance with a word"""
+
     LR_DATA = 0
     LR_NORM = 1
     LR_CONFIG = 2
