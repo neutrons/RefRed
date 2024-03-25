@@ -5,8 +5,6 @@ import os
 from typing import Optional
 
 # third-party imports
-from qtpy.QtCore import Qt  # type: ignore
-from qtpy.QtGui import QPalette
 from qtpy.QtWidgets import QDialog, QFileDialog
 
 # package imports
@@ -64,7 +62,6 @@ class PopupPlot1d(QDialog):
         self.ui = load_ui("plot_dialog_refl_interface.ui", self)
 
         self.setWindowTitle("Counts vs Y pixel")
-        self.hide_and_format_invalid_widgets()
 
         self.ui.plot_counts_vs_pixel.leaveFigure.connect(self.leave_plot_counts_vs_pixel)
         self.ui.plot_counts_vs_pixel.toolbar.homeClicked.connect(self.home_plot_counts_vs_pixel)
@@ -126,30 +123,6 @@ class PopupPlot1d(QDialog):
         self.ui.plot_counts_vs_pixel.canvas.ax.set_xlim([ymin, ymax])
         self.ui.plot_counts_vs_pixel.draw()
 
-    def hide_and_format_invalid_widgets(self):
-        palette = QPalette()
-        palette.setColor(QPalette.Foreground, Qt.red)
-        self.ui.plotPeakFromLabel.setVisible(False)
-        self.ui.plotPeakFromLabel.setPalette(palette)
-
-        self.ui.plotPeakToLabel.setVisible(False)
-        self.ui.plotPeakToLabel.setPalette(palette)
-
-        self.ui.plotBackFromLabel.setVisible(False)
-        self.ui.plotBackFromLabel.setPalette(palette)
-
-        self.ui.plotBackToLabel.setVisible(False)
-        self.ui.plotBackToLabel.setPalette(palette)
-
-        self.ui.plotBack2FromLabel.setVisible(False)
-        self.ui.plotBack2FromLabel.setPalette(palette)
-
-        self.ui.plotBack2ToLabel.setVisible(False)
-        self.ui.plotBack2ToLabel.setPalette(palette)
-
-        self.ui.invalid_selection_label.setVisible(False)
-        self.ui.invalid_selection_label.setPalette(palette)
-
     def sort_peak_back_input(self):
         peak1 = self.ui.plotPeakFromSpinBox.value()
         peak2 = self.ui.plotPeakToSpinBox.value()
@@ -171,36 +144,6 @@ class PopupPlot1d(QDialog):
         if back_min != back1:
             self.ui.plotBack2FromSpinBox.setValue(back2)
             self.ui.plotBack2ToSpinBox.setValue(back1)
-
-    def check_peak_back_input_validity(self):
-        peak1 = self.ui.plotPeakFromSpinBox.value()
-        peak2 = self.ui.plotPeakToSpinBox.value()
-
-        back1 = self.ui.plotBackFromSpinBox.value()
-        back2 = self.ui.plotBackToSpinBox.value()
-
-        _show_widgets_1 = False
-        _show_widgets_2 = False
-        second_background_boundaries_unsorted = False
-
-        if backgrounds_settings[self.data_type].subtract_background:
-            if back1 > peak1:
-                _show_widgets_1 = True
-            if back2 < peak2:
-                _show_widgets_2 = True
-            if backgrounds_settings[self.data_type].two_backgrounds:
-                if self.data.back2[0] > self.data.back2[1]:
-                    second_background_boundaries_unsorted = True
-
-        self.ui.plotPeakFromLabel.setVisible(_show_widgets_1)
-        self.ui.plotBackFromLabel.setVisible(_show_widgets_1)
-        self.ui.plotBack2FromLabel.setVisible(second_background_boundaries_unsorted)
-
-        self.ui.plotPeakToLabel.setVisible(_show_widgets_2)
-        self.ui.plotBackToLabel.setVisible(_show_widgets_2)
-        self.ui.plotBack2ToLabel.setVisible(second_background_boundaries_unsorted)
-
-        self.ui.invalid_selection_label.setVisible(_show_widgets_1 or _show_widgets_2)
 
     def reset_max_ui_value(self):
         self.ui.plotPeakFromSpinBox.setMaximum(255)
@@ -311,12 +254,10 @@ class PopupPlot1d(QDialog):
 
     def plot_back_flag_clicked(self, _):
         self.update_plots()
-        self.check_peak_back_input_validity()
 
     def set_peak_value(self, peak1, peak2):
         self.ui.plotPeakFromSpinBox.setValue(peak1)
         self.ui.plotPeakToSpinBox.setValue(peak2)
-        self.check_peak_back_input_validity()
 
     def set_back_value(
         self,
@@ -328,12 +269,10 @@ class PopupPlot1d(QDialog):
         assert boundary_from <= boundary_to
         getattr(self.ui, spinbox_from).setValue(boundary_from)
         getattr(self.ui, spinbox_to).setValue(boundary_to)
-        self.check_peak_back_input_validity()
 
     def act_upon_changed_boundaries(self):
         r"""Actions after User changes any boundary value (peak or background) in the QSpinBox widgets"""
         self.sort_peak_back_input()
-        self.check_peak_back_input_validity()
         self.update_plots()
 
     def plot_peak_from_spinbox_value_changed(self):

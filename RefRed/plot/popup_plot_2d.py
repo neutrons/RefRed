@@ -3,8 +3,6 @@ from pathlib import Path
 import os
 
 # third-party imports
-from qtpy.QtCore import Qt  # type: ignore
-from qtpy.QtGui import QPalette
 from qtpy.QtWidgets import QDialog, QFileDialog
 
 # package imports
@@ -255,37 +253,6 @@ class PopupPlot2d(QDialog):
         return self.retrieveLowRes() + self.retrievePeakBack()
 
     def init_gui(self):
-        palette = QPalette()
-        palette.setColor(QPalette.Foreground, Qt.red)
-        r"""
-        if self.data.new_detector_geometry_flag:
-            yrange = [0, 303]
-            xrange = [0, 255]
-        else:
-            yrange = [0, 255]
-            xrange = [0, 303]
-        """
-        self.ui.error_label.setVisible(False)
-        self.ui.error_label.setPalette(palette)
-
-        self.ui.plot2dPeakFromError.setVisible(False)
-        self.ui.plot2dPeakFromError.setPalette(palette)
-
-        self.ui.plot2dPeakToError.setVisible(False)
-        self.ui.plot2dPeakToError.setPalette(palette)
-
-        self.ui.plot2dBackFromError.setVisible(False)
-        self.ui.plot2dBackFromError.setPalette(palette)
-
-        self.ui.plot2dBackToError.setVisible(False)
-        self.ui.plot2dBackToError.setPalette(palette)
-
-        self.ui.plot2dBack2FromError.setVisible(False)
-        self.ui.plot2dBack2FromError.setPalette(palette)
-
-        self.ui.plot2dBack2ToError.setVisible(False)
-        self.ui.plot2dBack2ToError.setPalette(palette)
-
         # enable/disable background spinboxes based on the background settings
         self.background_settings.control_spinboxes_visibility(
             self.ui,
@@ -351,7 +318,6 @@ class PopupPlot2d(QDialog):
             first_background=("plot2dBackFromValue", "plot2dBackToValue"),
             second_background=("plot2dBack2FromValue", "plot2dBack2ToValue"),
         )
-        self.check_peak_back_input_validity()
         self.update_plots()
 
     def activate_or_not_low_res_widgets(self, low_res_flag):
@@ -389,11 +355,11 @@ class PopupPlot2d(QDialog):
         self.update_detector_tab_plot()
 
     def manual_input_peak1(self):
-        self.sort_and_check_widgets()
+        self.sort_peak_back_input()
         self.update_plots()
 
     def manual_input_peak2(self):
-        self.sort_and_check_widgets()
+        self.sort_peak_back_input()
         self.update_plots()
 
     def plot2d_peak_from_spinbox_value_changed(self):
@@ -413,7 +379,7 @@ class PopupPlot2d(QDialog):
             self.manual_input_peak2()
 
     def manual_input_background(self):
-        self.sort_and_check_widgets()
+        self.sort_peak_back_input()
         self.update_plots()
 
     def display_background_settings(self, *args, **kwargs):
@@ -450,40 +416,6 @@ class PopupPlot2d(QDialog):
         """
         if self.spinbox_observer.quantum_change(self.ui.plot2dBack2ToValue):
             self.manual_input_background()
-
-    def sort_and_check_widgets(self):
-        self.sort_peak_back_input()
-        self.check_peak_back_input_validity()
-
-    def check_peak_back_input_validity(self):
-        peak1 = self.ui.plot2dPeakFromSpinBox.value()
-        peak2 = self.ui.plot2dPeakToSpinBox.value()
-        back1 = self.ui.plot2dBackFromValue.value()
-        back2 = self.ui.plot2dBackToValue.value()
-
-        _show_widgets_1 = False
-        _show_widgets_2 = False
-        second_background_boundaries_unsorted = False
-
-        if self.background_settings.subtract_background:
-            if back1 > peak1:
-                _show_widgets_1 = True
-            if back2 < peak2:
-                _show_widgets_2 = True
-            if self.background_settings.two_backgrounds:
-                if self.data.back2[0] > self.data.back2[1]:
-                    second_background_boundaries_unsorted = True
-
-        self.ui.plot2dPeakFromError.setVisible(_show_widgets_1)
-        self.ui.plot2dBackFromError.setVisible(_show_widgets_1)
-        self.ui.plot2dBack2FromError.setVisible(second_background_boundaries_unsorted)
-
-        self.ui.plot2dPeakToError.setVisible(_show_widgets_2)
-        self.ui.plot2dBackToError.setVisible(_show_widgets_2)
-        self.ui.plot2dBack2ToError.setVisible(second_background_boundaries_unsorted)
-
-        any_error = _show_widgets_1 or _show_widgets_2 or second_background_boundaries_unsorted
-        self.ui.error_label.setVisible(any_error)
 
     def manual_input_of_low_res_field(self):
         value1 = self.ui.low_res1.value()
