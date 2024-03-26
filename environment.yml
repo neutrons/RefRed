@@ -4,7 +4,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.8
+  - python=3.10
   - mantid>6.9.20240318
   - qt>=5.12.9,<6
   - pyqt>=5.12.3
