@@ -2,7 +2,6 @@
 import os
 import tempfile
 from qtpy import QtCore, QtGui, QtWidgets
-import matplotlib.cm
 import matplotlib.colors
 from matplotlib.colors import LogNorm, Normalize
 from RefRed.config import plotting
@@ -16,11 +15,6 @@ def _set_default_rc():
 
 
 _set_default_rc()
-
-cmap = matplotlib.colors.LinearSegmentedColormap.from_list(
-    "default", ["#0000ff", "#00ff00", "#ffff00", "#ff0000", "#bd7efc", "#000000"], N=256
-)
-matplotlib.cm.register_cmap("default", cmap=cmap)
 
 
 # set the default backend to be compatible with Qt in case someone uses pylab from IPython console
