@@ -195,7 +195,7 @@ class SFCalculator(QtWidgets.QMainWindow):
 
     def updateProgressBar(self, progress):
         self.event_progressbar.setVisible(True)
-        self.event_progressbar.setValue(progress * 100)
+        self.event_progressbar.setValue(int(progress * 100))
         self.event_progressbar.update()
         if progress == 1:
             time.sleep(2)

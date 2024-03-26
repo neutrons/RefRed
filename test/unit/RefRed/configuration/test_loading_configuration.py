@@ -83,6 +83,7 @@ class TestLoadingConfiguration(object):
             'scaling_factor_file': 'scaling_factor_file',
             'incident_medium_index_selected': 5.005,
             'scaling_factor_flag': 6.006,
+            'dead_time_correction': False
         }
 
         def side_effect(node, arg):
