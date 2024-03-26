@@ -34,7 +34,7 @@ class GuiUtility(object):
         _gui_metadata = self.parent.gui_metadata
 
         # event tof bins
-        _tof_bin = _gui_metadata['tof_bin']
+        _tof_bin = int(_gui_metadata['tof_bin'])
         self.parent.ui.eventTofBins.setValue(_tof_bin)
 
         # q bin

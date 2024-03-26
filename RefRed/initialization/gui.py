@@ -108,8 +108,8 @@ class Gui(object):
         self.parent.setGeometry(
             50,
             50,
-            self.gui_size_coeff * screen.width(),
-            self.gui_size_coeff * screen.height(),
+            int(self.gui_size_coeff * screen.width()),
+            int(self.gui_size_coeff * screen.height()),
         )
 
     def set_statusbar(self):
