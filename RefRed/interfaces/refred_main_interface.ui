@@ -38,8 +38,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1540</width>
-         <height>1319</height>
+         <width>1544</width>
+         <height>1317</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_68">
@@ -603,15 +603,6 @@
                                </color>
                               </brush>
                              </colorrole>
-                             <colorrole role="PlaceholderText">
-                              <brush brushstyle="NoBrush">
-                               <color alpha="128">
-                                <red>0</red>
-                                <green>0</green>
-                                <blue>0</blue>
-                               </color>
-                              </brush>
-                             </colorrole>
                             </active>
                             <inactive>
                              <colorrole role="WindowText">
@@ -743,15 +734,6 @@
                              <colorrole role="ToolTipText">
                               <brush brushstyle="SolidPattern">
                                <color alpha="255">
-                                <red>0</red>
-                                <green>0</green>
-                                <blue>0</blue>
-                               </color>
-                              </brush>
-                             </colorrole>
-                             <colorrole role="PlaceholderText">
-                              <brush brushstyle="NoBrush">
-                               <color alpha="128">
                                 <red>0</red>
                                 <green>0</green>
                                 <blue>0</blue>
@@ -895,15 +877,6 @@
                                </color>
                               </brush>
                              </colorrole>
-                             <colorrole role="PlaceholderText">
-                              <brush brushstyle="NoBrush">
-                               <color alpha="128">
-                                <red>0</red>
-                                <green>0</green>
-                                <blue>0</blue>
-                               </color>
-                              </brush>
-                             </colorrole>
                             </disabled>
                            </palette>
                           </property>
@@ -1032,6 +1005,16 @@ p, li { white-space: pre-wrap; }
                                   </property>
                                  </widget>
                                 </item>
+                                <item row="2" column="0">
+                                 <widget class="QCheckBox" name="deadtime_checkbox">
+                                  <property name="text">
+                                   <string>Use dead time correction</string>
+                                  </property>
+                                  <property name="checked">
+                                   <bool>true</bool>
+                                  </property>
+                                 </widget>
+                                </item>
                                </layout>
                               </item>
                              </layout>
@@ -1039,6 +1022,9 @@ p, li { white-space: pre-wrap; }
                            </item>
                           </layout>
                          </widget>
+                        </item>
+                        <item>
+                         <layout class="QVBoxLayout" name="verticalLayout_10"/>
                         </item>
                         <item>
                          <widget class="QGroupBox" name="groupBox_4">
@@ -1993,29 +1979,11 @@ p, li { white-space: pre-wrap; }
                                          </color>
                                         </brush>
                                        </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
-                                          <red>0</red>
-                                          <green>255</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
                                       </active>
                                       <inactive>
                                        <colorrole role="Text">
                                         <brush brushstyle="SolidPattern">
                                          <color alpha="255">
-                                          <red>0</red>
-                                          <green>255</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
                                           <red>0</red>
                                           <green>255</green>
                                           <blue>0</blue>
@@ -2030,15 +1998,6 @@ p, li { white-space: pre-wrap; }
                                           <red>190</red>
                                           <green>190</green>
                                           <blue>190</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
-                                          <red>0</red>
-                                          <green>0</green>
-                                          <blue>0</blue>
                                          </color>
                                         </brush>
                                        </colorrole>
@@ -2064,29 +2023,11 @@ p, li { white-space: pre-wrap; }
                                          </color>
                                         </brush>
                                        </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
-                                          <red>0</red>
-                                          <green>255</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
                                       </active>
                                       <inactive>
                                        <colorrole role="Text">
                                         <brush brushstyle="SolidPattern">
                                          <color alpha="255">
-                                          <red>0</red>
-                                          <green>255</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
                                           <red>0</red>
                                           <green>255</green>
                                           <blue>0</blue>
@@ -2101,15 +2042,6 @@ p, li { white-space: pre-wrap; }
                                           <red>190</red>
                                           <green>190</green>
                                           <blue>190</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
-                                          <red>0</red>
-                                          <green>0</green>
-                                          <blue>0</blue>
                                          </color>
                                         </brush>
                                        </colorrole>
@@ -2197,29 +2129,11 @@ p, li { white-space: pre-wrap; }
                                          </color>
                                         </brush>
                                        </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
-                                          <red>255</red>
-                                          <green>15</green>
-                                          <blue>29</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
                                       </active>
                                       <inactive>
                                        <colorrole role="Text">
                                         <brush brushstyle="SolidPattern">
                                          <color alpha="255">
-                                          <red>255</red>
-                                          <green>15</green>
-                                          <blue>29</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
                                           <red>255</red>
                                           <green>15</green>
                                           <blue>29</blue>
@@ -2234,15 +2148,6 @@ p, li { white-space: pre-wrap; }
                                           <red>190</red>
                                           <green>190</green>
                                           <blue>190</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
-                                          <red>0</red>
-                                          <green>0</green>
-                                          <blue>0</blue>
                                          </color>
                                         </brush>
                                        </colorrole>
@@ -2268,29 +2173,11 @@ p, li { white-space: pre-wrap; }
                                          </color>
                                         </brush>
                                        </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
-                                          <red>255</red>
-                                          <green>15</green>
-                                          <blue>29</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
                                       </active>
                                       <inactive>
                                        <colorrole role="Text">
                                         <brush brushstyle="SolidPattern">
                                          <color alpha="255">
-                                          <red>255</red>
-                                          <green>15</green>
-                                          <blue>29</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
                                           <red>255</red>
                                           <green>15</green>
                                           <blue>29</blue>
@@ -2305,15 +2192,6 @@ p, li { white-space: pre-wrap; }
                                           <red>190</red>
                                           <green>190</green>
                                           <blue>190</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
-                                          <red>0</red>
-                                          <green>0</green>
-                                          <blue>0</blue>
                                          </color>
                                         </brush>
                                        </colorrole>
@@ -2404,15 +2282,6 @@ p, li { white-space: pre-wrap; }
                                          </color>
                                         </brush>
                                        </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
-                                          <red>255</red>
-                                          <green>165</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
                                       </active>
                                       <inactive>
                                        <colorrole role="Text">
@@ -2420,15 +2289,6 @@ p, li { white-space: pre-wrap; }
                                          <color alpha="255">
                                           <red>255</red>
                                           <green>120</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
-                                          <red>255</red>
-                                          <green>165</green>
                                           <blue>0</blue>
                                          </color>
                                         </brush>
@@ -2441,15 +2301,6 @@ p, li { white-space: pre-wrap; }
                                           <red>190</red>
                                           <green>190</green>
                                           <blue>190</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
-                                          <red>0</red>
-                                          <green>0</green>
-                                          <blue>0</blue>
                                          </color>
                                         </brush>
                                        </colorrole>
@@ -2478,29 +2329,11 @@ p, li { white-space: pre-wrap; }
                                          </color>
                                         </brush>
                                        </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
-                                          <red>255</red>
-                                          <green>120</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
                                       </active>
                                       <inactive>
                                        <colorrole role="Text">
                                         <brush brushstyle="SolidPattern">
                                          <color alpha="255">
-                                          <red>255</red>
-                                          <green>120</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
                                           <red>255</red>
                                           <green>120</green>
                                           <blue>0</blue>
@@ -2515,15 +2348,6 @@ p, li { white-space: pre-wrap; }
                                           <red>190</red>
                                           <green>190</green>
                                           <blue>190</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="128">
-                                          <red>0</red>
-                                          <green>0</green>
-                                          <blue>0</blue>
                                          </color>
                                         </brush>
                                        </colorrole>
@@ -2734,29 +2558,11 @@ p, li { white-space: pre-wrap; }
                                      </color>
                                     </brush>
                                    </colorrole>
-                                   <colorrole role="PlaceholderText">
-                                    <brush brushstyle="NoBrush">
-                                     <color alpha="128">
-                                      <red>0</red>
-                                      <green>0</green>
-                                      <blue>255</blue>
-                                     </color>
-                                    </brush>
-                                   </colorrole>
                                   </active>
                                   <inactive>
                                    <colorrole role="Text">
                                     <brush brushstyle="SolidPattern">
                                      <color alpha="255">
-                                      <red>0</red>
-                                      <green>0</green>
-                                      <blue>255</blue>
-                                     </color>
-                                    </brush>
-                                   </colorrole>
-                                   <colorrole role="PlaceholderText">
-                                    <brush brushstyle="NoBrush">
-                                     <color alpha="128">
                                       <red>0</red>
                                       <green>0</green>
                                       <blue>255</blue>
@@ -2771,15 +2577,6 @@ p, li { white-space: pre-wrap; }
                                       <red>118</red>
                                       <green>118</green>
                                       <blue>117</blue>
-                                     </color>
-                                    </brush>
-                                   </colorrole>
-                                   <colorrole role="PlaceholderText">
-                                    <brush brushstyle="NoBrush">
-                                     <color alpha="128">
-                                      <red>0</red>
-                                      <green>0</green>
-                                      <blue>255</blue>
                                      </color>
                                     </brush>
                                    </colorrole>
@@ -2834,29 +2631,11 @@ p, li { white-space: pre-wrap; }
                                      </color>
                                     </brush>
                                    </colorrole>
-                                   <colorrole role="PlaceholderText">
-                                    <brush brushstyle="NoBrush">
-                                     <color alpha="128">
-                                      <red>0</red>
-                                      <green>0</green>
-                                      <blue>255</blue>
-                                     </color>
-                                    </brush>
-                                   </colorrole>
                                   </active>
                                   <inactive>
                                    <colorrole role="Text">
                                     <brush brushstyle="SolidPattern">
                                      <color alpha="255">
-                                      <red>0</red>
-                                      <green>0</green>
-                                      <blue>255</blue>
-                                     </color>
-                                    </brush>
-                                   </colorrole>
-                                   <colorrole role="PlaceholderText">
-                                    <brush brushstyle="NoBrush">
-                                     <color alpha="128">
                                       <red>0</red>
                                       <green>0</green>
                                       <blue>255</blue>
@@ -2871,15 +2650,6 @@ p, li { white-space: pre-wrap; }
                                       <red>118</red>
                                       <green>118</green>
                                       <blue>117</blue>
-                                     </color>
-                                    </brush>
-                                   </colorrole>
-                                   <colorrole role="PlaceholderText">
-                                    <brush brushstyle="NoBrush">
-                                     <color alpha="128">
-                                      <red>0</red>
-                                      <green>0</green>
-                                      <blue>255</blue>
                                      </color>
                                     </brush>
                                    </colorrole>
@@ -3084,29 +2854,11 @@ p, li { white-space: pre-wrap; }
                                              </color>
                                             </brush>
                                            </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
-                                              <red>0</red>
-                                              <green>255</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
                                           </active>
                                           <inactive>
                                            <colorrole role="Text">
                                             <brush brushstyle="SolidPattern">
                                              <color alpha="255">
-                                              <red>0</red>
-                                              <green>255</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
                                               <red>0</red>
                                               <green>255</green>
                                               <blue>0</blue>
@@ -3121,15 +2873,6 @@ p, li { white-space: pre-wrap; }
                                               <red>190</red>
                                               <green>190</green>
                                               <blue>190</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
-                                              <red>0</red>
-                                              <green>0</green>
-                                              <blue>0</blue>
                                              </color>
                                             </brush>
                                            </colorrole>
@@ -3173,29 +2916,11 @@ p, li { white-space: pre-wrap; }
                                              </color>
                                             </brush>
                                            </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
-                                              <red>0</red>
-                                              <green>255</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
                                           </active>
                                           <inactive>
                                            <colorrole role="Text">
                                             <brush brushstyle="SolidPattern">
                                              <color alpha="255">
-                                              <red>0</red>
-                                              <green>255</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
                                               <red>0</red>
                                               <green>255</green>
                                               <blue>0</blue>
@@ -3210,15 +2935,6 @@ p, li { white-space: pre-wrap; }
                                               <red>190</red>
                                               <green>190</green>
                                               <blue>190</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
-                                              <red>0</red>
-                                              <green>0</green>
-                                              <blue>0</blue>
                                              </color>
                                             </brush>
                                            </colorrole>
@@ -3280,29 +2996,11 @@ p, li { white-space: pre-wrap; }
                                              </color>
                                             </brush>
                                            </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
-                                              <red>255</red>
-                                              <green>15</green>
-                                              <blue>29</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
                                           </active>
                                           <inactive>
                                            <colorrole role="Text">
                                             <brush brushstyle="SolidPattern">
                                              <color alpha="255">
-                                              <red>255</red>
-                                              <green>15</green>
-                                              <blue>29</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
                                               <red>255</red>
                                               <green>15</green>
                                               <blue>29</blue>
@@ -3317,15 +3015,6 @@ p, li { white-space: pre-wrap; }
                                               <red>190</red>
                                               <green>190</green>
                                               <blue>190</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
-                                              <red>0</red>
-                                              <green>0</green>
-                                              <blue>0</blue>
                                              </color>
                                             </brush>
                                            </colorrole>
@@ -3369,29 +3058,11 @@ p, li { white-space: pre-wrap; }
                                              </color>
                                             </brush>
                                            </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
-                                              <red>255</red>
-                                              <green>15</green>
-                                              <blue>29</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
                                           </active>
                                           <inactive>
                                            <colorrole role="Text">
                                             <brush brushstyle="SolidPattern">
                                              <color alpha="255">
-                                              <red>255</red>
-                                              <green>15</green>
-                                              <blue>29</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
                                               <red>255</red>
                                               <green>15</green>
                                               <blue>29</blue>
@@ -3406,15 +3077,6 @@ p, li { white-space: pre-wrap; }
                                               <red>190</red>
                                               <green>190</green>
                                               <blue>190</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
-                                              <red>0</red>
-                                              <green>0</green>
-                                              <blue>0</blue>
                                              </color>
                                             </brush>
                                            </colorrole>
@@ -3476,29 +3138,11 @@ p, li { white-space: pre-wrap; }
                                              </color>
                                             </brush>
                                            </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
-                                              <red>255</red>
-                                              <green>120</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
                                           </active>
                                           <inactive>
                                            <colorrole role="Text">
                                             <brush brushstyle="SolidPattern">
                                              <color alpha="255">
-                                              <red>255</red>
-                                              <green>120</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
                                               <red>255</red>
                                               <green>120</green>
                                               <blue>0</blue>
@@ -3513,15 +3157,6 @@ p, li { white-space: pre-wrap; }
                                               <red>190</red>
                                               <green>190</green>
                                               <blue>190</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
-                                              <red>0</red>
-                                              <green>0</green>
-                                              <blue>0</blue>
                                              </color>
                                             </brush>
                                            </colorrole>
@@ -3565,29 +3200,11 @@ p, li { white-space: pre-wrap; }
                                              </color>
                                             </brush>
                                            </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
-                                              <red>255</red>
-                                              <green>120</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
                                           </active>
                                           <inactive>
                                            <colorrole role="Text">
                                             <brush brushstyle="SolidPattern">
                                              <color alpha="255">
-                                              <red>255</red>
-                                              <green>120</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
                                               <red>255</red>
                                               <green>120</green>
                                               <blue>0</blue>
@@ -3602,15 +3219,6 @@ p, li { white-space: pre-wrap; }
                                               <red>190</red>
                                               <green>190</green>
                                               <blue>190</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="128">
-                                              <red>0</red>
-                                              <green>0</green>
-                                              <blue>0</blue>
                                              </color>
                                             </brush>
                                            </colorrole>
@@ -3809,29 +3417,11 @@ p, li { white-space: pre-wrap; }
                                        </color>
                                       </brush>
                                      </colorrole>
-                                     <colorrole role="PlaceholderText">
-                                      <brush brushstyle="NoBrush">
-                                       <color alpha="128">
-                                        <red>0</red>
-                                        <green>0</green>
-                                        <blue>255</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
                                     </active>
                                     <inactive>
                                      <colorrole role="Text">
                                       <brush brushstyle="SolidPattern">
                                        <color alpha="255">
-                                        <red>0</red>
-                                        <green>0</green>
-                                        <blue>255</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
-                                     <colorrole role="PlaceholderText">
-                                      <brush brushstyle="NoBrush">
-                                       <color alpha="128">
                                         <red>0</red>
                                         <green>0</green>
                                         <blue>255</blue>
@@ -3846,15 +3436,6 @@ p, li { white-space: pre-wrap; }
                                         <red>118</red>
                                         <green>118</green>
                                         <blue>117</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
-                                     <colorrole role="PlaceholderText">
-                                      <brush brushstyle="NoBrush">
-                                       <color alpha="128">
-                                        <red>0</red>
-                                        <green>0</green>
-                                        <blue>255</blue>
                                        </color>
                                       </brush>
                                      </colorrole>
@@ -3909,29 +3490,11 @@ p, li { white-space: pre-wrap; }
                                        </color>
                                       </brush>
                                      </colorrole>
-                                     <colorrole role="PlaceholderText">
-                                      <brush brushstyle="NoBrush">
-                                       <color alpha="128">
-                                        <red>0</red>
-                                        <green>0</green>
-                                        <blue>255</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
                                     </active>
                                     <inactive>
                                      <colorrole role="Text">
                                       <brush brushstyle="SolidPattern">
                                        <color alpha="255">
-                                        <red>0</red>
-                                        <green>0</green>
-                                        <blue>255</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
-                                     <colorrole role="PlaceholderText">
-                                      <brush brushstyle="NoBrush">
-                                       <color alpha="128">
                                         <red>0</red>
                                         <green>0</green>
                                         <blue>255</blue>
@@ -3946,15 +3509,6 @@ p, li { white-space: pre-wrap; }
                                         <red>118</red>
                                         <green>118</green>
                                         <blue>117</blue>
-                                       </color>
-                                      </brush>
-                                     </colorrole>
-                                     <colorrole role="PlaceholderText">
-                                      <brush brushstyle="NoBrush">
-                                       <color alpha="128">
-                                        <red>0</red>
-                                        <green>0</green>
-                                        <blue>255</blue>
                                        </color>
                                       </brush>
                                      </colorrole>
@@ -4296,11 +3850,11 @@ p, li { white-space: pre-wrap; }
                   <attribute name="horizontalHeaderVisible">
                    <bool>true</bool>
                   </attribute>
-                  <attribute name="horizontalHeaderMinimumSectionSize">
-                   <number>25</number>
-                  </attribute>
                   <attribute name="horizontalHeaderDefaultSectionSize">
                    <number>50</number>
+                  </attribute>
+                  <attribute name="horizontalHeaderMinimumSectionSize">
+                   <number>25</number>
                   </attribute>
                   <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
                    <bool>false</bool>
@@ -5328,7 +4882,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1560</width>
-     <height>22</height>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">
