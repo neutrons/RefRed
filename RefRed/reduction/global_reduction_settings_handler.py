@@ -41,7 +41,7 @@ class GlobalReductionSettingsHandler(object):
             "angle_offset_error",
             "tof_steps",
             "apply_normalization",
-            "dead_time"
+            "dead_time",
         ]
         return {k: getattr(self, k) for k in keys}
 
