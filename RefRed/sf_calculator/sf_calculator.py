@@ -1030,3 +1030,6 @@ class SFCalculator(QtWidgets.QMainWindow):
         self.TOFmanualFromValue.setText("%.2f" % tof1)
         self.TOFmanualToValue.setText("%.2f" % tof2)
         self.manualTOFtextFieldValidated(with_plot_update=with_plot_update)
+
+    def show_dead_time_dialog(self):
+        print("not ready")
