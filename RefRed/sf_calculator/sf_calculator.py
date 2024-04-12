@@ -77,7 +77,7 @@ class SFCalculator(QtWidgets.QMainWindow):
 
         # Dead time options
         self.apply_deadtime = True
-        self.paralyzing_deadtime = True
+        self.paralyzable_deadtime = True
         self.deadtime_value = 4.2
         self.deadtime_tof_step = 150
 
@@ -1043,12 +1043,12 @@ class SFCalculator(QtWidgets.QMainWindow):
             Pop up dialog for dead time options
         """
         dt_settings = DeadTimeSettingsView(parent=self)
-        dt_settings.set_state(self.apply_deadtime, self.paralyzing_deadtime,
+        dt_settings.set_state(self.apply_deadtime, self.paralyzable_deadtime,
                               self.deadtime_value, self.deadtime_tof_step)
         dt_settings.exec_()
 
         # Store dead time options
         self.apply_deadtime = dt_settings.options['apply_correction']
-        self.paralyzing_deadtime = dt_settings.options['paralyzing']
+        self.paralyzable_deadtime = dt_settings.options['paralyzable']
         self.deadtime_value = dt_settings.options['dead_time']
         self.deadtime_tof_step = dt_settings.options['tof_step']

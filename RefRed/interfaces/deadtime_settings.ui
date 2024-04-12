@@ -62,7 +62,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="QCheckBox" name="use_paralyzing">
+        <widget class="QCheckBox" name="use_paralyzable">
          <property name="text">
           <string/>
          </property>
@@ -77,7 +77,7 @@
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use two background regions to estimate the background under the peak&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="text">
-          <string>Use paralyzing dead time</string>
+          <string>Use paralyzable dead time</string>
          </property>
         </widget>
        </item>

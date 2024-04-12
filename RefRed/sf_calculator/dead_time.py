@@ -12,16 +12,16 @@ class DeadTimeSettingsView(QDialog):
         self.ui = load_ui(ui_filename="deadtime_settings.ui", baseinstance=self)
         self.options = self.get_state_from_form()
 
-    def set_state(self, apply_correction, paralyzing, dead_time, tof_step):
+    def set_state(self, apply_correction, paralyzable, dead_time, tof_step):
         """
             Store options and populate the form
             :param apply_correction: If True, dead time correction will be applied
-            :param paralyzing: If True, a paralyzable correction will be used
+            :param paralyzable: If True, a paralyzable correction will be used
             :param dead_time: Value of the dead time in micro second
             :param tof_step: TOF binning in micro second
         """
         self.ui.apply_correction.setChecked(apply_correction)
-        self.ui.use_paralyzing.setChecked(paralyzing)
+        self.ui.use_paralyzable.setChecked(paralyzable)
         self.ui.dead_time_value.setValue(dead_time)
         self.ui.dead_time_tof.setValue(tof_step)
         self.options = self.get_state_from_form()
@@ -32,7 +32,7 @@ class DeadTimeSettingsView(QDialog):
         """
         options = {}
         options['apply_correction'] = self.ui.apply_correction.isChecked()
-        options['paralyzing'] = self.ui.use_paralyzing.isChecked()
+        options['paralyzable'] = self.ui.use_paralyzable.isChecked()
         options['dead_time'] = self.ui.dead_time_value.value()
         options['tof_step'] = self.ui.dead_time_tof.value()
         return options
