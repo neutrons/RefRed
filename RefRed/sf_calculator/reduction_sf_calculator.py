@@ -168,7 +168,8 @@ class ReductionSfCalculator(object):
         from lr_reduction.scaling_factors import LRScalingFactors
         from lr_reduction.utils import mantid_algorithm_exec
 
-        mantid_algorithm_exec(LRScalingFactors.LRScalingFactors,
+        mantid_algorithm_exec(
+            LRScalingFactors.LRScalingFactors,
             DirectBeamRuns=run_list,
             IncidentMedium=str(incident_medium),
             TOFRange=tof_range,
@@ -180,7 +181,7 @@ class ReductionSfCalculator(object):
             UseDeadTimeCorrection=self.sf_gui.apply_deadtime,
             ParalyzableDeadTime=self.sf_gui.paralyzable_deadtime,
             DeadTime=self.sf_gui.deadtime_value,
-            DeadTimeTOFStep=self.sf_gui.deadtime_tof_step
+            DeadTimeTOFStep=self.sf_gui.deadtime_tof_step,
         )
 
     def generate_script(

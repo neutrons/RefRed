@@ -1040,11 +1040,12 @@ class SFCalculator(QtWidgets.QMainWindow):
 
     def show_dead_time_dialog(self):
         """
-            Pop up dialog for dead time options
+        Pop up dialog for dead time options
         """
         dt_settings = DeadTimeSettingsView(parent=self)
-        dt_settings.set_state(self.apply_deadtime, self.paralyzable_deadtime,
-                              self.deadtime_value, self.deadtime_tof_step)
+        dt_settings.set_state(
+            self.apply_deadtime, self.paralyzable_deadtime, self.deadtime_value, self.deadtime_tof_step
+        )
         dt_settings.exec_()
 
         # Store dead time options
