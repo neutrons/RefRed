@@ -4,7 +4,6 @@ import time
 from typing import Optional, Union
 
 # third-party imports
-import mantid.simpleapi as api
 import numpy as np
 from qtpy.QtWidgets import QApplication
 from qtpy.QtWidgets import QFileDialog
