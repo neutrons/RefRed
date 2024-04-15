@@ -195,6 +195,7 @@ class ReductionSfCalculator(object):
         Generate a scaling factor calculation script
         """
         import lr_reduction
+
         peak_ranges, bck_ranges, low_res_ranges, run_list = self._get_algorithm_params(string_runs, list_peak_back)
 
         script = "# Scaling factor calculation\n"
