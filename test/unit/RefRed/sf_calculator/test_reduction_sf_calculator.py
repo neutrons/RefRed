@@ -116,28 +116,31 @@ class GoldValues:
 
 
 def mock_lr_scaling_factor():
-    class Algo():
+    class Algo:
         def PyInit(self):
             return None
 
         def setProperty(self, key, value):
-            assert key in {'DirectBeamRuns',
-                           'IncidentMedium',
-                           'TOFRange',
-                           'TOFSteps',
-                           'SignalPeakPixelRange',
-                           'SignalBackgroundPixelRange',
-                           'LowResolutionPixelRange',
-                           'ScalingFactorFile',
-                           'UseDeadTimeCorrection',
-                           'ParalyzableDeadTime',
-                           'DeadTime',
-                           'DeadTimeTOFStep'}
+            assert key in {
+                'DirectBeamRuns',
+                'IncidentMedium',
+                'TOFRange',
+                'TOFSteps',
+                'SignalPeakPixelRange',
+                'SignalBackgroundPixelRange',
+                'LowResolutionPixelRange',
+                'ScalingFactorFile',
+                'UseDeadTimeCorrection',
+                'ParalyzableDeadTime',
+                'DeadTime',
+                'DeadTimeTOFStep',
+            }
 
         def PyExec(self):
             return None
 
     return Algo()
+
 
 if __name__ == '__main__':
     pytest.main([__file__])
