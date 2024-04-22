@@ -2,7 +2,6 @@
 from unittest import mock
 
 # third-party imports
-import mantid.simpleapi
 import lr_reduction.scaling_factors.LRScalingFactors
 import numpy as np
 import pytest
