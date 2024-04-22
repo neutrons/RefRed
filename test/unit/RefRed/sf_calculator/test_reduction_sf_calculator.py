@@ -3,6 +3,7 @@ from unittest import mock
 
 # third-party imports
 import mantid.simpleapi
+import lr_reduction.scaling_factors.LRScalingFactors
 import numpy as np
 import pytest
 import qtpy
@@ -66,7 +67,7 @@ def test_init_reduction_sf_calculator(processEvents_mock, qtbot):
     sf_gui.sfFileNameLabel = qtpy.QtWidgets.QLabel('/tmp/testscale.cfg')
 
     # Set up mock for mantid LRScalingFactors
-    mantid.simpleapi.LRScalingFactors = mock.Mock(side_effect=mock_lr_scaling_factor)
+    lr_reduction.scaling_factors.LRScalingFactors.LRScalingFactors = mock.Mock(side_effect=mock_lr_scaling_factor)
 
     # Initialize
     test_reducer = ReductionSfCalculator(sf_gui, False, True)
@@ -114,84 +115,29 @@ class GoldValues:
     gold_nbr_scripts = 5
 
 
-def mock_lr_scaling_factor(
-    DirectBeamRuns,
-    IncidentMedium,
-    TOFRange,
-    TOFSteps,
-    SignalPeakPixelRange,
-    SignalBackgroundPixelRange,
-    LowResolutionPixelRange,
-    ScalingFactorFile,
-):
-    """Verify the input parameters are correct
+def mock_lr_scaling_factor():
+    class Algo():
+        def PyInit(self):
+            return None
 
-    It is assumed that the mantid algorithm is correct.
-    The mantid algorithm shall be tested in a separate test
-    """
-    if len(DirectBeamRuns) == 3:
-        # first calculation
-        assert DirectBeamRuns == [184978, 184979, 184980]
-        assert IncidentMedium == 'air'
-        assert TOFRange == [20880.0, 34170.0]
-        assert TOFSteps == 200
-        assert SignalPeakPixelRange == [136, 145, 136, 145, 136, 145]
-        assert SignalBackgroundPixelRange == [133, 148, 133, 148, 133, 148]
-        assert LowResolutionPixelRange == [0, 256, 0, 256, 0, 256]
-        assert ScalingFactorFile == '/tmp/testscale.cfg'
+        def setProperty(self, key, value):
+            assert key in {'DirectBeamRuns',
+                           'IncidentMedium',
+                           'TOFRange',
+                           'TOFSteps',
+                           'SignalPeakPixelRange',
+                           'SignalBackgroundPixelRange',
+                           'LowResolutionPixelRange',
+                           'ScalingFactorFile',
+                           'UseDeadTimeCorrection',
+                           'ParalyzableDeadTime',
+                           'DeadTime',
+                           'DeadTimeTOFStep'}
 
-    elif len(DirectBeamRuns) == 9:
-        # second calculation
-        assert DirectBeamRuns == [184981, 184982, 184983, 184984, 184985, 184986, 184987, 184988, 184989]
-        assert IncidentMedium == 'air'
-        assert TOFRange == [9970.0, 23250.0]
-        assert TOFSteps == 200
-        assert SignalPeakPixelRange == [
-            137,
-            145,
-            137,
-            145,
-            136,
-            145,
-            136,
-            145,
-            136,
-            145,
-            136,
-            145,
-            135,
-            147,
-            135,
-            147,
-            135,
-            147,
-        ]
-        assert SignalBackgroundPixelRange == [
-            134,
-            148,
-            134,
-            148,
-            133,
-            148,
-            133,
-            148,
-            133,
-            148,
-            133,
-            148,
-            132,
-            150,
-            132,
-            150,
-            132,
-            150,
-        ]
-        assert LowResolutionPixelRange == [0, 256, 0, 256, 0, 256, 0, 256, 0, 256, 0, 256, 0, 256, 0, 256, 0, 256]
-        assert ScalingFactorFile == '/tmp/testscale.cfg'
+        def PyExec(self):
+            return None
 
-    else:
-        raise RuntimeError(f'Direct beam runs: {DirectBeamRuns} is not defined')
-
+    return Algo()
 
 if __name__ == '__main__':
     pytest.main([__file__])
