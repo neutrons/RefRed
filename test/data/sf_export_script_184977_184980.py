@@ -1,7 +1,22 @@
-# quicksNXS LRScalingFactors scaling factor calculation script
-# Script  automatically generated on 03_11_2021
+# Scaling factor calculation
+# lr_reduction 2.0.23
+# Script automatically generated on Mon Apr 22 17:01:11 2024
 
-import mantid
-import mantid.simpleapi as api
+from lr_reduction.scaling_factors import LRScalingFactors
+from lr_reduction.utils import mantid_algorithm_exec
 
-api.LRScalingFactors(DirectBeamRuns=[184978, 184979, 184980], IncidentMedium="air", TOFSteps=200, TOFRange=[20880.0, 34170.0], SignalPeakPixelRange=[136, 145, 136, 145, 136, 145], SignalBackgroundPixelRange=[133, 148, 133, 148, 133, 148], LowResolutionPixelRange=[0, 256, 0, 256, 0, 256], ScalingFactorFile="/tmp/UUGKIwuJfA.cfg")
+mantid_algorithm_exec(
+    LRScalingFactors.LRScalingFactors,
+    DirectBeamRuns=[184978, 184979, 184980],
+    IncidentMedium='air',
+    TOFRange=[20880.0, 34170.0],
+    TOFSteps=150,
+    SignalPeakPixelRange=[136, 145, 136, 145, 136, 145],
+    SignalBackgroundPixelRange=[133, 148, 133, 148, 133, 148],
+    LowResolutionPixelRange=[0, 256, 0, 256, 0, 256],
+    ScalingFactorFile='scaling_factors.cfg',
+    UseDeadTimeCorrection=True,
+    ParalyzableDeadTime=True,
+    DeadTime=4.2,
+    DeadTimeTOFStep=150,
+)

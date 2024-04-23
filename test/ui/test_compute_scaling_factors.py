@@ -72,10 +72,9 @@ def test_sf_calculator(qtbot, data_server, run_set, run_count, script_file):
 
     # compare the contents of the script
     def to_compare(filename):
-        r"""Load the script, retain only the call to LRScalingFactors, and drop the value of option ScalingFactorFile.
-        This value depends on the path of the directory where the test is executed"""
-        all = open(filename, "r").read().split('\n')[-1]
-        return all.split('ScalingFactorFile')[0]
+        # Load the script and compare lines that are not expected to change.
+        content = '\n'.join(open(filename, "r").read().split('\n')[8:16])
+        return content
 
     cfg_file = os.path.join(sfc._save_directory, file_name)
     assert to_compare(cfg_file) == to_compare(data_server.path_to(script_file))
