@@ -228,7 +228,7 @@ class MetadataFinder(QMainWindow):
         elif isinstance(_value, list):
             _value = _value
         else:
-            _value = f"[{_value[0]},...]-> ({len(_value)} entries)"
+            _value = f"[{_value[0]}, ...]-> ({len(_value)} entries)"
         _units = mt_run.getProperty(_name).units
         return [_value, _units]
 
