@@ -4,7 +4,6 @@ import time
 from typing import Optional, Union
 
 # third-party imports
-import mantid.simpleapi as api
 import numpy as np
 from qtpy.QtWidgets import QApplication
 from qtpy.QtWidgets import QFileDialog
@@ -165,15 +164,23 @@ class ReductionSfCalculator(object):
         """
         peak_ranges, bck_ranges, low_res_ranges, run_list = self._get_algorithm_params(string_runs, list_peak_back)
 
-        api.LRScalingFactors(
+        from lr_reduction.scaling_factors import LRScalingFactors
+        from lr_reduction.utils import mantid_algorithm_exec
+
+        mantid_algorithm_exec(
+            LRScalingFactors.LRScalingFactors,
             DirectBeamRuns=run_list,
             IncidentMedium=str(incident_medium),
             TOFRange=tof_range,
-            TOFSteps=200,
+            TOFSteps=self.sf_gui.deadtime_tof_step,
             SignalPeakPixelRange=peak_ranges,
             SignalBackgroundPixelRange=bck_ranges,
             LowResolutionPixelRange=low_res_ranges,
             ScalingFactorFile=str(output_file_name),
+            UseDeadTimeCorrection=self.sf_gui.apply_deadtime,
+            ParalyzableDeadTime=self.sf_gui.paralyzable_deadtime,
+            DeadTime=self.sf_gui.deadtime_value,
+            DeadTimeTOFStep=self.sf_gui.deadtime_tof_step,
         )
 
     def generate_script(
@@ -187,25 +194,33 @@ class ReductionSfCalculator(object):
         """
         Generate a scaling factor calculation script
         """
-        script = "# quicksNXS LRScalingFactors scaling factor calculation script\n"
-        _date = time.strftime("%d_%m_%Y")
-        script += "# Script  automatically generated on " + _date + "\n\n"
-        script += "import mantid\n"
-        script += "import mantid.simpleapi as api\n\n"
+        import lr_reduction
 
         peak_ranges, bck_ranges, low_res_ranges, run_list = self._get_algorithm_params(string_runs, list_peak_back)
 
-        str_run_list = ", ".join([str(x) for x in run_list])
-        _script_exe = "api.LRScalingFactors(DirectBeamRuns=[%s], " % str_run_list
-        _script_exe += 'IncidentMedium="%s", ' % incident_medium
-        _script_exe += "TOFSteps=200, "
-        _script_exe += "TOFRange=[%s], " % ", ".join([str(x) for x in tof_range])
-        _script_exe += "SignalPeakPixelRange=[%s], " % ", ".join([str(x) for x in peak_ranges])
-        _script_exe += "SignalBackgroundPixelRange=[%s], " % ", ".join([str(x) for x in bck_ranges])
-        _script_exe += "LowResolutionPixelRange=[%s], " % ", ".join([str(x) for x in low_res_ranges])
-        _script_exe += 'ScalingFactorFile="%s")' % output_file_name
+        script = "# Scaling factor calculation\n"
+        script += f"# lr_reduction {lr_reduction.__version__}\n"
+        script += f"# Script automatically generated on {time.ctime()}\n\n"
 
-        script += _script_exe
+        script += "from lr_reduction.scaling_factors import LRScalingFactors\n"
+        script += "from lr_reduction.utils import mantid_algorithm_exec\n\n"
+
+        script += "mantid_algorithm_exec(\n"
+        script += "    LRScalingFactors.LRScalingFactors,\n"
+        script += f"    DirectBeamRuns={run_list},\n"
+        script += f"    IncidentMedium='{incident_medium}',\n"
+        script += f"    TOFRange={tof_range},\n"
+        script += f"    TOFSteps={self.sf_gui.deadtime_tof_step},\n"
+        script += f"    SignalPeakPixelRange={peak_ranges},\n"
+        script += f"    SignalBackgroundPixelRange={bck_ranges},\n"
+        script += f"    LowResolutionPixelRange={low_res_ranges},\n"
+        script += f"    ScalingFactorFile='{output_file_name}',\n"
+        script += f"    UseDeadTimeCorrection={self.sf_gui.apply_deadtime},\n"
+        script += f"    ParalyzableDeadTime={self.sf_gui.paralyzable_deadtime},\n"
+        script += f"    DeadTime={self.sf_gui.deadtime_value},\n"
+        script += f"    DeadTimeTOFStep={self.sf_gui.deadtime_tof_step},\n"
+        script += ")\n"
+
         return script
 
     def refreshOutputFileContainPreview(self, output_file_name):

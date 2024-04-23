@@ -14,6 +14,7 @@ import time
 from RefRed import ORGANIZATION, APPNAME
 import RefRed.colors
 from RefRed.interfaces import load_ui
+from RefRed.sf_calculator.dead_time import DeadTimeSettingsView
 from RefRed.sf_calculator.fill_sf_gui_table import FillSFGuiTable
 from RefRed.sf_calculator.incident_medium_list_editor import IncidentMediumListEditor
 from RefRed.sf_calculator.load_and_sort_nxsdata_for_sf_calculator import (
@@ -73,6 +74,12 @@ class SFCalculator(QtWidgets.QMainWindow):
             "is_auto_peak_finder": True,
             "back_offset_from_peak": 3,
         }
+
+        # Dead time options
+        self.apply_deadtime = True
+        self.paralyzable_deadtime = True
+        self.deadtime_value = 4.2
+        self.deadtime_tof_step = 150
 
         self.initGui()
         self.checkGui()
@@ -1030,3 +1037,19 @@ class SFCalculator(QtWidgets.QMainWindow):
         self.TOFmanualFromValue.setText("%.2f" % tof1)
         self.TOFmanualToValue.setText("%.2f" % tof2)
         self.manualTOFtextFieldValidated(with_plot_update=with_plot_update)
+
+    def show_dead_time_dialog(self):
+        """
+        Pop up dialog for dead time options
+        """
+        dt_settings = DeadTimeSettingsView(parent=self)
+        dt_settings.set_state(
+            self.apply_deadtime, self.paralyzable_deadtime, self.deadtime_value, self.deadtime_tof_step
+        )
+        dt_settings.exec_()
+
+        # Store dead time options
+        self.apply_deadtime = dt_settings.options['apply_correction']
+        self.paralyzable_deadtime = dt_settings.options['paralyzable']
+        self.deadtime_value = dt_settings.options['dead_time']
+        self.deadtime_tof_step = dt_settings.options['tof_step']
