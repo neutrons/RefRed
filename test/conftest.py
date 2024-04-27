@@ -35,8 +35,8 @@ def data_server():
         def path_to(self, basename):
             r"""Absolute path to a data file"""
             file_path = os.path.join(self._directory, basename)
-            if not os.path.isfile(file_path):
-                raise IOError(f'File {basename} not found in data directory {self._directory}')
+            if os.path.isfile(file_path) is False:
+                raise FileNotFoundError(f"File {basename} not found in data directory {self._directory}")  # noqa E713
             return file_path
 
     yield _DataServe()

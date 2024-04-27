@@ -205,22 +205,24 @@ class ReductionSfCalculator(object):
         script += "from lr_reduction.scaling_factors import LRScalingFactors\n"
         script += "from lr_reduction.utils import mantid_algorithm_exec\n\n"
 
-        script += "mantid_algorithm_exec(\n"
-        script += "    LRScalingFactors.LRScalingFactors,\n"
-        script += f"    DirectBeamRuns={run_list},\n"
-        script += f"    IncidentMedium='{incident_medium}',\n"
-        script += f"    TOFRange={tof_range},\n"
-        script += f"    TOFSteps={self.sf_gui.deadtime_tof_step},\n"
-        script += f"    SignalPeakPixelRange={peak_ranges},\n"
-        script += f"    SignalBackgroundPixelRange={bck_ranges},\n"
-        script += f"    LowResolutionPixelRange={low_res_ranges},\n"
-        script += f"    ScalingFactorFile='{output_file_name}',\n"
-        script += f"    UseDeadTimeCorrection={self.sf_gui.apply_deadtime},\n"
-        script += f"    ParalyzableDeadTime={self.sf_gui.paralyzable_deadtime},\n"
-        script += f"    DeadTime={self.sf_gui.deadtime_value},\n"
-        script += f"    DeadTimeTOFStep={self.sf_gui.deadtime_tof_step},\n"
-        script += ")\n"
-
+        mantid_call = [
+            r"mantid_algorithm_exec(",
+            r"    LRScalingFactors.LRScalingFactors,",
+            r"    DirectBeamRuns={0},".format(run_list),
+            r"    IncidentMedium='{0}',".format(incident_medium),
+            r"    TOFRange={0},".format(tof_range),
+            r"    TOFSteps={0},".format(self.sf_gui.deadtime_tof_step),
+            r"    SignalPeakPixelRange={0},".format(peak_ranges),
+            r"    SignalBackgroundPixelRange={0},".format(bck_ranges),
+            r"    LowResolutionPixelRange={0},".format(low_res_ranges),
+            r"    ScalingFactorFile='{0}',".format(output_file_name),
+            r"    UseDeadTimeCorrection={0},".format(self.sf_gui.apply_deadtime),
+            r"    ParalyzableDeadTime={0},".format(self.sf_gui.paralyzable_deadtime),
+            r"    DeadTime={0},".format(self.sf_gui.deadtime_value),
+            r"    DeadTimeTOFStep={0},".format(self.sf_gui.deadtime_tof_step),
+            r")",
+        ]
+        script += "\n".join(mantid_call) + "\n"
         return script
 
     def refreshOutputFileContainPreview(self, output_file_name):
