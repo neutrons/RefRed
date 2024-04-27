@@ -6,7 +6,20 @@
 <!-- description here. -->
 
 # Manual test for the reviewer
-<!-- Instructions for testing here. -->
+Before running the manual tests, install the conda environment and install the source in editable mode
+```bash
+> conda env create --solver libmamba --name refred-dev --file ./environment.yml
+> conda activate refred-dev
+(refred-dev)> pip install -e .
+```
+Start RefRed GUI
+```bash
+(refred-dev)> PYTHONPATH=$(pwd):$PYTHONPATH ./scripts/start_refred.py
+```
+Or run tests
+```bash
+(refred-dev)> pytest test/unit/RefRed/test_main.py
+```
 
 # Check list for the reviewer
 - [ ] I have verified the proposed changes
