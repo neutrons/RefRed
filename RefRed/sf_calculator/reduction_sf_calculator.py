@@ -205,21 +205,21 @@ class ReductionSfCalculator(object):
         script += "from lr_reduction.scaling_factors import LRScalingFactors\n"
         script += "from lr_reduction.utils import mantid_algorithm_exec\n\n"
 
-        script += "mantid_algorithm_exec(\n"
-        script += "    LRScalingFactors.LRScalingFactors,\n"
-        script += f"    DirectBeamRuns={run_list},\n"
-        script += f"    IncidentMedium='{incident_medium}',\n"
-        script += f"    TOFRange={tof_range},\n"
-        script += f"    TOFSteps={self.sf_gui.deadtime_tof_step},\n"
-        script += f"    SignalPeakPixelRange={peak_ranges},\n"
-        script += f"    SignalBackgroundPixelRange={bck_ranges},\n"
-        script += f"    LowResolutionPixelRange={low_res_ranges},\n"
-        script += f"    ScalingFactorFile='{output_file_name}',\n"
-        script += f"    UseDeadTimeCorrection={self.sf_gui.apply_deadtime},\n"
-        script += f"    ParalyzableDeadTime={self.sf_gui.paralyzable_deadtime},\n"
-        script += f"    DeadTime={self.sf_gui.deadtime_value},\n"
-        script += f"    DeadTimeTOFStep={self.sf_gui.deadtime_tof_step},\n"
-        script += ")\n"
+        script += r'mantid_algorithm_exec(\n'
+        script += r'    LRScalingFactors.LRScalingFactors,\n'
+        script += r'    DirectBeamRuns={0},\n'.format(run_list)
+        script += r'    IncidentMedium="{0}",\n'.format(incident_medium)
+        script += r'    TOFRange={0},\n'.format(tof_range)
+        script += r'    TOFSteps={0},\n'.format(self.sf_gui.deadtime_tof_step)
+        script += r'    SignalPeakPixelRange={0},\n'.format(peak_ranges)
+        script += r'    SignalBackgroundPixelRange={0},\n'.format(bck_ranges)
+        script += r'    LowResolutionPixelRange={0},\n'.format(low_res_ranges)
+        script += r'    ScalingFactorFile="{0}",\n'.format(output_file_name)
+        script += r'    UseDeadTimeCorrection={0},\n'.format(self.sf_gui.apply_deadtime)
+        script += r'    ParalyzableDeadTime={0},\n'.format(self.sf_gui.paralyzable_deadtime)
+        script += r'    DeadTime={0},\n'.format(self.sf_gui.deadtime_value)
+        script += r'    DeadTimeTOFStep={0},\n'.format(self.sf_gui.deadtime_tof_step)
+        script += r')\n'
 
         return script
 
