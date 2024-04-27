@@ -53,13 +53,7 @@ class Gui(object):
 
         # This is the angle offset box, which is no longer needed
         # but kept for advanced usage
-        self.parent.ui.groupBox_4.setVisible(False)
-
-        # This is the TOF steps, which we also don't need at the moment
-        self.parent.ui.eventTofBins.setVisible(False)
-        self.parent.ui.label_33.setVisible(False)
-        self.parent.ui.label_29.setVisible(False)
-
+        self.parent.ui.AngleOffsetGroupBox.setVisible(False)
         self.parent.ui.sf_button.setChecked(True)
 
         # Select the `DATA` tab as the currently active one
