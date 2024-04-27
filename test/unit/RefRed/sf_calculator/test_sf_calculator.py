@@ -61,7 +61,6 @@ class TestSFCalculator:
         new_paralyzable = False
         new_dead_time = 5.0
         new_tof_step = 200
-        calculator = self.app
 
         class MockDeadTimeSettingsView:
             def __init__(self, parent=None):
@@ -75,10 +74,10 @@ class TestSFCalculator:
                 pass
 
         monkeypatch.setattr("RefRed.sf_calculator.sf_calculator.DeadTimeSettingsView", MockDeadTimeSettingsView)
-        calculator.show_dead_time_dialog()
-        assert calculator.paralyzable_deadtime == new_paralyzable
-        assert calculator.deadtime_value == new_dead_time
-        assert calculator.deadtime_tof_step == new_tof_step
+        self.app.show_dead_time_dialog()
+        assert self.app.paralyzable_deadtime == new_paralyzable
+        assert self.app.deadtime_value == new_dead_time
+        assert self.app.deadtime_tof_step == new_tof_step
 
 
 if __name__ == '__main__':
