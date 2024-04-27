@@ -17,8 +17,9 @@ SECOND = 1000  # 1000 miliseconds
 
 # The run-set "184975-184989" overflows the RAM of the GitHub Actions runners
 test_cases = [("184977-184980", 4, "sf_export_script_184977_184980.py")]
-if not os.environ.get("GITHUB_ACTIONS", False):
-    test_cases.append(("184975-184989", 15, "sf_export_script_184975_184989.py"))
+# DEBUG: uncomment these lines
+#if not os.environ.get("GITHUB_ACTIONS", False):
+#    test_cases.append(("184975-184989", 15, "sf_export_script_184975_184989.py"))
 
 
 @pytest.mark.parametrize("run_set, run_count, script_file", test_cases)
