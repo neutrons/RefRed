@@ -223,7 +223,6 @@ class ReductionSfCalculator(object):
             r")",
         ]
         script += "\n".join(mantid_call) + "\n"
-
         return script
 
     def refreshOutputFileContainPreview(self, output_file_name):
