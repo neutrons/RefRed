@@ -1,7 +1,6 @@
 # third party imports
 import pytest
-from qtpy import QtWidgets
-from qtpy.QtCore import Qt
+from qtpy import QtCore, QtWidgets
 
 # RefRed imports
 from RefRed.sf_calculator.sf_calculator import SFCalculator
@@ -18,7 +17,7 @@ class TestSFCalculator:
         # Ensure checkbox starts unchecked
         self.app.ui.deadtime_entry.applyCheckBox.setChecked(False)
         # Simulate checking the checkbox
-        qtbot.mouseClick(self.app.ui.deadtime_entry.applyCheckBox, Qt.LeftButton)
+        qtbot.mouseClick(self.app.ui.deadtime_entry.applyCheckBox, QtCore.Qt.LeftButton)
         # Assert that the apply_deadtime attribute is now True
         assert self.app.apply_deadtime is True
 
@@ -27,7 +26,7 @@ class TestSFCalculator:
         # Ensure checkbox starts checked
         self.app.ui.deadtime_entry.applyCheckBox.setChecked(True)
         # Simulate unchecking the checkbox
-        qtbot.mouseClick(self.app.ui.deadtime_entry.applyCheckBox, Qt.LeftButton)
+        qtbot.mouseClick(self.app.ui.deadtime_entry.applyCheckBox, QtCore.Qt.LeftButton)
         # Assert that the apply_deadtime attribute is now False
         assert self.app.apply_deadtime is False
 
