@@ -180,7 +180,7 @@ class LoadingConfiguration(object):
         o_scaling_factor_widget.set_enabled(status=scaling_factor_flag)
 
         use_dead_time = str2bool(self.getNodeValue(node_0, 'dead_time_correction'))
-        self.parent.ui.deadtime_checkbox.setChecked(use_dead_time)
+        self.parent.ui.deadtime_entry.applyCheckBox.setChecked(use_dead_time)
 
     def getMetadataObject(self, node) -> LConfigDataset:
         r"""Populate an instance of type LConfigDataset using the information contained in one of the

@@ -14,7 +14,7 @@ import time
 from RefRed import ORGANIZATION, APPNAME
 import RefRed.colors
 from RefRed.interfaces import load_ui
-from RefRed.sf_calculator.dead_time import DeadTimeSettingsView
+from RefRed.interfaces.deadtime_settings import DeadTimeSettingsView
 from RefRed.sf_calculator.fill_sf_gui_table import FillSFGuiTable
 from RefRed.sf_calculator.incident_medium_list_editor import IncidentMediumListEditor
 from RefRed.sf_calculator.load_and_sort_nxsdata_for_sf_calculator import (
@@ -118,6 +118,8 @@ class SFCalculator(QtWidgets.QMainWindow):
         self.yt_plot.toolbar.homeClicked.connect(self.homeYtPlot)
         self.yi_plot.toolbar.homeClicked.connect(self.homeYiPlot)
         self.forceSortByMetaData.clicked.connect(self.forceSrotTableByMetaData)
+        self.deadtime_entry.applyCheckBox.stateChanged.connect(self.apply_deadtime_update)
+        self.deadtime_entry.settingsButton.clicked.connect(self.show_dead_time_dialog)
 
     def initGui(self):
         palette = QtGui.QPalette()
@@ -135,6 +137,8 @@ class SFCalculator(QtWidgets.QMainWindow):
         # The file menu is not currently used, since we can't load or save
         # configurations. Just remove the menu by giving it an empty title.
         self.menuFile.setTitle("")
+        # deadtime correction
+        self.ui.deadtime_entry.applyCheckBox.setChecked(self.apply_deadtime)
 
     def homeYtPlot(self):
         [xmin, xmax, ymin, ymax] = self.yt_plot.toolbar.home_settings
@@ -1038,18 +1042,21 @@ class SFCalculator(QtWidgets.QMainWindow):
         self.TOFmanualToValue.setText("%.2f" % tof2)
         self.manualTOFtextFieldValidated(with_plot_update=with_plot_update)
 
+    def apply_deadtime_update(self):
+        r"""Update attribute apply_deadtime when the associated checkbox changes its state"""
+        apply_deadtime = self.ui.deadtime_entry.applyCheckBox.isChecked()
+        if self.apply_deadtime != apply_deadtime:
+            self.apply_deadtime = apply_deadtime
+
     def show_dead_time_dialog(self):
         """
         Pop up dialog for dead time options
         """
         dt_settings = DeadTimeSettingsView(parent=self)
-        dt_settings.set_state(
-            self.apply_deadtime, self.paralyzable_deadtime, self.deadtime_value, self.deadtime_tof_step
-        )
+        dt_settings.set_state(self.paralyzable_deadtime, self.deadtime_value, self.deadtime_tof_step)
         dt_settings.exec_()
 
         # Store dead time options
-        self.apply_deadtime = dt_settings.options['apply_correction']
         self.paralyzable_deadtime = dt_settings.options['paralyzable']
         self.deadtime_value = dt_settings.options['dead_time']
         self.deadtime_tof_step = dt_settings.options['tof_step']

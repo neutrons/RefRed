@@ -24,7 +24,7 @@ class GlobalReductionSettingsHandler(object):
         self.angle_offset_error = self.get_angle_offset_error()
         self.tof_steps = self.get_tof_steps()
         self.apply_normalization = self.parent.ui.useNormalizationFlag.isChecked()
-        self.dead_time = self.parent.ui.deadtime_checkbox.isChecked()
+        self.dead_time = self.parent.ui.deadtime_entry.applyCheckBox.isChecked()
 
     def to_dict(self):
         """
