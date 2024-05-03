@@ -21,18 +21,13 @@ class ExportXMLConfig(object):
     str_array = []
 
     def __init__(self, parent=None, filename=''):
-        self.init_variables()
-
         self.parent = parent
         self.filename = filename
+        self.str_array = []
 
         self.header_part()
         self.main_part()
         self.save_xml()
-
-    def init_variables(self):
-        self.filename = ''
-        self.str_array = []
 
     def header_part(self):
         str_array = self.str_array

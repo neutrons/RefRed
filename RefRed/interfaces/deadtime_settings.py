@@ -1,75 +1,37 @@
-# standard imports
-from typing import Any, Callable, Dict
-from xml.dom.minidom import Document, Element
-
 # third-party imports
 from qtpy.QtWidgets import QDialog, QWidget
-from pydantic import BaseModel
 
 # RefRed imports
+from RefRed.configuration.global_settings import GlobalSettings
 from RefRed.interfaces import load_ui
-from RefRed.utilities import str2bool
 
 
-class DeadTimeSettingsModel(BaseModel):
-    apply_deadtime: bool = True
-    paralyzable: bool = True
-    dead_time: float = 4.2
-    tof_step: int = 150
+class DeadTimeSettingsModel(GlobalSettings):
+    r"""Stores all options for the dead time correction. These are global options
 
-    def to_xml(self, indent: str = "") -> str:
-        r"""Serialize the dead time settings to XML format
+    Examples of Use:
 
-        Output example:
+    settings.to_xml() output:
         <apply_deadtime>True</apply_deadtime>
         <paralyzable>True</paralyzable>
         <dead_time>4.2</dead_time>
         <tof_step>150</tof_step>
 
-        Parameters
-        ----------
-        indent: str
-            Prefix to prepend each line of XML. Typically a certain number of spaces
-        """
-        doc = Document()  # Create a new XML document
-
-        def _to_xml(field: str) -> str:
-            r"""Serialize one of the dead time settings to XML format"""
-            element = doc.createElement(field)
-            element_text = doc.createTextNode(str(getattr(self, field)))
-            element.appendChild(element_text)
-            return element.toxml()
-
-        return "\n".join([indent + _to_xml(field) for field in self.dict()])
-
-    def from_xml(self, node: Element):
-        r"""Update the dead time settings from the contents of an XML element
-
-        If the XMl element is missing one (or more) setting, the setting(s) are not updated.
-
-        Input example:
+    Input to settings.from_xml():
         <RefRed>
-          <some_entry1>value1</some_entry1>
-          <some_entry2>value2</some_entry2>
-          <apply_deadtime>True</apply_deadtime>
-          <paralyzable>True</paralyzable>
-          <dead_time>4.2</dead_time>
-          <tof_step>150</tof_step>
-          <some_entry3>value3</some_entry3>
+            <some_entry1>value1</some_entry1>
+            <some_entry2>value2</some_entry2>
+            <apply_deadtime>True</apply_deadtime>
+            <paralyzable>True</paralyzable>
+            <dead_time>4.2</dead_time>
+            <tof_step>150</tof_step>
+            <some_entry3>value3</some_entry3>
         </RefRed>
-        """
-        converters: Dict[str, Callable[[str], Any]] = {
-            "apply_deadtime": str2bool,
-            "paralyzable": str2bool,
-            "dead_time": float,
-            "tof_step": int,
-        }
-        for field, converter in converters.items():
-            tmp: list = node.getElementsByTagName(field)
-            if len(tmp):
-                value = tmp[0].childNodes[0].nodeValue
-                setattr(self, field, converter(value))
-        return self
+    """
+    apply_deadtime: bool = True
+    paralyzable: bool = True
+    dead_time: float = 4.2
+    tof_step: int = 150
 
 
 class DeadTimeSettingsView(QDialog):
