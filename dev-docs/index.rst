@@ -14,3 +14,4 @@ Contents:
    :maxdepth: 1
 
    pycharm
+   testing
