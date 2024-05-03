@@ -11,7 +11,6 @@ import mantid
 # package imports
 import RefRed
 from RefRed.calculations.lr_data import LRData
-from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
 
 
@@ -27,7 +26,6 @@ class ExportXMLConfig(object):
         self.parent = parent
         self.filename = filename
 
-        self.prepare_big_table_data()
         self.header_part()
         self.main_part()
         self.save_xml()
@@ -35,21 +33,6 @@ class ExportXMLConfig(object):
     def init_variables(self):
         self.filename = ''
         self.str_array = []
-
-    def prepare_big_table_data(self):
-        """
-        all data files used last data clocking values
-        """
-
-        big_table_data = self.parent.big_table_data
-        o_gui_utility = GuiUtility(parent=self.parent)
-        row_highest_q = o_gui_utility.get_row_with_highest_q()
-
-        for row in range(row_highest_q):
-            _lrdata = big_table_data[row, 0]
-            big_table_data[row, 0] = _lrdata
-
-        self.parent.big_table_data = big_table_data
 
     def header_part(self):
         str_array = self.str_array
