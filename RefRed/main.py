@@ -25,7 +25,7 @@ from RefRed.gui_handling.observer import SpinBoxObserver
 from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
 from RefRed.interfaces import load_ui
-from RefRed.interfaces.deadtime_settings import DeadTimeSettingsView
+from RefRed.interfaces.deadtime_settings import DeadTimeSettingsModel, DeadTimeSettingsView
 from RefRed.load_reduced_data_set.load_reduced_data_set_handler import LoadReducedDataSetHandler
 from RefRed.load_reduced_data_set.reduced_ascii_data_right_click import ReducedAsciiDataRightClick
 from RefRed.metadata.metadata_finder import MetadataFinder
@@ -149,7 +149,7 @@ class MainGui(QtWidgets.QMainWindow):
         backgrounds_settings["norm"].signal_second_background.connect(self.norm_back_checkbox)
 
         # deadtime_entry connections
-        self.deadtime_options = {"apply_deadtime": True, "paralyzable": True, "dead_time": 4.2, "tof_step": 150}
+        self.deadtime_settings = DeadTimeSettingsModel()
         self.ui.deadtime_entry.applyCheckBox.stateChanged.connect(self.apply_deadtime_update)
         self.ui.deadtime_entry.settingsButton.clicked.connect(self.show_deadtime_settings)
 
@@ -659,21 +659,22 @@ class MainGui(QtWidgets.QMainWindow):
         o_settings_editor.show()
 
     def apply_deadtime_update(self):
-        r"""Update option apply_deadtime of attribute deadtime_options when the associated checkbox
+        r"""Update option apply_deadtime of field deadtime_settings when the associated checkbox
         changes its state"""
         apply_deadtime = self.ui.deadtime_entry.applyCheckBox.isChecked()
-        if self.deadtime_options["apply_deadtime"] != apply_deadtime:
-            self.deadtime_options["apply_deadtime"] = apply_deadtime
+        if self.deadtime_settings.apply_deadtime != apply_deadtime:
+            self.deadtime_settings.apply_deadtime = apply_deadtime
 
     def show_deadtime_settings(self):
         r"""Show the dialog for dead-time options. Update attribue deadtime options upon closing the dialog."""
-        dt_settings = DeadTimeSettingsView(parent=self)
-        dt_settings.set_state(
-            self.deadtime_options["paralyzable"], self.deadtime_options["dead_time"], self.deadtime_options["tof_step"]
+        view = DeadTimeSettingsView(parent=self)
+        view.set_state(
+            self.deadtime_settings.paralyzable, self.deadtime_settings.dead_time, self.deadtime_settings.tof_step
         )
-        dt_settings.exec_()
+        view.exec_()
+        # update the dead time settings of the Main GUI after user has closed the dialog
         for option in ["paralyzable", "dead_time", "tof_step"]:
-            self.deadtime_options[option] = dt_settings.options[option]
+            setattr(self.deadtime_settings, option, view.options[option])
 
     def closeEvent(self, event=None):
         SaveUserConfiguration(parent=self)

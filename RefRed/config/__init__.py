@@ -64,7 +64,7 @@ def _create_proxy():
     add them to the ConfigProxy object that stores
     all information in .ini files. The usage in other
     modules is the same for both cases when no parameter
-    is imported dirctly from the submodule.
+    is imported directly from the submodule.
     '''
     global proxy, __all__
     proxy = _ConfigProxy(_config_path)

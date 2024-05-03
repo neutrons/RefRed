@@ -210,9 +210,8 @@ class ExportXMLConfig(object):
 
             str_array.append('   <slits_width_flag>True</slits_width_flag>\n')
 
-            # Dead time correction
-            dead_time = o_general_settings.dead_time
-            str_array.append('   <dead_time_correction>' + str(dead_time) + '</dead_time_correction>\n')
+            str_array.append(o_general_settings.dead_time.to_xml() + "\n")  # dead time settings
+
             str_array.append('  </RefLData>\n')
 
         str_array.append('  </DataSeries>\n')

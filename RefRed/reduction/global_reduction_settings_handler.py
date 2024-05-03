@@ -1,3 +1,7 @@
+# RefRed imports
+from RefRed.interfaces.deadtime_settings import DeadTimeSettingsModel
+
+
 class GlobalReductionSettingsHandler(object):
 
     incident_medium_selected = ''
@@ -24,7 +28,7 @@ class GlobalReductionSettingsHandler(object):
         self.angle_offset_error = self.get_angle_offset_error()
         self.tof_steps = self.get_tof_steps()
         self.apply_normalization = self.parent.ui.useNormalizationFlag.isChecked()
-        self.dead_time = self.parent.ui.deadtime_entry.applyCheckBox.isChecked()
+        self.dead_time: DeadTimeSettingsModel = self.parent.deadtime_settings
 
     def to_dict(self):
         """
