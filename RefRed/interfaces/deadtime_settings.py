@@ -1,4 +1,5 @@
 # standard imports
+from typing import Any, Callable, Dict
 from xml.dom.minidom import Document, Element
 
 # third-party imports
@@ -57,7 +58,12 @@ class DeadTimeSettingsModel(BaseModel):
           <some_entry3>value3</some_entry3>
         </RefRed>
         """
-        converters = {"apply_deadtime": str2bool, "paralyzable": str2bool, "dead_time": float, "tof_step": int}
+        converters: Dict[str, Callable[[str], Any]] = {
+            "apply_deadtime": str2bool,
+            "paralyzable": str2bool,
+            "dead_time": float,
+            "tof_step": int,
+        }
         for field, converter in converters.items():
             tmp: list = node.getElementsByTagName(field)
             if len(tmp):
