@@ -6,6 +6,8 @@ import sys
 import time
 
 # third-party imports
+from lr_reduction import template
+from lr_reduction import reduction_template_reader
 import numpy as np
 from qtpy.QtWidgets import QFileDialog
 from qtpy.QtWidgets import QApplication
@@ -76,9 +78,6 @@ class LiveReductionHandler(object):
 
             # run reduction
             try:
-                from lr_reduction import template
-                from lr_reduction import reduction_template_reader
-
                 template_data = reduction_template_reader.ReductionParameters()
                 template_data.from_dict(reduction_pars, permissible=True)
                 q, r, dr, info = template.process_from_template(
