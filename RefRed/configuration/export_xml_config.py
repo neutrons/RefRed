@@ -15,19 +15,9 @@ from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSe
 
 
 class ExportXMLConfig(object):
-
-    parent = None
-    filename = ''
-    str_array = []
-
-    def __init__(self, parent=None, filename=''):
+    def __init__(self, parent=None):
         self.parent = parent
-        self.filename = filename
         self.str_array = []
-
-        self.header_part()
-        self.main_part()
-        self.save_xml()
 
     def header_part(self):
         str_array = self.str_array
@@ -196,15 +186,20 @@ class ExportXMLConfig(object):
         str_array.append('</Reduction>\n')
         self.str_array = str_array
 
-    def save_xml(self):
-        filename = self.filename
-        str_array = self.str_array
+    def save(self, filename: str):
+        r"""Save the current configuration for each run
 
-        # write out XML file
+        Parameters
+        ----------
+        filename: str
+            The name of the file to which the configuration will be saved.
+        """
+        self.header_part()
+        self.main_part()
+
         if os.path.isfile(filename):
             os.remove(filename)
-
         with open(filename, 'w') as outfile:
-            outfile.writelines(str_array)
+            outfile.writelines(self.str_array)
 
         logging.info(f"Config is saved to {filename}.")
