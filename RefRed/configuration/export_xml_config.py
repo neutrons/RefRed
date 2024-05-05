@@ -44,14 +44,11 @@ class ExportXMLConfig(object):
 
             _data: LRData = _big_table_data[row, 0]
             if _data is None:
-                break
+                break  # we found the first empty row in the reduction table. No more runs available
 
             str_array.append('  <RefLData>\n')
             str_array.append('   <peak_selection_type>narrow</peak_selection_type>\n')
 
-            # data_full_file_name = _data.full_file_name
-            # if type(data_full_file_name) == type([]):
-            # data_full_file_name = ','.join(data_full_file_name)
             data_peak = _data.peak
             data_back = _data.back
             data_back2 = _data.back2
