@@ -16,7 +16,7 @@ class DeadTimeSettingsModel(GlobalSettings):
     apply_deadtime: bool = True
     paralyzable: bool = True
     dead_time: float = 4.2
-    tof_step: int = 150
+    tof_step: float = 150.0
 
     # class variable, translates fields to XML tag names, same names as the lr_reduction package
     _to_xmltag = {
@@ -79,7 +79,7 @@ class DeadTimeSettingsModel(GlobalSettings):
             "apply_deadtime": str2bool,
             "paralyzable": str2bool,
             "dead_time": float,
-            "tof_step": int,
+            "tof_step": float,
         }
         for field, converter in converters.items():
             tmp: list = node.getElementsByTagName(self._to_xmltag[field])
@@ -126,15 +126,18 @@ class DeadTimeSettingsView(QDialog):
         self.ui.dead_time_tof.setValue(tof_step)
         self.options = self.get_state_from_form()
 
-    def get_state_from_form(self):
+    def get_state_from_form(self) -> dict:
+        r"""Read the options from the form.
+
+        Returns
+        -------
+        Dictionary whose keys must match fields of class `DeadTimeSettingsModel`
         """
-        Read the options from the form.
-        """
-        options = {}
-        options['paralyzable'] = self.ui.use_paralyzable.isChecked()
-        options['dead_time'] = self.ui.dead_time_value.value()
-        options['tof_step'] = self.ui.dead_time_tof.value()
-        return options
+        return {
+            'paralyzable': self.ui.use_paralyzable.isChecked(),
+            'dead_time': self.ui.dead_time_value.value(),
+            'tof_step': self.ui.dead_time_tof.value(),
+        }
 
     def accept(self):
         """
