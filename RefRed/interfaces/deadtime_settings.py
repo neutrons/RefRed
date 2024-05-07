@@ -13,7 +13,7 @@ class DeadTimeSettingsModel(GlobalSettings):
     r"""Stores all options for the dead time correction. These are global options"""
 
     # pydantic fields
-    apply_deadtime: bool = True
+    apply_deadtime: bool = False
     paralyzable: bool = True
     dead_time: float = 4.2
     tof_step: float = 150.0
