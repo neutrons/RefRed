@@ -1,73 +1,52 @@
+# RefRed imports
+from RefRed.configuration.global_settings import GlobalSettings
+
+
 class GlobalReductionSettingsHandler(object):
-
-    incident_medium_selected = ''
-    q_min = 0.005
-    q_step = 50
-    scaling_factor_file = ''
-    scaling_factor_flag = True
-    slits_width_flag = True
-    angle_offset = 0.0
-    angle_offset_error = 0.0
-    tof_steps = 40  # microS
-
     def __init__(self, parent=None):
         self.parent = parent
-        self.retrieve()
+        self.settings = {}
 
-    def retrieve(self):
-        self.incident_medium_selected = self.get_incident_medium_selected()
-        self.q_min = float(self.parent.gui_metadata['q_min'])
-        self.q_step = self.get_q_step()
-        self.scaling_factor_flag = self.get_scaling_factor_flag()
-        self.scaling_factor_file = self.get_scaling_factor_file()
-        self.angle_offset = self.get_angle_offset()
-        self.angle_offset_error = self.get_angle_offset_error()
-        self.tof_steps = self.get_tof_steps()
-        self.apply_normalization = self.parent.ui.useNormalizationFlag.isChecked()
-        self.dead_time = self.parent.ui.deadtime_entry.applyCheckBox.isChecked()
+        self.retrieve_settings()
+
+    def __getattr__(self, item):
+        r"""Enables values from dictionary `self.settings` to be fetched with the dot operator
+
+        Example
+        -------
+        g = GlobalReductionSettingsHandler()
+        assert g.q_min == g.settings["q_min"]
+        """
+        if item in self.settings:
+            return self.settings[item]
+        else:
+            raise AttributeError(f"'{type(self).__name__}' object has no attribute '{item}'")
+
+    def retrieve_settings(self):
+        r"""Retrieve the values of all the global settings from the GUI or from GlobalSettings instances"""
+        self.settings.update(
+            {
+                "incident_medium_selected": str(self.parent.ui.selectIncidentMediumList.currentText()).strip(),
+                "q_min": float(self.parent.gui_metadata['q_min']),
+                "q_step": float(self.parent.ui.qStep.text()),
+                "scaling_factor_flag": self.parent.ui.scalingFactorFlag.isChecked(),
+                "scaling_factor_file": str(self.parent.full_scaling_factor_file_name),
+                "slits_width_flag": True,
+                "angle_offset": float(self.parent.ui.angleOffsetValue.text()),
+                "angle_offset_error": float(self.parent.ui.angleOffsetError.text()),
+                "tof_steps": float(self.parent.ui.eventTofBins.text()),
+                "apply_normalization": self.parent.ui.useNormalizationFlag.isChecked(),
+                "dead_time": self.parent.deadtime_settings,  # an instance of `DeadTimeSettingsModel`
+            }
+        )
 
     def to_dict(self):
-        """
-        Return a dictionary with all the options
-        """
-        self.retrieve()
-        keys = [
-            "incident_medium_selected",
-            "q_min",
-            "q_step",
-            "scaling_factor_flag",
-            "scaling_factor_file",
-            "angle_offset",
-            "angle_offset_error",
-            "tof_steps",
-            "apply_normalization",
-            "dead_time",
-        ]
-        return {k: getattr(self, k) for k in keys}
-
-    def get_tof_steps(self):
-        return float(self.parent.ui.eventTofBins.text())
-
-    def get_angle_offset(self):
-        return float(self.parent.ui.angleOffsetValue.text())
-
-    def get_angle_offset_error(self):
-        return float(self.parent.ui.angleOffsetError.text())
-
-    def get_scaling_factor_flag(self):
-        return self.parent.ui.scalingFactorFlag.isChecked()
-
-    def get_scaling_factor_file(self):
-        return str(self.parent.full_scaling_factor_file_name)
-
-    def get_q_step(self):
-        _q_step = self.parent.ui.qStep.text()
-        try:
-            _q_value = float(_q_step)
-        except:
-            _q_value = 0.01
-        return _q_value
-
-    def get_incident_medium_selected(self):
-        _medium_selected = str(self.parent.ui.selectIncidentMediumList.currentText()).strip()
-        return str(_medium_selected)
+        r"""Return a dictionary with all the settings"""
+        options = {}
+        for settings_name in self.settings:
+            settings_value = getattr(self, settings_name)
+            if isinstance(settings_value, GlobalSettings):
+                options.update(settings_value.as_template_reader_dict())
+            else:
+                options[settings_name] = settings_value
+        return options

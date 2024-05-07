@@ -40,7 +40,7 @@ class SavingConfiguration(object):
 
         self.parent.path_config = os.path.dirname(self.filename)
         self.filename = makeSureFileHasExtension(self.filename)
-        ExportXMLConfig(parent=self.parent, filename=self.filename)
+        ExportXMLConfig(parent=self.parent).save(self.filename)
 
         StatusMessageHandler(parent=self.parent, message='Done!', is_threaded=True)
 

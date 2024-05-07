@@ -68,6 +68,7 @@ def test_startup(qtbot):
     qtbot.wait(wait)
 
     assert window.ui.plotTab.currentIndex() == 1
+
     # Open and close SF Calculator
     action_rect = window.ui.menubar.actionGeometry(window.ui.menuAdvanced.menuAction())
     qtbot.mouseClick(window.ui.menubar, QtCore.Qt.LeftButton, pos=action_rect.center())

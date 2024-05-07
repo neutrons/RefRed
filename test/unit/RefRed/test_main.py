@@ -53,7 +53,7 @@ class TestMainGui:
         # Simulate checking the checkbox
         qtbot.mouseClick(self.app.ui.deadtime_entry.applyCheckBox, QtCore.Qt.LeftButton)
         # Assert that the apply_deadtime attribute is now True
-        assert self.app.deadtime_options["apply_deadtime"] is True
+        assert self.app.deadtime_settings.apply_deadtime is True
 
     def test_apply_deadtime_update_unchecked(self, qtbot):
         """Test the apply_deadtime_update function when the checkbox is unchecked."""
@@ -62,7 +62,7 @@ class TestMainGui:
         # Simulate unchecking the checkbox
         qtbot.mouseClick(self.app.ui.deadtime_entry.applyCheckBox, QtCore.Qt.LeftButton)
         # Assert that the apply_deadtime attribute is now False
-        assert self.app.deadtime_options["apply_deadtime"] is False
+        assert self.app.deadtime_settings.apply_deadtime is False
 
     def test_show_deadtime_settings_default_values(self, monkeypatch):
         main_gui = self.app  # endow closure environment to MockDeadTimeSettingsView
@@ -71,9 +71,9 @@ class TestMainGui:
             def __init__(self, parent=None):
                 r"""Mocking the DeadTimeSettingsView to return default values without user interaction"""
                 self.options = {
-                    'paralyzable': main_gui.deadtime_options["paralyzable"],
-                    'dead_time': main_gui.deadtime_options["dead_time"],
-                    'tof_step': main_gui.deadtime_options["tof_step"],
+                    'paralyzable': main_gui.deadtime_settings.paralyzable,
+                    'dead_time': main_gui.deadtime_settings.dead_time,
+                    'tof_step': main_gui.deadtime_settings.tof_step,
                 }
 
             def exec_(self):
@@ -86,9 +86,9 @@ class TestMainGui:
 
         monkeypatch.setattr("RefRed.main.DeadTimeSettingsView", MockDeadTimeSettingsView)
         self.app.show_deadtime_settings()
-        assert self.app.deadtime_options["paralyzable"] is True
-        assert self.app.deadtime_options["dead_time"] == 4.2
-        assert self.app.deadtime_options["tof_step"] == 150
+        assert self.app.deadtime_settings.paralyzable is True
+        assert self.app.deadtime_settings.dead_time == 4.2
+        assert self.app.deadtime_settings.tof_step == 150
 
     def test_show_deadtime_settings_updated_values(self, monkeypatch):
         # endow closure environment to MockDeadTimeSettingsView
@@ -113,9 +113,9 @@ class TestMainGui:
 
         monkeypatch.setattr("RefRed.main.DeadTimeSettingsView", MockDeadTimeSettingsView)
         self.app.show_deadtime_settings()
-        assert self.app.deadtime_options["paralyzable"] == new_paralyzable
-        assert self.app.deadtime_options["dead_time"] == new_dead_time
-        assert self.app.deadtime_options["tof_step"] == new_tof_step
+        assert self.app.deadtime_settings.paralyzable == new_paralyzable
+        assert self.app.deadtime_settings.dead_time == new_dead_time
+        assert self.app.deadtime_settings.tof_step == new_tof_step
 
 
 if __name__ == '__main__':

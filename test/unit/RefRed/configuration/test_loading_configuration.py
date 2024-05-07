@@ -1,10 +1,10 @@
-# package imports
-from RefRed.configuration.loading_configuration import LoadingConfiguration
-from RefRed.tabledata import TableData
-
 # third party packages
 import pytest
 import unittest.mock as mock
+
+# RefRed imports
+from RefRed.configuration.loading_configuration import LoadingConfiguration
+from RefRed.tabledata import TableData
 
 
 class TestLoadingConfiguration(object):
@@ -83,7 +83,6 @@ class TestLoadingConfiguration(object):
             'scaling_factor_file': 'scaling_factor_file',
             'incident_medium_index_selected': 5.005,
             'scaling_factor_flag': 6.006,
-            'dead_time_correction': False,
         }
 
         def side_effect(node, arg):
@@ -101,8 +100,28 @@ class TestLoadingConfiguration(object):
 
         loadingConfiguration.parent.gui_metadata = mockGuiMetadata
 
+        # Mock the deadtime_settings object and its method
+        mock_deadtime_settings = mock.MagicMock()
+        mock_deadtime_settings.from_xml = mock.Mock()
+        loadingConfiguration.parent.deadtime_settings = mock_deadtime_settings
+
+        # Mock the applyCheckBox object and its method
+        mock_applyCheckBox = mock.MagicMock()
+        mock_applyCheckBox.setChecked = mock.Mock()
+        loadingConfiguration.parent.ui.deadtime_entry.applyCheckBox = mock_applyCheckBox
+
+        # call the method of interest
         loadingConfiguration.populate_main_gui_general_settings()
+
+        # verify getNodeValue was called
         loadingConfiguration.getNodeValue.assert_has_calls([mock.call(node_0, k) for k in values.keys()])
+
+        # Assert if the 'from_xml' method of 'deadtime_settings' is called
+        mock_deadtime_settings.from_xml.assert_called_once_with(node_0)
+        # Assert if the 'setChecked' method of 'applyCheckBox' is called
+        mock_applyCheckBox.setChecked.assert_called_once_with(
+            loadingConfiguration.parent.deadtime_settings.apply_deadtime
+        )
 
     # test that iMetadata.data_peak gets set properly
     def test_getMetadataObject(self):

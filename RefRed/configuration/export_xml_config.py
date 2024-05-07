@@ -11,45 +11,13 @@ import mantid
 # package imports
 import RefRed
 from RefRed.calculations.lr_data import LRData
-from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
 
 
 class ExportXMLConfig(object):
-
-    parent = None
-    filename = ''
-    str_array = []
-
-    def __init__(self, parent=None, filename=''):
-        self.init_variables()
-
+    def __init__(self, parent=None):
         self.parent = parent
-        self.filename = filename
-
-        self.prepare_big_table_data()
-        self.header_part()
-        self.main_part()
-        self.save_xml()
-
-    def init_variables(self):
-        self.filename = ''
         self.str_array = []
-
-    def prepare_big_table_data(self):
-        """
-        all data files used last data clocking values
-        """
-
-        big_table_data = self.parent.big_table_data
-        o_gui_utility = GuiUtility(parent=self.parent)
-        row_highest_q = o_gui_utility.get_row_with_highest_q()
-
-        for row in range(row_highest_q):
-            _lrdata = big_table_data[row, 0]
-            big_table_data[row, 0] = _lrdata
-
-        self.parent.big_table_data = big_table_data
 
     def header_part(self):
         str_array = self.str_array
@@ -76,14 +44,11 @@ class ExportXMLConfig(object):
 
             _data: LRData = _big_table_data[row, 0]
             if _data is None:
-                break
+                break  # we found the first empty row in the reduction table. No more runs available
 
             str_array.append('  <RefLData>\n')
             str_array.append('   <peak_selection_type>narrow</peak_selection_type>\n')
 
-            # data_full_file_name = _data.full_file_name
-            # if type(data_full_file_name) == type([]):
-            # data_full_file_name = ','.join(data_full_file_name)
             data_peak = _data.peak
             data_back = _data.back
             data_back2 = _data.back2
@@ -210,24 +175,28 @@ class ExportXMLConfig(object):
 
             str_array.append('   <slits_width_flag>True</slits_width_flag>\n')
 
-            # Dead time correction
-            dead_time = o_general_settings.dead_time
-            str_array.append('   <dead_time_correction>' + str(dead_time) + '</dead_time_correction>\n')
+            str_array.append(o_general_settings.dead_time.to_xml(indent="   ") + "\n")  # dead time settings
+
             str_array.append('  </RefLData>\n')
 
         str_array.append('  </DataSeries>\n')
         str_array.append('</Reduction>\n')
         self.str_array = str_array
 
-    def save_xml(self):
-        filename = self.filename
-        str_array = self.str_array
+    def save(self, filename: str):
+        r"""Save the current configuration for each run
 
-        # write out XML file
+        Parameters
+        ----------
+        filename: str
+            The name of the file to which the configuration will be saved.
+        """
+        self.header_part()
+        self.main_part()
+
         if os.path.isfile(filename):
             os.remove(filename)
-
         with open(filename, 'w') as outfile:
-            outfile.writelines(str_array)
+            outfile.writelines(self.str_array)
 
         logging.info(f"Config is saved to {filename}.")

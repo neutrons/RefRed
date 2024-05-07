@@ -139,6 +139,7 @@ class LoadingConfiguration(object):
             logging.warning("No RefLData found in config, skipping.")
             return
 
+        #  Assumption: all <RefLData> entries have the same global settings, so the first will suffice
         node_0 = RefLData[0]
 
         q_step = self.getNodeValue(node_0, 'q_step')
@@ -179,8 +180,9 @@ class LoadingConfiguration(object):
         o_scaling_factor_widget.checkbox(status=scaling_factor_flag)
         o_scaling_factor_widget.set_enabled(status=scaling_factor_flag)
 
-        use_dead_time = str2bool(self.getNodeValue(node_0, 'dead_time_correction'))
-        self.parent.ui.deadtime_entry.applyCheckBox.setChecked(use_dead_time)
+        # initialize the dead time settings
+        self.parent.deadtime_settings.from_xml(node_0)
+        self.parent.ui.deadtime_entry.applyCheckBox.setChecked(self.parent.deadtime_settings.apply_deadtime)
 
     def getMetadataObject(self, node) -> LConfigDataset:
         r"""Populate an instance of type LConfigDataset using the information contained in one of the
