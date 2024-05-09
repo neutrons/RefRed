@@ -58,7 +58,8 @@ class DeadTimeSettingsModel(GlobalSettings):
     def from_xml(self, node: Element):
         r"""Update the settings from the contents of an XML element
 
-        If the XMl element is missing one (or more) setting, the setting(s) are not updated.
+        If the XMl element is missing one (or more) setting, the setting(s) are not updated except for
+        field `apply_deadtime`, which is set to `False.
         XML tag names name are same as those produced by lr_reduction.reduction_template_reader.to_xml()
 
         Example
@@ -86,6 +87,9 @@ class DeadTimeSettingsModel(GlobalSettings):
             if len(tmp):
                 value = tmp[0].childNodes[0].nodeValue
                 setattr(self, field, converter(value))
+            elif field == "apply_deadtime":
+                # old XML files don't have dead time info, so we make sure it's not used.
+                setattr(self, "apply_deadtime", False)
         return self
 
     def as_template_reader_dict(self) -> Dict[str, Any]:
