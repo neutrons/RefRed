@@ -218,7 +218,7 @@ class ReductionSfCalculator(object):
             r"    LRScalingFactors.LRScalingFactors,",
             r"    DirectBeamRuns={0},".format(run_list),
             r"    IncidentMedium='{0}',".format(incident_medium),
-            r"    Attenuators='{0},".format(attenuators),
+            r"    Attenuators={0},".format(attenuators),
             r"    TOFRange={0},".format(tof_range),
             r"    TOFSteps={0},".format(self.sf_gui.deadtime_tof_step),
             r"    SignalPeakPixelRange={0},".format(peak_ranges),
