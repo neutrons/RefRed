@@ -123,6 +123,7 @@ def mock_lr_scaling_factor():
             assert key in {
                 'DirectBeamRuns',
                 'IncidentMedium',
+                'Attenuators',
                 'TOFRange',
                 'TOFSteps',
                 'SignalPeakPixelRange',

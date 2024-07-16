@@ -9,6 +9,7 @@ mantid_algorithm_exec(
     LRScalingFactors.LRScalingFactors,
     DirectBeamRuns=[184978, 184979, 184980],
     IncidentMedium='air',
+    Attenuators=[],
     TOFRange=[20880.0, 34170.0],
     TOFSteps=150,
     SignalPeakPixelRange=[136, 145, 136, 145, 136, 145],

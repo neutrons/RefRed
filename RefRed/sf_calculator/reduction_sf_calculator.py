@@ -1,12 +1,12 @@
 # standard-library imports
+import sys
 import logging
 import time
 from typing import Optional, Union
 
 # third-party imports
 import numpy as np
-from qtpy.QtWidgets import QApplication
-from qtpy.QtWidgets import QFileDialog
+from qtpy.QtWidgets import QApplication, QMessageBox, QFileDialog
 
 # RefRed imports
 from RefRed.utilities import convertTOF
@@ -102,15 +102,20 @@ class ReductionSfCalculator(object):
             string_runs = self.getStringRuns(from_index, to_index)
             list_peak_back = self.getListPeakBack(from_index, to_index)
             tof_range = self.getTofRange(from_index)
+            attenuators = self.table_settings[from_index : to_index + 1, 1]
 
             if not self.export_script_flag:
-                self.launchScript(
-                    string_runs=string_runs,
-                    list_peak_back=list_peak_back,
-                    incident_medium=incident_medium,
-                    output_file_name=output_file_name,
-                    tof_range=tof_range,
-                )
+                try:
+                    self.launchScript(
+                        string_runs=string_runs,
+                        list_peak_back=list_peak_back,
+                        incident_medium=incident_medium,
+                        output_file_name=output_file_name,
+                        tof_range=tof_range,
+                        attenuators=attenuators,
+                    )
+                except:
+                    QMessageBox.information(self.sf_gui, "Error!", str(sys.exc_info()[1]))
 
                 self.refreshOutputFileContainPreview(output_file_name)
             else:
@@ -158,6 +163,7 @@ class ReductionSfCalculator(object):
         incident_medium="",
         output_file_name="",
         tof_range=[],
+        attenuators=[],
     ):
         """
         Create scaling factor file
@@ -172,6 +178,7 @@ class ReductionSfCalculator(object):
             DirectBeamRuns=run_list,
             IncidentMedium=str(incident_medium),
             TOFRange=tof_range,
+            Attenuators=attenuators,
             TOFSteps=self.sf_gui.deadtime_tof_step,
             SignalPeakPixelRange=peak_ranges,
             SignalBackgroundPixelRange=bck_ranges,
@@ -190,6 +197,7 @@ class ReductionSfCalculator(object):
         incident_medium="",
         output_file_name="",
         tof_range=[],
+        attenuators=[],
     ):
         """
         Generate a scaling factor calculation script
@@ -210,6 +218,7 @@ class ReductionSfCalculator(object):
             r"    LRScalingFactors.LRScalingFactors,",
             r"    DirectBeamRuns={0},".format(run_list),
             r"    IncidentMedium='{0}',".format(incident_medium),
+            r"    Attenuators={0},".format(attenuators),
             r"    TOFRange={0},".format(tof_range),
             r"    TOFSteps={0},".format(self.sf_gui.deadtime_tof_step),
             r"    SignalPeakPixelRange={0},".format(peak_ranges),
