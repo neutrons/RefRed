@@ -18,9 +18,10 @@ from RefRed.utilities import convert_angle
 NEUTRON_MASS = 1.675e-27  # kg
 PLANCK_CONSTANT = 6.626e-34  # m^2 kg s^-1
 H_OVER_M_NEUTRON = PLANCK_CONSTANT / NEUTRON_MASS
+# This is the default effective distance between the moderator and the
+# detector, including an average emission delay.
+DEFAULT_4B_SOURCE_DET_DISTANCE = 15.75
 
-# any run before, tmin and tmax will be used a different algorithm
-RUN_NUMBER_0_BETTER_CHOPPER_COVERAGE = 137261
 NEW_GEOMETRY_DATE = '2014-10-01'
 
 
@@ -34,7 +35,6 @@ class LRData(object):
     tof_range_manual = None
     tof_range_auto = None
     tof_range_auto_flag = True
-    tof_range_auto_with_margin = []
 
     low_res = [0, 255]
     low_res_flag = True
@@ -42,8 +42,6 @@ class LRData(object):
     full_file_name = ['']
     filename = ''
     ipts = 'N/A'
-
-    is_better_chopper_coverage = True
     total_counts = 0
 
     def __init__(
@@ -81,9 +79,6 @@ class LRData(object):
 
         self.ipts = mt_run.getProperty('experiment_identifier').value
         self.run_number = mt_run.getProperty('run_number').value
-
-        if float(self.run_number) < RUN_NUMBER_0_BETTER_CHOPPER_COVERAGE:
-            self.is_better_chopper_coverage = False
 
         self.lambda_requested = float(mt_run.getProperty('LambdaRequest').value[0])
         self.lambda_requested_units = mt_run.getProperty('LambdaRequest').units
@@ -131,38 +126,46 @@ class LRData(object):
         self.theta = self.calculate_theta()
         self.frequency = float(mt_run.getProperty('Speed1').value[0])
 
-        tof_coeff_narrow = 1.7 * 60 / self.frequency
-        tof_coeff_large = 2.5 * 60 / self.frequency
-        tof_coeff = 0.5 * 60 / self.frequency
+        # Determine the range to select in TOF according to how the DAS computed the
+        # chopper settings
+        use_emission_delay = False
+        if "BL4B:Chop:Skf2:ChopperModerator" in mt_run:
+            moderator_calc = mt_run.getProperty("BL4B:Chop:Skf2:ChopperModerator").value[0]
+            t_mult = mt_run.getProperty("BL4B:Chop:Skf2:ChopperMultiplier").value[0]
+            t_off = mt_run.getProperty("BL4B:Chop:Skf2:ChopperOffset").value[0]
+            use_emission_delay = moderator_calc == 1
+
+        wl_half_width = 1.7 * 60 / self.frequency
+        wl_delta_full_range = 0.8 * 60 / self.frequency
+
+        # Calculate the TOF range to select
+        if use_emission_delay:
+            # We cut 5% on each side compared to the case without correction to avoid the shoulders
+            tmin = (self.dMD*(self.lambda_requested - wl_half_width * 0.95) / H_OVER_M_NEUTRON * 1e-4 + t_off) / (1 - t_mult / 1000)
+            tmax = (self.dMD*(self.lambda_requested + wl_half_width * 0.95) / H_OVER_M_NEUTRON * 1e-4 + t_off) / (1 - t_mult / 1000)
+        else:
+            tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - wl_half_width) * 1e-4
+            tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + wl_half_width) * 1e-4
 
         if lconfig is not None:
             autotmin = float(lconfig.tof_range[0])
             autotmax = float(lconfig.tof_range[1])
         else:
-            if self.is_better_chopper_coverage:
-                autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - tof_coeff_narrow) * 1e-4
-                autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff_narrow) * 1e-4
-            else:
-                autotmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff - tof_coeff_narrow) * 1e-4
-                autotmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff + tof_coeff_narrow) * 1e-4
-
-        # automatically calculate the TOF range for display
-        if self.is_better_chopper_coverage:
-            tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - tof_coeff_large) * 1e-4
-            tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff_large) * 1e-4
-        else:
-            tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff - tof_coeff_large) * 1e-4
-            tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff + tof_coeff_large) * 1e-4
-
-        if tmin < 0:
-            tmin = 0
+            autotmin = tmin
+            autotmax = tmax
 
         self.tof_range_auto = [autotmin, autotmax]  # microS
-        self.tof_range_auto_with_margin = [tmin, tmax]  # microS
 
         # manual tof range (if user wants to use a manual time range)
         self.tof_range = [autotmin, autotmax]  # for the first time, initialize tof_range like auto (microS)
         self.tof_range_manual = [autotmin, autotmax]
+
+        # Widen the range to show the entire TOF range in the plots
+        delta_t = self.dMD / H_OVER_M_NEUTRON * wl_delta_full_range * 1e-4
+        tmin -= delta_t
+        if tmin <  0:
+            tmin = 0
+        tmax += delta_t
 
         self.binning = [tmin, self.read_options['bins'], tmax]
         self.calculate_lambda_range()
