@@ -13,7 +13,7 @@ Release Notes
 
 **Of interest to the Developer:**
 
-- MR #XYZ: one-liner description
+- MR #126: structure documentation and publish in readthedocs
 
 5.1.0
 -----
