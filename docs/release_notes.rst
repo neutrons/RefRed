@@ -21,15 +21,19 @@ Release Notes
 
 **Of interest to the User**:
 
-- MR #XYZ: one-liner description
+- MR #118: add detector dead-time correction to the scaling factor calculation
+- MR #117: add detector dead-time correction to the reduction workflow
+- MR #111: dialog to set the peak and background boundaries
+- MR #108: Introduce a second background for better peak resolution
 
 **Of interest to the Developer:**
 
-- MR #XYZ: one-liner description
+- MR #109: substitute the raw numpy array big_table_data with a customized Class having meaningful method names
+- MR #105: avoid accessing GUI elements from another thread than the main thread
 
 5.0.0
 -----
-2023-04-01
+2023-04-23
 
 RefRed v5 now uses a new reduction package <https://github.com/neutrons/LiquidsReflectometer>.
 Apart from being an event-based implementation of the same reduction process,
