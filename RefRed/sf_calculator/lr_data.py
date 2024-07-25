@@ -14,7 +14,6 @@ from RefRed.plot.all_plot_axis import AllPlotAxis
 NEUTRON_MASS = 1.675e-27  # kg
 PLANCK_CONSTANT = 6.626e-34  # m^2 kg s^-1
 H_OVER_M_NEUTRON = PLANCK_CONSTANT / NEUTRON_MASS
-DEFAULT_4B_SOURCE_DET_DISTANCE = 15.75
 
 
 class LRData(object):
