@@ -14,6 +14,7 @@ from RefRed.plot.all_plot_axis import AllPlotAxis
 NEUTRON_MASS = 1.675e-27  # kg
 PLANCK_CONSTANT = 6.626e-34  # m^2 kg s^-1
 H_OVER_M_NEUTRON = PLANCK_CONSTANT / NEUTRON_MASS
+DEFAULT_4B_SOURCE_DET_DISTANCE = 15.75
 
 
 class LRData(object):
@@ -51,22 +52,15 @@ class LRData(object):
         self.full_file_name = mt_run.getProperty('Filename').value[0]
         self.filename = os.path.basename(self.full_file_name)
 
-        sample = workspace.getInstrument().getSample()
-        source = workspace.getInstrument().getSource()
-        self.dMS = sample.getDistance(source)
-
         # create array of distances pixel->sample
         self.number_x_pixels = int(workspace.getInstrument().getNumberParameter("number-of-x-pixels")[0])  # 256
         self.number_y_pixels = int(workspace.getInstrument().getNumberParameter("number-of-y-pixels")[0])
 
-        # distance sample->center of detector
-        x_index, y_index = int(self.number_x_pixels / 2), int(self.number_y_pixels / 2)
-        detector = workspace.getDetector(self.number_x_pixels * x_index + y_index)
-        self.dSD = sample.getDistance(detector)
-        del x_index, y_index, detector
-
         # distance source->center of detector
-        self.dMD = self.dSD + self.dMS
+        if workspace.getInstrument().hasParameter("source-det-distance"):
+            self.dMD = workspace.getInstrument().getNumberParameter("source-det-distance")[0]
+        else:
+            self.dMD = DEFAULT_4B_SOURCE_DET_DISTANCE
 
         # calculate theta
         self.theta = self.calculate_theta()
