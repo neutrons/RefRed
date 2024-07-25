@@ -52,23 +52,46 @@ class LRData(object):
         self.full_file_name = mt_run.getProperty('Filename').value[0]
         self.filename = os.path.basename(self.full_file_name)
 
+        sample = workspace.getInstrument().getSample()
+        source = workspace.getInstrument().getSource()
+        self.dMS = sample.getDistance(source)
+
         # create array of distances pixel->sample
         self.number_x_pixels = int(workspace.getInstrument().getNumberParameter("number-of-x-pixels")[0])  # 256
         self.number_y_pixels = int(workspace.getInstrument().getNumberParameter("number-of-y-pixels")[0])
 
+        # distance sample->center of detector
+        x_index, y_index = int(self.number_x_pixels / 2), int(self.number_y_pixels / 2)
+        detector = workspace.getDetector(self.number_x_pixels * x_index + y_index)
+        self.dSD = sample.getDistance(detector)
+        del x_index, y_index, detector
+
         # distance source->center of detector
-        if workspace.getInstrument().hasParameter("source-det-distance"):
-            self.dMD = workspace.getInstrument().getNumberParameter("source-det-distance")[0]
-        else:
-            self.dMD = DEFAULT_4B_SOURCE_DET_DISTANCE
+        self.dMD = self.dSD + self.dMS
 
         # calculate theta
         self.theta = self.calculate_theta()
         self.frequency = float(mt_run.getProperty('Speed1').value[0])
 
-        tof_coeff_large = 1.7 * 60 / self.frequency
-        tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff_large) * 1e-4
-        tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - tof_coeff_large) * 1e-4
+        # Determine the range to select in TOF according to how the DAS computed the
+        # chopper settings
+        use_emission_delay = False
+        if "BL4B:Chop:Skf2:ChopperModerator" in mt_run:
+            moderator_calc = mt_run.getProperty("BL4B:Chop:Skf2:ChopperModerator").value[0]
+            t_mult = mt_run.getProperty("BL4B:Chop:Skf2:ChopperMultiplier").value[0]
+            t_off = mt_run.getProperty("BL4B:Chop:Skf2:ChopperOffset").value[0]
+            use_emission_delay = moderator_calc == 1
+
+        wl_half_width = 1.7 * 60 / self.frequency
+
+        # Calculate the TOF range to select
+        if use_emission_delay:
+            # We cut 5% on each side compared to the case without correction to avoid the shoulders
+            tmin = (self.dMD*(self.lambda_requested - wl_half_width * 0.95) / H_OVER_M_NEUTRON * 1e-4 + t_off) / (1 - t_mult / 1000)
+            tmax = (self.dMD*(self.lambda_requested + wl_half_width * 0.95) / H_OVER_M_NEUTRON * 1e-4 + t_off) / (1 - t_mult / 1000)
+        else:
+            tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + wl_half_width) * 1e-4
+            tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - wl_half_width) * 1e-4
 
         if self.read_options['is_auto_tof_finder'] or self.tof_range is None:
             autotmin = tmin
