@@ -72,9 +72,29 @@ class LRData(object):
         self.theta = self.calculate_theta()
         self.frequency = float(mt_run.getProperty('Speed1').value[0])
 
-        tof_coeff_large = 1.7 * 60 / self.frequency
-        tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + tof_coeff_large) * 1e-4
-        tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - tof_coeff_large) * 1e-4
+        # Determine the range to select in TOF according to how the DAS computed the
+        # chopper settings
+        use_emission_delay = False
+        if "BL4B:Chop:Skf2:ChopperModerator" in mt_run:
+            moderator_calc = mt_run.getProperty("BL4B:Chop:Skf2:ChopperModerator").value[0]
+            t_mult = mt_run.getProperty("BL4B:Chop:Skf2:ChopperMultiplier").value[0]
+            t_off = mt_run.getProperty("BL4B:Chop:Skf2:ChopperOffset").value[0]
+            use_emission_delay = moderator_calc == 1
+
+        wl_half_width = 1.7 * 60 / self.frequency
+
+        # Calculate the TOF range to select
+        if use_emission_delay:
+            # We cut 5% on each side compared to the case without correction to avoid the shoulders
+            tmin = (self.dMD * (self.lambda_requested - wl_half_width * 0.95) / H_OVER_M_NEUTRON * 1e-4 + t_off) / (
+                1 - t_mult / 1000
+            )
+            tmax = (self.dMD * (self.lambda_requested + wl_half_width * 0.95) / H_OVER_M_NEUTRON * 1e-4 + t_off) / (
+                1 - t_mult / 1000
+            )
+        else:
+            tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + wl_half_width) * 1e-4
+            tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - wl_half_width) * 1e-4
 
         if self.read_options['is_auto_tof_finder'] or self.tof_range is None:
             autotmin = tmin
