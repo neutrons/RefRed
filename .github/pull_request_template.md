@@ -18,11 +18,11 @@ Check all that apply:
 
 Start RefRed GUI
 ```bash
-(refred-dev)> PYTHONPATH=$(pwd):$PYTHONPATH ./scripts/start_refred.py
+(refred)> PYTHONPATH=$(pwd):$PYTHONPATH ./scripts/start_refred.py
 ```
 Or run tests
 ```bash
-(refred-dev)> pytest test/unit/RefRed/test_main.py
+(refred)> pytest test/unit/RefRed/test_main.py
 ```
 
 # Check list for the reviewer
