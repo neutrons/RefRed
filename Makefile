@@ -3,13 +3,6 @@ SHELL=/bin/bash
 # https://www.gnu.org/software/make/manual/html_node/One-Shell.html
 # Required to prevent having to use "conda init"
 
-# command to run docker compose. change this to be what you have installed
-# this can be overriden on the command line
-# DOCKER_COMPOSE="docker compose" make startdev
-DOCKER_COMPOSE ?= docker-compose
-# name for docker image to run the CI in
-DOCKER_CI_TAG ?= web_reflectivity_test
-
 # all the lines in a recipe are passed to a single invocation of the shell.
 .ONESHELL:
 
