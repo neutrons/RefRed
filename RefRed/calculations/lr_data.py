@@ -141,8 +141,12 @@ class LRData(object):
         # Calculate the TOF range to select
         if use_emission_delay:
             # We cut 5% on each side compared to the case without correction to avoid the shoulders
-            tmin = (self.dMD*(self.lambda_requested - wl_half_width * 0.95) / H_OVER_M_NEUTRON * 1e-4 + t_off) / (1 - t_mult / 1000)
-            tmax = (self.dMD*(self.lambda_requested + wl_half_width * 0.95) / H_OVER_M_NEUTRON * 1e-4 + t_off) / (1 - t_mult / 1000)
+            tmin = (self.dMD * (self.lambda_requested - wl_half_width * 0.95) / H_OVER_M_NEUTRON * 1e-4 + t_off) / (
+                1 - t_mult / 1000
+            )
+            tmax = (self.dMD * (self.lambda_requested + wl_half_width * 0.95) / H_OVER_M_NEUTRON * 1e-4 + t_off) / (
+                1 - t_mult / 1000
+            )
         else:
             tmin = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested - wl_half_width) * 1e-4
             tmax = self.dMD / H_OVER_M_NEUTRON * (self.lambda_requested + wl_half_width) * 1e-4
@@ -163,7 +167,7 @@ class LRData(object):
         # Widen the range to show the entire TOF range in the plots
         delta_t = self.dMD / H_OVER_M_NEUTRON * wl_delta_full_range * 1e-4
         tmin -= delta_t
-        if tmin <  0:
+        if tmin < 0:
             tmin = 0
         tmax += delta_t
 
