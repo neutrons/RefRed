@@ -3,7 +3,7 @@
 Wellcome to RefRed documentation
 ================================
 
-RefRed is a desktop Application for data reduction collected at the SNS Liquids Reflectometer beamline.
+RefRed is a desktop Application for data reduction collected at the SNS Liquids Reflectometer beamline BL-4B.
 
 User Guide
 ----------
