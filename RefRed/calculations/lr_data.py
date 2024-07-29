@@ -133,7 +133,7 @@ class LRData(object):
             t_off = mt_run.getProperty("BL4B:Chop:Skf2:ChopperOffset").value[0]
             use_emission_delay = moderator_calc == 1
 
-        wl_half_width = 1.6 * 60 / self.frequency
+        wl_half_width = 1.7 * 60 / self.frequency
         wl_delta_full_range = 0.8 * 60 / self.frequency
 
         # Calculate the TOF range to select
@@ -147,7 +147,7 @@ class LRData(object):
             wl_min = self.lambda_requested - wl_half_width
             wl_max = self.lambda_requested + wl_half_width
             # Empirical additional delay to get rid of the ramp
-            ramp_delay = -750 + 125.0 * (self.lambda_requested - 4)
+            ramp_delay = -450 + 100.0 * (self.lambda_requested - 4)
             tmin += t_off + t_mult * wl_min + ramp_delay
             tmax += t_off + t_mult * wl_max
 
