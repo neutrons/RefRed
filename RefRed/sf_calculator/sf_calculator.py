@@ -2,6 +2,7 @@
     Scaling factor calculator
     TODO: This need major cleanup
 """
+
 import sys
 import os
 from pathlib import Path

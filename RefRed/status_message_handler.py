@@ -1,6 +1,7 @@
 """
     TODO: refactor this
 """
+
 import sys
 import time
 from qtpy import QtCore
