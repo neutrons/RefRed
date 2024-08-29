@@ -146,12 +146,12 @@ class PopupPlot1d(QDialog):
             self.ui.plotBack2ToSpinBox.setValue(back1)
 
     def reset_max_ui_value(self):
-        self.ui.plotPeakFromSpinBox.setMaximum(255)
-        self.ui.plotPeakToSpinBox.setMaximum(255)
-        self.ui.plotBackFromSpinBox.setMaximum(255)
-        self.ui.plotBackToSpinBox.setMaximum(255)
-        self.ui.plotBack2FromSpinBox.setMaximum(255)
-        self.ui.plotBack2ToSpinBox.setMaximum(255)
+        self.ui.plotPeakFromSpinBox.setMaximum(self.nbr_pixel_y_axis)
+        self.ui.plotPeakToSpinBox.setMaximum(self.nbr_pixel_y_axis)
+        self.ui.plotBackFromSpinBox.setMaximum(self.nbr_pixel_y_axis)
+        self.ui.plotBackToSpinBox.setMaximum(self.nbr_pixel_y_axis)
+        self.ui.plotBack2FromSpinBox.setMaximum(self.nbr_pixel_y_axis)
+        self.ui.plotBack2ToSpinBox.setMaximum(self.nbr_pixel_y_axis)
 
     def get_ycountsdata_of_tof_range_selected(self):
         if self.data.tof_range_auto_flag:
