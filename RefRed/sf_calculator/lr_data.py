@@ -94,10 +94,8 @@ class LRData(object):
         if use_emission_delay:
             wl_min = self.lambda_requested - wl_half_width
             wl_max = self.lambda_requested + wl_half_width
-            # Empirical additional delay to get rid of the ramp
-            ramp_delay = -450 + 100.0 * (self.lambda_requested - 4)
-            tmin += t_off + t_mult * wl_min + ramp_delay
-            tmax += t_off + t_mult * wl_max
+            tmin -= t_off + t_mult * wl_min
+            tmax -= t_off + t_mult * wl_max
 
         if self.read_options['is_auto_tof_finder'] or self.tof_range is None:
             autotmin = tmin
