@@ -94,8 +94,8 @@ class LRData(object):
         if use_emission_delay:
             wl_min = self.lambda_requested - wl_half_width
             wl_max = self.lambda_requested + wl_half_width
-            tmin += t_off + t_mult * wl_min
-            tmax += t_off + t_mult * wl_max
+            tmin -= t_off + t_mult * wl_min
+            tmax -= t_off + t_mult * wl_max
 
         if self.read_options['is_auto_tof_finder'] or self.tof_range is None:
             autotmin = tmin
