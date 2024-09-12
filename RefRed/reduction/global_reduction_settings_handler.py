@@ -32,8 +32,8 @@ class GlobalReductionSettingsHandler(object):
                 "scaling_factor_flag": self.parent.ui.scalingFactorFlag.isChecked(),
                 "scaling_factor_file": str(self.parent.full_scaling_factor_file_name),
                 "slits_width_flag": True,
-                "angle_offset": float(self.parent.ui.angleOffsetValue.text()),
-                "angle_offset_error": float(self.parent.ui.angleOffsetError.text()),
+                "angle_offset": 0,
+                "angle_offset_error": 0,
                 "tof_steps": float(self.parent.ui.eventTofBins.text()),
                 "apply_normalization": self.parent.ui.useNormalizationFlag.isChecked(),
                 "dead_time": self.parent.deadtime_settings,  # an instance of `DeadTimeSettingsModel`
