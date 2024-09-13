@@ -144,10 +144,9 @@ class ExportXMLConfig(object):
 
             str_array.append('   <auto_q_binning>False</auto_q_binning>\n')
 
-            angleValue = str(self.parent.ui.angleOffsetValue.text())
-            angleError = str(self.parent.ui.angleOffsetError.text())
-            str_array.append('   <angle_offset>' + angleValue + '</angle_offset>\n')
-            str_array.append('   <angle_offset_error>' + angleError + '</angle_offset_error>\n')
+            # The angle offset is currently not exposed in the UI, so we set it to 0.
+            str_array.append('   <angle_offset> 0 </angle_offset>\n')
+            str_array.append('   <angle_offset_error> 0 </angle_offset_error>\n')
 
             q_step = str(self.parent.ui.qStep.text())
             str_array.append('   <q_step>' + q_step + '</q_step>\n')
