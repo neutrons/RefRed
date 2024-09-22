@@ -14,7 +14,7 @@ dependencies:
   - pydantic
   - pip
   - pip:
-    - git+https://github.com/neutrons/LiquidsReflectometer.git@v2.1.4#egg=lr_reduction
+    - git+https://github.com/neutrons/LiquidsReflectometer.git@v2.1.7#egg=lr_reduction
 # documentation
   - sphinx
   - sphinx_rtd_theme
