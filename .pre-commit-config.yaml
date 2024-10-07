@@ -8,7 +8,7 @@ default_language_version:
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v5.0.0
     hooks:
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
@@ -17,13 +17,13 @@ repos:
       - id: check-yaml
 
   - repo: https://github.com/psf/black
-    rev: 22.12.0
+    rev: 24.10.0
     hooks:
       - id: black
         exclude: test/data
 
   - repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
+    rev: 7.1.1
     hooks:
     - id: flake8
       exclude: dev-docs|docs|versioneer.py|RefRed/_version.py|create_graph.py|test/data
