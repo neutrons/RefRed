@@ -20,9 +20,10 @@ class Gui(object):
         "\u03bbmax (\u00c5)",
         "Qmin (1/\u00c5)",
         "Qmax (1/\u00c5)",
+        "Const. Q Bin.",
         "Comments",
     ]
-    column_widths = [60, 200, 200, 65, 85, 85, 95, 95, 400]
+    column_widths = [60, 200, 200, 65, 85, 85, 95, 95, 95, 300]
     stitching_column_widths = [150, 60, 60]
     gui_size_coeff = 2.0 / 3.0
 
@@ -148,6 +149,24 @@ class Gui(object):
                     _flags = QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable
                     _item.setFlags(_flags)
                     parent.ui.reductionTable.setItem(row_index, col_index, _item)
+
+                elif col_index == 8:
+                    # Create checkbox
+                    _widget = QtWidgets.QCheckBox()
+                    _widget.setChecked(False)
+                    _widget.setEnabled(True)
+
+                    # Create a layout to center the checkbox
+                    _layout = QtWidgets.QHBoxLayout()
+                    _layout.addWidget(_widget)
+                    _layout.setAlignment(_widget, QtCore.Qt.AlignCenter)  # Align the button to the center
+                    _layout.setContentsMargins(0, 0, 0, 0)
+
+                    # Create a QWidget to hold the layout
+                    _container = QtWidgets.QWidget()
+                    _container.setLayout(_layout)
+
+                    parent.ui.reductionTable.setCellWidget(row_index, col_index, _container)
 
                 else:
                     _item = QtWidgets.QTableWidgetItem()

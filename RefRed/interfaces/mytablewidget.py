@@ -42,7 +42,8 @@ class ReductionTableColumIndex(Enum):
     LAMBDA_MAX = 5
     Q_MIN = 6
     Q_MAX = 7
-    COMMENTS = 8
+    CONST_Q_BINS = 8
+    COMMENTS = 9
 
     def __int__(self):
         return self.value

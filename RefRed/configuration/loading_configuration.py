@@ -304,9 +304,11 @@ class LoadingConfiguration(object):
         _brush_color = QtGui.QBrush()
         _brush_color.setColor(QtCore.Qt.black)
         for _row in range(nbr_row):
-            for _col in range(1, nbr_col):
-                self.parent.ui.reductionTable.item(_row, _col).setText("")
-                self.parent.ui.reductionTable.item(_row, _col).setForeground(_brush_color)
+            for _col in range(nbr_col):
+                table_item = self.parent.ui.reductionTable.item(_row, _col)
+                if table_item is not None:  # cell holds text rather than a widget (e.g. checkbox)
+                    table_item.setText("")
+                    table_item.setForeground(_brush_color)
 
     def populate_reduction_table_from_lconfigdataset(self):
         PopulateReductionTable(parent=self.parent)
