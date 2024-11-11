@@ -11,7 +11,7 @@ from typing import Any, List, Optional
 
 # third party imports
 from qtpy import QtWidgets
-from qtpy.QtCore import Qt
+from qtpy.QtCore import Qt  # type: ignore
 
 # package imports
 from RefRed.calculations.lr_data import LRData
