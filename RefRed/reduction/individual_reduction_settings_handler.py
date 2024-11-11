@@ -210,7 +210,7 @@ class IndividualReductionSettingsHandler(object):
 
     def get_const_q(self):
         """
-        Get the constant Q binning bool value for the reduction table row
+        Get the constant Q binning bool value for the reduction table row from the GUI
 
         Returns
         -------
