@@ -4,7 +4,7 @@
 import numpy as np
 
 # application imports
-from RefRed.interfaces.mytablewidget import ReductionTableColumIndex
+from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex
 from RefRed.tabledata import TableData
 
 
@@ -36,7 +36,7 @@ class PopulateReductionTableFromListLRData(object):
         self.big_table_data: TableData = self.parent.big_table_data
 
         self.reductionTable_col = (
-            int(ReductionTableColumIndex.DATA_RUN) if self.is_data else int(ReductionTableColumIndex.NORM_RUN)
+            ReductionTableColumnIndex.DATA_RUN if self.is_data else ReductionTableColumnIndex.NORM_RUN
         )
 
         if is_data:

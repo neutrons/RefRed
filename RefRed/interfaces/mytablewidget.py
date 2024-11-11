@@ -1,5 +1,5 @@
 # standard imports
-from enum import Enum
+from enum import IntEnum
 
 # third party imports
 from qtpy import QtWidgets
@@ -29,7 +29,7 @@ class MyTableWidget(QtWidgets.QTableWidget):
         self.parent = ui_parent
 
 
-class ReductionTableColumIndex(Enum):
+class ReductionTableColumnIndex(IntEnum):
     """
     Enumeration class associating a column index to a word easy to understand what the column index is for
     """

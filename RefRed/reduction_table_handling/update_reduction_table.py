@@ -9,7 +9,7 @@ import RefRed.colors
 from RefRed.calculations.check_list_run_compatibility_thread import CheckListRunCompatibilityThread
 from RefRed.calculations.locate_list_run import LocateListRun
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
-from RefRed.interfaces.mytablewidget import ReductionTableColumIndex
+from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex
 from RefRed.tabledata import TableData
 
 
@@ -39,7 +39,7 @@ class UpdateReductionTable(object):
 
         # check if nexus can be found
         list_run_object = LocateListRun(list_run=list_run)
-        col_mess = int(ReductionTableColumIndex.COMMENTS)
+        col_mess = ReductionTableColumnIndex.COMMENTS
         if list_run_object.list_run_not_found != []:
             str_list_run_not_found = [str(x) for x in list_run_object.list_run_not_found]
             runs_not_located = ', '.join(str_list_run_not_found)
