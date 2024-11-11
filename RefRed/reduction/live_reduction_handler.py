@@ -83,6 +83,7 @@ class LiveReductionHandler(object):
                 q, r, dr, info = template.process_from_template(
                     reduction_pars['data_files'],
                     template_data,
+                    q_summing=reduction_pars['const_q'],  # const Q binning
                     info=True,
                     normalize=reduction_pars['apply_normalization'],
                 )
@@ -144,7 +145,7 @@ class LiveReductionHandler(object):
             script += "reduction_pars = json.loads('%s')\n" % json_pars
             script += "template_data = reduction_template_reader.ReductionParameters()\n"
             script += "template_data.from_dict(reduction_pars)\n"
-            script += "q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, info=True, normalize=reduction_pars['apply_normalization'])\n\n"  # noqa: E501
+            script += "q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, q_summing=reduction_pars['const_q'], info=True, normalize=reduction_pars['apply_normalization'])\n\n"  # noqa: E501
 
         with open(filename, 'w') as fd:
             fd.write(script)
