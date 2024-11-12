@@ -20,11 +20,11 @@ Next
 ----
 
 **Of interest to the User**:
+- MR #135: update popup message for v4 deprecation
 
 
 **Of interest to the Developer:**
 
-- MR #135: update popup message for v4 deprecation
 - MR #126: structure documentation and publish in readthedocs
 
 5.1.0
