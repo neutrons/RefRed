@@ -36,17 +36,13 @@ class LoadingConfiguration(object):
     def __init__(self, parent=None):
         self.parent = parent
         self.filename = ""
-        StatusMessageHandler(
-            parent=self.parent, message="Loading config ...", is_threaded=False
-        )
+        StatusMessageHandler(parent=self.parent, message="Loading config ...", is_threaded=False)
 
     def run(self):
         _path = self.parent.path_config
         _filter = "XML (*.xml);; All Files (*.*)"
         filename = ""
-        file_dialog = QFileDialog(
-            self.parent, "Open Configuration File", _path, _filter
-        )
+        file_dialog = QFileDialog(self.parent, "Open Configuration File", _path, _filter)
         file_dialog.setViewMode(QFileDialog.List)
         if file_dialog.exec_():
             filename = file_dialog.selectedFiles()
@@ -179,9 +175,7 @@ class LoadingConfiguration(object):
         o_scaling_factor_widget = ScalingFactorWidgetsHandler(parent=self.parent)
         o_scaling_factor_widget.fill_incident_medium_list(scaling_factor_file)
         # +1 to make mantid friendly
-        index_selected = (
-            int(self.getNodeValue(node_0, "incident_medium_index_selected")) + 1
-        )
+        index_selected = int(self.getNodeValue(node_0, "incident_medium_index_selected")) + 1
         o_scaling_factor_widget.set_index_selected(index_selected)
 
         self.parent.path_ascii = os.path.dirname(scaling_factor_file)
@@ -191,9 +185,7 @@ class LoadingConfiguration(object):
 
         # initialize the dead time settings
         self.parent.deadtime_settings.from_xml(node_0)
-        self.parent.ui.deadtime_entry.applyCheckBox.setChecked(
-            self.parent.deadtime_settings.apply_deadtime
-        )
+        self.parent.ui.deadtime_entry.applyCheckBox.setChecked(self.parent.deadtime_settings.apply_deadtime)
 
     def getMetadataObject(self, node) -> LConfigDataset:
         r"""Populate an instance of type LConfigDataset using the information contained in one of the
@@ -222,9 +214,7 @@ class LoadingConfiguration(object):
 
         # background settings for reflectivity data
         iMetadata.data_back_flag = get_item_boolean("background_flag", default=True)
-        iMetadata.data_two_backgrounds = get_item_boolean(
-            "two_backgrounds", default=False
-        )
+        iMetadata.data_two_backgrounds = get_item_boolean("two_backgrounds", default=False)
 
         _low_res_flag = str2bool(self.getNodeValue(node, "x_range_flag"))
         iMetadata.data_low_res_flag = _low_res_flag
@@ -274,12 +264,8 @@ class LoadingConfiguration(object):
         iMetadata.norm_low_res = [_low_res_min, _low_res_max]
 
         # background settings for normalization data
-        iMetadata.norm_back_flag = get_item_boolean(
-            "norm_background_flag", default=True
-        )
-        iMetadata.norm_two_backgrounds = get_item_boolean(
-            "norm_two_backgrounds", default=False
-        )
+        iMetadata.norm_back_flag = get_item_boolean("norm_background_flag", default=True)
+        iMetadata.norm_two_backgrounds = get_item_boolean("norm_two_backgrounds", default=False)
 
         _low_res_flag = str2bool(self.getNodeValue(node, "norm_x_range_flag"))
         iMetadata.norm_low_res_flag = _low_res_flag
@@ -321,9 +307,7 @@ class LoadingConfiguration(object):
         for _row in range(nbr_row):
             for _col in range(1, nbr_col):
                 self.parent.ui.reductionTable.item(_row, _col).setText("")
-                self.parent.ui.reductionTable.item(_row, _col).setForeground(
-                    _brush_color
-                )
+                self.parent.ui.reductionTable.item(_row, _col).setForeground(_brush_color)
 
     def populate_reduction_table_from_lconfigdataset(self):
         PopulateReductionTable(parent=self.parent)
