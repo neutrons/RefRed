@@ -83,6 +83,7 @@ class LoadingConfiguration(object):
         """
         try:
             dom = minidom.parse(filename)
+        # TODO: specify the exception
         except:
             # If we can't parse the file, it's not a valid file
             return False
@@ -94,8 +95,6 @@ class LoadingConfiguration(object):
                 + "It is NOT advised to mix reduction versions.\n\n"
                 + "If you need to change your reduction parameters,"
                 + "it is recommended to reprocess all your data with the new version.\n\n"
-                + "Use the following to start version 4:\n\n"
-                + "    refred --v4\n\n"
                 + "Please consult with your local contact for advise."
             )
 
