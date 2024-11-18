@@ -53,7 +53,8 @@ class Gui(object):
 
         # This is the angle offset box, which is no longer needed
         # but kept for advanced usage
-        self.parent.ui.AngleOffsetGroupBox.setVisible(False)
+        self.parent.ui.angleOffsetError.setVisible(False)
+        self.parent.ui.offset_pm.setVisible(False)
         self.parent.ui.sf_button.setChecked(True)
 
         # Select the `DATA` tab as the currently active one
