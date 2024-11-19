@@ -160,7 +160,9 @@ class ReductionTableHandler(object):
         nbr_col = self.parent.ui.reductionTable.columnCount()
         for _row in range(nbr_row):
             for _col in range(1, nbr_col):
-                self.parent.ui.reductionTable.item(_row, _col).setText("")
+                table_item = self.parent.ui.reductionTable.item(_row, _col)
+                if table_item is not None:  # cell holds text rather than a widget (e.g. checkbox)
+                    table_item.setText("")
 
     def __clear_big_table_data(self):
         self.parent.big_table_data = TableData(self.parent.REDUCTIONTABLE_MAX_ROWCOUNT)
