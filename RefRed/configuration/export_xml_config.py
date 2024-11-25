@@ -12,6 +12,7 @@ import mantid
 import RefRed
 from RefRed.calculations.lr_data import LRData
 from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
+from RefRed.reduction.individual_reduction_settings_handler import IndividualReductionSettingsHandler
 
 
 class ExportXMLConfig(object):
@@ -45,6 +46,8 @@ class ExportXMLConfig(object):
             _data: LRData = _big_table_data[row, 0]
             if _data is None:
                 break  # we found the first empty row in the reduction table. No more runs available
+
+            o_individual_settings = IndividualReductionSettingsHandler(parent=self.parent, row_index=row)
 
             str_array.append('  <RefLData>\n')
             str_array.append('   <peak_selection_type>narrow</peak_selection_type>\n')
@@ -175,6 +178,9 @@ class ExportXMLConfig(object):
             str_array.append('   <slits_width_flag>True</slits_width_flag>\n')
 
             str_array.append(o_general_settings.dead_time.to_xml(indent="   ") + "\n")  # dead time settings
+
+            const_q_bins = o_individual_settings.get_const_q()
+            str_array.append('   <const_q>' + str(const_q_bins) + '</const_q>\n')
 
             str_array.append('  </RefLData>\n')
 

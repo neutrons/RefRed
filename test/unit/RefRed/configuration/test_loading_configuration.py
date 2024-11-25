@@ -156,6 +156,7 @@ class TestLoadingConfiguration(object):
             'norm_x_range_flag': 'norm_x_range_flag',
             'data_full_file_name': 'dataFullFileName1,dataFullFileName2',
             'norm_full_file_name': 'normFullFileName1,normFullFileName2',
+            'const_q': True,
         }
 
         def side_effect(_, arg, default=""):
@@ -172,6 +173,7 @@ class TestLoadingConfiguration(object):
         assert config.data_back[0] == values['back_roi1_from']
         assert config.data_back[1] == values['back_roi1_to']
         assert config.data_low_res == [values['x_min_pixel'], values['x_max_pixel']]
+        assert config.const_q == values['const_q']
 
 
 if __name__ == '__main__':

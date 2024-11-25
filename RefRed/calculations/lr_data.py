@@ -189,6 +189,8 @@ class LRData(object):
         self.back_flag: bool = True
         self.two_backgrounds: bool = False
 
+        self.const_q: bool = False
+
         self.all_plot_axis = AllPlotAxis()
         self.tof_auto_flag = True
         self.new_detector_geometry_flag = self.is_nexus_taken_after_refDate()

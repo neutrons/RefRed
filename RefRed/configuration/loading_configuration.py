@@ -233,6 +233,8 @@ class LoadingConfiguration(object):
         _lambda_max = self.getNodeValue(node, "to_lambda_range")
         iMetadata.lambda_range = [_lambda_min, _lambda_max]
 
+        iMetadata.const_q = get_item_boolean("const_q", default=False)
+
         iMetadata.tof_units = "micros"
 
         _data_sets = self.getNodeValue(node, "data_sets")

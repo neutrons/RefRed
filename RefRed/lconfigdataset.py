@@ -45,6 +45,7 @@ class LConfigDataset(object):
 
     q_range = ['0', '0']
     lambda_range = ['0', '0']
+    const_q = False
 
     reduce_q_axis = []
     reduce_y_axis = []
