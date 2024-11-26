@@ -9,13 +9,8 @@
 # standard imports
 from typing import Any, List, Optional
 
-# third party imports
-from qtpy import QtWidgets
-from qtpy.QtCore import Qt  # type: ignore
-
 # package imports
 from RefRed.calculations.lr_data import LRData
-from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex
 from RefRed.tabledata import TableData
 
 
@@ -209,15 +204,4 @@ class IndividualReductionSettingsHandler(object):
         return str(run_numbers)
 
     def get_const_q(self):
-        """
-        Get the constant Q binning bool value for the reduction table row from the GUI
-
-        Returns
-        -------
-        bool
-        """
-        const_q_col = ReductionTableColumnIndex.CONST_Q_BINS
-        const_q_checkbox = self.parent.ui.reductionTable.cellWidget(self.row_index, const_q_col).findChild(
-            QtWidgets.QCheckBox
-        )
-        return const_q_checkbox.checkState() == Qt.Checked
+        return bool(self.data.const_q)

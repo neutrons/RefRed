@@ -4,7 +4,7 @@ from unittest.mock import Mock
 from RefRed.calculations.lr_data import LRData
 from RefRed.lconfigdataset import LConfigDataset
 from RefRed.reduction_table_handling.const_q_checkbox_handler import ConstQCheckBoxHandler
-from qtpy.QtCore import Qt
+from qtpy.QtCore import Qt  # type: ignore
 
 from RefRed.tabledata import TableData
 
