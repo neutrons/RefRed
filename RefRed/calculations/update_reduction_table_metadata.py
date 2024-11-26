@@ -20,7 +20,6 @@ class UpdateReductionTableMetadata(object):
         q_range = lrdata.q_range
         lambda_range = lrdata.lambda_range
         incident_angle = lrdata.incident_angle
-        const_q = lrdata.const_q
 
         [qmin, qmax] = q_range
         str_qmin = "%.4f" % qmin
@@ -41,25 +40,16 @@ class UpdateReductionTableMetadata(object):
         _item_incident = QtWidgets.QTableWidgetItem(str_incident_angle)
         _item_incident.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
 
-        const_q = const_q
-        _widget = QtWidgets.QCheckBox()
-        _widget.setChecked(const_q)
-        _widget.setEnabled(True)
-        # Create a layout to center the checkbox
-        _layout = QtWidgets.QHBoxLayout()
-        _layout.addWidget(_widget)
-        _layout.setAlignment(_widget, QtCore.Qt.AlignCenter)
-        _layout.setContentsMargins(0, 0, 0, 0)
-        # Create a QWidget to hold the layout
-        _widget_const_q = QtWidgets.QWidget()
-        _widget_const_q.setLayout(_layout)
-
         parent.ui.reductionTable.setItem(row, ReductionTableColumnIndex.Q_MIN, _item_min)
         parent.ui.reductionTable.setItem(row, ReductionTableColumnIndex.Q_MAX, _item_max)
         parent.ui.reductionTable.setItem(row, ReductionTableColumnIndex.LAMBDA_MIN, _item_lmin)
         parent.ui.reductionTable.setItem(row, ReductionTableColumnIndex.LAMBDA_MAX, _item_lmax)
         parent.ui.reductionTable.setItem(row, ReductionTableColumnIndex.TWO_THETA, _item_incident)
-        parent.ui.reductionTable.setCellWidget(row, ReductionTableColumnIndex.CONST_Q_BINS, _widget_const_q)
+
+        const_q = lrdata.const_q
+        const_q_col = ReductionTableColumnIndex.CONST_Q_BINS
+        const_q_checkbox = parent.ui.reductionTable.cellWidget(row, const_q_col).findChild(QtWidgets.QCheckBox)
+        const_q_checkbox.setChecked(const_q)
 
     def sortIntArray(self, _array):
         [_element1, _element2] = _array

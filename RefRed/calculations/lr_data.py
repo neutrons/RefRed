@@ -209,6 +209,7 @@ class LRData(object):
                 self.low_res_flag = bool(lconfig.data_low_res_flag)
                 self.back_flag = bool(lconfig.data_back_flag)
                 self.two_backgrounds = bool(lconfig.data_two_backgrounds)
+                self.const_q = bool(lconfig.const_q)
             else:
                 self.peak = [int(lconfig.norm_peak[0]), int(lconfig.norm_peak[1])]
                 self.back = [int(lconfig.norm_back[0]), int(lconfig.norm_back[1])]
@@ -217,6 +218,7 @@ class LRData(object):
                 self.low_res_flag = bool(lconfig.norm_low_res_flag)
                 self.back_flag = bool(lconfig.norm_back_flag)
                 self.two_backgrounds = bool(lconfig.norm_two_backgrounds)
+                self.const_q = bool(lconfig.const_q)
 
         elif reduction_table_cell is not None:
             self.tof_auto_flag = reduction_table_cell.tof_auto_flag
@@ -230,6 +232,7 @@ class LRData(object):
             self.low_res_flag = reduction_table_cell.low_res_flag
             self.back_flag = reduction_table_cell.back_flag
             self.two_backgrounds = reduction_table_cell.two_backgrounds
+            self.const_q = reduction_table_cell.const_q
 
         else:
             pf = PeakFinderDerivation(list(range(len(self.ycountsdata))), self.ycountsdata)

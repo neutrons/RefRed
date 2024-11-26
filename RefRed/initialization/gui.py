@@ -155,6 +155,10 @@ class Gui(object):
                     _widget = QtWidgets.QCheckBox()
                     _widget.setChecked(False)
                     _widget.setEnabled(True)
+                    # connect handler to state change
+                    _widget.stateChanged.connect(
+                        lambda state=0, row=row_index: self.parent.reduction_table_const_q_handler(state, row)
+                    )
 
                     # Create a layout to center the checkbox
                     _layout = QtWidgets.QHBoxLayout()
