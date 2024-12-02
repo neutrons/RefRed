@@ -5,7 +5,7 @@ from xml.dom import minidom
 from typing import Any
 
 # third party imports
-from qtpy import QtGui, QtCore, QtWidgets
+from qtpy import QtWidgets
 from qtpy.QtWidgets import QFileDialog
 
 # application imports
@@ -22,6 +22,7 @@ from RefRed.gui_handling.scaling_factor_widgets_handler import (
 )
 from RefRed.lconfigdataset import LConfigDataset
 from RefRed.plot.clear_plots import ClearPlots
+from RefRed.reduction_table_handling.reduction_table_handler import ReductionTableHandler
 from RefRed.status_message_handler import StatusMessageHandler
 from RefRed.tabledata import TableData
 from RefRed.utilities import str2bool
@@ -301,16 +302,8 @@ class LoadingConfiguration(object):
         ClearPlots(parent=self.parent, is_data=True, is_norm=True, all_plots=True)
 
     def clear_reductionTable(self):
-        nbr_row = self.parent.ui.reductionTable.rowCount()
-        nbr_col = self.parent.ui.reductionTable.columnCount()
-        _brush_color = QtGui.QBrush()
-        _brush_color.setColor(QtCore.Qt.black)
-        for _row in range(nbr_row):
-            for _col in range(nbr_col):
-                table_item = self.parent.ui.reductionTable.item(_row, _col)
-                if table_item is not None:  # cell holds text rather than a widget (e.g. checkbox)
-                    table_item.setText("")
-                    table_item.setForeground(_brush_color)
+        reduction_table_handler = ReductionTableHandler(parent=self.parent)
+        reduction_table_handler.clear_reduction_table()
 
     def populate_reduction_table_from_lconfigdataset(self):
         PopulateReductionTable(parent=self.parent)

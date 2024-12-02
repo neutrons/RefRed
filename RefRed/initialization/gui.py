@@ -3,6 +3,7 @@ from qtpy import QtGui, QtCore, QtWidgets
 import socket
 
 from RefRed import WINDOW_TITLE
+from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex
 from RefRed.plot.all_plot_axis import AllPlotAxis
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
@@ -133,7 +134,7 @@ class Gui(object):
 
         for row_index in range(self.parent.REDUCTIONTABLE_MAX_ROWCOUNT):
             for col_index in range(len(self.column_widths)):
-                if col_index == 0:
+                if col_index == ReductionTableColumnIndex.PLOTTED:
                     _widget = QtWidgets.QCheckBox()
                     _widget.setChecked(False)
                     _widget.setEnabled(True)
@@ -144,13 +145,15 @@ class Gui(object):
                     _widget.stateChanged.connect(_signal_func)
 
                     parent.ui.reductionTable.setCellWidget(row_index, col_index, _widget)
-                elif (col_index == 1) or (col_index == 2):
+                elif (col_index == ReductionTableColumnIndex.DATA_RUN) or (
+                    col_index == ReductionTableColumnIndex.NORM_RUN
+                ):
                     _item = QtWidgets.QTableWidgetItem()
                     _flags = QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable
                     _item.setFlags(_flags)
                     parent.ui.reductionTable.setItem(row_index, col_index, _item)
 
-                elif col_index == 8:
+                elif col_index == ReductionTableColumnIndex.CONST_Q_BINS:
                     # Create checkbox
                     _widget = QtWidgets.QCheckBox()
                     _widget.setChecked(False)
