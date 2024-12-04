@@ -189,7 +189,7 @@ class LRData(object):
         self.back_flag: bool = True
         self.two_backgrounds: bool = False
 
-        self.const_q: bool = False
+        self.const_q: bool = False  # reduction using constant Q binning
 
         self.all_plot_axis = AllPlotAxis()
         self.tof_auto_flag = True

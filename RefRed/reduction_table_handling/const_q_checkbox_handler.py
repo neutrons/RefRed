@@ -8,7 +8,28 @@ from RefRed.tabledata import TableData
 
 
 class ConstQCheckBoxHandler:
+    """
+    Handler for the constant Q binning checkbox in the reduction table.
+
+    This class updates the `const_q` attribute in the reflectometry data, normalization data, and
+    reduction configuration based on the state of the constant Q binning checkbox.
+    """
+
     def __init__(self, parent=None, row: int = -1, state: Qt.CheckState = 0):
+        """
+        Initializes the handler and updates the stored configuration based on the checkbox state.
+            - Converts the checkbox state to a boolean value.
+            - Retrieves the reflectometry data, normalization data, and reduction configuration from the parent.
+
+        Parameters
+        ----------
+        parent
+            The parent object containing the big table data
+        row
+            The row index in the table
+        state
+            The state of the checkbox
+        """
         if row == -1:
             return
         if parent is None:
