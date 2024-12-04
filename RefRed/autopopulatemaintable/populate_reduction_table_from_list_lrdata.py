@@ -4,7 +4,8 @@
 import numpy as np
 
 # application imports
-from RefRed.interfaces.mytablewidget import ReductionTableColumIndex
+from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex
+from RefRed.reduction_table_handling.reduction_table_handler import ReductionTableHandler
 from RefRed.tabledata import TableData
 
 
@@ -36,11 +37,12 @@ class PopulateReductionTableFromListLRData(object):
         self.big_table_data: TableData = self.parent.big_table_data
 
         self.reductionTable_col = (
-            int(ReductionTableColumIndex.DATA_RUN) if self.is_data else int(ReductionTableColumIndex.NORM_RUN)
+            ReductionTableColumnIndex.DATA_RUN if self.is_data else ReductionTableColumnIndex.NORM_RUN
         )
 
         if is_data:
-            self.clear_reductionTable()
+            o_reduction_table_handler = ReductionTableHandler(parent=self.parent)
+            o_reduction_table_handler.clear_reduction_table()
 
         self.insert_runs_into_table()
 
@@ -122,13 +124,6 @@ class PopulateReductionTableFromListLRData(object):
             else:
                 str_run = str(_run)
             self.parent.ui.reductionTable.item(_index, self.reductionTable_col).setText(str_run)
-
-    def clear_reductionTable(self):
-        nbr_row = self.parent.ui.reductionTable.rowCount()
-        nbr_col = self.parent.ui.reductionTable.columnCount()
-        for _row in range(nbr_row):
-            for _col in range(1, nbr_col):
-                self.parent.ui.reductionTable.item(_row, _col).setText("")
 
     def clear_big_table_data(self):
         self.big_table_data = TableData(self.parent.REDUCTIONTABLE_MAX_ROWCOUNT)

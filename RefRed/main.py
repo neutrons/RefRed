@@ -38,6 +38,7 @@ from RefRed.plot.background_settings import backgrounds_settings, BackgroundSett
 from RefRed.preview_config.preview_config import PreviewConfig
 from RefRed.reduction.live_reduction_handler import LiveReductionHandler
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
+from RefRed.reduction_table_handling.const_q_checkbox_handler import ConstQCheckBoxHandler
 from RefRed.reduction_table_handling.reduction_table_check_box import ReductionTableCheckBox
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
 from RefRed.reduction_table_handling.reduction_table_right_click import ReductionTableRightClick
@@ -232,6 +233,11 @@ class MainGui(QtWidgets.QMainWindow):
     # display row checkbox
     def reduction_table_visibility_changed_test(self, state, row):
         ReductionTableCheckBox(parent=self, row_selected=row)
+
+    @config_file_has_been_modified
+    def reduction_table_const_q_handler(self, state, row):
+        """Handles updating stored configuration upon change in const Q checkbox state"""
+        ConstQCheckBoxHandler(parent=self, row=row, state=state)
 
     def file_loaded(self, row, is_data_displayed, is_display_requested):
         """Event call-back used to display plots and re-enable the reduction table after loading"""

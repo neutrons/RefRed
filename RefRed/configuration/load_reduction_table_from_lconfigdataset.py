@@ -122,6 +122,7 @@ class LoadReductionTableFromLConfigDataSet(object):
 
         tof_auto_flag = lconfig.tof_auto_flag
         tof_range = lconfig.tof_range
+        const_q = lconfig.const_q
 
         # using lconfig values
         lrdata.peak = [peak1, peak2]
@@ -134,6 +135,7 @@ class LoadReductionTableFromLConfigDataSet(object):
         lrdata.tof_range = tof_range
         lrdata.tof_auto_flag = tof_auto_flag
         lrdata.full_file_name = full_file_name
+        lrdata.const_q = const_q
 
         index_col = 0 if type == 'data' else 1
         reduction_table_index_col = index_col + 1

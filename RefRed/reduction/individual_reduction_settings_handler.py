@@ -50,6 +50,7 @@ class IndividualReductionSettingsHandler(object):
 
         self._tof_range = self.get_tof_range()
         self._output_workspace_name = self.define_output_workspace_name(run_numbers=self._data_run_numbers)
+        self._const_q = self.get_const_q()
 
     def to_dict(self):
         """
@@ -77,6 +78,7 @@ class IndividualReductionSettingsHandler(object):
             norm_x_range_flag=self._norm_low_res_flag,
             norm_x_range=self._norm_low_res_range,
             tof_range=self._tof_range,
+            const_q=self._const_q,
         )
         return pars
 
@@ -200,3 +202,6 @@ class IndividualReductionSettingsHandler(object):
     def get_run_numbers(self, column_index=1):
         run_numbers = self.parent.ui.reductionTable.item(self.row_index, column_index).text()
         return str(run_numbers)
+
+    def get_const_q(self):
+        return bool(self.data.const_q)

@@ -23,6 +23,11 @@ class TestExportXMLConfig:
         assert '<mantid_version>1.0.0</mantid_version>' in header
         assert '<generator>RefRed-2.0.0</generator>' in header
 
+    def test_main_part(self):
+        config = ExportXMLConfig(MagicMock())
+        config.main_part()
+        assert len(config.str_array) == 55
+
 
 if __name__ == "__main__":
     pytest.main()

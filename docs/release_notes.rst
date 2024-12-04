@@ -21,6 +21,7 @@ Next
 
 **Of interest to the User**:
 - MR #135: update popup message for v4 deprecation
+- MR #134: add column in the reduction table for constant Q binning during reduction
 
 
 **Of interest to the Developer:**

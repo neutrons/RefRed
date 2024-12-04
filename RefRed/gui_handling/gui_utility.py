@@ -8,7 +8,7 @@ from qtpy.QtCore import Qt  # type: ignore
 
 # application imports
 from RefRed import WINDOW_TITLE
-from RefRed.interfaces.mytablewidget import ReductionTableColumIndex
+from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex
 from RefRed.tabledata import TableData
 
 if TYPE_CHECKING:  # imported only when running mypy but not imported when the application is running
@@ -81,7 +81,7 @@ class GuiUtility(object):
         -------
         Row index, or `NULL_ACTIVE_ROW` if no row is active
         """
-        column_index = int(ReductionTableColumIndex.PLOTTED)
+        column_index = ReductionTableColumnIndex.PLOTTED
         for row_index in range(self.parent.REDUCTIONTABLE_MAX_ROWCOUNT):
             check_box: QtWidgets.QCheckBox = self.parent.ui.reductionTable.cellWidget(row_index, column_index)
             if check_box.checkState() == Qt.Checked:
@@ -116,7 +116,7 @@ class GuiUtility(object):
 
         def get_norm_runnumber(table_row_index: int) -> str:
             r"""run number of the direct beam run stored in row `index` of the reduction table"""
-            table_column_index = int(ReductionTableColumIndex.NORM_RUN)
+            table_column_index = ReductionTableColumnIndex.NORM_RUN
             return str(self.parent.ui.reductionTable.item(table_row_index, table_column_index).text())
 
         all_rows = [row]

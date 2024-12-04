@@ -3,6 +3,7 @@ from qtpy import QtGui, QtCore, QtWidgets
 import socket
 
 from RefRed import WINDOW_TITLE
+from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex
 from RefRed.plot.all_plot_axis import AllPlotAxis
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
@@ -20,9 +21,10 @@ class Gui(object):
         "\u03bbmax (\u00c5)",
         "Qmin (1/\u00c5)",
         "Qmax (1/\u00c5)",
+        "Const. Q Bin.",
         "Comments",
     ]
-    column_widths = [60, 200, 200, 65, 85, 85, 95, 95, 400]
+    column_widths = [60, 200, 200, 65, 85, 85, 95, 95, 95, 300]
     stitching_column_widths = [150, 60, 60]
     gui_size_coeff = 2.0 / 3.0
 
@@ -132,7 +134,7 @@ class Gui(object):
 
         for row_index in range(self.parent.REDUCTIONTABLE_MAX_ROWCOUNT):
             for col_index in range(len(self.column_widths)):
-                if col_index == 0:
+                if col_index == ReductionTableColumnIndex.PLOTTED:
                     _widget = QtWidgets.QCheckBox()
                     _widget.setChecked(False)
                     _widget.setEnabled(True)
@@ -143,11 +145,35 @@ class Gui(object):
                     _widget.stateChanged.connect(_signal_func)
 
                     parent.ui.reductionTable.setCellWidget(row_index, col_index, _widget)
-                elif (col_index == 1) or (col_index == 2):
+                elif (col_index == ReductionTableColumnIndex.DATA_RUN) or (
+                    col_index == ReductionTableColumnIndex.NORM_RUN
+                ):
                     _item = QtWidgets.QTableWidgetItem()
                     _flags = QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable
                     _item.setFlags(_flags)
                     parent.ui.reductionTable.setItem(row_index, col_index, _item)
+
+                elif col_index == ReductionTableColumnIndex.CONST_Q_BINS:
+                    # Create checkbox
+                    _widget = QtWidgets.QCheckBox()
+                    _widget.setChecked(False)
+                    _widget.setEnabled(True)
+                    # connect handler to state change
+                    _widget.stateChanged.connect(
+                        lambda state=0, row=row_index: self.parent.reduction_table_const_q_handler(state, row)
+                    )
+
+                    # Create a layout to center the checkbox
+                    _layout = QtWidgets.QHBoxLayout()
+                    _layout.addWidget(_widget)
+                    _layout.setAlignment(_widget, QtCore.Qt.AlignCenter)  # Align the button to the center
+                    _layout.setContentsMargins(0, 0, 0, 0)
+
+                    # Create a QWidget to hold the layout
+                    _container = QtWidgets.QWidget()
+                    _container.setLayout(_layout)
+
+                    parent.ui.reductionTable.setCellWidget(row_index, col_index, _container)
 
                 else:
                     _item = QtWidgets.QTableWidgetItem()

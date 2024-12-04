@@ -1,4 +1,5 @@
-from qtpy import QtWidgets, QtCore
+from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex
+from RefRed.reduction_table_handling.reduction_table_handler import ReductionTableHandler
 
 
 class UpdateReductionTableMetadata(object):
@@ -18,36 +19,18 @@ class UpdateReductionTableMetadata(object):
         q_range = lrdata.q_range
         lambda_range = lrdata.lambda_range
         incident_angle = lrdata.incident_angle
+        const_q = lrdata.const_q
 
         [qmin, qmax] = q_range
         str_qmin = "%.4f" % qmin
-        _item_min = QtWidgets.QTableWidgetItem(str_qmin)
-        _item_min.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
         str_qmax = "%.4f" % qmax
-        _item_max = QtWidgets.QTableWidgetItem(str_qmax)
-        _item_max.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-
         [lmin, lmax] = lambda_range
-        _item_lmin = QtWidgets.QTableWidgetItem(str(lmin))
-        _item_lmin.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-        _item_lmax = QtWidgets.QTableWidgetItem(str(lmax))
-        _item_lmax.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-
-        incident_angle = incident_angle
         str_incident_angle = "%.2f" % incident_angle
-        _item_incident = QtWidgets.QTableWidgetItem(str_incident_angle)
-        _item_incident.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
 
-        parent.ui.reductionTable.setItem(row, 6, _item_min)
-        parent.ui.reductionTable.setItem(row, 7, _item_max)
-        parent.ui.reductionTable.setItem(row, 4, _item_lmin)
-        parent.ui.reductionTable.setItem(row, 5, _item_lmax)
-        parent.ui.reductionTable.setItem(row, 3, _item_incident)
-
-    def sortIntArray(self, _array):
-        [_element1, _element2] = _array
-        _element1 = int(_element1)
-        _element2 = int(_element2)
-        _element_min = min([_element1, _element2])
-        _element_max = max([_element1, _element2])
-        return [_element_min, _element_max]
+        handler = ReductionTableHandler(parent)
+        handler.set_table_item_text(row, ReductionTableColumnIndex.Q_MIN, str_qmin)
+        handler.set_table_item_text(row, ReductionTableColumnIndex.Q_MAX, str_qmax)
+        handler.set_table_item_text(row, ReductionTableColumnIndex.LAMBDA_MIN, str(lmin))
+        handler.set_table_item_text(row, ReductionTableColumnIndex.LAMBDA_MAX, str(lmax))
+        handler.set_table_item_text(row, ReductionTableColumnIndex.TWO_THETA, str_incident_angle)
+        handler.set_checkbox_state(row, ReductionTableColumnIndex.CONST_Q_BINS, const_q)

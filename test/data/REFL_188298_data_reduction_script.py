@@ -6,35 +6,35 @@ from lr_reduction import reduction_template_reader
 reduction_pars = json.loads('{"data_files": "188298", "norm_file": "188230", "data_peak_range": [128, 141], "substract_background": true, "background_roi": [125, 144], "data_x_range_flag": true, "data_x_range": [70, 185], "apply_normalization": true, "norm_peak_range": [130, 139], "subtract_norm_background": true, "norm_background_roi": [127, 142], "norm_x_range_flag": true, "norm_x_range": [75, 187], "tof_range": [51977.0051592, 65268.5238077], "incident_medium_selected": "Si", "q_step": 0.02, "scaling_factor_flag": true, "scaling_factor_file": "test/data/sf_186529_Si_auto.cfg", "angle_offset": 0.01, "angle_offset_error": 0.001, "tof_steps": 40.0}')
 template_data = reduction_template_reader.ReductionParameters()
 template_data.from_dict(reduction_pars)
-q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, info=True, normalize=reduction_pars['apply_normalization'])
+q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, q_summing=reduction_pars['const_q'], info=True, normalize=reduction_pars['apply_normalization'])
 
 reduction_pars = json.loads('{"data_files": "188299", "norm_file": "188231", "data_peak_range": [129, 141], "substract_background": true, "background_roi": [126, 144], "data_x_range_flag": true, "data_x_range": [70, 181], "apply_normalization": true, "norm_peak_range": [131, 139], "subtract_norm_background": true, "norm_background_roi": [128, 142], "norm_x_range_flag": true, "norm_x_range": [74, 193], "tof_range": [41761.0114019, 55052.5300504], "incident_medium_selected": "Si", "q_step": 0.02, "scaling_factor_flag": true, "scaling_factor_file": "test/data/sf_186529_Si_auto.cfg", "angle_offset": 0.01, "angle_offset_error": 0.001, "tof_steps": 40.0}')
 template_data = reduction_template_reader.ReductionParameters()
 template_data.from_dict(reduction_pars)
-q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, info=True, normalize=reduction_pars['apply_normalization'])
+q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, q_summing=reduction_pars['const_q'], info=True, normalize=reduction_pars['apply_normalization'])
 
 reduction_pars = json.loads('{"data_files": "188300", "norm_file": "188232", "data_peak_range": [128, 141], "substract_background": true, "background_roi": [125, 144], "data_x_range_flag": true, "data_x_range": [72, 185], "apply_normalization": true, "norm_peak_range": [131, 139], "subtract_norm_background": true, "norm_background_roi": [128, 142], "norm_x_range_flag": true, "norm_x_range": [78, 184], "tof_range": [31419.955747, 44711.4743955], "incident_medium_selected": "Si", "q_step": 0.02, "scaling_factor_flag": true, "scaling_factor_file": "test/data/sf_186529_Si_auto.cfg", "angle_offset": 0.01, "angle_offset_error": 0.001, "tof_steps": 40.0}')
 template_data = reduction_template_reader.ReductionParameters()
 template_data.from_dict(reduction_pars)
-q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, info=True, normalize=reduction_pars['apply_normalization'])
+q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, q_summing=reduction_pars['const_q'], info=True, normalize=reduction_pars['apply_normalization'])
 
 reduction_pars = json.loads('{"data_files": "188301", "norm_file": "188233", "data_peak_range": [129, 142], "substract_background": true, "background_roi": [126, 145], "data_x_range_flag": true, "data_x_range": [74, 183], "apply_normalization": true, "norm_peak_range": [131, 139], "subtract_norm_background": true, "norm_background_roi": [128, 142], "norm_x_range_flag": true, "norm_x_range": [111, 157], "tof_range": [20879.5826929, 34171.1013413], "incident_medium_selected": "Si", "q_step": 0.02, "scaling_factor_flag": true, "scaling_factor_file": "test/data/sf_186529_Si_auto.cfg", "angle_offset": 0.01, "angle_offset_error": 0.001, "tof_steps": 40.0}')
 template_data = reduction_template_reader.ReductionParameters()
 template_data.from_dict(reduction_pars)
-q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, info=True, normalize=reduction_pars['apply_normalization'])
+q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, q_summing=reduction_pars['const_q'], info=True, normalize=reduction_pars['apply_normalization'])
 
 reduction_pars = json.loads('{"data_files": "188302", "norm_file": "188234", "data_peak_range": [129, 141], "substract_background": true, "background_roi": [126, 144], "data_x_range_flag": true, "data_x_range": [70, 183], "apply_normalization": true, "norm_peak_range": [131, 139], "subtract_norm_background": true, "norm_background_roi": [128, 142], "norm_x_range_flag": true, "norm_x_range": [120, 147], "tof_range": [9964.0239461, 23255.5425945], "incident_medium_selected": "Si", "q_step": 0.02, "scaling_factor_flag": true, "scaling_factor_file": "test/data/sf_186529_Si_auto.cfg", "angle_offset": 0.01, "angle_offset_error": 0.001, "tof_steps": 40.0}')
 template_data = reduction_template_reader.ReductionParameters()
 template_data.from_dict(reduction_pars)
-q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, info=True, normalize=reduction_pars['apply_normalization'])
+q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, q_summing=reduction_pars['const_q'], info=True, normalize=reduction_pars['apply_normalization'])
 
 reduction_pars = json.loads('{"data_files": "188303", "norm_file": "188234", "data_peak_range": [130, 140], "substract_background": true, "background_roi": [127, 143], "data_x_range_flag": true, "data_x_range": [75, 181], "apply_normalization": true, "norm_peak_range": [131, 139], "subtract_norm_background": true, "norm_background_roi": [128, 142], "norm_x_range_flag": true, "norm_x_range": [120, 147], "tof_range": [9964.0239461, 23255.5425945], "incident_medium_selected": "Si", "q_step": 0.02, "scaling_factor_flag": true, "scaling_factor_file": "test/data/sf_186529_Si_auto.cfg", "angle_offset": 0.01, "angle_offset_error": 0.001, "tof_steps": 40.0}')
 template_data = reduction_template_reader.ReductionParameters()
 template_data.from_dict(reduction_pars)
-q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, info=True, normalize=reduction_pars['apply_normalization'])
+q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, q_summing=reduction_pars['const_q'], info=True, normalize=reduction_pars['apply_normalization'])
 
 reduction_pars = json.loads('{"data_files": "188304", "norm_file": "188234", "data_peak_range": [129, 138], "substract_background": true, "background_roi": [126, 141], "data_x_range_flag": true, "data_x_range": [75, 180], "apply_normalization": true, "norm_peak_range": [131, 139], "subtract_norm_background": true, "norm_background_roi": [128, 142], "norm_x_range_flag": true, "norm_x_range": [120, 147], "tof_range": [9964.0239461, 23255.5425945], "incident_medium_selected": "Si", "q_step": 0.02, "scaling_factor_flag": true, "scaling_factor_file": "test/data/sf_186529_Si_auto.cfg", "angle_offset": 0.01, "angle_offset_error": 0.001, "tof_steps": 40.0}')
 template_data = reduction_template_reader.ReductionParameters()
 template_data.from_dict(reduction_pars)
-q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, info=True, normalize=reduction_pars['apply_normalization'])
+q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, q_summing=reduction_pars['const_q'], info=True, normalize=reduction_pars['apply_normalization'])
 

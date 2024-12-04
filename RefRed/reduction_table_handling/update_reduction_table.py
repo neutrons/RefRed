@@ -5,10 +5,11 @@ from qtpy import QtGui
 from qtpy.QtWidgets import QApplication
 
 # application imports
+import RefRed.colors
 from RefRed.calculations.check_list_run_compatibility_thread import CheckListRunCompatibilityThread
 from RefRed.calculations.locate_list_run import LocateListRun
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
-import RefRed.colors
+from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex
 from RefRed.tabledata import TableData
 
 
@@ -38,18 +39,19 @@ class UpdateReductionTable(object):
 
         # check if nexus can be found
         list_run_object = LocateListRun(list_run=list_run)
+        col_comments = ReductionTableColumnIndex.COMMENTS
         if list_run_object.list_run_not_found != []:
             str_list_run_not_found = [str(x) for x in list_run_object.list_run_not_found]
             runs_not_located = ', '.join(str_list_run_not_found)
             mess = "Can not locate %s run(s): %s" % (data_type, runs_not_located)
-            self.parent.ui.reductionTable.item(row, 8).setText(mess)
+            self.parent.ui.reductionTable.item(row, col_comments).setText(mess)
             _color = QtGui.QColor(RefRed.colors.VALUE_BAD)
-            self.parent.ui.reductionTable.item(row, 8).setBackground(_color)
+            self.parent.ui.reductionTable.item(row, col_comments).setBackground(_color)
         else:
             mess = "%s runs have been located!" % data_type
-            self.parent.ui.reductionTable.item(row, 8).setText(mess)
+            self.parent.ui.reductionTable.item(row, col_comments).setText(mess)
             _color = QtGui.QColor(RefRed.colors.VALUE_OK)
-            self.parent.ui.reductionTable.item(row, 8).setBackground(_color)
+            self.parent.ui.reductionTable.item(row, col_comments).setBackground(_color)
 
         list_run_found = list(list_run_object.list_run_found)
 

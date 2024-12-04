@@ -61,6 +61,7 @@ class ExportXMLConfig(object):
             q_range = _data.q_range
             lambda_range = _data.lambda_range
             incident_angle = _data.incident_angle
+            const_q = _data.const_q
 
             _norm: Optional[LRData] = _big_table_data[row, 1]
             if _norm is not None:
@@ -175,6 +176,8 @@ class ExportXMLConfig(object):
             str_array.append('   <slits_width_flag>True</slits_width_flag>\n')
 
             str_array.append(o_general_settings.dead_time.to_xml(indent="   ") + "\n")  # dead time settings
+
+            str_array.append('   <const_q>' + str(const_q) + '</const_q>\n')
 
             str_array.append('  </RefLData>\n')
 
