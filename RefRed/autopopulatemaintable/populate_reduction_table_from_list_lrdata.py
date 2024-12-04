@@ -42,7 +42,7 @@ class PopulateReductionTableFromListLRData(object):
 
         if is_data:
             o_reduction_table_handler = ReductionTableHandler(parent=self.parent)
-            o_reduction_table_handler.full_clear()
+            o_reduction_table_handler.clear_reduction_table()
 
         self.insert_runs_into_table()
 
