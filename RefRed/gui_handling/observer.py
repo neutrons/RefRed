@@ -17,12 +17,14 @@ class SpinBoxObserver:
     QUANTUM : int
         The minimum allowed change in value for any of the registered QSpinBox objects
     """
+
     NAN: int = -1
     QUANTUM: int = 1
 
     @dataclass
     class RegistryEntry:
         r"""Helper class to encapsulate entries in the registry of SpinBoxObserver._registry"""
+
         spin_box: QSpinBox
         last_value: int
 

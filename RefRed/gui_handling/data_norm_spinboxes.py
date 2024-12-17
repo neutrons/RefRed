@@ -121,6 +121,7 @@ class DataBackSpinbox(object):
     entry_type
         One of "back" or "back2", denoting the first or the second background ROI's
     """
+
     parent = None
 
     def __init__(self, parent: QWidget, entry_type: str = 'back'):
@@ -155,6 +156,7 @@ class NormBackSpinbox(object):
     entry_type
         One of "back" or "back2", denoting the first or the second background ROI's
     """
+
     parent = None
 
     def __init__(self, parent: QWidget, entry_type: str = "back"):

@@ -1,6 +1,7 @@
 '''
   Module for useful decorators
 '''
+
 from qtpy import QtGui, QtCore, QtWidgets
 from RefRed import WINDOW_TITLE
 from functools import wraps

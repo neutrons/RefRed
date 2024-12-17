@@ -7,4 +7,5 @@ class GlobalSettings(BaseModel):
 
     See `DeadTimeSettingsModel` for an example
     """
+
     pass

@@ -2,6 +2,7 @@
     Notes from review: This class does a subset of what is done in calculations.lr_data.
     This code is probably not needed.
 """
+
 from mantid.simpleapi import Rebin
 import numpy as np
 import logging
