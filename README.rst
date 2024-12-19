@@ -19,18 +19,17 @@
 RefRed
 ------
 
-Data Reduction Software for the Liquids Reflectometer at the Spallation Neutron Source at Oak Ridge National Laboratory (ORNL)
+Data Reduction desktop application for the Liquids Reflectometer at the Spallation Neutron Source at Oak Ridge National Laboratory (ORNL).
 
-------------
+- **Documentation:** https://refred.readthedocs.io/
+- **Source code:** https://github.com/neutrons/RefRed
+- **Release notes:** https://refred.readthedocs.io/en/latest/release_notes.html
+- **Contributing:** https://github.com/neutrons/RefRed/blob/next/CONTRIBUTING.rst
+- **Bug reports and feedback:** https://github.com/neutrons/RefRed/issues
+
 Contributing
 ------------
 
 Contributing is done by adding to the source code base, as well writing tests and documentation (see
-`Merge Requests <https://docs.gitlab.com/ee/user/project/merge_requests/getting_started.html>`_).
+`Pull Requests <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/getting-started>`_).
 See `CONTRIBUTING.rst <CONTRIBUTING.rst>`_ for more information.
-
-----------
-Deployment
-----------
-
-- The state of branch `next` is deployed on every push-commit with the CI of [conda-legacy-deploy](https://code.ornl.gov/sns-hfir-scse/deployments/conda-legacy-deploy), by automatically launching a pipeline of branch `main` with environment variables `PLAY=update` and `CONDA_ENV=refred-dev`

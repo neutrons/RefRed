@@ -4,11 +4,11 @@ Reducing data using RefRed
 This use-case describes how the user interacts with RefRed once their reduction
 options have been chosen.
 
-1. Load a template according to the corresponding `use case <load-template.rst>`_.
+1. Load a template according to the corresponding :doc:`use case <load-template>`.
 Note that it takes a minute or so to load all the data.
 
 2. Click the "reduce" button at the bottom of the interface (see the image in this
-`use case <load-template.rst>`_ to locate the reduce button).
+:doc:`use case <load-template>` to locate the reduce button).
 
    Once the reduction starts, the user will be brought to the "data stitching"
    tab (see image). As the reduction proceeds, each data set will be added
