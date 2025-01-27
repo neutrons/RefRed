@@ -1,9 +1,9 @@
 import numpy as np
+
 from RefRed.status_message_handler import StatusMessageHandler
 
 
 class SFFileHandler(object):
-
     full_sf_factor_table = []
     full_sf_factor_labels = []
     nbr_row = -1

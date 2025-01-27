@@ -10,9 +10,9 @@ class ParentHandler(object):
         self.n_runs = n_runs
 
     def _calculateSFCE(self, data_type="absolute"):
-        '''
+        """
         Scaling factor calculation of Ctritical Edge (CE)
-        '''
+        """
         _q_min = float(str(self.parent.ui.sf_qmin_value.text()))
         _q_max = float(str(self.parent.ui.sf_qmax_value.text()))
 
@@ -39,10 +39,10 @@ class ParentHandler(object):
         # Save the SF in first run
         self.saveSFinLConfig(self.parent.big_table_data[0, 2], _sf, data_type=data_type)
 
-    def saveSFinLConfig(self, lconfig, sf, data_type='absolute'):
-        if data_type == 'absolute':
+    def saveSFinLConfig(self, lconfig, sf, data_type="absolute"):
+        if data_type == "absolute":
             lconfig.sf_abs_normalization = sf
-        elif data_type == 'auto':
+        elif data_type == "auto":
             lconfig.sf_auto = sf
         else:
             lconfig.sf_manual = sf
@@ -56,9 +56,9 @@ class ParentHandler(object):
 
 
 class AbsoluteNormalization(ParentHandler):
-    '''
+    """
     this class performs the absolute normalization of reduced data
-    '''
+    """
 
     def __init__(self, parent=None, row_index=0, n_runs=1):
         super(AbsoluteNormalization, self).__init__(parent=parent, row_index=row_index, n_runs=n_runs)
@@ -81,13 +81,13 @@ class AbsoluteNormalization(ParentHandler):
         ce_lconfig = self.getLConfig(0)
         _sf = ce_lconfig.sf_abs_normalization
         lconfig = self.getLConfig(self.row_index)
-        lconfig = self.saveSFinLConfig(lconfig, _sf, data_type='absolute')
+        lconfig = self.saveSFinLConfig(lconfig, _sf, data_type="absolute")
 
 
 class AutomaticStitching(ParentHandler):
-    '''
+    """
     automatic stiching of the reduced data using the Q range to calculate the CE
-    '''
+    """
 
     def __init__(self, parent=None, row_index=0, n_runs=1):
         super(AutomaticStitching, self).__init__(parent=parent, row_index=row_index, n_runs=n_runs)
@@ -97,14 +97,14 @@ class AutomaticStitching(ParentHandler):
 
     def use_first_angle_range(self):
         if self.row_index == 0:
-            self._calculateSFCE(data_type='auto')
+            self._calculateSFCE(data_type="auto")
         else:
             self._calculateSFOtherAngles()
 
     def _calculateSFOtherAngles(self):
-        '''
+        """
         Scaling factor calculation of other angles
-        '''
+        """
         _row_index = self.row_index
         left_lconfig = self.getLConfig(_row_index - 1)
         right_lconfig = self.getLConfig(_row_index)
@@ -115,10 +115,10 @@ class AutomaticStitching(ParentHandler):
 
 
 class ManualStitching(ParentHandler):
-    '''
+    """
     manual stitching of the data. The program will simply used the data defined
     in the main table to scaled the data
-    '''
+    """
 
     def __init__(self, parent=None, row_index=0, n_runs=1):
         super(ManualStitching, self).__init__(parent=parent, row_index=row_index, n_runs=n_runs)
@@ -127,4 +127,4 @@ class ManualStitching(ParentHandler):
         ce_lconfig = self.getLConfig(self.row_index)
         _sf = ce_lconfig.sf_manual
         lconfig = self.getLConfig(self.row_index)
-        lconfig = self.saveSFinLConfig(lconfig, _sf, data_type='manual')
+        lconfig = self.saveSFinLConfig(lconfig, _sf, data_type="manual")

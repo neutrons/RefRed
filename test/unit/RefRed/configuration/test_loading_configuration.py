@@ -1,6 +1,7 @@
 # third party packages
-import pytest
 import unittest.mock as mock
+
+import pytest
 
 # RefRed imports
 from RefRed.configuration.loading_configuration import LoadingConfiguration
@@ -9,7 +10,7 @@ from RefRed.tabledata import TableData
 
 class TestLoadingConfiguration(object):
     def test_init(self):
-        with mock.patch('RefRed.configuration.loading_configuration.StatusMessageHandler') as mockStatusMessageHandler:
+        with mock.patch("RefRed.configuration.loading_configuration.StatusMessageHandler") as mockStatusMessageHandler:
             m = mock.Mock()
             loadingConfiguration = LoadingConfiguration(parent=m)
             mockStatusMessageHandler.assert_called()
@@ -23,8 +24,8 @@ class TestLoadingConfiguration(object):
             ("", "File not found"),
         ],
     )
-    @mock.patch('RefRed.configuration.loading_configuration.QFileDialog')
-    @mock.patch('RefRed.configuration.loading_configuration.StatusMessageHandler')
+    @mock.patch("RefRed.configuration.loading_configuration.QFileDialog")
+    @mock.patch("RefRed.configuration.loading_configuration.StatusMessageHandler")
     def test_run_file_search(self, StatusMessageHandlerMock, QFileDialogMock, filepath, message, data_server):
         def add_abspath(input_filepath):
             r"""helper to add the absolute path to file REF_L_188298_tiny_template.xml"""
@@ -52,8 +53,8 @@ class TestLoadingConfiguration(object):
         loader.run()  # test is the file is found
         StatusMessageHandlerMock.assert_called_with(parent=parent, message=message, is_threaded=True)
 
-    @mock.patch('RefRed.tabledata.TableData._validate_type')
-    @mock.patch('RefRed.configuration.loading_configuration.LoadingConfiguration.getMetadataObject')
+    @mock.patch("RefRed.tabledata.TableData._validate_type")
+    @mock.patch("RefRed.configuration.loading_configuration.LoadingConfiguration.getMetadataObject")
     def test_populate_big_table_data_with_lconfig(self, mockGetMetadataObject, mock_validate_type):
         mockGetMetadataObject.return_value = mock.Mock()
         mock_validate_type.return_value = None  # don't check the type of elements when inserted in the table
@@ -74,15 +75,15 @@ class TestLoadingConfiguration(object):
         loadingConfiguration.parent.ui.selectIncidentMediumList.count.return_value = 2
 
         values = {
-            'q_step': 1.001,
-            'q_min': 2.002,
+            "q_step": 1.001,
+            "q_min": 2.002,
             # Applying normalization is a global setting
-            'norm_flag': True,
-            'angle_offset': 2.5025,
-            'angle_offset_error': 3.003,
-            'scaling_factor_file': 'scaling_factor_file',
-            'incident_medium_index_selected': 5.005,
-            'scaling_factor_flag': 6.006,
+            "norm_flag": True,
+            "angle_offset": 2.5025,
+            "angle_offset_error": 3.003,
+            "scaling_factor_file": "scaling_factor_file",
+            "incident_medium_index_selected": 5.005,
+            "scaling_factor_flag": 6.006,
         }
 
         def side_effect(node, arg):
@@ -129,34 +130,34 @@ class TestLoadingConfiguration(object):
         node_mock = mock.Mock()  # mocks the Node instance associated to an XML block of an input configuration file
 
         values = {
-            'from_peak_pixels': 1,
-            'to_peak_pixels': 2,
-            'back_roi1_from': 3,
-            'back_roi1_to': 4,
-            'x_min_pixel': 5.005,
-            'x_max_pixel': 6.006,
-            'background_flag': 'background_flag',
-            'x_range_flag': 'x_range_flag',
-            'from_tof_range': 7.007,
-            'to_tof_range': 8.008,
-            'from_q_range': 9.009,
-            'to_q_range': 10.010,
-            'from_lambda_range': 11.011,
-            'to_lambda_range': 12.012,
-            'data_sets': 'dataset1, dataset2',
-            'tof_range_flag': 'tof_range_flag',
-            'norm_from_peak_pixels': 13.013,
-            'norm_to_peak_pixels': 14.014,
-            'norm_from_back_pixels': 15.015,
-            'norm_to_back_pixels': 16.016,
-            'norm_dataset': 'normData1, normData2',
-            'norm_x_min': 17.017,
-            'norm_x_max': 18.018,
-            'norm_background_flag': 'norm_background_flag',
-            'norm_x_range_flag': 'norm_x_range_flag',
-            'data_full_file_name': 'dataFullFileName1,dataFullFileName2',
-            'norm_full_file_name': 'normFullFileName1,normFullFileName2',
-            'const_q': True,
+            "from_peak_pixels": 1,
+            "to_peak_pixels": 2,
+            "back_roi1_from": 3,
+            "back_roi1_to": 4,
+            "x_min_pixel": 5.005,
+            "x_max_pixel": 6.006,
+            "background_flag": "background_flag",
+            "x_range_flag": "x_range_flag",
+            "from_tof_range": 7.007,
+            "to_tof_range": 8.008,
+            "from_q_range": 9.009,
+            "to_q_range": 10.010,
+            "from_lambda_range": 11.011,
+            "to_lambda_range": 12.012,
+            "data_sets": "dataset1, dataset2",
+            "tof_range_flag": "tof_range_flag",
+            "norm_from_peak_pixels": 13.013,
+            "norm_to_peak_pixels": 14.014,
+            "norm_from_back_pixels": 15.015,
+            "norm_to_back_pixels": 16.016,
+            "norm_dataset": "normData1, normData2",
+            "norm_x_min": 17.017,
+            "norm_x_max": 18.018,
+            "norm_background_flag": "norm_background_flag",
+            "norm_x_range_flag": "norm_x_range_flag",
+            "data_full_file_name": "dataFullFileName1,dataFullFileName2",
+            "norm_full_file_name": "normFullFileName1,normFullFileName2",
+            "const_q": True,
         }
 
         def side_effect(_, arg, default=""):
@@ -168,13 +169,13 @@ class TestLoadingConfiguration(object):
 
         config = loader.getMetadataObject(node_mock)
 
-        assert config.data_peak[0] == values['from_peak_pixels']
-        assert config.data_peak[1] == values['to_peak_pixels']
-        assert config.data_back[0] == values['back_roi1_from']
-        assert config.data_back[1] == values['back_roi1_to']
-        assert config.data_low_res == [values['x_min_pixel'], values['x_max_pixel']]
-        assert config.const_q == values['const_q']
+        assert config.data_peak[0] == values["from_peak_pixels"]
+        assert config.data_peak[1] == values["to_peak_pixels"]
+        assert config.data_back[0] == values["back_roi1_from"]
+        assert config.data_back[1] == values["back_roi1_to"]
+        assert config.data_low_res == [values["x_min_pixel"], values["x_max_pixel"]]
+        assert config.const_q == values["const_q"]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

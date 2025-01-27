@@ -5,9 +5,10 @@ from unittest.mock import patch as mock_patch
 import pytest
 from qtpy import QtCore
 
+from RefRed.main import MainGui
+
 # RefRed imports
 from RefRed.plot.popup_plot_1d import PopupPlot1d
-from RefRed.main import MainGui
 
 
 def test_popup_plot_1d(qtbot, data_server):
@@ -72,5 +73,5 @@ def test_popup_plot_1d(qtbot, data_server):
     assert_boundary("background right boundary", popup.ui.plotBackToSpinBox, 145, old_value=144)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

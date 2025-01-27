@@ -25,10 +25,10 @@ class TestDeadTimeSettingsModel:
 
     def test_to_xml(self):
         expected_xml = (
-            '<dead_time_correction>True</dead_time_correction>\n'
-            '<dead_time_paralyzable>True</dead_time_paralyzable>\n'
-            '<dead_time_value>4.2</dead_time_value>\n'
-            '<dead_time_tof_step>150.0</dead_time_tof_step>'
+            "<dead_time_correction>True</dead_time_correction>\n"
+            "<dead_time_paralyzable>True</dead_time_paralyzable>\n"
+            "<dead_time_value>4.2</dead_time_value>\n"
+            "<dead_time_tof_step>150.0</dead_time_tof_step>"
         )
         model = DeadTimeSettingsModel(apply_deadtime=True, paralyzable=True, dead_time=4.2, tof_step=150)
         xml_output = model.to_xml()
@@ -36,14 +36,14 @@ class TestDeadTimeSettingsModel:
 
     def test_from_xml(self):
         xml_input = (
-            '<RefRed>'
-            '<spurious>True</spurious>\n'
-            '<dead_time_correction>False</dead_time_correction>\n'
-            '<dead_time_paralyzable>False</dead_time_paralyzable>\n'
-            '<dead_time_value>2.1</dead_time_value>\n'
-            '<dead_time_tof_step>100.0</dead_time_tof_step>\n'
-            '<another_spurious>True</another_spurious>\n'
-            '</RefRed>'
+            "<RefRed>"
+            "<spurious>True</spurious>\n"
+            "<dead_time_correction>False</dead_time_correction>\n"
+            "<dead_time_paralyzable>False</dead_time_paralyzable>\n"
+            "<dead_time_value>2.1</dead_time_value>\n"
+            "<dead_time_tof_step>100.0</dead_time_tof_step>\n"
+            "<another_spurious>True</another_spurious>\n"
+            "</RefRed>"
         )
         dom = parseString(xml_input)
         model = DeadTimeSettingsModel().from_xml(dom.documentElement)

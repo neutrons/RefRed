@@ -1,11 +1,12 @@
 # package imports
-from RefRed.interfaces.mytablewidget import MyTableWidget
+import unittest.mock as mock
+
+import pytest
 
 # third party packages
 from qtpy.QtCore import Qt  # type: ignore
 
-import unittest.mock as mock
-import pytest
+from RefRed.interfaces.mytablewidget import MyTableWidget
 
 
 class Event(object):
@@ -39,5 +40,5 @@ class TestMyTableWidget(object):
         m.table_reduction_cell_enter_pressed.assert_called()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

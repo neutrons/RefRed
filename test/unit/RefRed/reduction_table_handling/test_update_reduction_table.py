@@ -1,9 +1,10 @@
-from RefRed.main import MainGui
-from test.utilities import load_run_from_reduction_table
+import unittest.mock as mock
 
 # third party packages
 import pytest
-import unittest.mock as mock
+
+from RefRed.main import MainGui
+from test.utilities import load_run_from_reduction_table
 
 wait = 1000
 
@@ -108,5 +109,5 @@ def test_load_run_auto_peak_finder(mock_file_finder_find_runs, mock_display_plot
     assert window_main.big_table_data[0, 0].tof_range_auto == pytest.approx(user_set_tof, 1e-6)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

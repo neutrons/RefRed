@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Options specific to the data file export in qio.
-'''
+"""
 
-config_file = 'reduction'
+config_file = "reduction"
 
 sampleSize = 10.0
 

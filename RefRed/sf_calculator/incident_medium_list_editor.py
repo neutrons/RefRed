@@ -5,7 +5,6 @@ from RefRed.utilities import removeEmptyStrElementAndUpdateIndexSelected
 
 
 class IncidentMediumListEditor(QDialog):
-
     sf_gui = None
     current_index = -1
 
@@ -32,9 +31,9 @@ class IncidentMediumListEditor(QDialog):
 
     def validateEvent(self):
         text_medium = str(self.ui.textEdit.toPlainText())
-        text_list = text_medium.split('\n')
+        text_list = text_medium.split("\n")
         [text_list, current_index] = removeEmptyStrElementAndUpdateIndexSelected(text_list, self.current_index)
-        text_list.insert(0, 'Select or Define Incident Medium ...')
+        text_list.insert(0, "Select or Define Incident Medium ...")
         self.sf_gui.incidentMediumComboBox.clear()
         self.sf_gui.incidentMediumComboBox.addItems(text_list)
         self.sf_gui.incidentMediumComboBox.setCurrentIndex(current_index)

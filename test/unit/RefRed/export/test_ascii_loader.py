@@ -1,11 +1,13 @@
 # package imports
-from RefRed.export import ascii_loader
+import tempfile
+from pathlib import Path
+
+import numpy as np
 
 # 3rd party imports
 import pytest
-import tempfile
-import numpy as np
-from pathlib import Path
+
+from RefRed.export import ascii_loader
 
 
 class TestAsciiLoader:

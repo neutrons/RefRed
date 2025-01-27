@@ -2,7 +2,6 @@ from RefRed.gui_handling.gui_utility import GuiUtility
 
 
 class MouseLeavePlot(object):
-
     parent = None
 
     def __init__(self, parent=None, plot_type=None):
@@ -10,7 +9,7 @@ class MouseLeavePlot(object):
             return
         self.parent = parent
 
-        if plot_type == 'stitching':
+        if plot_type == "stitching":
             self.leave_figure_plot(plot_type=plot_type, row=0, column=0)
         # elif retain_all:
         # self.leave_all_figure_plot(plot_type = plot_type)
@@ -34,22 +33,22 @@ class MouseLeavePlot(object):
             return
 
         c = 0  # TODO what is the meaning of `c` ?
-        if plot_type == 'yi':
+        if plot_type == "yi":
             if c == 0:
                 plot_ui = parent.ui.data_yi_plot
             else:
                 plot_ui = parent.ui.norm_yi_plot
-        elif plot_type == 'yt':
+        elif plot_type == "yt":
             if c == 0:
                 plot_ui = parent.ui.data_yt_plot
             else:
                 plot_ui = parent.ui.norm_yt_plot
-        elif plot_type == 'it':
+        elif plot_type == "it":
             if c == 0:
                 plot_ui = parent.ui.data_it_plot
             else:
                 plot_ui = parent.ui.norm_it_plot
-        elif plot_type == 'ix':
+        elif plot_type == "ix":
             if c == 0:
                 plot_ui = parent.ui.data_ix_plot
             else:
@@ -61,16 +60,16 @@ class MouseLeavePlot(object):
         plot_ui.canvas.ax.yaxis.set_data_interval(ymin, ymax)
         plot_ui.draw()
 
-        if plot_type == 'yi':
+        if plot_type == "yi":
             data.all_plot_axis.yi_view_interval = [xmin, xmax, ymin, ymax]
             parent.global_yi_view_interval = [xmin, xmax, ymin, ymax]
-        elif plot_type == 'yt':
+        elif plot_type == "yt":
             data.all_plot_axis.yt_view_interval = [xmin, xmax, ymin, ymax]
             parent.global_yt_view_interval = [xmin, xmax, ymin, ymax]
-        elif plot_type == 'it':
+        elif plot_type == "it":
             data.all_plot_axis.it_view_interval = [xmin, xmax, ymin, ymax]
             parent.global_it_view_interval = [xmin, xmax, ymin, ymax]
-        elif plot_type == 'ix':
+        elif plot_type == "ix":
             data.all_plot_axis.ix_view_interval = [xmin, xmax, ymin, ymax]
             parent.global_ix_view_interval = [xmin, xmax, ymin, ymax]
 
@@ -89,31 +88,31 @@ class MouseLeavePlot(object):
         if data is None:
             return
 
-        if plot_type == 'yi':
+        if plot_type == "yi":
             # view_interval = data.all_plot_axis.yi_view_interval
             if column == 0:
                 plot_ui = parent.ui.data_yi_plot
             else:
                 plot_ui = parent.ui.norm_yi_plot
-        elif plot_type == 'yt':
+        elif plot_type == "yt":
             # view_interval = data.all_plot_axis.yt_view_interval
             if column == 0:
                 plot_ui = parent.ui.data_yt_plot
             else:
                 plot_ui = parent.ui.norm_yt_plot
-        elif plot_type == 'it':
+        elif plot_type == "it":
             # view_interval = data.all_plot_axis.it_view_interval
             if column == 0:
                 plot_ui = parent.ui.data_it_plot
             else:
                 plot_ui = parent.ui.norm_it_plot
-        elif plot_type == 'ix':
+        elif plot_type == "ix":
             # view_interval = data.all_plot_axis.ix_view_interval
             if column == 0:
                 plot_ui = parent.ui.data_ix_plot
             else:
                 plot_ui = parent.ui.norm_ix_plot
-        elif plot_type == 'stitching':
+        elif plot_type == "stitching":
             # view_interval = data.all_plot_axis.reduced_plot_stitching_tab_view_interval
             plot_ui = parent.ui.data_stitching_plot
 
@@ -123,15 +122,15 @@ class MouseLeavePlot(object):
         plot_ui.canvas.ax.yaxis.set_data_interval(ymin, ymax)
         plot_ui.draw()
 
-        if plot_type == 'yi':
+        if plot_type == "yi":
             data.all_plot_axis.yi_view_interval = [xmin, xmax, ymin, ymax]
-        elif plot_type == 'yt':
+        elif plot_type == "yt":
             data.all_plot_axis.yt_view_interval = [xmin, xmax, ymin, ymax]
-        elif plot_type == 'it':
+        elif plot_type == "it":
             data.all_plot_axis.it_view_interval = [xmin, xmax, ymin, ymax]
-        elif plot_type == 'ix':
+        elif plot_type == "ix":
             data.all_plot_axis.ix_view_interval = [xmin, xmax, ymin, ymax]
-        elif plot_type == 'stitching':
+        elif plot_type == "stitching":
             data.all_plot_axis.reduced_plot_stitching_tab_view_interval = [xmin, xmax, ymin, ymax]
 
         parent.big_table_data[row, column] = data

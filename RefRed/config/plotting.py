@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 Options for the matplotlib graph creation.
-'''
+"""
 
-config_file = 'gui'
+config_file = "gui"
 
 font = {
-    'family': 'serif',
+    "family": "serif",
     #  'weight' : 'normal',
     #  'variant': 'DejaVuSerif',
-    'size': 7,
+    "size": 7,
 }
-savefig = {'dpi': 600}
+savefig = {"dpi": 600}

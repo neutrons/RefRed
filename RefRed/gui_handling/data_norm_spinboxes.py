@@ -11,10 +11,9 @@ from RefRed.tabledata import TableData
 
 
 class SpinBox(object):
-
     parent = None
 
-    def __init__(self, parent=None, is_data=True, entry_type: str = 'peak', value_min=-1, value_max=-1, flag=True):
+    def __init__(self, parent=None, is_data=True, entry_type: str = "peak", value_min=-1, value_max=-1, flag=True):
         self.parent = parent
         big_table_data: TableData = parent.big_table_data
         gui_utility = GuiUtility(parent=self.parent)
@@ -30,7 +29,6 @@ class SpinBox(object):
             row=active_row_index, is_data=is_data
         )
         for row_index in all_rows:
-
             if is_data:
                 data = big_table_data.reflectometry_data(row_index)
             else:
@@ -51,13 +49,13 @@ class SpinBox(object):
             is_plot_yi = True
             is_plot_it = False
             is_plot_ix = False
-            if entry_type == 'peak':
+            if entry_type == "peak":
                 data.peak = [val_min, val_max]
-            elif entry_type == 'back':
+            elif entry_type == "back":
                 data.back = [val_min, val_max]
-            elif entry_type == 'back2':
+            elif entry_type == "back2":
                 data.back2 = [val_min, val_max]
-            elif entry_type == 'low_res':
+            elif entry_type == "low_res":
                 is_plot_yt = False
                 is_plot_yi = False
                 is_plot_ix = True
@@ -86,28 +84,25 @@ class SpinBox(object):
 
 
 class DataSpinbox(object):
-    def __init__(self, parent=None, entry_type='peak', value_min=-1, value_max=-1, flag=True):
-        SpinBox(
-            parent=parent, is_data=True, entry_type=entry_type, value_min=value_min, value_max=value_max, flag=flag
-        )
+    def __init__(self, parent=None, entry_type="peak", value_min=-1, value_max=-1, flag=True):
+        SpinBox(parent=parent, is_data=True, entry_type=entry_type, value_min=value_min, value_max=value_max, flag=flag)
 
 
 class NormSpinbox(object):
-    def __init__(self, parent=None, entry_type='peak', value_min=-1, value_max=-1, flag=True):
+    def __init__(self, parent=None, entry_type="peak", value_min=-1, value_max=-1, flag=True):
         SpinBox(
             parent=parent, is_data=False, entry_type=entry_type, value_min=value_min, value_max=value_max, flag=flag
         )
 
 
 class DataPeakSpinbox(object):
-
     parent = None
 
     def __init__(self, parent=None):
         self.parent = parent
         peak1 = self.parent.ui.peakFromValue.value()
         peak2 = self.parent.ui.peakToValue.value()
-        DataSpinbox(parent=parent, entry_type='peak', value_min=peak1, value_max=peak2)
+        DataSpinbox(parent=parent, entry_type="peak", value_min=peak1, value_max=peak2)
 
 
 class DataBackSpinbox(object):
@@ -124,10 +119,10 @@ class DataBackSpinbox(object):
 
     parent = None
 
-    def __init__(self, parent: QWidget, entry_type: str = 'back'):
-        if entry_type == 'back':
+    def __init__(self, parent: QWidget, entry_type: str = "back"):
+        if entry_type == "back":
             back1, back2 = parent.ui.backFromValue.value(), parent.ui.backToValue.value()
-        elif entry_type == 'back2':
+        elif entry_type == "back2":
             back1, back2 = parent.ui.back2FromValue.value(), parent.ui.back2ToValue.value()
         else:
             raise ValueError("Valid `entry_type` options are 'back', 'back2'")
@@ -135,14 +130,13 @@ class DataBackSpinbox(object):
 
 
 class NormPeakSpinbox(object):
-
     Parent = None
 
     def __init__(self, parent=None):
         self.parent = parent
         peak1 = self.parent.ui.normPeakFromValue.value()
         peak2 = self.parent.ui.normPeakToValue.value()
-        NormSpinbox(parent=parent, entry_type='peak', value_min=peak1, value_max=peak2)
+        NormSpinbox(parent=parent, entry_type="peak", value_min=peak1, value_max=peak2)
 
 
 class NormBackSpinbox(object):
@@ -160,9 +154,9 @@ class NormBackSpinbox(object):
     parent = None
 
     def __init__(self, parent: QWidget, entry_type: str = "back"):
-        if entry_type == 'back':
+        if entry_type == "back":
             back1, back2 = parent.ui.normBackFromValue.value(), parent.ui.normBackToValue.value()
-        elif entry_type == 'back2':
+        elif entry_type == "back2":
             back1, back2 = parent.ui.normBack2FromValue.value(), parent.ui.normBack2ToValue.value()
         else:
             raise ValueError(f"entry_type '{entry_type}' is not valid. Valid options are 'back', 'back2'")
@@ -170,7 +164,6 @@ class NormBackSpinbox(object):
 
 
 class DataLowResSpinbox(object):
-
     parent = None
 
     def __init__(self, parent=None):
@@ -178,11 +171,10 @@ class DataLowResSpinbox(object):
         lowres1 = self.parent.ui.dataLowResFromValue.value()
         lowres2 = self.parent.ui.dataLowResToValue.value()
         flag = self.parent.ui.dataLowResFlag.isChecked()
-        DataSpinbox(parent=parent, entry_type='low_res', value_min=lowres1, value_max=lowres2, flag=flag)
+        DataSpinbox(parent=parent, entry_type="low_res", value_min=lowres1, value_max=lowres2, flag=flag)
 
 
 class NormLowResSpinbox(object):
-
     parent = None
 
     def __init__(self, parent=None):
@@ -190,4 +182,4 @@ class NormLowResSpinbox(object):
         lowres1 = self.parent.ui.normLowResFromValue.value()
         lowres2 = self.parent.ui.normLowResToValue.value()
         flag = self.parent.ui.normLowResFlag.isChecked()
-        NormSpinbox(parent=parent, entry_type='low_res', value_min=lowres1, value_max=lowres2, flag=flag)
+        NormSpinbox(parent=parent, entry_type="low_res", value_min=lowres1, value_max=lowres2, flag=flag)

@@ -11,7 +11,6 @@ class UpdateReductionTableMetadata(object):
         self.update()
 
     def update(self):
-
         lrdata = self.lrdata
         row = self.row
         parent = self.parent

@@ -1,5 +1,5 @@
 """
-    TODO: verify whether this is really needed
+TODO: verify whether this is really needed
 """
 
 # third party packages
@@ -11,4 +11,4 @@ def loadCsvFile(filename):
     :param str filename: Absolute path to CSV file
     :return List[float]:Three-item list, each item being one file column
     """
-    return [column.tolist() for column in np.genfromtxt(filename, delimiter=',').transpose()]
+    return [column.tolist() for column in np.genfromtxt(filename, delimiter=",").transpose()]

@@ -27,7 +27,7 @@ class GlobalReductionSettingsHandler(object):
         self.settings.update(
             {
                 "incident_medium_selected": str(self.parent.ui.selectIncidentMediumList.currentText()).strip(),
-                "q_min": float(self.parent.gui_metadata['q_min']),
+                "q_min": float(self.parent.gui_metadata["q_min"]),
                 "q_step": float(self.parent.ui.qStep.text()),
                 "scaling_factor_flag": self.parent.ui.scalingFactorFlag.isChecked(),
                 "scaling_factor_file": str(self.parent.full_scaling_factor_file_name),

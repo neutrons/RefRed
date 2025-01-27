@@ -24,7 +24,7 @@ def mock_table_row_item(row, col):
     try:
         real_col = index_col.index(col)
     except ValueError:
-        assert False, f'Column {col} content are not float/int'
+        assert False, f"Column {col} content are not float/int"
 
     cell_value = str(GoldValues.gold_table_setting[row, real_col])
 
@@ -38,7 +38,7 @@ def mock_table_row_cell(row, col):
         real_col = index_col.index(col)
         cell_value = GoldValues.gold_table_setting[row, real_col]
     except ValueError:
-        assert False, f'Column {col} content are not float/int'
+        assert False, f"Column {col} content are not float/int"
 
     spin_box_instance = qtpy.QtWidgets.QSpinBox()
     spin_box_instance.setValue(int(cell_value))
@@ -46,7 +46,7 @@ def mock_table_row_cell(row, col):
     return spin_box_instance
 
 
-@mock.patch('RefRed.sf_calculator.reduction_sf_calculator.QApplication.processEvents')
+@mock.patch("RefRed.sf_calculator.reduction_sf_calculator.QApplication.processEvents")
 def test_init_reduction_sf_calculator(processEvents_mock, qtbot):
     """Test reduction sf calculator"""
     main_app = MainGui()
@@ -61,9 +61,9 @@ def test_init_reduction_sf_calculator(processEvents_mock, qtbot):
     sf_gui.tableWidget.item = mock.MagicMock(side_effect=mock_table_row_item)
 
     sf_gui.incidentMediumComboBox = qtpy.QtWidgets.QComboBox()
-    sf_gui.incidentMediumComboBox.addItem('air')
+    sf_gui.incidentMediumComboBox.addItem("air")
     sf_gui.incidentMediumComboBox.setCurrentIndex(0)
-    sf_gui.sfFileNameLabel = qtpy.QtWidgets.QLabel('/tmp/testscale.cfg')
+    sf_gui.sfFileNameLabel = qtpy.QtWidgets.QLabel("/tmp/testscale.cfg")
 
     # Set up mock for mantid LRScalingFactors
     lr_reduction.scaling_factors.LRScalingFactors.LRScalingFactors = mock.Mock(side_effect=mock_lr_scaling_factor)
@@ -121,19 +121,19 @@ def mock_lr_scaling_factor():
 
         def setProperty(self, key, value):
             assert key in {
-                'DirectBeamRuns',
-                'IncidentMedium',
-                'Attenuators',
-                'TOFRange',
-                'TOFSteps',
-                'SignalPeakPixelRange',
-                'SignalBackgroundPixelRange',
-                'LowResolutionPixelRange',
-                'ScalingFactorFile',
-                'UseDeadTimeCorrection',
-                'ParalyzableDeadTime',
-                'DeadTime',
-                'DeadTimeTOFStep',
+                "DirectBeamRuns",
+                "IncidentMedium",
+                "Attenuators",
+                "TOFRange",
+                "TOFSteps",
+                "SignalPeakPixelRange",
+                "SignalBackgroundPixelRange",
+                "LowResolutionPixelRange",
+                "ScalingFactorFile",
+                "UseDeadTimeCorrection",
+                "ParalyzableDeadTime",
+                "DeadTime",
+                "DeadTimeTOFStep",
             }
 
         def PyExec(self):
@@ -142,5 +142,5 @@ def mock_lr_scaling_factor():
     return Algo()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

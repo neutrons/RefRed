@@ -1,9 +1,9 @@
-from qtpy import QtWidgets
-import numpy as np
 import mantid.simpleapi as api
+import numpy as np
+from qtpy import QtWidgets
 
-from RefRed.sf_calculator.sort_nxsdata import SortNXSData
 from RefRed.sf_calculator.lr_data import LRData
+from RefRed.sf_calculator.sort_nxsdata import SortNXSData
 
 INSTRUMENT_SHORT_NAME = "REF_L"
 
@@ -14,15 +14,15 @@ class LoadAndSortNXSDataForSFcalculator(object):
     list_NXSData = []
     list_NXSData_sorted = []
     list_metadata = [
-        'gd_prtn_chrg',
-        'S1HWidth',
-        'S1VHeight',
-        'S2HWidth',
-        'S2VHeight',
-        'SiHWidth',
-        'SiVHeight',
-        'LambdaRequest',
-        'vATT',
+        "gd_prtn_chrg",
+        "S1HWidth",
+        "S1VHeight",
+        "S2HWidth",
+        "S2VHeight",
+        "SiHWidth",
+        "SiVHeight",
+        "LambdaRequest",
+        "vATT",
     ]
     big_table = []
     is_using_si_slits = False
@@ -44,7 +44,7 @@ class LoadAndSortNXSDataForSFcalculator(object):
     def loadNXSData(self):
         for _runs in self.list_runs:
             _full_file_name = api.FileFinder.findRuns("%s_%d" % (INSTRUMENT_SHORT_NAME, int(_runs)))[0]
-            if _full_file_name != '':
+            if _full_file_name != "":
                 workspace = api.LoadEventNexus(
                     Filename=_full_file_name, OutputWorkspace="__data_file_%s" % _runs, MetaDataOnly=False
                 )
@@ -142,7 +142,7 @@ class LoadAndSortNXSDataForSFcalculator(object):
         elif isinstance(_value, str):
             _value = _value
         else:
-            _value = '[' + str(_value[0]) + ',...]' + '-> (' + str(len(_value)) + ' entries)'
+            _value = "[" + str(_value[0]) + ",...]" + "-> (" + str(len(_value)) + " entries)"
         return _value
 
     def getTableData(self):

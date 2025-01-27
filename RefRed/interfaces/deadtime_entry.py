@@ -1,9 +1,9 @@
 # third party imports
-from qtpy.QtWidgets import QGroupBox, QHBoxLayout, QCheckBox, QPushButton
+from qtpy.QtWidgets import QCheckBox, QGroupBox, QHBoxLayout, QPushButton
 
 
 class DeadTimeEntryPoint(QGroupBox):
-    def __init__(self, title='Dead Time Correction'):
+    def __init__(self, title="Dead Time Correction"):
         super().__init__(title)
         self.initUI()
 
@@ -22,9 +22,9 @@ class DeadTimeEntryPoint(QGroupBox):
             "}"
         )
 
-        self.applyCheckBox = QCheckBox('Apply', self)
+        self.applyCheckBox = QCheckBox("Apply", self)
         self.applyCheckBox.stateChanged.connect(self.toggleSettingsButton)
-        self.settingsButton = QPushButton('Settings', self)
+        self.settingsButton = QPushButton("Settings", self)
         self.settingsButton.setEnabled(self.applyCheckBox.isChecked())  # enabled if we use the correction
 
         # Create a horizontal layout for the checkbox and settings button

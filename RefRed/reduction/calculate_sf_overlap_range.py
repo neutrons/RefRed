@@ -1,22 +1,22 @@
+import numpy as np
 from mantid import mtd
 from mantid.simpleapi import CreateWorkspace, Fit, ReplaceSpecialValues
-import numpy as np
 
 
 class CalculateSFoverlapRange(object):
-    '''
+    """
     calculate the scaling factor (SF) to apply to match the average value of the overlap range
     of data between the two lconfig data sets
-    '''
+    """
 
     def __init__(self, left_lconfig, right_lconfig):
         self.left_lconfig = left_lconfig
         self.right_lconfig = right_lconfig
 
     def getSF(self):
-        '''
+        """
         fit data of the overlaping region between left and right sets
-        '''
+        """
         left_set = self.applySFtoLconfig(self.left_lconfig)
         right_set = self.right_lconfig
 
@@ -30,8 +30,8 @@ class CalculateSFoverlapRange(object):
             _sf = 1
 
         else:
-            [a_left, b_left] = self.fitData(left_set, index_min_in_left, type='left')
-            [a_right, b_right] = self.fitData(right_set, index_max_in_right, type='right')
+            [a_left, b_left] = self.fitData(left_set, index_min_in_left, type="left")
+            [a_right, b_right] = self.fitData(right_set, index_max_in_right, type="right")
 
             nbr_points = 10
             fit_range_to_use = self.gitFittingOverlapRange(min_x, max_x, nbr_points)
@@ -41,9 +41,9 @@ class CalculateSFoverlapRange(object):
         return _sf
 
     def applySFtoLconfig(self, lconfig):
-        '''
+        """
         use the auto_sf to the data set
-        '''
+        """
         y_axis = lconfig.reduce_y_axis
         e_axis = lconfig.reduce_e_axis
         sf = lconfig.sf_auto
@@ -57,15 +57,14 @@ class CalculateSFoverlapRange(object):
         return lconfig
 
     def gitFittingOverlapRange(self, min_x, max_x, nbr_points):
-
         step = (float(max_x) - float(min_x)) / float(nbr_points)
         _fit_range = np.arange(min_x, max_x + step, step)
         return _fit_range
 
     def calculateOverlapAxis(self, left_axis, right_axis):
-        '''
+        """
         calculate the overlap region of the two axis
-        '''
+        """
         _min_x = -1
         _max_x = -1
         no_overlap = True
@@ -84,11 +83,11 @@ class CalculateSFoverlapRange(object):
 
         return [_min_x, _max_x, left_min_index, right_max_index, no_overlap]
 
-    def fitData(self, data_set, threshold_index, type='right'):
-        '''
+    def fitData(self, data_set, threshold_index, type="right"):
+        """
         will fit the data with linear fitting y=ax + b
-        '''
-        if type == 'left':
+        """
+        if type == "left":
             x_axis = data_set.reduce_q_axis[threshold_index:]
             y_axis = data_set.tmp_y_axis[threshold_index:]
             e_axis = data_set.tmp_e_axis[threshold_index:]
@@ -103,9 +102,9 @@ class CalculateSFoverlapRange(object):
             InputWorkspace=dataToFit, NaNValue=0, NaNError=0, InfinityValue=0, InfinityError=0
         )
 
-        Fit(InputWorkspace=dataToFit, Function="name=UserFunction, Formula=a+b*x, a=1, b=2", Output='res')
+        Fit(InputWorkspace=dataToFit, Function="name=UserFunction, Formula=a+b*x, a=1, b=2", Output="res")
 
-        res = mtd['res_Parameters']
+        res = mtd["res_Parameters"]
 
         b = res.cell(0, 1)
         a = res.cell(1, 1)
@@ -117,19 +116,19 @@ class CalculateSFoverlapRange(object):
         return idx
 
     def scaleToApplyForBestOverlap(self, fit_range_to_use, a_left, b_left, a_right, b_right):
-        '''
+        """
         This function will use the same overlap region and will determine the scaling to apply to
         the second fit to get the best match
-        '''
+        """
         left_mean = self.calculateMeanOfFunctionOverRange(fit_range_to_use, a_left, b_left)
         right_mean = self.calculateMeanOfFunctionOverRange(fit_range_to_use, a_right, b_right)
         _sf = right_mean / left_mean
         return _sf
 
     def calculateMeanOfFunctionOverRange(self, range_to_use, a, b):
-        '''
+        """
         will return the average value of the function over the given range
-        '''
+        """
         sz_range = range_to_use.size
         _sum = 0
         for i in range(sz_range):

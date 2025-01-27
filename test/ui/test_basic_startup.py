@@ -1,13 +1,15 @@
-from RefRed.main import MainGui
-from qtpy import QtCore, QtWidgets
 import functools
+
 import pytest
+from qtpy import QtCore, QtWidgets
+
+from RefRed.main import MainGui
 
 wait = 200
 
 
 def test_startup(qtbot):
-    pytest.importorskip('mantid')
+    pytest.importorskip("mantid")
 
     window = MainGui()
     qtbot.addWidget(window)

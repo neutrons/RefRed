@@ -1,37 +1,38 @@
 # -*- coding: utf-8 -*-
-'''
-  Basis of the configuration system. The :class:`ConfigProxy` object
-  combines module parameters with temporary and user changeable
-  configuration file options. When used in other modules
-  this facility is completely hidden to the API.
+"""
+Basis of the configuration system. The :class:`ConfigProxy` object
+combines module parameters with temporary and user changeable
+configuration file options. When used in other modules
+this facility is completely hidden to the API.
 
-  As each parameter can be accessed as an attribute of the ConfigHolder object
-  it behaves exactly like the according module would to, thus
-  IDEs with context sensitive syntax completion work with it as well.
+As each parameter can be accessed as an attribute of the ConfigHolder object
+it behaves exactly like the according module would to, thus
+IDEs with context sensitive syntax completion work with it as well.
 
-  The initialization of all config modules is done in the config __init__ module.
-'''
+The initialization of all config modules is done in the config __init__ module.
+"""
 
-import os
 import atexit
+import os
 import re
 import sys
+
 from configobj import ConfigObj, ConfigObjError
 
 
 class ConfigProxy(object):
-    '''
+    """
     Handling of configuration options with temporal and fixed storage to .ini files
     in the used folder.
     Each configuration has it's own ConfigHolder object for access but one .ini file
     can hold several configurations.
-    '''
+    """
 
     _KEYCRE = re.compile(r"%\(([^)]*)\)s")  # search pattern for interpolation
     _PARSE_ERRORS = None
 
-    default_storage = 'general'
-    config_path = ''
+    default_storage = "general"
+    config_path = ""
     configs = {}
     path_configs = {}
     storages = {}
@@ -48,25 +49,25 @@ class ConfigProxy(object):
         # store .ini files on interpreter exit
         atexit.register(self.store)
 
-    def add_config(self, name, items, storage=''):
-        '''
+    def add_config(self, name, items, storage=""):
+        """
         Crate a new dictionary connected to a storage config file.
 
         :returns: The corresponding :class:`ConfigHolder` object.
-        '''
-        if storage == '':
+        """
+        if storage == "":
             storage = self.default_storage
         if storage is None:
-            storage = '_temp'
-            if '_temp' not in self.storages:
+            storage = "_temp"
+            if "_temp" not in self.storages:
                 self.tmp_storages[storage] = {}
                 # use the exact same dictionary object
                 self.storages[storage] = self.tmp_storages[storage]
         elif storage not in self.storages:
-            sfile = os.path.join(self.config_path, storage + '.ini')
+            sfile = os.path.join(self.config_path, storage + ".ini")
             try:
                 self.storages[storage] = ConfigObj(
-                    infile=sfile, unrepr=True, encoding='utf8', indent_type='    ', interpolation=False
+                    infile=sfile, unrepr=True, encoding="utf8", indent_type="    ", interpolation=False
                 )
             except ConfigObjError:
                 self._PARSE_ERRORS.append(
@@ -89,31 +90,31 @@ class ConfigProxy(object):
         return self[name]
 
     def add_path_config(self, name, items, cpath):
-        '''
+        """
         Crate a new dictionary connected to a storage config file.
 
         :returns: The corresponding :class:`ConfigHolder` object.
-        '''
+        """
         # get last config from file, if it exists
-        ccfile = os.path.join(cpath, 'config_path_options.ini')
+        ccfile = os.path.join(cpath, "config_path_options.ini")
         if os.path.exists(ccfile):
-            ccopts = ConfigObj(infile=ccfile, unrepr=True, encoding='utf8', indent_type='    ', interpolation=False)
-            last_cfile = ccopts['last_file']
+            ccopts = ConfigObj(infile=ccfile, unrepr=True, encoding="utf8", indent_type="    ", interpolation=False)
+            last_cfile = ccopts["last_file"]
         else:
             try:
                 os.makedirs(cpath)
             except OSError:
                 pass
-            ccopts = ConfigObj(infile=ccfile, unrepr=True, encoding='utf8', indent_type='    ', interpolation=False)
-            last_cfile = 'default'
-            ccopts['last_file'] = last_cfile
-            ccopts['config_files'] = [last_cfile]
+            ccopts = ConfigObj(infile=ccfile, unrepr=True, encoding="utf8", indent_type="    ", interpolation=False)
+            last_cfile = "default"
+            ccopts["last_file"] = last_cfile
+            ccopts["config_files"] = [last_cfile]
 
         if cpath not in self.storages:
-            sfile = os.path.join(cpath, last_cfile + '.ini')
+            sfile = os.path.join(cpath, last_cfile + ".ini")
             try:
                 self.storages[cpath] = ConfigObj(
-                    infile=sfile, unrepr=True, encoding='utf8', indent_type='    ', interpolation=False
+                    infile=sfile, unrepr=True, encoding="utf8", indent_type="    ", interpolation=False
                 )
             except ConfigObjError:
                 self._PARSE_ERRORS.append(
@@ -147,7 +148,7 @@ class ConfigProxy(object):
             if cpath in self.configs and self.configs[cpath] in self.path_configs:
                 cpath = self.configs[cpath]
             else:
-                raise KeyError('Config path %s is not defined' % cpath)
+                raise KeyError("Config path %s is not defined" % cpath)
         # save the current config to a file
         # remove constants for storage
         for ignore, config in list(self.storages[cpath].items()):
@@ -157,10 +158,10 @@ class ConfigProxy(object):
         self.storages[cpath].write()
 
         # create a new config, from the defaults
-        sfile = os.path.join(cpath, cname + '.ini')
+        sfile = os.path.join(cpath, cname + ".ini")
         try:
             self.storages[cpath] = ConfigObj(
-                infile=sfile, unrepr=True, encoding='utf8', indent_type='    ', interpolation=False
+                infile=sfile, unrepr=True, encoding="utf8", indent_type="    ", interpolation=False
             )
         except ConfigObjError:
             self._PARSE_ERRORS.append(
@@ -169,8 +170,8 @@ class ConfigProxy(object):
                     sys.exc_info(),
                 )
             )
-        if cname not in self.path_configs[cpath][0]['config_files']:
-            self.path_configs[cpath][0]['config_files'].append(cname)
+        if cname not in self.path_configs[cpath][0]["config_files"]:
+            self.path_configs[cpath][0]["config_files"].append(cname)
 
         # update missing items from default config
         for name, items in list(self.path_configs[cpath][1].items()):
@@ -181,31 +182,31 @@ class ConfigProxy(object):
                         self.storages[cpath][name][key] = value
             else:
                 self.storages[cpath][name] = dict(items)
-            self.path_configs[cpath][0]['last_file'] = cname
+            self.path_configs[cpath][0]["last_file"] = cname
 
     def get_path_configs(self, cpath):
         if cpath not in self.path_configs:
             if cpath in self.configs and self.configs[cpath] in self.path_configs:
                 cpath = self.configs[cpath]
             else:
-                raise KeyError('Config path %s is not defined' % cpath)
-        return self.path_configs[cpath][0]['config_files']
+                raise KeyError("Config path %s is not defined" % cpath)
+        return self.path_configs[cpath][0]["config_files"]
 
     def add_alias(self, config, alias):
-        '''
+        """
         Crate an alias for another configuration item.
 
         :returns: The corresponding :class:`ConfigHolder` object.
-        '''
+        """
         if config not in self.configs:
-            raise KeyError('no configuration named %s found' % config)
+            raise KeyError("no configuration named %s found" % config)
         self.aliases[alias] = config
         return self[config]
 
     def store(self):
         """store configuration data into .ini files."""
         for item in list(self.storages.values()):
-            if not hasattr(item, 'write'):
+            if not hasattr(item, "write"):
                 continue
             # remove constants for storage
             restore = {}
@@ -240,9 +241,9 @@ class ConfigProxy(object):
             raise KeyError("%s is no known configuration" % config)
         storage = self.configs[config]
         # special convenience methods to switch the config file with the config object
-        if storage in self.path_configs and item == 'get_configs':
+        if storage in self.path_configs and item == "get_configs":
             return lambda: self.get_path_configs(storage)
-        if storage in self.path_configs and item == 'switch_config':
+        if storage in self.path_configs and item == "switch_config":
             return lambda new_config: self.switch_path_config(storage, new_config)
         #
         if item in self.tmp_storages[storage][config]:
@@ -252,17 +253,17 @@ class ConfigProxy(object):
             value = self.storages[storage][config][item]
         if (
             isinstance(value, str)
-            and '%' in value
-            and not self.storages[storage][config].get('NO_INTERPOLATION', False)
+            and "%" in value
+            and not self.storages[storage][config].get("NO_INTERPOLATION", False)
         ):
             # perform interpolation with constants if possible
             value = self.interpolate(config, value)
         return value
 
     def interpolate(self, config, value, recdepth=0):
-        '''
+        """
         Interpolate value with available options starting in the same configuration.
-        '''
+        """
         vtype = type(value)
         storage = self.configs[config]
         if recdepth > 5:
@@ -276,7 +277,7 @@ class ConfigProxy(object):
             match_end = match.span()[1]
             match = self._KEYCRE.search(value[match_start + match_end :])
             match_start += match_end
-            if '.' not in match_key:
+            if "." not in match_key:
                 # search same config for value
                 if match_key in self.tmp_storages[storage][config]:
                     value = value.replace(match_str, vtype(self.tmp_storages[storage][config][match_key]))
@@ -284,7 +285,7 @@ class ConfigProxy(object):
                     value = value.replace(match_str, vtype(self.storages[storage][config][match_key]))
             else:
                 # search other config for values
-                configi, match_key = match_key.split('.', 1)
+                configi, match_key = match_key.split(".", 1)
                 if not (configi in self.configs or configi in self.aliases):
                     continue
                 if configi in self.aliases:
@@ -294,7 +295,7 @@ class ConfigProxy(object):
                     value = value.replace(match_str, vtype(self.tmp_storages[storagei][configi][match_key]))
                 if match_key in self.storages[storagei][configi]:
                     value = value.replace(match_str, vtype(self.storages[storagei][configi][match_key]))
-        if '%' in value:
+        if "%" in value:
             return self.interpolate(config, value, recdepth + 1)
         return value
 
@@ -320,8 +321,8 @@ class ConfigProxy(object):
         storage = self.configs[config]
         keys = list(self.storages[storage][config].keys())
         if storage in self.path_configs:
-            keys.append('get_configs')
-            keys.append('switch_config')
+            keys.append("get_configs")
+            keys.append("switch_config")
         return keys
 
     def keys(self):
@@ -341,19 +342,19 @@ class ConfigProxy(object):
 
     def __repr__(self):
         output = self.__class__.__name__
-        output += '(storages=%i, configs=%i)' % (len(self.storages), len(self))
+        output += "(storages=%i, configs=%i)" % (len(self.storages), len(self))
         return output
 
 
 class ConfigHolder(object):
-    '''
+    """
     Dictionary like object connected to the a :class:`ConfigProxy` reading
     and writing values directly to that object.
     Each key can also be accessed as attribute of the object.
 
     To store items temporarily, the object supports a "temp"
     attribute, which itself is a ConfigHolder object.
-    '''
+    """
 
     def __init__(self, proxy, name, storetmp=False):
         self._proxy = proxy
@@ -372,13 +373,13 @@ class ConfigHolder(object):
         Basis of the parameter access (e.g. can use
         object.key to access object[key]). If a
         """
-        if name.startswith('_') or name in dir(ConfigHolder):
+        if name.startswith("_") or name in dir(ConfigHolder):
             return object.__getattribute__(self, name)
         else:
             return self.__getitem__(name)
 
     def __setattr__(self, name, value):
-        if name.startswith('_') or name in dir(ConfigHolder):
+        if name.startswith("_") or name in dir(ConfigHolder):
             object.__setattr__(self, name, value)
         else:
             return self.__setitem__(name, value)
@@ -404,10 +405,10 @@ class ConfigHolder(object):
         return [(str(key), self[key]) for key in list(self.keys())]
 
     def __repr__(self):
-        output = self.__class__.__name__ + '('
-        spacer = '\n' + ' ' * len(output)
-        output += repr(dict(list(self.items()))).replace('\n', spacer)
-        output += ')'
+        output = self.__class__.__name__ + "("
+        spacer = "\n" + " " * len(output)
+        output += repr(dict(list(self.items()))).replace("\n", spacer)
+        output += ")"
         return output
 
     def __dir__(self):

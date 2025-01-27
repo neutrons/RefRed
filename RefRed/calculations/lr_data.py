@@ -3,10 +3,11 @@ import logging
 import math
 from typing import List, Optional, Type
 
+import numpy as np
+
 # third-party imports
 from mantid.api import mtd
 from mantid.simpleapi import Rebin
-import numpy as np
 
 # package imports
 from RefRed.lconfigdataset import LConfigDataset
@@ -19,11 +20,10 @@ NEUTRON_MASS = 1.675e-27  # kg
 PLANCK_CONSTANT = 6.626e-34  # m^2 kg s^-1
 H_OVER_M_NEUTRON = PLANCK_CONSTANT / NEUTRON_MASS
 
-NEW_GEOMETRY_DATE = '2014-10-01'
+NEW_GEOMETRY_DATE = "2014-10-01"
 
 
 class LRData(object):
-
     read_options = dict(
         is_auto_tof_finder=True, is_auto_peak_finder=True, back_offset_from_peak=3, bins=50, angle_offset=0.001
     )
@@ -36,9 +36,9 @@ class LRData(object):
     low_res = [0, 255]
     low_res_flag = True
     use_it_flag = True
-    full_file_name = ['']
-    filename = ''
-    ipts = 'N/A'
+    full_file_name = [""]
+    filename = ""
+    ipts = "N/A"
     total_counts = 0
 
     def __init__(
@@ -74,33 +74,33 @@ class LRData(object):
 
         mt_run = workspace.getRun()
 
-        self.ipts = mt_run.getProperty('experiment_identifier').value
-        self.run_number = mt_run.getProperty('run_number').value
+        self.ipts = mt_run.getProperty("experiment_identifier").value
+        self.run_number = mt_run.getProperty("run_number").value
 
-        self.lambda_requested = float(mt_run.getProperty('LambdaRequest').value[0])
-        self.lambda_requested_units = mt_run.getProperty('LambdaRequest').units
-        self.thi = mt_run.getProperty('thi').value[0]
-        self.thi_units = mt_run.getProperty('thi').units
-        self.ths = mt_run.getProperty('ths').value[0]
-        self.ths_units = mt_run.getProperty('ths').units
-        self.tthd = mt_run.getProperty('tthd').value[0]
-        self.tthd_units = mt_run.getProperty('tthd').units
-        self.S1W = mt_run.getProperty('S1HWidth').value[0]
-        self.S1H = mt_run.getProperty('S1VHeight').value[0]
-        self.parent.current_ipts = mt_run.getProperty('experiment_identifier').value
+        self.lambda_requested = float(mt_run.getProperty("LambdaRequest").value[0])
+        self.lambda_requested_units = mt_run.getProperty("LambdaRequest").units
+        self.thi = mt_run.getProperty("thi").value[0]
+        self.thi_units = mt_run.getProperty("thi").units
+        self.ths = mt_run.getProperty("ths").value[0]
+        self.ths_units = mt_run.getProperty("ths").units
+        self.tthd = mt_run.getProperty("tthd").value[0]
+        self.tthd_units = mt_run.getProperty("tthd").units
+        self.S1W = mt_run.getProperty("S1HWidth").value[0]
+        self.S1H = mt_run.getProperty("S1VHeight").value[0]
+        self.parent.current_ipts = mt_run.getProperty("experiment_identifier").value
         self.total_counts = workspace.getNumberEvents()
 
         try:
-            self.SiW = mt_run.getProperty('SiHWidth').value[0]
-            self.SiH = mt_run.getProperty('SiVHeight').value[0]
+            self.SiW = mt_run.getProperty("SiHWidth").value[0]
+            self.SiH = mt_run.getProperty("SiVHeight").value[0]
             self.isSiThere = True
         except:
-            self.S2W = mt_run.getProperty('S2HWidth').value[0]
-            self.S2H = mt_run.getProperty('S2VHeight').value[0]
+            self.S2W = mt_run.getProperty("S2HWidth").value[0]
+            self.S2H = mt_run.getProperty("S2VHeight").value[0]
             self.isSiThere = False
 
-        self.attenuatorNbr = mt_run.getProperty('vATT').value[0] - 1
-        self.date = mt_run.getProperty('run_start').value
+        self.attenuatorNbr = mt_run.getProperty("vATT").value[0] - 1
+        self.date = mt_run.getProperty("run_start").value
 
         sample = workspace.getInstrument().getSample()
         source = workspace.getInstrument().getSource()
@@ -121,7 +121,7 @@ class LRData(object):
 
         # calculate theta
         self.theta = self.calculate_theta()
-        self.frequency = float(mt_run.getProperty('Speed1').value[0])
+        self.frequency = float(mt_run.getProperty("Speed1").value[0])
 
         # Determine the range to select in TOF according to how the DAS computed the
         # chopper settings
@@ -169,16 +169,16 @@ class LRData(object):
             tmin = 0
         tmax += delta_t
 
-        self.binning = [tmin, self.read_options['bins'], tmax]
+        self.binning = [tmin, self.read_options["bins"], tmax]
         self.calculate_lambda_range()
         self.incident_angle = 2.0 * self.calculate_theta(with_offset=False)  # 2.theta
         self.calculate_q_range()
         # self.lambda_range = self.calculate_lambda_range()
 
         # Proton charge
-        _proton_charge = float(mt_run.getProperty('gd_prtn_chrg').value)
+        _proton_charge = float(mt_run.getProperty("gd_prtn_chrg").value)
         # _proton_charge_units = mt_run.getProperty('gd_prtn_chrg').units
-        new_proton_charge_units = 'mC'
+        new_proton_charge_units = "mC"
 
         self.proton_charge = _proton_charge * 3.6  # to go from microA/h to mC
         self.proton_charge_units = new_proton_charge_units
@@ -239,7 +239,7 @@ class LRData(object):
             [peak1, peak2] = pf.getPeaks()
             self.peak = [int(peak1), int(peak2)]
 
-            backOffsetFromPeak = self.read_options['back_offset_from_peak']
+            backOffsetFromPeak = self.read_options["back_offset_from_peak"]
             back1 = int(peak1 - backOffsetFromPeak)
             back2 = int(peak2 + backOffsetFromPeak)
             self.back = [back1, back2]
@@ -331,7 +331,7 @@ class LRData(object):
         # Add the offset
         angle_offset = 0.0
         if with_offset and "angle_offset" in self.read_options:
-            angle_offset = float(self.read_options['angle_offset'])
+            angle_offset = float(self.read_options["angle_offset"])
             angle_offset_deg = angle_offset
             theta = theta + angle_offset_deg * math.pi / 180.0
 
@@ -347,7 +347,7 @@ class LRData(object):
         self.Ixyt = nxs_histo.extractY().reshape(self.number_x_pixels, self.number_y_pixels, nbr_tof - 1)
 
     def read_data(self):
-        output_workspace_name = self.workspace_name + '_rebin'
+        output_workspace_name = self.workspace_name + "_rebin"
         nxs_histo = Rebin(
             InputWorkspace=self.workspace_name,
             OutputWorkspace=output_workspace_name,
@@ -381,5 +381,5 @@ class LRData(object):
         This function parses the output.date and returns true if this date is after the ref date
         """
         nexus_date = self.date
-        nexus_date_acquistion = nexus_date.split('T')[0]
+        nexus_date_acquistion = nexus_date.split("T")[0]
         return nexus_date_acquistion > NEW_GEOMETRY_DATE

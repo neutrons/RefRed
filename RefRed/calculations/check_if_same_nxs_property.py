@@ -2,9 +2,8 @@ from mantid.api import mtd
 
 
 class CheckIfSameNxsProperty(object):
-
     is_same_property = False
-    property_name = ''
+    property_name = ""
 
     def __init__(self, list_wks=None, property_name=property_name):
         if list_wks is None:

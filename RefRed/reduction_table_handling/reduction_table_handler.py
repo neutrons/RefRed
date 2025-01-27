@@ -12,7 +12,6 @@ from RefRed.tabledata import TableData
 
 
 class ReductionTableHandler(object):
-
     from_row = -1
     to_row = -1
 

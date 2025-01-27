@@ -1,4 +1,5 @@
 import logging
+
 from RefRed.sf_calculator.compare_two_nxsdata_for_sfcalculator import CompareTwoNXSDataForSFcalculator
 
 
@@ -9,7 +10,6 @@ class Position(object):
 
 
 class SortNXSData(object):
-
     sortedArrayOfNXSData = None
     sf_gui = None
 

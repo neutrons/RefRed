@@ -10,7 +10,6 @@ from qtpy.QtCore import Qt  # type: ignore
 
 
 class MyTableWidget(QtWidgets.QTableWidget):
-
     parent = None
     ui = None
 

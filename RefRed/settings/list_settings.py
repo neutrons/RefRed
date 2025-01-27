@@ -1,6 +1,5 @@
 class ListSettings(object):
     def __init__(self):
-
         self.q_min = 0.005
         self.d_q0 = 0.0
         self.dq_over_q = 0.028

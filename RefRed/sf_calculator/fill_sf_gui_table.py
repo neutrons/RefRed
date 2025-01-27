@@ -1,23 +1,21 @@
-from qtpy import QtGui, QtCore
-from qtpy import QtWidgets
+from qtpy import QtCore, QtGui, QtWidgets
+
 import RefRed.colors
 
 
 class FillSFGuiTable(object):
-
     tableData = None
     parent = None
     index_color = 0
 
     def __init__(self, parent=None, table=None, is_using_si_slits=False):
-
         self.parent = parent
         if is_using_si_slits:
-            s2ih = 'SiH'
-            s2iw = 'SiW'
+            s2ih = "SiH"
+            s2iw = "SiW"
         else:
-            s2ih = 'S2H'
-            s2iw = 'S2W'
+            s2ih = "S2H"
+            s2iw = "S2W"
         verticalHeader = [
             "Run #",
             "Nbr. Attenuator",
@@ -126,8 +124,8 @@ class FillSFGuiTable(object):
             for k in range(10, 16):
                 _value = _row[k]
                 _brush = QtGui.QBrush()
-                if _value == '0' or _value == 'N/A' or _value == '':
-                    _value = 'N/A'
+                if _value == "0" or _value == "N/A" or _value == "":
+                    _value = "N/A"
                     _brush.setColor(RefRed.colors.VALUE_BAD)
                     is_any_red = True
                 else:

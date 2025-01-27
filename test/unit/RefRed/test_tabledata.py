@@ -26,20 +26,20 @@ class TestTableData:
             assert "Wrong type for wrong_type" in str(exception.value)
 
     def test_set_data_by_column_enum(self):
-        with patch.object(LRData, '__init__', return_value=None):
+        with patch.object(LRData, "__init__", return_value=None):
             instance = LRData()
             self.table.set_data_by_column_enum(0, TableDataColumIndex.LR_DATA, instance)
             self.table.set_data_by_column_enum(0, TableDataColumIndex.LR_NORM, instance)
         self.table.set_data_by_column_enum(0, TableDataColumIndex.LR_CONFIG, LConfigDataset())
 
     def test_reflectometry_data(self):
-        with patch.object(LRData, '__init__', return_value=None):
+        with patch.object(LRData, "__init__", return_value=None):
             self.table.set_reflectometry_data(0, LRData())
             assert isinstance(self.table.reflectometry_data(0), LRData)
             assert isinstance(self.table[0, int(TableDataColumIndex.LR_DATA)], LRData)
 
     def test_normalization_data(self):
-        with patch.object(LRData, '__init__', return_value=None):
+        with patch.object(LRData, "__init__", return_value=None):
             self.table.set_normalization_data(0, LRData())
             assert isinstance(self.table.normalization_data(0), LRData)
             assert isinstance(self.table[0, int(TableDataColumIndex.LR_NORM)], LRData)
@@ -82,5 +82,5 @@ class TestTableData:
         assert new_counters == counters
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

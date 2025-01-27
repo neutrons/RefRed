@@ -87,5 +87,5 @@ def test_plot2d_dialog(qtbot, data_server):
     qtbot.wait(wait)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

@@ -1,17 +1,17 @@
+import time
+
 from qtpy import QtCore
 from qtpy.QtWidgets import QApplication
-import time
 
 
 class ProgressBarHandler(object):
-
     nbr_reduction = 0
     current_step = 0
 
     def __init__(self, parent=None):
         self.parent = parent
 
-    def setup(self, nbr_reduction=0, label='Reduction Process'):
+    def setup(self, nbr_reduction=0, label="Reduction Process"):
         self.nbr_reduction = nbr_reduction
 
         self.parent.ui.reductionProcessProgressBar.setMinimum(0)

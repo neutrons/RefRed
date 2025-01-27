@@ -1,10 +1,12 @@
 """
-    TODO: refactor this
+TODO: refactor this
 """
 
 import sys
 import time
+
 from qtpy import QtCore
+
 from RefRed.utilities import get_index_free_thread
 
 
@@ -16,7 +18,7 @@ class StatusMessageThreaded(QtCore.QThread):  # type: ignore
     def run(self):
         time.sleep(5)
         try:
-            self.parent.ui.statusbar.showMessage('')
+            self.parent.ui.statusbar.showMessage("")
         except RuntimeError:
             # race condition: pytest-qt fixture qtbot kills the main window but fails to kill this thread.
             # As a result, after five seconds there's no self.parent and the previous line raises
@@ -24,12 +26,12 @@ class StatusMessageThreaded(QtCore.QThread):  # type: ignore
 
 
 class StatusMessageHandler(object):
-    def __init__(self, parent=None, message='', severity='good', is_threaded=True):
+    def __init__(self, parent=None, message="", severity="good", is_threaded=True):
         self.parent = parent
 
-        if severity == 'good':
+        if severity == "good":
             self.parent.ui.statusbar.setStyleSheet("QStatusBar{color: black;}")
-        elif severity == 'bad':
+        elif severity == "bad":
             self.parent.ui.statusbar.setStyleSheet("QStatusBar{color: red;}")
         self.parent.ui.statusbar.showMessage(message)
 

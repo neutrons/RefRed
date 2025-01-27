@@ -1,13 +1,14 @@
+from xml.dom import minidom
+
+from numpy import empty
 from PyQt5.QtWidgets import QFileDialog
 from qtpy import QtGui, QtWidgets
-from xml.dom import minidom
-from numpy import empty
-from RefRed.interfaces import load_ui
+
 import RefRed.colors
+from RefRed.interfaces import load_ui
 
 
 class PreviewConfig(QtWidgets.QMainWindow):
-
     system_name = ["instrument_name", "timestamp", "version", "mantid_version", "generator"]
 
     data_name = [

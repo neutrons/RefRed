@@ -1,16 +1,16 @@
 from qtpy import QtGui, QtWidgets
+
+import RefRed.colors
 from RefRed.calculations.add_list_nexus import AddListNexus
-from RefRed.calculations.lr_data import LRData
 from RefRed.calculations.locate_list_run import LocateListRun
+from RefRed.calculations.lr_data import LRData
 from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
+from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.progressbar_handler import ProgressBarHandler
 from RefRed.plot.display_plots import DisplayPlots
-from RefRed.gui_handling.gui_utility import GuiUtility
-import RefRed.colors
 
 
 class LoadReductionTableFromLConfigDataSet(object):
-
     parent = None
 
     def __init__(self, parent=None):
@@ -19,7 +19,7 @@ class LoadReductionTableFromLConfigDataSet(object):
         nbr_lconfig = self.get_nbr_lconfig()
         big_table_data = self.parent.big_table_data
         o_load_config_progressbar_handler = ProgressBarHandler(parent=parent)
-        o_load_config_progressbar_handler.setup(nbr_reduction=nbr_lconfig, label='Loading Config.')
+        o_load_config_progressbar_handler.setup(nbr_reduction=nbr_lconfig, label="Loading Config.")
 
         for index_row, lconfig in enumerate(big_table_data[:, 2]):
             if lconfig is None:
@@ -35,10 +35,10 @@ class LoadReductionTableFromLConfigDataSet(object):
                 list_run=list_data_run,
                 metadata_only=False,
                 check_nexus_compatibility=False,
-                prefix='data',
+                prefix="data",
             )
             data_lrdata = LRData(_add_data_nexus.wks, lconfig=lconfig, is_data=True, parent=self.parent)
-            self.update_lrdata(lrdata=data_lrdata, lconfig=lconfig, type='data', row=index_row)
+            self.update_lrdata(lrdata=data_lrdata, lconfig=lconfig, type="data", row=index_row)
 
             list_norm_run = lconfig.norm_sets
             o_list_norm_nexus = LocateListRun(list_run=list_norm_run)
@@ -49,10 +49,10 @@ class LoadReductionTableFromLConfigDataSet(object):
                     list_run=list_norm_run,
                     metadata_only=False,
                     check_nexus_compatibility=False,
-                    prefix='norm',
+                    prefix="norm",
                 )
                 norm_lrdata = LRData(_add_norm_nexus.wks, is_data=False, parent=self.parent)
-                self.update_lrdata(lrdata=norm_lrdata, lconfig=lconfig, type='norm', row=index_row)
+                self.update_lrdata(lrdata=norm_lrdata, lconfig=lconfig, type="norm", row=index_row)
 
             is_display_requested = self.display_of_this_row_checked(index_row)
             if is_display_requested:
@@ -89,10 +89,10 @@ class LoadReductionTableFromLConfigDataSet(object):
             nbr_row += 1
         return nbr_row
 
-    def update_lrdata(self, lrdata=None, lconfig=None, type='data', row=0):
+    def update_lrdata(self, lrdata=None, lconfig=None, type="data", row=0):
         big_table_data = self.parent.big_table_data
 
-        if type == 'data':
+        if type == "data":
             peak1 = int(lconfig.data_peak[0])
             peak2 = int(lconfig.data_peak[1])
             back1_1 = int(lconfig.data_back[0])
@@ -137,12 +137,12 @@ class LoadReductionTableFromLConfigDataSet(object):
         lrdata.full_file_name = full_file_name
         lrdata.const_q = const_q
 
-        index_col = 0 if type == 'data' else 1
+        index_col = 0 if type == "data" else 1
         reduction_table_index_col = index_col + 1
         big_table_data[row, index_col] = lrdata
         self.parent.big_table_data = big_table_data
 
-        if type == 'data':
+        if type == "data":
             UpdateReductionTableMetadata(parent=self.parent, lrdata=lrdata, row=row)
             QtWidgets.QApplication.processEvents()
 

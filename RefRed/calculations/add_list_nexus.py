@@ -1,17 +1,17 @@
 from mantid.simpleapi import Plus
+
+from RefRed.calculations.check_if_same_nxs_property import CheckIfSameNxsProperty
 from RefRed.calculations.load_list_nexus import LoadListNexus
 from RefRed.calculations.load_nexus import LoadNexus
-from RefRed.calculations.check_if_same_nxs_property import CheckIfSameNxsProperty
 
 
 class AddListNexus(object):
-
     wks = None
     addition_worked = True
-    prefix = 'data'
+    prefix = "data"
 
     def __init__(
-        self, list_nexus=None, list_run=None, metadata_only=False, check_nexus_compatibility=True, prefix='data'
+        self, list_nexus=None, list_run=None, metadata_only=False, check_nexus_compatibility=True, prefix="data"
     ):
         if list_nexus is None:
             return
@@ -36,11 +36,10 @@ class AddListNexus(object):
             if len(_list_wks) > 1:
                 is_same_property = False
                 if check_nexus_compatibility:
-                    check_same_property = CheckIfSameNxsProperty(list_wks=_list_wks, property_name='LambdaRequest')
+                    check_same_property = CheckIfSameNxsProperty(list_wks=_list_wks, property_name="LambdaRequest")
                     is_same_property = check_same_property.is_same_property
 
                 else:  # we force true
-
                     is_same_property = True
 
                 if is_same_property:

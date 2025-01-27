@@ -21,10 +21,10 @@ class TestMainGui:
     def test_run_reduction_button(self):
         assert self.app.run_reduction_button() is None
 
-    @mock.patch('RefRed.main.MainGui.file_loaded_signal')
-    @mock.patch('RefRed.main.InitializeGui')
-    @mock.patch('RefRed.main.load_ui')
-    @mock.patch('qtpy.QtWidgets.QMainWindow.__init__')
+    @mock.patch("RefRed.main.MainGui.file_loaded_signal")
+    @mock.patch("RefRed.main.InitializeGui")
+    @mock.patch("RefRed.main.load_ui")
+    @mock.patch("qtpy.QtWidgets.QMainWindow.__init__")
     def test_mock_init(self, mockMainWindowInit, mockLoadUI, mockInitializeGui, mockFileLoadedSignal):
         parent = mock.Mock()
         MainGui(parent=parent)
@@ -33,11 +33,11 @@ class TestMainGui:
         mockInitializeGui.assert_called()
         mockFileLoadedSignal.connect.assert_called()
 
-    @mock.patch('RefRed.main.LoadingConfiguration')
-    @mock.patch('RefRed.main.MainGui.file_loaded_signal')
-    @mock.patch('RefRed.main.InitializeGui')
-    @mock.patch('RefRed.main.load_ui')
-    @mock.patch('qtpy.QtWidgets.QMainWindow.__init__')
+    @mock.patch("RefRed.main.LoadingConfiguration")
+    @mock.patch("RefRed.main.MainGui.file_loaded_signal")
+    @mock.patch("RefRed.main.InitializeGui")
+    @mock.patch("RefRed.main.load_ui")
+    @mock.patch("qtpy.QtWidgets.QMainWindow.__init__")
     def test_load_configuration(
         self, mockMainWindowInit, mockLoadUI, mockInitializeGui, mockFileLoadedSignal, mockLoadConfiguration
     ):
@@ -71,18 +71,18 @@ class TestMainGui:
             def __init__(self, parent=None):
                 r"""Mocking the DeadTimeSettingsView to return default values without user interaction"""
                 self.options = {
-                    'paralyzable': main_gui.deadtime_settings.paralyzable,
-                    'dead_time': main_gui.deadtime_settings.dead_time,
-                    'tof_step': main_gui.deadtime_settings.tof_step,
+                    "paralyzable": main_gui.deadtime_settings.paralyzable,
+                    "dead_time": main_gui.deadtime_settings.dead_time,
+                    "tof_step": main_gui.deadtime_settings.tof_step,
                 }
 
             def exec_(self):
                 return QtWidgets.QDialog.Accepted
 
             def set_state(self, paralyzable, dead_time, tof_step):
-                self.options['paralyzable'] = paralyzable
-                self.options['dead_time'] = dead_time
-                self.options['tof_step'] = tof_step
+                self.options["paralyzable"] = paralyzable
+                self.options["dead_time"] = dead_time
+                self.options["tof_step"] = tof_step
 
         monkeypatch.setattr("RefRed.main.DeadTimeSettingsView", MockDeadTimeSettingsView)
         self.app.show_deadtime_settings()
@@ -100,9 +100,9 @@ class TestMainGui:
             def __init__(self, parent=None):
                 r"""Mocking the DeadTimeSettingsView to return default values without user interaction"""
                 self.options = {
-                    'paralyzable': new_paralyzable,
-                    'dead_time': new_dead_time,
-                    'tof_step': new_tof_step,
+                    "paralyzable": new_paralyzable,
+                    "dead_time": new_dead_time,
+                    "tof_step": new_tof_step,
                 }
 
             def exec_(self):
@@ -118,5 +118,5 @@ class TestMainGui:
         assert self.app.deadtime_settings.tof_step == new_tof_step
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

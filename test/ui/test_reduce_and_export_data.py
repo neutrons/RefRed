@@ -5,13 +5,13 @@ from unittest import mock
 
 # third-party imports
 import numpy as np
-from qtpy import QtCore
 import pytest
+from qtpy import QtCore
+
+from RefRed.configuration.loading_configuration import LoadingConfiguration
 
 # RefRed imports
 from RefRed.main import MainGui
-from RefRed.configuration.loading_configuration import LoadingConfiguration
-
 
 wait = 200
 
@@ -68,7 +68,6 @@ else:
 
 @pytest.mark.parametrize("case", test_cases)
 def test_reduce_and_export_data(qtbot, tmp_path, data_server, case):
-
     # set the current working directory as the root of the repo. Required because the path of scaling factor file
     # stored in the template file is 'test/data/sf_186529_Si_auto.cfg', thus relative to the root of the repo.
     os.chdir(Path(data_server.directory).parent.parent)
@@ -129,7 +128,7 @@ def test_reduce_and_export_data(qtbot, tmp_path, data_server, case):
     expected_script = open(data_server.path_to(case["script"])).readlines()
 
     for value, expected in zip(reduction_script, expected_script):
-        if value.startswith('#') or value.startswith('reduction_pars'):
+        if value.startswith("#") or value.startswith("reduction_pars"):
             continue
         assert value.strip() == expected.strip()
 
@@ -148,13 +147,13 @@ def compare_results(results_file, expected_results_file, tmp_path):
         ):
             continue
 
-        if value.startswith('# # 188'):
-            value_arr = value.replace('#', '').strip().split()
-            expected_arr = expected.replace('#', '').strip().split()
+        if value.startswith("# # 188"):
+            value_arr = value.replace("#", "").strip().split()
+            expected_arr = expected.replace("#", "").strip().split()
             for i in range(2):  # DataRun and NormRun
                 assert value_arr[i] == expected_arr[i]
             np.testing.assert_allclose(np.array(value_arr[2:], dtype=float), np.array(expected_arr[2:], dtype=float))
-        elif value.startswith('#'):
+        elif value.startswith("#"):
             assert value.strip() == expected.strip()
         else:
             np.testing.assert_allclose(np.array(value.split(), dtype=float), np.array(expected.split(), dtype=float))
@@ -171,5 +170,5 @@ def export_ascii(qtbot, window, results_file):
     qtbot.wait(wait)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

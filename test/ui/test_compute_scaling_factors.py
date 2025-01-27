@@ -1,16 +1,16 @@
 # standard imports
-import random
 import os
+import random
 import string
 from unittest.mock import patch as mock_patch
 
+import pytest
+
 # third party imports
 from qtpy import QtCore
-import pytest
 
 # RefRed imports
 from RefRed.main import MainGui
-
 
 SECOND = 1000  # 1000 miliseconds
 
@@ -42,7 +42,7 @@ def test_sf_calculator(qtbot, data_server, run_set, run_count, script_file):
     # Generate the structure factors
     #
     sfc._save_directory = "/tmp"  # force the location of saving directory
-    file_name = ''.join([random.choice(string.ascii_letters) for i in range(10)]) + ".cfg"
+    file_name = "".join([random.choice(string.ascii_letters) for i in range(10)]) + ".cfg"
     with mock_patch("RefRed.sf_calculator.sf_calculator.QFileDialog.getSaveFileName") as mock_getSaveFileName:
         mock_getSaveFileName.return_value = os.path.join(sfc._save_directory, file_name), ""
         qtbot.mouseClick(sfc.sfFileNameBrowseButton, QtCore.Qt.LeftButton)
@@ -54,17 +54,15 @@ def test_sf_calculator(qtbot, data_server, run_set, run_count, script_file):
     # Compare the contents of the file preview and the actual saved file
     cfg_file = os.path.join(sfc._save_directory, file_name)
     cfg = sfc.sfFileNamePreview.toPlainText()
-    contents = open(cfg_file, 'r').read()
+    contents = open(cfg_file, "r").read()
     assert cfg == contents
     os.remove(cfg_file)
 
     #
     # Export Python Script
     #
-    file_name = ''.join([random.choice(string.ascii_letters) for i in range(10)]) + ".py"
-    with mock_patch(
-        "RefRed.sf_calculator.reduction_sf_calculator.QFileDialog.getSaveFileName"
-    ) as mock_getSaveFileName:
+    file_name = "".join([random.choice(string.ascii_letters) for i in range(10)]) + ".py"
+    with mock_patch("RefRed.sf_calculator.reduction_sf_calculator.QFileDialog.getSaveFileName") as mock_getSaveFileName:
         mock_getSaveFileName.return_value = os.path.join(sfc._save_directory, file_name), ""
         qtbot.mouseClick(sfc.exportButton, QtCore.Qt.LeftButton)
 
@@ -73,7 +71,7 @@ def test_sf_calculator(qtbot, data_server, run_set, run_count, script_file):
     # compare the contents of the script
     def to_compare(filename):
         # Load the script and compare lines that are not expected to change.
-        content = '\n'.join(open(filename, "r").read().split('\n')[8:16])
+        content = "\n".join(open(filename, "r").read().split("\n")[8:16])
         return content
 
     cfg_file = os.path.join(sfc._save_directory, file_name)
@@ -81,5 +79,5 @@ def test_sf_calculator(qtbot, data_server, run_set, run_count, script_file):
     os.remove(cfg_file)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

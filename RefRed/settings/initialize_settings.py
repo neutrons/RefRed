@@ -1,5 +1,6 @@
 from qtpy.QtCore import QSettings  # type: ignore
-from RefRed import ORGANIZATION, APPNAME
+
+from RefRed import APPNAME, ORGANIZATION
 from RefRed.settings.list_settings import ListSettings
 
 
@@ -25,7 +26,7 @@ class InitializeSettings(object):
         value = lsettings.__dict__[key]
         # value from qsettings
         if qsettings.contains(key):
-            _value = str(qsettings.value(key) or '').strip()
+            _value = str(qsettings.value(key) or "").strip()
             if _value:
                 value = _value
 

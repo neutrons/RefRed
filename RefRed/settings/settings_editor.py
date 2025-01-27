@@ -1,12 +1,12 @@
 from qtpy import QtCore, QtWidgets
-from RefRed.interfaces import load_ui
-from RefRed.settings.settings_password_editor import SettingsPasswordEditor
+
 from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.interfaces import load_ui
 from RefRed.settings.list_settings import ListSettings
+from RefRed.settings.settings_password_editor import SettingsPasswordEditor
 
 
 class SettingsEditor(QtWidgets.QMainWindow):
-
     is_super_user = False
 
     def __init__(self, parent=None, loadUI: bool = True):
@@ -25,7 +25,7 @@ class SettingsEditor(QtWidgets.QMainWindow):
         self.ui.tableWidget.setColumnCount(1)
         self.ui.tableWidget.setRowCount(nbr_key)
         self.ui.tableWidget.setVerticalHeaderLabels(_list_keys)
-        self.ui.tableWidget.setHorizontalHeaderLabels(['Value'])
+        self.ui.tableWidget.setHorizontalHeaderLabels(["Value"])
 
         for _index, _key in enumerate(_gui_metadata.keys()):
             _item = QtWidgets.QTableWidgetItem()

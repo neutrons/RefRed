@@ -1,10 +1,10 @@
 from qtpy import QtWidgets
+
 from RefRed.interfaces import load_ui
 
 
 class SettingsPasswordEditor(QtWidgets.QDialog):
-
-    password = '5'
+    password = "5"
 
     def __init__(self, parent=None):
         self.parent = parent

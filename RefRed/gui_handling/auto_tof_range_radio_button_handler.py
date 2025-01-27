@@ -1,10 +1,9 @@
+from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.plot.display_plots import DisplayPlots
-from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
 
 
 class AutoTofRangeRadioButtonHandler(object):
-
     parent = None
     all_rows = []
     row = -1

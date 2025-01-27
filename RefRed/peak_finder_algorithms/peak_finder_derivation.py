@@ -1,9 +1,9 @@
-import numpy as np
 import math
+
+import numpy as np
 
 
 class PeakFinderDerivation(object):
-
     peaks = [-1, -1]
     xdata_firstderi = []
     ydata_firstderi = []
@@ -175,6 +175,6 @@ class PeakFinderDerivation(object):
 if __name__ == "__main__":
     from file_loading_utility import loadCsvFile
 
-    [xdata, ydata, edata] = loadCsvFile('easy_data_set.csv')
+    [xdata, ydata, edata] = loadCsvFile("easy_data_set.csv")
     peakfinder1 = PeakFinderDerivation(xdata, ydata, edata)
     [high_x, high_y] = peakfinder1.get5HighestPoints()

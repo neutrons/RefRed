@@ -2,7 +2,6 @@ from qtpy import QtWidgets
 
 
 class ReducedAsciiTableHandler(object):
-
     list_filename_to_remove = []
     total_number_of_rows_in_table = -1
 

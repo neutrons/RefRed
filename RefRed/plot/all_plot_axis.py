@@ -1,5 +1,4 @@
 class AllPlotAxis(object):
-
     yt_view_interval = None
     yt_data_interval = None
     is_yt_ylog = False

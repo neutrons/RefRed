@@ -14,7 +14,6 @@ from RefRed.tabledata import TableData
 
 
 class UpdateReductionTable(object):
-
     raw_runs = None
     is_data_displayed = True
 
@@ -23,11 +22,11 @@ class UpdateReductionTable(object):
         self.row = row
         self.col = col
 
-        data_type = 'data' if col == 1 else 'norm'
+        data_type = "data" if col == 1 else "norm"
         self.is_data_displayed = True if (col == 1) else False
 
         item = self.parent.ui.reductionTable.item(row, col)
-        if item.text() == '':
+        if item.text() == "":
             self.clear_cell()
             self.parent.file_loaded_signal.emit(row, self.is_data_displayed, self.display_of_this_row_checked())
             QApplication.processEvents()
@@ -42,7 +41,7 @@ class UpdateReductionTable(object):
         col_comments = ReductionTableColumnIndex.COMMENTS
         if list_run_object.list_run_not_found != []:
             str_list_run_not_found = [str(x) for x in list_run_object.list_run_not_found]
-            runs_not_located = ', '.join(str_list_run_not_found)
+            runs_not_located = ", ".join(str_list_run_not_found)
             mess = "Can not locate %s run(s): %s" % (data_type, runs_not_located)
             self.parent.ui.reductionTable.item(row, col_comments).setText(mess)
             _color = QtGui.QColor(RefRed.colors.VALUE_BAD)
@@ -56,10 +55,10 @@ class UpdateReductionTable(object):
         list_run_found = list(list_run_object.list_run_found)
 
         if list_run_found == []:
-            self.parent.ui.reductionTable.item(row, col).setText('')
+            self.parent.ui.reductionTable.item(row, col).setText("")
             return
         str_list_run_found = [str(x) for x in list_run_found]
-        final_list_run_found = ','.join(str_list_run_found)
+        final_list_run_found = ",".join(str_list_run_found)
         self.parent.ui.reductionTable.item(row, col).setText(final_list_run_found)
 
         list_nexus_found = list_run_object.list_nexus_found

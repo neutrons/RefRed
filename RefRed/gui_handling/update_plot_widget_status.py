@@ -1,6 +1,6 @@
 # RefRed imports
-from RefRed.plot.background_settings import backgrounds_settings
 from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.plot.background_settings import backgrounds_settings
 
 
 class UpdatePlotWidgetStatus(object):
@@ -51,9 +51,7 @@ class UpdatePlotWidgetStatus(object):
         parent.ui.backToValue.setEnabled(status_custom)
         parent.ui.backFromValue.setEnabled(status_custom)
         status_custom = (
-            status
-            and backgrounds_settings["data"].subtract_background
-            and backgrounds_settings["data"].two_backgrounds
+            status and backgrounds_settings["data"].subtract_background and backgrounds_settings["data"].two_backgrounds
         )
         parent.ui.back2ToValue.setEnabled(status_custom)
         parent.ui.back2FromValue.setEnabled(status_custom)
@@ -89,9 +87,7 @@ class UpdatePlotWidgetStatus(object):
         parent.ui.normBackToValue.setEnabled(status_custom)
         parent.ui.normBackFromValue.setEnabled(status_custom)
         status_custom = (
-            status
-            and backgrounds_settings["norm"].subtract_background
-            and backgrounds_settings["norm"].two_backgrounds
+            status and backgrounds_settings["norm"].subtract_background and backgrounds_settings["norm"].two_backgrounds
         )
         parent.ui.normBack2ToValue.setEnabled(status_custom)
         parent.ui.normBack2FromValue.setEnabled(status_custom)

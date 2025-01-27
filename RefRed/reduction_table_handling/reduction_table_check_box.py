@@ -13,7 +13,6 @@ from RefRed.plot.display_plots import DisplayPlots
 
 
 class ReductionTableCheckBox(object):
-
     BOX_CHECKED = 2  # value emited by qtpy.QtWidgets.QCheckBox.stateChanged when checked
     row_selected = -1
     prev_row_selected = -1

@@ -3,8 +3,7 @@ from distutils.util import strtobool
 from typing import Optional
 
 # third party imports
-from qtpy import QtGui, QtCore
-from qtpy import QtWidgets
+from qtpy import QtCore, QtGui, QtWidgets
 
 # application imports
 from RefRed.gui_handling.gui_utility import GuiUtility
@@ -33,9 +32,9 @@ class FillStitchingTable(ParentHandler):
 
         self.fillTableRunNumber()
 
-        if stitching_type == 'absolute':
+        if stitching_type == "absolute":
             self.fillTableForAbsoluteNormalization()
-        elif stitching_type == 'auto':
+        elif stitching_type == "auto":
             self.fillTableForAutoStitching()
         else:
             self.fillTableForManualStitching()

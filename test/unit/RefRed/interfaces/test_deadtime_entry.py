@@ -38,5 +38,5 @@ def test_uncheck_checkbox(dead_time_entry_point, qtbot):
     assert not dead_time_entry_point.settingsButton.isEnabled()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

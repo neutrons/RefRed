@@ -2,7 +2,6 @@ from RefRed.gui_handling.gui_utility import GuiUtility
 
 
 class HomePlotButtonClicked(object):
-
     parent = None
 
     def __init__(self, parent=None, plot_type=None):
@@ -10,7 +9,7 @@ class HomePlotButtonClicked(object):
             return
         self.parent = parent
 
-        if plot_type == 'stitching':
+        if plot_type == "stitching":
             data = parent.big_table_data[0, 0]
             if data.all_plot_axis.reduced_plot_stitching_tab_data_interval is None:
                 return
@@ -21,7 +20,6 @@ class HomePlotButtonClicked(object):
             self.update_manual_axis_input_dialog(xmin, xmax, ymin, ymax)
 
         else:
-
             o_gui_utility = GuiUtility(parent=self.parent)
             row = o_gui_utility.get_current_table_reduction_check_box_checked()
             column = 0 if o_gui_utility.is_data_tab_selected() else 1
@@ -34,7 +32,7 @@ class HomePlotButtonClicked(object):
             if data.all_plot_axis.yi_data_interval is None:
                 return
 
-            if plot_type == 'yi':
+            if plot_type == "yi":
                 [xmin, xmax, ymin, ymax] = data.all_plot_axis.yi_data_interval
                 data.all_plot_axis.yi_view_interval = [xmin, xmax, ymin, ymax]
                 if column == 0:
@@ -42,7 +40,7 @@ class HomePlotButtonClicked(object):
                 else:
                     _plot_ui = parent.ui.norm_yi_plot.canvas
 
-            elif plot_type == 'yt':
+            elif plot_type == "yt":
                 [xmin, xmax, ymin, ymax] = data.all_plot_axis.yt_data_interval
                 data.all_plot_axis.yt_view_interval = [xmin, xmax, ymin, ymax]
                 if column == 0:
@@ -50,7 +48,7 @@ class HomePlotButtonClicked(object):
                 else:
                     _plot_ui = parent.ui.norm_yt_plot.canvas
 
-            elif plot_type == 'it':
+            elif plot_type == "it":
                 [xmin, xmax, ymin, ymax] = data.all_plot_axis.it_data_interval
                 data.all_plot_axis.it_view_interval = [xmin, xmax, ymin, ymax]
                 if column == 0:
@@ -58,7 +56,7 @@ class HomePlotButtonClicked(object):
                 else:
                     _plot_ui = parent.ui.norm_it_plot.canvas
 
-            elif plot_type == 'ix':
+            elif plot_type == "ix":
                 [xmin, xmax, ymin, ymax] = data.all_plot_axis.ix_data_interval
                 data.all_plot_axis.ix_view_interval = [xmin, xmax, ymin, ymax]
                 if column == 0:
@@ -73,7 +71,6 @@ class HomePlotButtonClicked(object):
         _plot_ui.draw()
 
     def update_manual_axis_input_dialog(self, xmin, xmax, ymin, ymax):
-
         if self.parent.manual_x_axis_dialog is not None:
             _xmin = "%.4f" % xmin
             _xmax = "%.4f" % xmax

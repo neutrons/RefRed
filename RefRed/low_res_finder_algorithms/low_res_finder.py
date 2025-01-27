@@ -1,9 +1,9 @@
-import numpy as np
 import math
+
+import numpy as np
 
 
 class LowResFinder(object):
-
     low_res = [-1, -1]
     xdata_firstderi = []
     ydata_firstderi = []
@@ -132,5 +132,5 @@ class LowResFinder(object):
 if __name__ == "__main__":
     from RefRed.file_loading_utility import loadCsvFile
 
-    [xdata, ydata, edata] = loadCsvFile('easy_data_set.csv')
+    [xdata, ydata, edata] = loadCsvFile("easy_data_set.csv")
     peakfinder1 = LowResFinder(xdata, ydata, edata)

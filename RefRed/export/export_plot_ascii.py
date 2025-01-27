@@ -3,20 +3,19 @@ import os
 from pathlib import Path
 from typing import List, Tuple
 
+from lr_reduction import output as lr_output
+
 # third-party imorts
 from qtpy.QtWidgets import QFileDialog
 
 # RefRed imports
 import RefRed.utilities
 from RefRed.gui_handling.gui_utility import GuiUtility
-from RefRed.utilities import makeSureFileHasExtension
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
-
-from lr_reduction import output as lr_output
+from RefRed.utilities import makeSureFileHasExtension
 
 
 class ExportPlotAscii:
-
     # NOTE:
     # figure layout as of 10-22-2021
     # ------------  main window ------------|
@@ -247,10 +246,10 @@ class ExportPlotAscii:
             refl = sf * _data.reduce_y_axis
             d_refl = sf * _data.reduce_e_axis
 
-            _data.meta_data['scaling_factors']['a'] = sf * _data.meta_data['scaling_factors']['a']
-            _data.meta_data['scaling_factors']['err_a'] = sf * _data.meta_data['scaling_factors']['err_a']
-            _data.meta_data['scaling_factors']['b'] = sf * _data.meta_data['scaling_factors']['b']
-            _data.meta_data['scaling_factors']['err_b'] = sf * _data.meta_data['scaling_factors']['err_b']
+            _data.meta_data["scaling_factors"]["a"] = sf * _data.meta_data["scaling_factors"]["a"]
+            _data.meta_data["scaling_factors"]["err_a"] = sf * _data.meta_data["scaling_factors"]["err_a"]
+            _data.meta_data["scaling_factors"]["b"] = sf * _data.meta_data["scaling_factors"]["b"]
+            _data.meta_data["scaling_factors"]["err_b"] = sf * _data.meta_data["scaling_factors"]["err_b"]
 
             coll.add(qz_mid, refl, d_refl, meta_data=_data.meta_data)
 

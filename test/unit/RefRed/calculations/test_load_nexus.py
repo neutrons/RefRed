@@ -1,9 +1,9 @@
 # package imports
-from RefRed.calculations.load_nexus import LoadNexus
-
 # third party imports
 import pytest
 from mantid.simpleapi import mtd
+
+from RefRed.calculations.load_nexus import LoadNexus
 
 
 class TestLoadNexus(object):

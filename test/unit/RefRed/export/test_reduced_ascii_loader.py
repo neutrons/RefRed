@@ -1,12 +1,14 @@
 # package imports
-from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
+import tempfile
+import unittest.mock as mock
+from pathlib import Path
+
+import numpy as np
 
 # 3rd party imports
 import pytest
-import tempfile
-import unittest.mock as mock
-import numpy as np
-from pathlib import Path
+
+from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
 
 
 class TestReducedAsciiLoader:
