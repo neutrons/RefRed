@@ -16,15 +16,23 @@ repos:
       #  args: ['--maxkb=4096']
       - id: check-yaml
 
-  - repo: https://github.com/psf/black
-    rev: 24.10.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.3
     hooks:
-      - id: black
-        exclude: test/data
-
-  - repo: https://github.com/PyCQA/flake8
-    rev: 7.1.1
-    hooks:
-    - id: flake8
-      exclude: dev-docs|docs|versioneer.py|RefRed/_version.py|create_graph.py|test/data
-      args: ['--extend-ignore=E999,F821,E402,E127']
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+        exclude: |
+          dev-docs
+          docs
+          versioneer.py
+          RefRed/_version.py
+          create_graph.py
+          test/data
+      - id: ruff-format
+        exclude: |
+          dev-docs
+          docs
+          versioneer.py
+          RefRed/_version.py
+          create_graph.py
+          test/data

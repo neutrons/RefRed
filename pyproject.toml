@@ -1,26 +1,25 @@
-[tool.black]
-line-length = 119
-target-version = ['py36', 'py37', 'py38']
-skip-string-normalization = true
-extend-exclude = '''
-^/(
-  (
-      \.eggs         # exclude a few common directories in the
-    | \.git          # root of the project
-    | \.hg
-    | \.mypy_cache
-    | \.tox
-    | \.venv
-    | _build
-    | buck-out
-    | build
-    | dist
-    | versioneer.py
-    | test/data/*.py
-  )/
-)
-'''
+[tool.ruff]
+line-length = 120
+extend-exclude = [
+  ".eggs",
+  ".git",
+  ".hg",
+  ".mypy_cache",
+  ".tox",
+  ".venv",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "versioneer.py",
+  "test/data/*.py",
+]
+
+[tool.ruff.lint]
+select = ["A", "ARG", "ASYNC", "BLE", "C90", "E", "F", "I", "N", "UP032", "W"]
+ignore = ["F821", "E402"]
+
 [tool.mypy]
 ignore_missing_imports = true
 allow_untyped_globals = true
-ignore = ["test/data",]
+# ignore = ["test/data"]

@@ -5,12 +5,11 @@ import os
 import sys
 import time
 
-# third-party imports
-from lr_reduction import template
-from lr_reduction import reduction_template_reader
 import numpy as np
-from qtpy.QtWidgets import QFileDialog
-from qtpy.QtWidgets import QApplication
+
+# third-party imports
+from lr_reduction import reduction_template_reader, template
+from qtpy.QtWidgets import QApplication, QFileDialog
 
 # RefRed imports
 from RefRed.gui_handling.progressbar_handler import ProgressBarHandler
@@ -24,7 +23,6 @@ from RefRed.status_message_handler import StatusMessageHandler
 
 
 class LiveReductionHandler(object):
-
     big_table_data = None
     list_reduced_workspace = []
     nbr_reduction_process = -1
@@ -60,14 +58,14 @@ class LiveReductionHandler(object):
         if _data_0_0 is None:
             return
 
-        StatusMessageHandler(parent=self.parent, message='Running reduction ...', is_threaded=False)
+        StatusMessageHandler(parent=self.parent, message="Running reduction ...", is_threaded=False)
 
         self.parent.ui.reduceButton.setEnabled(False)
 
         self.cleanup()
 
         o_reduction_progressbar_handler = ProgressBarHandler(parent=self.parent)
-        o_reduction_progressbar_handler.setup(nbr_reduction=self.nbr_reduction_process, label='Reduction Process ')
+        o_reduction_progressbar_handler.setup(nbr_reduction=self.nbr_reduction_process, label="Reduction Process ")
 
         common_pars = GlobalReductionSettingsHandler(parent=self.parent).to_dict()
 
@@ -81,17 +79,18 @@ class LiveReductionHandler(object):
                 template_data = reduction_template_reader.ReductionParameters()
                 template_data.from_dict(reduction_pars, permissible=True)
                 q, r, dr, info = template.process_from_template(
-                    reduction_pars['data_files'],
+                    reduction_pars["data_files"],
                     template_data,
-                    q_summing=reduction_pars['const_q'],  # const Q binning
+                    q_summing=reduction_pars["const_q"],  # const Q binning
                     info=True,
-                    normalize=reduction_pars['apply_normalization'],
+                    normalize=reduction_pars["apply_normalization"],
                 )
                 self.save_reduction(row_index, refl=[q, r, dr], info=info)
-            except:
+            # TODO: catch specific exceptions
+            except:  # noqa: E722
                 logging.error(sys.exc_info()[1])
                 self.parent.ui.reduceButton.setEnabled(True)
-                StatusMessageHandler(parent=self.parent, message='Failed!', is_threaded=True)
+                StatusMessageHandler(parent=self.parent, message="Failed!", is_threaded=True)
                 return
 
             # scale
@@ -114,7 +113,7 @@ class LiveReductionHandler(object):
         # save size of view for home button
         self.save_stitching_plot_view()
 
-        StatusMessageHandler(parent=self.parent, message='Done!', is_threaded=True)
+        StatusMessageHandler(parent=self.parent, message="Done!", is_threaded=True)
 
     def export(self):
         """
@@ -147,7 +146,7 @@ class LiveReductionHandler(object):
             script += "template_data.from_dict(reduction_pars)\n"
             script += "q, r, dr, info = template.process_from_template(reduction_pars['data_files'], template_data, q_summing=reduction_pars['const_q'], info=True, normalize=reduction_pars['apply_normalization'])\n\n"  # noqa: E501
 
-        with open(filename, 'w') as fd:
+        with open(filename, "w") as fd:
             fd.write(script)
 
     def save_stitching_plot_view(self):
@@ -160,7 +159,6 @@ class LiveReductionHandler(object):
         self.parent.big_table_data = big_table_data
 
     def save_reduction(self, row=-1, refl=None, info=None):
-
         big_table_data = self.big_table_data
         _config = big_table_data[row, 2]
         if _config is None:
@@ -174,15 +172,15 @@ class LiveReductionHandler(object):
         _config.y_axis_for_display = refl[1]
         _config.e_axis_for_display = refl[2]
         _config.sf_auto_found_match = True
-        if info['scaling_factors']['a'] == 1 and info['scaling_factors']['err_a'] == 0:
+        if info["scaling_factors"]["a"] == 1 and info["scaling_factors"]["err_a"] == 0:
             _config.sf_auto_found_match = False
 
         big_table_data[row, 2] = _config
         self.big_table_data = big_table_data
 
     def print_message(self, title, value):
-        print('> %s ' % title)
-        print('-> value: ', value, '-> type: ', type(value))
+        print("> %s " % title)
+        print("-> value: ", value, "-> type: ", type(value))
 
     def calculate_nbr_reduction_process(self):
         _big_table_data = self.big_table_data
