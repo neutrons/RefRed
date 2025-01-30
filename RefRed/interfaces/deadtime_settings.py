@@ -52,7 +52,7 @@ class DeadTimeSettingsModel(GlobalSettings):
             element.appendChild(element_text)
             return element.toxml()
 
-        return "\n".join([indent + _to_xml(field) for field in self.dict()])
+        return "\n".join([indent + _to_xml(field) for field in self.model_dump()])
 
     def from_xml(self, node: Element):
         r"""Update the settings from the contents of an XML element
@@ -103,7 +103,7 @@ class DeadTimeSettingsModel(GlobalSettings):
             "dead_time": "dead_time_value",
             "tof_step": "dead_time_tof_step",
         }
-        return {_to_reader_key[field]: value for field, value in self.dict().items()}
+        return {_to_reader_key[field]: value for field, value in self.model_dump().items()}
 
 
 class DeadTimeSettingsView(QDialog):

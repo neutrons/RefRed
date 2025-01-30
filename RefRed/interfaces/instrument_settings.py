@@ -137,41 +137,29 @@ class InstrumentSettings(GlobalSettings):
     s1_sample_distance: float = 0.0
 
     # class variable, translates fields to XML tag names, same names as the lr_reduction package
-    _to_xmltag = {
-        "apply_deadtime": "dead_time_correction",
-        "paralyzable": "dead_time_paralyzable",
-        "dead_time": "dead_time_value",
-        "tof_step": "dead_time_tof_step",
-    }
-
     def to_xml(self, indent: str = "") -> str:
-        r"""Serialize the settings to XML format.
+        r"""Convert the settings to an XML string
 
-        XML tags names are those expected by lr_reduction.reduction_template_reader.from_xml()
-
-        Parameters
-        ----------
-        indent: str
-            Prefix to prepend each line of XML. Typically, a certain number of spaces
+        The XML tag names are same as those used by lr_reduction.reduction_template_reader.to_xml()
 
         Example
         -------
-        One example of the expected output by this method would look like:
-        <dead_time_correction>True</dead_time_correction>
-        <dead_time_paralyzable>True</dead_time_paralyzable>
-        <dead_time_value>4.2</dead_time_value>
-        <dead_time_tof_step>150</dead_time_tof_step>
+        The XML string would look like:
+        <RefRed>
+            <some_entry1>value1</some_entry1>
+            <some_entry2>value2</some_entry2>
+            <some_entry3>value3</some_entry3>
+        </RefRed>
         """
-        doc = Document()  # Create a new XML document
-
-        def _to_xml(field: str) -> str:
-            r"""Serialize one of the dead time settings to XML format"""
-            element = doc.createElement(self._to_xmltag[field])
-            element_text = doc.createTextNode(str(getattr(self, field)))
-            element.appendChild(element_text)
-            return element.toxml()
-
-        return "\n".join([indent + _to_xml(field) for field in self.dict()])
+        doc: Document = Document()
+        xml = ""
+        for field, value in self.model_dump().items():
+            if field == "apply_instrument_settings":
+                continue
+            child: Element = doc.createElement(field)
+            child.appendChild(doc.createTextNode(str(value)))
+            xml += f"{indent}{child.toxml()}\n"
+        return xml
 
     def from_xml(self, node: Element):
         r"""Update the settings from the contents of an XML element
@@ -186,10 +174,6 @@ class InstrumentSettings(GlobalSettings):
         <RefRed>
             <some_entry1>value1</some_entry1>
             <some_entry2>value2</some_entry2>
-            <dead_time_correction>True</dead_time_correction>
-            <dead_time_paralyzable>True</dead_time_paralyzable>
-            <dead_time_value>4.2</dead_time_value>
-            <dead_time_tof_step>150</dead_time_tof_step>
             <some_entry3>value3</some_entry3>
         </RefRed>
         """
@@ -214,12 +198,11 @@ class InstrumentSettings(GlobalSettings):
         r"""Save the settings as a dictionary that can be understood by
         lr_reduction.reduction_template_reader.from_dict()
         """
-        # The values in this dictionary are attribute names of instances of
-        # class lr_reduction.reduction_template_reader.ReductionParameters
+        return self.model_dump()
         _to_reader_key = {
             "apply_deadtime": "dead_time",
             "paralyzable": "paralyzable",
             "dead_time": "dead_time_value",
             "tof_step": "dead_time_tof_step",
         }
-        return {_to_reader_key[field]: value for field, value in self.dict().items()}
+        return {_to_reader_key[field]: value for field, value in self.model_dump().items()}
