@@ -12,7 +12,6 @@ from qtpy.QtWidgets import (
 
 from RefRed.configuration.global_settings import GlobalSettings
 from RefRed.interfaces import load_ui
-from RefRed.utilities import str2bool
 
 
 class InstrumentSettingsEntryPoint(QGroupBox):
@@ -179,13 +178,16 @@ class InstrumentSettings(GlobalSettings):
         """
         # cast each value (of type `str`) to the type appropriate to the corresponding pydantic field
         converters: Dict[str, Callable[[str], Any]] = {
-            "apply_deadtime": str2bool,
-            "paralyzable": str2bool,
-            "dead_time": float,
-            "tof_step": float,
+            "source_detector_distance": float,
+            "sample_detector_distance": float,
+            "num_x_pixels": int,
+            "num_y_pixels": int,
+            "pixel_width": float,
+            "xi_reference": float,
+            "s1_sample_distance": float,
         }
         for field, converter in converters.items():
-            tmp: list = node.getElementsByTagName(self._to_xmltag[field])
+            tmp: list = node.getElementsByTagName(field)
             if len(tmp):
                 value = tmp[0].childNodes[0].nodeValue
                 setattr(self, field, converter(value))
