@@ -105,9 +105,7 @@ class MainGui(QtWidgets.QMainWindow):
     browsed_files = {"data": None, "norm": None}
     current_ipts = ""
 
-    o_user_configuration = (
-        None  # will record the various settings of the GUI defined by the user
-    )
+    o_user_configuration = None  # will record the various settings of the GUI defined by the user
     o_stitching_ascii_widget = None  # used when loading ascii files in reduced tab
 
     manual_x_axis_dialog = None
@@ -117,9 +115,7 @@ class MainGui(QtWidgets.QMainWindow):
     nbr_row_table_ascii = 8
     prev_table_reduction_row_selected = -1
     current_table_reduction_row_selected = -1
-    reduction_table_check_box_state = np.zeros(
-        (REDUCTIONTABLE_MAX_ROWCOUNT), dtype=bool
-    )
+    reduction_table_check_box_state = np.zeros((REDUCTIONTABLE_MAX_ROWCOUNT), dtype=bool)
     loading_nxs_thread = {
         "thread1": None,
         "thread2": None,
@@ -184,36 +180,20 @@ class MainGui(QtWidgets.QMainWindow):
         backgrounds_settings.set_maingui(self)
 
         # show/hide the red and orange background boundary lines  depending on the background settings
-        backgrounds_settings["data"].signal_first_background.connect(
-            self.data_back_checkbox
-        )
-        backgrounds_settings["data"].signal_second_background.connect(
-            self.data_back_checkbox
-        )
-        backgrounds_settings["norm"].signal_first_background.connect(
-            self.norm_back_checkbox
-        )
-        backgrounds_settings["norm"].signal_second_background.connect(
-            self.norm_back_checkbox
-        )
+        backgrounds_settings["data"].signal_first_background.connect(self.data_back_checkbox)
+        backgrounds_settings["data"].signal_second_background.connect(self.data_back_checkbox)
+        backgrounds_settings["norm"].signal_first_background.connect(self.norm_back_checkbox)
+        backgrounds_settings["norm"].signal_second_background.connect(self.norm_back_checkbox)
 
         # deadtime_entry connections
         self.deadtime_settings = DeadTimeSettingsModel()
-        self.ui.deadtime_entry.applyCheckBox.stateChanged.connect(
-            self.apply_deadtime_update
-        )
-        self.ui.deadtime_entry.settingsButton.clicked.connect(
-            self.show_deadtime_settings
-        )
+        self.ui.deadtime_entry.applyCheckBox.stateChanged.connect(self.apply_deadtime_update)
+        self.ui.deadtime_entry.settingsButton.clicked.connect(self.show_deadtime_settings)
 
         # instrument_settings connections
         self.instrument_settings = InstrumentSettings()
-        self.ui.instrument_settings_entry.applyCheckBox.stateChanged.connect(
-            self.toggle_instrument_settings
-        )
-        self.ui.instrument_settings_entry.settingsButton.clicked.connect(
-            self.show_instrument_settings
-        )
+        self.ui.instrument_settings_entry.applyCheckBox.stateChanged.connect(self.toggle_instrument_settings)
+        self.ui.instrument_settings_entry.settingsButton.clicked.connect(self.show_instrument_settings)
 
     # home button of plots
     def home_clicked_yi_plot(self):
@@ -286,9 +266,7 @@ class MainGui(QtWidgets.QMainWindow):
         LogPlotToggle(parent=self, status=checked, plot_type="yi", is_y_log=False)
 
     def logx_toggle_data_stitching(self, checked):
-        LogPlotToggle(
-            parent=self, status=checked, plot_type="stitching", is_y_log=False
-        )
+        LogPlotToggle(parent=self, status=checked, plot_type="stitching", is_y_log=False)
 
     def logy_toggle_data_stitching(self, checked):
         LogPlotToggle(parent=self, status=checked, plot_type="stitching", is_y_log=True)
@@ -339,12 +317,8 @@ class MainGui(QtWidgets.QMainWindow):
     def data_norm_tab_changed(self, index):
         r"""Slot called upon User clicking in the 'DATA' or 'NORMALIZATION' tabs"""
         o_gui_utility = GuiUtility(parent=self)
-        _current_table_reduction_row_selected = (
-            o_gui_utility.get_current_table_reduction_check_box_checked()
-        )
-        ReductionTableCheckBox(
-            parent=self, row_selected=_current_table_reduction_row_selected
-        )
+        _current_table_reduction_row_selected = o_gui_utility.get_current_table_reduction_check_box_checked()
+        ReductionTableCheckBox(parent=self, row_selected=_current_table_reduction_row_selected)
 
     @config_file_has_been_modified
     def widget_modified(self, *args, **kwargs):
@@ -547,9 +521,7 @@ class MainGui(QtWidgets.QMainWindow):
     @config_file_has_been_modified
     def data_browse_button(self, *args, **kwargs):
         BrowsingRuns(parent=self, data_type="data")
-        ReductionTableAutoFill(
-            parent=self, list_of_run_from_input="", data_type_selected="data"
-        )
+        ReductionTableAutoFill(parent=self, list_of_run_from_input="", data_type_selected="data")
         self.ui.data_sequence_lineEdit.setText("")
 
     @config_file_has_been_modified
@@ -565,9 +537,7 @@ class MainGui(QtWidgets.QMainWindow):
     @config_file_has_been_modified
     def norm_browse_button(self, *args, **kwargs):
         BrowsingRuns(parent=self, data_type="norm")
-        ReductionTableAutoFill(
-            parent=self, list_of_run_from_input="", data_type_selected="norm"
-        )
+        ReductionTableAutoFill(parent=self, list_of_run_from_input="", data_type_selected="norm")
         self.ui.norm_sequence_lineEdit.setText("")
 
     # Menu buttons
@@ -584,9 +554,7 @@ class MainGui(QtWidgets.QMainWindow):
 
     @config_file_modification_reset
     def save_configuration(self, *args, **kwargs):
-        o_save_config = SavingConfiguration(
-            parent=self, filename=self.current_loaded_file
-        )
+        o_save_config = SavingConfiguration(parent=self, filename=self.current_loaded_file)
         o_save_config.run()
 
     def save_as_configuration(self):
@@ -650,9 +618,7 @@ class MainGui(QtWidgets.QMainWindow):
 
     @config_file_has_been_modified
     def reduction_table_right_click(self, position, *args, **kwargs):
-        o_reduction_table_right_click = ReductionTableRightClick(
-            parent=self, position=position
-        )
+        o_reduction_table_right_click = ReductionTableRightClick(parent=self, position=position)
         o_reduction_table_right_click.run()
 
     def launch_metadata_finder(self):
@@ -694,9 +660,7 @@ class MainGui(QtWidgets.QMainWindow):
         live_reduction.recalculate(replot_only=True)
 
     def reduced_ascii_data_set_table_right_click(self, position):
-        o_reduced_ascii_right_click = ReducedAsciiDataRightClick(
-            parent=self, position=position
-        )
+        o_reduced_ascii_right_click = ReducedAsciiDataRightClick(parent=self, position=position)
         o_reduced_ascii_right_click.run()
 
     def sf_absolute_normalization_button(self):
