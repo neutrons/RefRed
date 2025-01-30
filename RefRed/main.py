@@ -713,7 +713,7 @@ class MainGui(QtWidgets.QMainWindow):
         o_settings_editor = SettingsEditor(parent=self)
         o_settings_editor.show()
 
-    ### Dead time settings
+    # Dead time settings
 
     def apply_deadtime_update(self):
         r"""Update option apply_deadtime of field deadtime_settings when the associated checkbox
@@ -735,7 +735,7 @@ class MainGui(QtWidgets.QMainWindow):
         for option in ["paralyzable", "dead_time", "tof_step"]:
             setattr(self.deadtime_settings, option, view.options[option])
 
-    ### Instrument settings
+    # Instrument settings
 
     def toggle_instrument_settings(self):
         """Update option apply_deadtime of field deadtime_settings when the associated checkbox
