@@ -1,75 +1,113 @@
-# import sys
-from qtpy import QtCore, QtWidgets
 import logging
-import numpy as np
 import os
 
+import numpy as np
+from qtpy import QtCore, QtWidgets
+
+from RefRed.about_dialog import AboutDialog
 from RefRed.autopopulatemaintable.reductiontable_auto_fill import ReductionTableAutoFill
+from RefRed.browsing_runs import BrowsingRuns
+from RefRed.config.mantid_config import MantidConfig
 from RefRed.configuration.loading_configuration import LoadingConfiguration
 from RefRed.configuration.saving_configuration import SavingConfiguration
-from RefRed.configuration.user_configuration_handler import RetrieveUserConfiguration, SaveUserConfiguration
-from RefRed.export.export_plot_ascii import ExportPlotAscii
-from RefRed.gui_handling.data_norm_spinboxes import DataPeakSpinbox, NormPeakSpinbox
-from RefRed.gui_handling.data_norm_spinboxes import DataBackSpinbox, NormBackSpinbox
-from RefRed.gui_handling.data_norm_spinboxes import DataLowResSpinbox, NormLowResSpinbox
-from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidgetsHandler
-from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
-from RefRed.gui_handling.gui_utility import GuiUtility
-from RefRed.gui_handling.stitching_yscale_options_radio_button_handler import StitchingYScaleOptionsRadioButtonHandler
-from RefRed.gui_handling.first_angle_range_gui_handler import (
-    NormalizationOrStitchingButtonStatus,
-    FirstAngleRangeGuiHandler,
+from RefRed.configuration.user_configuration_handler import (
+    RetrieveUserConfiguration,
+    SaveUserConfiguration,
 )
-from RefRed.gui_handling.refred_interface_handler import RefRedInterfaceHandler
+from RefRed.decorators import (
+    config_file_has_been_modified,
+    config_file_modification_reset,
+)
+from RefRed.export.export_plot_ascii import ExportPlotAscii
+from RefRed.gui_handling.auto_tof_range_radio_button_handler import (
+    AutoTofRangeRadioButtonHandler,
+)
+from RefRed.gui_handling.data_norm_spinboxes import (
+    DataBackSpinbox,
+    DataLowResSpinbox,
+    DataPeakSpinbox,
+    NormBackSpinbox,
+    NormLowResSpinbox,
+    NormPeakSpinbox,
+)
+from RefRed.gui_handling.first_angle_range_gui_handler import (
+    FirstAngleRangeGuiHandler,
+    NormalizationOrStitchingButtonStatus,
+)
+from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.observer import SpinBoxObserver
+from RefRed.gui_handling.refred_interface_handler import RefRedInterfaceHandler
+from RefRed.gui_handling.scaling_factor_widgets_handler import (
+    ScalingFactorWidgetsHandler,
+)
+from RefRed.gui_handling.stitching_yscale_options_radio_button_handler import (
+    StitchingYScaleOptionsRadioButtonHandler,
+)
 from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
 from RefRed.interfaces import load_ui
-from RefRed.interfaces.deadtime_settings import DeadTimeSettingsModel, DeadTimeSettingsView
-from RefRed.load_reduced_data_set.load_reduced_data_set_handler import LoadReducedDataSetHandler
-from RefRed.load_reduced_data_set.reduced_ascii_data_right_click import ReducedAsciiDataRightClick
+from RefRed.interfaces.deadtime_settings import (
+    DeadTimeSettingsModel,
+    DeadTimeSettingsView,
+)
+from RefRed.interfaces.instrument_settings import (
+    InstrumentSettingsDialog,
+    InstrumentSettings,
+)
+from RefRed.load_reduced_data_set.load_reduced_data_set_handler import (
+    LoadReducedDataSetHandler,
+)
+from RefRed.load_reduced_data_set.reduced_ascii_data_right_click import (
+    ReducedAsciiDataRightClick,
+)
 from RefRed.metadata.metadata_finder import MetadataFinder
+from RefRed.plot.background_settings import BackgroundSettingsView, backgrounds_settings
 from RefRed.plot.display_plots import DisplayPlots
-from RefRed.plot.single_click_plot import SingleClickPlot
 from RefRed.plot.home_plot_button_clicked import HomePlotButtonClicked
-from RefRed.plot.mouse_leave_plot import MouseLeavePlot
 from RefRed.plot.log_plot_toggle import LogPlotToggle
-from RefRed.plot.background_settings import backgrounds_settings, BackgroundSettingsView
+from RefRed.plot.mouse_leave_plot import MouseLeavePlot
+from RefRed.plot.single_click_plot import SingleClickPlot
 from RefRed.preview_config.preview_config import PreviewConfig
 from RefRed.reduction.live_reduction_handler import LiveReductionHandler
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
-from RefRed.reduction_table_handling.const_q_checkbox_handler import ConstQCheckBoxHandler
-from RefRed.reduction_table_handling.reduction_table_check_box import ReductionTableCheckBox
+from RefRed.reduction_table_handling.const_q_checkbox_handler import (
+    ConstQCheckBoxHandler,
+)
+from RefRed.reduction_table_handling.reduction_table_check_box import (
+    ReductionTableCheckBox,
+)
+from RefRed.reduction_table_handling.reduction_table_handler import (
+    ReductionTableHandler,
+)
+from RefRed.reduction_table_handling.reduction_table_right_click import (
+    ReductionTableRightClick,
+)
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
-from RefRed.reduction_table_handling.reduction_table_right_click import ReductionTableRightClick
-from RefRed.reduction_table_handling.reduction_table_handler import ReductionTableHandler
 from RefRed.settings.initialize_settings import InitializeSettings
 from RefRed.settings.settings_editor import SettingsEditor
 from RefRed.sf_calculator.sf_calculator import SFCalculator
 from RefRed.sf_preview.sf_preview import SFPreview
-from RefRed.decorators import config_file_has_been_modified, config_file_modification_reset
-from RefRed.about_dialog import AboutDialog
-from RefRed.browsing_runs import BrowsingRuns
-from RefRed.config.mantid_config import MantidConfig
 from RefRed.tabledata import TableData
 
 
 class MainGui(QtWidgets.QMainWindow):
-    '''Top class that handles the GUI'''
+    """Top class that handles the GUI"""
 
     file_loaded_signal = QtCore.Signal(int, bool, bool)
 
     # default location
-    path_ascii = '.'  # ascii file such as scaling factor file
+    path_ascii = "."  # ascii file such as scaling factor file
 
-    full_scaling_factor_file_name = ''
+    full_scaling_factor_file_name = ""
     home_dir = os.path.expanduser("~")
-    default_loaded_file = os.path.join(home_dir, 'tmp.xml')
-    current_loaded_file = os.path.join(home_dir, 'tmp.xml')
-    browsed_files = {'data': None, 'norm': None}
+    default_loaded_file = os.path.join(home_dir, "tmp.xml")
+    current_loaded_file = os.path.join(home_dir, "tmp.xml")
+    browsed_files = {"data": None, "norm": None}
     current_ipts = ""
 
-    o_user_configuration = None  # will record the various settings of the GUI defined by the user
+    o_user_configuration = (
+        None  # will record the various settings of the GUI defined by the user
+    )
     o_stitching_ascii_widget = None  # used when loading ascii files in reduced tab
 
     manual_x_axis_dialog = None
@@ -79,36 +117,38 @@ class MainGui(QtWidgets.QMainWindow):
     nbr_row_table_ascii = 8
     prev_table_reduction_row_selected = -1
     current_table_reduction_row_selected = -1
-    reduction_table_check_box_state = np.zeros((REDUCTIONTABLE_MAX_ROWCOUNT), dtype=bool)
+    reduction_table_check_box_state = np.zeros(
+        (REDUCTIONTABLE_MAX_ROWCOUNT), dtype=bool
+    )
     loading_nxs_thread = {
-        'thread1': None,
-        'thread2': None,
-        'thread3': None,
-        'thread4': None,
-        'thread5': None,
-        'thread6': None,
-        'thread7': None,
-        'thread8': None,
-        'thread9': None,
-        'thread10': None,
-        'thread11': None,
-        'thread12': None,
-        'thread13': None,
-        'thread14': None,
-        'thread15': None,
-        'thread16': None,
-        'thread17': None,
-        'thread18': None,
-        'thread19': None,
-        'thread20': None,
-        'thread21': None,
-        'thread22': None,
-        'thread23': None,
-        'thread24': None,
-        'thread25': None,
-        'thread26': None,
-        'thread27': None,
-        'thread28': None,
+        "thread1": None,
+        "thread2": None,
+        "thread3": None,
+        "thread4": None,
+        "thread5": None,
+        "thread6": None,
+        "thread7": None,
+        "thread8": None,
+        "thread9": None,
+        "thread10": None,
+        "thread11": None,
+        "thread12": None,
+        "thread13": None,
+        "thread14": None,
+        "thread15": None,
+        "thread16": None,
+        "thread17": None,
+        "thread18": None,
+        "thread19": None,
+        "thread20": None,
+        "thread21": None,
+        "thread22": None,
+        "thread23": None,
+        "thread24": None,
+        "thread25": None,
+        "thread26": None,
+        "thread27": None,
+        "thread28": None,
     }
     index_free_thread = 0
 
@@ -134,7 +174,7 @@ class MainGui(QtWidgets.QMainWindow):
         RetrieveUserConfiguration(parent=self)
 
         self.file_loaded_signal.connect(self.file_loaded)
-        log_file = os.path.expanduser("~") + '/.refred.log'
+        log_file = os.path.expanduser("~") + "/.refred.log"
         logging.basicConfig(filename=log_file, level=logging.DEBUG)
 
         # backup the last value for each spinbox in this widget
@@ -144,91 +184,114 @@ class MainGui(QtWidgets.QMainWindow):
         backgrounds_settings.set_maingui(self)
 
         # show/hide the red and orange background boundary lines  depending on the background settings
-        backgrounds_settings["data"].signal_first_background.connect(self.data_back_checkbox)
-        backgrounds_settings["data"].signal_second_background.connect(self.data_back_checkbox)
-        backgrounds_settings["norm"].signal_first_background.connect(self.norm_back_checkbox)
-        backgrounds_settings["norm"].signal_second_background.connect(self.norm_back_checkbox)
+        backgrounds_settings["data"].signal_first_background.connect(
+            self.data_back_checkbox
+        )
+        backgrounds_settings["data"].signal_second_background.connect(
+            self.data_back_checkbox
+        )
+        backgrounds_settings["norm"].signal_first_background.connect(
+            self.norm_back_checkbox
+        )
+        backgrounds_settings["norm"].signal_second_background.connect(
+            self.norm_back_checkbox
+        )
 
         # deadtime_entry connections
         self.deadtime_settings = DeadTimeSettingsModel()
-        self.ui.deadtime_entry.applyCheckBox.stateChanged.connect(self.apply_deadtime_update)
-        self.ui.deadtime_entry.settingsButton.clicked.connect(self.show_deadtime_settings)
+        self.ui.deadtime_entry.applyCheckBox.stateChanged.connect(
+            self.apply_deadtime_update
+        )
+        self.ui.deadtime_entry.settingsButton.clicked.connect(
+            self.show_deadtime_settings
+        )
+
+        # instrument_settings connections
+        self.instrument_settings = InstrumentSettings()
+        self.ui.instrument_settings_entry.applyCheckBox.stateChanged.connect(
+            self.toggle_instrument_settings
+        )
+        self.ui.instrument_settings_entry.settingsButton.clicked.connect(
+            self.show_instrument_settings
+        )
 
     # home button of plots
     def home_clicked_yi_plot(self):
-        HomePlotButtonClicked(parent=self, plot_type='yi')
+        HomePlotButtonClicked(parent=self, plot_type="yi")
 
     def home_clicked_yt_plot(self):
-        HomePlotButtonClicked(parent=self, plot_type='yt')
+        HomePlotButtonClicked(parent=self, plot_type="yt")
 
     def home_clicked_it_plot(self):
-        HomePlotButtonClicked(parent=self, plot_type='it')
+        HomePlotButtonClicked(parent=self, plot_type="it")
 
     def home_clicked_ix_plot(self):
-        HomePlotButtonClicked(parent=self, plot_type='ix')
+        HomePlotButtonClicked(parent=self, plot_type="ix")
 
     def home_clicked_data_stitching_plot(self):
-        HomePlotButtonClicked(parent=self, plot_type='stitching')
+        HomePlotButtonClicked(parent=self, plot_type="stitching")
 
     # leave figure
     def leave_figure_yi_plot(self):
-        MouseLeavePlot(parent=self, plot_type='yi')
+        MouseLeavePlot(parent=self, plot_type="yi")
 
     def leave_figure_yt_plot(self):
-        MouseLeavePlot(parent=self, plot_type='yt')
+        MouseLeavePlot(parent=self, plot_type="yt")
 
     def leave_figure_it_plot(self):
-        MouseLeavePlot(parent=self, plot_type='it')
+        MouseLeavePlot(parent=self, plot_type="it")
 
     def leave_figure_ix_plot(self):
-        MouseLeavePlot(parent=self, plot_type='ix')
+        MouseLeavePlot(parent=self, plot_type="ix")
 
     def leave_figure_data_stitching_plot(self):
-        MouseLeavePlot(parent=self, plot_type='stitching')
+        MouseLeavePlot(parent=self, plot_type="stitching")
 
     # single click
     def single_click_data_yi_plot(self, isPanOrZoomActivated):
-        SingleClickPlot(self, data_type='data', plot_type='yi')
+        SingleClickPlot(self, data_type="data", plot_type="yi")
 
     def single_click_norm_yi_plot(self, isPanOrZoomActivated):
-        SingleClickPlot(self, data_type='norm', plot_type='yi')
+        SingleClickPlot(self, data_type="norm", plot_type="yi")
 
     def single_click_norm_yt_plot(self, isPanOrZoomActivated):
-        SingleClickPlot(self, data_type='norm', plot_type='yt')
+        SingleClickPlot(self, data_type="norm", plot_type="yt")
 
     def single_click_data_yt_plot(self, isPanOrZoomActivated):
-        SingleClickPlot(self, data_type='data', plot_type='yt')
+        SingleClickPlot(self, data_type="data", plot_type="yt")
 
     def single_click_norm_it_plot(self, isPanOrZoomActivated):
-        SingleClickPlot(self, data_type='norm', plot_type='it')
+        SingleClickPlot(self, data_type="norm", plot_type="it")
 
     def single_click_data_it_plot(self, isPanOrZoomActivated):
-        SingleClickPlot(self, data_type='data', plot_type='it')
+        SingleClickPlot(self, data_type="data", plot_type="it")
 
     def single_click_norm_ix_plot(self, isPanOrZoomActivated):
-        SingleClickPlot(self, data_type='norm', plot_type='ix')
+        SingleClickPlot(self, data_type="norm", plot_type="ix")
 
     def single_click_data_ix_plot(self, isPanOrZoomActivated):
-        SingleClickPlot(self, data_type='data', plot_type='ix')
+        SingleClickPlot(self, data_type="data", plot_type="ix")
 
     # toggle log
     def logy_toggle_yt_plot(self, checked):
-        LogPlotToggle(parent=self, status=checked, plot_type='yt', is_y_log=True)
+        LogPlotToggle(parent=self, status=checked, plot_type="yt", is_y_log=True)
 
     def logy_toggle_it_plot(self, checked):
-        LogPlotToggle(parent=self, status=checked, plot_type='it', is_y_log=True)
+        LogPlotToggle(parent=self, status=checked, plot_type="it", is_y_log=True)
 
     def logy_toggle_ix_plot(self, checked):
-        LogPlotToggle(parent=self, status=checked, plot_type='ix', is_y_log=True)
+        LogPlotToggle(parent=self, status=checked, plot_type="ix", is_y_log=True)
 
     def logx_toggle_yi_plot(self, checked):
-        LogPlotToggle(parent=self, status=checked, plot_type='yi', is_y_log=False)
+        LogPlotToggle(parent=self, status=checked, plot_type="yi", is_y_log=False)
 
     def logx_toggle_data_stitching(self, checked):
-        LogPlotToggle(parent=self, status=checked, plot_type='stitching', is_y_log=False)
+        LogPlotToggle(
+            parent=self, status=checked, plot_type="stitching", is_y_log=False
+        )
 
     def logy_toggle_data_stitching(self, checked):
-        LogPlotToggle(parent=self, status=checked, plot_type='stitching', is_y_log=True)
+        LogPlotToggle(parent=self, status=checked, plot_type="stitching", is_y_log=True)
 
     # display row checkbox
     def reduction_table_visibility_changed_test(self, state, row):
@@ -276,8 +339,12 @@ class MainGui(QtWidgets.QMainWindow):
     def data_norm_tab_changed(self, index):
         r"""Slot called upon User clicking in the 'DATA' or 'NORMALIZATION' tabs"""
         o_gui_utility = GuiUtility(parent=self)
-        _current_table_reduction_row_selected = o_gui_utility.get_current_table_reduction_check_box_checked()
-        ReductionTableCheckBox(parent=self, row_selected=_current_table_reduction_row_selected)
+        _current_table_reduction_row_selected = (
+            o_gui_utility.get_current_table_reduction_check_box_checked()
+        )
+        ReductionTableCheckBox(
+            parent=self, row_selected=_current_table_reduction_row_selected
+        )
 
     @config_file_has_been_modified
     def widget_modified(self, *args, **kwargs):
@@ -469,27 +536,39 @@ class MainGui(QtWidgets.QMainWindow):
     @config_file_has_been_modified
     def data_sequence_event(self, *args, **kwargs):
         str_data_input = self.ui.data_sequence_lineEdit.text()
-        ReductionTableAutoFill(parent=self, list_of_run_from_input=str_data_input, data_type_selected='data')
-        self.ui.data_sequence_lineEdit.setText('')
+        ReductionTableAutoFill(
+            parent=self,
+            list_of_run_from_input=str_data_input,
+            data_type_selected="data",
+        )
+        self.ui.data_sequence_lineEdit.setText("")
         self.norm_sequence_event()
 
     @config_file_has_been_modified
     def data_browse_button(self, *args, **kwargs):
-        BrowsingRuns(parent=self, data_type='data')
-        ReductionTableAutoFill(parent=self, list_of_run_from_input='', data_type_selected='data')
-        self.ui.data_sequence_lineEdit.setText('')
+        BrowsingRuns(parent=self, data_type="data")
+        ReductionTableAutoFill(
+            parent=self, list_of_run_from_input="", data_type_selected="data"
+        )
+        self.ui.data_sequence_lineEdit.setText("")
 
     @config_file_has_been_modified
     def norm_sequence_event(self, *args, **kwargs):
         str_norm_input = self.ui.norm_sequence_lineEdit.text()
-        ReductionTableAutoFill(parent=self, list_of_run_from_input=str_norm_input, data_type_selected='norm')
-        self.ui.norm_sequence_lineEdit.setText('')
+        ReductionTableAutoFill(
+            parent=self,
+            list_of_run_from_input=str_norm_input,
+            data_type_selected="norm",
+        )
+        self.ui.norm_sequence_lineEdit.setText("")
 
     @config_file_has_been_modified
     def norm_browse_button(self, *args, **kwargs):
-        BrowsingRuns(parent=self, data_type='norm')
-        ReductionTableAutoFill(parent=self, list_of_run_from_input='', data_type_selected='norm')
-        self.ui.norm_sequence_lineEdit.setText('')
+        BrowsingRuns(parent=self, data_type="norm")
+        ReductionTableAutoFill(
+            parent=self, list_of_run_from_input="", data_type_selected="norm"
+        )
+        self.ui.norm_sequence_lineEdit.setText("")
 
     # Menu buttons
     def action_new(self):
@@ -505,7 +584,9 @@ class MainGui(QtWidgets.QMainWindow):
 
     @config_file_modification_reset
     def save_configuration(self, *args, **kwargs):
-        o_save_config = SavingConfiguration(parent=self, filename=self.current_loaded_file)
+        o_save_config = SavingConfiguration(
+            parent=self, filename=self.current_loaded_file
+        )
         o_save_config.run()
 
     def save_as_configuration(self):
@@ -548,28 +629,30 @@ class MainGui(QtWidgets.QMainWindow):
         self.stitching_sf_radio_button()
 
     def export_stitching_data(self):
-        o_export_plot = ExportPlotAscii(parent=self, data_type='stitched')
+        o_export_plot = ExportPlotAscii(parent=self, data_type="stitched")
         o_export_plot.export()
 
     def export_it(self):
-        o_export_plot = ExportPlotAscii(parent=self, data_type='it')
+        o_export_plot = ExportPlotAscii(parent=self, data_type="it")
         o_export_plot.export()
 
     def export_yi(self):
-        o_export_plot = ExportPlotAscii(parent=self, data_type='yi')
+        o_export_plot = ExportPlotAscii(parent=self, data_type="yi")
         o_export_plot.export()
 
     def export_ix(self):
-        o_export_plot = ExportPlotAscii(parent=self, data_type='ix')
+        o_export_plot = ExportPlotAscii(parent=self, data_type="ix")
         o_export_plot.export()
 
     def export_yt(self):
-        o_export_plot = ExportPlotAscii(parent=self, data_type='yt')
+        o_export_plot = ExportPlotAscii(parent=self, data_type="yt")
         o_export_plot.export()
 
     @config_file_has_been_modified
     def reduction_table_right_click(self, position, *args, **kwargs):
-        o_reduction_table_right_click = ReductionTableRightClick(parent=self, position=position)
+        o_reduction_table_right_click = ReductionTableRightClick(
+            parent=self, position=position
+        )
         o_reduction_table_right_click.run()
 
     def launch_metadata_finder(self):
@@ -589,13 +672,13 @@ class MainGui(QtWidgets.QMainWindow):
         o_reduced_plot.plot()
 
     def stitching_yscale_options_radio_button_1(self):
-        '''R vs Q'''
+        """R vs Q"""
         o_button_handler = StitchingYScaleOptionsRadioButtonHandler(parent=self)
         o_button_handler.set_index_button_clicked(index=0)
         self.stitching_sf_radio_button()
 
     def stitching_yscale_options_radio_button_2(self):
-        '''RQ^4 vs Q'''
+        """RQ^4 vs Q"""
         o_button_handler = StitchingYScaleOptionsRadioButtonHandler(parent=self)
         o_button_handler.set_index_button_clicked(index=1)
         self.stitching_sf_radio_button()
@@ -611,7 +694,9 @@ class MainGui(QtWidgets.QMainWindow):
         live_reduction.recalculate(replot_only=True)
 
     def reduced_ascii_data_set_table_right_click(self, position):
-        o_reduced_ascii_right_click = ReducedAsciiDataRightClick(parent=self, position=position)
+        o_reduced_ascii_right_click = ReducedAsciiDataRightClick(
+            parent=self, position=position
+        )
         o_reduced_ascii_right_click.run()
 
     def sf_absolute_normalization_button(self):
@@ -664,6 +749,8 @@ class MainGui(QtWidgets.QMainWindow):
         o_settings_editor = SettingsEditor(parent=self)
         o_settings_editor.show()
 
+    ### Dead time settings
+
     def apply_deadtime_update(self):
         r"""Update option apply_deadtime of field deadtime_settings when the associated checkbox
         changes its state"""
@@ -675,12 +762,49 @@ class MainGui(QtWidgets.QMainWindow):
         r"""Show the dialog for dead-time options. Update attribue deadtime options upon closing the dialog."""
         view = DeadTimeSettingsView(parent=self)
         view.set_state(
-            self.deadtime_settings.paralyzable, self.deadtime_settings.dead_time, self.deadtime_settings.tof_step
+            self.deadtime_settings.paralyzable,
+            self.deadtime_settings.dead_time,
+            self.deadtime_settings.tof_step,
         )
         view.exec_()
         # update the dead time settings of the Main GUI after user has closed the dialog
         for option in ["paralyzable", "dead_time", "tof_step"]:
             setattr(self.deadtime_settings, option, view.options[option])
+
+    ### Instrument settings
+
+    def toggle_instrument_settings(self):
+        """Update option apply_deadtime of field deadtime_settings when the associated checkbox
+        changes its state"""
+        self.instrument_settings.apply_instrument_settings = (
+            self.ui.instrument_settings_entry.applyCheckBox.isChecked()
+        )
+
+    def show_instrument_settings(self):
+        """Show the dialog for instrument settings. Update attribues options upon closing the dialog."""
+        view = InstrumentSettingsDialog(parent=self)
+        view.set_state(
+            self.instrument_settings.source_detector_distance,
+            self.instrument_settings.sample_detector_distance,
+            self.instrument_settings.num_x_pixels,
+            self.instrument_settings.num_y_pixels,
+            self.instrument_settings.pixel_width,
+            self.instrument_settings.xi_reference,
+            self.instrument_settings.s1_sample_distance,
+        )
+        view.exec_()
+
+        # update the instrument settings of the Main GUI after user has closed the dialog
+        for option in [
+            "source_detector_distance",
+            "sample_detector_distance",
+            "num_x_pixels",
+            "num_y_pixels",
+            "pixel_width",
+            "xi_reference",
+            "s1_sample_distance",
+        ]:
+            setattr(self.instrument_settings, option, view.options[option])
 
     def closeEvent(self, event=None):
         SaveUserConfiguration(parent=self)

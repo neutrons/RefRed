@@ -1,9 +1,8 @@
-# third-party imports
-from qtpy.QtWidgets import QDialog, QWidget
-from xml.dom.minidom import Document, Element
 from typing import Any, Callable, Dict
+from xml.dom.minidom import Document, Element
 
-# RefRed imports
+from qtpy.QtWidgets import QDialog, QWidget
+
 from RefRed.configuration.global_settings import GlobalSettings
 from RefRed.interfaces import load_ui
 from RefRed.utilities import str2bool
@@ -138,15 +137,14 @@ class DeadTimeSettingsView(QDialog):
         Dictionary whose keys must match fields of class `DeadTimeSettingsModel`
         """
         return {
-            'paralyzable': self.ui.use_paralyzable.isChecked(),
-            'dead_time': self.ui.dead_time_value.value(),
-            'tof_step': self.ui.dead_time_tof.value(),
+            "paralyzable": self.ui.use_paralyzable.isChecked(),
+            "dead_time": self.ui.dead_time_value.value(),
+            "tof_step": self.ui.dead_time_tof.value(),
         }
 
     def accept(self):
         """
-        Read in the options on the form when the OK button is
-        clicked.
+        Read in the options on the form when the OK button is clicked.
         """
         self.options = self.get_state_from_form()
         self.close()
