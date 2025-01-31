@@ -153,8 +153,8 @@ class InstrumentSettings(GlobalSettings):
         doc: Document = Document()
         xml = ""
         for field, value in self.model_dump().items():
-            if field == "apply_instrument_settings":
-                continue
+            # if field == "apply_instrument_settings":
+            #     continue
             child: Element = doc.createElement(field)
             child.appendChild(doc.createTextNode(str(value)))
             xml += f"{indent}{child.toxml()}\n"
@@ -178,6 +178,7 @@ class InstrumentSettings(GlobalSettings):
         """
         # cast each value (of type `str`) to the type appropriate to the corresponding pydantic field
         converters: Dict[str, Callable[[str], Any]] = {
+            "apply_instrument_settings": bool,
             "source_detector_distance": float,
             "sample_detector_distance": float,
             "num_x_pixels": int,
@@ -191,9 +192,6 @@ class InstrumentSettings(GlobalSettings):
             if len(tmp):
                 value = tmp[0].childNodes[0].nodeValue
                 setattr(self, field, converter(value))
-            elif field == "apply_deadtime":
-                # old XML files don't have dead time info, so we make sure it's not used.
-                setattr(self, "apply_deadtime", False)
         return self
 
     def as_template_reader_dict(self) -> Dict[str, Any]:
