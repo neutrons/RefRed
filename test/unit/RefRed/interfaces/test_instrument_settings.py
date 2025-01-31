@@ -40,7 +40,6 @@ def test_uncheck_checkbox(instrument_settings_entry_point, qtbot):
 
 
 class TestInstrumentSettingsModel:
-
     custom_settings = {
         "apply_instrument_settings": True,
         "source_detector_distance": 1.0,
