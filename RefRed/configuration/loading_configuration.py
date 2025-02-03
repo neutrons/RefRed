@@ -187,6 +187,12 @@ class LoadingConfiguration(object):
         self.parent.deadtime_settings.from_xml(node_0)
         self.parent.ui.deadtime_entry.applyCheckBox.setChecked(self.parent.deadtime_settings.apply_deadtime)
 
+        # initialize the instrument settings
+        self.parent.instrument_settings.from_xml(node_0)
+        self.parent.ui.instrument_settings_entry.applyCheckBox.setChecked(
+            self.parent.instrument_settings.apply_instrument_settings
+        )
+
     def getMetadataObject(self, node) -> LConfigDataset:
         r"""Populate an instance of type LConfigDataset using the information contained in one of the
         'RefLData    XML blocks within a configuration file."""

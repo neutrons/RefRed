@@ -198,11 +198,11 @@ class InstrumentSettings(GlobalSettings):
         r"""Save the settings as a dictionary that can be understood by
         lr_reduction.reduction_template_reader.from_dict()
         """
+        # _to_reader_key = {
+        #     "apply_deadtime": "dead_time",
+        #     "paralyzable": "paralyzable",
+        #     "dead_time": "dead_time_value",
+        #     "tof_step": "dead_time_tof_step",
+        # }
+        # return {_to_reader_key[field]: value for field, value in self.model_dump().items()}
         return self.model_dump()
-        _to_reader_key = {
-            "apply_deadtime": "dead_time",
-            "paralyzable": "paralyzable",
-            "dead_time": "dead_time_value",
-            "tof_step": "dead_time_tof_step",
-        }
-        return {_to_reader_key[field]: value for field, value in self.model_dump().items()}

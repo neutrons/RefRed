@@ -6,6 +6,8 @@ from qtpy.QtCore import Qt  # type: ignore
 from RefRed.interfaces.instrument_settings import InstrumentSettings
 from RefRed.interfaces.instrument_settings import InstrumentSettingsEntryPoint
 
+# Test the InstrumentSettingsEntryPoint
+
 
 @pytest.fixture
 def instrument_settings_entry_point(qtbot):
@@ -37,6 +39,9 @@ def test_uncheck_checkbox(instrument_settings_entry_point, qtbot):
     assert not instrument_settings_entry_point.applyCheckBox.isChecked()
     # Test if the settings button is now disabled
     assert not instrument_settings_entry_point.settingsButton.isEnabled()
+
+
+# Test the InstrumentSettings Model
 
 
 class TestInstrumentSettingsModel:
