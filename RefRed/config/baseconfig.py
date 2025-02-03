@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 '''
-  Basis of the configuration system. The :class:`ConfigProxy` object
-  combines module parameters with temporary and user changeable
-  configuration file options. When used in other modules
-  this facility is completely hidden to the API.
+Basis of the configuration system. The :class:`ConfigProxy` object
+combines module parameters with temporary and user changeable
+configuration file options. When used in other modules
+this facility is completely hidden to the API.
 
-  As each parameter can be accessed as an attribute of the ConfigHolder object
-  it behaves exactly like the according module would to, thus
-  IDEs with context sensitive syntax completion work with it as well.
+As each parameter can be accessed as an attribute of the ConfigHolder object
+it behaves exactly like the according module would to, thus
+IDEs with context sensitive syntax completion work with it as well.
 
-  The initialization of all config modules is done in the config __init__ module.
+The initialization of all config modules is done in the config __init__ module.
 '''
 
 import os

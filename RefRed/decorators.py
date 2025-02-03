@@ -1,5 +1,5 @@
 '''
-  Module for useful decorators
+Module for useful decorators
 '''
 
 from qtpy import QtGui, QtCore, QtWidgets

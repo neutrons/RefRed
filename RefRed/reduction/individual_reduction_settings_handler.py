@@ -1,10 +1,10 @@
 """
-    Generate reduction options from the reduction table.
+Generate reduction options from the reduction table.
 
-    Note from code review:
-    It's not clear why the configuration stored in big_table_data[:, 3]
-    is saved if it's not used here. It creates confusion as to where we should
-    keep this information.
+Note from code review:
+It's not clear why the configuration stored in big_table_data[:, 3]
+is saved if it's not used here. It creates confusion as to where we should
+keep this information.
 """
 
 # standard imports

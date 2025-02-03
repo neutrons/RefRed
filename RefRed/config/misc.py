@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-  doc
+doc
 '''
 
 config_file = ''

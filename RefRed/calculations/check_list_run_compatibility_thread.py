@@ -1,11 +1,11 @@
 """
-    Notes from inspecting the code:
-    Load data and update application store.
+Notes from inspecting the code:
+Load data and update application store.
 
-    The main "big_table_data" array has three entries per row,
-        0: Scattering data <class 'RefRed.calculations.lr_data.LRData'>
-        1: Direct beam data <class 'RefRed.calculations.lr_data.LRData'>
-        2: Reduction options <class 'RefRed.lconfigdataset.LConfigDataset'>
+The main "big_table_data" array has three entries per row,
+    0: Scattering data <class 'RefRed.calculations.lr_data.LRData'>
+    1: Direct beam data <class 'RefRed.calculations.lr_data.LRData'>
+    2: Reduction options <class 'RefRed.lconfigdataset.LConfigDataset'>
 """
 
 # import logging

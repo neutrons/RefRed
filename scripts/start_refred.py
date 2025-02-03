@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 '''
-  Small program for quick access to SNS liquids reflectometer raw data.
+Small program for quick access to SNS liquids reflectometer raw data.
 '''
 import os
 import sys

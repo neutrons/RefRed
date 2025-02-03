@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-  Templeates used for ASCII file creation.
+Templeates used for ASCII file creation.
 '''
 
 config_file = 'reduction'

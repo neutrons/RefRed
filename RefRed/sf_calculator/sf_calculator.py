@@ -1,6 +1,6 @@
 """
-    Scaling factor calculator
-    TODO: This need major cleanup
+Scaling factor calculator
+TODO: This need major cleanup
 """
 
 import sys
