@@ -1,12 +1,15 @@
 from qtpy import QtGui, QtWidgets
+
+import RefRed.colors
 from RefRed.calculations.add_list_nexus import AddListNexus
-from RefRed.calculations.lr_data import LRData
 from RefRed.calculations.locate_list_run import LocateListRun
-from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
+from RefRed.calculations.lr_data import LRData
+from RefRed.calculations.update_reduction_table_metadata import (
+    UpdateReductionTableMetadata,
+)
+from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.progressbar_handler import ProgressBarHandler
 from RefRed.plot.display_plots import DisplayPlots
-from RefRed.gui_handling.gui_utility import GuiUtility
-import RefRed.colors
 
 
 class LoadReductionTableFromLConfigDataSet(object):
@@ -29,7 +32,7 @@ class LoadReductionTableFromLConfigDataSet(object):
             list_data_run = lconfig.data_sets
             o_list_data_nexus = LocateListRun(list_run=list_data_run)
             list_data_nexus = o_list_data_nexus.list_nexus_found
-            #            list_data_nexus= o_list_data_nexus.list_run_found
+            # list_data_nexus= o_list_data_nexus.list_run_found
             _add_data_nexus = AddListNexus(
                 list_nexus=list_data_nexus,
                 list_run=list_data_run,

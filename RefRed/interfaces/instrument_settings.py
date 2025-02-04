@@ -161,10 +161,8 @@ class InstrumentSettings(GlobalSettings):
         return xml
 
     def from_xml(self, node: Element):
-        r"""Update the settings from the contents of an XML element
-
-        If the XMl element is missing one (or more) setting, the setting(s) are not updated except for
-        field `apply_deadtime`, which is set to `False.
+        r"""
+        Update the settings from the contents of an XML element
         XML tag names name are same as those produced by lr_reduction.reduction_template_reader.to_xml()
 
         Example
@@ -192,17 +190,11 @@ class InstrumentSettings(GlobalSettings):
             if len(tmp):
                 value = tmp[0].childNodes[0].nodeValue
                 setattr(self, field, converter(value))
+            # elif field == "apply_instrument_settings":
+            #     # old XML files don't have instrument settings, so we make sure it's not used.
+            #     setattr(self, "apply_instrument_settings", False)
         return self
 
     def as_template_reader_dict(self) -> Dict[str, Any]:
-        r"""Save the settings as a dictionary that can be understood by
-        lr_reduction.reduction_template_reader.from_dict()
-        """
-        # _to_reader_key = {
-        #     "apply_deadtime": "dead_time",
-        #     "paralyzable": "paralyzable",
-        #     "dead_time": "dead_time_value",
-        #     "tof_step": "dead_time_tof_step",
-        # }
-        # return {_to_reader_key[field]: value for field, value in self.model_dump().items()}
+        r"""Save the settings as a dictionary for lr_reduction.reduction_template_reader.from_dict()"""
         return self.model_dump()

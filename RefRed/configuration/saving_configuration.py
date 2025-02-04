@@ -17,6 +17,7 @@ class SavingConfiguration(object):
         StatusMessageHandler(parent=self.parent, message='Saving config ...', is_threaded=False)
 
     def run(self):
+
         if self.filename == '':
             _path = self.parent.path_config
             _filter = "XML (*.xml);; All Files (*.*)"
