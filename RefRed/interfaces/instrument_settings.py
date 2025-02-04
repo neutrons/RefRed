@@ -123,17 +123,20 @@ class InstrumentSettingsDialog(QDialog):
 
 
 class InstrumentSettings(GlobalSettings):
-    """Dataclass to store instrument geometry parameters. These are global options"""
+    """Dataclass to store instrument geometry parameters. These are global options
+
+    Default values are determined by settings.json from lr_reduction
+    """
 
     # pydantic fields
     apply_instrument_settings: bool = False
-    source_detector_distance: float = 0.0
-    sample_detector_distance: float = 0.0
-    num_x_pixels: int = 0
-    num_y_pixels: int = 0
-    pixel_width: float = 0.0
-    xi_reference: float = 0.0
-    s1_sample_distance: float = 0.0
+    source_detector_distance: float = 15.75
+    sample_detector_distance: float = 1.83
+    num_x_pixels: int = 256
+    num_y_pixels: int = 304
+    pixel_width: float = 0.70
+    xi_reference: float = 445
+    s1_sample_distance: float = 1.485
 
     # class variable, translates fields to XML tag names, same names as the lr_reduction package
     def to_xml(self, indent: str = "") -> str:

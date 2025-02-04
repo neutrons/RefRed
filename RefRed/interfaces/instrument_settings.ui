@@ -55,12 +55,24 @@
         <property name="maximum">
          <double>1000000000.000000000000000</double>
         </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="singleStep">
+            <double>0.1</double>
+        </property>
        </widget>
       </item>
       <item row="4" column="3">
        <widget class="QDoubleSpinBox" name="pixel_width">
         <property name="maximum">
          <double>1000000000.000000000000000</double>
+        </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="singleStep">
+            <double>0.1</double>
         </property>
        </widget>
       </item>
@@ -129,6 +141,12 @@
         <property name="maximum">
          <double>1000000000.000000000000000</double>
         </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="singleStep">
+            <double>0.1</double>
+        </property>
        </widget>
       </item>
       <item row="1" column="0">
@@ -149,6 +167,12 @@
        <widget class="QDoubleSpinBox" name="xi_reference">
         <property name="maximum">
          <double>1000000000.000000000000000</double>
+        </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="singleStep">
+            <double>0.1</double>
         </property>
        </widget>
       </item>
@@ -223,6 +247,12 @@
        <widget class="QDoubleSpinBox" name="s1_sample_distance">
         <property name="maximum">
          <double>1000000000.000000000000000</double>
+        </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="singleStep">
+            <double>0.1</double>
         </property>
        </widget>
       </item>
