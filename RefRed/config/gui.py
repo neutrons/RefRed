@@ -26,11 +26,11 @@ figure_params = [
 
 # Default values to populate in the GUI
 gui_metadata = dict(
-    q_min = 0.005,
-    d_q0 = 0.0,
-    dq_over_q = 0.028,
-    tof_bin = 40,  # micros
-    q_bin = 0.01,  # logarithmic binning
-    angle_offset = 0.0,
-    angle_offset_error = 0.001
+    q_min=0.005,
+    d_q0=0.0,
+    dq_over_q=0.028,
+    tof_bin=40,  # micros
+    q_bin=0.01,  # logarithmic binning
+    angle_offset=0.0,
+    angle_offset_error=0.001,
 )
