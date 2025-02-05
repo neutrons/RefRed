@@ -180,13 +180,13 @@ class TestMainGui:
 
         monkeypatch.setattr("RefRed.main.InstrumentSettingsDialog", MockInstrumentSettingsDialog)
         self.app.show_instrument_settings()
-        assert self.app.instrument_settings.source_detector_distance == 0.0
-        assert self.app.instrument_settings.sample_detector_distance == 0.0
-        assert self.app.instrument_settings.num_x_pixels == 0
-        assert self.app.instrument_settings.num_y_pixels == 0
-        assert self.app.instrument_settings.pixel_width == 0.0
-        assert self.app.instrument_settings.xi_reference == 0.0
-        assert self.app.instrument_settings.s1_sample_distance == 0.0
+        assert self.app.instrument_settings.source_detector_distance == 15.75
+        assert self.app.instrument_settings.sample_detector_distance == 1.83
+        assert self.app.instrument_settings.num_x_pixels == 256
+        assert self.app.instrument_settings.num_y_pixels == 304
+        assert self.app.instrument_settings.pixel_width == 0.70
+        assert self.app.instrument_settings.xi_reference == 445
+        assert self.app.instrument_settings.s1_sample_distance == 1.485
 
     def test_show_instrument_settings_updated_values(self, monkeypatch):
         # endow closure environment to MockInstrumentSettingsDialog
