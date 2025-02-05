@@ -23,3 +23,14 @@ figure_params = [
     {'top': 0.95, 'right': 0.95, 'bottom': 0.1, 'left': 0.15},  # x_project
     {'top': 0.95, 'right': 0.95, 'bottom': 0.1, 'left': 0.15},  # y_project
 ]
+
+# Default values to populate in the GUI
+gui_metadata = dict(
+    q_min = 0.005,
+    d_q0 = 0.0,
+    dq_over_q = 0.028,
+    tof_bin = 40,  # micros
+    q_bin = 0.01,  # logarithmic binning
+    angle_offset = 0.0,
+    angle_offset_error = 0.001
+)
