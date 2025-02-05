@@ -18,7 +18,7 @@ class UpdateReductionTableMetadata(object):
 
         q_range = lrdata.q_range
         lambda_range = lrdata.lambda_range
-        incident_angle = lrdata.incident_angle
+        incident_angle = lrdata.incident_angle / 2.0
         const_q = lrdata.const_q
 
         [qmin, qmax] = q_range
