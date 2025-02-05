@@ -89,6 +89,7 @@ class LRData(object):
         self.S1H = mt_run.getProperty('S1VHeight').value[0]
         self.parent.current_ipts = mt_run.getProperty('experiment_identifier').value
         self.total_counts = workspace.getNumberEvents()
+        self.theta_theta_mode = mt_run.getProperty('BL4B:CS:ExpPl:OperatingMode').value[0] == 'Free Liquid'
 
         try:
             self.SiW = mt_run.getProperty('SiHWidth').value[0]
@@ -319,12 +320,16 @@ class LRData(object):
 
     def calculate_theta(self, with_offset=True):
         """
-        calculate theta
+        Calculate theta
+        If we are in free-liquid mode (theta-theta), return the incident angle.
+        Otherwise, return the sample theta.
         """
-        tthd_value = self.tthd
-        thi_value = self.thi
+        if self.theta_theta_mode:
+            theta = self.thi
+        else:
+            theta = self.ths
 
-        theta = math.fabs(tthd_value - thi_value) / 2.0
+        theta = np.fabs(theta)
         if theta < 0.001:
             logging.debug("thi and tthd are equal: is this a direct beam?")
 
