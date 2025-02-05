@@ -43,7 +43,6 @@ from RefRed.reduction_table_handling.reduction_table_check_box import ReductionT
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
 from RefRed.reduction_table_handling.reduction_table_right_click import ReductionTableRightClick
 from RefRed.reduction_table_handling.reduction_table_handler import ReductionTableHandler
-from RefRed.settings.list_settings import ListSettings
 from RefRed.sf_calculator.sf_calculator import SFCalculator
 from RefRed.sf_preview.sf_preview import SFPreview
 from RefRed.decorators import config_file_has_been_modified, config_file_modification_reset
