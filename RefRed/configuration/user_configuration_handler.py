@@ -4,8 +4,6 @@ from RefRed import ORGANIZATION, APPNAME
 from RefRed.configuration.user_configuration import UserConfiguration
 from RefRed.utilities import str2bool
 
-# from RefRed.settings.list_settings import ListSettings
-
 
 class RetrieveUserConfiguration(object):
     def __init__(self, parent=None):
@@ -37,8 +35,3 @@ class SaveUserConfiguration(object):
         o_user_config = self.parent.o_user_configuration
         settings.setValue('is_reduced_plot_stitching_tab_xlog', str(o_user_config.is_reduced_plot_stitching_tab_xlog))
         settings.setValue('is_reduced_plot_stitching_tab_ylog', str(o_user_config.is_reduced_plot_stitching_tab_ylog))
-
-        _gui_metadata = self.parent.gui_metadata
-        for _key in _gui_metadata.keys():
-            _value = str(_gui_metadata[_key])
-            settings.setValue(_key, _value)

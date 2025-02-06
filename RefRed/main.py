@@ -4,6 +4,7 @@ import os
 import numpy as np
 from qtpy import QtCore, QtWidgets
 
+import RefRed.config.gui
 from RefRed.about_dialog import AboutDialog
 from RefRed.autopopulatemaintable.reductiontable_auto_fill import ReductionTableAutoFill
 from RefRed.browsing_runs import BrowsingRuns
@@ -51,8 +52,8 @@ from RefRed.interfaces.deadtime_settings import (
     DeadTimeSettingsView,
 )
 from RefRed.interfaces.instrument_settings import (
-    InstrumentSettingsDialog,
     InstrumentSettings,
+    InstrumentSettingsDialog,
 )
 from RefRed.load_reduced_data_set.load_reduced_data_set_handler import (
     LoadReducedDataSetHandler,
@@ -83,8 +84,6 @@ from RefRed.reduction_table_handling.reduction_table_right_click import (
     ReductionTableRightClick,
 )
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
-from RefRed.settings.initialize_settings import InitializeSettings
-from RefRed.settings.settings_editor import SettingsEditor
 from RefRed.sf_calculator.sf_calculator import SFCalculator
 from RefRed.sf_preview.sf_preview import SFPreview
 from RefRed.tabledata import TableData
@@ -162,7 +161,9 @@ class MainGui(QtWidgets.QMainWindow):
             QtWidgets.QMainWindow.__init__(self, parent, QtCore.Qt.Window)
         self.ui = load_ui("refred_main_interface.ui", self)
 
-        InitializeSettings(self)
+        # Get default values for widgets
+        self.gui_metadata = RefRed.config.gui.gui_metadata
+
         self.config = MantidConfig(self)
         InitializeGui(self)
         self.ui.reductionTable.setUI(self)
@@ -708,12 +709,6 @@ class MainGui(QtWidgets.QMainWindow):
     def about_message(self):
         o_about_message = AboutDialog(parent=self)
         o_about_message.display()
-
-    def settings_editor(self):
-        o_settings_editor = SettingsEditor(parent=self)
-        o_settings_editor.show()
-
-    # Dead time settings
 
     def apply_deadtime_update(self):
         r"""Update option apply_deadtime of field deadtime_settings when the associated checkbox
