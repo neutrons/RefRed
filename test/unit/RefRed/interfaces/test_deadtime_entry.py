@@ -1,9 +1,7 @@
-# third party imports
 import pytest
 from qtpy.QtCore import Qt  # type: ignore
 
-# RefRed imports
-from RefRed.interfaces.deadtime_entry import DeadTimeEntryPoint  # Make sure to import your class correctly
+from RefRed.interfaces.deadtime_entry import DeadTimeEntryPoint
 
 
 @pytest.fixture
@@ -38,5 +36,5 @@ def test_uncheck_checkbox(dead_time_entry_point, qtbot):
     assert not dead_time_entry_point.settingsButton.isEnabled()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

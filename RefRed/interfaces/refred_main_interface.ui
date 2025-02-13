@@ -39,7 +39,7 @@
          <x>0</x>
          <y>0</y>
          <width>1540</width>
-         <height>1321</height>
+         <height>1315</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_68">
@@ -1096,6 +1096,19 @@
                                  </property>
                                  <property name="title">
                                   <string>Dead Time Correction</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="InstrumentSettingsEntryPoint" name="instrument_settings_entry">
+                                 <property name="sizePolicy">
+                                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                   <horstretch>0</horstretch>
+                                   <verstretch>0</verstretch>
+                                  </sizepolicy>
+                                 </property>
+                                 <property name="title">
+                                  <string>Instrument Settings</string>
                                  </property>
                                 </widget>
                                </item>
@@ -4305,7 +4318,7 @@
                    <bool>false</bool>
                   </attribute>
                   <attribute name="verticalHeaderDefaultSectionSize">
-                   <number>21</number>
+                   <number>23</number>
                   </attribute>
                   <attribute name="verticalHeaderShowSortIndicator" stdset="0">
                    <bool>false</bool>
@@ -5326,7 +5339,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1560</width>
-     <height>20</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">
@@ -5656,6 +5669,12 @@ p, li { white-space: pre-wrap; }
    <class>DeadTimeEntryPoint</class>
    <extends>QGroupBox</extends>
    <header>RefRed/interfaces/deadtime_entry.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>InstrumentSettingsEntryPoint</class>
+   <extends>QGroupBox</extends>
+   <header>RefRed/interfaces/instrument_settings.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
