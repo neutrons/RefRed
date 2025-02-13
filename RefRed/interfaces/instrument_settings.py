@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import Any, Callable, Dict
 from xml.dom.minidom import Document, Element
 
@@ -13,16 +14,17 @@ from qtpy.QtWidgets import (
 from RefRed.configuration.global_settings import GlobalSettings
 from RefRed.interfaces import load_ui
 
-DEFAULT_INSTRUMENT_SETTINGS = {
-    "apply_instrument_settings": False,
-    "source_detector_distance": 15.75,
-    "sample_detector_distance": 1.83,
-    "num_x_pixels": 256,
-    "num_y_pixels": 304,
-    "pixel_width": 0.70,
-    "xi_reference": 445,
-    "s1_sample_distance": 1.485,
-}
+
+@dataclass
+class DEFAULT_INSTRUMENT_SETTINGS:
+    apply_instrument_settings: bool = False
+    source_detector_distance: float = 15.75
+    sample_detector_distance: float = 1.83
+    num_x_pixels: int = 256
+    num_y_pixels: int = 304
+    pixel_width: float = 0.70
+    xi_reference: float = 445
+    s1_sample_distance: float = 1.485
 
 
 class InstrumentSettingsEntryPoint(QGroupBox):
@@ -136,14 +138,14 @@ class InstrumentSettings(GlobalSettings):
     """
 
     # pydantic fields
-    apply_instrument_settings: bool = DEFAULT_INSTRUMENT_SETTINGS["apply_instrument_settings"]
-    source_detector_distance: float = DEFAULT_INSTRUMENT_SETTINGS["source_detector_distance"]
-    sample_detector_distance: float = DEFAULT_INSTRUMENT_SETTINGS["sample_detector_distance"]
-    num_x_pixels: int = DEFAULT_INSTRUMENT_SETTINGS["num_x_pixels"]
-    num_y_pixels: int = DEFAULT_INSTRUMENT_SETTINGS["num_y_pixels"]
-    pixel_width: float = DEFAULT_INSTRUMENT_SETTINGS["pixel_width"]
-    xi_reference: float = DEFAULT_INSTRUMENT_SETTINGS["xi_reference"]
-    s1_sample_distance: float = DEFAULT_INSTRUMENT_SETTINGS["s1_sample_distance"]
+    apply_instrument_settings: bool = DEFAULT_INSTRUMENT_SETTINGS.apply_instrument_settings
+    source_detector_distance: float = DEFAULT_INSTRUMENT_SETTINGS.source_detector_distance
+    sample_detector_distance: float = DEFAULT_INSTRUMENT_SETTINGS.sample_detector_distance
+    num_x_pixels: int = DEFAULT_INSTRUMENT_SETTINGS.num_x_pixels
+    num_y_pixels: int = DEFAULT_INSTRUMENT_SETTINGS.num_y_pixels
+    pixel_width: float = DEFAULT_INSTRUMENT_SETTINGS.pixel_width
+    xi_reference: float = DEFAULT_INSTRUMENT_SETTINGS.xi_reference
+    s1_sample_distance: float = DEFAULT_INSTRUMENT_SETTINGS.s1_sample_distance
 
     # class variable, translates fields to XML tag names, same names as the lr_reduction package
     def to_xml(self, indent: str = "") -> str:
@@ -202,7 +204,7 @@ class InstrumentSettings(GlobalSettings):
                 setattr(self, field, converter(value))
             else:
                 # if the field is not found in the XML, we use the default value
-                setattr(self, field, DEFAULT_INSTRUMENT_SETTINGS[field])
+                setattr(self, field, DEFAULT_INSTRUMENT_SETTINGS.__dict__[field])
 
         return self
 
