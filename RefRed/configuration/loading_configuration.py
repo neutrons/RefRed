@@ -56,7 +56,8 @@ class LoadingConfiguration(object):
                 try:
                     self.loading()
                     message = "Done!"
-                except:
+                except Exception as e:
+                    logging.error(f"Error loading file: {e}")
                     message = "Error loading file: aborted"
             else:
                 message = "Loading aborted"
