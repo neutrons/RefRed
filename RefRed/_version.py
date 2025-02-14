@@ -47,7 +47,7 @@ def get_config():
     return cfg
 
 
-class NotThisMethod(Exception):
+class NotThisMethod(Exception):  # noqa: N818
     """Exception raised if a method is not valid for the current scenario."""
 
 

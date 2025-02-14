@@ -74,7 +74,7 @@ def _create_proxy():
             continue
         try:
             modi = __import__("RefRed.config." + name, fromlist=[name])
-        except Exception as error:
+        except Exception as error:  # noqa: BLE001
             _warn("Could not import module %s,\n %s: %s" % (name, error.__class__.__name__, error))
             continue
         if "config_path" in modi.__dict__:

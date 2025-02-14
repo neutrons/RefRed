@@ -30,8 +30,8 @@ class CalculateSFoverlapRange(object):
             _sf = 1
 
         else:
-            [a_left, b_left] = self.fitData(left_set, index_min_in_left, type="left")
-            [a_right, b_right] = self.fitData(right_set, index_max_in_right, type="right")
+            [a_left, b_left] = self.fitData(left_set, index_min_in_left, data_type="left")
+            [a_right, b_right] = self.fitData(right_set, index_max_in_right, data_type="right")
 
             nbr_points = 10
             fit_range_to_use = self.gitFittingOverlapRange(min_x, max_x, nbr_points)
@@ -83,11 +83,11 @@ class CalculateSFoverlapRange(object):
 
         return [_min_x, _max_x, left_min_index, right_max_index, no_overlap]
 
-    def fitData(self, data_set, threshold_index, type="right"):
+    def fitData(self, data_set, threshold_index, data_type="right"):
         """
         will fit the data with linear fitting y=ax + b
         """
-        if type == "left":
+        if data_type == "left":
             x_axis = data_set.reduce_q_axis[threshold_index:]
             y_axis = data_set.tmp_y_axis[threshold_index:]
             e_axis = data_set.tmp_e_axis[threshold_index:]

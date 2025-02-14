@@ -20,12 +20,17 @@ select = ["A", "ARG", "ASYNC", "BLE", "C90", "E", "F", "I", "N", "UP032", "W"]
 ignore = [
   "ARG001", # Unused function argument
   "ARG002", # Unused method argument
+  "ARG003", # Unused class method argument
+  "C901",   # function is too complex
   "E402",   # module level import not at top of file
   "E722",   # do not use bare 'except'
   "F821",   # undefined name
   "N802",   # function name should be lowercase
   "N803",   # argument name should be lowercase
   "N806",   # variable in function should be lowercase
+  "N815",   # mixed case class variable name
+  "N816",   # mixed case global variable name
+  "N999",   # invalid module name
 ]
 
 [tool.mypy]

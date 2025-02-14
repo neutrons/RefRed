@@ -202,8 +202,8 @@ class ExportPlotAscii:
         path = Path(self.parent.path_ascii)
         default_filename = path / default_filename
         caption = "Select Location and Name"
-        filter = "Reduced Ascii (*.txt);; All (*.*)"
-        filename, filter = QFileDialog.getSaveFileName(
+        filter = "Reduced Ascii (*.txt);; All (*.*)"  # noqa: A001
+        filename, filter = QFileDialog.getSaveFileName(  # noqa: A001
             self.parent,
             caption,
             str(default_filename),
