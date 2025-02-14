@@ -20,6 +20,7 @@ Next
 ----
 
 **Of interest to the User**:
+- MR #141: Add instrument geometry settings to reduction workflow
 - MR #138: remove right-click option "Display Metadata..." from the reduction table
 - MR #135: update popup message for v4 deprecation
 - MR #134: add column in the reduction table for constant Q binning during reduction

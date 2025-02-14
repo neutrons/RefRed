@@ -19,14 +19,20 @@ Select `/SNS/REF_L/IPTS-26010/shared/autoreduce/REF_L_188298_auto_template.xml`.
 to proceed. There are several widgets on the UI. These are labeled with
 on the image below as follows:
 
-  A- The loaded files are listed in the table. The run numbers in green
-  are editable. The user can click these numbers and change them to use
-  the current template as a starting point.
+  A: Item A allows the user to enter or browse for data and normalization files.
 
-  The check boxes on the left of the table allow the user to populate
-  the main area of the UI (item B).
+  B: Item B allows the user change a number of reduction parameters, including:
 
-  B- Each reflected run needs a normalization run (R is the ratio of the
+    - the TOF binning and output Q binning
+    - the calibration angle offset, which is given by the instrument scientist
+    - the dead time correction settings
+    - the instrument geometry parameters
+
+  C: Item C allows the user to pick a scaling factor file.
+
+  D: Panel D give basic information about the reflected run.
+
+  E: Each reflected run needs a normalization run (R is the ratio of the
   reflected beam and the direct beam). For this reason the main area of
   the UI is presented as two tabs, one for the reflected data (called Data),
   and one for the normalization (called Normalization). They both
@@ -45,14 +51,12 @@ on the image below as follows:
   Double-clicking on the y vs counts plot will pop up a larger plot that
   makes it easier to visualize and select the peak.
 
-  C- Item C allows the user change the TOF binning and the output Q binning.
+  F: The loaded files are listed in the table. The run numbers in green
+  are editable. The user can click these numbers and change them to use
+  the current template as a starting point.
 
-  D- Item D allows the user to change the calibration angle offset, which
-  is given by the instrument scientist.
-
-  E- Item E allows the user to pick a scaling factor file.
-
-  F- Panel F give basic information about the reflected run.
+  The check boxes on the left of the table allow the user to populate
+  the main area of the UI (item E).
 
 .. image:: template-inspection.png
 

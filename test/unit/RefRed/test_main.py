@@ -37,16 +37,18 @@ class TestMainGui:
     @mock.patch("qtpy.QtWidgets.QMainWindow.__init__")
     def test_load_configuration(
         self,
-        mock_main_window_init,  # noqa: ARG002
-        mock_load_ui,  # noqa: ARG002
-        mock_initialize_gui,  # noqa: ARG002
-        mock_file_loaded_signal,  # noqa: ARG002
-        mock_load_configuration,
+        mockMainWindowInit,
+        mockLoadUI,
+        mockInitializeGui,
+        mockFileLoadedSignal,
+        mockLoadConfiguration,
     ):
         parent = mock.Mock()
         main_gui = MainGui(parent=parent)
         main_gui.load_configuration()
-        mock_load_configuration.assert_called()
+        mockLoadConfiguration.assert_called()
+
+    # Deadtime Settings tests
 
     # Deadtime Settings tests
 
