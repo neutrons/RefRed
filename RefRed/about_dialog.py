@@ -6,7 +6,7 @@ from matplotlib import __version__ as matplotlib_version_str
 from numpy.version import version as numpy_version_str
 from qtpy import PYQT_VERSION, QT_VERSION, QtWidgets
 
-from RefRed import __version__ as RefRed_version_str
+from RefRed import __version__ as refred_version_str
 
 
 class AboutDialog(object):
@@ -23,27 +23,18 @@ class AboutDialog(object):
         qt_version = QT_VERSION
         pyqt_version = PYQT_VERSION
 
-        message = """RefRed - Liquids Reflectrometry Reduction program
+        message = f"""RefRed - Liquids Reflectrometry Reduction program
 
-        RefRed version %s
-        Reduction version %s
+        RefRed version {refred_version_str}
+        Reduction version {lr_reduction.__version__}
 
         Library versions:
-          - Python: %s
-          - Numpy: %s
-          - Mantid:  %s
-          - Matplotlib: %s
-          - Qt: %s
-          - PyQt: %s""" % (
-            RefRed_version_str,
-            lr_reduction.__version__,
-            python_version,
-            numpy_version,
-            mantid_version,
-            matplotlib_version,
-            qt_version,
-            pyqt_version,
-        )
+          - Python: {python_version}
+          - Numpy: {numpy_version}
+          - Mantid:  {mantid_version}
+          - Matplotlib: {matplotlib_version}
+          - Qt: {qt_version}
+          - PyQt: {pyqt_version}"""
 
         QtWidgets.QMessageBox.about(self.parent, "About RefRed", message)
 

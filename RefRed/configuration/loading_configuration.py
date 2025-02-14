@@ -55,7 +55,8 @@ class LoadingConfiguration(object):
                 try:
                     self.loading()
                     message = "Done!"
-                except:
+                except Exception as e:  # noqa: BLE001
+                    logging.error(f"Error loading file: {e}")
                     message = "Error loading file: aborted"
             else:
                 message = "Loading aborted"
@@ -185,6 +186,12 @@ class LoadingConfiguration(object):
         # initialize the dead time settings
         self.parent.deadtime_settings.from_xml(node_0)
         self.parent.ui.deadtime_entry.applyCheckBox.setChecked(self.parent.deadtime_settings.apply_deadtime)
+
+        # initialize the instrument settings
+        self.parent.instrument_settings.from_xml(node_0)
+        self.parent.ui.instrument_settings_entry.applyCheckBox.setChecked(
+            self.parent.instrument_settings.apply_instrument_settings
+        )
 
     def getMetadataObject(self, node) -> LConfigDataset:
         r"""Populate an instance of type LConfigDataset using the information contained in one of the

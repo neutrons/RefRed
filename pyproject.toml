@@ -17,7 +17,16 @@ extend-exclude = [
 
 [tool.ruff.lint]
 select = ["A", "ARG", "ASYNC", "BLE", "C90", "E", "F", "I", "N", "UP032", "W"]
-ignore = ["F821", "E402"]
+ignore = [
+  "ARG001", # Unused function argument
+  "ARG002", # Unused method argument
+  "E402",   # module level import not at top of file
+  "E722",   # do not use bare 'except'
+  "F821",   # undefined name
+  "N802",   # function name should be lowercase
+  "N803",   # argument name should be lowercase
+  "N806",   # variable in function should be lowercase
+]
 
 [tool.mypy]
 ignore_missing_imports = true

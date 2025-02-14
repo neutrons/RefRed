@@ -136,9 +136,9 @@ class LRData(object):
             [peak1, peak2] = pf.getPeaks()
             self.peak = [str(peak1), str(peak2)]
 
-            backOffsetFromPeak = self.read_options["back_offset_from_peak"]
-            back1 = int(peak1 - backOffsetFromPeak)
-            back2 = int(peak2 + backOffsetFromPeak)
+            back_offset_from_peak = self.read_options["back_offset_from_peak"]
+            back1 = int(peak1 - back_offset_from_peak)
+            back2 = int(peak2 + back_offset_from_peak)
             self.back = [str(back1), str(back2)]
 
     # Properties for easy data access #
@@ -238,7 +238,7 @@ class LRData(object):
         angle_offset_deg = angle_offset
         return theta + angle_offset_deg * math.pi / 180.0
 
-    def _getIxyt(self, nxs_histo):
+    def _get_Ixyt(self, nxs_histo):
         """
         will format the histogrma NeXus to retrieve the full 3D data set
         """
@@ -252,7 +252,7 @@ class LRData(object):
     def _read_data(self, workspace):
         nxs_histo = Rebin(InputWorkspace=workspace, Params=self.binning, PreserveEvents=True)
         # retrieve 3D array
-        [_tof_axis, Ixyt] = self._getIxyt(nxs_histo)
+        [_tof_axis, Ixyt] = self._get_Ixyt(nxs_histo)
         nxs_histo.delete()
         self.tof_axis_auto_with_margin = _tof_axis
 

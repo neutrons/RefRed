@@ -41,7 +41,6 @@ __packages__ = [
     "RefRed.preview_config",
     "RefRed.reduction",
     "RefRed.reduction_table_handling",
-    "RefRed.settings",
     "RefRed.sf_calculator",
     "RefRed.sf_preview",
     "RefRed.thread",

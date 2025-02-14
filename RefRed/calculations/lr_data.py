@@ -41,7 +41,7 @@ class LRData(object):
     ipts = "N/A"
     total_counts = 0
 
-    def __init__(
+    def __init__(  # noqa: C901
         self,
         workspace,
         lconfig: Optional[LConfigDataset] = None,
@@ -89,12 +89,13 @@ class LRData(object):
         self.S1H = mt_run.getProperty("S1VHeight").value[0]
         self.parent.current_ipts = mt_run.getProperty("experiment_identifier").value
         self.total_counts = workspace.getNumberEvents()
+        self.theta_theta_mode = mt_run.getProperty("BL4B:CS:ExpPl:OperatingMode").value[0] == "Free Liquid"
 
         try:
             self.SiW = mt_run.getProperty("SiHWidth").value[0]
             self.SiH = mt_run.getProperty("SiVHeight").value[0]
             self.isSiThere = True
-        except:
+        except:  # noqa: E722
             self.S2W = mt_run.getProperty("S2HWidth").value[0]
             self.S2H = mt_run.getProperty("S2VHeight").value[0]
             self.isSiThere = False
@@ -193,7 +194,7 @@ class LRData(object):
 
         self.all_plot_axis = AllPlotAxis()
         self.tof_auto_flag = True
-        self.new_detector_geometry_flag = self.is_nexus_taken_after_refDate()
+        self.new_detector_geometry_flag = self.is_nexus_taken_after_ref_date()
         self.data_loaded = False
         self.read_data()
 
@@ -319,12 +320,16 @@ class LRData(object):
 
     def calculate_theta(self, with_offset=True):
         """
-        calculate theta
+        Calculate theta
+        If we are in free-liquid mode (theta-theta), return the incident angle.
+        Otherwise, return the sample theta.
         """
-        tthd_value = self.tthd
-        thi_value = self.thi
+        if self.theta_theta_mode:
+            theta = self.thi
+        else:
+            theta = self.ths
 
-        theta = math.fabs(tthd_value - thi_value) / 2.0
+        theta = np.fabs(theta)
         if theta < 0.001:
             logging.debug("thi and tthd are equal: is this a direct beam?")
 
@@ -337,7 +342,7 @@ class LRData(object):
 
         return theta
 
-    def _getIxyt(self, nxs_histo):
+    def _get_Ixyt(self, nxs_histo):  # noqa: N802
         """
         will format the histogrma NeXus to retrieve the full 3D data set
         """
@@ -355,7 +360,7 @@ class LRData(object):
             PreserveEvents=True,
         )
         # retrieve 3D array
-        self._getIxyt(nxs_histo)
+        self._get_Ixyt(nxs_histo)
         nxs_histo.delete()
         self.tof_axis_auto_with_margin = self._tof_axis
 
@@ -376,7 +381,7 @@ class LRData(object):
 
         self.data_loaded = True
 
-    def is_nexus_taken_after_refDate(self):
+    def is_nexus_taken_after_ref_date(self):
         """
         This function parses the output.date and returns true if this date is after the ref date
         """

@@ -1,10 +1,8 @@
-# third-party imports
 from typing import Any, Callable, Dict
 from xml.dom.minidom import Document, Element
 
 from qtpy.QtWidgets import QDialog, QWidget
 
-# RefRed imports
 from RefRed.configuration.global_settings import GlobalSettings
 from RefRed.interfaces import load_ui
 from RefRed.utilities import str2bool
@@ -54,7 +52,7 @@ class DeadTimeSettingsModel(GlobalSettings):
             element.appendChild(element_text)
             return element.toxml()
 
-        return "\n".join([indent + _to_xml(field) for field in self.dict()])
+        return "\n".join([indent + _to_xml(field) for field in self.model_dump()])
 
     def from_xml(self, node: Element):
         r"""Update the settings from the contents of an XML element
@@ -105,7 +103,7 @@ class DeadTimeSettingsModel(GlobalSettings):
             "dead_time": "dead_time_value",
             "tof_step": "dead_time_tof_step",
         }
-        return {_to_reader_key[field]: value for field, value in self.dict().items()}
+        return {_to_reader_key[field]: value for field, value in self.model_dump().items()}
 
 
 class DeadTimeSettingsView(QDialog):
@@ -146,8 +144,7 @@ class DeadTimeSettingsView(QDialog):
 
     def accept(self):
         """
-        Read in the options on the form when the OK button is
-        clicked.
+        Read in the options on the form when the OK button is clicked.
         """
         self.options = self.get_state_from_form()
         self.close()

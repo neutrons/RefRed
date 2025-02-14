@@ -1,4 +1,3 @@
-# RefRed imports
 from RefRed.configuration.global_settings import GlobalSettings
 
 
@@ -37,6 +36,7 @@ class GlobalReductionSettingsHandler(object):
                 "tof_steps": float(self.parent.ui.eventTofBins.text()),
                 "apply_normalization": self.parent.ui.useNormalizationFlag.isChecked(),
                 "dead_time": self.parent.deadtime_settings,  # an instance of `DeadTimeSettingsModel`
+                "instrument_settings": self.parent.instrument_settings,  # an instance of `InstrumentSettings`
             }
         )
 

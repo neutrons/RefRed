@@ -11,7 +11,9 @@ import mantid
 # package imports
 import RefRed
 from RefRed.calculations.lr_data import LRData
-from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
+from RefRed.reduction.global_reduction_settings_handler import (
+    GlobalReductionSettingsHandler,
+)
 
 
 class ExportXMLConfig(object):
@@ -173,7 +175,11 @@ class ExportXMLConfig(object):
 
             str_array.append("   <slits_width_flag>True</slits_width_flag>\n")
 
-            str_array.append(o_general_settings.dead_time.to_xml(indent="   ") + "\n")  # dead time settings
+            # dead time settings
+            str_array.append(o_general_settings.dead_time.to_xml(indent="   ") + "\n")
+
+            # instrument settings
+            str_array.append(o_general_settings.instrument_settings.to_xml(indent="   ") + "\n")
 
             str_array.append("   <const_q>" + str(const_q) + "</const_q>\n")
 

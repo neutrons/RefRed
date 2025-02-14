@@ -1,20 +1,28 @@
-# import sys
 import logging
 import os
 
 import numpy as np
 from qtpy import QtCore, QtWidgets
 
+import RefRed.config.gui
 from RefRed.about_dialog import AboutDialog
 from RefRed.autopopulatemaintable.reductiontable_auto_fill import ReductionTableAutoFill
 from RefRed.browsing_runs import BrowsingRuns
 from RefRed.config.mantid_config import MantidConfig
 from RefRed.configuration.loading_configuration import LoadingConfiguration
 from RefRed.configuration.saving_configuration import SavingConfiguration
-from RefRed.configuration.user_configuration_handler import RetrieveUserConfiguration, SaveUserConfiguration
-from RefRed.decorators import config_file_has_been_modified, config_file_modification_reset
+from RefRed.configuration.user_configuration_handler import (
+    RetrieveUserConfiguration,
+    SaveUserConfiguration,
+)
+from RefRed.decorators import (
+    config_file_has_been_modified,
+    config_file_modification_reset,
+)
 from RefRed.export.export_plot_ascii import ExportPlotAscii
-from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
+from RefRed.gui_handling.auto_tof_range_radio_button_handler import (
+    AutoTofRangeRadioButtonHandler,
+)
 from RefRed.gui_handling.data_norm_spinboxes import (
     DataBackSpinbox,
     DataLowResSpinbox,
@@ -30,14 +38,29 @@ from RefRed.gui_handling.first_angle_range_gui_handler import (
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.observer import SpinBoxObserver
 from RefRed.gui_handling.refred_interface_handler import RefRedInterfaceHandler
-from RefRed.gui_handling.scaling_factor_widgets_handler import ScalingFactorWidgetsHandler
-from RefRed.gui_handling.stitching_yscale_options_radio_button_handler import StitchingYScaleOptionsRadioButtonHandler
+from RefRed.gui_handling.scaling_factor_widgets_handler import (
+    ScalingFactorWidgetsHandler,
+)
+from RefRed.gui_handling.stitching_yscale_options_radio_button_handler import (
+    StitchingYScaleOptionsRadioButtonHandler,
+)
 from RefRed.initialization.gui import Gui as InitializeGui
 from RefRed.initialization.gui_connections import GuiConnections as MakeGuiConnections
 from RefRed.interfaces import load_ui
-from RefRed.interfaces.deadtime_settings import DeadTimeSettingsModel, DeadTimeSettingsView
-from RefRed.load_reduced_data_set.load_reduced_data_set_handler import LoadReducedDataSetHandler
-from RefRed.load_reduced_data_set.reduced_ascii_data_right_click import ReducedAsciiDataRightClick
+from RefRed.interfaces.deadtime_settings import (
+    DeadTimeSettingsModel,
+    DeadTimeSettingsView,
+)
+from RefRed.interfaces.instrument_settings import (
+    InstrumentSettings,
+    InstrumentSettingsDialog,
+)
+from RefRed.load_reduced_data_set.load_reduced_data_set_handler import (
+    LoadReducedDataSetHandler,
+)
+from RefRed.load_reduced_data_set.reduced_ascii_data_right_click import (
+    ReducedAsciiDataRightClick,
+)
 from RefRed.metadata.metadata_finder import MetadataFinder
 from RefRed.plot.background_settings import BackgroundSettingsView, backgrounds_settings
 from RefRed.plot.display_plots import DisplayPlots
@@ -48,13 +71,19 @@ from RefRed.plot.single_click_plot import SingleClickPlot
 from RefRed.preview_config.preview_config import PreviewConfig
 from RefRed.reduction.live_reduction_handler import LiveReductionHandler
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
-from RefRed.reduction_table_handling.const_q_checkbox_handler import ConstQCheckBoxHandler
-from RefRed.reduction_table_handling.reduction_table_check_box import ReductionTableCheckBox
-from RefRed.reduction_table_handling.reduction_table_handler import ReductionTableHandler
-from RefRed.reduction_table_handling.reduction_table_right_click import ReductionTableRightClick
+from RefRed.reduction_table_handling.const_q_checkbox_handler import (
+    ConstQCheckBoxHandler,
+)
+from RefRed.reduction_table_handling.reduction_table_check_box import (
+    ReductionTableCheckBox,
+)
+from RefRed.reduction_table_handling.reduction_table_handler import (
+    ReductionTableHandler,
+)
+from RefRed.reduction_table_handling.reduction_table_right_click import (
+    ReductionTableRightClick,
+)
 from RefRed.reduction_table_handling.update_reduction_table import UpdateReductionTable
-from RefRed.settings.initialize_settings import InitializeSettings
-from RefRed.settings.settings_editor import SettingsEditor
 from RefRed.sf_calculator.sf_calculator import SFCalculator
 from RefRed.sf_preview.sf_preview import SFPreview
 from RefRed.tabledata import TableData
@@ -132,7 +161,9 @@ class MainGui(QtWidgets.QMainWindow):
             QtWidgets.QMainWindow.__init__(self, parent, QtCore.Qt.Window)
         self.ui = load_ui("refred_main_interface.ui", self)
 
-        InitializeSettings(self)
+        # Get default values for widgets
+        self.gui_metadata = RefRed.config.gui.gui_metadata
+
         self.config = MantidConfig(self)
         InitializeGui(self)
         self.ui.reductionTable.setUI(self)
@@ -159,6 +190,11 @@ class MainGui(QtWidgets.QMainWindow):
         self.deadtime_settings = DeadTimeSettingsModel()
         self.ui.deadtime_entry.applyCheckBox.stateChanged.connect(self.apply_deadtime_update)
         self.ui.deadtime_entry.settingsButton.clicked.connect(self.show_deadtime_settings)
+
+        # instrument_settings connections
+        self.instrument_settings = InstrumentSettings()
+        self.ui.instrument_settings_entry.applyCheckBox.stateChanged.connect(self.toggle_instrument_settings)
+        self.ui.instrument_settings_entry.settingsButton.clicked.connect(self.show_instrument_settings)
 
     # home button of plots
     def home_clicked_yi_plot(self):
@@ -475,7 +511,11 @@ class MainGui(QtWidgets.QMainWindow):
     @config_file_has_been_modified
     def data_sequence_event(self, *args, **kwargs):
         str_data_input = self.ui.data_sequence_lineEdit.text()
-        ReductionTableAutoFill(parent=self, list_of_run_from_input=str_data_input, data_type_selected="data")
+        ReductionTableAutoFill(
+            parent=self,
+            list_of_run_from_input=str_data_input,
+            data_type_selected="data",
+        )
         self.ui.data_sequence_lineEdit.setText("")
         self.norm_sequence_event()
 
@@ -488,7 +528,11 @@ class MainGui(QtWidgets.QMainWindow):
     @config_file_has_been_modified
     def norm_sequence_event(self, *args, **kwargs):
         str_norm_input = self.ui.norm_sequence_lineEdit.text()
-        ReductionTableAutoFill(parent=self, list_of_run_from_input=str_norm_input, data_type_selected="norm")
+        ReductionTableAutoFill(
+            parent=self,
+            list_of_run_from_input=str_norm_input,
+            data_type_selected="norm",
+        )
         self.ui.norm_sequence_lineEdit.setText("")
 
     @config_file_has_been_modified
@@ -666,10 +710,6 @@ class MainGui(QtWidgets.QMainWindow):
         o_about_message = AboutDialog(parent=self)
         o_about_message.display()
 
-    def settings_editor(self):
-        o_settings_editor = SettingsEditor(parent=self)
-        o_settings_editor.show()
-
     def apply_deadtime_update(self):
         r"""Update option apply_deadtime of field deadtime_settings when the associated checkbox
         changes its state"""
@@ -681,12 +721,47 @@ class MainGui(QtWidgets.QMainWindow):
         r"""Show the dialog for dead-time options. Update attribue deadtime options upon closing the dialog."""
         view = DeadTimeSettingsView(parent=self)
         view.set_state(
-            self.deadtime_settings.paralyzable, self.deadtime_settings.dead_time, self.deadtime_settings.tof_step
+            self.deadtime_settings.paralyzable,
+            self.deadtime_settings.dead_time,
+            self.deadtime_settings.tof_step,
         )
         view.exec_()
         # update the dead time settings of the Main GUI after user has closed the dialog
         for option in ["paralyzable", "dead_time", "tof_step"]:
             setattr(self.deadtime_settings, option, view.options[option])
+
+    # Instrument settings
+
+    def toggle_instrument_settings(self):
+        """Update option apply_deadtime of field deadtime_settings when the associated checkbox
+        changes its state"""
+        self.instrument_settings.apply_instrument_settings = self.ui.instrument_settings_entry.applyCheckBox.isChecked()
+
+    def show_instrument_settings(self):
+        """Show the dialog for instrument settings. Update attribues options upon closing the dialog."""
+        view = InstrumentSettingsDialog(parent=self)
+        view.set_state(
+            self.instrument_settings.source_detector_distance,
+            self.instrument_settings.sample_detector_distance,
+            self.instrument_settings.num_x_pixels,
+            self.instrument_settings.num_y_pixels,
+            self.instrument_settings.pixel_width,
+            self.instrument_settings.xi_reference,
+            self.instrument_settings.s1_sample_distance,
+        )
+        view.exec_()
+
+        # update the instrument settings of the Main GUI after user has closed the dialog
+        for option in [
+            "source_detector_distance",
+            "sample_detector_distance",
+            "num_x_pixels",
+            "num_y_pixels",
+            "pixel_width",
+            "xi_reference",
+            "s1_sample_distance",
+        ]:
+            setattr(self.instrument_settings, option, view.options[option])
 
     def closeEvent(self, event=None):
         SaveUserConfiguration(parent=self)

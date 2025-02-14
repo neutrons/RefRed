@@ -1,4 +1,3 @@
-# third party imports
 from qtpy.QtWidgets import QCheckBox, QGroupBox, QHBoxLayout, QPushButton
 
 
@@ -25,13 +24,16 @@ class DeadTimeEntryPoint(QGroupBox):
         self.applyCheckBox = QCheckBox("Apply", self)
         self.applyCheckBox.stateChanged.connect(self.toggleSettingsButton)
         self.settingsButton = QPushButton("Settings", self)
-        self.settingsButton.setEnabled(self.applyCheckBox.isChecked())  # enabled if we use the correction
+        self.settingsButton.setEnabled(
+            # enabled if we use the correction
+            self.applyCheckBox.isChecked()
+        )
 
         # Create a horizontal layout for the checkbox and settings button
         hbox = QHBoxLayout()
         hbox.addWidget(self.applyCheckBox)
         hbox.addWidget(self.settingsButton)
-        hbox.addStretch(1)  # This adds a stretchable space after the button (optional)
+        # hbox.addStretch(1)  # This adds a stretchable space after the button (optional)
 
         # Set the layout for the group box
         self.setLayout(hbox)

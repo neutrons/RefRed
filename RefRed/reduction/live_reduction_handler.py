@@ -1,4 +1,3 @@
-# standard imports
 import json
 import logging
 import os
@@ -6,17 +5,18 @@ import sys
 import time
 
 import numpy as np
-
-# third-party imports
 from lr_reduction import reduction_template_reader, template
 from qtpy.QtWidgets import QApplication, QFileDialog
 
-# RefRed imports
 from RefRed.gui_handling.progressbar_handler import ProgressBarHandler
 from RefRed.lconfigdataset import LConfigDataset
 from RefRed.mantid_utility import MantidUtility
-from RefRed.reduction.global_reduction_settings_handler import GlobalReductionSettingsHandler
-from RefRed.reduction.individual_reduction_settings_handler import IndividualReductionSettingsHandler
+from RefRed.reduction.global_reduction_settings_handler import (
+    GlobalReductionSettingsHandler,
+)
+from RefRed.reduction.individual_reduction_settings_handler import (
+    IndividualReductionSettingsHandler,
+)
 from RefRed.reduction.live_calculate_sf import LiveCalculateSF
 from RefRed.reduction.live_reduced_data_handler import LiveReducedDataHandler
 from RefRed.status_message_handler import StatusMessageHandler
@@ -37,7 +37,9 @@ class LiveReductionHandler(object):
             # scale
             if not replot_only:
                 o_calculate_sf = LiveCalculateSF(
-                    parent=self.parent, row_index=row_index, n_runs=self.nbr_reduction_process
+                    parent=self.parent,
+                    row_index=row_index,
+                    n_runs=self.nbr_reduction_process,
                 )
                 o_calculate_sf.run()
 
@@ -86,8 +88,7 @@ class LiveReductionHandler(object):
                     normalize=reduction_pars["apply_normalization"],
                 )
                 self.save_reduction(row_index, refl=[q, r, dr], info=info)
-            # TODO: catch specific exceptions
-            except:  # noqa: E722
+            except:
                 logging.error(sys.exc_info()[1])
                 self.parent.ui.reduceButton.setEnabled(True)
                 StatusMessageHandler(parent=self.parent, message="Failed!", is_threaded=True)
@@ -154,7 +155,12 @@ class LiveReductionHandler(object):
         data = big_table_data[0, 0]
         [xmin, xmax] = self.parent.ui.data_stitching_plot.canvas.ax.xaxis.get_view_interval()
         [ymin, ymax] = self.parent.ui.data_stitching_plot.canvas.ax.yaxis.get_view_interval()
-        data.all_plot_axis.reduced_plot_stitching_tab_data_interval = [xmin, xmax, ymin, ymax]
+        data.all_plot_axis.reduced_plot_stitching_tab_data_interval = [
+            xmin,
+            xmax,
+            ymin,
+            ymax,
+        ]
         big_table_data[0, 0] = data
         self.parent.big_table_data = big_table_data
 
