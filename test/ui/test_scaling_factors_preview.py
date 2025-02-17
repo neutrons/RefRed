@@ -1,15 +1,10 @@
-# standard imports
 import os
 from unittest.mock import patch as mock_patch
 
 import pytest
-
-# third-party imports
 from qtpy import QtCore
 
 from RefRed.main import MainGui
-
-# RefRed imports
 from RefRed.sf_preview.sf_preview import SFPreview
 
 SECOND = 1000  # 1000 miliseconds

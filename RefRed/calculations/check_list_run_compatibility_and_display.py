@@ -1,11 +1,6 @@
-# standard imports
-
-# third party imports
 from qtpy import QtGui
 
 import RefRed.colors
-
-# application imports
 from RefRed.calculations.add_list_nexus import AddListNexus
 from RefRed.calculations.lr_data import LRData
 from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata

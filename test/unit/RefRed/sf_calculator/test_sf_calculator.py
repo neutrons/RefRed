@@ -1,8 +1,6 @@
-# third party imports
 import pytest
 from qtpy import QtCore, QtWidgets  # type: ignore
 
-# RefRed imports
 from RefRed.sf_calculator.sf_calculator import SFCalculator
 
 

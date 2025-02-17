@@ -1,5 +1,3 @@
-# package imports
-# third party imports
 import pytest
 from mantid.simpleapi import mtd
 

@@ -1,9 +1,6 @@
-# package imports
 import unittest.mock as mock
 
 import pytest
-
-# third party packages
 from qtpy.QtCore import Qt  # type: ignore
 
 from RefRed.interfaces.mytablewidget import MyTableWidget

@@ -1,9 +1,5 @@
-# standard imports
-
-# third party imports
 from qtpy import QtCore, QtGui, QtWidgets
 
-# application imports
 from RefRed import WINDOW_TITLE
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex

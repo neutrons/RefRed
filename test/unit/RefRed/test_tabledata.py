@@ -1,10 +1,7 @@
-# standard imports
 from unittest.mock import patch
 
-# third party imports
 import pytest
 
-# application imports
 from RefRed.calculations.lr_data import LRData
 from RefRed.lconfigdataset import LConfigDataset
 from RefRed.tabledata import TableData, TableDataColumIndex

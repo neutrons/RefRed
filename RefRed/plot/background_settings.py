@@ -1,11 +1,8 @@
-# standard imports
 from typing import List, Optional, Tuple
 
-# third-party imports
 from qtpy.QtCore import QObject, Qt, Signal  # type: ignore
 from qtpy.QtWidgets import QCheckBox, QDialog, QWidget
 
-# application imports
 from RefRed.calculations.lr_data import LRData
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.interfaces import load_ui

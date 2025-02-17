@@ -1,16 +1,12 @@
-# standard imports
 import os
 from pathlib import Path
 from unittest import mock
 
-# third-party imports
 import numpy as np
 import pytest
 from qtpy import QtCore
 
 from RefRed.configuration.loading_configuration import LoadingConfiguration
-
-# RefRed imports
 from RefRed.main import MainGui
 
 wait = 200

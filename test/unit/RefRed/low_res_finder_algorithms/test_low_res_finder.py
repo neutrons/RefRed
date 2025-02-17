@@ -1,7 +1,4 @@
-# package imports
 import numpy as np
-
-# 3rd party imports
 import pytest
 
 from RefRed.file_loading_utility import loadCsvFile

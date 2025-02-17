@@ -1,14 +1,11 @@
-# standard imports
 import datetime
 import logging
 import os
 from typing import Optional
 
-# third-party imports
 import lr_reduction
 import mantid
 
-# package imports
 import RefRed
 from RefRed.calculations.lr_data import LRData
 from RefRed.reduction.global_reduction_settings_handler import (

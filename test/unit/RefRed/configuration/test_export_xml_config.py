@@ -1,11 +1,8 @@
-# standard imports
 from datetime import datetime
 from unittest.mock import MagicMock, patch
 
-# third party imports
 import pytest
 
-# RefRed imports
 from RefRed.configuration.export_xml_config import ExportXMLConfig
 
 

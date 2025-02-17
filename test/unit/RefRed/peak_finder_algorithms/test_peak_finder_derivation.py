@@ -1,5 +1,3 @@
-# package imports
-# third party packages
 import pytest
 
 from RefRed.file_loading_utility import loadCsvFile

@@ -1,11 +1,8 @@
-# package imports
 import tempfile
 import unittest.mock as mock
 from pathlib import Path
 
 import numpy as np
-
-# 3rd party imports
 import pytest
 
 import RefRed

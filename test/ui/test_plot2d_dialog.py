@@ -1,11 +1,8 @@
-# standard imports
 from unittest.mock import patch as mock_patch
 
-# third-party imports
 import pytest
 from qtpy import QtCore, QtWidgets
 
-# RefRed imports
 from RefRed.main import MainGui
 from RefRed.plot.popup_plot_2d import PopupPlot2d
 

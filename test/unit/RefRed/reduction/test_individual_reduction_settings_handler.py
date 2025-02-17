@@ -1,9 +1,7 @@
-# third party packages.
 from unittest.mock import Mock
 
 import pytest
 
-# RefRed imports
 from RefRed.reduction.individual_reduction_settings_handler import IndividualReductionSettingsHandler
 
 

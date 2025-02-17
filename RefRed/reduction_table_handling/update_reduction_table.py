@@ -1,10 +1,6 @@
-# standard imports
-
-# third party imports
 from qtpy import QtGui
 from qtpy.QtWidgets import QApplication
 
-# application imports
 import RefRed.colors
 from RefRed.calculations.check_list_run_compatibility_thread import CheckListRunCompatibilityThread
 from RefRed.calculations.locate_list_run import LocateListRun

@@ -1,9 +1,7 @@
-# third party packages
 import unittest.mock as mock
 
 import pytest
 
-# RefRed imports
 from RefRed.configuration.loading_configuration import LoadingConfiguration
 from RefRed.tabledata import TableData
 

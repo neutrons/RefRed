@@ -1,11 +1,8 @@
-# standard imports
 from typing import TYPE_CHECKING, List
 
-# third party imports
 from qtpy import QtWidgets
 from qtpy.QtCore import Qt  # type: ignore
 
-# application imports
 from RefRed import WINDOW_TITLE
 from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex
 from RefRed.tabledata import TableData

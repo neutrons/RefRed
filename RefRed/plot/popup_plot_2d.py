@@ -1,11 +1,8 @@
-# standard imports
 import os
 from pathlib import Path
 
-# third-party imports
 from qtpy.QtWidgets import QDialog, QFileDialog
 
-# package imports
 import RefRed.colors
 import RefRed.utilities
 from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler

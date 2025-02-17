@@ -1,9 +1,5 @@
-# standard imports
-
-# third party imports
 import numpy as np
 
-# application imports
 from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex
 from RefRed.reduction_table_handling.reduction_table_handler import ReductionTableHandler
 from RefRed.tabledata import TableData

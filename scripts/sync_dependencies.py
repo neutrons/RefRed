@@ -1,4 +1,3 @@
-# standard imports
 import logging
 import os
 import re

@@ -1,7 +1,5 @@
-# standard imports
 import os
 
-# third party imports
 from qtpy.QtWidgets import QWidget
 from qtpy.uic import loadUi
 

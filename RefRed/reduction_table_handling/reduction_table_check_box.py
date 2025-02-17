@@ -1,10 +1,6 @@
-# standard imports
-
-# third-party imports
 import numpy as np
 from qtpy.QtCore import Qt  # type: ignore
 
-# package imports
 from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
 from RefRed.plot.background_settings import backgrounds_settings

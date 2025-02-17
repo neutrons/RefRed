@@ -1,7 +1,5 @@
-# standard imports
 from unittest import mock
 
-# third-party imports
 import lr_reduction.scaling_factors.LRScalingFactors
 import numpy as np
 import pytest
@@ -9,7 +7,6 @@ import qtpy
 import qtpy.QtWidgets
 from qtpy.QtWidgets import QTableWidgetItem
 
-# RefRed imports
 from RefRed.main import MainGui
 from RefRed.sf_calculator.reduction_sf_calculator import ReductionSfCalculator
 

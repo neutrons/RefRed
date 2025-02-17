@@ -1,14 +1,11 @@
-# standard imports
 import logging
 import os
 from typing import Any
 from xml.dom import minidom
 
-# third party imports
 from qtpy import QtWidgets
 from qtpy.QtWidgets import QFileDialog
 
-# application imports
 from RefRed.configuration.load_reduction_table_from_lconfigdataset import (
     LoadReductionTableFromLConfigDataSet as LoadReductionTable,
 )

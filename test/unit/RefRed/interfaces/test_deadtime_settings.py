@@ -1,10 +1,7 @@
-# standard imports
 from xml.dom.minidom import parseString
 
-# third party imports
 import pytest
 
-# RefRed imports
 from RefRed.interfaces.deadtime_settings import DeadTimeSettingsModel
 
 

@@ -1,15 +1,11 @@
-# standard imports
 import os
 import random
 import string
 from unittest.mock import patch as mock_patch
 
 import pytest
-
-# third party imports
 from qtpy import QtCore
 
-# RefRed imports
 from RefRed.main import MainGui
 
 SECOND = 1000  # 1000 miliseconds

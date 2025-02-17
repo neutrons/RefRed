@@ -1,10 +1,7 @@
-# standard imports
 from typing import List
 
-# third party imports
 from qtpy.QtWidgets import QWidget
 
-# application imports
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.tabledata import TableData

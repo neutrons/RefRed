@@ -1,16 +1,12 @@
-# standard imports
 import bisect
 import os
 from pathlib import Path
 from typing import Optional
 
-# third-party imports
 from qtpy.QtWidgets import QDialog, QFileDialog
 
 import RefRed.colors
 import RefRed.utilities
-
-# package imports
 from RefRed.calculations.lr_data import LRData
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.observer import SpinBoxObserver

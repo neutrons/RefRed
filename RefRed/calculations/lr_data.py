@@ -1,15 +1,11 @@
-# standard imports
 import logging
 import math
 from typing import List, Optional, Type
 
 import numpy as np
-
-# third-party imports
 from mantid.api import mtd
 from mantid.simpleapi import Rebin
 
-# package imports
 from RefRed.lconfigdataset import LConfigDataset
 from RefRed.low_res_finder_algorithms.low_res_finder import LowResFinder
 from RefRed.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation

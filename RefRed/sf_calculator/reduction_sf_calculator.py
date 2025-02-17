@@ -1,14 +1,11 @@
-# standard-library imports
 import logging
 import sys
 import time
 from typing import Optional, Union
 
-# third-party imports
 import numpy as np
 from qtpy.QtWidgets import QApplication, QFileDialog, QMessageBox
 
-# RefRed imports
 from RefRed.utilities import convertTOF
 
 

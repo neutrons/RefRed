@@ -1,4 +1,3 @@
-# RefRed imports
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.plot.background_settings import backgrounds_settings
 

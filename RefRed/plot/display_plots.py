@@ -1,10 +1,6 @@
-# standard imports
 import bisect
 
 import RefRed.colors as colors
-
-# third party imports
-# application imports
 from RefRed.calculations.lr_data import LRData
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
 from RefRed.plot.background_settings import backgrounds_settings

@@ -1,10 +1,7 @@
-# package imports
 import tempfile
 from pathlib import Path
 
 import numpy as np
-
-# 3rd party imports
 import pytest
 
 from RefRed.export import ascii_loader

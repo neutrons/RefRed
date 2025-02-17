@@ -1,11 +1,8 @@
-# standard imports
 from distutils.util import strtobool
 from typing import Optional
 
-# third party imports
 from qtpy import QtCore, QtGui, QtWidgets
 
-# application imports
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.tabledata import TableData
 

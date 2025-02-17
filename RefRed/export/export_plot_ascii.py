@@ -1,14 +1,10 @@
-# standard imports
 import os
 from pathlib import Path
 from typing import List, Tuple
 
 from lr_reduction import output as lr_output
-
-# third-party imorts
 from qtpy.QtWidgets import QFileDialog
 
-# RefRed imports
 import RefRed.utilities
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.reduction.reduced_data_handler import ReducedDataHandler
