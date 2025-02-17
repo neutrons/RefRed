@@ -1,13 +1,12 @@
-# package imports
+import tempfile
+import unittest.mock as mock
+from pathlib import Path
+
+import numpy as np
+import pytest
+
 import RefRed
 from RefRed.export import export_plot_ascii
-
-# 3rd party imports
-import pytest
-import unittest.mock as mock
-import tempfile
-import numpy as np
-from pathlib import Path
 
 
 class TestExportPlotAscii:

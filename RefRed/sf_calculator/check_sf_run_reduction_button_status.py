@@ -2,7 +2,6 @@ from RefRed.utilities import removeEmptyStrElementAndUpdateIndexSelected
 
 
 class CheckSfRunReductionButtonStatus(object):
-
     sf_gui = None
 
     def __init__(self, parent=None):
@@ -27,7 +26,7 @@ class CheckSfRunReductionButtonStatus(object):
             back1 = str(self.sf_gui.tableWidget.item(_row, 12).text())
             back2 = str(self.sf_gui.tableWidget.item(_row, 13).text())
 
-            if (peak1 == 'N/A') or (peak2 == 'N/A') or (back1 == 'N/A') or (back2 == 'N/A'):
+            if (peak1 == "N/A") or (peak2 == "N/A") or (back1 == "N/A") or (back2 == "N/A"):
                 return False
 
             if int(peak1) < int(back1):
@@ -40,7 +39,7 @@ class CheckSfRunReductionButtonStatus(object):
 
     def isOutputFileNameReady(self):
         output_file_name = self.sf_gui.sfFileNameLabel.text()
-        if output_file_name == 'N/A':
+        if output_file_name == "N/A":
             return False
         return True
 

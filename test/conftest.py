@@ -1,17 +1,14 @@
-# standard imports
 import os
-from qtpy import QtCore, QtWidgets
 import sys
 
-# 3rd-party imports
-from mantid.simpleapi import config
 import pytest
-
+from mantid.simpleapi import config
+from qtpy import QtCore, QtWidgets
 
 this_module_path = sys.modules[__name__].__file__
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def data_server():
     r"""Object containing info and functionality for data files
     Also, it adds the data directory to the list of Mantid data directories
@@ -22,7 +19,7 @@ def data_server():
 
     class _DataServe(object):
         def __init__(self):
-            self._directory = os.path.join(os.path.dirname(this_module_path), 'data')
+            self._directory = os.path.join(os.path.dirname(this_module_path), "data")
             config.appendDataSearchDir(self._directory)
             config["default.facility"] = "SNS"
             config["default.instrument"] = "REF_L"

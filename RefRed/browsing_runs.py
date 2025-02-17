@@ -1,10 +1,11 @@
 import os
+
 from qtpy import QtWidgets
+
 from RefRed import nexus_utilities
 
 
 class BrowsingRuns(object):
-
     list_files = None
     list_runs = None
 

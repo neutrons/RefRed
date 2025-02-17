@@ -23,8 +23,6 @@ jobs:
           auto-update-conda: true
           miniforge-version: latest
           environment-file: environment.yml
-      - name: flake8
-        run: flake8 --statistics RefRed test scripts
       - name: mypy type annotations
         run: mypy RefRed test scripts
       - name: dependencies synced

@@ -1,10 +1,10 @@
 import os
+
 from numpy import shape
 from qtpy.QtWidgets import QFileDialog
 
 
 class ScalingFactorWidgetsHandler(object):
-
     parent = None
 
     def __init__(self, parent=None):

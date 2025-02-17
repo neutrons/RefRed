@@ -1,5 +1,5 @@
 class CompareTwoNXSDataForSFcalculator(object):
-    '''
+    """
     will return -1, 0 or 1 according to the position of the nexusToPosition in relation to the
     nexusToCompareWith based on the following criteria
     #1: number of attenuators (ascending order)
@@ -7,7 +7,7 @@ class CompareTwoNXSDataForSFcalculator(object):
     #3: S2W (ascending order)
     #4: S2H (descending order)
     #5 if everything up to this point is identical, return 0
-    '''
+    """
 
     nexusToCompareWithRun = None
     nexusToPositionRun = None
@@ -23,17 +23,17 @@ class CompareTwoNXSDataForSFcalculator(object):
         self.mtdToCompareWith = nxsdataToCompareWith.workspace
         self.mtdToPosition = nxsdataToPosition.workspace
 
-        compare1 = self.compareParameter('LambdaRequest', 'descending')
+        compare1 = self.compareParameter("LambdaRequest", "descending")
         if compare1 != 0:
             self.resultComparison = compare1
             return
 
-        compare2 = self.compareParameter('vATT', 'ascending')
+        compare2 = self.compareParameter("vATT", "ascending")
         if compare2 != 0:
             self.resultComparison = compare2
             return
 
-        compare3 = self.comparepCharge('descending')
+        compare3 = self.comparepCharge("descending")
         if compare3 != 0:
             self.resultComparison = compare3
             return
@@ -45,7 +45,7 @@ class CompareTwoNXSDataForSFcalculator(object):
         _paramNexusToCompareWith = self.get_normalized_pcharge(_mtdToCompareWith)
         _paramNexusToPosition = self.get_normalized_pcharge(_mtdToPosition)
 
-        if order == 'ascending':
+        if order == "ascending":
             resultLessThan = -1
             resultMoreThan = 1
         else:
@@ -61,7 +61,7 @@ class CompareTwoNXSDataForSFcalculator(object):
 
     def get_normalized_pcharge(self, _mtd):
         _run = _mtd.getRun()
-        pcharge = float(_run.getProperty('gd_prtn_chrg').value)
+        pcharge = float(_run.getProperty("gd_prtn_chrg").value)
 
         # FIXME get total counts and divide pcharge/total_counts
         total_counts = float(_mtd.getNumberEvents())
@@ -80,7 +80,7 @@ class CompareTwoNXSDataForSFcalculator(object):
             _paramNexusToCompareWith = float(_nexusToCompareWithRun.getProperty(param_backup).value[0])
             _paramNexusToPosition = float(_nexusToPositionRun.getProperty(param_backup).value[0])
 
-        if order == 'ascending':
+        if order == "ascending":
             resultLessThan = -1
             resultMoreThan = 1
         else:

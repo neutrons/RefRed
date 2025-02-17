@@ -3,8 +3,7 @@ from xml.dom.minidom import parseString
 import pytest
 from qtpy.QtCore import Qt  # type: ignore
 
-from RefRed.interfaces.instrument_settings import InstrumentSettings
-from RefRed.interfaces.instrument_settings import InstrumentSettingsEntryPoint
+from RefRed.interfaces.instrument_settings import InstrumentSettings, InstrumentSettingsEntryPoint
 
 # Test the InstrumentSettingsEntryPoint
 

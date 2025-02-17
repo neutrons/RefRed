@@ -16,7 +16,7 @@ from RefRed.interfaces import load_ui
 
 
 @dataclass
-class DEFAULT_INSTRUMENT_SETTINGS:
+class DEFAULT_INSTRUMENT_SETTINGS:  # noqa: N801
     apply_instrument_settings: bool = False
     source_detector_distance: float = 15.75
     sample_detector_distance: float = 1.83

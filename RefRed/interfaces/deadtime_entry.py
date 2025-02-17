@@ -1,4 +1,4 @@
-from qtpy.QtWidgets import QGroupBox, QHBoxLayout, QCheckBox, QPushButton
+from qtpy.QtWidgets import QCheckBox, QGroupBox, QHBoxLayout, QPushButton
 
 
 class DeadTimeEntryPoint(QGroupBox):

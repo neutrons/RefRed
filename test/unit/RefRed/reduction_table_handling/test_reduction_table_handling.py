@@ -1,11 +1,11 @@
 from unittest import mock
+
 import pytest
 from qtpy import QtWidgets
 
 from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex
 from RefRed.main import MainGui
 from RefRed.reduction_table_handling.reduction_table_handler import ReductionTableHandler
-
 
 NBR_ROWS = 6
 
@@ -65,7 +65,7 @@ class TestReductionTableHandling:
         nbr_deleted = to_row + 1 - from_row
 
         # clear selected rows
-        with mock.patch.object(ReductionTableHandler, '_ReductionTableHandler__get_range_row_selected'):
+        with mock.patch.object(ReductionTableHandler, "_ReductionTableHandler__get_range_row_selected"):
             handler = ReductionTableHandler(parent=window_main)
             handler.from_row = from_row
             handler.to_row = to_row

@@ -1,5 +1,4 @@
 class PopulateReductionTableFromLConfigDataSet(object):
-
     parent = None
 
     def __init__(self, parent=None):

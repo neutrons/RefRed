@@ -1,10 +1,12 @@
-from numpy.version import version as numpy_version_str
-from matplotlib import __version__ as matplotlib_version_str
-from RefRed import __version__ as RefRed_version_str
-from qtpy import QtWidgets, QT_VERSION, PYQT_VERSION
 import sys
-import mantid
+
 import lr_reduction
+import mantid
+from matplotlib import __version__ as matplotlib_version_str
+from numpy.version import version as numpy_version_str
+from qtpy import PYQT_VERSION, QT_VERSION, QtWidgets
+
+from RefRed import __version__ as refred_version_str
 
 
 class AboutDialog(object):
@@ -23,7 +25,7 @@ class AboutDialog(object):
 
         message = f"""RefRed - Liquids Reflectrometry Reduction program
 
-        RefRed version {RefRed_version_str}
+        RefRed version {refred_version_str}
         Reduction version {lr_reduction.__version__}
 
         Library versions:

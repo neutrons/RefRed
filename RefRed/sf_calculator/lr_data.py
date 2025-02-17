@@ -1,13 +1,14 @@
 """
-    Notes from review: This class does a subset of what is done in calculations.lr_data.
-    This code is probably not needed.
+Notes from review: This class does a subset of what is done in calculations.lr_data.
+This code is probably not needed.
 """
 
-from mantid.simpleapi import Rebin
-import numpy as np
 import logging
 import math
 import os
+
+import numpy as np
+from mantid.simpleapi import Rebin
 
 from RefRed.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
 from RefRed.plot.all_plot_axis import AllPlotAxis
@@ -19,7 +20,7 @@ H_OVER_M_NEUTRON = PLANCK_CONSTANT / NEUTRON_MASS
 
 class LRData(object):
     tof_range = None
-    low_res = ['0', '255']
+    low_res = ["0", "255"]
     low_res_flag = True
     is_better_chopper_coverage = True
 
@@ -28,28 +29,28 @@ class LRData(object):
         self.read_options = read_options
         mt_run = workspace.getRun()
 
-        self.run_number = mt_run.getProperty('run_number').value
+        self.run_number = mt_run.getProperty("run_number").value
 
-        self.lambda_requested = float(mt_run.getProperty('LambdaRequest').value[0])
-        self.lambda_requested_units = mt_run.getProperty('LambdaRequest').units
-        self.thi = mt_run.getProperty('thi').value[0]
-        self.thi_units = mt_run.getProperty('thi').units
-        self.tthd = mt_run.getProperty('tthd').value[0]
-        self.tthd_units = mt_run.getProperty('tthd').units
-        self.S1W = mt_run.getProperty('S1HWidth').value[0]
-        self.S1H = mt_run.getProperty('S1VHeight').value[0]
+        self.lambda_requested = float(mt_run.getProperty("LambdaRequest").value[0])
+        self.lambda_requested_units = mt_run.getProperty("LambdaRequest").units
+        self.thi = mt_run.getProperty("thi").value[0]
+        self.thi_units = mt_run.getProperty("thi").units
+        self.tthd = mt_run.getProperty("tthd").value[0]
+        self.tthd_units = mt_run.getProperty("tthd").units
+        self.S1W = mt_run.getProperty("S1HWidth").value[0]
+        self.S1H = mt_run.getProperty("S1VHeight").value[0]
 
         try:
-            self.SiW = mt_run.getProperty('SiHWidth').value[0]
-            self.SiH = mt_run.getProperty('SiVHeight').value[0]
+            self.SiW = mt_run.getProperty("SiHWidth").value[0]
+            self.SiH = mt_run.getProperty("SiVHeight").value[0]
             self.isSiThere = True
         except:
-            self.S2W = mt_run.getProperty('S2HWidth').value[0]
-            self.S2H = mt_run.getProperty('S2VHeight').value[0]
+            self.S2W = mt_run.getProperty("S2HWidth").value[0]
+            self.S2H = mt_run.getProperty("S2VHeight").value[0]
 
-        self.attenuatorNbr = mt_run.getProperty('vATT').value[0] - 1
-        self.date = mt_run.getProperty('run_start').value
-        self.full_file_name = mt_run.getProperty('Filename').value[0]
+        self.attenuatorNbr = mt_run.getProperty("vATT").value[0] - 1
+        self.date = mt_run.getProperty("run_start").value
+        self.full_file_name = mt_run.getProperty("Filename").value[0]
         self.filename = os.path.basename(self.full_file_name)
 
         sample = workspace.getInstrument().getSample()
@@ -71,7 +72,7 @@ class LRData(object):
 
         # calculate theta
         self.theta = self.calculate_theta()
-        self.frequency = float(mt_run.getProperty('Speed1').value[0])
+        self.frequency = float(mt_run.getProperty("Speed1").value[0])
 
         # Determine the range to select in TOF according to how the DAS computed the
         # chopper settings
@@ -98,7 +99,7 @@ class LRData(object):
             tmin -= t_off + t_mult * wl_min
             tmax -= t_off + t_mult * wl_max
 
-        if self.read_options['is_auto_tof_finder'] or self.tof_range is None:
+        if self.read_options["is_auto_tof_finder"] or self.tof_range is None:
             autotmin = tmin
             autotmax = tmax
         else:
@@ -108,15 +109,15 @@ class LRData(object):
         self.tof_range_auto = [autotmin, autotmax]  # microS
         self.tof_range_auto_with_margin = [tmin, tmax]  # microS
         self.tof_range = [autotmin, autotmax]  # for the first time, initialize tof_range like auto (microS)
-        self.binning = [tmin, self.read_options['bins'], tmax]
+        self.binning = [tmin, self.read_options["bins"], tmax]
         self.calculate_lambda_range()
         self.q_range = self.calculate_q_range()
         self.incident_angle = self.calculate_theta(False)
 
         # Proton charge
-        _proton_charge = float(mt_run.getProperty('gd_prtn_chrg').value)
+        _proton_charge = float(mt_run.getProperty("gd_prtn_chrg").value)
         # _proton_charge_units = mt_run.getProperty('gd_prtn_chrg').units
-        new_proton_charge_units = 'mC'
+        new_proton_charge_units = "mC"
 
         self.proton_charge = _proton_charge * 3.6  # to go from microA/h to mC
         self.proton_charge_units = new_proton_charge_units
@@ -130,14 +131,14 @@ class LRData(object):
         self.data_loaded = False
         self._read_data(workspace)
 
-        if self.read_options['is_auto_peak_finder']:
+        if self.read_options["is_auto_peak_finder"]:
             pf = PeakFinderDerivation(list(range(len(self.ycountsdata))), self.ycountsdata)
             [peak1, peak2] = pf.getPeaks()
             self.peak = [str(peak1), str(peak2)]
 
-            backOffsetFromPeak = self.read_options['back_offset_from_peak']
-            back1 = int(peak1 - backOffsetFromPeak)
-            back2 = int(peak2 + backOffsetFromPeak)
+            back_offset_from_peak = self.read_options["back_offset_from_peak"]
+            back1 = int(peak1 - back_offset_from_peak)
+            back2 = int(peak2 + back_offset_from_peak)
             self.back = [str(back1), str(back2)]
 
     # Properties for easy data access #
@@ -221,9 +222,9 @@ class LRData(object):
         thi_units = self.thi_units
 
         # Make sure we have radians
-        if thi_units == 'degree':
+        if thi_units == "degree":
             thi_value *= math.pi / 180.0
-        if tthd_units == 'degree':
+        if tthd_units == "degree":
             tthd_value *= math.pi / 180.0
 
         theta = math.fabs(tthd_value - thi_value) / 2.0
@@ -233,11 +234,11 @@ class LRData(object):
         # Add the offset
         angle_offset = 0.0
         if with_offset and "angle_offset" in self.read_options:
-            angle_offset = float(self.read_options['angle_offset'])
+            angle_offset = float(self.read_options["angle_offset"])
         angle_offset_deg = angle_offset
         return theta + angle_offset_deg * math.pi / 180.0
 
-    def _getIxyt(self, nxs_histo):
+    def _get_Ixyt(self, nxs_histo):
         """
         will format the histogrma NeXus to retrieve the full 3D data set
         """
@@ -251,7 +252,7 @@ class LRData(object):
     def _read_data(self, workspace):
         nxs_histo = Rebin(InputWorkspace=workspace, Params=self.binning, PreserveEvents=True)
         # retrieve 3D array
-        [_tof_axis, Ixyt] = self._getIxyt(nxs_histo)
+        [_tof_axis, Ixyt] = self._get_Ixyt(nxs_histo)
         nxs_histo.delete()
         self.tof_axis_auto_with_margin = _tof_axis
 

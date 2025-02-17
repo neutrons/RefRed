@@ -21,21 +21,20 @@ class SortLRDataList(object):
     list_nexus = None
 
     criteria1_value = None
-    criteria1_type = ''
+    criteria1_type = ""
 
     criteria2_value = None
-    criteria2_type = ''
+    criteria2_type = ""
 
     def __init__(
-        self, parent=None, list_lrdata=None, list_runs=None, list_wks=None, list_nexus=None, data_type_selected='data'
+        self, parent=None, list_lrdata=None, list_runs=None, list_wks=None, list_nexus=None, data_type_selected="data"
     ):
-
         self.list_lrdata = list_lrdata
         self.list_runs = list_runs
         self.list_wks = list_wks
         self.parent = parent
         self.list_nexus = list_nexus
-        self.is_data_type_selected = True if data_type_selected == 'data' else False
+        self.is_data_type_selected = True if data_type_selected == "data" else False
 
     def run(self):
         if len(self.list_lrdata) < 2:

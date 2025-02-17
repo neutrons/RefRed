@@ -1,9 +1,11 @@
 import math
 import os
-import numpy as np
 from random import randint
-from RefRed import nexus_utilities
 from typing import Union
+
+import numpy as np
+
+from RefRed import nexus_utilities
 
 
 def convert_angle(angle=0, from_units="degree", to_units="rad"):
@@ -52,9 +54,7 @@ def convertTOF(TOFarray=None, from_units="micros", to_units="ms"):
         return None
 
 
-def convert_tof_values_unit(
-    tof_array: Union[None, list, np.ndarray], from_units: str = "micros", to_units: str = "ms"
-):
+def convert_tof_values_unit(tof_array: Union[None, list, np.ndarray], from_units: str = "micros", to_units: str = "ms"):
     """Convert an array, supposed to be TOF values, from one unit to another
 
     Parameters
@@ -80,9 +80,9 @@ def convert_tof_values_unit(
         return array
 
     # Check input and output units
-    allowed_units = ['micros', 'ms']
+    allowed_units = ["micros", "ms"]
     if from_units not in allowed_units or to_units not in allowed_units:
-        raise NameError(f'Input and output units can be micros and ms only but ' f'not {from_units} or {to_units}')
+        raise NameError(f"Input and output units can be micros and ms only but not {from_units} or {to_units}")
 
     if tof_array is None or from_units == to_units:
         # case 1: None input or
@@ -97,7 +97,7 @@ def convert_tof_values_unit(
         # convert from ms to micros
         return multiply_by_value(tof_array, 1000)
 
-    raise RuntimeError('Impossible')
+    raise RuntimeError("Impossible")
 
 
 def output_2d_ascii_file(filename, image):

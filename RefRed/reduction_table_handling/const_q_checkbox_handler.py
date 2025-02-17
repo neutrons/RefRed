@@ -1,9 +1,5 @@
-# standard imports
-
-# third-party imports
 from qtpy.QtCore import Qt  # type: ignore
 
-# package imports
 from RefRed.tabledata import TableData
 
 

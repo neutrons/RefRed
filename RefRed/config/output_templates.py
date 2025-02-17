@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-'''
-  Templeates used for ASCII file creation.
-'''
+"""
+Templeates used for ASCII file creation.
+"""
 
-config_file = 'reduction'
+config_file = "reduction"
 NO_INTERPOLATION = True
 
 gp_template = """#!/usr/bin/gnuplot
@@ -62,16 +62,16 @@ gp_line = '"%(file_name)s" u 1:2:3 w errorlines t "(%(channel)s)" lw 1.5 pt 7 ps
 #         u'"%(file_name)s" u 1:2 smooth csplines t "" lw 1.5 lc %(index)i'
 gp_line_3D = 'splot "%(file_name)s" u %(x)i:%(y)i:(Imin($%(z)i)) w pm3d t ""'
 # GP_LINE_3D=u'splot "%(file_name)s" u %(x)i:%(y)i:%(z)i w pm3d t ""'
-GP_SEP = ',\\\n     '
+GP_SEP = ",\\\n     "
 GP_SEP_3D = '\nset title "%s"\n'
 
 # set of characters to replace, as they can't be iso_8859_1 encoded but are
 # available with gnuplot enhanced commands
-GP_REPLACE_CHARS = (('α', '{/Symbol a}'), ('δ', '{/Symbol d}'))
+GP_REPLACE_CHARS = (("α", "{/Symbol a}"), ("δ", "{/Symbol d}"))
 
-gp_font_paths = ['/usr/share/fonts/dejavu/', '/usr/share/fonts/truetype/ttf-dejavu/']
+gp_font_paths = ["/usr/share/fonts/dejavu/", "/usr/share/fonts/truetype/ttf-dejavu/"]
 
-FILE_HEADER = '''# Datafile created by QuickNXS %(version)s
+FILE_HEADER = """# Datafile created by QuickNXS %(version)s
 # Date: %(date)s
 # Type: %(datatype)s
 # Input file indices: %(indices)s
@@ -89,19 +89,19 @@ FILE_HEADER = '''# Datafile created by QuickNXS %(version)s
 # %(column_units)s
 # Column Names:
 # %(column_names)s
-'''  # noqa E501
+"""  # noqa E501
 FILE_HEADER_PARAMS = (
-    '%(scale)-12g %(P0)-3i %(PN)-5i %(x_pos)-8g %(x_width)-12g %(y_pos)-8g %(y_width)-12g '
-    '%(bg_pos)-8g %(bg_width)-12g %(dpix)-12g %(tth)-12g %(file_number)-12s %(norm_index)-9s '
-    '%(extract_fan)-4i %(file_name)-12s '
+    "%(scale)-12g %(P0)-3i %(PN)-5i %(x_pos)-8g %(x_width)-12g %(y_pos)-8g %(y_width)-12g "
+    "%(bg_pos)-8g %(bg_width)-12g %(dpix)-12g %(tth)-12g %(file_number)-12s %(norm_index)-9s "
+    "%(extract_fan)-4i %(file_name)-12s "
 )
 
 DICTIZE_CHANNELS = {
-    'x': 'unpolarized',
-    '+': 'up',
-    '-': 'down',
-    '++': 'upup',
-    '--': 'downdown',
-    '+-': 'updown',
-    '-+': 'downup',
+    "x": "unpolarized",
+    "+": "up",
+    "-": "down",
+    "++": "upup",
+    "--": "downdown",
+    "+-": "updown",
+    "-+": "downup",
 }

@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 import os
 import tempfile
-from qtpy import QtCore, QtGui, QtWidgets
+
 import matplotlib.colors
 from matplotlib.colors import LogNorm, Normalize
-from RefRed.config import plotting
 from matplotlib.figure import Figure
+from qtpy import QtCore, QtGui, QtWidgets
+
+from RefRed.config import plotting
 
 
 # set the default backend to be compatible with Qt in case someone uses pylab from IPython console
@@ -47,11 +49,11 @@ def set_matplotlib_backend():
 
 BACKEND = set_matplotlib_backend()
 if BACKEND == "Qt4Agg":
-    from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
     from matplotlib.backends.backend_qt4 import NavigationToolbar2QT
+    from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 elif BACKEND == "Qt5Agg":
-    from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
     from matplotlib.backends.backend_qt5 import NavigationToolbar2QT
+    from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
     from matplotlib.cbook import Stack
 
 # path where all of the icons are
@@ -179,7 +181,6 @@ class NavigationToolbar(NavigationToolbar2QT):
         self.adj_window = None
 
     def activate_widget(self, widget_name, activateIt):
-
         if widget_name == "pan":
             if activateIt:
                 self.isPanActivated = True
@@ -270,7 +271,7 @@ class NavigationToolbar(NavigationToolbar2QT):
         if figname:
             try:
                 self.canvas.print_figure(str(figname))
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001
                 QtWidgets.QMessageBox.critical(
                     self,
                     "Error saving file",
@@ -282,7 +283,6 @@ class NavigationToolbar(NavigationToolbar2QT):
     def toggle_ylog(self, *args):
         ax = self.canvas.ax
         if len(ax.images) == 0 and all([c.__class__.__name__ != "QuadMesh" for c in ax.collections]):
-
             #      logstate=ax.get_xscale()
             if self.ylog:
                 ax.set_yscale("linear")
@@ -306,7 +306,6 @@ class NavigationToolbar(NavigationToolbar2QT):
     def toggle_xlog(self, *args):
         ax = self.canvas.ax
         if len(ax.images) == 0 and all([c.__class__.__name__ != "QuadMesh" for c in ax.collections]):
-
             if self.xlog:
                 ax.set_xscale("linear")
             else:
@@ -328,7 +327,6 @@ class NavigationToolbar(NavigationToolbar2QT):
 
 
 class MplCanvas(FigureCanvas):
-
     trigger_click = QtCore.Signal(bool, bool, int, int)
     trigger_figure_left = QtCore.Signal()
 

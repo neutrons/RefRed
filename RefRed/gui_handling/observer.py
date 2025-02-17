@@ -1,10 +1,6 @@
-# standard imports
 from dataclasses import dataclass
 
-# third-party imports
 from qtpy.QtWidgets import QSpinBox
-
-# package imports
 
 
 class SpinBoxObserver:

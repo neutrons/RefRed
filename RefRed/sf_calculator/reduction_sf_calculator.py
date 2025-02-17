@@ -1,14 +1,11 @@
-# standard-library imports
-import sys
 import logging
+import sys
 import time
 from typing import Optional, Union
 
-# third-party imports
 import numpy as np
-from qtpy.QtWidgets import QApplication, QMessageBox, QFileDialog
+from qtpy.QtWidgets import QApplication, QFileDialog, QMessageBox
 
-# RefRed imports
 from RefRed.utilities import convertTOF
 
 
@@ -127,7 +124,7 @@ class ReductionSfCalculator(object):
                     tof_range=tof_range,
                 )
 
-                with open(self.export_script_file, 'w') as fd:
+                with open(self.export_script_file, "w") as fd:
                     fd.write(script)
 
             self.sf_gui.updateProgressBar(float(i + 1) / float(nbr_scripts))
@@ -216,19 +213,19 @@ class ReductionSfCalculator(object):
         mantid_call = [
             r"mantid_algorithm_exec(",
             r"    LRScalingFactors.LRScalingFactors,",
-            r"    DirectBeamRuns={0},".format(run_list),
-            r"    IncidentMedium='{0}',".format(incident_medium),
-            r"    Attenuators={0},".format(attenuators),
-            r"    TOFRange={0},".format(tof_range),
-            r"    TOFSteps={0},".format(self.sf_gui.deadtime_tof_step),
-            r"    SignalPeakPixelRange={0},".format(peak_ranges),
-            r"    SignalBackgroundPixelRange={0},".format(bck_ranges),
-            r"    LowResolutionPixelRange={0},".format(low_res_ranges),
-            r"    ScalingFactorFile='{0}',".format(output_file_name),
-            r"    UseDeadTimeCorrection={0},".format(self.sf_gui.apply_deadtime),
-            r"    ParalyzableDeadTime={0},".format(self.sf_gui.paralyzable_deadtime),
-            r"    DeadTime={0},".format(self.sf_gui.deadtime_value),
-            r"    DeadTimeTOFStep={0},".format(self.sf_gui.deadtime_tof_step),
+            rf"    DirectBeamRuns={run_list},",
+            rf"    IncidentMedium='{incident_medium}',",
+            rf"    Attenuators={attenuators},",
+            rf"    TOFRange={tof_range},",
+            rf"    TOFSteps={self.sf_gui.deadtime_tof_step},",
+            rf"    SignalPeakPixelRange={peak_ranges},",
+            rf"    SignalBackgroundPixelRange={bck_ranges},",
+            rf"    LowResolutionPixelRange={low_res_ranges},",
+            rf"    ScalingFactorFile='{output_file_name}',",
+            rf"    UseDeadTimeCorrection={self.sf_gui.apply_deadtime},",
+            rf"    ParalyzableDeadTime={self.sf_gui.paralyzable_deadtime},",
+            rf"    DeadTime={self.sf_gui.deadtime_value},",
+            rf"    DeadTimeTOFStep={self.sf_gui.deadtime_tof_step},",
             r")",
         ]
         script += "\n".join(mantid_call) + "\n"

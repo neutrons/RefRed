@@ -1,4 +1,5 @@
 import pytest
+
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 
 
@@ -10,7 +11,7 @@ def test_run_sequence_breaker():
     Expected result is obtained by RefRed-production release (python 2.7 version)
     """
     # Test input
-    test_run_sequence = '184975-184989'
+    test_run_sequence = "184975-184989"
     gold_run_list = [
         184975,
         184976,
@@ -39,5 +40,5 @@ def test_run_sequence_breaker():
     assert final_list == gold_run_list
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

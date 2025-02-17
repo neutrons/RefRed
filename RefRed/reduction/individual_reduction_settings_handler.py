@@ -1,25 +1,22 @@
 """
-    Generate reduction options from the reduction table.
+Generate reduction options from the reduction table.
 
-    Note from code review:
-    It's not clear why the configuration stored in big_table_data[:, 3]
-    is saved if it's not used here. It creates confusion as to where we should
-    keep this information.
+Note from code review:
+It's not clear why the configuration stored in big_table_data[:, 3]
+is saved if it's not used here. It creates confusion as to where we should
+keep this information.
 """
 
-# standard imports
 from typing import Any, List, Optional
 
-# package imports
 from RefRed.calculations.lr_data import LRData
 from RefRed.tabledata import TableData
 
 
 class IndividualReductionSettingsHandler(object):
-
     data = None
     norm = None
-    output_workspace = ''
+    output_workspace = ""
 
     def __init__(self, parent=None, row_index=-1):
         self.parent = parent

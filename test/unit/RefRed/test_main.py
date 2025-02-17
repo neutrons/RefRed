@@ -22,13 +22,13 @@ class TestMainGui:
     @mock.patch("RefRed.main.InitializeGui")
     @mock.patch("RefRed.main.load_ui")
     @mock.patch("qtpy.QtWidgets.QMainWindow.__init__")
-    def test_mock_init(self, mockMainWindowInit, mockLoadUI, mockInitializeGui, mockFileLoadedSignal):
+    def test_mock_init(self, mock_main_window_init, mock_load_ui, mock_initialize_gui, mock_file_loaded_signal):
         parent = mock.Mock()
         MainGui(parent=parent)
-        mockMainWindowInit.assert_called()
-        mockLoadUI.assert_called()
-        mockInitializeGui.assert_called()
-        mockFileLoadedSignal.connect.assert_called()
+        mock_main_window_init.assert_called()
+        mock_load_ui.assert_called()
+        mock_initialize_gui.assert_called()
+        mock_file_loaded_signal.connect.assert_called()
 
     @mock.patch("RefRed.main.LoadingConfiguration")
     @mock.patch("RefRed.main.MainGui.file_loaded_signal")
@@ -44,9 +44,11 @@ class TestMainGui:
         mockLoadConfiguration,
     ):
         parent = mock.Mock()
-        mainGui = MainGui(parent=parent)
-        mainGui.load_configuration()
+        main_gui = MainGui(parent=parent)
+        main_gui.load_configuration()
         mockLoadConfiguration.assert_called()
+
+    # Deadtime Settings tests
 
     # Deadtime Settings tests
 
@@ -72,7 +74,7 @@ class TestMainGui:
         main_gui = self.app  # endow closure environment to MockDeadTimeSettingsView
 
         class MockDeadTimeSettingsView:
-            def __init__(self, parent=None):
+            def __init__(self, parent=None):  # noqa: ARG002
                 r"""Mocking the DeadTimeSettingsView to return default values without user interaction"""
                 self.options = {
                     "paralyzable": main_gui.deadtime_settings.paralyzable,
@@ -101,7 +103,7 @@ class TestMainGui:
         new_tof_step = 200
 
         class MockDeadTimeSettingsView:
-            def __init__(self, parent=None):
+            def __init__(self, parent=None):  # noqa: ARG002
                 r"""Mocking the DeadTimeSettingsView to return default values without user interaction"""
                 self.options = {
                     "paralyzable": new_paralyzable,
@@ -145,7 +147,7 @@ class TestMainGui:
         main_gui = self.app  # endow closure environment to MockInstrumentSettingsDialog
 
         class MockInstrumentSettingsDialog:
-            def __init__(self, parent=None):
+            def __init__(self, parent=None):  # noqa: ARG002
                 r"""Mocking the InstrumentSettingsDialog to return default values without user interaction"""
                 self.options = {
                     "source_detector_distance": main_gui.instrument_settings.source_detector_distance,
@@ -199,7 +201,7 @@ class TestMainGui:
         new_s1_sample_distance = 7.0
 
         class MockInstrumentSettingsDialog:
-            def __init__(self, parent=None):
+            def __init__(self, parent=None):  # noqa: ARG002
                 r"""Mocking the InstrumentSettingsDialog to return default values without user interaction"""
                 self.options = {
                     "source_detector_distance": new_source_detector_distance,

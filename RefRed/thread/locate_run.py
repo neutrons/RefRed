@@ -1,4 +1,5 @@
 from qtpy import QtCore
+
 import RefRed.nexus_utilities
 
 
@@ -12,9 +13,9 @@ class LocateRunThread(QtCore.QThread):  # type: ignore
         try:
             full_file_name = RefRed.nexus_utilities.findNeXusFullPath(self.run_number)
         except:
-            full_file_name = ''
+            full_file_name = ""
 
-        if full_file_name == '':
+        if full_file_name == "":
             self.parent.number_of_runs = self.parent.number_of_runs - 1
             self.parent.list_nxs.pop()
         else:

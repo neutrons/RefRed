@@ -1,11 +1,7 @@
-# standard imports
 import bisect
 
-# third party imports
-
-# application imports
-from RefRed.calculations.lr_data import LRData
 import RefRed.colors as colors
+from RefRed.calculations.lr_data import LRData
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
 from RefRed.plot.background_settings import backgrounds_settings
 from RefRed.plot.clear_plots import ClearPlots
@@ -13,7 +9,6 @@ from RefRed.tabledata import TableData
 
 
 class DisplayPlots(object):
-
     parent = None
     _data = None
     is_data = True
@@ -312,7 +307,6 @@ class DisplayPlots(object):
         self.it_plot_ui.canvas.draw_idle()
 
     def plot_yt(self):
-
         _ytof = self.ytof
         _isLog = True
         _tof_axis = self.tofAxis
@@ -401,7 +395,6 @@ class DisplayPlots(object):
         self.ix_plot_ui = parent.ui.data_ix_plot
 
         if update_reduction_table:
-
             [peak1, peak2] = self.peak
             parent.ui.peakFromValue.setValue(peak1)
             parent.ui.peakToValue.setValue(peak2)

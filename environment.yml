@@ -19,8 +19,7 @@ dependencies:
   - sphinx
   - sphinx_rtd_theme
 # development
-  - black
-  - flake8
+  - ruff
   - mypy
   - pre-commit
   - pytest

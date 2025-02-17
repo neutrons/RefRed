@@ -1,23 +1,19 @@
-# standard imports
-from pathlib import Path
 import os
+from pathlib import Path
 
-# third-party imports
 from qtpy.QtWidgets import QDialog, QFileDialog
 
-# package imports
 import RefRed.colors
+import RefRed.utilities
 from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.observer import SpinBoxObserver
 from RefRed.interfaces import load_ui
-from RefRed.plot.background_settings import backgrounds_settings, BackgroundSettingsView
+from RefRed.plot.background_settings import BackgroundSettingsView, backgrounds_settings
 from RefRed.plot.display_plots import DisplayPlots
-import RefRed.utilities
 
 
 class PopupPlot2d(QDialog):
-
     parent = None
     _open_instances = []  # registry of PopupPlot2d instances
     data = None
@@ -31,7 +27,6 @@ class PopupPlot2d(QDialog):
     auto_max_tof = None
 
     def __init__(self, parent=None, data_type="data", data=None, row=0):
-
         self.parent = parent
         self.data = data
         self.data_type = data_type

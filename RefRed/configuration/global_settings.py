@@ -1,4 +1,3 @@
-# third party imports
 from pydantic import BaseModel
 
 

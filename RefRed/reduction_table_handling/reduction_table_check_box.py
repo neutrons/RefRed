@@ -1,10 +1,6 @@
-# standard imports
-
-# third-party imports
 import numpy as np
 from qtpy.QtCore import Qt  # type: ignore
 
-# package imports
 from RefRed.gui_handling.auto_tof_range_radio_button_handler import AutoTofRangeRadioButtonHandler
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
 from RefRed.plot.background_settings import backgrounds_settings
@@ -13,7 +9,6 @@ from RefRed.plot.display_plots import DisplayPlots
 
 
 class ReductionTableCheckBox(object):
-
     BOX_CHECKED = 2  # value emited by qtpy.QtWidgets.QCheckBox.stateChanged when checked
     row_selected = -1
     prev_row_selected = -1

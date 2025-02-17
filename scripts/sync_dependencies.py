@@ -1,4 +1,3 @@
-# standard imports
 import logging
 import os
 import re
@@ -15,8 +14,8 @@ def check_dependencies_synced():
     reqs_env = open(os.path.join(repo_dir, "requirements.txt"), "r").read()
 
     # check for LiquidsReflectometer versions
-    lr_conda = re.search(r'LiquidsReflectometer\.git@([^#]+)', conda_env).group(1)
-    lr_reqs = re.search(r'LiquidsReflectometer\.git@([^#]+)', reqs_env).group(1)
+    lr_conda = re.search(r"LiquidsReflectometer\.git@([^#]+)", conda_env).group(1)
+    lr_reqs = re.search(r"LiquidsReflectometer\.git@([^#]+)", reqs_env).group(1)
     if lr_conda != lr_reqs:
         raise RuntimeError("environment.yml and requirements.txt ask different versions of LiquidsReflectometer")
 

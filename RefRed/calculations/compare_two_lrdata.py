@@ -3,7 +3,6 @@ THETA_TOLERANCE = 0.05
 
 class CompareTwoLRData(object):
     def __init__(self, lrdata_1=None, lrdata_2=None):
-
         self.lrdata_1 = lrdata_1
         self.lrdata_2 = lrdata_2
         self.result_comparison = 0
@@ -24,7 +23,7 @@ class CompareTwoLRData(object):
             return
 
     def compare_lambda_requested(self):
-        '''sorting in descending order'''
+        """sorting in descending order"""
 
         _lrdata_1 = self.lrdata_1
         _lrdata_2 = self.lrdata_2
@@ -40,7 +39,7 @@ class CompareTwoLRData(object):
             return 0
 
     def compare_thi(self):
-        '''sorting in descending order'''
+        """sorting in descending order"""
 
         _lrdata_1 = self.lrdata_1
         _lrdata_2 = self.lrdata_2
@@ -56,7 +55,7 @@ class CompareTwoLRData(object):
             return 0
 
     def compare_theta(self):
-        '''sorting in ascending order'''
+        """sorting in ascending order"""
 
         _lrdata_1 = self.lrdata_1
         _lrdata_2 = self.lrdata_2

@@ -1,11 +1,8 @@
-# standard imports
 from enum import Enum
 from typing import Optional, Union
 
-# third party imports
 import numpy as np
 
-# application imports
 from RefRed.calculations.lr_data import LRData
 from RefRed.lconfigdataset import LConfigDataset
 

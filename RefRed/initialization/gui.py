@@ -1,22 +1,21 @@
-from qtpy import QtGui, QtCore, QtWidgets
-
 import socket
 
+from qtpy import QtCore, QtGui, QtWidgets
+
 from RefRed import WINDOW_TITLE
-from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex
-from RefRed.plot.all_plot_axis import AllPlotAxis
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
+from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex
+from RefRed.plot.all_plot_axis import AllPlotAxis
 
 
 class Gui(object):
-
     parent = None
     vertical_header = [
         "Plotted",
         "Data Run #",
         "Norm. Run #",
-        "\u03b8 (\u00B0)",
+        "\u03b8 (\u00b0)",
         "\u03bbmin (\u00c5)",
         "\u03bbmax (\u00c5)",
         "Qmin (1/\u00c5)",
@@ -29,7 +28,6 @@ class Gui(object):
     gui_size_coeff = 2.0 / 3.0
 
     def __init__(self, parent):
-
         self.parent = parent
         self.set_gui_title()
         self.set_gui_size()

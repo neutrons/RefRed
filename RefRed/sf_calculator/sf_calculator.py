@@ -1,33 +1,33 @@
 """
-    Scaling factor calculator
-    TODO: This need major cleanup
+Scaling factor calculator
+TODO: This need major cleanup
 """
 
-import sys
-import os
-from pathlib import Path
-from qtpy import QtGui, QtCore, QtWidgets
-from qtpy.QtWidgets import QFileDialog
-import numpy as np
 import logging
+import os
+import sys
 import time
+from pathlib import Path
 
-from RefRed import ORGANIZATION, APPNAME
+import numpy as np
+from qtpy import QtCore, QtGui, QtWidgets
+from qtpy.QtWidgets import QFileDialog
+
 import RefRed.colors
+from RefRed import APPNAME, ORGANIZATION
+from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.interfaces import load_ui
 from RefRed.interfaces.deadtime_settings import DeadTimeSettingsView
+from RefRed.sf_calculator.check_sf_run_reduction_button_status import (
+    CheckSfRunReductionButtonStatus,
+)
 from RefRed.sf_calculator.fill_sf_gui_table import FillSFGuiTable
 from RefRed.sf_calculator.incident_medium_list_editor import IncidentMediumListEditor
 from RefRed.sf_calculator.load_and_sort_nxsdata_for_sf_calculator import (
     LoadAndSortNXSDataForSFcalculator,
 )
-from RefRed.sf_calculator.check_sf_run_reduction_button_status import (
-    CheckSfRunReductionButtonStatus,
-)
 from RefRed.sf_calculator.reduction_sf_calculator import ReductionSfCalculator
 from RefRed.sf_calculator.sf_calculator_right_click import SFCalculatorRightClick
-
-from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.utilities import convert_tof_values_unit
 
 
@@ -1058,6 +1058,6 @@ class SFCalculator(QtWidgets.QMainWindow):
         dt_settings.exec_()
 
         # Store dead time options
-        self.paralyzable_deadtime = dt_settings.options['paralyzable']
-        self.deadtime_value = dt_settings.options['dead_time']
-        self.deadtime_tof_step = dt_settings.options['tof_step']
+        self.paralyzable_deadtime = dt_settings.options["paralyzable"]
+        self.deadtime_value = dt_settings.options["dead_time"]
+        self.deadtime_tof_step = dt_settings.options["tof_step"]

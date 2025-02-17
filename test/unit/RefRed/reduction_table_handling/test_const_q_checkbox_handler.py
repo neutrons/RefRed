@@ -1,11 +1,11 @@
 from unittest import mock
 from unittest.mock import Mock
 
+from qtpy.QtCore import Qt  # type: ignore
+
 from RefRed.calculations.lr_data import LRData
 from RefRed.lconfigdataset import LConfigDataset
 from RefRed.reduction_table_handling.const_q_checkbox_handler import ConstQCheckBoxHandler
-from qtpy.QtCore import Qt  # type: ignore
-
 from RefRed.tabledata import TableData
 
 
@@ -13,7 +13,7 @@ def test_const_q_checkbox_handler():
     big_table_data = TableData(max_row_count=1)
     row = 0
 
-    with mock.patch.object(LRData, '__init__', return_value=None):
+    with mock.patch.object(LRData, "__init__", return_value=None):
         instance = LRData()
         big_table_data.set_reflectometry_data(row, instance)
         big_table_data.set_normalization_data(row, instance)

@@ -1,10 +1,8 @@
 class RunSequenceBreaker(object):
-
     final_list = None
     str_final_list = None
 
     def __init__(self, run_sequence=None):
-
         self.final_list = []
         self.str_final_list = []
 
@@ -16,14 +14,14 @@ class RunSequenceBreaker(object):
 
             if _run_sequence == "":
                 self.final_list = [-1]
-                self.str_final_list = ['']
+                self.str_final_list = [""]
                 return
 
             # coma separated
-            coma_separated = _run_sequence.split(',')
+            coma_separated = _run_sequence.split(",")
 
             for _element in coma_separated:
-                hypen_separated = _element.split('-')
+                hypen_separated = _element.split("-")
                 nbr_element = len(hypen_separated)
                 if nbr_element > 1:
                     _range = self.getRangeBetweenTwoNumbers(hypen_separated[0], hypen_separated[1])
@@ -36,7 +34,7 @@ class RunSequenceBreaker(object):
                     self.str_final_list.append(str(hypen_separated[0]))
         except:
             self.final_list = [-2]
-            self.str_final_list = ['']
+            self.str_final_list = [""]
 
     def getRangeBetweenTwoNumbers(self, num1, num2):
         _num1 = int(num1)

@@ -1,16 +1,14 @@
 import time
+
+from RefRed.gui_handling.gui_utility import GuiUtility
+from RefRed.plot.launch_stitching_manual_axis import LaunchStitchingManualXAxis, LaunchStitchingManualYAxis
 from RefRed.plot.popup_plot_1d import PopupPlot1d
 from RefRed.plot.popup_plot_2d import PopupPlot2d
-from RefRed.plot.launch_stitching_manual_axis import LaunchStitchingManualXAxis
-from RefRed.plot.launch_stitching_manual_axis import LaunchStitchingManualYAxis
-from RefRed.gui_handling.gui_utility import GuiUtility
-
 
 DOUBLE_CLICK_DELAY = 0.4  # seconds
 
 
 class SingleClickPlot(object):
-
     parent = None
     data = None
     row = 0
@@ -18,17 +16,16 @@ class SingleClickPlot(object):
     def __init__(
         self,
         parent,
-        data_type='data',
-        plot_type='yi',
+        data_type="data",
+        plot_type="yi",
         is_pan_or_zoom_activated=False,
         is_manual_zoom_requested=False,
         is_x_axis_manual_zoom_requested=False,
         mouse_x=0,
         mouse_y=0,
     ):
-
         self.parent = parent
-        if plot_type == 'stitching':
+        if plot_type == "stitching":
             if is_manual_zoom_requested:
                 self.right_click_stitching_plot(is_x_axis_manual_zoom_requested, mouse_x, mouse_y)
             return
@@ -42,13 +39,13 @@ class SingleClickPlot(object):
 
         self.data = parent.big_table_data[row, col]
 
-        if plot_type in ['ix', 'it']:
+        if plot_type in ["ix", "it"]:
             return
 
-        if plot_type == 'yi':
+        if plot_type == "yi":
             self.single_yi_plot_click(data_type=data_type)
 
-        if plot_type == 'yt':
+        if plot_type == "yt":
             self.single_yt_plot_click(data_type=data_type)
 
     def right_click_stitching_plot(self, is_x_axis_manual_zoom_requested, mouse_x, mouse_y):
@@ -63,7 +60,7 @@ class SingleClickPlot(object):
                 self.parent.manual_y_axis_dialog = manual_axis
                 manual_axis.show()
 
-    def single_yi_plot_click(self, data_type='data'):
+    def single_yi_plot_click(self, data_type="data"):
         parent = self.parent
         if parent.time_click1 == -1:
             parent.time_click1 = time.time()
@@ -80,7 +77,7 @@ class SingleClickPlot(object):
 
         parent.time_click1 = -1
 
-    def single_yt_plot_click(self, data_type='data'):
+    def single_yt_plot_click(self, data_type="data"):
         parent = self.parent
         if parent.time_click1 == -1:
             parent.time_click1 = time.time()

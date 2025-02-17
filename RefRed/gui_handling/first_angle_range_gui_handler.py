@@ -4,11 +4,11 @@ class ParentGuiHandler(object):
 
 
 class FirstAngleRangeGuiHandler(ParentGuiHandler):
-    '''
+    """
     This class allows to enable or not the First Angle widgets
     according to status of SF or first_angle buttons in the
     stitching tab
-    '''
+    """
 
     def __init__(self, parent=None):
         super(FirstAngleRangeGuiHandler, self).__init__(parent=parent)
@@ -27,7 +27,6 @@ class FirstAngleRangeGuiHandler(ParentGuiHandler):
 
 
 class NormalizationOrStitchingButtonStatus(ParentGuiHandler):
-
     is_absolute_normalization = True
     is_auto_stitching = False
     is_manual_stitching = False
@@ -74,11 +73,11 @@ class NormalizationOrStitchingButtonStatus(ParentGuiHandler):
 
 
 class NormalizationOrStitchingGuiHandler(NormalizationOrStitchingButtonStatus):
-    '''
+    """
     Various widgets have to be enabled or not according to
     status of the 3 main buttons: Absolute_Normalization, Auto._Stitching and
     Manual_Stitching
-    '''
+    """
 
     def __init__(self, parent=None):
         super(NormalizationOrStitchingGuiHandler, self).__init__(parent=parent)

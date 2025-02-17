@@ -1,11 +1,11 @@
-from qtpy import QtWidgets
 import numpy as np
+from qtpy import QtWidgets
+
 from RefRed.interfaces import load_ui
 from RefRed.sf_preview.sf_file_handler import SFFileHandler
 
 
 class SFPreview(QtWidgets.QMainWindow):
-
     col_width = 100
     col_width1 = col_width + 50
     column_widths = [
@@ -21,14 +21,14 @@ class SFPreview(QtWidgets.QMainWindow):
         col_width1,
     ]
 
-    def __init__(self, parent=None, filename=''):
+    def __init__(self, parent=None, filename=""):
         self.parent = parent
 
         QtWidgets.QMainWindow.__init__(self, parent=parent)
         self.ui = load_ui("sf_preview_interface.ui", self)
 
         filename = self.parent.full_scaling_factor_file_name
-        if filename == '':
+        if filename == "":
             return
 
         self.filename = filename

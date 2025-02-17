@@ -1,12 +1,8 @@
-# standard imports
-from typing import List
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
-# third party imports
 from qtpy import QtWidgets
 from qtpy.QtCore import Qt  # type: ignore
 
-# application imports
 from RefRed import WINDOW_TITLE
 from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex
 from RefRed.tabledata import TableData
@@ -16,7 +12,6 @@ if TYPE_CHECKING:  # imported only when running mypy but not imported when the a
 
 
 class GuiUtility(object):
-
     NULL_ACTIVE_ROW = -1  # fake row index when no active row found in the reduction table
 
     def __init__(self, parent: "MainGui"):
@@ -24,29 +19,29 @@ class GuiUtility(object):
 
     def get_ipts(self, row=-1):
         if row == -1:
-            return 'N/A'
+            return "N/A"
         _data0 = self.parent.big_table_data.reflectometry_data(row)
         if _data0 is None:
-            return 'N/A'
+            return "N/A"
         return _data0.ipts
 
     def init_widgets_value(self):
         _gui_metadata = self.parent.gui_metadata
 
         # event tof bins
-        _tof_bin = int(_gui_metadata['tof_bin'])
+        _tof_bin = int(_gui_metadata["tof_bin"])
         self.parent.ui.eventTofBins.setValue(_tof_bin)
 
         # q bin
-        _q_bin = _gui_metadata['q_min']
+        _q_bin = _gui_metadata["q_min"]
         self.parent.ui.qStep.setText(str(_q_bin))
 
         # angle offset
-        _angle_offset = "%.3f" % _gui_metadata['angle_offset']
+        _angle_offset = "%.3f" % _gui_metadata["angle_offset"]
         self.parent.ui.angleOffsetValue.setText(_angle_offset)
 
         # angle offset error
-        _angle_offset_error = "%.3f" % _gui_metadata['angle_offset_error']
+        _angle_offset_error = "%.3f" % _gui_metadata["angle_offset_error"]
         self.parent.ui.angleOffsetError.setText(_angle_offset_error)
 
     def get_row_with_highest_q(self):
@@ -188,7 +183,7 @@ class GuiUtility(object):
 
     def gui_has_been_modified(self):
         dialog_title = WINDOW_TITLE + self.parent.current_loaded_file
-        new_dialog_title = dialog_title + '*'
+        new_dialog_title = dialog_title + "*"
         self.parent.setWindowTitle(new_dialog_title)
 
     def gui_not_modified(self):
@@ -198,9 +193,9 @@ class GuiUtility(object):
 
     def get_reduced_yaxis_type(self):
         if self.parent.ui.RvsQ.isChecked():
-            return 'RvsQ'
+            return "RvsQ"
         else:
-            return 'RQ4vsQ'
+            return "RQ4vsQ"
 
     def getStitchingType(self):
         """
@@ -208,8 +203,8 @@ class GuiUtility(object):
         can be either 'auto', 'manual' or 'absolute'
         """
         if self.parent.ui.absolute_normalization_button.isChecked():
-            return 'absolute'
+            return "absolute"
         elif self.parent.ui.auto_stitching_button.isChecked():
-            return 'auto'
+            return "auto"
         else:
-            return 'manual'
+            return "manual"

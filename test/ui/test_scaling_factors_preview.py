@@ -1,15 +1,11 @@
-# standard imports
 import os
 from unittest.mock import patch as mock_patch
 
-# third-party imports
-from qtpy import QtCore
 import pytest
+from qtpy import QtCore
 
-# RefRed imports
-from RefRed.sf_preview.sf_preview import SFPreview
 from RefRed.main import MainGui
-
+from RefRed.sf_preview.sf_preview import SFPreview
 
 SECOND = 1000  # 1000 miliseconds
 
@@ -52,5 +48,5 @@ def test_sf_preview(qtbot, data_server):
     assert sf_preview.ui.table_widget.item(4, 4).data(0) == "12.487"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

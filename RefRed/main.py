@@ -735,9 +735,7 @@ class MainGui(QtWidgets.QMainWindow):
     def toggle_instrument_settings(self):
         """Update option apply_deadtime of field deadtime_settings when the associated checkbox
         changes its state"""
-        self.instrument_settings.apply_instrument_settings = (
-            self.ui.instrument_settings_entry.applyCheckBox.isChecked()
-        )
+        self.instrument_settings.apply_instrument_settings = self.ui.instrument_settings_entry.applyCheckBox.isChecked()
 
     def show_instrument_settings(self):
         """Show the dialog for instrument settings. Update attribues options upon closing the dialog."""

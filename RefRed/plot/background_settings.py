@@ -1,11 +1,8 @@
-# standard imports
 from typing import List, Optional, Tuple
 
-# third-party imports
-from qtpy.QtCore import Qt, QObject, Signal  # type: ignore
-from qtpy.QtWidgets import QDialog, QCheckBox, QWidget
+from qtpy.QtCore import QObject, Qt, Signal  # type: ignore
+from qtpy.QtWidgets import QCheckBox, QDialog, QWidget
 
-# application imports
 from RefRed.calculations.lr_data import LRData
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.interfaces import load_ui
@@ -100,9 +97,9 @@ class CompositeBackgroundSettings:
         self.maingui: Optional[QObject] = None
 
     def __getitem__(self, key):
-        if key == 'data':
+        if key == "data":
             return self.data
-        elif key == 'norm':
+        elif key == "norm":
             return self.norm
         else:
             raise KeyError(f"No attribute with key '{key}' found in CompositeBackgroundSettings")
@@ -200,7 +197,6 @@ backgrounds_settings = CompositeBackgroundSettings()  # singleton instance
 
 
 class BackgroundSettingsView(QDialog):
-
     # checkbox names as well as names for the model properties
     options = ["subtract_background", "two_backgrounds"]
 

@@ -4,7 +4,6 @@ INSTRUMENT_SHORT_NAME = "REF_L"
 
 
 class LocateListRun(object):
-
     list_run = []
     list_nexus_found = []
     list_run_found = []

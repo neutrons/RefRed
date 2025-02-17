@@ -1,10 +1,8 @@
-# package imports
+import numpy as np
+import pytest
+
 from RefRed.file_loading_utility import loadCsvFile
 from RefRed.low_res_finder_algorithms.low_res_finder import LowResFinder
-
-# 3rd party imports
-import pytest
-import numpy as np
 
 
 @pytest.fixture(scope="function")
@@ -32,7 +30,7 @@ def csv_hard(data_server):
 
 
 def test_loadcsvfile_easy(csv_easy):
-    '''Step0 - Loading: checking that loadCsvFile works correctly on easy'''
+    """Step0 - Loading: checking that loadCsvFile works correctly on easy"""
     [xdata, ydata, edata] = csv_easy
     # x-axis
     xdata10 = xdata[0:10]
@@ -49,7 +47,7 @@ def test_loadcsvfile_easy(csv_easy):
 
 
 def test_loadcsvfile_medium(csv_medium):
-    '''Step0 - Loading: checking that loadCsvFile works correctly on medium'''
+    """Step0 - Loading: checking that loadCsvFile works correctly on medium"""
     [xdata, ydata, edata] = csv_medium
     # x-axis
     xdata10 = xdata[0:10]
@@ -66,7 +64,7 @@ def test_loadcsvfile_medium(csv_medium):
 
 
 def test_loadcsvfile_hard(csv_hard):
-    '''Step0 - Loading: checking that loadCsvFile works correctly on hard'''
+    """Step0 - Loading: checking that loadCsvFile works correctly on hard"""
     [xdata, ydata, edata] = csv_hard
     # x-axis
     xdata10 = xdata[0:10]
@@ -83,7 +81,7 @@ def test_loadcsvfile_hard(csv_hard):
 
 
 def test_calculate_first_derivative_easy(csv_easy):
-    '''Step1 - derivative: testing the first derivative calculation of easy data set'''
+    """Step1 - derivative: testing the first derivative calculation of easy data set"""
     [xdata, ydata, edata] = csv_easy
     peakfinder = LowResFinder(xdata, ydata, edata)
     [xdata_first, ydata_first] = peakfinder.get_first_derivative()
@@ -98,7 +96,7 @@ def test_calculate_first_derivative_easy(csv_easy):
 
 
 def test_calculate_first_derivative_yaxis_medium(csv_medium):
-    '''Step1 - derivative: testing the first derivative calculation of medium data set - axis y'''
+    """Step1 - derivative: testing the first derivative calculation of medium data set - axis y"""
     [xdata, ydata, edata] = csv_medium
     peakfinder = LowResFinder(xdata, ydata, edata)
     [_, ydata_first] = peakfinder.get_first_derivative()
@@ -109,7 +107,7 @@ def test_calculate_first_derivative_yaxis_medium(csv_medium):
 
 
 def test_calculatefirstderivative_yaxis_hard(csv_hard):
-    '''Step1 - derivative: testing the first derivative calculation of hard data set - axis y'''
+    """Step1 - derivative: testing the first derivative calculation of hard data set - axis y"""
     [xdata, ydata, edata] = csv_hard
     peakfinder = LowResFinder(xdata, ydata, edata)
     [_, ydata_first] = peakfinder.get_first_derivative()
@@ -120,7 +118,7 @@ def test_calculatefirstderivative_yaxis_hard(csv_hard):
 
 
 def test_calculateMinMaxDervativePixels_easy(csv_easy):
-    '''Step2 - calculate derivative counts value of easy data set'''
+    """Step2 - calculate derivative counts value of easy data set"""
     [xdata, ydata, edata] = csv_easy
     peakfinder = LowResFinder(xdata, ydata, edata)
     # minValue
@@ -138,7 +136,7 @@ def test_calculateMinMaxDervativePixels_easy(csv_easy):
 
 
 def test_calculateMinMaxDervativePixels_medium(csv_medium):
-    '''Step2 - calculate derivative counts value of medium data set'''
+    """Step2 - calculate derivative counts value of medium data set"""
     [xdata, ydata, edata] = csv_medium
     peakfinder = LowResFinder(xdata, ydata, edata)
     # minValue
@@ -150,7 +148,7 @@ def test_calculateMinMaxDervativePixels_medium(csv_medium):
 
 
 def test_calculateMinMaxDervativePixels_hard(csv_hard):
-    '''Step2 - calculate derivative counts value of hard data set'''
+    """Step2 - calculate derivative counts value of hard data set"""
     [xdata, ydata, edata] = csv_hard
     peakfinder = LowResFinder(xdata, ydata, edata)
     # minValue
@@ -162,7 +160,7 @@ def test_calculateMinMaxDervativePixels_hard(csv_hard):
 
 
 def test_calculateAvgAndStdDerivation_counts_firstderi_easy(csv_easy):
-    '''Step3 - calculate mean and std of first derivation counts of easy data set'''
+    """Step3 - calculate mean and std of first derivation counts of easy data set"""
     [xdata, ydata, edata] = csv_easy
     peakfinder = LowResFinder(xdata, ydata, edata)
     # mean
@@ -174,7 +172,7 @@ def test_calculateAvgAndStdDerivation_counts_firstderi_easy(csv_easy):
 
 
 def test_calculateAvgAndStdDerivation_counts_firstderi_medium(csv_medium):
-    '''Step3 - calculate mean and std of first derivation counts of medium data set'''
+    """Step3 - calculate mean and std of first derivation counts of medium data set"""
     [xdata, ydata, edata] = csv_medium
     peakfinder = LowResFinder(xdata, ydata, edata)
     # mean
@@ -186,7 +184,7 @@ def test_calculateAvgAndStdDerivation_counts_firstderi_medium(csv_medium):
 
 
 def test_calculateAvgAndStdDerivation_counts_firstderi_hard(csv_hard):
-    '''Step3 - calculate mean and std of first derivation counts of hard data set'''
+    """Step3 - calculate mean and std of first derivation counts of hard data set"""
     [xdata, ydata, edata] = csv_hard
     peakfinder = LowResFinder(xdata, ydata, edata)
     # mean
@@ -198,7 +196,7 @@ def test_calculateAvgAndStdDerivation_counts_firstderi_hard(csv_hard):
 
 
 def test_calculateLowResPixel_easy(csv_easy):
-    '''Step4 - assert the min&max value of low res for an easy data set'''
+    """Step4 - assert the min&max value of low res for an easy data set"""
     [xdata, ydata, edata] = csv_easy
     peakfinder = LowResFinder(xdata, ydata, edata)
     low_res_range = peakfinder.get_low_res()
@@ -209,7 +207,7 @@ def test_calculateLowResPixel_easy(csv_easy):
 
 
 def test_calculateLowResPixel_medium(csv_medium):
-    '''Step4 - assert the min&max value of low res for a medium data set'''
+    """Step4 - assert the min&max value of low res for a medium data set"""
     [xdata, ydata, edata] = csv_medium
     peakfinder = LowResFinder(xdata, ydata, edata)
     low_res_range = peakfinder.get_low_res()
@@ -220,7 +218,7 @@ def test_calculateLowResPixel_medium(csv_medium):
 
 
 def test_calculateLowResPixel_hard(csv_hard):
-    '''Step4 - assert the min&max value of low res for a hard data set'''
+    """Step4 - assert the min&max value of low res for a hard data set"""
     [xdata, ydata, edata] = csv_hard
     peakfinder = LowResFinder(xdata, ydata, edata)
     low_res_range = peakfinder.get_low_res()
@@ -230,5 +228,5 @@ def test_calculateLowResPixel_hard(csv_hard):
     np.testing.assert_equal(low_res_range[1], 197)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

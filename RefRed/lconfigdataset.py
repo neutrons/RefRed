@@ -1,4 +1,3 @@
-# standard imports
 from typing import List
 
 
@@ -13,8 +12,8 @@ class LConfigDataset(object):
 
     data_runs_compatible = True
     data_wks = None
-    data_sets = ['']
-    data_full_file_name = ['']
+    data_sets = [""]
+    data_full_file_name = [""]
     data_peak: List[int] = [0, 0]  # lower and upper boundaries for the peak
     data_back: List[int] = [0, 0]  # lower and upper boundaries for the first background
     data_back2: List[int] = [0, 0]  # lower and upper boundaries for the second background
@@ -24,14 +23,14 @@ class LConfigDataset(object):
     data_low_res_flag = True
     data_lambda_requested = -1
 
-    tof_range = ['0', '0']
-    tof_units = 'ms'
+    tof_range = ["0", "0"]
+    tof_units = "ms"
     tof_auto_flag = True
 
     norm_runs_compatible = True
     norm_wks = None
-    norm_sets = ['']
-    norm_full_file_name = ['']
+    norm_sets = [""]
+    norm_full_file_name = [""]
     norm_flag = True
     norm_peak = [0, 0]
     norm_back = [0, 0]
@@ -43,8 +42,8 @@ class LConfigDataset(object):
     norm_low_res_flag = True
     norm_lambda_requested = -1
 
-    q_range = ['0', '0']
-    lambda_range = ['0', '0']
+    q_range = ["0", "0"]
+    lambda_range = ["0", "0"]
     const_q = False
 
     reduce_q_axis = []

@@ -5,7 +5,6 @@ import sys
 import time
 
 import numpy as np
-
 from lr_reduction import reduction_template_reader, template
 from qtpy.QtWidgets import QApplication, QFileDialog
 

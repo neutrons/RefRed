@@ -1,6 +1,6 @@
 # third party packages
-from numpy.testing import assert_allclose
 import pytest  # PYTEST documentation at https://docs.pytest.org/
+from numpy.testing import assert_allclose
 
 
 # Helper functions to showcase some features of pytest
@@ -25,7 +25,7 @@ def raises_exception(a, b):
     try:
         c = a / b  # will raise an exception if b == 0.0
     except ZeroDivisionError:
-        raise ZeroDivisionError('Do not divide by zero, please')  # custom message
+        raise ZeroDivisionError("Do not divide by zero, please")  # custom message
     return c
 
 
@@ -50,17 +50,17 @@ class TestExampleScript:
         r"""How to test when your code is throwing an exception"""
         with pytest.raises(ZeroDivisionError) as exception_info:
             raises_exception(1.0, 0.0)  # divide by zero raises exception
-        assert 'Do not divide by zero' in str(exception_info.value)  # checks part of the error message
+        assert "Do not divide by zero" in str(exception_info.value)  # checks part of the error message
 
     def test_read_file(self, data_server):  # 'data_server' is a magic pytest fixture. See file conftest.py
         r"""Using data files located within directory tests/data/"""
         # read file tests/data/test_file_1.dat
-        path_to_file = data_server.path_to('easy_data_set.csv')
-        assert '285,3,1.732050808' in read_file(path_to_file)
+        path_to_file = data_server.path_to("easy_data_set.csv")
+        assert "285,3,1.732050808" in read_file(path_to_file)
         # read file tests/data/examples/test_file_2.dat
         # path_to_file = data_server.path_to('examples/test_file_2.dat')
         # assert 'Bye World!' in read_file(path_to_file)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pytest.main([__file__])

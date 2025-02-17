@@ -1,13 +1,9 @@
-# standard imports
-
-# third party imports
 from qtpy import QtGui
 
-# application imports
+import RefRed.colors
 from RefRed.calculations.add_list_nexus import AddListNexus
 from RefRed.calculations.lr_data import LRData
 from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
-import RefRed.colors
 from RefRed.lconfigdataset import LConfigDataset
 from RefRed.plot.display_plots import DisplayPlots
 from RefRed.reduction_table_handling.check_list_run_compatibility import CheckListRunCompatibility
@@ -15,11 +11,10 @@ from RefRed.tabledata import TableData
 
 
 class CheckListRunCompatibilityAndDisplay(object):
-
     runs_are_compatible = False
     wks = None
     lrdata = None
-    prefix = 'data'
+    prefix = "data"
 
     def __init__(
         self,
@@ -40,7 +35,7 @@ class CheckListRunCompatibilityAndDisplay(object):
         self.is_display_requested = is_display_requested
         self.runs_are_compatible = False
         self.lrdata = None
-        self.prefix = 'data' if self.is_working_with_data_column else 'norm'
+        self.prefix = "data" if self.is_working_with_data_column else "norm"
 
     def run(self):
         runs_are_compatible = True

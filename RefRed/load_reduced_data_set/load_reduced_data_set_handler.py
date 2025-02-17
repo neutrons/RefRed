@@ -1,11 +1,12 @@
-from qtpy import QtWidgets
 import os
+
+from qtpy import QtWidgets
+
 from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
 from RefRed.load_reduced_data_set.stitching_ascii_widget import StitchingAsciiWidget
 
 
 class LoadReducedDataSetHandler(object):
-
     last_row_loaded = -1
 
     def __init__(self, parent=None):

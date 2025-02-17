@@ -1,5 +1,4 @@
 class ClearPlots(object):
-
     parent = None
 
     plot_yt = False
@@ -37,11 +36,11 @@ class ClearPlots(object):
 
         if is_data:
             self.clear_data_plots()
-            parent.ui.dataNameOfFile.setText('')
+            parent.ui.dataNameOfFile.setText("")
 
         if is_norm:
             self.clear_norm_plots()
-            parent.ui.normNameOfFile.setText('')
+            parent.ui.normNameOfFile.setText("")
 
         if self.stitched:
             self.clear_stitched()
@@ -51,19 +50,19 @@ class ClearPlots(object):
 
     def clear_metadata(self):
         parent = self.parent
-        parent.ui.metadataProtonChargeValue.setText('N/A')
-        parent.ui.metadataProtonChargeUnits.setText('units')
-        parent.ui.metadataLambdaRequestedValue.setText('N/A')
-        parent.ui.metadataLambdaRequestedUnits.setText('units')
-        parent.ui.metadatathiValue.setText('N/A')
-        parent.ui.metadatathiUnits.setText('units')
-        parent.ui.metadatatthdValue.setText('N/A')
-        parent.ui.metadatatthdUnits.setText('units')
-        parent.ui.metadataS1WValue.setText('N/A')
-        parent.ui.metadataS1HValue.setText('N/A')
-        parent.ui.metadataS2WValue.setText('N/A')
-        parent.ui.metadataS2HValue.setText('N/A')
-        parent.ui.metadataRunNumber.setText('N/A')
+        parent.ui.metadataProtonChargeValue.setText("N/A")
+        parent.ui.metadataProtonChargeUnits.setText("units")
+        parent.ui.metadataLambdaRequestedValue.setText("N/A")
+        parent.ui.metadataLambdaRequestedUnits.setText("units")
+        parent.ui.metadatathiValue.setText("N/A")
+        parent.ui.metadatathiUnits.setText("units")
+        parent.ui.metadatatthdValue.setText("N/A")
+        parent.ui.metadatatthdUnits.setText("units")
+        parent.ui.metadataS1WValue.setText("N/A")
+        parent.ui.metadataS1HValue.setText("N/A")
+        parent.ui.metadataS2WValue.setText("N/A")
+        parent.ui.metadataS2HValue.setText("N/A")
+        parent.ui.metadataRunNumber.setText("N/A")
 
     def clear_data_plots(self):
         parent = self.parent

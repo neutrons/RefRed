@@ -1,14 +1,13 @@
-from qtpy.QtWidgets import QApplication
 import numpy as np
+from qtpy.QtWidgets import QApplication
 
-from RefRed.gui_handling.gui_utility import GuiUtility
-from RefRed.gui_handling.fill_stitching_table import FillStitchingTable
 import RefRed.colors
+from RefRed.gui_handling.fill_stitching_table import FillStitchingTable
+from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.tabledata import TableData
 
 
 class LiveReducedDataHandler(object):
-
     big_table_data = None
     colors = None
     row_index = 0
@@ -69,10 +68,10 @@ class LiveReducedDataHandler(object):
             )
 
             if _data.all_plot_axis.is_reduced_plot_stitching_tab_ylog:
-                self.parent.ui.data_stitching_plot.set_yscale('log')
+                self.parent.ui.data_stitching_plot.set_yscale("log")
 
             if _data.all_plot_axis.is_reduced_plot_stitching_tab_xlog:
-                self.parent.ui.data_stitching_plot.set_xscale('log')
+                self.parent.ui.data_stitching_plot.set_xscale("log")
 
             self.parent.ui.data_stitching_plot.draw()
             self.parent.ui.data_stitching_plot.canvas.draw_idle()
@@ -114,10 +113,10 @@ class LiveReducedDataHandler(object):
         )
 
         if _data.all_plot_axis.is_reduced_plot_stitching_tab_ylog:
-            self.parent.ui.data_stitching_plot.set_yscale('log')
+            self.parent.ui.data_stitching_plot.set_yscale("log")
 
         if _data.all_plot_axis.is_reduced_plot_stitching_tab_xlog:
-            self.parent.ui.data_stitching_plot.set_xscale('log')
+            self.parent.ui.data_stitching_plot.set_xscale("log")
 
         QApplication.processEvents()
 
@@ -139,7 +138,7 @@ class LiveReducedDataHandler(object):
 
 class ProducedSelectedOutputScaled(object):
     parent = None
-    axis_type = 'RvsQ'
+    axis_type = "RvsQ"
 
     def __init__(self, parent=None, q_axis=None, y_axis=None, e_axis=None):
         self.parent = parent
@@ -161,13 +160,13 @@ class ProducedSelectedOutputScaled(object):
         input_e_axis = self.input_e_axis
 
         # R vs Q selected
-        if self.axis_type == 'RvsQ':
+        if self.axis_type == "RvsQ":
             self.output_y_axis = input_y_axis
             self.output_e_axis = input_e_axis
             return
 
         # RQ4 vs Q selected
-        if self.axis_type == 'RQ4vsQ':
+        if self.axis_type == "RQ4vsQ":
             _q_axis_4 = input_q_axis**4
             self.output_y_axis = input_y_axis * _q_axis_4
             self.output_e_axis = input_e_axis * _q_axis_4

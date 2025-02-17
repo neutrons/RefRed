@@ -1,4 +1,5 @@
 import os
+
 from RefRed.export.ascii_loader import AsciiLoader
 
 
@@ -22,7 +23,7 @@ class ReducedAsciiLoader:
         self.is_live_reduction = is_live_reduction
         if is_live_reduction:
             self.ascii_file_name = "LAST REDUCED SET"
-            self.short_ascii_file_name = 'LAST REDUCED SET'
+            self.short_ascii_file_name = "LAST REDUCED SET"
             self.big_table_data = self.parent.big_table_data
         else:
             self.ascii_file_name = ascii_file_name

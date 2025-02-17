@@ -1,27 +1,26 @@
 """
-    Notes from inspecting the code:
-    Load data and update application store.
+Notes from inspecting the code:
+Load data and update application store.
 
-    The main "big_table_data" array has three entries per row,
-        0: Scattering data <class 'RefRed.calculations.lr_data.LRData'>
-        1: Direct beam data <class 'RefRed.calculations.lr_data.LRData'>
-        2: Reduction options <class 'RefRed.lconfigdataset.LConfigDataset'>
+The main "big_table_data" array has three entries per row,
+    0: Scattering data <class 'RefRed.calculations.lr_data.LRData'>
+    1: Direct beam data <class 'RefRed.calculations.lr_data.LRData'>
+    2: Reduction options <class 'RefRed.lconfigdataset.LConfigDataset'>
 """
 
 # import logging
-import RefRed.colors
 from qtpy import QtCore, QtGui
 from qtpy.QtCore import Signal
 
-from RefRed.reduction_table_handling.check_list_run_compatibility import CheckListRunCompatibility
+import RefRed.colors
 from RefRed.calculations.add_list_nexus import AddListNexus
-from RefRed.lconfigdataset import LConfigDataset
 from RefRed.calculations.lr_data import LRData
 from RefRed.calculations.update_reduction_table_metadata import UpdateReductionTableMetadata
+from RefRed.lconfigdataset import LConfigDataset
+from RefRed.reduction_table_handling.check_list_run_compatibility import CheckListRunCompatibility
 
 
 class CheckListRunCompatibilityThread(QtCore.QThread):  # type: ignore
-
     updated_data = Signal(int, bool, bool)
 
     runs_are_compatible = False
@@ -37,7 +36,6 @@ class CheckListRunCompatibilityThread(QtCore.QThread):  # type: ignore
         is_working_with_data_column=True,
         is_display_requested=False,
     ):
-
         self.parent = parent
         self.list_run = list_run
         self.list_nexus = list_nexus

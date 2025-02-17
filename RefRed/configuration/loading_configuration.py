@@ -1,18 +1,14 @@
-# standard imports
 import logging
 import os
-from xml.dom import minidom
 from typing import Any
+from xml.dom import minidom
 
-# third party imports
 from qtpy import QtWidgets
 from qtpy.QtWidgets import QFileDialog
 
-# application imports
 from RefRed.configuration.load_reduction_table_from_lconfigdataset import (
     LoadReductionTableFromLConfigDataSet as LoadReductionTable,
 )
-
 from RefRed.configuration.populate_reduction_table_from_lconfigdataset import (
     PopulateReductionTableFromLConfigDataSet as PopulateReductionTable,
 )
@@ -56,7 +52,7 @@ class LoadingConfiguration(object):
                 try:
                     self.loading()
                     message = "Done!"
-                except Exception as e:
+                except Exception as e:  # noqa: BLE001
                     logging.error(f"Error loading file: {e}")
                     message = "Error loading file: aborted"
             else:

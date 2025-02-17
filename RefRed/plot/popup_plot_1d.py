@@ -1,25 +1,21 @@
-# standard imports
 import bisect
-from pathlib import Path
 import os
+from pathlib import Path
 from typing import Optional
 
-# third-party imports
 from qtpy.QtWidgets import QDialog, QFileDialog
 
-# package imports
-from RefRed.calculations.lr_data import LRData
 import RefRed.colors
+import RefRed.utilities
+from RefRed.calculations.lr_data import LRData
 from RefRed.gui_handling.gui_utility import GuiUtility
 from RefRed.gui_handling.observer import SpinBoxObserver
 from RefRed.interfaces import load_ui
-from RefRed.plot.background_settings import backgrounds_settings, BackgroundSettingsView
+from RefRed.plot.background_settings import BackgroundSettingsView, backgrounds_settings
 from RefRed.plot.display_plots import DisplayPlots
-import RefRed.utilities
 
 
 class PopupPlot1d(QDialog):
-
     parent = None
     data_type = "data"
     data = None
@@ -44,7 +40,6 @@ class PopupPlot1d(QDialog):
     nbr_pixel_y_axis = 304
 
     def __init__(self, parent=None, data_type: str = "data", data: Optional[LRData] = None, row: int = 0):
-
         self.data_type = data_type
         self.parent = parent
         # argument data is optional for historical reasons but it should always be passed, never use the default value

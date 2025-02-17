@@ -2,15 +2,14 @@ from RefRed.gui_handling.gui_utility import GuiUtility
 
 
 class LogPlotToggle(object):
-    def __init__(self, parent=None, status='log', plot_type=None, is_y_log=True):
-
+    def __init__(self, parent=None, status="log", plot_type=None, is_y_log=True):
         status = str(status)
-        if status == 'log':
+        if status == "log":
             isLog = True
         else:
             isLog = False
 
-        if plot_type == 'stitching':
+        if plot_type == "stitching":
             [row, column] = [0, 0]
         else:
             o_gui_utility = GuiUtility(parent=parent)
@@ -21,27 +20,27 @@ class LogPlotToggle(object):
         if data is None:
             return
 
-        if plot_type == 'stitching':
+        if plot_type == "stitching":
             if is_y_log:
                 data.all_plot_axis.is_reduced_plot_stitching_tab_ylog = isLog
             else:
                 data.all_plot_axis.is_reduced_plot_stitching_tab_xlog = isLog
-        elif plot_type == 'yi':
+        elif plot_type == "yi":
             if is_y_log:
                 data.all_plot_axis.is_yi_ylog = isLog
             else:
                 data.all_plot_axis.is_yi_xlog = isLog
-        elif plot_type == 'yt':
+        elif plot_type == "yt":
             if is_y_log:
                 data.all_plot_axis.is_yt_ylog = isLog
             else:
                 data.all_plot_axis.is_yt_xlog = isLog
-        elif plot_type == 'it':
+        elif plot_type == "it":
             if is_y_log:
                 data.all_plot_axis.is_it_ylog = isLog
             else:
                 data.all_plot_axis.is_it_xlog = isLog
-        elif plot_type == 'ix':
+        elif plot_type == "ix":
             if is_y_log:
                 data.all_plot_axis.is_ix_ylog = isLog
             else:

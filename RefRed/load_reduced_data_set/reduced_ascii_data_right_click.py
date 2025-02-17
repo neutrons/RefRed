@@ -1,6 +1,7 @@
 from qtpy import QtGui, QtWidgets
-from RefRed.load_reduced_data_set.reduced_ascii_table_handler import ReducedAsciiTableHandler
+
 from RefRed.load_reduced_data_set.load_reduced_data_set_handler import LoadReducedDataSetHandler
+from RefRed.load_reduced_data_set.reduced_ascii_table_handler import ReducedAsciiTableHandler
 
 
 class ReducedAsciiDataRightClick(object):

@@ -1,16 +1,11 @@
-# standard imports
-
-# third party imports
 import numpy as np
 
-# application imports
 from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex
 from RefRed.reduction_table_handling.reduction_table_handler import ReductionTableHandler
 from RefRed.tabledata import TableData
 
 
 class PopulateReductionTableFromListLRData(object):
-
     list_lrdata_sorted = None
     list_wks_sorted = None
     list_runs_sorted = None
@@ -20,7 +15,6 @@ class PopulateReductionTableFromListLRData(object):
     THI_TOLERANCE = 0.015
 
     def __init__(self, parent=None, list_lrdata=None, list_wks=None, list_run=None, list_nexus=None, is_data=True):
-
         self.parent = parent
         self.list_run = list_run
         self.list_lrdata = list_lrdata

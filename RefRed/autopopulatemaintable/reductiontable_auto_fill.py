@@ -1,25 +1,25 @@
 # import sys
 import time
-import numpy as np
 from itertools import chain
+
+import numpy as np
 from qtpy.QtWidgets import QApplication
 
-from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
+from RefRed.autopopulatemaintable.auto_fill_widgets_handler import AutoFillWidgetsHandler
 from RefRed.autopopulatemaintable.extract_lconfigdataset_runs import ExtractLConfigDataSetRuns
-from RefRed.thread.locate_run import LocateRunThread
-from RefRed.calculations.load_list_nexus import LoadListNexus
-from RefRed.calculations.sort_lrdata_list import SortLRDataList
-from RefRed.calculations.lr_data import LRData
 from RefRed.autopopulatemaintable.populate_reduction_table_from_list_lrdata import PopulateReductionTableFromListLRData
 from RefRed.calculations.check_list_run_compatibility_and_display import CheckListRunCompatibilityAndDisplay
+from RefRed.calculations.load_list_nexus import LoadListNexus
+from RefRed.calculations.lr_data import LRData
+from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
+from RefRed.calculations.sort_lrdata_list import SortLRDataList
 from RefRed.mantid_utility import MantidUtility
-from RefRed.utilities import format_to_list
-from RefRed.autopopulatemaintable.auto_fill_widgets_handler import AutoFillWidgetsHandler
 from RefRed.nexus_utilities import get_run_number
+from RefRed.thread.locate_run import LocateRunThread
+from RefRed.utilities import format_to_list
 
 
 class ReductionTableAutoFill(object):
-
     list_full_file_name = []
     list_nxs = []
     list_lrdata = []
@@ -29,14 +29,13 @@ class ReductionTableAutoFill(object):
     list_wks_sorted = []
     list_nexus_sorted = []
 
-    data_type_selected = 'data'
+    data_type_selected = "data"
     o_auto_fill_widgets_handler = None
 
-    def __init__(self, parent=None, list_of_run_from_input='', data_type_selected='data', reset_table=False):
-
+    def __init__(self, parent=None, list_of_run_from_input="", data_type_selected="data", reset_table=False):
         self.parent = parent
 
-        if data_type_selected == 'data':
+        if data_type_selected == "data":
             # add to norm box, previous loaded norm
             _str_old_runs = self.retrieve_list_norm_previously_loaded()
             if not _str_old_runs == "":
@@ -48,16 +47,16 @@ class ReductionTableAutoFill(object):
                 self.parent.ui.norm_sequence_lineEdit.setText(new_str)
 
         self.browsing_files_flag = False
-        if not (self.parent.browsed_files[data_type_selected] is None):
+        if self.parent.browsed_files[data_type_selected] is not None:
             self.browsing_files_flag = True
 
-        if list_of_run_from_input == '':
+        if list_of_run_from_input == "":
             self.sorted_list_of_runs = []
             if not self.browsing_files_flag:
                 return
 
-        if data_type_selected != 'data':
-            data_type_selected = 'norm'
+        if data_type_selected != "data":
+            data_type_selected = "norm"
         self.data_type_selected = data_type_selected
 
         self.init_variable()
@@ -85,13 +84,12 @@ class ReductionTableAutoFill(object):
         self.run()
 
     def merge_list_of_runs(self, new_runs=None):
-
         # manual entry of the runs
         self.raw_run_from_input = new_runs
         self.calculate_discrete_list_of_runs()  # step1 -> list_of_runs_from_input
 
         self.big_table_data = None
-        if (not self.reset_table) and (self.data_type_selected == 'data'):
+        if (not self.reset_table) and (self.data_type_selected == "data"):
             self.retrieve_bigtable_list_data_loaded()  # step2 -> list_of_runs_from_lconfig
 
         _full_list_of_runs = []
@@ -151,7 +149,7 @@ class ReductionTableAutoFill(object):
         _list_nexus_sorted = self.list_nexus_sorted
         _list_runs_sorted = self.list_runs_sorted
         # _data_type_selected = self.data_type_selected
-        _is_working_with_data_column = True if self.data_type_selected == 'data' else False
+        _is_working_with_data_column = True if self.data_type_selected == "data" else False
 
         self.parent.ui.progressBar_check5.setMinimum(0)
         self.parent.ui.progressBar_check5.setValue(0)
@@ -275,7 +273,7 @@ class ReductionTableAutoFill(object):
         list_runs_sorted = self.list_runs_sorted
         list_wks_sorted = self.list_wks_sorted
         list_nexus_sorted = self.list_nexus_sorted
-        is_data = True if self.data_type_selected == 'data' else False
+        is_data = True if self.data_type_selected == "data" else False
         o_pop_reduction_table = PopulateReductionTableFromListLRData(
             parent=self.parent,
             list_lrdata=list_lrdata_sorted,
@@ -297,7 +295,7 @@ class ReductionTableAutoFill(object):
         _list_full_file_name = []
         for i in range(sz):
             _filename_thread_array.append(LocateRunThread())
-            _list_full_file_name.append('')
+            _list_full_file_name.append("")
         self.filename_thread_array = _filename_thread_array
         self.list_nxs = _list_full_file_name
 
@@ -320,7 +318,7 @@ class ReductionTableAutoFill(object):
         if parent is None:
             return
         _big_table_data = parent.big_table_data
-        _extract_runs = ExtractLConfigDataSetRuns(_big_table_data[:, 2], data_type='norm')
+        _extract_runs = ExtractLConfigDataSetRuns(_big_table_data[:, 2], data_type="norm")
         _runs = _extract_runs.list_runs()
         _str_runs = ",".join([str(run) for run in _runs])
         return _str_runs
@@ -332,7 +330,7 @@ class ReductionTableAutoFill(object):
 
     def check_minimum_requirements(self):
         _data_type_selected = self.data_type_selected
-        if _data_type_selected == 'data':
+        if _data_type_selected == "data":
             return True
 
         big_table_data = self.parent.big_table_data

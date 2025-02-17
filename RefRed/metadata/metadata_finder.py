@@ -1,29 +1,29 @@
-from pathlib import Path
-from qtpy.QtGui import QPalette, QPixmap, QIcon
-from qtpy.QtWidgets import (
-    QMainWindow,
-    QCheckBox,
-    QFileDialog,
-    QTableWidgetItem,
-    QMessageBox,
-    QPushButton,
-)
-from qtpy.QtCore import Qt, QSize, QSettings  # type: ignore
-from mantid.simpleapi import LoadEventNexus
 import os
 import time
-import numpy as np
+from pathlib import Path
 
-from RefRed import ORGANIZATION, APPNAME
-from RefRed.interfaces import load_ui
+import numpy as np
+from mantid.simpleapi import LoadEventNexus
+from qtpy.QtCore import QSettings, QSize, Qt  # type: ignore
+from qtpy.QtGui import QIcon, QPalette, QPixmap
+from qtpy.QtWidgets import (
+    QCheckBox,
+    QFileDialog,
+    QMainWindow,
+    QMessageBox,
+    QPushButton,
+    QTableWidgetItem,
+)
+
+import RefRed.nexus_utilities
+import RefRed.utilities
+from RefRed import APPNAME, ORGANIZATION
 from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
 from RefRed.decorators import waiting_effects
-import RefRed.utilities
-import RefRed.nexus_utilities
+from RefRed.interfaces import load_ui
 
 
 class MetadataFinder(QMainWindow):
-
     _open_instances = []
     parent = None
 
@@ -177,7 +177,7 @@ class MetadataFinder(QMainWindow):
         _index = 0
         for _key in list_keys:
             _name = _key
-            if (search_string.strip() != "") and (not (search_string in _name.lower())):
+            if (search_string.strip() != "") and (search_string not in _name.lower()):
                 continue
 
             self.ui.configureTable.insertRow(_index)
@@ -243,7 +243,7 @@ class MetadataFinder(QMainWindow):
         _list_runs = oListRuns.getFinalList()
         if len(_list_runs) > self.WARNING_NBR_FILES:
             msgBox = QMessageBox()
-            _str = "Program is about to load {:%d} files. Do you want to continue ?".format(len(_list_runs))
+            _str = f"Program is about to load {len(_list_runs):%d} files. Do you want to continue ?"
             msgBox.setText(_str)
             msgBox.addButton(QPushButton("NO"), QMessageBox.NoRole)
             msgBox.addButton(QPushButton("YES"), QMessageBox.YesRole)
@@ -280,7 +280,7 @@ class MetadataFinder(QMainWindow):
                     return
                 self.list_filename.append(_filename)
                 randomString = RefRed.utilities.generate_random_workspace_name()
-                print(f"About to load \"{_filename}\"")
+                print(f'About to load "{_filename}"')
                 _nxs = LoadEventNexus(Filename=_filename, OutputWorkspace=randomString, MetaDataOnly=True)
                 self.list_nxs.append(_nxs)
 

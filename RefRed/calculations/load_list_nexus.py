@@ -2,16 +2,15 @@ from RefRed.calculations.load_nexus import LoadNexus
 
 
 class LoadListNexus(object):
-
     list_nexus = None
     list_run = None
-    prefix = 'data'
+    prefix = "data"
 
     list_wks_loaded = []
     list_run_loaded = []
     list_nexuss_loaded = []
 
-    def __init__(self, list_nexus=None, list_run=None, metadata_only=False, prefix='data'):
+    def __init__(self, list_nexus=None, list_run=None, metadata_only=False, prefix="data"):
         if list_nexus is None:
             return
         self.list_nexus = list_nexus
