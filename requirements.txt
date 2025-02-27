@@ -8,4 +8,4 @@ scipy
 PyQt5
 qtpy
 setuptools
-lr_reduction@git+https://github.com/neutrons/LiquidsReflectometer.git@v2.1.11#egg=lr_reduction
+lr_reduction@git+https://github.com/neutrons/LiquidsReflectometer.git@v2.1.12#egg=lr_reduction
