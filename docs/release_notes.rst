@@ -16,8 +16,15 @@ Release Notes
 - MR #XYZ: one-liner description
 
 
-Next
-----
+5.1.1
+-----
+2025-03-04
+
+v5.1.1 includes the addition of instrument geometry settings to the reduction
+workflow, the removal of the \`Display Metadata...\` right-click option from the reduction table,
+an updated popup message for v4 deprecation, and a new column in the reduction table for
+constant Q binning during reduction. For developers, the documentation has been restructured
+and published in ReadTheDocs.
 
 **Of interest to the User**:
 - MR #141: Add instrument geometry settings to reduction workflow
