@@ -194,7 +194,7 @@ class MetadataFinder(QMainWindow):
             self.ui.configureTable.setItem(_index, 1, _nameItem)
 
             [value, units] = self.retrieveValueUnits(nxs.getRun(), _name)
-            _valueItem = QTableWidgetItem(value)
+            _valueItem = QTableWidgetItem(str(value))
             self.ui.configureTable.setItem(_index, 2, _valueItem)
             _unitsItem = QTableWidgetItem(units)
             self.ui.configureTable.setItem(_index, 3, _unitsItem)
