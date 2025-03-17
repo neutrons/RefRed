@@ -5,7 +5,7 @@ Release Notes
 
 <Next Release>
 --------------
-(date of release)
+(date of release, with format YYYY-MM-DD)
 
 **Of interest to the User**:
 
@@ -16,8 +16,9 @@ Release Notes
 - MR #XYZ: one-liner description
 
 
-Next
-----
+5.2.0
+-----
+2025-03-18
 
 **Of interest to the User**:
 - MR #141: Add instrument geometry settings to reduction workflow
@@ -27,7 +28,6 @@ Next
 
 
 **Of interest to the Developer:**
-
 - MR #126: structure documentation and publish in readthedocs
 
 5.1.0
