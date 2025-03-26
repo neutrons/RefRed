@@ -13,6 +13,7 @@ from qtpy.QtWidgets import (
 
 from RefRed.configuration.global_settings import GlobalSettings
 from RefRed.interfaces import load_ui
+from RefRed.utilities import str2bool
 
 
 @dataclass
@@ -188,7 +189,7 @@ class InstrumentSettings(GlobalSettings):
         """
         # cast each value (of type `str`) to the type appropriate to the corresponding pydantic field
         converters: Dict[str, Callable[[str], Any]] = {
-            "apply_instrument_settings": bool,
+            "apply_instrument_settings": str2bool,
             "source_detector_distance": float,
             "sample_detector_distance": float,
             "num_x_pixels": int,
