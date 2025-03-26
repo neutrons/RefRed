@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Any, Callable, Dict
 from xml.dom.minidom import Document, Element
-from RefRed.utilities import str2bool
 
 from qtpy.QtWidgets import (
     QCheckBox,
@@ -14,6 +13,7 @@ from qtpy.QtWidgets import (
 
 from RefRed.configuration.global_settings import GlobalSettings
 from RefRed.interfaces import load_ui
+from RefRed.utilities import str2bool
 
 
 @dataclass
