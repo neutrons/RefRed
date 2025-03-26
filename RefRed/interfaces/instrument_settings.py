@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import Any, Callable, Dict
 from xml.dom.minidom import Document, Element
+from RefRed.utilities import str2bool
 
 from qtpy.QtWidgets import (
     QCheckBox,
@@ -188,7 +189,7 @@ class InstrumentSettings(GlobalSettings):
         """
         # cast each value (of type `str`) to the type appropriate to the corresponding pydantic field
         converters: Dict[str, Callable[[str], Any]] = {
-            "apply_instrument_settings": bool,
+            "apply_instrument_settings": str2bool,
             "source_detector_distance": float,
             "sample_detector_distance": float,
             "num_x_pixels": int,
