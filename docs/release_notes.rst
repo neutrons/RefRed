@@ -16,6 +16,18 @@ Release Notes
 - MR #XYZ: one-liner description
 
 
+5.2.1
+-----
+YYYY-MM-DD
+
+**Of interest to the User**:
+
+- MR #XYZ: one-liner description
+
+**Of interest to the Developer:**
+
+-  PR #150 Update mantid to 6.12.0
+
 5.2.0
 -----
 2025-03-18
