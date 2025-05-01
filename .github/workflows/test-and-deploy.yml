@@ -16,8 +16,8 @@ jobs:
         shell: bash -l {0}
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: conda-incubator/setup-miniconda@v2
+      - uses: actions/checkout@v4
+      - uses: conda-incubator/setup-miniconda@v3
         name: Setup Conda
         with:
           auto-update-conda: true
@@ -48,7 +48,7 @@ jobs:
 
       - name: Trigger deploy
         id: trigger
-        uses: eic/trigger-gitlab-ci@v2
+        uses: eic/trigger-gitlab-ci@v3
         with:
           url: https://code.ornl.gov
           token: ${{ secrets.GITLAB_TRIGGER_TOKEN }}
@@ -59,7 +59,7 @@ jobs:
             CONDA_ENV="${{ steps.conda_env_name.outputs.name }}"
 
       - name: Annotate commit
-        uses: peter-evans/commit-comment@v2
+        uses: peter-evans/commit-comment@v3
         with:
           body: |
             GitLab pipeline for ${{ steps.conda_env_name.outputs.name }} has been submitted for this commit: ${{ steps.trigger.outputs.web_url }}
