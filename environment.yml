@@ -2,7 +2,6 @@ name: refred
 channels:
   - mantid/label/main
   - conda-forge
-  - defaults
 dependencies:
   - python=3.10.*
   - mantid=6.12.0
@@ -14,6 +13,7 @@ dependencies:
   - pydantic
   - pip
   - pip:
+      - build
       - git+https://github.com/neutrons/LiquidsReflectometer.git@v2.1.13#egg=lr_reduction
   # documentation
   - sphinx

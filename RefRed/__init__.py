@@ -1,8 +1,9 @@
-from ._version import get_versions
+"""RefRed: A PyQT GUI for Liquids Reflectometry Data Reduction"""
 
-# set by versioneer
-__version__ = get_versions()["version"]
-del get_versions
+try:
+    from ._version import __version__  # noqa: F401
+except ImportError:
+    __version__ = "unknown"
 
 ORGANIZATION = "neutrons"
 APPNAME = "RefRed"

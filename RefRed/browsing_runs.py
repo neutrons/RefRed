@@ -18,7 +18,7 @@ class BrowsingRuns(object):
 
     def _select_files(self):
         _path = self.parent.path_config
-        _filter = "NeXus (*.nxs);;All (*.*)"
+        _filter = "NeXus (*.nxs*);;All (*.*)"
         _title = "Select %s NeXus files" % self.data_type
         filenames, _ = QtWidgets.QFileDialog.getOpenFileNames(self.parent, _title, _path, _filter)
 
