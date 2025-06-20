@@ -107,3 +107,7 @@ ignore = [
   "N816",   # mixed case global variable name
   "N999",   # invalid module name
 ]
+
+[tool.mypy]
+ignore_missing_imports = true
+allow_untyped_globals = true
