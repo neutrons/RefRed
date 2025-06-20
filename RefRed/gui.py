@@ -13,7 +13,7 @@ from RefRed import __version__ as version
 
 print(f"""##################################################
 # RefRed {version}
-#    with mr_reduction: {lr_reduction.__version__}
+#    with lr_reduction: {lr_reduction.__version__}
 #    with Mantid:       {mantid.__version__}
 ##################################################
 """)
@@ -22,7 +22,7 @@ from RefRed.main import MainGui
 
 
 def main(argv=[]):
-    app = QApplication(argv)
+    app = QApplication(argv or [])
     splash = QSplashScreen(QPixmap(":/General/logo_refl_hq.png"))
     splash.showMessage(
         """<html>
@@ -38,7 +38,7 @@ def main(argv=[]):
     splash.show()
     QApplication.processEvents()
 
-    window = MainGui(argv)
+    window = MainGui(argv or [])
     window.show()
     splash.finish(window)
     return app.exec_()
