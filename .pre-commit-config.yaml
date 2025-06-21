@@ -24,7 +24,6 @@ repos:
         exclude: |
           dev-docs
           docs
-          versioneer.py
           RefRed/_version.py
           create_graph.py
           test/data
@@ -32,7 +31,6 @@ repos:
         exclude: |
           dev-docs
           docs
-          versioneer.py
           RefRed/_version.py
           create_graph.py
           test/data

@@ -26,7 +26,7 @@ class AboutDialog(object):
         message = f"""RefRed - Liquids Reflectrometry Reduction program
 
         RefRed version {refred_version_str}
-        Reduction version {lr_reduction.__version__}
+        lr_reduction version {lr_reduction.__version__}
 
         Library versions:
           - Python: {python_version}

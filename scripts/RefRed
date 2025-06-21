@@ -1,5 +1,0 @@
-#!/bin/sh
-#
-# Launch Mantidplot using any necessary LD_PRELOAD or software collection behaviour
-#
-QT_API=pyqt5 start_refred.py

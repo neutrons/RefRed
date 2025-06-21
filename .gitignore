@@ -115,3 +115,6 @@ testenv2.7
 
 # gvim
 *.swp
+
+# versioningit
+_version.py
