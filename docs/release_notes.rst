@@ -13,7 +13,7 @@ Release Notes
 
 **Of interest to the Developer:**
 
-- MR #XYZ: one-liner description
+- MR #152: Modernize installation process from setup.py to pyproject.toml
 
 
 5.2.1

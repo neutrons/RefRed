@@ -154,7 +154,7 @@ class MainGui(QtWidgets.QMainWindow):
     # various metadata such as q_min (for output reduced ascii)
     gui_metadata = {}
 
-    def __init__(self, argv=[], parent=None):
+    def __init__(self, parent=None):
         if parent is None:
             QtWidgets.QMainWindow.__init__(self)
         else:
