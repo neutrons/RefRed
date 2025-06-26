@@ -1,8 +1,7 @@
 # -*- encoding: utf-8 -*-
 """
 Package containing configuration modules.
-This folder contains all files which define constants and parameters
-for quicknxs.
+This folder contains all files which define constants and parameters for RefRed.
 
 The config package facilitates a special ConfigProxy interface that
 acts like a dictionary, which is automatically generated from the
@@ -25,7 +24,7 @@ For example the module "user1" could look like this::
 
 The module that wants to use these information will be similar to::
 
-  from quicknxs.config import user1
+  from RefRed.config import user1
 
   print user1.CONS1 # directly read from module
   print user1['opt1'] # first time read from module than from user.ini file

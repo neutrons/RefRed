@@ -221,7 +221,7 @@ class NavigationToolbar(NavigationToolbar2QT):
         sorted_filetypes = list(filetypes.items())
         sorted_filetypes.sort()
 
-        filename = os.path.join(tempfile.gettempdir(), "quicknxs_print.png")
+        filename = os.path.join(tempfile.gettempdir(), "refred_print.png")
         self.canvas.print_figure(filename, dpi=600)
         imgpix = QtGui.QPixmap(filename)
         os.remove(filename)
