@@ -23,7 +23,7 @@ jobs:
         run: pixi run mypy RefRed test
 
       - name: Unit test with code coverage
-        run: pixi run test -vv --cov=src --cov-report=xml --cov-report=term
+        run: pixi run test -vv --cov=RefRed --cov-report=xml --cov-report=term
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4

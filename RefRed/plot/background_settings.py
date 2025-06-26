@@ -86,7 +86,7 @@ class CompositeBackgroundSettings:
     3. Automatically updates itself when the user clicks on a different row in the reduction table.
     """
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls):
         if not cls._instance:
             cls._instance = super(CompositeBackgroundSettings, cls).__new__(cls)
         return cls._instance
