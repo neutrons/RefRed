@@ -38,7 +38,7 @@ def main(argv=[]):
     splash.show()
     QApplication.processEvents()
 
-    window = MainGui(argv or [])
+    window = MainGui()
     window.show()
     splash.finish(window)
     return app.exec_()

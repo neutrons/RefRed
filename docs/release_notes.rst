@@ -13,6 +13,7 @@ Release Notes
 
 **Of interest to the Developer:**
 
+- PR #154: Convert to pixi from conda
 - MR #152: Modernize installation process from setup.py to pyproject.toml
 
 
