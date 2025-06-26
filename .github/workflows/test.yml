@@ -87,7 +87,7 @@ jobs:
         run: |
           micromamba install --yes -c conda-forge conda-build conda-index
           python -m conda_index /tmp/local-channel
-          micromamba install --yes -c /tmp/local-channel -c mantid-ornl -c conda-forge refred
+          micromamba install --yes -c /tmp/local-channel -c mantid-ornl -c conda-forge RefRed
 
       - name: Verify the installation
         run: python -c "import RefRed"
