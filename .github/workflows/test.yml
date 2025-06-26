@@ -56,7 +56,7 @@ jobs:
           path: refred-*.conda
 
   conda-verify:
-    needs: [tests, package]
+    needs: package
     runs-on: ubuntu-24.04
     defaults:
       run:
@@ -87,7 +87,7 @@ jobs:
         run: |
           micromamba install --yes -c conda-forge conda-build conda-index
           python -m conda_index /tmp/local-channel
-          micromamba install --yes -c /tmp/local-channel -c mantid-ornl -c conda-forge RefRed
+          micromamba install --yes -c /tmp/local-channel -c mantid-ornl -c conda-forge refred
 
       - name: Verify the installation
         run: python -c "import RefRed"
