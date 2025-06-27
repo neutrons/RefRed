@@ -2,16 +2,18 @@ name: Packaging and Deployment
 
 on:
   workflow_dispatch:
-  push:
+  workflow_run:
+    workflows: [Test Suite]
+    types: [completed]
     branches: [qa, main]
-    tags: ["v*"]
 
 env:
   PKG_NAME: refred
 
 jobs:
-  linux:
+  on-success:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -39,3 +41,8 @@ jobs:
           if [ "${IS_RC}" = "true" ]; then CONDA_LABEL="rc"; fi
           echo pushing ${{ github.ref }} with label $CONDA_LABEL
           pixi run anaconda upload --label $CONDA_LABEL --user neutrons "$PKG_NAME"-*.conda
+  on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - run: echo 'The triggering workflow failed'
