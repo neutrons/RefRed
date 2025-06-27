@@ -20,7 +20,7 @@ jobs:
           pixi-version: v0.48.2
 
       - name: mypy type annotations
-        run: pixi run mypy refred test
+        run: pixi run mypy src/refred test
 
       - name: Unit test with code coverage
         run: pixi run test -vv --cov=refred --cov-report=xml --cov-report=term
