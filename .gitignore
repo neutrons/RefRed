@@ -118,3 +118,6 @@ testenv2.7
 
 # versioningit
 _version.py
+
+# conda package
+refred-*.conda
