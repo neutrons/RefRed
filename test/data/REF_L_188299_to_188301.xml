@@ -1,7 +1,7 @@
 <Reduction>
  <instrument_name>REFL</instrument_name>
  <version>2.0.0</version>
-<generator>refred</generator>
+<generator>RefRed</generator>
  <DataSeries>
   <RefLData>
    <peak_selection_type>narrow</peak_selection_type>

@@ -3,7 +3,7 @@
  <timestamp>Tuesday, 04. February 2025 01:55PM</timestamp>
  <version>2.2.0.dev44+d202502041807</version>
  <mantid_version>6.10.0</mantid_version>
-<generator>refred-5.1.0+52.g206bd51.dirty</generator>
+<generator>RefRed-5.1.0+52.g206bd51.dirty</generator>
  <DataSeries>
   <RefLData>
    <peak_selection_type>narrow</peak_selection_type>
