@@ -6,8 +6,8 @@ import numpy as np
 import pytest
 from qtpy import QtCore
 
-from RefRed.configuration.loading_configuration import LoadingConfiguration
-from RefRed.main import MainGui
+from refred.configuration.loading_configuration import LoadingConfiguration
+from refred.main import MainGui
 
 wait = 200
 
@@ -115,7 +115,7 @@ def test_reduce_and_export_data(qtbot, tmp_path, data_server, case):
     # export the reduction script
     (tmp_path / "output.txt").unlink()
 
-    with mock.patch("RefRed.export.export_plot_ascii.QFileDialog.getSaveFileName") as mock_getSaveFileName:
+    with mock.patch("refred.export.export_plot_ascii.QFileDialog.getSaveFileName") as mock_getSaveFileName:
         mock_getSaveFileName.return_value = (str(tmp_path / "output.txt"), "")
         window.export_reduction_script_button()
     qtbot.wait(wait)
@@ -160,7 +160,7 @@ def export_ascii(qtbot, window, results_file):
     # press "Export the plot into ASCII file"
     export_action = window.ui.data_stitching_plot.toolbar.actions()[9]
     export_button_widget = window.ui.data_stitching_plot.toolbar.widgetForAction(export_action)
-    with mock.patch("RefRed.export.export_plot_ascii.QFileDialog.getSaveFileName") as mock_getSaveFileName:
+    with mock.patch("refred.export.export_plot_ascii.QFileDialog.getSaveFileName") as mock_getSaveFileName:
         mock_getSaveFileName.return_value = (results_file, "")
         qtbot.mouseClick(export_button_widget, QtCore.Qt.LeftButton)
     qtbot.wait(wait)
