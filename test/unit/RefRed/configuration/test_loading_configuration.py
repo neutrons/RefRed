@@ -2,13 +2,13 @@ import unittest.mock as mock
 
 import pytest
 
-from RefRed.configuration.loading_configuration import LoadingConfiguration
-from RefRed.tabledata import TableData
+from refred.configuration.loading_configuration import LoadingConfiguration
+from refred.tabledata import TableData
 
 
 class TestLoadingConfiguration(object):
     def test_init(self):
-        with mock.patch("RefRed.configuration.loading_configuration.StatusMessageHandler") as mockStatusMessageHandler:
+        with mock.patch("refred.configuration.loading_configuration.StatusMessageHandler") as mockStatusMessageHandler:
             m = mock.Mock()
             loadingConfiguration = LoadingConfiguration(parent=m)
             mockStatusMessageHandler.assert_called()
@@ -22,8 +22,8 @@ class TestLoadingConfiguration(object):
             ("", "File not found"),
         ],
     )
-    @mock.patch("RefRed.configuration.loading_configuration.QFileDialog")
-    @mock.patch("RefRed.configuration.loading_configuration.StatusMessageHandler")
+    @mock.patch("refred.configuration.loading_configuration.QFileDialog")
+    @mock.patch("refred.configuration.loading_configuration.StatusMessageHandler")
     def test_run_file_search(self, StatusMessageHandlerMock, QFileDialogMock, filepath, message, data_server):
         def add_abspath(input_filepath):
             r"""helper to add the absolute path to file REF_L_188298_tiny_template.xml"""
@@ -51,8 +51,8 @@ class TestLoadingConfiguration(object):
         loader.run()  # test is the file is found
         StatusMessageHandlerMock.assert_called_with(parent=parent, message=message, is_threaded=True)
 
-    @mock.patch("RefRed.tabledata.TableData._validate_type")
-    @mock.patch("RefRed.configuration.loading_configuration.LoadingConfiguration.getMetadataObject")
+    @mock.patch("refred.tabledata.TableData._validate_type")
+    @mock.patch("refred.configuration.loading_configuration.LoadingConfiguration.getMetadataObject")
     def test_populate_big_table_data_with_lconfig(self, mockGetMetadataObject, mock_validate_type):
         mockGetMetadataObject.return_value = mock.Mock()
         mock_validate_type.return_value = None  # don't check the type of elements when inserted in the table

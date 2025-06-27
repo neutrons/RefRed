@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from RefRed.export.reduced_ascii_loader import ReducedAsciiLoader
+from refred.export.reduced_ascii_loader import ReducedAsciiLoader
 
 
 class TestReducedAsciiLoader:

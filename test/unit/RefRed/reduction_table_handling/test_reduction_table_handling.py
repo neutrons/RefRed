@@ -3,9 +3,9 @@ from unittest import mock
 import pytest
 from qtpy import QtWidgets
 
-from RefRed.interfaces.mytablewidget import ReductionTableColumnIndex
-from RefRed.main import MainGui
-from RefRed.reduction_table_handling.reduction_table_handler import ReductionTableHandler
+from refred.interfaces.mytablewidget import ReductionTableColumnIndex
+from refred.main import MainGui
+from refred.reduction_table_handling.reduction_table_handler import ReductionTableHandler
 
 NBR_ROWS = 6
 

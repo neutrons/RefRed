@@ -1,7 +1,7 @@
 import pytest
 
-from RefRed.file_loading_utility import loadCsvFile
-from RefRed.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
+from refred.file_loading_utility import loadCsvFile
+from refred.peak_finder_algorithms.peak_finder_derivation import PeakFinderDerivation
 
 
 class TestPeakFinderDerivation(object):

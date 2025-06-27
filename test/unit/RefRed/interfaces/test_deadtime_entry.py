@@ -1,7 +1,7 @@
 import pytest
 from qtpy.QtCore import Qt  # type: ignore
 
-from RefRed.interfaces.deadtime_entry import DeadTimeEntryPoint
+from refred.interfaces.deadtime_entry import DeadTimeEntryPoint
 
 
 @pytest.fixture

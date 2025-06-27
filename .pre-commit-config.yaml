@@ -22,12 +22,12 @@ repos:
         args: [--fix, --exit-non-zero-on-fix]
         exclude: |
           docs
-          RefRed/_version.py
+          refred/_version.py
           test/data
       - id: ruff-format
         exclude: |
           docs
-          RefRed/_version.py
+          refred/_version.py
           test/data
 
   - repo: local

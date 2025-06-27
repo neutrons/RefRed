@@ -1,14 +1,14 @@
 import pytest
 
-from RefRed.calculations.run_sequence_breaker import RunSequenceBreaker
+from refred.calculations.run_sequence_breaker import RunSequenceBreaker
 
 
 def test_run_sequence_breaker():
-    """Test  RefRed.calculations.run_sequence_breaker.RunSequenceBreaker
+    """Test  refred.calculations.run_sequence_breaker.RunSequenceBreaker
 
     Unit test data is from documented use case
-    https://github.com/neutrons/RefRed/blob/next/docs/compute-scaling-factors.rst.
-    Expected result is obtained by RefRed-production release (python 2.7 version)
+    https://github.com/neutrons/refred/blob/next/docs/compute-scaling-factors.rst.
+    Expected result is obtained by refred-production release (python 2.7 version)
     """
     # Test input
     test_run_sequence = "184975-184989"

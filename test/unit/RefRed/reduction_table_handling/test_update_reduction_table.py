@@ -3,15 +3,15 @@ import unittest.mock as mock
 # third party packages
 import pytest
 
-from RefRed.main import MainGui
+from refred.main import MainGui
 from test.utilities import load_run_from_reduction_table
 
 wait = 1000
 
 
 @pytest.mark.parametrize("is_display_checked", [True, False])
-@mock.patch("RefRed.main.DisplayPlots")
-@mock.patch("RefRed.calculations.locate_list_run.FileFinder.findRuns")
+@mock.patch("refred.main.DisplayPlots")
+@mock.patch("refred.calculations.locate_list_run.FileFinder.findRuns")
 def test_update_reduction_table_thread(
     mock_file_finder_find_runs, mock_display_plots, is_display_checked, qtbot, file_finder_find_runs
 ):
@@ -35,7 +35,7 @@ def test_update_reduction_table_thread(
 
 
 @pytest.mark.parametrize("col", [1, 2])  # data run column, normalization run column
-@mock.patch("RefRed.calculations.locate_list_run.FileFinder.findRuns")
+@mock.patch("refred.calculations.locate_list_run.FileFinder.findRuns")
 def test_empty_cell_press_enter(mock_file_finder_find_runs, col, qtbot, file_finder_find_runs):
     """Test pressing Enter in empty cell in the reduction table before and after data has been loaded"""
     mock_file_finder_find_runs.side_effect = file_finder_find_runs
@@ -62,8 +62,8 @@ def test_empty_cell_press_enter(mock_file_finder_find_runs, col, qtbot, file_fin
     assert window_main.ui.reductionTable.isEnabled()
 
 
-@mock.patch("RefRed.main.DisplayPlots")
-@mock.patch("RefRed.calculations.locate_list_run.FileFinder.findRuns")
+@mock.patch("refred.main.DisplayPlots")
+@mock.patch("refred.calculations.locate_list_run.FileFinder.findRuns")
 def test_load_run_auto_peak_finder(mock_file_finder_find_runs, mock_display_plots, qtbot, file_finder_find_runs):
     """Test that the auto-peak finder is only enabled if a new run is loaded"""
     mock_file_finder_find_runs.side_effect = file_finder_find_runs

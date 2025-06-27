@@ -2,7 +2,7 @@ from unittest.mock import Mock
 
 import pytest
 
-from RefRed.reduction.individual_reduction_settings_handler import IndividualReductionSettingsHandler
+from refred.reduction.individual_reduction_settings_handler import IndividualReductionSettingsHandler
 
 
 class TestIndividualReductionSettingsHandler:

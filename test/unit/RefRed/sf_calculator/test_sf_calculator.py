@@ -1,7 +1,7 @@
 import pytest
 from qtpy import QtCore, QtWidgets  # type: ignore
 
-from RefRed.sf_calculator.sf_calculator import SFCalculator
+from refred.sf_calculator.sf_calculator import SFCalculator
 
 
 class TestSFCalculator:
@@ -48,7 +48,7 @@ class TestSFCalculator:
                 self.options["dead_time"] = dead_time
                 self.options["tof_step"] = tof_step
 
-        monkeypatch.setattr("RefRed.sf_calculator.sf_calculator.DeadTimeSettingsView", MockDeadTimeSettingsView)
+        monkeypatch.setattr("refred.sf_calculator.sf_calculator.DeadTimeSettingsView", MockDeadTimeSettingsView)
         self.app.show_dead_time_dialog()
         assert self.app.paralyzable_deadtime is True
         assert self.app.deadtime_value == 4.2
@@ -71,7 +71,7 @@ class TestSFCalculator:
             def set_state(self, paralyzable, dead_time, tof_step):
                 pass
 
-        monkeypatch.setattr("RefRed.sf_calculator.sf_calculator.DeadTimeSettingsView", MockDeadTimeSettingsView)
+        monkeypatch.setattr("refred.sf_calculator.sf_calculator.DeadTimeSettingsView", MockDeadTimeSettingsView)
         self.app.show_dead_time_dialog()
         assert self.app.paralyzable_deadtime == new_paralyzable
         assert self.app.deadtime_value == new_dead_time

@@ -4,7 +4,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from RefRed.export import ascii_loader
+from refred.export import ascii_loader
 
 
 class TestAsciiLoader:

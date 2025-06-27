@@ -1,7 +1,7 @@
 import pytest
 from mantid.simpleapi import mtd
 
-from RefRed.calculations.load_nexus import LoadNexus
+from refred.calculations.load_nexus import LoadNexus
 
 
 class TestLoadNexus(object):

@@ -3,10 +3,10 @@ from unittest.mock import Mock
 
 from qtpy.QtCore import Qt  # type: ignore
 
-from RefRed.calculations.lr_data import LRData
-from RefRed.lconfigdataset import LConfigDataset
-from RefRed.reduction_table_handling.const_q_checkbox_handler import ConstQCheckBoxHandler
-from RefRed.tabledata import TableData
+from refred.calculations.lr_data import LRData
+from refred.lconfigdataset import LConfigDataset
+from refred.reduction_table_handling.const_q_checkbox_handler import ConstQCheckBoxHandler
+from refred.tabledata import TableData
 
 
 def test_const_q_checkbox_handler():

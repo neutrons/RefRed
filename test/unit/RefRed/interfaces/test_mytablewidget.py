@@ -3,7 +3,7 @@ import unittest.mock as mock
 import pytest
 from qtpy.QtCore import Qt  # type: ignore
 
-from RefRed.interfaces.mytablewidget import MyTableWidget
+from refred.interfaces.mytablewidget import MyTableWidget
 
 
 class Event(object):

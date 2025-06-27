@@ -2,7 +2,7 @@ from xml.dom.minidom import parseString
 
 import pytest
 
-from RefRed.interfaces.deadtime_settings import DeadTimeSettingsModel
+from refred.interfaces.deadtime_settings import DeadTimeSettingsModel
 
 
 class TestDeadTimeSettingsModel:
@@ -33,14 +33,14 @@ class TestDeadTimeSettingsModel:
 
     def test_from_xml(self):
         xml_input = (
-            "<RefRed>"
+            "<refred>"
             "<spurious>True</spurious>\n"
             "<dead_time_correction>False</dead_time_correction>\n"
             "<dead_time_paralyzable>False</dead_time_paralyzable>\n"
             "<dead_time_value>2.1</dead_time_value>\n"
             "<dead_time_tof_step>100.0</dead_time_tof_step>\n"
             "<another_spurious>True</another_spurious>\n"
-            "</RefRed>"
+            "</refred>"
         )
         dom = parseString(xml_input)
         model = DeadTimeSettingsModel().from_xml(dom.documentElement)

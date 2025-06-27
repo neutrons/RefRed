@@ -1,11 +1,11 @@
 import numpy as np
 import pytest
 
-from RefRed.utilities import convert_tof_values_unit
+from refred.utilities import convert_tof_values_unit
 
 
 def test_convert_tof_list():
-    """Unit test on RefRed.utilities"""
+    """Unit test on refred.utilities"""
     # Gold input
     tof_list = [2000.0, 32100.0]
 
@@ -24,7 +24,7 @@ def test_convert_tof_list():
 
 
 def test_convert_tof_array():
-    """Unit test on RefRed.utilities"""
+    """Unit test on refred.utilities"""
     # Gold input
     tof_list = np.array([2000.0, 32100.0])
 
@@ -43,7 +43,7 @@ def test_convert_tof_array():
 
 
 def test_convert_tof_none():
-    """Unit test on RefRed.utilities"""
+    """Unit test on refred.utilities"""
     # Input
     none_tofs = None
 

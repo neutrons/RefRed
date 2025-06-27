@@ -5,8 +5,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-import RefRed
-from RefRed.export import export_plot_ascii
+import refred
+from refred.export import export_plot_ascii
 
 
 class TestExportPlotAscii:
@@ -69,8 +69,8 @@ class TestExportPlotAscii:
         for me, ne in zip(outstrlist, reference):
             assert me == ne
 
-    @mock.patch("RefRed.utilities.write_ascii_file", mock.MagicMock())
-    @mock.patch("RefRed.utilities.output_2d_ascii_file", mock.MagicMock())
+    @mock.patch("refred.utilities.write_ascii_file", mock.MagicMock())
+    @mock.patch("refred.utilities.output_2d_ascii_file", mock.MagicMock())
     def test_export(self):
         # we need a new one as pytest might run out of order
         epa = export_plot_ascii.ExportPlotAscii(parent=self.fp)
@@ -89,8 +89,8 @@ class TestExportPlotAscii:
             epa.data_type = dt
             epa.export()
 
-        assert RefRed.utilities.output_2d_ascii_file.call_count == 1
-        assert RefRed.utilities.write_ascii_file.call_count == 3
+        assert refred.utilities.output_2d_ascii_file.call_count == 1
+        assert refred.utilities.write_ascii_file.call_count == 3
 
 
 if __name__ == "__main__":

@@ -4,8 +4,8 @@ from unittest.mock import patch as mock_patch
 import pytest
 from qtpy import QtCore
 
-from RefRed.main import MainGui
-from RefRed.sf_preview.sf_preview import SFPreview
+from refred.main import MainGui
+from refred.sf_preview.sf_preview import SFPreview
 
 SECOND = 1000  # 1000 miliseconds
 
@@ -33,7 +33,7 @@ def test_sf_preview(qtbot, data_server):
         return os.path.join(parent_dir, "sf_186529_Si_auto.cfg"), ""
 
     with mock_patch(
-        "RefRed.gui_handling.scaling_factor_widgets_handler.QFileDialog.getOpenFileName", new=mock_open_file
+        "refred.gui_handling.scaling_factor_widgets_handler.QFileDialog.getOpenFileName", new=mock_open_file
     ):
         qtbot.mouseClick(window_main.ui.sfBrowseButton, QtCore.Qt.LeftButton)  # open the QFileDialog
 

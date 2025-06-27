@@ -1,6 +1,6 @@
 import pytest
 
-from RefRed.file_loading_utility import loadCsvFile
+from refred.file_loading_utility import loadCsvFile
 
 
 @pytest.fixture(scope="function")

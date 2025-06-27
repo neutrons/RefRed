@@ -9,7 +9,7 @@ dynamic = ["version"]
 requires-python = ">=3.10"
 license = { text = "GPL version 3.0" }
 readme = "README.rst"
-keywords = ["neutrons", "RefRed", "liquids reflectometer"]
+keywords = ["neutrons", "refred", "liquids reflectometer"]
 
 [project.urls]
 homepage = "https://github.com/neutrons/RefRed"
@@ -17,7 +17,7 @@ repository = "https://github.com/neutrons/RefRed"
 issues = "https://github.com/neutrons/RefRed/issues"
 
 [project.gui-scripts]
-refred = "RefRed.gui:main"
+refred = "refred.gui:main"
 
 ####################
 ### Build config ###
@@ -34,12 +34,12 @@ source = "versioningit"
 artifacts = ["*.yml", "*.yaml", "*.ini", "*.gx", "*.json", "*.ui"]
 
 [tool.hatch.build.hooks.versioningit-onbuild]
-source-file = "RefRed/_version.py"
-build-file = "RefRed/_version.py"
+source-file = "src/refred/_version.py"
+build-file = "src/refred/_version.py"
 replacement = '"{next_version}"'
 
 [tool.hatch.build.targets.wheel]
-packages = ["RefRed"]
+packages = ["src/refred"]
 
 [tool.versioningit.vcs]
 method = "git"
@@ -54,14 +54,14 @@ dirty = "{version}+d{build_date:%Y%m%d}"
 distance-dirty = "{next_version}.dev{distance}+d{build_date:%Y%m%d%H%M}"
 
 [tool.versioningit.write]
-file = "RefRed/_version.py"
+file = "src/refred/_version.py"
 
 ###################
 ### Pixi config ###
 ###################
 
 [tool.pixi.workspace]
-name = "RefRed"
+name = "refred"
 platforms = ["linux-64"]
 channels = [
   "conda-forge",
@@ -73,7 +73,7 @@ channels = [
 preview = ["pixi-build"]
 
 [tool.pixi.package]
-name = "RefRed"
+name = "refred"
 version = "0.0.0"
 
 [tool.pixi.package.build]
@@ -85,7 +85,7 @@ pyqt = ">=5,<6"
 qtpy = ">=1.9.0"
 
 [tool.pixi.pypi-dependencies]
-RefRed = { path = ".", editable = true }
+refred = { path = ".", editable = true }
 configobj = ">=5.0.9"
 
 [tool.pixi.package.host-dependencies]
@@ -169,7 +169,7 @@ reset-version = { cmd = "toml set tool.pixi.package.version \"0.0.0\" --toml-pat
 ##########################
 
 [tool.coverage.run]
-source = ["RefRed"]
+source = ["src/refred"]
 omit = ["test/*"]
 
 ############

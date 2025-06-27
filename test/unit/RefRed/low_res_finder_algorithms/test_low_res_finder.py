@@ -1,8 +1,8 @@
 import numpy as np
 import pytest
 
-from RefRed.file_loading_utility import loadCsvFile
-from RefRed.low_res_finder_algorithms.low_res_finder import LowResFinder
+from refred.file_loading_utility import loadCsvFile
+from refred.low_res_finder_algorithms.low_res_finder import LowResFinder
 
 
 @pytest.fixture(scope="function")

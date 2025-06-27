@@ -1,5 +1,5 @@
-from RefRed.main import MainGui
-from RefRed.reduction.live_reduction_handler import LiveReductionHandler
+from refred.main import MainGui
+from refred.reduction.live_reduction_handler import LiveReductionHandler
 from test.utilities import load_run_from_reduction_table
 
 

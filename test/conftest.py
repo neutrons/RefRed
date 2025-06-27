@@ -76,7 +76,7 @@ def file_finder_find_runs(data_server):
     """Fixture to add as side effect for mock of FileFinder.findRuns to locate runs in the test data directory
 
     Usage:
-    @mock.patch("RefRed.calculations.locate_list_run.FileFinder.findRuns")
+    @mock.patch("refred.calculations.locate_list_run.FileFinder.findRuns")
     def test_update_reduction_table(mock_file_finder_find_runs, file_finder_find_runs):
         mock_file_finder_find_runs.side_effect = file_finder_find_runs
     :return function: function to add as side effect to mock of FileFinder.findRuns

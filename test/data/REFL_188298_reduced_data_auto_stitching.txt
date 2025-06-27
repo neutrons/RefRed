@@ -15,7 +15,7 @@
 #
 # # Date: 02_12_2021
 # # Reduction method: manual
-# # Reduction engine: RefRed
+# # Reduction engine: refred
 # # # Date: 02_12_2021
 # #
 # # DataRun	NormRun	2theta(degrees)	LambdaMin(A)	LambdaMax(A)	Qmin(1/A)	Qmax(1/A)	ScalingFactor	Total Counts	pcCharge(mC)

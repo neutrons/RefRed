@@ -3,7 +3,7 @@ import unittest.mock as mock
 import pytest
 from qtpy import QtCore, QtWidgets  # type: ignore
 
-from RefRed.main import MainGui
+from refred.main import MainGui
 
 
 class TestMainGui:
@@ -18,9 +18,9 @@ class TestMainGui:
     def test_run_reduction_button(self):
         assert self.app.run_reduction_button() is None
 
-    @mock.patch("RefRed.main.MainGui.file_loaded_signal")
-    @mock.patch("RefRed.main.InitializeGui")
-    @mock.patch("RefRed.main.load_ui")
+    @mock.patch("refred.main.MainGui.file_loaded_signal")
+    @mock.patch("refred.main.InitializeGui")
+    @mock.patch("refred.main.load_ui")
     @mock.patch("qtpy.QtWidgets.QMainWindow.__init__")
     def test_mock_init(self, mock_main_window_init, mock_load_ui, mock_initialize_gui, mock_file_loaded_signal):
         parent = mock.Mock()
@@ -30,10 +30,10 @@ class TestMainGui:
         mock_initialize_gui.assert_called()
         mock_file_loaded_signal.connect.assert_called()
 
-    @mock.patch("RefRed.main.LoadingConfiguration")
-    @mock.patch("RefRed.main.MainGui.file_loaded_signal")
-    @mock.patch("RefRed.main.InitializeGui")
-    @mock.patch("RefRed.main.load_ui")
+    @mock.patch("refred.main.LoadingConfiguration")
+    @mock.patch("refred.main.MainGui.file_loaded_signal")
+    @mock.patch("refred.main.InitializeGui")
+    @mock.patch("refred.main.load_ui")
     @mock.patch("qtpy.QtWidgets.QMainWindow.__init__")
     def test_load_configuration(
         self,
@@ -90,7 +90,7 @@ class TestMainGui:
                 self.options["dead_time"] = dead_time
                 self.options["tof_step"] = tof_step
 
-        monkeypatch.setattr("RefRed.main.DeadTimeSettingsView", MockDeadTimeSettingsView)
+        monkeypatch.setattr("refred.main.DeadTimeSettingsView", MockDeadTimeSettingsView)
         self.app.show_deadtime_settings()
         assert self.app.deadtime_settings.paralyzable is True
         assert self.app.deadtime_settings.dead_time == 4.2
@@ -117,7 +117,7 @@ class TestMainGui:
             def set_state(self, paralyzable, dead_time, tof_step):
                 pass
 
-        monkeypatch.setattr("RefRed.main.DeadTimeSettingsView", MockDeadTimeSettingsView)
+        monkeypatch.setattr("refred.main.DeadTimeSettingsView", MockDeadTimeSettingsView)
         self.app.show_deadtime_settings()
         assert self.app.deadtime_settings.paralyzable == new_paralyzable
         assert self.app.deadtime_settings.dead_time == new_dead_time
@@ -180,7 +180,7 @@ class TestMainGui:
                 self.options["xi_reference"] = xi_reference
                 self.options["s1_sample_distance"] = s1_sample_distance
 
-        monkeypatch.setattr("RefRed.main.InstrumentSettingsDialog", MockInstrumentSettingsDialog)
+        monkeypatch.setattr("refred.main.InstrumentSettingsDialog", MockInstrumentSettingsDialog)
         self.app.show_instrument_settings()
         assert self.app.instrument_settings.source_detector_distance == 15.75
         assert self.app.instrument_settings.sample_detector_distance == 1.83
@@ -228,7 +228,7 @@ class TestMainGui:
             ):
                 pass
 
-        monkeypatch.setattr("RefRed.main.InstrumentSettingsDialog", MockInstrumentSettingsDialog)
+        monkeypatch.setattr("refred.main.InstrumentSettingsDialog", MockInstrumentSettingsDialog)
         self.app.show_instrument_settings()
         assert self.app.instrument_settings.source_detector_distance == new_source_detector_distance
         assert self.app.instrument_settings.sample_detector_distance == new_sample_detector_distance

@@ -3,7 +3,7 @@ from xml.dom.minidom import parseString
 import pytest
 from qtpy.QtCore import Qt  # type: ignore
 
-from RefRed.interfaces.instrument_settings import InstrumentSettings, InstrumentSettingsEntryPoint
+from refred.interfaces.instrument_settings import InstrumentSettings, InstrumentSettingsEntryPoint
 
 # Test the InstrumentSettingsEntryPoint
 
@@ -87,7 +87,7 @@ class TestInstrumentSettingsModel:
 
     def test_from_xml(self):
         xml_input = (
-            "<RefRed>"
+            "<refred>"
             "<spurious>True</spurious>\n"
             "<apply_instrument_settings>True</apply_instrument_settings>\n"
             "<source_detector_distance>1.0</source_detector_distance>\n"
@@ -98,7 +98,7 @@ class TestInstrumentSettingsModel:
             "<xi_reference>6.0</xi_reference>\n"
             "<s1_sample_distance>7.0</s1_sample_distance>\n"
             "<another_spurious>True</another_spurious>\n"
-            "</RefRed>"
+            "</refred>"
         )
         dom = parseString(xml_input)
         model = InstrumentSettings().from_xml(dom.documentElement)

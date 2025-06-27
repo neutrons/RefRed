@@ -2,9 +2,9 @@ from unittest.mock import patch
 
 import pytest
 
-from RefRed.calculations.lr_data import LRData
-from RefRed.lconfigdataset import LConfigDataset
-from RefRed.tabledata import TableData, TableDataColumIndex
+from refred.calculations.lr_data import LRData
+from refred.lconfigdataset import LConfigDataset
+from refred.tabledata import TableData, TableDataColumIndex
 
 
 class TestTableData:

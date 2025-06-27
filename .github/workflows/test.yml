@@ -20,10 +20,10 @@ jobs:
           pixi-version: v0.48.2
 
       - name: mypy type annotations
-        run: pixi run mypy RefRed test
+        run: pixi run mypy refred test
 
       - name: Unit test with code coverage
-        run: pixi run test -vv --cov=RefRed --cov-report=xml --cov-report=term
+        run: pixi run test -vv --cov=refred --cov-report=xml --cov-report=term
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
@@ -90,4 +90,4 @@ jobs:
           micromamba install --yes -c /tmp/local-channel -c mantid-ornl -c conda-forge refred
 
       - name: Verify the installation
-        run: python -c "import RefRed"
+        run: python -c "import refred"

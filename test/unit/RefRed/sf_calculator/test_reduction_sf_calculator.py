@@ -7,8 +7,8 @@ import qtpy
 import qtpy.QtWidgets
 from qtpy.QtWidgets import QTableWidgetItem
 
-from RefRed.main import MainGui
-from RefRed.sf_calculator.reduction_sf_calculator import ReductionSfCalculator
+from refred.main import MainGui
+from refred.sf_calculator.reduction_sf_calculator import ReductionSfCalculator
 
 
 def mock_table_row_count(*args, **kwargs):
@@ -43,7 +43,7 @@ def mock_table_row_cell(row, col):
     return spin_box_instance
 
 
-@mock.patch("RefRed.sf_calculator.reduction_sf_calculator.QApplication.processEvents")
+@mock.patch("refred.sf_calculator.reduction_sf_calculator.QApplication.processEvents")
 def test_init_reduction_sf_calculator(processEvents_mock, qtbot):
     """Test reduction sf calculator"""
     main_app = MainGui()
