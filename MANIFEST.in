@@ -1,5 +1,0 @@
-include MANIFEST.in
-include README
-include scripts/RefRed
-include RefRed/*
-recursive-include icons *.png *.svg *.ico

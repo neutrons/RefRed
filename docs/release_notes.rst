@@ -13,6 +13,8 @@ Release Notes
 
 **Of interest to the Developer:**
 
+- PR #155: rename to refred from RefRed and introduce src/ directory
+- PR #154: convert to pixi from conda
 - MR #152: Modernize installation process from setup.py to pyproject.toml
 
 

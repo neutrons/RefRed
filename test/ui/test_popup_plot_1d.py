@@ -3,8 +3,8 @@ from unittest.mock import patch as mock_patch
 import pytest
 from qtpy import QtCore
 
-from RefRed.main import MainGui
-from RefRed.plot.popup_plot_1d import PopupPlot1d
+from refred.main import MainGui
+from refred.plot.popup_plot_1d import PopupPlot1d
 
 
 def test_popup_plot_1d(qtbot, data_server):
@@ -20,9 +20,9 @@ def test_popup_plot_1d(qtbot, data_server):
         r"""mock returning the path to the file that's been opened for reading"""
         return data_server.path_to("REF_L_188299_configuration.xml")
 
-    with mock_patch("RefRed.configuration.loading_configuration.QFileDialog.exec_", new=mock_file_dialog_opens):
+    with mock_patch("refred.configuration.loading_configuration.QFileDialog.exec_", new=mock_file_dialog_opens):
         with mock_patch(
-            "RefRed.configuration.loading_configuration.QFileDialog.selectedFiles", new=mock_file_dialog_returns
+            "refred.configuration.loading_configuration.QFileDialog.selectedFiles", new=mock_file_dialog_returns
         ):
             window_main.load_configuration()  # load one data set, populates the first row in the reduction table
 
