@@ -36,7 +36,6 @@ artifacts = ["*.yml", "*.yaml", "*.ini", "*.gx", "*.json", "*.ui"]
 [tool.hatch.build.hooks.versioningit-onbuild]
 source-file = "src/refred/_version.py"
 build-file = "src/refred/_version.py"
-replacement = '"{next_version}"'
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/refred"]
@@ -80,7 +79,7 @@ version = "0.0.0"
 backend = { name = "pixi-build-python", version = "0.1.*" }
 
 [tool.pixi.dependencies]
-lr_reduction = { git = "git+https://github.com/neutrons/LiquidsReflectometer.git@remove-pyside6#egg=lr_reduction" }
+lr_reduction = { git = "git+https://github.com/neutrons/LiquidsReflectometer.git@v2.2.0rc2#egg=lr_reduction" }
 pyqt = ">=5,<6"
 qtpy = ">=1.9.0"
 
@@ -152,7 +151,7 @@ conda-publish = { cmd = "anaconda upload *.conda", description = "Publish the .c
 ] }
 # Misc
 audit-deps = { cmd = "pip-audit --local -s osv", description = "Audit the package dependencies for vulnerabilities" }
-clean = { cmd = 'rm -rf .pytest_cache .ruff_cache **/*.egg-info **/dist **/__pycache__ **/_version.py', description = "Clean up various caches and build artifacts" }
+clean = { cmd = 'rm -rf .mypy_cache .pytest_cache .ruff_cache **/*.egg-info **/dist **/__pycache__ **/_version.py', description = "Clean up various caches and build artifacts" }
 clean-conda = { cmd = "rm -f *.conda", description = "Clean the local .conda build artifacts" }
 clean-docs = { cmd = "rm -rf docs/_build", description = "Clean up documentation build artifacts" }
 clean-all = { description = "Clean all artifacts", depends-on = [

@@ -4443,8 +4443,8 @@ packages:
   timestamp: 1737836872415
 - pypi: ./
   name: refred
-  version: 5.4.0.dev12+d202506271645
-  sha256: cfc7089f1541fa7b84449b2a690bd0c883637569f96f9b01aede181e05e7586a
+  version: 5.4.0.dev14+d202506301712
+  sha256: adcc2aa6ae6d02417fc8ea701550bcfcb97f2a89270712945b84fc05ad074ae9
   requires_python: '>=3.10'
   editable: true
 - pypi: https://files.pythonhosted.org/packages/db/60/1eeca2074f5b87df394fccaa432ae3fc06c9c9bfa97c5051aed70e6e00c2/regex-2024.11.6-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
