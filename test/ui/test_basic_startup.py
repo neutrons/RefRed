@@ -3,7 +3,7 @@ import functools
 import pytest
 from qtpy import QtCore, QtWidgets
 
-from RefRed.main import MainGui
+from refred.main import MainGui
 
 wait = 200
 
@@ -98,6 +98,6 @@ def test_startup(qtbot):
         qtbot.keyClick(dialog, QtCore.Qt.Key_Enter)
 
     QtCore.QTimer.singleShot(
-        500, functools.partial(handle_message_box, "RefRed - Liquids Reflectrometry Reduction program")
+        500, functools.partial(handle_message_box, "refred - Liquids Reflectrometry Reduction program")
     )
     qtbot.keyClick(window.ui.menuHelp, QtCore.Qt.Key_Enter)

@@ -1,0 +1,832 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>834</width>
+    <height>754</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Selection Tool</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab_1">
+      <attribute name="title">
+       <string>Plot</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="MPLWidget" name="plot_counts_vs_pixel" native="true"/>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QLabel" name="peakBoundariesLabel">
+               <property name="text">
+                <string>Peak</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_10">
+                 <item>
+                  <widget class="QSpinBox" name="plotPeakFromSpinBox">
+                   <property name="palette">
+                    <palette>
+                     <active>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>0</red>
+                         <green>255</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>0</red>
+                         <green>255</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </active>
+                     <inactive>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>0</red>
+                         <green>255</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>0</red>
+                         <green>255</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </inactive>
+                     <disabled>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>190</red>
+                         <green>190</green>
+                         <blue>190</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>0</red>
+                         <green>0</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </disabled>
+                    </palette>
+                   </property>
+                   <property name="maximum">
+                    <number>303</number>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_11">
+                 <item>
+                  <widget class="QSpinBox" name="plotPeakToSpinBox">
+                   <property name="palette">
+                    <palette>
+                     <active>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>0</red>
+                         <green>255</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>0</red>
+                         <green>255</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </active>
+                     <inactive>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>0</red>
+                         <green>255</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>0</red>
+                         <green>255</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </inactive>
+                     <disabled>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>190</red>
+                         <green>190</green>
+                         <blue>190</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>0</red>
+                         <green>0</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </disabled>
+                    </palette>
+                   </property>
+                   <property name="maximum">
+                    <number>303</number>
+                   </property>
+                   <property name="value">
+                    <number>255</number>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <item>
+              <widget class="QLabel" name="backBoundariesLabel">
+               <property name="text">
+                <string>Back</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_6">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_12">
+                 <item>
+                  <widget class="QSpinBox" name="plotBackFromSpinBox">
+                   <property name="palette">
+                    <palette>
+                     <active>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>255</red>
+                         <green>15</green>
+                         <blue>29</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>255</red>
+                         <green>15</green>
+                         <blue>29</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </active>
+                     <inactive>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>255</red>
+                         <green>15</green>
+                         <blue>29</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>255</red>
+                         <green>15</green>
+                         <blue>29</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </inactive>
+                     <disabled>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>190</red>
+                         <green>190</green>
+                         <blue>190</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>0</red>
+                         <green>0</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </disabled>
+                    </palette>
+                   </property>
+                   <property name="maximum">
+                    <number>303</number>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_13">
+                 <item>
+                  <widget class="QSpinBox" name="plotBackToSpinBox">
+                   <property name="palette">
+                    <palette>
+                     <active>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>255</red>
+                         <green>15</green>
+                         <blue>29</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>255</red>
+                         <green>15</green>
+                         <blue>29</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </active>
+                     <inactive>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>255</red>
+                         <green>15</green>
+                         <blue>29</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>255</red>
+                         <green>15</green>
+                         <blue>29</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </inactive>
+                     <disabled>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>190</red>
+                         <green>190</green>
+                         <blue>190</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>0</red>
+                         <green>0</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </disabled>
+                    </palette>
+                   </property>
+                   <property name="maximum">
+                    <number>303</number>
+                   </property>
+                   <property name="value">
+                    <number>255</number>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_8">
+             <item>
+              <widget class="QLabel" name="back2BoundariesLabel">
+               <property name="text">
+                <string>Back2</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_7">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_14">
+                 <item>
+                  <widget class="QSpinBox" name="plotBack2FromSpinBox">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="palette">
+                    <palette>
+                     <active>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>255</red>
+                         <green>120</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>255</red>
+                         <green>120</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </active>
+                     <inactive>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>255</red>
+                         <green>120</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>255</red>
+                         <green>120</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </inactive>
+                     <disabled>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>190</red>
+                         <green>190</green>
+                         <blue>190</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>0</red>
+                         <green>0</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </disabled>
+                    </palette>
+                   </property>
+                   <property name="maximum">
+                    <number>303</number>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_15">
+                 <item>
+                  <widget class="QSpinBox" name="plotBack2ToSpinBox">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="palette">
+                    <palette>
+                     <active>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>255</red>
+                         <green>120</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>255</red>
+                         <green>120</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </active>
+                     <inactive>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>255</red>
+                         <green>120</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>255</red>
+                         <green>120</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </inactive>
+                     <disabled>
+                      <colorrole role="Text">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>190</red>
+                         <green>190</green>
+                         <blue>190</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                      <colorrole role="PlaceholderText">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="128">
+                         <red>0</red>
+                         <green>0</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </disabled>
+                    </palette>
+                   </property>
+                   <property name="maximum">
+                    <number>303</number>
+                   </property>
+                   <property name="value">
+                    <number>255</number>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QPushButton" name="backgroundSettingsPushButton">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;opens the backgrounds-settings dialog&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="text">
+              <string>Background</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../icons/icons.qrc">
+               <normaloff>:/General/cogwheel.png</normaloff>:/General/cogwheel.png</iconset>
+             </property>
+             <property name="autoDefault">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MPLWidget</class>
+   <extends>QWidget</extends>
+   <header>refred/interfaces/mplwidgets.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../icons/icons.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>plotPeakFromSpinBox</sender>
+   <signal>editingFinished()</signal>
+   <receiver>Dialog</receiver>
+   <slot>act_upon_changed_boundaries</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>587</x>
+     <y>509</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>615</x>
+     <y>500</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plotPeakToSpinBox</sender>
+   <signal>editingFinished()</signal>
+   <receiver>Dialog</receiver>
+   <slot>act_upon_changed_boundaries</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>652</x>
+     <y>509</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>615</x>
+     <y>500</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plotBackFromSpinBox</sender>
+   <signal>editingFinished()</signal>
+   <receiver>Dialog</receiver>
+   <slot>act_upon_changed_boundaries</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>327</x>
+     <y>821</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>615</x>
+     <y>500</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plotBackToSpinBox</sender>
+   <signal>editingFinished()</signal>
+   <receiver>Dialog</receiver>
+   <slot>act_upon_changed_boundaries</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>913</x>
+     <y>821</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>615</x>
+     <y>500</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plotPeakFromSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>plot_peak_from_spinbox_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>613</x>
+     <y>197</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>383</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plotPeakToSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>plot_peak_to_spinbox_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>613</x>
+     <y>237</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>383</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plotBackFromSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>plot_back_from_spinbox_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>613</x>
+     <y>281</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>383</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plotBackToSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>plot_back_to_spinbox_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>613</x>
+     <y>321</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>383</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>backgroundSettingsPushButton</sender>
+   <signal>pressed()</signal>
+   <receiver>Dialog</receiver>
+   <slot>display_background_settings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>616</x>
+     <y>505</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>416</x>
+     <y>376</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plotBack2FromSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>plot_back2_from_spinbox_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>667</x>
+     <y>427</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>416</x>
+     <y>376</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plotBack2FromSpinBox</sender>
+   <signal>editingFinished()</signal>
+   <receiver>Dialog</receiver>
+   <slot>act_upon_changed_boundaries</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>667</x>
+     <y>427</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>416</x>
+     <y>376</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plotBack2ToSpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>plot_back2_to_spinbox_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>667</x>
+     <y>467</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>416</x>
+     <y>376</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plotBack2ToSpinBox</sender>
+   <signal>editingFinished()</signal>
+   <receiver>Dialog</receiver>
+   <slot>act_upon_changed_boundaries</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>667</x>
+     <y>467</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>416</x>
+     <y>376</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>update_peak1_spinbox()</slot>
+  <slot>update_peak2_spinbox()</slot>
+  <slot>update_back1_spinbox()</slot>
+  <slot>update_back2_spinbox()</slot>
+  <slot>display_background_settings()</slot>
+  <slot>act_upon_changed_boundaries</slot>
+  <slot>plot_peak_from_spinbox_value_changed()</slot>
+  <slot>plot_peak_to_spinbox_value_changed()</slot>
+  <slot>plot_back_from_spinbox_value_changed()</slot>
+  <slot>plot_back_to_spinbox_value_changed()</slot>
+  <slot>plot_back2_from_spinbox_value_changed()</slot>
+  <slot>plot_back2_to_spinbox_value_changed()</slot>
+ </slots>
+</ui>

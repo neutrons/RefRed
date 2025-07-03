@@ -1,7 +1,6 @@
-# File introduces automated checks triggered on git events
-# to enable run `pip install pre-commit && pre-commit install`
 ci:
   autofix_prs: true
+  skip: [pixi-lock-check]
 
 default_language_version:
   python: python3
@@ -17,20 +16,24 @@ repos:
       - id: check-yaml
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.9.6
+    rev: v0.12.0
     hooks:
-      - id: ruff
+      - id: ruff-check
         args: [--fix, --exit-non-zero-on-fix]
         exclude: |
-          dev-docs
           docs
-          RefRed/_version.py
-          create_graph.py
+          refred/_version.py
           test/data
       - id: ruff-format
         exclude: |
-          dev-docs
           docs
-          RefRed/_version.py
-          create_graph.py
+          refred/_version.py
           test/data
+
+  - repo: local
+    hooks:
+      - id: pixi-lock-check
+        name: pixi-lock-check
+        entry: bash -c "pixi lock --check"
+        stage: pre-push
+        language: system

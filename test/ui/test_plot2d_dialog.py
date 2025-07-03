@@ -3,8 +3,8 @@ from unittest.mock import patch as mock_patch
 import pytest
 from qtpy import QtCore, QtWidgets
 
-from RefRed.main import MainGui
-from RefRed.plot.popup_plot_2d import PopupPlot2d
+from refred.main import MainGui
+from refred.plot.popup_plot_2d import PopupPlot2d
 
 wait = 100
 
@@ -24,9 +24,9 @@ def test_plot2d_dialog(qtbot, data_server):
         r"""mock returning the path to the file that's been opened for reading"""
         return data_server.path_to("REF_L_188298_tiny_template.xml")
 
-    with mock_patch("RefRed.configuration.loading_configuration.QFileDialog.exec_", new=mock_file_dialog_opens):
+    with mock_patch("refred.configuration.loading_configuration.QFileDialog.exec_", new=mock_file_dialog_opens):
         with mock_patch(
-            "RefRed.configuration.loading_configuration.QFileDialog.selectedFiles", new=mock_file_dialog_returns
+            "refred.configuration.loading_configuration.QFileDialog.selectedFiles", new=mock_file_dialog_returns
         ):
             window_main.load_configuration()  # load one data set, populates the first row in the reduction table
 
@@ -34,7 +34,7 @@ def test_plot2d_dialog(qtbot, data_server):
     window_main.reduction_table_visibility_changed_test(state=1, row=0)
 
     # Trigger the plot2d dialog
-    # NOTE: somehow RefRed is not utilizing the built-in double
+    # NOTE: somehow refred is not utilizing the built-in double
     #       click from Qt, so we need to trigger the single click
     #       twice within a short period
     window_main.single_click_data_yt_plot(True)

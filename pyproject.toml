@@ -4,71 +4,172 @@
 
 [project]
 name = "RefRed"
-description = "Liquids Reflectometer Data Reduction"
+description = " GUI for Liquids Reflectometer Data Reduction"
 dynamic = ["version"]
 requires-python = ">=3.10"
 license = { text = "GPL version 3.0" }
-readme = "README.md"
-keywords = ["neutrons", "RefRed", "liquids reflectometer"]
-
-dependencies = [
-  "configobj",
-  "h5py",
-  "matplotlib",
-  "pydantic",
-  "numpy",
-  "scipy",
-  "PyQt5",
-  "qtpy",
-  "setuptools",
-  "lr_reduction@git+https://github.com/neutrons/LiquidsReflectometer.git@v2.1.13#egg=lr_reduction",
-]
+readme = "README.rst"
+keywords = ["neutrons", "refred", "liquids reflectometer"]
 
 [project.urls]
 homepage = "https://github.com/neutrons/RefRed"
 repository = "https://github.com/neutrons/RefRed"
 issues = "https://github.com/neutrons/RefRed/issues"
 
-[project.scripts]
-RefRed = "RefRed.gui:main"
+[project.gui-scripts]
+refred = "refred.gui:main"
 
 ####################
 ### Build config ###
 ####################
 
 [build-system]
-requires = ["setuptools >= 47", "wheel", "toml", "versioningit"]
-build-backend = "setuptools.build_meta"
+build-backend = "hatchling.build"
+requires = ["hatchling", "versioningit"]
+
+[tool.hatch.version]
+source = "versioningit"
+
+[tool.hatch.build]
+artifacts = ["*.yml", "*.yaml", "*.ini", "*.gx", "*.json", "*.ui"]
+
+[tool.hatch.build.hooks.versioningit-onbuild]
+source-file = "src/refred/_version.py"
+build-file = "src/refred/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/refred"]
 
 [tool.versioningit.vcs]
 method = "git"
-default-tag = "5.0.0"
+default-tag = "4.0.0"
 
 [tool.versioningit.next-version]
 method = "minor"
 
 [tool.versioningit.format]
 distance = "{next_version}.dev{distance}"
-dirty = "{version}+d{build_date:%Y%m%d}"
-distance-dirty = "{next_version}.dev{distance}+d{build_date:%Y%m%d%H%M}"
+dirty = "{version}"
+distance-dirty = "{next_version}.dev{distance}"
 
 [tool.versioningit.write]
-file = "RefRed/_version.py"
+file = "src/refred/_version.py"
 
-[tool.setuptools.packages.find]
-where = ["."]
-exclude = ["test","docs*"]
+###################
+### Pixi config ###
+###################
 
-[tool.setuptools.package-data]
-"*" = ["*.yml", "*.yaml", "*.ini", "*.gx", "*.json", "*.ui"]
+[tool.pixi.workspace]
+name = "refred"
+platforms = ["linux-64"]
+channels = [
+  "conda-forge",
+  "mantid-ornl",
+  "mantid",
+  "https://prefix.dev/pixi-build-backends",
+]
+# Required until the build feature becomes stable
+preview = ["pixi-build"]
+
+[tool.pixi.package]
+name = "refred"
+version = "0.0.0"
+
+[tool.pixi.package.build]
+backend = { name = "pixi-build-python", version = "0.1.*" }
+
+[tool.pixi.dependencies]
+lr_reduction = { git = "git+https://github.com/neutrons/LiquidsReflectometer.git@v2.2.0rc2#egg=lr_reduction" }
+pyqt = ">=5,<6"
+qtpy = ">=1.9.0"
+
+[tool.pixi.pypi-dependencies]
+refred = { path = ".", editable = true }
+configobj = ">=5.0.9"
+
+[tool.pixi.package.host-dependencies]
+hatchling = "*"
+versioningit = "*"
+
+# Environments and features
+
+[tool.pixi.environments]
+default = { features = [
+  "dev",
+  "docs",
+  "test",
+  "build",
+], solve-group = "default" }
+docs = { features = ["dev", "docs"], no-default-feature = true }
+build = { features = ["build"], no-default-feature = true }
+
+[tool.pixi.feature.build.dependencies]
+anaconda-client = ">=1.13.0"
+check-wheel-contents = ">=0.6.2"
+versioningit = ">=3.2.0"
+
+[tool.pixi.feature.build.pypi-dependencies]
+toml-cli = "*"
+
+[tool.pixi.feature.dev.dependencies]
+mypy = ">=1.16.1"
+pip = ">=25.1.1"
+pip-audit = ">=2.9.0"
+pre-commit = ">=4.2.0"
+ruff = "*"
+versioningit = ">=3.2.0"
+
+[tool.pixi.feature.docs.dependencies]
+sphinx = ">=8"
+sphinx_rtd_theme = ">=3.0.1"
+
+[tool.pixi.feature.docs.pypi-dependencies]
+sphinx-qt-documentation = "*"
+
+[tool.pixi.feature.test.dependencies]
+codecov = ">=2.1.13"
+pytest = ">=8.4.1"
+pytest-cov = ">=6.2.1"
+pytest-qt = ">=4.4.0"
+pytest-xvfb = ">=3.1.1"
+
+[tool.pixi.tasks]
+# Documentation
+build-docs = { cmd = 'sphinx-build -b html docs docs/_build/html', description = "Build documentation" }
+test-docs = { cmd = "sphinx-build -M doctest docs docs/_build/html", description = "Test building the documentation" }
+# Testing
+test = { description = "Run the test suite", cmd = "pytest" }
+# Packaging
+conda-build-command = { cmd = "pixi build", description = "Wrapper for building the conda package - used by `conda-build`" }
+conda-build = { description = "Build the conda package", depends-on = [
+  "sync-version",
+  "conda-build-command",
+  "reset-version",
+] }
+conda-publish = { cmd = "anaconda upload *.conda", description = "Publish the .conda package to anaconda.org", depends-on = [
+  "conda-build",
+] }
+# Misc
+audit-deps = { cmd = "pip-audit --local -s osv", description = "Audit the package dependencies for vulnerabilities" }
+clean = { cmd = 'rm -rf .mypy_cache .pytest_cache .ruff_cache **/*.egg-info **/dist **/__pycache__ **/_version.py', description = "Clean up various caches and build artifacts" }
+clean-conda = { cmd = "rm -f *.conda", description = "Clean the local .conda build artifacts" }
+clean-docs = { cmd = "rm -rf docs/_build", description = "Clean up documentation build artifacts" }
+clean-all = { description = "Clean all artifacts", depends-on = [
+  "clean",
+  "clean-conda",
+  "clean-docs",
+] }
+sync-version = { cmd = 'version=$(python -m versioningit); toml set tool.pixi.package.version "$version" --toml-path pyproject.toml', description = "Sync pyproject.toml version with Git version" }
+reset-version = { cmd = "toml set tool.pixi.package.version \"0.0.0\" --toml-path pyproject.toml", description = "Reset the package version to 0.0.0" }
+
 
 ##########################
 ### Pytest and CodeCov ###
 ##########################
 
-# [tool.coverage.run]
-# source = ["src/RefRed"]
-# omit = ["test/*"]
+[tool.coverage.run]
+source = ["src/refred"]
+omit = ["test/*"]
 
 ############
 ### Ruff ###
