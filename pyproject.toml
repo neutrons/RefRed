@@ -66,6 +66,7 @@ channels = [
   "conda-forge",
   "mantid-ornl",
   "mantid",
+  "neutrons/label/rc",
   "https://prefix.dev/pixi-build-backends",
 ]
 # Required until the build feature becomes stable
@@ -79,7 +80,7 @@ version = "0.0.0"
 backend = { name = "pixi-build-python", version = "0.1.*" }
 
 [tool.pixi.dependencies]
-lr_reduction = { git = "git+https://github.com/neutrons/LiquidsReflectometer.git@v2.2.0rc2#egg=lr_reduction" }
+lr_reduction = "==2.2.0rc3"
 pyqt = ">=5,<6"
 qtpy = ">=1.9.0"
 
