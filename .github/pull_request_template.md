@@ -27,7 +27,7 @@ $ PYTHONPATH=$(pwd):$PYTHONPATH ./scripts/start_refred.py
 Or run tests
 
 ```bash
-$ pixi run rest
+$ pixi run test
 ```
 
 # Check list for the reviewer
