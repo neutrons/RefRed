@@ -37,7 +37,7 @@ To build the conda package, use the `pixi` task:
 
 .. code-block:: bash
 
-   ❯ pixi conda-build
+   ❯ pixi run conda-build
    Building conda package...
    Packaging complete: refred-*.conda created in the current directory.
 
@@ -52,8 +52,9 @@ but to manually install and test the conda package, use `micromamba`, `mamba`, o
    micromamba activate refred
    micromamba install --yes -c conda-forge conda-build conda-index
    python -m conda_index /tmp/local-channel
-   # use below the same channels as listed in file pyproject.toml
+   # in addition to local-channel, use below the channels listed in file pyproject.toml
    micromamba install --yes -c /tmp/local-channel -c conda-forge -c neutrons/label/rc -c mantid-ornl refred
+   # test the package and its most important dependencies are available
    python -c "import refred; import lr_reduction; import mantid; import qtpy"
 
 
