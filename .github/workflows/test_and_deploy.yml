@@ -62,7 +62,7 @@ jobs:
           local-channel: /tmp/local-channel
           python-version: "3.10"
           extra-channels: mantid-ornl neutrons/label/rc
-          extra-commands: pixi run python -c "import lr_reduction; import mantid; import pyqt"
+          extra-commands: pixi run python -c "import lr_reduction; import mantid; import qtpy"
 
 
       - name: Upload conda package as artifact
