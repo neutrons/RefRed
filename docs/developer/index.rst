@@ -30,6 +30,33 @@ Quick tasks, such as building the documentation can be carried out with `pixi` t
    test                 Run the test suite
 
 
+Building conda packages
+-----------------------
+
+To build the conda package, use the `pixi` task:
+
+.. code-block:: bash
+
+   ❯ pixi conda-build
+   Building conda package...
+   Packaging complete: refred-*.conda created in the current directory.
+
+
+The GitHub actions workflow will automatically build and test the conda package,
+but to manually install and test the conda package, use `micromamba`, `mamba`, or `conda`:
+
+.. code-block:: bash
+   mdkir -p /tmp/local-channel/linux-64
+   cp refred-*.conda /tmp/local-channel/linux-64
+   micromamba create -n refred --yes python=3.10  # same python version as in the pixi environment
+   micromamba activate refred
+   micromamba install --yes -c conda-forge conda-build conda-index
+   python -m conda_index /tmp/local-channel
+   # use below the same channels as listed in file pyproject.toml
+   micromamba install --yes -c /tmp/local-channel -c conda-forge -c neutrons/label/rc -c mantid-ornl refred
+   python -c "import refred; import lr_reduction; import mantid; import qtpy"
+
+
 Contents:
 ---------
 
