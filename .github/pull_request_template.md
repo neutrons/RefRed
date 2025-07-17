@@ -13,7 +13,7 @@ Check all that apply:
 - Links to IBM EWM items:
 - Links to related issues or pull requests:
 
-# Manual test for the reviewer
+## :warning:  Manual test for the reviewer
 
 ([instructions to set up the environment](https://github.com/neutrons/RefRed/blob/next/docs/developer/testing.rst#running-manual-tests-in-a-pull-request))
 
