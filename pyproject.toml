@@ -65,7 +65,7 @@ platforms = ["linux-64"]
 channels = [
   "conda-forge",
   "mantid-ornl",
-  "mantid",
+  "neutrons/label/rc",
   "https://prefix.dev/pixi-build-backends",
 ]
 # Required until the build feature becomes stable
@@ -78,14 +78,17 @@ version = "0.0.0"
 [tool.pixi.package.build]
 backend = { name = "pixi-build-python", version = "0.1.*" }
 
+# Conda packages to be installed in the environments. Includes all the run-dependencies.
 [tool.pixi.dependencies]
-lr_reduction = { git = "git+https://github.com/neutrons/LiquidsReflectometer.git@v2.2.0rc2#egg=lr_reduction" }
-pyqt = ">=5,<6"
-qtpy = ">=1.9.0"
+lr_reduction = "=2.2.0"
 
 [tool.pixi.pypi-dependencies]
 refred = { path = ".", editable = true }
 configobj = ">=5.0.9"
+
+# Conda packages (no PyPi) to be enumerated within the conda package to be built.
+[tool.pixi.package.run-dependencies]
+lr_reduction = "=2.2.0"
 
 [tool.pixi.package.host-dependencies]
 hatchling = "*"

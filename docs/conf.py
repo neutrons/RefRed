@@ -48,6 +48,7 @@ extensions = [
     "sphinx.ext.mathjax",
     "sphinx.ext.viewcode",
     "sphinx.ext.intersphinx",
+    "sphinx_qt_documentation",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -283,11 +284,13 @@ texinfo_documents = [
 # Domains for intersphinx inventory file objects.inv
 intersphinx_mapping = {
     "lmfit": ("https://lmfit.github.io/lmfit-py", None),
+    "mantid": ("http://docs.mantidproject.org/", None),
     "matplotlib": ("https://matplotlib.org", None),
     "numpy": ("http://docs.scipy.org/doc/numpy", None),
+    "PyQt5": ("http://pyqt.sourceforge.net/Docs/PyQt5/", None),
+    "pytest": ("https://docs.pytest.org/en/latest", None),
     "python": (f"https://docs.python.org/{sys.version_info[0]}", None),
     "scipy": ("https://docs.scipy.org/doc/scipy/reference", None),
-    "pytest": ("https://docs.pytest.org/en/latest", None),
 }
 
 # Suppress certain warnings
