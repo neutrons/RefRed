@@ -46,7 +46,7 @@ The GitHub actions workflow will automatically build and test the conda package,
 but to manually install and test the conda package, use `micromamba`, `mamba`, or `conda`:
 
 .. code-block:: bash
-   mdkir -p /tmp/local-channel/linux-64
+   mkdir -p /tmp/local-channel/linux-64
    cp refred-*.conda /tmp/local-channel/linux-64
    micromamba create -n refred --yes python=3.10  # same python version as in the pixi environment
    micromamba activate refred
