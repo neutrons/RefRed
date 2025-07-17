@@ -89,6 +89,7 @@ configobj = ">=5.0.9"
 # Conda packages (no PyPi) to be enumerated within the conda package to be built.
 [tool.pixi.package.run-dependencies]
 lr_reduction = "=2.2.0"
+configobj = ">=5.0.9"
 
 [tool.pixi.package.host-dependencies]
 hatchling = "*"
