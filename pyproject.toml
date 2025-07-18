@@ -17,7 +17,7 @@ repository = "https://github.com/neutrons/RefRed"
 issues = "https://github.com/neutrons/RefRed/issues"
 
 [project.gui-scripts]
-refred = "refred.gui:main"
+refred-gui = "refred.gui:main"
 
 ####################
 ### Build config ###
