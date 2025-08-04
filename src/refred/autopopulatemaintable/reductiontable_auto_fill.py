@@ -8,6 +8,7 @@ from qtpy.QtWidgets import QApplication
 from refred.autopopulatemaintable.auto_fill_widgets_handler import AutoFillWidgetsHandler
 from refred.autopopulatemaintable.extract_lconfigdataset_runs import ExtractLConfigDataSetRuns
 from refred.autopopulatemaintable.populate_reduction_table_from_list_lrdata import PopulateReductionTableFromListLRData
+from refred.background_tasks.locate_run import LocateRunThread
 from refred.calculations.check_list_run_compatibility_and_display import CheckListRunCompatibilityAndDisplay
 from refred.calculations.load_list_nexus import LoadListNexus
 from refred.calculations.lr_data import LRData
@@ -15,7 +16,6 @@ from refred.calculations.run_sequence_breaker import RunSequenceBreaker
 from refred.calculations.sort_lrdata_list import SortLRDataList
 from refred.mantid_utility import MantidUtility
 from refred.nexus_utilities import get_run_number
-from refred.thread.locate_run import LocateRunThread
 from refred.utilities import format_to_list
 
 
