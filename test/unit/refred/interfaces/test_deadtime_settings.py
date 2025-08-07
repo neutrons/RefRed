@@ -25,7 +25,7 @@ class TestDeadTimeSettingsModel:
             "<dead_time_correction>True</dead_time_correction>\n"
             "<dead_time_paralyzable>True</dead_time_paralyzable>\n"
             "<dead_time_value>4.2</dead_time_value>\n"
-            "<dead_time_tof_step>150.0</dead_time_tof_step>"
+            "<dead_time_tof_step>150.0</dead_time_tof_step>\n"
         )
         model = DeadTimeSettingsModel(apply_deadtime=True, paralyzable=True, dead_time=4.2, tof_step=150)
         xml_output = model.to_xml()

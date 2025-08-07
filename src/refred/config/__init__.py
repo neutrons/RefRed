@@ -41,7 +41,7 @@ To use variables from a different config use '%(config.name)s' syntax.
 # hide imported modules for interactive use with IPython tab completion
 import os as _os
 import pkgutil as _pkgutil
-from logging import warn as _warn
+from logging import warning as _warn
 
 from .baseconfig import ConfigProxy as _ConfigProxy
 

@@ -166,8 +166,6 @@ class InstrumentSettings(GlobalSettings):
         doc: Document = Document()
         xml = ""
         for field, value in self.model_dump().items():
-            # if field == "apply_instrument_settings":
-            #     continue
             child: Element = doc.createElement(field)
             child.appendChild(doc.createTextNode(str(value)))
             xml += f"{indent}{child.toxml()}\n"
