@@ -145,10 +145,14 @@ class ExportXMLConfig(object):
             str_array.append("   <auto_q_binning>False</auto_q_binning>\n")
 
             # Read angle offset values from UI fields
-            angle_offset = str(self.parent.ui.angleOffsetValue.text())
-            angle_offset_error = str(self.parent.ui.angleOffsetError.text())
-            str_array.append(f"   <angle_offset> {angle_offset} </angle_offset>\n")
-            str_array.append(f"   <angle_offset_error> {angle_offset_error} </angle_offset_error>\n")
+            angle_offset = str(self.parent.ui.angleOffsetValue.text()).strip()
+            angle_offset_error = str(self.parent.ui.angleOffsetError.text()).strip()
+            if angle_offset == "":
+                angle_offset = "0"
+            if angle_offset_error == "":
+                angle_offset_error = "0"
+            str_array.append(f"   <angle_offset>{angle_offset}</angle_offset>\n")
+            str_array.append(f"   <angle_offset_error>{angle_offset_error}</angle_offset_error>\n")
 
             q_step = str(self.parent.ui.qStep.text())
             str_array.append("   <q_step>" + q_step + "</q_step>\n")

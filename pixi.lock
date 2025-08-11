@@ -4474,7 +4474,7 @@ packages:
   timestamp: 1737836872415
 - pypi: ./
   name: refred
-  version: 5.5.0.dev5
+  version: 5.5.0.dev6
   sha256: b7ee2e7e0f96b1a43ce800489554bfa7554defb877df056a5c370c7839f47f2c
   requires_python: '>=3.10'
   editable: true

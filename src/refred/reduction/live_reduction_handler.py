@@ -3,6 +3,7 @@ import logging
 import os
 import sys
 import time
+from typing import TYPE_CHECKING
 
 import numpy as np
 from lr_reduction import reduction_template_reader, template
@@ -22,12 +23,15 @@ from refred.reduction.live_reduced_data_handler import LiveReducedDataHandler
 from refred.status_message_handler import StatusMessageHandler
 from refred.tabledata import TableData
 
+if TYPE_CHECKING:
+    from refred.main import MainGui
+
 
 class LiveReductionHandler(object):
     list_reduced_workspace = []
     nbr_reduction_process = -1
 
-    def __init__(self, parent):
+    def __init__(self, parent: "MainGui"):
         self.parent = parent
         self.big_table_data: TableData = self.parent.big_table_data
         self.nbr_reduction_process = self.calculate_nbr_reduction_process()
