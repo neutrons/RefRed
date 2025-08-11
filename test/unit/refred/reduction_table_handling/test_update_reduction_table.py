@@ -6,7 +6,7 @@ import pytest
 from refred.main import MainGui
 from test.utilities import load_run_from_reduction_table
 
-wait = 1000
+wait = 2000
 
 
 @pytest.mark.parametrize("is_display_checked", [True, False])

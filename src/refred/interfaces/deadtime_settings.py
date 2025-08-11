@@ -43,16 +43,13 @@ class DeadTimeSettingsModel(GlobalSettings):
         <dead_time_value>4.2</dead_time_value>
         <dead_time_tof_step>150</dead_time_tof_step>
         """
-        doc = Document()  # Create a new XML document
-
-        def _to_xml(field: str) -> str:
-            r"""Serialize one of the dead time settings to XML format"""
-            element = doc.createElement(self._to_xmltag[field])
-            element_text = doc.createTextNode(str(getattr(self, field)))
-            element.appendChild(element_text)
-            return element.toxml()
-
-        return "\n".join([indent + _to_xml(field) for field in self.model_dump()])
+        doc: Document = Document()
+        xml = ""
+        for field, value in self.model_dump().items():
+            child: Element = doc.createElement(self._to_xmltag[field])
+            child.appendChild(doc.createTextNode(str(value)))
+            xml += f"{indent}{child.toxml()}\n"
+        return xml
 
     def from_xml(self, node: Element):
         r"""Update the settings from the contents of an XML element

@@ -25,7 +25,7 @@ class ExportXMLConfig(object):
         str_array.append(" <timestamp>" + datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p") + "</timestamp>\n")
         str_array.append(" <version>%s</version>\n" % lr_reduction.__version__)
         str_array.append(" <mantid_version>" + mantid.__version__ + "</mantid_version>\n")
-        str_array.append("<generator>refred-%s</generator>\n" % refred.__version__)
+        str_array.append(" <generator>refred-%s</generator>\n" % refred.__version__)
 
         # metadata
         str_array.append(" <DataSeries>\n")
@@ -76,6 +76,7 @@ class ExportXMLConfig(object):
                 norm_flag = False
                 norm_peak = [0, 255]
                 norm_back = [0, 255]
+                norm_back2 = None
                 norm_back_flag = False
                 norm_two_backgrounds = False
                 norm_low_res = [0, 255]
@@ -126,8 +127,9 @@ class ExportXMLConfig(object):
             str_array.append("   <norm_two_backgrounds>" + str(norm_two_backgrounds) + "</norm_two_backgrounds>\n")
             str_array.append("   <norm_from_back_pixels>" + str(norm_back[0]) + "</norm_from_back_pixels>\n")
             str_array.append("   <norm_to_back_pixels>" + str(norm_back[1]) + "</norm_to_back_pixels>\n")
-            str_array.append("   <norm_from_back2_pixels>" + str(norm_back2[0]) + "</norm_from_back2_pixels>\n")
-            str_array.append("   <norm_to_back2_pixels>" + str(norm_back2[1]) + "</norm_to_back2_pixels>\n")
+            if norm_back2:
+                str_array.append("   <norm_from_back2_pixels>" + str(norm_back2[0]) + "</norm_from_back2_pixels>\n")
+                str_array.append("   <norm_to_back2_pixels>" + str(norm_back2[1]) + "</norm_to_back2_pixels>\n")
             str_array.append("   <norm_lambda_requested>" + str(norm_lambda_requested) + "</norm_lambda_requested>\n")
 
             _norm_run_number_cell = self.parent.ui.reductionTable.item(row, 2).text()
@@ -142,9 +144,15 @@ class ExportXMLConfig(object):
 
             str_array.append("   <auto_q_binning>False</auto_q_binning>\n")
 
-            # The angle offset is currently not exposed in the UI, so we set it to 0.
-            str_array.append("   <angle_offset> 0 </angle_offset>\n")
-            str_array.append("   <angle_offset_error> 0 </angle_offset_error>\n")
+            # Read angle offset values from UI fields
+            angle_offset = str(self.parent.ui.angleOffsetValue.text()).strip()
+            angle_offset_error = str(self.parent.ui.angleOffsetError.text()).strip()
+            if angle_offset == "":
+                angle_offset = "0"
+            if angle_offset_error == "":
+                angle_offset_error = "0"
+            str_array.append(f"   <angle_offset>{angle_offset}</angle_offset>\n")
+            str_array.append(f"   <angle_offset_error>{angle_offset_error}</angle_offset_error>\n")
 
             q_step = str(self.parent.ui.qStep.text())
             str_array.append("   <q_step>" + q_step + "</q_step>\n")
@@ -173,16 +181,16 @@ class ExportXMLConfig(object):
             str_array.append("   <slits_width_flag>True</slits_width_flag>\n")
 
             # dead time settings
-            str_array.append(o_general_settings.dead_time.to_xml(indent="   ") + "\n")
+            str_array.append(o_general_settings.dead_time.to_xml(indent="   "))
 
             # instrument settings
-            str_array.append(o_general_settings.instrument_settings.to_xml(indent="   ") + "\n")
+            str_array.append(o_general_settings.instrument_settings.to_xml(indent="   "))
 
             str_array.append("   <const_q>" + str(const_q) + "</const_q>\n")
 
             str_array.append("  </RefLData>\n")
 
-        str_array.append("  </DataSeries>\n")
+        str_array.append(" </DataSeries>\n")
         str_array.append("</Reduction>\n")
         self.str_array = str_array
 

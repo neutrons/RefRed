@@ -54,8 +54,7 @@ class LRData(object):
         :param parent: parent object
         :param reduction_table_cell: if defined, use for peak, background, low res, TOF range
         """
-        # TODO: there appears to be duplicate instances of this class being
-        #      created when loading a file.
+        # TODO: there appears to be duplicate instances of this class being created when loading a file.
         if lconfig and reduction_table_cell:
             raise ValueError("Can't use both lconfig and reduction_table_cell")
 

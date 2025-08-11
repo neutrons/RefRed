@@ -151,9 +151,6 @@ class MainGui(QtWidgets.QMainWindow):
 
     big_table_data = TableData(REDUCTIONTABLE_MAX_ROWCOUNT)
 
-    # various metadata such as q_min (for output reduced ascii)
-    gui_metadata = {}
-
     def __init__(self, parent=None):
         if parent is None:
             QtWidgets.QMainWindow.__init__(self)
