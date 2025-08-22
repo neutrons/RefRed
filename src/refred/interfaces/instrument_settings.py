@@ -26,6 +26,7 @@ class DEFAULT_INSTRUMENT_SETTINGS:  # noqa: N801
     pixel_width: float = 0.70
     xi_reference: float = 445
     s1_sample_distance: float = 1.485
+    wavelength_resolution_dLambda_formula: str = "L - A * exp(-k * x), L=0.07564423, A=0.13093263, k=0.34918918"
 
 
 class InstrumentSettingsEntryPoint(QGroupBox):
@@ -86,6 +87,7 @@ class InstrumentSettingsDialog(QDialog):
         pixel_width,
         xi_reference,
         s1_sample_distance,
+        wavelength_resolution_dLambda_formula,
     ):
         """
         Store options and populate the form
@@ -97,6 +99,7 @@ class InstrumentSettingsDialog(QDialog):
         :param pixel_width: Pixel width in mm
         :param xi_reference: Reference xi value in mm
         :param s1_sample_distance: S1 to sample distance in meters
+        :param wavelength_resolution_dLambda_formula: The formula used to calculate the wavelength resolution
         """
         self.ui.source_detector_distance.setValue(source_detector_distance)
         self.ui.sample_detector_distance.setValue(sample_detector_distance)
@@ -105,6 +108,7 @@ class InstrumentSettingsDialog(QDialog):
         self.ui.pixel_width.setValue(pixel_width)
         self.ui.xi_reference.setValue(xi_reference)
         self.ui.s1_sample_distance.setValue(s1_sample_distance)
+        self.ui.wavelength_resolution_dLambda_formula.setText(wavelength_resolution_dLambda_formula)
         self.options = self.get_state_from_form()
 
     def get_state_from_form(self) -> dict:
@@ -122,6 +126,7 @@ class InstrumentSettingsDialog(QDialog):
             "pixel_width": self.ui.pixel_width.value(),
             "xi_reference": self.ui.xi_reference.value(),
             "s1_sample_distance": self.ui.s1_sample_distance.value(),
+            "wavelength_resolution_dLambda_formula": self.ui.wavelength_resolution_dLambda_formula.text(),
         }
 
     def accept(self):
@@ -147,6 +152,7 @@ class InstrumentSettings(GlobalSettings):
     pixel_width: float = DEFAULT_INSTRUMENT_SETTINGS.pixel_width
     xi_reference: float = DEFAULT_INSTRUMENT_SETTINGS.xi_reference
     s1_sample_distance: float = DEFAULT_INSTRUMENT_SETTINGS.s1_sample_distance
+    wavelength_resolution_dLambda_formula: str = DEFAULT_INSTRUMENT_SETTINGS.wavelength_resolution_dLambda_formula
 
     # class variable, translates fields to XML tag names, same names as the lr_reduction package
     def to_xml(self, indent: str = "") -> str:
@@ -195,6 +201,7 @@ class InstrumentSettings(GlobalSettings):
             "pixel_width": float,
             "xi_reference": float,
             "s1_sample_distance": float,
+            "wavelength_resolution_dLambda_formula": str,
         }
         for field, converter in converters.items():
             tmp: list = node.getElementsByTagName(field)

@@ -745,6 +745,7 @@ class MainGui(QtWidgets.QMainWindow):
             self.instrument_settings.pixel_width,
             self.instrument_settings.xi_reference,
             self.instrument_settings.s1_sample_distance,
+            self.instrument_settings.wavelength_resolution_dLambda_formula,
         )
         view.exec_()
 
@@ -757,6 +758,7 @@ class MainGui(QtWidgets.QMainWindow):
             "pixel_width",
             "xi_reference",
             "s1_sample_distance",
+            "wavelength_resolution_dLambda_formula",
         ]:
             setattr(self.instrument_settings, option, view.options[option])
 
