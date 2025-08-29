@@ -53,7 +53,8 @@ class TestInstrumentSettingsModel:
         "pixel_width": 5.0,
         "xi_reference": 6.0,
         "s1_sample_distance": 7.0,
-        "wavelength_resolution_dLambda_formula": "L - A * exp(-k * x), L=8.0, A=9.0, k=10.0",
+        "wavelength_resolution_dLambda_formula": "L - A * exp(-k * x)",
+        "wavelength_resolution_initial_parameters": "L=8.0, A=9.0, k=10.0",
     }
 
     def test_initialization_with_defaults(self):
@@ -66,10 +67,8 @@ class TestInstrumentSettingsModel:
         assert model.pixel_width == 0.70
         assert model.xi_reference == 445
         assert model.s1_sample_distance == 1.485
-        assert (
-            model.wavelength_resolution_dLambda_formula
-            == "L - A * exp(-k * x), L=0.07564423, A=0.13093263, k=0.34918918"
-        )
+        assert model.wavelength_resolution_dLambda_formula == "L - A * exp(-k * x)"
+        assert model.wavelength_resolution_initial_parameters == "L=0.07564423, A=0.13093263, k=0.34918918"
 
     def test_initialization_with_custom_values(self):
         model = InstrumentSettings(**self.custom_settings)
@@ -85,7 +84,9 @@ class TestInstrumentSettingsModel:
             "<pixel_width>5.0</pixel_width>\n"
             "<xi_reference>6.0</xi_reference>\n"
             "<s1_sample_distance>7.0</s1_sample_distance>\n"
-            "<wavelength_resolution_dLambda_formula>L - A * exp(-k * x), L=8.0, A=9.0, k=10.0</wavelength_resolution_dLambda_formula>\n"  # noqa: E501
+            "<wavelength_resolution_dLambda_formula>L - A * exp(-k * x)</wavelength_resolution_dLambda_formula>\n"  # noqa: E501
+            "<wavelength_resolution_initial_parameters>L=8.0, A=9.0, k=10.0</wavelength_resolution_initial_parameters>\n"  # noqa: E501
+            # noqa: E501
         )
         model = InstrumentSettings(**self.custom_settings)
         xml_output = model.to_xml()
@@ -103,7 +104,8 @@ class TestInstrumentSettingsModel:
             "<pixel_width>5.0</pixel_width>\n"
             "<xi_reference>6.0</xi_reference>\n"
             "<s1_sample_distance>7.0</s1_sample_distance>\n"
-            "<wavelength_resolution_dLambda_formula>L - A * exp(-k * x), L=8.0, A=9.0, k=10.0</wavelength_resolution_dLambda_formula>\n"  # noqa: E501
+            "<wavelength_resolution_dLambda_formula>L - A * exp(-k * x)</wavelength_resolution_dLambda_formula>\n"  # noqa: E501
+            "<wavelength_resolution_initial_parameters>L=8.0, A=9.0, k=10.0</wavelength_resolution_initial_parameters>\n"  # noqa: E501
             "<another_spurious>True</another_spurious>\n"
             "</refred>"
         )
