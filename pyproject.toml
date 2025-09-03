@@ -65,7 +65,7 @@ platforms = ["linux-64"]
 channels = [
   "conda-forge",
   "mantid-ornl",
-  "neutrons/label/rc",
+  "neutrons",
   "https://prefix.dev/pixi-build-backends",
 ]
 # Required until the build feature becomes stable
