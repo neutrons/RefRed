@@ -65,7 +65,7 @@ platforms = ["linux-64"]
 channels = [
   "conda-forge",
   "mantid-ornl",
-  "neutrons",
+  "neutrons/label/rc",
   "https://prefix.dev/pixi-build-backends",
 ]
 # Required until the build feature becomes stable
@@ -80,7 +80,7 @@ backend = { name = "pixi-build-python", version = "0.1.*" }
 
 # Conda packages to be installed in the environments. Includes all the run-dependencies.
 [tool.pixi.dependencies]
-lr_reduction = "=2.2.0"
+lr_reduction = "=2.3.0"
 configobj = ">=5.0.9"
 
 [tool.pixi.pypi-dependencies]
@@ -88,7 +88,7 @@ refred = { path = ".", editable = true }
 
 # Conda packages (no PyPi) to be enumerated within the conda package to be built.
 [tool.pixi.package.run-dependencies]
-lr_reduction = "=2.2.0"
+lr_reduction = "=2.3.0"
 configobj = ">=5.0.9"
 
 [tool.pixi.package.host-dependencies]
