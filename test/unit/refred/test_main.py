@@ -159,7 +159,6 @@ class TestMainGui:
                     "s1_sample_distance": main_gui.instrument_settings.s1_sample_distance,
                     "wavelength_resolution_dLambda_formula": main_gui.instrument_settings.wavelength_resolution_dLambda_formula,  # noqa: E501
                     "wavelength_resolution_initial_parameters": main_gui.instrument_settings.wavelength_resolution_initial_parameters,  # noqa: E501
-                    # noqa: E501
                 }
 
             def exec_(self):

@@ -86,7 +86,6 @@ class TestInstrumentSettingsModel:
             "<s1_sample_distance>7.0</s1_sample_distance>\n"
             "<wavelength_resolution_dLambda_formula>L - A * exp(-k * x)</wavelength_resolution_dLambda_formula>\n"  # noqa: E501
             "<wavelength_resolution_initial_parameters>L=8.0, A=9.0, k=10.0</wavelength_resolution_initial_parameters>\n"  # noqa: E501
-            # noqa: E501
         )
         model = InstrumentSettings(**self.custom_settings)
         xml_output = model.to_xml()
