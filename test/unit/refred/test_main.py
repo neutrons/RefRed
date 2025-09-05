@@ -157,8 +157,7 @@ class TestMainGui:
                     "pixel_width": main_gui.instrument_settings.pixel_width,
                     "xi_reference": main_gui.instrument_settings.xi_reference,
                     "s1_sample_distance": main_gui.instrument_settings.s1_sample_distance,
-                    "wavelength_resolution_dLambda_formula": main_gui.instrument_settings.wavelength_resolution_dLambda_formula,  # noqa: E501
-                    "wavelength_resolution_initial_parameters": main_gui.instrument_settings.wavelength_resolution_initial_parameters,  # noqa: E501
+                    "wavelength_resolution_function": main_gui.instrument_settings.wavelength_resolution_function,  # noqa: E501
                 }
 
             def exec_(self):
@@ -173,8 +172,7 @@ class TestMainGui:
                 pixel_width,
                 xi_reference,
                 s1_sample_distance,
-                wavelength_resolution_dLambda_formula,
-                wavelength_resolution_initial_parameters,
+                wavelength_resolution_function,
             ):
                 self.options["source_detector_distance"] = source_detector_distance
                 self.options["sample_detector_distance"] = sample_detector_distance
@@ -183,8 +181,7 @@ class TestMainGui:
                 self.options["pixel_width"] = pixel_width
                 self.options["xi_reference"] = xi_reference
                 self.options["s1_sample_distance"] = s1_sample_distance
-                self.options["wavelength_resolution_dLambda_formula"] = wavelength_resolution_dLambda_formula
-                self.options["wavelength_resolution_initial_parameters"] = wavelength_resolution_initial_parameters
+                self.options["wavelength_resolution_function"] = wavelength_resolution_function
 
         monkeypatch.setattr("refred.main.InstrumentSettingsDialog", MockInstrumentSettingsDialog)
         self.app.show_instrument_settings()
@@ -195,10 +192,9 @@ class TestMainGui:
         assert self.app.instrument_settings.pixel_width == 0.70
         assert self.app.instrument_settings.xi_reference == 445
         assert self.app.instrument_settings.s1_sample_distance == 1.485
-        assert self.app.instrument_settings.wavelength_resolution_dLambda_formula == "L - A * exp(-k * x)"
         assert (
-            self.app.instrument_settings.wavelength_resolution_initial_parameters
-            == "L=0.07564423, A=0.13093263, k=0.34918918"
+            self.app.instrument_settings.wavelength_resolution_function
+            == "name=UserFunction, Formula=L - A * exp(-k * x), L=0.07564423, A=0.13093263, k=0.34918918"  # noqa: E501
         )
 
     def test_show_instrument_settings_updated_values(self, monkeypatch):
@@ -210,8 +206,7 @@ class TestMainGui:
         new_pixel_width = 5.0
         new_xi_reference = 6.0
         new_s1_sample_distance = 7.0
-        new_wavelength_resolution_dLambda_formula = "L - A * exp(-k * x)"
-        new_wavelength_resolution_initial_parameters = "L=8.0, A=9.0, k=10.0"
+        new_wavelength_resolution_function = "name=UserFunction, Formula=L - A * exp(-k * x), L=8.0, A=9.0, k=10.0"
 
         class MockInstrumentSettingsDialog:
             def __init__(self, parent=None):  # noqa: ARG002
@@ -224,8 +219,7 @@ class TestMainGui:
                     "pixel_width": new_pixel_width,
                     "xi_reference": new_xi_reference,
                     "s1_sample_distance": new_s1_sample_distance,
-                    "wavelength_resolution_dLambda_formula": new_wavelength_resolution_dLambda_formula,
-                    "wavelength_resolution_initial_parameters": new_wavelength_resolution_initial_parameters,
+                    "wavelength_resolution_function": new_wavelength_resolution_function,
                 }
 
             def exec_(self):
@@ -240,8 +234,7 @@ class TestMainGui:
                 pixel_width,
                 xi_reference,
                 s1_sample_distance,
-                wavelength_resolution_dLambda_formula,
-                wavelength_resolution_initial_parameters,
+                wavelength_resolution_function,
             ):
                 pass
 
@@ -254,14 +247,7 @@ class TestMainGui:
         assert self.app.instrument_settings.pixel_width == new_pixel_width
         assert self.app.instrument_settings.xi_reference == new_xi_reference
         assert self.app.instrument_settings.s1_sample_distance == new_s1_sample_distance
-        assert (
-            self.app.instrument_settings.wavelength_resolution_dLambda_formula
-            == new_wavelength_resolution_dLambda_formula
-        )
-        assert (
-            self.app.instrument_settings.wavelength_resolution_initial_parameters
-            == new_wavelength_resolution_initial_parameters
-        )
+        assert self.app.instrument_settings.wavelength_resolution_function == new_wavelength_resolution_function
 
 
 if __name__ == "__main__":

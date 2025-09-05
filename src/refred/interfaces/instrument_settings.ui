@@ -256,47 +256,14 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
     <item row="7" column="0">
-       <spacer name="horizontalSpacer_1">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-    <item row="8" column="0">
-       <widget class="QLabel" name="label_9>
+       <widget class="QLabel" name="label_9">
         <property name="text">
-         <string>Wavelength Resolution Settings</string>
+         <string>Wavelength resolution function</string>
         </property>
        </widget>
       </item>
-    <item row="9" column="0">
-       <widget class="QLabel" name="label_10">
-        <property name="text">
-         <string>Formula</string>
-        </property>
-       </widget>
-      </item>
-     <item row="9" column="2">
+     <item row="7" column="2">
        <spacer name="horizontalSpacer_7">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -309,34 +276,11 @@
         </property>
        </spacer>
       </item>
-    <item row="9" column="3">
-       <widget class="QLineEdit" name="wavelength_resolution_dLambda_formula">
+    <item row="7" column="3">
+       <widget class="QLineEdit" name="wavelength_resolution_function">
        </widget>
       </item>
-    <item row="10" column="0">
-       <widget class="QLabel" name="label_8">
-        <property name="text">
-         <string>Initial Parameters</string>
-        </property>
-       </widget>
-      </item>
-     <item row="10" column="2">
-       <spacer name="horizontalSpacer_8">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-    <item row="10" column="3">
-       <widget class="QLineEdit" name="wavelength_resolution_initial_parameters">
-       </widget>
-      </item>
+
      </layout>
     </item>
    </layout>

@@ -67,8 +67,7 @@
    <pixel_width>6.0</pixel_width>
    <xi_reference>7.0</xi_reference>
    <s1_sample_distance>8.0</s1_sample_distance>
-   <wavelength_resolution_dLambda_formula>A*x</wavelength_resolution_dLambda_formula>
-   <wavelength_resolution_dLambda_initial_parameters>A=1</wavelength_resolution_dLambda_initial_parameters>
+   <wavelength_resolution_function>A*x</wavelength_resolution_function>
 
    <const_q>False</const_q>
   </RefLData>
@@ -134,8 +133,7 @@
    <pixel_width>6.0</pixel_width>
    <xi_reference>7.0</xi_reference>
    <s1_sample_distance>8.0</s1_sample_distance>
-   <wavelength_resolution_dLambda_formula>A*x</wavelength_resolution_dLambda_formula>
-   <wavelength_resolution_dLambda_initial_parameters>A=1</wavelength_resolution_dLambda_initial_parameters>
+   <wavelength_resolution_function>A*x</wavelength_resolution_function>
 
    <const_q>False</const_q>
   </RefLData>
@@ -201,8 +199,7 @@
    <pixel_width>6.0</pixel_width>
    <xi_reference>7.0</xi_reference>
    <s1_sample_distance>8.0</s1_sample_distance>
-   <wavelength_resolution_dLambda_formula>A*x</wavelength_resolution_dLambda_formula>
-   <wavelength_resolution_dLambda_initial_parameters>A=1</wavelength_resolution_dLambda_initial_parameters>
+   <wavelength_resolution_function>A*x</wavelength_resolution_function>
 
    <const_q>False</const_q>
   </RefLData>
@@ -268,8 +265,7 @@
    <pixel_width>6.0</pixel_width>
    <xi_reference>7.0</xi_reference>
    <s1_sample_distance>8.0</s1_sample_distance>
-   <wavelength_resolution_dLambda_formula>A*x</wavelength_resolution_dLambda_formula>
-   <wavelength_resolution_dLambda_initial_parameters>A=1</wavelength_resolution_dLambda_initial_parameters>
+   <wavelength_resolution_function>A*x</wavelength_resolution_function>
 
    <const_q>False</const_q>
   </RefLData>
@@ -335,8 +331,7 @@
    <pixel_width>6.0</pixel_width>
    <xi_reference>7.0</xi_reference>
    <s1_sample_distance>8.0</s1_sample_distance>
-   <wavelength_resolution_dLambda_formula>A*x</wavelength_resolution_dLambda_formula>
-   <wavelength_resolution_dLambda_initial_parameters>A=1</wavelength_resolution_dLambda_initial_parameters>
+   <wavelength_resolution_function>A*x</wavelength_resolution_function>
 
    <const_q>False</const_q>
   </RefLData>
@@ -402,8 +397,7 @@
    <pixel_width>6.0</pixel_width>
    <xi_reference>7.0</xi_reference>
    <s1_sample_distance>8.0</s1_sample_distance>
-   <wavelength_resolution_dLambda_formula>A*x</wavelength_resolution_dLambda_formula>
-   <wavelength_resolution_dLambda_initial_parameters>A=1</wavelength_resolution_dLambda_initial_parameters>
+   <wavelength_resolution_function>A*x</wavelength_resolution_function>
 
    <const_q>False</const_q>
   </RefLData>
@@ -469,8 +463,7 @@
    <pixel_width>6.0</pixel_width>
    <xi_reference>7.0</xi_reference>
    <s1_sample_distance>8.0</s1_sample_distance>
-   <wavelength_resolution_dLambda_formula>A*x</wavelength_resolution_dLambda_formula>
-   <wavelength_resolution_dLambda_initial_parameters>A=1</wavelength_resolution_dLambda_initial_parameters>
+   <wavelength_resolution_function>A*x</wavelength_resolution_function>
 
    <const_q>False</const_q>
   </RefLData>
