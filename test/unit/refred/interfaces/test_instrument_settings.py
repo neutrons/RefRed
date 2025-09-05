@@ -103,7 +103,7 @@ class TestInstrumentSettingsModel:
             "<pixel_width>5.0</pixel_width>\n"
             "<xi_reference>6.0</xi_reference>\n"
             "<s1_sample_distance>7.0</s1_sample_distance>\n"
-            "<wavelength_resolution_function>name=UserFunction, Formula=L - A * exp(-k * x), L=0.07564423, A=0.13093263, k=0.34918918</wavelength_resolution_function>\n"  # noqa: E501
+            "<wavelength_resolution_function>name=UserFunction, Formula=L - A * exp(-k * x), L=8.0, A=9.0, k=10.0</wavelength_resolution_function>\n"  # noqa: E501
             "<another_spurious>True</another_spurious>\n"
             "</refred>"
         )
