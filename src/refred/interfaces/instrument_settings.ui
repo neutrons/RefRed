@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>392</width>
+    <width>520</width>
     <height>329</height>
    </rect>
   </property>
@@ -27,7 +27,7 @@
     <rect>
      <x>10</x>
      <y>280</y>
-     <width>371</width>
+     <width>500</width>
      <height>31</height>
     </rect>
    </property>
@@ -43,7 +43,7 @@
     <rect>
      <x>9</x>
      <y>9</y>
-     <width>371</width>
+     <width>500</width>
      <height>261</height>
     </rect>
    </property>
@@ -278,6 +278,12 @@
       </item>
     <item row="7" column="3">
        <widget class="QLineEdit" name="wavelength_resolution_function">
+         <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>0</height>
+           </size>
+         </property>
        </widget>
       </item>
 
