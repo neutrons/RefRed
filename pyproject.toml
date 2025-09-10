@@ -6,7 +6,7 @@
 name = "RefRed"
 description = " GUI for Liquids Reflectometer Data Reduction"
 dynamic = ["version"]
-requires-python = ">=3.10"
+requires-python = ">=3.11,<3.12"
 license = { text = "GPL version 3.0" }
 readme = "README.rst"
 keywords = ["neutrons", "refred", "liquids reflectometer"]

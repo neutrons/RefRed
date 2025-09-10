@@ -48,7 +48,7 @@ but to manually install and test the conda package, use `micromamba`, `mamba`, o
 .. code-block:: bash
    mkdir -p /tmp/local-channel/linux-64
    cp refred-*.conda /tmp/local-channel/linux-64
-   micromamba create -n refred --yes python=3.10  # same python version as in the pixi environment
+   micromamba create -n refred --yes python=3.11  # same python version as in the pixi environment
    micromamba activate refred
    micromamba install --yes -c conda-forge conda-build conda-index
    python -m conda_index /tmp/local-channel
