@@ -53,7 +53,7 @@ but to manually install and test the conda package, use `micromamba`, `mamba`, o
    micromamba install --yes -c conda-forge conda-build conda-index
    python -m conda_index /tmp/local-channel
    # in addition to local-channel, use below the channels listed in file pyproject.toml
-   micromamba install --yes -c /tmp/local-channel -c conda-forge -c neutrons/label/rc -c mantid-ornl refred
+   micromamba install --yes -c /tmp/local-channel -c conda-forge -c neutrons/label/rc -c mantid refred
    # test the package and its most important dependencies are available
    python -c "import refred; import lr_reduction; import mantid; import qtpy"
 
