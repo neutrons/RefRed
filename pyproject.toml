@@ -6,7 +6,7 @@
 name = "RefRed"
 description = " GUI for Liquids Reflectometer Data Reduction"
 dynamic = ["version"]
-requires-python = ">=3.11,<3.12"
+requires-python = ">=3.11,<3.12"  # Python version when using the package
 license = { text = "GPL version 3.0" }
 readme = "README.rst"
 keywords = ["neutrons", "refred", "liquids reflectometer"]
@@ -64,7 +64,7 @@ name = "refred"
 platforms = ["linux-64"]
 channels = [
   "conda-forge",
-  "mantid-ornl",
+  "mantid",
   "neutrons/label/rc",
   "https://prefix.dev/pixi-build-backends",
 ]
@@ -92,6 +92,7 @@ lr_reduction = "=2.3.0"
 configobj = ">=5.0.9"
 
 [tool.pixi.package.host-dependencies]
+python = ">=3.11,<3.12"  # Python version to build the package with
 hatchling = "*"
 versioningit = "*"
 

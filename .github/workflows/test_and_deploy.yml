@@ -61,7 +61,7 @@ jobs:
           package-name: refred
           local-channel: /tmp/local-channel
           python-version: "3.11"
-          extra-channels: mantid-ornl neutrons/label/rc
+          extra-channels: mantid neutrons/label/rc
           extra-commands: pixi run python -c "import lr_reduction; import mantid; import qtpy; import configobj"
 
 
