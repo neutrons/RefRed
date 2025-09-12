@@ -101,7 +101,8 @@ class InstrumentSettingsDialog(QDialog):
         :param pixel_width: Pixel width in mm
         :param xi_reference: Reference xi value in mm
         :param s1_sample_distance: S1 to sample distance in meters
-        :param wavelength_resolution_function: The function used to calculate the wavelength resolution
+        :param wavelength_resolution_function: The function used to calculate the uncertainty in Q
+               due to uncertainties in neutrons' emission times from the moderator
         """
         self.ui.source_detector_distance.setValue(source_detector_distance)
         self.ui.sample_detector_distance.setValue(sample_detector_distance)
