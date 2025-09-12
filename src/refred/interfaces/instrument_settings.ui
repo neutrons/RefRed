@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>392</width>
-    <height>309</height>
+    <width>520</width>
+    <height>329</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,8 +26,8 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>260</y>
-     <width>371</width>
+     <y>280</y>
+     <width>500</width>
      <height>31</height>
     </rect>
    </property>
@@ -43,8 +43,8 @@
     <rect>
      <x>9</x>
      <y>9</y>
-     <width>371</width>
-     <height>241</height>
+     <width>500</width>
+     <height>261</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -256,8 +256,15 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
-       <spacer name="horizontalSpacer">
+    <item row="7" column="0">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Wavelength resolution function</string>
+        </property>
+       </widget>
+      </item>
+     <item row="7" column="2">
+       <spacer name="horizontalSpacer_7">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -269,6 +276,17 @@
         </property>
        </spacer>
       </item>
+    <item row="7" column="3">
+       <widget class="QLineEdit" name="wavelength_resolution_function">
+         <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>0</height>
+           </size>
+         </property>
+       </widget>
+      </item>
+
      </layout>
     </item>
    </layout>
