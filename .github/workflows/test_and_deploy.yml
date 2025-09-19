@@ -13,6 +13,9 @@ env:
 jobs:
   tests:
     runs-on: ubuntu-24.04
+    defaults:
+      run:
+        shell: bash -el {0}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -36,6 +39,9 @@ jobs:
 
   build:
     runs-on: ubuntu-24.04
+    defaults:
+      run:
+        shell: bash -el {0}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -76,6 +82,9 @@ jobs:
     runs-on: ubuntu-24.04
     needs: [tests, build]
     if: startsWith(github.ref, 'refs/tags/v')
+    defaults:
+      run:
+        shell: bash -el {0}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
