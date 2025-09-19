@@ -20,6 +20,16 @@ from refred.utilities import format_to_list
 
 
 class ReductionTableAutoFill(object):
+    """
+    This class handles loading a list of runs, either data or normalization runs
+
+    Steps:
+    Load data files
+    Sort data runs by lambda, then thi and then theta
+    Update the GUI reduction table
+    Update the plots in the GUI
+    """
+
     list_full_file_name = []
     list_nxs = []
     list_lrdata = []
@@ -122,6 +132,7 @@ class ReductionTableAutoFill(object):
         self.number_of_runs = None
         self.list_nexus_sorted = None
         self.list_nexus_loaded = None
+        self.list_run_loaded = None
 
     def run(self):
         self.cleanup_workspaces()
@@ -146,6 +157,7 @@ class ReductionTableAutoFill(object):
         o_mantid_utility.cleanup_workspaces()
 
     def loading_full_reductionTable(self):
+        """Loads the sorted runs into internal data structures and updates the GUI table and plots"""
         _list_nexus_sorted = self.list_nexus_sorted
         _list_runs_sorted = self.list_runs_sorted
         # _data_type_selected = self.data_type_selected
@@ -231,8 +243,10 @@ class ReductionTableAutoFill(object):
         )
         self.list_wks_loaded = o_load_list.list_wks_loaded
         self.list_nexus_loaded = o_load_list.list_nexus_loaded
+        self.list_run_loaded = o_load_list.list_run_loaded
 
     def loading_lrdata(self):
+        """Creates a new LRData instance for each loaded workspace"""
         _list_wks_loaded = self.list_wks_loaded
         _list_lrdata = []
 
@@ -243,13 +257,42 @@ class ReductionTableAutoFill(object):
         QApplication.processEvents()
 
         for index in range(len(_list_wks_loaded)):
-            _lrdata = LRData(_list_wks_loaded[index], parent=self.parent)
+            _run_loaded = self.list_run_loaded[index]
+            # if this run was loaded previously, use the existing config in the data table (e.g. peak position)
+            reduction_table_cell: LRData | None = self.get_data_table_cell_matching_run(_run_loaded)
+            _lrdata = LRData(_list_wks_loaded[index], parent=self.parent, reduction_table_cell=reduction_table_cell)
             _list_lrdata.append(_lrdata)
             self.parent.ui.progressBar_check2.setValue(index + 1)
             QApplication.processEvents()
         self.list_lrdata = _list_lrdata
 
         self.o_auto_fill_widgets_handler.step2()
+
+    def get_data_table_cell_matching_run(self, run: str):
+        """
+        Returns the first cell in the data table of run objects that matches the input run, or None
+        if there is no match
+
+        Parameters
+        ----------
+        run: str
+            Run number
+
+        Returns
+        -------
+        LRData | None
+            The first object in the run objects table matching the input run, or None if there is no match
+        """
+        data_table_cell = None
+        for row_index in range(self.parent.REDUCTIONTABLE_MAX_ROWCOUNT):
+            if self.data_type_selected == "data":
+                _table_cell: LRData = self.big_table_data.reflectometry_data(row_index)
+            else:
+                _table_cell: LRData = self.big_table_data.normalization_data(row_index)
+            if _table_cell is not None and _table_cell.run_number == run:
+                data_table_cell = _table_cell
+                break
+        return data_table_cell
 
     def sorting_runs(self):
         o_wks_sorted = SortLRDataList(
