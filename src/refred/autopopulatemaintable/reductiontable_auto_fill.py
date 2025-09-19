@@ -285,10 +285,11 @@ class ReductionTableAutoFill(object):
         """
         data_table_cell = None
         for row_index in range(self.parent.REDUCTIONTABLE_MAX_ROWCOUNT):
+            _table_cell: LRData | None = None
             if self.data_type_selected == "data":
-                _table_cell: LRData = self.big_table_data.reflectometry_data(row_index)
+                _table_cell = self.big_table_data.reflectometry_data(row_index)
             else:
-                _table_cell: LRData = self.big_table_data.normalization_data(row_index)
+                _table_cell = self.big_table_data.normalization_data(row_index)
             if _table_cell is not None and _table_cell.run_number == run:
                 data_table_cell = _table_cell
                 break
