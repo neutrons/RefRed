@@ -12,13 +12,24 @@ class TestDeadTimeSettingsModel:
         assert model.paralyzable is True
         assert model.dead_time == 4.2
         assert model.tof_step == 150
+        assert model.use_threshold_ratio is False
+        assert model.threshold_ratio == 1.5
 
     def test_initialization_with_custom_values(self):
-        model = DeadTimeSettingsModel(apply_deadtime=False, paralyzable=False, dead_time=5.0, tof_step=200)
+        model = DeadTimeSettingsModel(
+            apply_deadtime=False,
+            paralyzable=False,
+            dead_time=5.0,
+            tof_step=200,
+            use_threshold_ratio=True,
+            threshold_ratio=2.5,
+        )
         assert model.apply_deadtime is False
         assert model.paralyzable is False
         assert model.dead_time == 5.0
         assert model.tof_step == 200.0
+        assert model.use_threshold_ratio is True
+        assert model.threshold_ratio == 2.5
 
     def test_to_xml(self):
         expected_xml = (
@@ -26,8 +37,17 @@ class TestDeadTimeSettingsModel:
             "<dead_time_paralyzable>True</dead_time_paralyzable>\n"
             "<dead_time_value>4.2</dead_time_value>\n"
             "<dead_time_tof_step>150.0</dead_time_tof_step>\n"
+            "<use_dead_time_threshold>True</use_dead_time_threshold>\n"
+            "<dead_time_threshold>2.5</dead_time_threshold>\n"
         )
-        model = DeadTimeSettingsModel(apply_deadtime=True, paralyzable=True, dead_time=4.2, tof_step=150)
+        model = DeadTimeSettingsModel(
+            apply_deadtime=True,
+            paralyzable=True,
+            dead_time=4.2,
+            tof_step=150,
+            use_threshold_ratio=True,
+            threshold_ratio=2.5,
+        )
         xml_output = model.to_xml()
         assert xml_output == expected_xml
 
@@ -39,6 +59,8 @@ class TestDeadTimeSettingsModel:
             "<dead_time_paralyzable>False</dead_time_paralyzable>\n"
             "<dead_time_value>2.1</dead_time_value>\n"
             "<dead_time_tof_step>100.0</dead_time_tof_step>\n"
+            "<use_dead_time_threshold>True</use_dead_time_threshold>\n"
+            "<dead_time_threshold>2.5</dead_time_threshold>\n"
             "<another_spurious>True</another_spurious>\n"
             "</refred>"
         )
@@ -48,6 +70,8 @@ class TestDeadTimeSettingsModel:
         assert model.paralyzable is False
         assert model.dead_time == 2.1
         assert model.tof_step == 100.0
+        assert model.use_threshold_ratio is True
+        assert model.threshold_ratio == 2.5
 
 
 if __name__ == "__main__":

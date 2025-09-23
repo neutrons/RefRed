@@ -80,27 +80,35 @@ class TestMainGui:
                     "paralyzable": main_gui.deadtime_settings.paralyzable,
                     "dead_time": main_gui.deadtime_settings.dead_time,
                     "tof_step": main_gui.deadtime_settings.tof_step,
+                    "use_threshold_ratio": main_gui.deadtime_settings.use_threshold_ratio,
+                    "threshold_ratio": main_gui.deadtime_settings.threshold_ratio,
                 }
 
             def exec_(self):
                 return QtWidgets.QDialog.Accepted
 
-            def set_state(self, paralyzable, dead_time, tof_step):
+            def set_state(self, paralyzable, dead_time, tof_step, use_threshold_ratio, threshold_ratio):
                 self.options["paralyzable"] = paralyzable
                 self.options["dead_time"] = dead_time
                 self.options["tof_step"] = tof_step
+                self.options["use_threshold_ratio"] = use_threshold_ratio
+                self.options["threshold_ratio"] = threshold_ratio
 
         monkeypatch.setattr("refred.main.DeadTimeSettingsView", MockDeadTimeSettingsView)
         self.app.show_deadtime_settings()
         assert self.app.deadtime_settings.paralyzable is True
         assert self.app.deadtime_settings.dead_time == 4.2
         assert self.app.deadtime_settings.tof_step == 150
+        assert self.app.deadtime_settings.use_threshold_ratio is False
+        assert self.app.deadtime_settings.threshold_ratio == 1.5
 
     def test_show_deadtime_settings_updated_values(self, monkeypatch):
         # endow closure environment to MockDeadTimeSettingsView
         new_paralyzable = False
         new_dead_time = 5.0
         new_tof_step = 200
+        new_use_threshold_ratio = True
+        new_threshold_ratio = 2.5
 
         class MockDeadTimeSettingsView:
             def __init__(self, parent=None):  # noqa: ARG002
@@ -109,12 +117,14 @@ class TestMainGui:
                     "paralyzable": new_paralyzable,
                     "dead_time": new_dead_time,
                     "tof_step": new_tof_step,
+                    "use_threshold_ratio": new_use_threshold_ratio,
+                    "threshold_ratio": new_threshold_ratio,
                 }
 
             def exec_(self):
                 return QtWidgets.QDialog.Accepted
 
-            def set_state(self, paralyzable, dead_time, tof_step):
+            def set_state(self, paralyzable, dead_time, tof_step, use_threshold_ratio, threshold_ratio):
                 pass
 
         monkeypatch.setattr("refred.main.DeadTimeSettingsView", MockDeadTimeSettingsView)
@@ -122,6 +132,8 @@ class TestMainGui:
         assert self.app.deadtime_settings.paralyzable == new_paralyzable
         assert self.app.deadtime_settings.dead_time == new_dead_time
         assert self.app.deadtime_settings.tof_step == new_tof_step
+        assert self.app.deadtime_settings.use_threshold_ratio == new_use_threshold_ratio
+        assert self.app.deadtime_settings.threshold_ratio == new_threshold_ratio
 
     # Instrument Settings tests
 

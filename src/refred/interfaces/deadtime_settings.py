@@ -16,6 +16,8 @@ class DeadTimeSettingsModel(GlobalSettings):
     paralyzable: bool = True
     dead_time: float = 4.2
     tof_step: float = 150.0
+    use_threshold_ratio: bool = False
+    threshold_ratio: float = 1.5
 
     # class variable, translates fields to XML tag names, same names as the lr_reduction package
     _to_xmltag = {
@@ -23,6 +25,8 @@ class DeadTimeSettingsModel(GlobalSettings):
         "paralyzable": "dead_time_paralyzable",
         "dead_time": "dead_time_value",
         "tof_step": "dead_time_tof_step",
+        "use_threshold_ratio": "use_dead_time_threshold",
+        "threshold_ratio": "dead_time_threshold",
     }
 
     def to_xml(self, indent: str = "") -> str:
@@ -42,6 +46,8 @@ class DeadTimeSettingsModel(GlobalSettings):
         <dead_time_paralyzable>True</dead_time_paralyzable>
         <dead_time_value>4.2</dead_time_value>
         <dead_time_tof_step>150</dead_time_tof_step>
+        <use_dead_time_threshold>False</use_dead_time_threshold>
+        <dead_time_threshold>1.5</dead_time_threshold>
         """
         doc: Document = Document()
         xml = ""
@@ -68,6 +74,8 @@ class DeadTimeSettingsModel(GlobalSettings):
             <dead_time_paralyzable>True</dead_time_paralyzable>
             <dead_time_value>4.2</dead_time_value>
             <dead_time_tof_step>150</dead_time_tof_step>
+            <use_dead_time_threshold>False</use_dead_time_threshold>
+            <dead_time_threshold>1.5</dead_time_threshold>
             <some_entry3>value3</some_entry3>
         </refred>
         """
@@ -77,6 +85,8 @@ class DeadTimeSettingsModel(GlobalSettings):
             "paralyzable": str2bool,
             "dead_time": float,
             "tof_step": float,
+            "use_threshold_ratio": str2bool,
+            "threshold_ratio": float,
         }
         for field, converter in converters.items():
             tmp: list = node.getElementsByTagName(self._to_xmltag[field])
@@ -99,6 +109,8 @@ class DeadTimeSettingsModel(GlobalSettings):
             "paralyzable": "paralyzable",
             "dead_time": "dead_time_value",
             "tof_step": "dead_time_tof_step",
+            "use_threshold_ratio": "use_dead_time_threshold",
+            "threshold_ratio": "dead_time_threshold",
         }
         return {_to_reader_key[field]: value for field, value in self.model_dump().items()}
 
@@ -113,17 +125,21 @@ class DeadTimeSettingsView(QDialog):
         self.ui = load_ui(ui_filename="deadtime_settings.ui", baseinstance=self)
         self.options = self.get_state_from_form()
 
-    def set_state(self, paralyzable, dead_time, tof_step):
+    def set_state(self, paralyzable, dead_time, tof_step, use_threshold_ratio, threshold_ratio):
         """
         Store options and populate the form
         :param apply_correction: If True, dead time correction will be applied
         :param paralyzable: If True, a paralyzable correction will be used
         :param dead_time: Value of the dead time in micro second
         :param tof_step: TOF binning in micro second
+        :param use_threshold_ratio: If True, an upper limit on deadtime correction ratios is enforced
+        :param threshold_ratio: The upper limit on deadtime correction ratios. Corrections exceeding this are set to 0
         """
         self.ui.use_paralyzable.setChecked(paralyzable)
         self.ui.dead_time_value.setValue(dead_time)
         self.ui.dead_time_tof.setValue(tof_step)
+        self.ui.use_threshold_ratio.setChecked(use_threshold_ratio)
+        self.ui.threshold_ratio.setValue(threshold_ratio)
         self.options = self.get_state_from_form()
 
     def get_state_from_form(self) -> dict:
@@ -137,6 +153,8 @@ class DeadTimeSettingsView(QDialog):
             "paralyzable": self.ui.use_paralyzable.isChecked(),
             "dead_time": self.ui.dead_time_value.value(),
             "tof_step": self.ui.dead_time_tof.value(),
+            "use_threshold_ratio": self.ui.use_threshold_ratio.isChecked(),
+            "threshold_ratio": self.ui.threshold_ratio.value(),
         }
 
     def accept(self):

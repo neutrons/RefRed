@@ -721,10 +721,12 @@ class MainGui(QtWidgets.QMainWindow):
             self.deadtime_settings.paralyzable,
             self.deadtime_settings.dead_time,
             self.deadtime_settings.tof_step,
+            self.deadtime_settings.use_threshold_ratio,
+            self.deadtime_settings.threshold_ratio,
         )
         view.exec_()
         # update the dead time settings of the Main GUI after user has closed the dialog
-        for option in ["paralyzable", "dead_time", "tof_step"]:
+        for option in ["paralyzable", "dead_time", "tof_step", "use_threshold_ratio", "threshold_ratio"]:
             setattr(self.deadtime_settings, option, view.options[option])
 
     # Instrument settings
