@@ -363,6 +363,14 @@ class DisplayPlots(object):
         parent.ui.TOFmanualToValue.setText(stmax)
 
     def workWithNorm(self, update_reduction_table=True):
+        """
+        Update instance attributes to point to the normalization tab plot widgets
+
+        Parameters
+        ----------
+        update_reduction_table: bool
+            If True, updates the background settings widgets in the normalization tab
+        """
         parent = self.parent
         self.yt_plot_ui = parent.ui.norm_yt_plot
         self.yi_plot_ui = parent.ui.norm_yi_plot
@@ -388,6 +396,17 @@ class DisplayPlots(object):
             parent.ui.normLowResFlag.setChecked(self.lowResFlag)
 
     def workWithData(self, update_reduction_table=True):
+        """
+        Update instance attributes to point to the data tab plot widgets
+
+        Optionally updates the background setting widgets according to the plotted run configuration,
+        while blocking the widget signals to not trigger additional plot updates.
+
+        Parameters
+        ----------
+        update_reduction_table: bool
+            If True, updates the background settings widgets in the data tab
+        """
         parent = self.parent
         self.yt_plot_ui = parent.ui.data_yt_plot
         self.yi_plot_ui = parent.ui.data_yi_plot
@@ -396,19 +415,42 @@ class DisplayPlots(object):
 
         if update_reduction_table:
             [peak1, peak2] = self.peak
+            parent.ui.peakFromValue.blockSignals(True)
             parent.ui.peakFromValue.setValue(peak1)
+            parent.ui.peakFromValue.blockSignals(False)
+
+            parent.ui.peakToValue.blockSignals(True)
             parent.ui.peakToValue.setValue(peak2)
+            parent.ui.peakToValue.blockSignals(False)
 
+            parent.ui.backFromValue.blockSignals(True)
             parent.ui.backFromValue.setValue(self.back[0])
-            parent.ui.backToValue.setValue(self.back[1])
+            parent.ui.backFromValue.blockSignals(False)
 
+            parent.ui.backToValue.blockSignals(True)
+            parent.ui.backToValue.setValue(self.back[1])
+            parent.ui.backToValue.blockSignals(False)
+
+            parent.ui.back2FromValue.blockSignals(True)
             parent.ui.back2FromValue.setValue(self.back2[0])
+            parent.ui.back2FromValue.blockSignals(False)
+
+            parent.ui.back2ToValue.blockSignals(True)
             parent.ui.back2ToValue.setValue(self.back2[1])
+            parent.ui.back2ToValue.blockSignals(False)
 
             [lowRes1, lowRes2] = self.lowRes
+            parent.ui.dataLowResFromValue.blockSignals(True)
             parent.ui.dataLowResFromValue.setValue(lowRes1)
+            parent.ui.dataLowResFromValue.blockSignals(False)
+
+            parent.ui.dataLowResToValue.blockSignals(True)
             parent.ui.dataLowResToValue.setValue(lowRes2)
+            parent.ui.dataLowResToValue.blockSignals(False)
+
+            parent.ui.dataLowResFlag.blockSignals(True)
             parent.ui.dataLowResFlag.setChecked(self.lowResFlag)
+            parent.ui.dataLowResFlag.blockSignals(False)
 
     def isDataSelected(self):
         if self.parent.ui.dataNormTabWidget.currentIndex() == 0:

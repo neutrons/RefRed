@@ -104,11 +104,14 @@ class CheckListRunCompatibilityAndDisplay(object):
         self.parent.big_table_data = big_table_data
 
     def loading_lr_data(self):
+        """Creates an instance of LRData for the loaded workspace"""
         wks = self.wks
-        lrdata = LRData(wks, parent=self.parent)
-        self.lrdata = lrdata
         big_table_data = self.parent.big_table_data
         col_index = 0 if self.is_working_with_data_column else 1
+        reduction_table_cell = big_table_data[self.row, col_index]
+        # when loading a run in an existing cell, big_table_cell is not None and LRData will copy existing config
+        lrdata = LRData(wks, parent=self.parent, reduction_table_cell=reduction_table_cell)
+        self.lrdata = lrdata
         big_table_data[self.row, col_index] = lrdata
         self.parent.big_table_data = big_table_data
 

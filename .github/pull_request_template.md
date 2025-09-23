@@ -17,19 +17,6 @@ Check all that apply:
 
 ([instructions to set up the environment](https://github.com/neutrons/RefRed/blob/next/docs/developer/testing.rst#running-manual-tests-in-a-pull-request))
 
-Start RefRed GUI
-
-```bash
-(refred)
-$ PYTHONPATH=$(pwd):$PYTHONPATH ./scripts/start_refred.py
-```
-
-Or run tests
-
-```bash
-$ pixi run test
-```
-
 # Check list for the reviewer
 
 - [ ] best software practices
