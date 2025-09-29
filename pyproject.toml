@@ -88,7 +88,7 @@ refred = { path = ".", editable = true }
 
 # Conda packages (no PyPi) to be enumerated within the conda package to be built.
 [tool.pixi.package.run-dependencies]
-lr_reduction = "=2.3.0"
+lr_reduction = "=2.4.0"
 configobj = ">=5.0.9"
 
 [tool.pixi.package.host-dependencies]
