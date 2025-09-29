@@ -4,7 +4,7 @@ environments:
     channels:
     - url: https://conda.anaconda.org/conda-forge/
     - url: https://conda.anaconda.org/mantid/
-    - url: https://conda.anaconda.org/neutrons/
+    - url: https://conda.anaconda.org/neutrons/label/rc/
     - url: https://prefix.dev/pixi-build-backends/
     indexes:
     - https://pypi.org/simple
@@ -118,7 +118,7 @@ environments:
     channels:
     - url: https://conda.anaconda.org/conda-forge/
     - url: https://conda.anaconda.org/mantid/
-    - url: https://conda.anaconda.org/neutrons/
+    - url: https://conda.anaconda.org/neutrons/label/rc/
     - url: https://prefix.dev/pixi-build-backends/
     indexes:
     - https://pypi.org/simple
@@ -304,7 +304,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/libzlib-1.3.1-hb9d3cd8_2.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/license-expression-30.4.4-pyhe01879c_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/lmfit-1.3.4-pyhd8ed1ab_0.conda
-      - conda: https://conda.anaconda.org/neutrons/noarch/lr_reduction-2.3.0-pyhbf21a9e_0.conda
+      - conda: https://conda.anaconda.org/neutrons/label/rc/noarch/lr_reduction-2.4.0rc1-pyhbf21a9e_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/lz4-c-1.10.0-h5888daf_1.conda
       - conda: https://conda.anaconda.org/mantid/linux-64/mantid-6.13.1-py311h281d3ad_0.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/noarch/markdown-it-py-4.0.0-pyhd8ed1ab_0.conda
@@ -474,7 +474,7 @@ environments:
     channels:
     - url: https://conda.anaconda.org/conda-forge/
     - url: https://conda.anaconda.org/mantid/
-    - url: https://conda.anaconda.org/neutrons/
+    - url: https://conda.anaconda.org/neutrons/label/rc/
     - url: https://prefix.dev/pixi-build-backends/
     indexes:
     - https://pypi.org/simple
@@ -2986,9 +2986,9 @@ packages:
   - pkg:pypi/lmfit?source=hash-mapping
   size: 86583
   timestamp: 1753035921043
-- conda: https://conda.anaconda.org/neutrons/noarch/lr_reduction-2.3.0-pyhbf21a9e_0.conda
-  sha256: 2066aad1f2c8e522989eb63144c1e95479f17b39be75de48392834893371d3d0
-  md5: e1222d60172aaeccde2ffe21422d460d
+- conda: https://conda.anaconda.org/neutrons/label/rc/noarch/lr_reduction-2.4.0rc1-pyhbf21a9e_0.conda
+  sha256: 77a58c951452749a05ac227b04d7a61e9e6a8632d0086d03e536df76df6a6fa9
+  md5: a3271ee17fc4350e2007705393711d74
   depends:
   - python >=3.11
   - lmfit >=1.3.0,<1.4.0
@@ -2997,8 +2997,8 @@ packages:
   - pyqt >=5,<6
   - qtpy >=2.4.3
   - python
-  size: 72892
-  timestamp: 1758574358492
+  size: 76245
+  timestamp: 1759159291604
 - conda: https://conda.anaconda.org/conda-forge/linux-64/lz4-c-1.10.0-h5888daf_1.conda
   sha256: 47326f811392a5fd3055f0f773036c392d26fdb32e4d8e7a8197eed951489346
   md5: 9de5350a85c4a20c685259b889aa6393
@@ -4433,8 +4433,8 @@ packages:
   timestamp: 1737836872415
 - pypi: ./
   name: refred
-  version: 5.6.0.dev18
-  sha256: 2ef880f7fe2c2ef713077fbf6df99a7f082f3c019b964388f3c04e96b741304d
+  version: 5.6.0.dev19
+  sha256: 310375002757ea1d6c9c23db9b9b73f52b52071165c6356e83176c5c6e7dfc50
   requires_python: '>=3.11,<3.12'
   editable: true
 - pypi: https://files.pythonhosted.org/packages/86/70/ba42d5ed606ee275f2465bfc0e2208755b06cdabd0f4c7c4b614d51b57ab/regex-2025.9.18-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
