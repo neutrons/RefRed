@@ -17,5 +17,5 @@ class TestLiveReductionHandler:
         assert len(handler.big_table_data[row][2].reduce_q_axis) == 0
         assert len(handler.big_table_data[row][2].reduce_y_axis) == 0
         handler.run()
-        assert len(handler.big_table_data[row][2].reduce_q_axis) == 69
-        assert len(handler.big_table_data[row][2].reduce_y_axis) == 69
+        assert len(handler.big_table_data[row][2].reduce_q_axis) == 72
+        assert len(handler.big_table_data[row][2].reduce_y_axis) == 72
