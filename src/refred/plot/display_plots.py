@@ -2,6 +2,7 @@ import bisect
 
 import refred.colors as colors
 from refred.calculations.lr_data import LRData
+from refred.gui_handling.observer import SpinBoxObserver
 from refred.gui_handling.update_plot_widget_status import UpdatePlotWidgetStatus
 from refred.plot.background_settings import backgrounds_settings
 from refred.plot.clear_plots import ClearPlots
@@ -70,6 +71,14 @@ class DisplayPlots(object):
         if not _data.new_detector_geometry_flag:
             self.xlim = 303
             self.ylim = 255
+
+        if is_norm:
+            norm_back_from_last = self.parent.spinbox_observer.get_entry(self.parent.ui.normBackFromValue).last_value
+            norm_back_to_last = self.parent.spinbox_observer.get_entry(self.parent.ui.normBackToValue).last_value
+            if not norm_back_from_last == SpinBoxObserver.NAN:
+                self._data.back[0] = norm_back_from_last
+            if not norm_back_to_last == SpinBoxObserver.NAN:
+                self._data.back[1] = norm_back_to_last
 
         # if self.parent.retain_all:
         # _active_data.all_plot_axis.yi_view_interval = self.parent.global_yi_view_interval
