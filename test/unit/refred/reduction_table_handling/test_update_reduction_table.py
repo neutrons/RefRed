@@ -131,6 +131,7 @@ def test_clear_row_when_both_data_and_norm_runs_cleared(mock_file_finder_find_ru
     # clear the text in the data run and normalization run cells
     load_run_from_reduction_table(window_main, row=row, col=TableCol.DATA_RUN, run="")
     load_run_from_reduction_table(window_main, row=row, col=TableCol.NORM_RUN, run="")
+    qtbot.wait(wait)
 
     # verify that the internal state has been cleared
     assert window_main.big_table_data.get_data_by_column_enum(row, TableDataColumIndex.LR_DATA) is None
