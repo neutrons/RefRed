@@ -28,8 +28,22 @@ class ReductionTableHandler(object):
         self.parent.ui.previewLive.setEnabled(False)
         self.parent.ui.actionExportScript.setEnabled(False)
 
-    def clear_rows_selected(self):
-        self.__get_range_row_selected()
+    def clear_rows_selected(self, row_index: int | None = None):
+        """Clear reduction table row(s) in GUI and internal state
+
+        Parameters
+        ----------
+        row_index
+            The row to clear. If None, uses the current GUI selection.
+        """
+        if row_index is None:
+            # Determine row range from current GUI selection
+            self.__get_range_row_selected()
+        else:
+            if not isinstance(row_index, int):
+                raise TypeError(f"row_index must be an int or None, got {type(row_index)}")
+            self.from_row = self.to_row = row_index
+
         if self.__is_row_displayed_in_range_selected():
             self.__clear_metadata()
             self.__clear_plots()

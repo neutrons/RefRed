@@ -84,3 +84,29 @@ class TestReductionTableHandling:
         for i in range(NBR_ROWS - nbr_deleted, NBR_ROWS):
             assert table.item(i, ReductionTableColumnIndex.DATA_RUN).text() == ""
             assert table.item(i, ReductionTableColumnIndex.NORM_RUN).text() == ""
+
+    @pytest.mark.parametrize(
+        "row_index, throws_exception",
+        [
+            (None, False),
+            (2, False),
+            ([2, 3], True),
+        ],
+    )
+    def test_clear_rows_selected_row_index(self, row_index, throws_exception, setup_main_window_reduction_table, qtbot):
+        """Test clear_rows_selected with different inputs"""
+        window_main = setup_main_window_reduction_table
+        qtbot.addWidget(window_main)
+        from_row = 2
+        to_row = 3  # inclusive
+
+        with mock.patch.object(ReductionTableHandler, "_ReductionTableHandler__get_range_row_selected"):
+            handler = ReductionTableHandler(parent=window_main)
+            handler.from_row = from_row
+            handler.to_row = to_row
+
+            if throws_exception:
+                with pytest.raises(TypeError):
+                    handler.clear_rows_selected(row_index=row_index)
+            else:
+                handler.clear_rows_selected(row_index=row_index)
