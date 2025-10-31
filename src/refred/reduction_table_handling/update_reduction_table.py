@@ -6,6 +6,7 @@ from refred.calculations.check_list_run_compatibility_thread import CheckListRun
 from refred.calculations.locate_list_run import LocateListRun
 from refred.calculations.run_sequence_breaker import RunSequenceBreaker
 from refred.interfaces.mytablewidget import ReductionTableColumnIndex
+from refred.reduction_table_handling.reduction_table_handler import ReductionTableHandler
 from refred.tabledata import TableData
 
 
@@ -89,10 +90,16 @@ class UpdateReductionTable(object):
         if config is None:
             # no data loaded in this row
             return
-        if self.col == 1:
+        data_item = self.parent.ui.reductionTable.item(self.row, ReductionTableColumnIndex.DATA_RUN)
+        norm_item = self.parent.ui.reductionTable.item(self.row, ReductionTableColumnIndex.NORM_RUN)
+        if data_item.text() == "" and norm_item.text() == "":
+            # clear the whole row since both the data run and norm run are empty
+            o_reduction_table_handler = ReductionTableHandler(parent=self.parent)
+            o_reduction_table_handler.clear_rows_selected(self.row)
+        elif self.col == ReductionTableColumnIndex.DATA_RUN:
             big_table_data.set_reflectometry_data(self.row, None)
             config.clear_data()
-        elif self.col == 2:
+        elif self.col == ReductionTableColumnIndex.NORM_RUN:
             big_table_data.set_normalization_data(self.row, None)
             config.clear_normalization()
 
