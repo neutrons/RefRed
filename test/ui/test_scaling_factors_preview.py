@@ -13,16 +13,15 @@ SECOND = 1000  # 1000 miliseconds
 def test_sf_preview(qtbot, data_server):
     window_main = MainGui()
     qtbot.addWidget(window_main)
-    # Uncheck button "Use Scaling Factor Config."
-    qtbot.mouseClick(window_main.ui.scalingFactorFlag, QtCore.Qt.LeftButton)
+    # Assert defaults for button "Use Scaling Factor Config."
     assert window_main.ui.scalingFactorFlag.isChecked() is False
     assert window_main.ui.previewScalingFactorFile.isEnabled() is False  # Verify button "Preview ..." is disabled
-    # re-enable the preview
+    # enable the preview
     qtbot.mouseClick(window_main.ui.scalingFactorFlag, QtCore.Qt.LeftButton)
     assert window_main.ui.scalingFactorFlag.isChecked() is True
     assert window_main.ui.previewScalingFactorFile.isEnabled() is True  # Verify button "Preview ..." is disabled
     # Click in the "Browse.." button and load file sf_186529_Si_auto.cfg from the test/data directory
-
+    
     file_name = "sf_186529_Si_auto.cfg"
     # this will set directory in the QFileDialog to the directory where file_name resides
     window_main.path_ascii = os.path.dirname(data_server.path_to(file_name))

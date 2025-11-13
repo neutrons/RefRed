@@ -8,7 +8,7 @@ from refred.interfaces.deadtime_settings import DeadTimeSettingsModel
 class TestDeadTimeSettingsModel:
     def test_initialization_with_defaults(self):
         model = DeadTimeSettingsModel()
-        assert model.apply_deadtime is False
+        assert model.apply_deadtime is True
         assert model.paralyzable is True
         assert model.dead_time == 4.2
         assert model.tof_step == 150
