@@ -21,7 +21,7 @@ def test_sf_preview(qtbot, data_server):
     assert window_main.ui.scalingFactorFlag.isChecked() is True
     assert window_main.ui.previewScalingFactorFile.isEnabled() is True  # Verify button "Preview ..." is disabled
     # Click in the "Browse.." button and load file sf_186529_Si_auto.cfg from the test/data directory
-    
+
     file_name = "sf_186529_Si_auto.cfg"
     # this will set directory in the QFileDialog to the directory where file_name resides
     window_main.path_ascii = os.path.dirname(data_server.path_to(file_name))
