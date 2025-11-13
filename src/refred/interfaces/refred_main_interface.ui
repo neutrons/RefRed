@@ -1151,7 +1151,7 @@
                            <item>
                             <widget class="QFrame" name="scalingFactorConfigFrame">
                              <property name="enabled">
-                              <bool>true</bool>
+                              <bool>false</bool>
                              </property>
                              <property name="frameShape">
                               <enum>QFrame::StyledPanel</enum>
@@ -1165,9 +1165,6 @@
                                 <property name="text">
                                  <string>Preview ...</string>
                                 </property>
-				<property name="enabled">
-				  <bool>false</bool>
-				</property>
                                </widget>
                               </item>
                               <item>
