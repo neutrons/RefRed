@@ -1165,6 +1165,9 @@
                                 <property name="text">
                                  <string>Preview ...</string>
                                 </property>
+				<property name="enabled">
+				  <bool>false</bool>
+				</property>
                                </widget>
                               </item>
                               <item>
