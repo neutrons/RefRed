@@ -59,7 +59,7 @@ class TestInstrumentSettingsModel:
     def test_initialization_with_defaults(self):
         model = InstrumentSettings()
         assert model.apply_instrument_settings is False
-        assert model.source_detector_distance == 15.75
+        assert model.source_detector_distance == 15.5
         assert model.sample_detector_distance == 1.83
         assert model.num_x_pixels == 256
         assert model.num_y_pixels == 304

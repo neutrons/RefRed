@@ -197,7 +197,7 @@ class TestMainGui:
 
         monkeypatch.setattr("refred.main.InstrumentSettingsDialog", MockInstrumentSettingsDialog)
         self.app.show_instrument_settings()
-        assert self.app.instrument_settings.source_detector_distance == 15.75
+        assert self.app.instrument_settings.source_detector_distance == 15.5
         assert self.app.instrument_settings.sample_detector_distance == 1.83
         assert self.app.instrument_settings.num_x_pixels == 256
         assert self.app.instrument_settings.num_y_pixels == 304
