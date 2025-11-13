@@ -12,28 +12,28 @@ def dead_time_entry_point(qtbot):
 
 
 def test_initial_state(dead_time_entry_point):
-    assert not dead_time_entry_point.applyCheckBox.isChecked()
-    assert not dead_time_entry_point.settingsButton.isEnabled()
+    assert dead_time_entry_point.applyCheckBox.isChecked()
+    assert dead_time_entry_point.settingsButton.isEnabled()
 
 
 def test_checkbox_interaction(dead_time_entry_point, qtbot):
     # Simulate checking the checkbox
     qtbot.mouseClick(dead_time_entry_point.applyCheckBox, Qt.LeftButton)
-    # Test if the checkbox is checked
-    assert dead_time_entry_point.applyCheckBox.isChecked()
-    # Test if the settings button is now enabled
-    assert dead_time_entry_point.settingsButton.isEnabled()
-
-
-def test_uncheck_checkbox(dead_time_entry_point, qtbot):
-    # First, check the checkbox
-    qtbot.mouseClick(dead_time_entry_point.applyCheckBox, Qt.LeftButton)
-    # Now, uncheck it
-    qtbot.mouseClick(dead_time_entry_point.applyCheckBox, Qt.LeftButton)
     # Test if the checkbox is unchecked
     assert not dead_time_entry_point.applyCheckBox.isChecked()
     # Test if the settings button is now disabled
     assert not dead_time_entry_point.settingsButton.isEnabled()
+
+
+def test_check_checkbox(dead_time_entry_point, qtbot):
+    # First, check the checkbox
+    qtbot.mouseClick(dead_time_entry_point.applyCheckBox, Qt.LeftButton)
+    # Now, check it
+    qtbot.mouseClick(dead_time_entry_point.applyCheckBox, Qt.LeftButton)
+    # Test if the checkbox is unchecked
+    assert dead_time_entry_point.applyCheckBox.isChecked()
+    # Test if the settings button is now disabled
+    assert dead_time_entry_point.settingsButton.isEnabled()
 
 
 if __name__ == "__main__":

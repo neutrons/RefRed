@@ -22,6 +22,7 @@ class DeadTimeEntryPoint(QGroupBox):
         )
 
         self.applyCheckBox = QCheckBox("Apply", self)
+        self.applyCheckBox.setChecked(True)
         self.applyCheckBox.stateChanged.connect(self.toggleSettingsButton)
         self.settingsButton = QPushButton("Settings", self)
         self.settingsButton.setEnabled(

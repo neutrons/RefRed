@@ -19,7 +19,7 @@ from refred.utilities import str2bool
 @dataclass
 class DEFAULT_INSTRUMENT_SETTINGS:  # noqa: N801
     apply_instrument_settings: bool = False
-    source_detector_distance: float = 15.75
+    source_detector_distance: float = 15.5
     sample_detector_distance: float = 1.83
     num_x_pixels: int = 256
     num_y_pixels: int = 304

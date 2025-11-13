@@ -13,11 +13,10 @@ SECOND = 1000  # 1000 miliseconds
 def test_sf_preview(qtbot, data_server):
     window_main = MainGui()
     qtbot.addWidget(window_main)
-    # Uncheck button "Use Scaling Factor Config."
-    qtbot.mouseClick(window_main.ui.scalingFactorFlag, QtCore.Qt.LeftButton)
+    # Assert defaults for button "Use Scaling Factor Config."
     assert window_main.ui.scalingFactorFlag.isChecked() is False
     assert window_main.ui.previewScalingFactorFile.isEnabled() is False  # Verify button "Preview ..." is disabled
-    # re-enable the preview
+    # enable the preview
     qtbot.mouseClick(window_main.ui.scalingFactorFlag, QtCore.Qt.LeftButton)
     assert window_main.ui.scalingFactorFlag.isChecked() is True
     assert window_main.ui.previewScalingFactorFile.isEnabled() is True  # Verify button "Preview ..." is disabled
