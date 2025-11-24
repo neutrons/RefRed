@@ -305,7 +305,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/libzlib-1.3.1-hb9d3cd8_2.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/license-expression-30.4.4-pyhe01879c_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/lmfit-1.3.4-pyhd8ed1ab_0.conda
-      - conda: https://conda.anaconda.org/neutrons/noarch/lr_reduction-2.5.0-pyhbf21a9e_0.conda
+      - conda: https://conda.anaconda.org/neutrons/noarch/lr_reduction-2.6.0-pyhbf21a9e_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/lz4-c-1.10.0-h5888daf_1.conda
       - conda: https://conda.anaconda.org/mantid/linux-64/mantid-6.14.0-py311hd1ad81e_0.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/noarch/markdown-it-py-4.0.0-pyhd8ed1ab_0.conda
@@ -3039,19 +3039,19 @@ packages:
   - pkg:pypi/lmfit?source=hash-mapping
   size: 86583
   timestamp: 1753035921043
-- conda: https://conda.anaconda.org/neutrons/noarch/lr_reduction-2.5.0-pyhbf21a9e_0.conda
-  sha256: e0370c58b22243782c69035311a58e988c5026e925d8c1268b9c5a4f75591a81
-  md5: 850ca5d8bad23251f4402ccce8eaa920
+- conda: https://conda.anaconda.org/neutrons/noarch/lr_reduction-2.6.0-pyhbf21a9e_0.conda
+  sha256: 8ed983e1ce8509c5fa4253667c0271a65aa11d9929c11d8e65b1d0fa34ce4f4f
+  md5: fbfb94e09a644219b55da853f6b6decf
   depends:
   - python >=3.11
   - lmfit >=1.3.0,<1.4.0
-  - mantid >=6.12.0
+  - mantid >=6.14.0,<6.15
   - matplotlib ==3.9.4
   - pyqt >=5,<6
   - qtpy >=2.4.3
   - python
-  size: 78578
-  timestamp: 1762204919601
+  size: 78570
+  timestamp: 1764022274524
 - conda: https://conda.anaconda.org/conda-forge/linux-64/lz4-c-1.10.0-h5888daf_1.conda
   sha256: 47326f811392a5fd3055f0f773036c392d26fdb32e4d8e7a8197eed951489346
   md5: 9de5350a85c4a20c685259b889aa6393
@@ -4546,8 +4546,8 @@ packages:
   timestamp: 1760379115194
 - pypi: ./
   name: refred
-  version: 5.6.0rc4
-  sha256: 53c0d24ef0642ed24faeee6043b3ea2b40a762afccc6ce5bc7e5621350b1fb6c
+  version: 5.8.0rc1
+  sha256: b846b70b1db068713b713a95be6489a98fb4db17dbff48f7109e7c2b3634f27a
   requires_python: '>=3.11,<3.12'
   editable: true
 - pypi: https://files.pythonhosted.org/packages/5e/48/58a1f6623466522352a6efa153b9a3714fc559d9f930e9bc947b4a88a2c3/regex-2025.10.23-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
