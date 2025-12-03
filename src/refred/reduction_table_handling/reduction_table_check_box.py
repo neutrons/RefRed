@@ -98,4 +98,4 @@ class ReductionTableCheckBox(object):
         for row in range(self.size_check_box_state_table):
             _state = self._reduction_table_check_box_state[row]
             _widget = self.parent.ui.reductionTable.cellWidget(row, 0)
-            _widget.setChecked(_state)
+            _widget.setChecked(bool(_state))

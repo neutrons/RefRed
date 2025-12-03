@@ -10,10 +10,10 @@ from refred.export import ascii_loader
 class TestAsciiLoader:
     def setup_class(self):
         # create a temp file to load and verify
-        np.random.seed(42)
+        rng = np.random.default_rng(seed=42)
         # NOTE: numpy.savetxt will prepend # for the header
         self.header = "\t".join([f"{i}_header" for i in range(3)])
-        self.refdata = np.random.random(10 * 3).reshape(10, 3)
+        self.refdata = rng.random(10 * 3).reshape(10, 3)
 
     def teardown_class(self):
         print(f"Test tear down for {self}")
