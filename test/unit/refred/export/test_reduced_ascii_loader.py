@@ -14,9 +14,9 @@ class TestReducedAsciiLoader:
         self.parent = mock.Mock()
         self.parent.big_table_data = "big_table_data"
         # data
-        np.random.seed(42)
+        rng = np.random.default_rng(seed=42)
         self.header = "\t".join([f"{i}_header" for i in range(3)])
-        self.refdata = np.random.random(10 * 3).reshape(10, 3)
+        self.refdata = rng.random(10 * 3).reshape(10, 3)
 
     def teardown_class(self):
         pass

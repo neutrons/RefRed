@@ -197,7 +197,7 @@ extend-exclude = [
 ]
 
 [tool.ruff.lint]
-select = ["A", "ARG", "ASYNC", "BLE", "C90", "E", "F", "I", "N", "UP032", "W"]
+select = ["A", "ARG", "ASYNC", "BLE", "C90", "E", "F", "I", "N", "NPY", "UP032", "W"]
 ignore = [
   "ARG001", # Unused function argument
   "ARG002", # Unused method argument
