@@ -125,10 +125,10 @@ class DeadTimeSettingsView(QDialog):
         self.ui = load_ui(ui_filename="deadtime_settings.ui", baseinstance=self)
         self.options = self.get_state_from_form()
 
+    # TODO: Should add default values for these parameters (Glass)
     def set_state(self, paralyzable, dead_time, tof_step, use_threshold_ratio, threshold_ratio):
         """
         Store options and populate the form
-        :param apply_correction: If True, dead time correction will be applied
         :param paralyzable: If True, a paralyzable correction will be used
         :param dead_time: Value of the dead time in micro second
         :param tof_step: TOF binning in micro second
