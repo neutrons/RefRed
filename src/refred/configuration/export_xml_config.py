@@ -1,7 +1,7 @@
 import datetime
 import logging
 import os
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, List, Optional
 
 import lr_reduction
 import mantid
@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 class ExportXMLConfig(object):
     def __init__(self, parent: "MainGui"):
         self.parent = parent
-        self.str_array = []
+        self.str_array: List[str] = []
 
     def header_part(self):
         str_array = self.str_array

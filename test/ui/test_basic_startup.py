@@ -55,9 +55,13 @@ def test_startup(qtbot):
     qtbot.keyClick(window.ui.menuFile, QtCore.Qt.Key_Enter)
     qtbot.wait(wait)
 
+    sleep_time = 1000
+    qtbot.wait(sleep_time)
+
     # Open and close SF Preview
     qtbot.mouseClick(window.ui.scalingFactorFlag, QtCore.Qt.LeftButton)
     qtbot.mouseClick(window.ui.previewScalingFactorFile, QtCore.Qt.LeftButton)
+    qtbot.wait(wait)
     sf_preview_window = window.findChild(QtWidgets.QMainWindow)
     assert sf_preview_window.windowTitle() == "Scaling Factor File Preview"
     qtbot.wait(wait)
