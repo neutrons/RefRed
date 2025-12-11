@@ -1054,6 +1054,7 @@ class SFCalculator(QtWidgets.QMainWindow):
         Pop up dialog for dead time options
         """
         dt_settings = DeadTimeSettingsView(parent=self)
+        # TODO: Missing `use_threshold_ratio` and `threshold_ratio` arguments (Glass)
         dt_settings.set_state(self.paralyzable_deadtime, self.deadtime_value, self.deadtime_tof_step)
         dt_settings.exec_()
 

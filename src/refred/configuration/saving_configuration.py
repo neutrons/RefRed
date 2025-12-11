@@ -1,4 +1,5 @@
 import os
+from typing import TYPE_CHECKING
 
 from qtpy import QtWidgets
 
@@ -7,11 +8,14 @@ from refred.gui_handling.gui_utility import GuiUtility
 from refred.status_message_handler import StatusMessageHandler
 from refred.utilities import makeSureFileHasExtension
 
+if TYPE_CHECKING:
+    from refred.main import MainGui
+
 
 class SavingConfiguration(object):
-    parent = None
+    """Class to save the current configuration to an XML file."""
 
-    def __init__(self, parent=None, filename=""):
+    def __init__(self, parent: "MainGui", filename: str = ""):
         self.parent = parent
         self.filename = filename
 
@@ -41,7 +45,12 @@ class SavingConfiguration(object):
 
         self.parent.path_config = os.path.dirname(self.filename)
         self.filename = makeSureFileHasExtension(self.filename)
-        ExportXMLConfig(parent=self.parent).save(self.filename)
+        export_config = ExportXMLConfig(parent=self.parent)
+        try:
+            export_config.save(self.filename)
+        except (PermissionError, IsADirectoryError) as e:
+            StatusMessageHandler(parent=self.parent, message=f"Error: {e}", is_threaded=True)
+            return
 
         StatusMessageHandler(parent=self.parent, message="Done!", is_threaded=True)
 
