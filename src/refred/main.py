@@ -151,11 +151,13 @@ class MainGui(QtWidgets.QMainWindow):
 
     big_table_data = TableData(REDUCTIONTABLE_MAX_ROWCOUNT)
 
+    # TODO: `parent` argument is never used and can probably be removed (Glass)
     def __init__(self, parent=None):
         if parent is None:
             QtWidgets.QMainWindow.__init__(self)
         else:
             QtWidgets.QMainWindow.__init__(self, parent, QtCore.Qt.Window)
+
         self.ui = load_ui("refred_main_interface.ui", self)
 
         # Get default values for widgets

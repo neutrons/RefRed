@@ -1,106 +1,149 @@
 from dataclasses import dataclass
+from pathlib import Path
+from typing import Callable
+
+import pytest
 
 from refred.configuration import saving_configuration
 
 
+### Helpers to fake the MainGui
 @dataclass
 class DummyParent:
     path_config: str
+    config_saved: bool = False
 
 
-def _patch_status_handler(monkeypatch):
-    calls = []
+def fake_extension_factory(expected_input: Path, sanitized_output: str) -> Callable[[str], str]:
+    def _fake_extension(path: str) -> str:
+        assert path == str(expected_input)
+        return sanitized_output
 
-    class _FakeStatusHandler:
-        def __init__(self, parent, message, is_threaded):
-            calls.append({"parent": parent, "message": message, "is_threaded": is_threaded})
-
-    monkeypatch.setattr(saving_configuration, "StatusMessageHandler", _FakeStatusHandler)
-    return calls
+    return _fake_extension
 
 
-def test_run_with_filename_saves_and_updates_gui(monkeypatch, tmp_path):
-    parent = DummyParent(path_config="/tmp/original")
-    provided_path = tmp_path / "config" / "my_session"
-    sanitized_path = f"{provided_path}.xml"
+def fake_status_handler_factory(call_collector: list[tuple[str, bool]]):
+    class _FakeStatusMessageHandler:
+        def __init__(self, parent: DummyParent, message: str, is_threaded: bool):
+            call_collector.append((message, is_threaded))
 
-    status_calls = _patch_status_handler(monkeypatch)
+    return _FakeStatusMessageHandler
 
-    export_calls = {}
 
-    class _FakeExportConfig:
-        def __init__(self, parent):
-            export_calls["parent"] = parent
+def fake_export_config_factory() -> type:
+    class _FakeExportXMLConfig:
+        def __init__(self, parent: DummyParent):
+            self.parent: DummyParent = parent
 
-        def save(self, filename):
-            export_calls["saved_filename"] = filename
+        def save(self, filename: str):
+            path = Path(filename)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            _ = path.write_text("<Reduction />", encoding="utf-8")
 
-    gui_calls = []
+    return _FakeExportXMLConfig
 
+
+def fake_gui_utility_factory(sanitized_path: str) -> type:
     class _FakeGuiUtility:
-        def __init__(self, parent):
-            export_calls["gui_parent"] = parent
+        def __init__(self, parent: DummyParent):
+            self.parent: DummyParent = parent
 
-        def new_config_file_loaded(self, config_file_name):
-            gui_calls.append(("new", config_file_name))
+        def new_config_file_loaded(self, config_file_name: str):
+            assert config_file_name == sanitized_path
+            self.parent.config_saved = True
 
         def gui_not_modified(self):
-            gui_calls.append(("not_modified", None))
+            pass
 
-    def _fake_extension(path):
-        export_calls["extension_arg"] = path
-        return sanitized_path
-
-    monkeypatch.setattr(saving_configuration, "ExportXMLConfig", _FakeExportConfig)
-    monkeypatch.setattr(saving_configuration, "GuiUtility", _FakeGuiUtility)
-    monkeypatch.setattr(saving_configuration, "makeSureFileHasExtension", _fake_extension)
-
-    saver = saving_configuration.SavingConfiguration(parent=parent, filename=str(provided_path))  # type: ignore[arg-type]
-    saver.run()
-
-    assert parent.path_config == str(provided_path.parent)
-    assert export_calls["extension_arg"] == str(provided_path)
-    assert export_calls["saved_filename"] == sanitized_path
-    assert gui_calls == [("new", sanitized_path), ("not_modified", None)]
-    assert [call["message"] for call in status_calls] == ["Saving config ...", "Done!"]
-    assert status_calls[1]["is_threaded"] is True
+    return _FakeGuiUtility
 
 
-def test_run_reports_permission_error_without_gui_updates(monkeypatch, tmp_path):
-    parent = DummyParent(path_config="/tmp/original")
-    provided_path = tmp_path / "config" / "fails"
+### Tests
+
+
+def test_saving_configuration_good_path(monkeypatch: pytest.MonkeyPatch, tmp_path: Path):
+    parent = DummyParent(path_config=str(tmp_path))
+    provided_path = tmp_path / "test_config"
     sanitized_path = f"{provided_path}.xml"
-    error_text = "Cannot write file"
 
-    status_calls = _patch_status_handler(monkeypatch)
+    monkeypatch.setattr(
+        saving_configuration,
+        "makeSureFileHasExtension",
+        fake_extension_factory(provided_path, sanitized_path),
+    )
 
-    class _FakeExportConfig:
-        def __init__(self, parent):
-            self.parent = parent
+    status_messages: list[tuple[str, bool]] = []
+    monkeypatch.setattr(
+        saving_configuration,
+        "StatusMessageHandler",
+        fake_status_handler_factory(status_messages),
+    )
 
-        def save(self, filename):
-            raise PermissionError(error_text)
+    monkeypatch.setattr(
+        saving_configuration,
+        "ExportXMLConfig",
+        fake_export_config_factory(),
+    )
 
-    gui_instantiated = {"value": False}
+    monkeypatch.setattr(
+        saving_configuration,
+        "GuiUtility",
+        fake_gui_utility_factory(sanitized_path),
+    )
 
-    class _FakeGuiUtility:
-        def __init__(self, parent):
-            gui_instantiated["value"] = True
+    saver = saving_configuration.SavingConfiguration(parent=parent, filename=str(provided_path))  # type: ignore[arg-type]
+    saver.run()
 
-    def _fake_extension(path):
-        return sanitized_path
+    saved_file = Path(sanitized_path)
+    assert saved_file.exists()
+    assert parent.path_config == str(provided_path.parent)
+    assert parent.config_saved is True
+    assert status_messages == [("Saving config ...", False), ("Done!", True)]
 
-    monkeypatch.setattr(saving_configuration, "ExportXMLConfig", _FakeExportConfig)
-    monkeypatch.setattr(saving_configuration, "GuiUtility", _FakeGuiUtility)
-    monkeypatch.setattr(saving_configuration, "makeSureFileHasExtension", _fake_extension)
+
+def test_saving_configuration_permission_error(monkeypatch: pytest.MonkeyPatch, tmp_path: Path):
+    parent = DummyParent(path_config=str(tmp_path))
+    provided_path = tmp_path / "forbidden" / "config"
+    sanitized_path = f"{provided_path}.xml"
+
+    monkeypatch.setattr(
+        saving_configuration,
+        "makeSureFileHasExtension",
+        fake_extension_factory(provided_path, sanitized_path),
+    )
+
+    status_messages: list[tuple[str, bool]] = []
+    monkeypatch.setattr(
+        saving_configuration,
+        "StatusMessageHandler",
+        fake_status_handler_factory(status_messages),
+    )
+
+    class _PermissionErrorExportXMLConfig:
+        def __init__(self, parent: DummyParent):
+            self.parent: DummyParent = parent
+
+        def save(self, filename: str):
+            raise PermissionError("No permission to write file.")
+
+    monkeypatch.setattr(
+        saving_configuration,
+        "ExportXMLConfig",
+        _PermissionErrorExportXMLConfig,
+    )
+
+    monkeypatch.setattr(
+        saving_configuration,
+        "GuiUtility",
+        fake_gui_utility_factory(sanitized_path),
+    )
 
     saver = saving_configuration.SavingConfiguration(parent=parent, filename=str(provided_path))  # type: ignore[arg-type]
     saver.run()
 
     assert parent.path_config == str(provided_path.parent)
-    assert gui_instantiated["value"] is False
-    assert [call["message"] for call in status_calls] == [
-        "Saving config ...",
-        f"Error: {error_text}",
+    assert parent.config_saved is False
+    assert status_messages == [
+        ("Saving config ...", False),
+        ("Error: No permission to write file.", True),
     ]
-    assert status_calls[1]["is_threaded"] is True
