@@ -36,6 +36,7 @@ class UpdateReductionTable(object):
         # check if nexus can be found
         list_run_object = LocateListRun(list_run=list_run)
         col_comments = ReductionTableColumnIndex.COMMENTS
+
         if list_run_object.list_run_not_found != []:
             str_list_run_not_found = [str(x) for x in list_run_object.list_run_not_found]
             runs_not_located = ", ".join(str_list_run_not_found)
@@ -53,6 +54,8 @@ class UpdateReductionTable(object):
 
         if list_run_found == []:
             self.parent.ui.reductionTable.item(row, col).setText("")
+            self.parent.file_loaded_signal.emit(row, self.is_data_displayed, self.display_of_this_row_checked())
+            QApplication.processEvents()
             return
         str_list_run_found = [str(x) for x in list_run_found]
         final_list_run_found = ",".join(str_list_run_found)
