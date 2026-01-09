@@ -1,6 +1,5 @@
 import unittest.mock as mock
 
-# third party packages
 import pytest
 
 from refred.interfaces.mytablewidget import ReductionTableColumnIndex as TableCol
@@ -145,6 +144,29 @@ def test_clear_row_when_both_data_and_norm_runs_cleared(mock_file_finder_find_ru
         item = ui_table.item(row, col_index)
         if item:
             assert item.text() == ""
+
+
+@mock.patch("refred.calculations.locate_list_run.FileFinder.findRuns")
+def test_run_with_missing_properties(mock_file_finder_find_runs, qtbot, file_finder_find_runs, data_server):
+    """Test that a run with missing required properties is handled correctly"""
+
+    mock_file_finder_find_runs.side_effect = file_finder_find_runs
+
+    window_main = MainGui()
+    qtbot.addWidget(window_main)
+
+    row = 0
+    reflected_run = "123456"
+    load_run_from_reduction_table(window_main, row=row, col=TableCol.DATA_RUN, run=reflected_run)
+    qtbot.wait(wait)
+
+    # verify that the internal state has been updated correctly
+    big_table_data = window_main.big_table_data
+    lr_data = big_table_data.get_data_by_column_enum(row, TableDataColumIndex.LR_DATA)
+    assert lr_data is None  # data should not be loaded due to missing properties
+    # Comment cell should indicate that the run is missing required properties
+    comment_item = window_main.ui.reductionTable.item(row, TableCol.COMMENTS)
+    assert comment_item.text() == f"Run(s) missing required properties: {reflected_run}"
 
 
 if __name__ == "__main__":

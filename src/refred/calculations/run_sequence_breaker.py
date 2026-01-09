@@ -1,8 +1,8 @@
 class RunSequenceBreaker(object):
-    final_list = None
-    str_final_list = None
+    final_list: list[int] | None = None
+    str_final_list: list[str] | None = None
 
-    def __init__(self, run_sequence=None):
+    def __init__(self, run_sequence: str | None = None):
         self.final_list = []
         self.str_final_list = []
 
@@ -17,10 +17,9 @@ class RunSequenceBreaker(object):
                 self.str_final_list = [""]
                 return
 
-            # coma separated
-            coma_separated = _run_sequence.split(",")
+            comma_separated = _run_sequence.split(",")
 
-            for _element in coma_separated:
+            for _element in comma_separated:
                 hypen_separated = _element.split("-")
                 nbr_element = len(hypen_separated)
                 if nbr_element > 1:
@@ -32,6 +31,7 @@ class RunSequenceBreaker(object):
                 else:
                     self.final_list.append(int(hypen_separated[0]))
                     self.str_final_list.append(str(hypen_separated[0]))
+        # TODO: specify exception (Glass)
         except:
             self.final_list = [-2]
             self.str_final_list = [""]
@@ -44,8 +44,8 @@ class RunSequenceBreaker(object):
         to_num = max([_num1, _num2])
         return list(range(from_num, to_num + 1))
 
-    def getFinalList(self):
+    def getFinalList(self) -> list[int]:
         return self.final_list
 
-    def getStringFinalList(self):
+    def getStringFinalList(self) -> list[str]:
         return self.str_final_list

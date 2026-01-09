@@ -84,6 +84,8 @@ def file_finder_find_runs(data_server):
 
     def _file_finder_find_runs(file_hint: str):
         """Get path to file in test data directory"""
+        if file_hint == "123456":
+            return data_server.path_to("REF_L_123456_event.nxs")
         return data_server.path_to(f"{file_hint}.nxs.h5")
 
     return _file_finder_find_runs
