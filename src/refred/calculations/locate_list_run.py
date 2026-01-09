@@ -23,7 +23,7 @@ class LocateListRun(object):
         for run in list_run:
             # Try to find the nexus file for each run
             try:
-                nexus_file_name: str = FileFinder.findRuns("%s_%d" % (INSTRUMENT_SHORT_NAME, run))[0]
+                nexus_file_name: str = FileFinder.findRuns(f"{INSTRUMENT_SHORT_NAME}_{run}")[0]
                 self.list_nexus_found.append(nexus_file_name)
                 self.list_run_found.append(run)
             # TODO: specify exception (Glass)
@@ -42,10 +42,10 @@ class LocateListRun(object):
                 self.list_run_missing_properties.append(run_missing)
                 self.list_nexus_found.pop(index)
                 self.list_run_found.pop(index)
-        return
 
     def init_parameters(self):
         self.list_run = []
         self.list_nexus_found = []
         self.list_run_found = []
         self.list_run_not_found = []
+        self.list_run_missing_properties = []
