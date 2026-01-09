@@ -99,7 +99,7 @@ jobs:
           pixi-version: v0.49.0
 
       - name: Download conda package artifact
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: artifact-conda-package
 
