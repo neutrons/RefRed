@@ -44,8 +44,8 @@ class RunSequenceBreaker(object):
         to_num = max([_num1, _num2])
         return list(range(from_num, to_num + 1))
 
-    def getFinalList(self) -> list[int]:
+    def getFinalList(self) -> list[int] | None:
         return self.final_list
 
-    def getStringFinalList(self) -> list[str]:
+    def getStringFinalList(self) -> list[str] | None:
         return self.str_final_list
