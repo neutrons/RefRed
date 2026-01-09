@@ -41,7 +41,7 @@ class PopulateReductionTableFromListLRData(object):
         self.insert_runs_into_table()
 
         if is_data:
-            self.clear_big_table_data()
+            self.clear_big_table_data(preserve_norm=True)
             self.update_big_table_data()
 
         self.parent.big_table_data = self.big_table_data
@@ -119,5 +119,12 @@ class PopulateReductionTableFromListLRData(object):
                 str_run = str(_run)
             self.parent.ui.reductionTable.item(_index, self.reductionTable_col).setText(str_run)
 
-    def clear_big_table_data(self):
-        self.big_table_data = TableData(self.parent.REDUCTIONTABLE_MAX_ROWCOUNT)
+    def clear_big_table_data(self, preserve_norm=False):
+        """
+        preserve_norm : bool - Whether to preserve the norm run column.
+            Used to persist LRData information during run loading process.
+        """
+        new_table = TableData(self.parent.REDUCTIONTABLE_MAX_ROWCOUNT)
+        if preserve_norm:
+            new_table[:, 1] = self.big_table_data[:, 1]
+        self.big_table_data = new_table
