@@ -147,7 +147,7 @@ def test_clear_row_when_both_data_and_norm_runs_cleared(mock_file_finder_find_ru
 
 
 @mock.patch("refred.calculations.locate_list_run.FileFinder.findRuns")
-def test_run_with_missing_properties(mock_file_finder_find_runs, qtbot, file_finder_find_runs, data_server):
+def test_run_with_missing_properties(mock_file_finder_find_runs, qtbot, file_finder_find_runs):
     """Test that a run with missing required properties is handled correctly"""
 
     mock_file_finder_find_runs.side_effect = file_finder_find_runs

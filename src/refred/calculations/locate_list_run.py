@@ -30,7 +30,7 @@ class LocateListRun(object):
             except:
                 self.list_run_not_found.append(run)
 
-        for nexus_file in self.list_nexus_found:
+        for nexus_file in self.list_nexus_found[:]:
             # Check for required properties
             try:
                 ws = Load(nexus_file)
