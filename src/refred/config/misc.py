@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-doc
+Miscellaneous configuration parameters for RefRed
 """
 
 config_file = ""

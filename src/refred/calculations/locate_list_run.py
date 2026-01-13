@@ -1,10 +1,8 @@
 from mantid.api import FileFinder
-from mantid.simpleapi import Load
+
+from refred.nexus_utilities import nxs_has_required_properties
 
 INSTRUMENT_SHORT_NAME = "REF_L"
-REQUIRED_PROPERTIES = [
-    "BL4B:CS:ExpPl:OperatingMode",
-]
 
 
 class LocateListRun(object):
@@ -31,12 +29,7 @@ class LocateListRun(object):
                 self.list_run_not_found.append(run)
 
         for nexus_file in self.list_nexus_found[:]:
-            # Check for required properties
-            try:
-                ws = Load(nexus_file)
-                for prop in REQUIRED_PROPERTIES:
-                    _ = ws.getRun().getProperty(prop).value
-            except RuntimeError:
+            if not nxs_has_required_properties(nexus_file):
                 index = self.list_nexus_found.index(nexus_file)
                 run_missing = self.list_run_found[index]
                 self.list_run_missing_properties.append(run_missing)

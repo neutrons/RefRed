@@ -270,7 +270,7 @@ class MetadataFinder(QMainWindow):
             self.list_nxs = []
             for _runs in _list_runs:
                 try:
-                    _filename = refred.nexus_utilities.findNeXusFullPath(_runs)
+                    _filename = refred.nexus_utilities.find_nexus_full_path(_runs)
                 except RuntimeError:
                     self.ui.inputErrorLabel.setVisible(True)
                     return

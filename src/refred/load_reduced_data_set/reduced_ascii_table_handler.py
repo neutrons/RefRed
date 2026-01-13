@@ -62,7 +62,7 @@ class ReducedAsciiTableHandler(object):
         _to_row = selected_range[0].bottomRow()
         _from_row = selected_range[0].topRow()
 
-        # user can not remove row of live reduced data
+        # user cannot remove row of live reduced data
         list_filename_to_remove = []
         for row in range(_from_row, _to_row + 1):
             file_name = str(self.parent.ui.reducedAsciiDataSetTable.item(row, 0).text())

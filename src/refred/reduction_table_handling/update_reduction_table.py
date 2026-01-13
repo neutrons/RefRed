@@ -40,7 +40,7 @@ class UpdateReductionTable(object):
         if list_run_object.list_run_not_found != []:
             str_list_run_not_found = [str(x) for x in list_run_object.list_run_not_found]
             runs_not_located = ", ".join(str_list_run_not_found)
-            mess = f"Can not locate {data_type} run(s): {runs_not_located}"
+            mess = f"Cannot locate {data_type} run(s): {runs_not_located}"
             self.parent.ui.reductionTable.item(row, col_comments).setText(mess)
             _color = QtGui.QColor(refred.colors.VALUE_BAD)
             self.parent.ui.reductionTable.item(row, col_comments).setBackground(_color)
