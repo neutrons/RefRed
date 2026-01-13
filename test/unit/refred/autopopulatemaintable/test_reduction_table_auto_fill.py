@@ -44,7 +44,6 @@ def test_reduction_table_auto_fill_two_runs(mock_file_finder_find_runs, file_fin
     run_data: LRData = window_main.big_table_data.reflectometry_data(0)
     assert run_data.run_number == run_str_1
     assert run_data.back == [back_min, back_max]
-    # TODO: making this pass requires refactoring of ReductionTableAutoFill, see follow up defect EWM 13195
-    # norm_data: LRData = window_main.big_table_data.normalization_data(0)
-    # assert norm_data.run_number == norm_str_1
-    # assert norm_data.back == [back_min, back_max]
+    norm_data: LRData = window_main.big_table_data.normalization_data(0)
+    assert norm_data.run_number == norm_str_1
+    assert norm_data.back == [back_min, back_max]

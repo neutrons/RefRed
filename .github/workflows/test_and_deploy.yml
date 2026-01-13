@@ -18,7 +18,7 @@ jobs:
         shell: bash -el {0}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup Pixi
         uses: prefix-dev/setup-pixi@v0.9.3
@@ -44,7 +44,7 @@ jobs:
         shell: bash -el {0}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 100
           fetch-tags: true
@@ -72,7 +72,7 @@ jobs:
 
 
       - name: Upload conda package as artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: startsWith(github.ref, 'refs/tags/v')
         with:
           name: artifact-conda-package
@@ -87,7 +87,7 @@ jobs:
         shell: bash -el {0}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 100
           fetch-tags: true
@@ -99,7 +99,7 @@ jobs:
           pixi-version: v0.49.0
 
       - name: Download conda package artifact
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: artifact-conda-package
 
