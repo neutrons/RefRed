@@ -6,7 +6,7 @@ from qtpy import QtCore, QtWidgets
 
 import refred.config.gui
 from refred.about_dialog import AboutDialog
-from refred.autopopulatemaintable.reductiontable_auto_fill import ReductionTableAutoFill
+from refred.autopopulatemaintable.reduction_table_auto_fill import ReductionTableAutoFill
 from refred.browsing_runs import BrowsingRuns
 from refred.config.mantid_config import MantidConfig
 from refred.configuration.loading_configuration import LoadingConfiguration
