@@ -14,7 +14,7 @@ REQUIRED_PROPERTIES = [
 def find_nexus_full_path(run_number: int) -> str:
     try:
         full_file_name = FileFinder.findRuns(f"REF_L_{run_number}")[0]
-    except RuntimeError:
+    except (RuntimeError, ValueError):
         logger.error(f"Could not find file: {sys.exc_info()[1]}")
         full_file_name = ""
     return full_file_name
