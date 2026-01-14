@@ -90,7 +90,7 @@ class LRData(object):
             self.SiW = mt_run.getProperty("SiHWidth").value[0]
             self.SiH = mt_run.getProperty("SiVHeight").value[0]
             self.isSiThere = True
-        except:  # noqa: E722
+        except RuntimeError:
             self.S2W = mt_run.getProperty("S2HWidth").value[0]
             self.S2H = mt_run.getProperty("S2VHeight").value[0]
             self.isSiThere = False

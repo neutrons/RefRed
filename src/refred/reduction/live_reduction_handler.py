@@ -95,7 +95,9 @@ class LiveReductionHandler(object):
             except:
                 logging.error(sys.exc_info()[1])
                 self.parent.ui.reduceButton.setEnabled(True)
-                StatusMessageHandler(parent=self.parent, message="Failed!", is_threaded=True)
+                StatusMessageHandler(
+                    parent=self.parent, message=f"Reduction failed: {sys.exc_info()[1]}", is_threaded=True
+                )
                 return
 
             # scale

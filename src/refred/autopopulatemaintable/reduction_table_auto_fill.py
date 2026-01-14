@@ -1,4 +1,3 @@
-# import sys
 import time
 from itertools import chain
 
@@ -15,7 +14,7 @@ from refred.calculations.lr_data import LRData
 from refred.calculations.run_sequence_breaker import RunSequenceBreaker
 from refred.calculations.sort_lrdata_list import SortLRDataList
 from refred.mantid_utility import MantidUtility
-from refred.nexus_utilities import get_run_number
+from refred.nexus_utilities import get_run_number, nxs_has_required_properties
 from refred.utilities import format_to_list
 
 
@@ -122,14 +121,13 @@ class ReductionTableAutoFill(object):
         self.list_runs_sorted = []
         self.list_wks_sorted = []
         self.list_nexus_sorted = []
-        self.full_list_of_runs = None
-        self.list_of_run_from_input = None
-        self.list_of_run_from_lconfig = None
+        self.full_list_of_runs = []
+        self.list_of_run_from_input = []
+        self.list_of_run_from_lconfig = []
         self.list_lrdata_sorted = None
         self.runs_found = 0
-        self.number_of_runs = None
+        self.number_of_runs = 0
         self.filename_thread_array = None
-        self.number_of_runs = None
         self.list_nexus_sorted = None
         self.list_nexus_loaded = None
         self.list_run_loaded = None
@@ -139,7 +137,7 @@ class ReductionTableAutoFill(object):
         self.locate_runs()
         self.add_browsed_runs()
         self.retrieve_list_of_runs_from_nexus_metadata()
-        if self.runs_found == 0:
+        if self.runs_found == 0 or not self.full_list_of_runs:
             return
         self.loading_runs()
         self.loading_lrdata()
@@ -194,6 +192,7 @@ class ReductionTableAutoFill(object):
         return False
 
     def locate_runs(self):
+        """Search for the full file paths of the runs entered in the text box"""
         _list_of_runs = self.full_list_of_runs
         self.number_of_runs = len(_list_of_runs)
         self.runs_found = 0
@@ -212,6 +211,7 @@ class ReductionTableAutoFill(object):
             self.o_auto_fill_widgets_handler.error_step1()
 
     def add_browsed_runs(self):
+        """Add runs selected via the file browser to the list of runs to be loaded."""
         if self.parent.browsed_files[self.data_type_selected] is None:
             return
 
@@ -229,7 +229,7 @@ class ReductionTableAutoFill(object):
         _list_runs = []
         for _nxs in _list_nxs:
             _run = get_run_number(_nxs)
-            if _run is not None:
+            if _run is not None and nxs_has_required_properties(_nxs):
                 _list_runs.append(_run)
 
         self.full_list_of_runs = _list_runs
@@ -246,7 +246,7 @@ class ReductionTableAutoFill(object):
         self.list_run_loaded = o_load_list.list_run_loaded
 
     def loading_lrdata(self):
-        """Creates a new LRData instance for each loaded workspace"""
+        """Create a new LRData instance for each loaded workspace"""
         _list_wks_loaded = self.list_wks_loaded
         _list_lrdata = []
 

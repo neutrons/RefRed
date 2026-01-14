@@ -43,10 +43,10 @@ class SingleClickPlot(object):
             return
 
         if plot_type == "yi":
-            self.single_yi_plot_click(data_type=data_type)
+            self.single_click_plot(data_type=data_type, plot_type=plot_type)
 
         if plot_type == "yt":
-            self.single_yt_plot_click(data_type=data_type)
+            self.single_click_plot(data_type=data_type, plot_type=plot_type)
 
     def right_click_stitching_plot(self, is_x_axis_manual_zoom_requested, mouse_x, mouse_y):
         if is_x_axis_manual_zoom_requested:
@@ -60,7 +60,7 @@ class SingleClickPlot(object):
                 self.parent.manual_y_axis_dialog = manual_axis
                 manual_axis.show()
 
-    def single_yi_plot_click(self, data_type="data"):
+    def single_click_plot(self, data_type="data", plot_type="yi"):
         parent = self.parent
         if parent.time_click1 == -1:
             parent.time_click1 = time.time()
@@ -72,22 +72,11 @@ class SingleClickPlot(object):
             _time_click2 = time.time()
 
         if (_time_click2 - parent.time_click1) <= DOUBLE_CLICK_DELAY:
-            popup_plot = PopupPlot1d(parent=self.parent, data_type=data_type, data=self.data, row=self.row)
-            popup_plot.show()
+            if plot_type == "yi":
+                popup_plot = PopupPlot1d(parent=self.parent, data_type=data_type, data=self.data, row=self.row)
+                popup_plot.show()
+            elif plot_type == "yt":
+                popup_plot = PopupPlot2d(parent=self.parent, data_type=data_type, data=self.data, row=self.row)
+                popup_plot.show()
 
         parent.time_click1 = -1
-
-    def single_yt_plot_click(self, data_type="data"):
-        parent = self.parent
-        if parent.time_click1 == -1:
-            parent.time_click1 = time.time()
-            return
-        elif abs(parent.time_click1 - time.time()) > 0.5:
-            parent.time_click1 = time.time()
-            return
-        else:
-            _time_click2 = time.time()
-
-        if (_time_click2 - parent.time_click1) <= DOUBLE_CLICK_DELAY:
-            popup_plot = PopupPlot2d(parent=self.parent, data_type=data_type, data=self.data, row=self.row)
-            popup_plot.show()

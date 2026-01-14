@@ -5,8 +5,6 @@ from typing import Union
 
 import numpy as np
 
-from refred import nexus_utilities
-
 
 def convert_angle(angle=0, from_units="degree", to_units="rad"):
     """
@@ -161,14 +159,6 @@ def makeSureFileHasExtension(filename, default_ext=".xml"):
     if file_extension == "":
         filename += default_ext
     return filename
-
-
-def findFullFileName(run_number):
-    try:
-        full_file_name = nexus_utilities.findNeXusFullPath(run_number)
-    except:
-        full_file_name = ""
-    return full_file_name
 
 
 def str2bool(v):

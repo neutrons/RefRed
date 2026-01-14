@@ -40,12 +40,19 @@ class UpdateReductionTable(object):
         if list_run_object.list_run_not_found != []:
             str_list_run_not_found = [str(x) for x in list_run_object.list_run_not_found]
             runs_not_located = ", ".join(str_list_run_not_found)
-            mess = "Can not locate %s run(s): %s" % (data_type, runs_not_located)
+            mess = f"Cannot locate {data_type} run(s): {runs_not_located}"
+            self.parent.ui.reductionTable.item(row, col_comments).setText(mess)
+            _color = QtGui.QColor(refred.colors.VALUE_BAD)
+            self.parent.ui.reductionTable.item(row, col_comments).setBackground(_color)
+        elif list_run_object.list_run_missing_properties != []:
+            str_list_run_missing_properties = [str(x) for x in list_run_object.list_run_missing_properties]
+            runs_missing_props = ", ".join(str_list_run_missing_properties)
+            mess = f"Run(s) missing required properties: {runs_missing_props}"
             self.parent.ui.reductionTable.item(row, col_comments).setText(mess)
             _color = QtGui.QColor(refred.colors.VALUE_BAD)
             self.parent.ui.reductionTable.item(row, col_comments).setBackground(_color)
         else:
-            mess = "%s runs have been located!" % data_type
+            mess = f"{data_type} runs have been located!"
             self.parent.ui.reductionTable.item(row, col_comments).setText(mess)
             _color = QtGui.QColor(refred.colors.VALUE_OK)
             self.parent.ui.reductionTable.item(row, col_comments).setBackground(_color)

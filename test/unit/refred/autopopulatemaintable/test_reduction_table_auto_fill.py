@@ -1,6 +1,6 @@
 from unittest import mock
 
-from refred.autopopulatemaintable.reductiontable_auto_fill import ReductionTableAutoFill
+from refred.autopopulatemaintable.reduction_table_auto_fill import ReductionTableAutoFill
 from refred.calculations.lr_data import LRData
 from refred.gui_handling.data_norm_spinboxes import DataSpinbox, NormSpinbox
 from refred.main import MainGui

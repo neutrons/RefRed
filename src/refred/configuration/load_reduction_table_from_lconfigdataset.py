@@ -28,10 +28,9 @@ class LoadReductionTableFromLConfigDataSet(object):
                 o_load_config_progressbar_handler.end()
                 break
 
-            list_data_run = lconfig.data_sets
+            list_data_run = [int(x) for x in lconfig.data_sets]
             o_list_data_nexus = LocateListRun(list_run=list_data_run)
             list_data_nexus = o_list_data_nexus.list_nexus_found
-            # list_data_nexus= o_list_data_nexus.list_run_found
             _add_data_nexus = AddListNexus(
                 list_nexus=list_data_nexus,
                 list_run=list_data_run,
