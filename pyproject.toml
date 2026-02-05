@@ -64,7 +64,7 @@ name = "refred"
 platforms = ["linux-64"]
 channels = [
   "conda-forge",
-  "mantid",
+  "mantid-ornl",
   "neutrons",
   "https://prefix.dev/pixi-build-backends",
 ]

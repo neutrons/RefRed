@@ -189,6 +189,11 @@ class ExportXMLConfig(object):
             # instrument settings
             str_array.append(o_general_settings.instrument_settings.to_xml(indent="   "))
 
+            # stitching settings
+            str_array.append("   <auto_stitch_selected>" + str(self.parent.ui.auto_stitching_button.isChecked()) + "</auto_stitch_selected>\n")
+            str_array.append("   <sf_qmin>" + str(self.parent.ui.sf_qmin_value.text()) + "</sf_qmin>\n")
+            str_array.append("   <sf_qmax>" + str(self.parent.ui.sf_qmax_value.text()) + "</sf_qmax>\n")
+
             str_array.append("   <const_q>" + str(const_q) + "</const_q>\n")
 
             str_array.append("  </RefLData>\n")

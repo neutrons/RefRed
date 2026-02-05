@@ -190,6 +190,15 @@ class LoadingConfiguration(object):
             self.parent.instrument_settings.apply_instrument_settings
         )
 
+        # initialize the stitching settings
+        auto_stitch = str2bool(self.getNodeValue(node_0, "auto_stitch_selected", default=False))
+        if auto_stitch:
+            self.parent.ui.absolute_normalization_button.setChecked(False)
+            self.parent.ui.auto_stitching_button.setChecked(True)
+            self.parent.ui.manual_stitching_button.setChecked(False)
+        self.parent.ui.sf_qmin_value.setText(self.getNodeValue(node_0, "sf_qmin", default="0.00"))
+        self.parent.ui.sf_qmax_value.setText(self.getNodeValue(node_0, "sf_qmax", default="0.01"))
+
     def getMetadataObject(self, node) -> LConfigDataset:
         r"""Populate an instance of type LConfigDataset using the information contained in one of the
         'RefLData    XML blocks within a configuration file."""
@@ -290,6 +299,9 @@ class LoadingConfiguration(object):
         except:
             _norm_full_file_name = [""]
         iMetadata.norm_full_file_name = _norm_full_file_name
+
+        sf_auto = self.getNodeValue(node, "reflectivity_scale_factor", default="1")
+        iMetadata.sf_auto - sf_auto
 
         return iMetadata
 
