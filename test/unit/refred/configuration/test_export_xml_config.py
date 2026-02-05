@@ -23,7 +23,7 @@ class TestExportXMLConfig:
     def test_main_part(self):
         config = ExportXMLConfig(MagicMock())
         config.main_part()
-        assert len(config.str_array) == 56
+        assert len(config.str_array) == 59
 
 
 if __name__ == "__main__":

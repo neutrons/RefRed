@@ -190,11 +190,12 @@ class ExportXMLConfig(object):
             str_array.append(o_general_settings.instrument_settings.to_xml(indent="   "))
 
             # stitching settings
-            str_array.append(
-                "   <auto_stitch_selected>"
-                + str(self.parent.ui.auto_stitching_button.isChecked())
-                + "</auto_stitch_selected>\n"
-            )
+            if self.parent.ui.manual_stitching_button.isChecked():
+                stitching_type = "AutomaticAverage"
+            else:
+                stitching_type = "None"
+
+            str_array.append("   <stitching_type>" + stitching_type + "</stitching_type>\n")
             str_array.append("   <sf_qmin>" + str(self.parent.ui.sf_qmin_value.text()) + "</sf_qmin>\n")
             str_array.append("   <sf_qmax>" + str(self.parent.ui.sf_qmax_value.text()) + "</sf_qmax>\n")
 
