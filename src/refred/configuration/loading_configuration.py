@@ -191,8 +191,8 @@ class LoadingConfiguration(object):
         )
 
         # initialize the stitching settings
-        auto_stitch = str2bool(self.getNodeValue(node_0, "auto_stitch_selected", default=False))
-        if auto_stitch:
+        stitching_type = str2bool(self.getNodeValue(node_0, "stitching_type", default=False))
+        if stitching_type:
             self.parent.ui.absolute_normalization_button.setChecked(False)
             self.parent.ui.auto_stitching_button.setChecked(True)
             self.parent.ui.manual_stitching_button.setChecked(False)
