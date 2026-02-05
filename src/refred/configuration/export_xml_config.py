@@ -190,7 +190,7 @@ class ExportXMLConfig(object):
             str_array.append(o_general_settings.instrument_settings.to_xml(indent="   "))
 
             # stitching settings
-            if self.parent.ui.manual_stitching_button.isChecked():
+            if self.parent.ui.auto_stitching_button.isChecked():
                 stitching_type = "AutomaticAverage"
             else:
                 stitching_type = "None"

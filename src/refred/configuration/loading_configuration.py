@@ -191,13 +191,13 @@ class LoadingConfiguration(object):
         )
 
         # initialize the stitching settings
-        stitching_type = str2bool(self.getNodeValue(node_0, "stitching_type", default=False))
-        if stitching_type:
+        stitching_type = self.getNodeValue(node_0, "stitching_type")
+        if stitching_type == "AutomaticAverage":
             self.parent.ui.absolute_normalization_button.setChecked(False)
             self.parent.ui.auto_stitching_button.setChecked(True)
             self.parent.ui.manual_stitching_button.setChecked(False)
-        self.parent.ui.sf_qmin_value.setText(self.getNodeValue(node_0, "sf_qmin", default="0.00"))
-        self.parent.ui.sf_qmax_value.setText(self.getNodeValue(node_0, "sf_qmax", default="0.01"))
+        self.parent.ui.sf_qmin_value.setText(self.getNodeValue(node_0, "sf_qmin"))
+        self.parent.ui.sf_qmax_value.setText(self.getNodeValue(node_0, "sf_qmax"))
 
     def getMetadataObject(self, node) -> LConfigDataset:
         r"""Populate an instance of type LConfigDataset using the information contained in one of the
