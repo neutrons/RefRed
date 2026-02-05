@@ -301,7 +301,7 @@ class LoadingConfiguration(object):
         iMetadata.norm_full_file_name = _norm_full_file_name
 
         sf_auto = self.getNodeValue(node, "reflectivity_scale_factor", default="1")
-        iMetadata.sf_auto - sf_auto
+        iMetadata.sf_auto = sf_auto
 
         return iMetadata
 
