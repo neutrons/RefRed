@@ -164,7 +164,7 @@ class TableData(np.ndarray):
         row_q_pairs = []
         for index_row, _lconfig in enumerate(self[:, 2]):
             if _lconfig is None:
-                break
+                continue
             q_axis = _lconfig.q_axis_for_display
             if q_axis is not None and len(q_axis) > 0:
                 min_q = np.min(q_axis)

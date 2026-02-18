@@ -233,7 +233,7 @@ class ExportPlotAscii:
         sorted_indices = self.parent.big_table_data.get_q_sorted_indices()
 
         coll = lr_output.RunCollection()
-        for export_index, row in enumerate(sorted_indices):
+        for row in sorted_indices:
             _data = self.parent.big_table_data.reduction_config(row)
 
             # Get the scaling factor, which may change in the UI
@@ -253,7 +253,7 @@ class ExportPlotAscii:
 
             # At the user's request, save each individual run
             if export_all:
-                run_file_path = "%s-%d%s" % (_root, export_index, _ext)
+                run_file_path = "%s-%d%s" % (_root, row, _ext)
                 coll_run = lr_output.RunCollection()
                 coll_run.add(qz_mid, refl, d_refl, meta_data=_data.meta_data)
                 coll_run.save_ascii(run_file_path)
