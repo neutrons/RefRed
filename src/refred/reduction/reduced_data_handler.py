@@ -23,13 +23,15 @@ class ReducedDataHandler(object):
 
     def save_manual_sf(self):
         big_table_data = self.big_table_data
-        for index_row, _lconfig in enumerate(big_table_data[:, 2]):
+        sorted_indices = big_table_data.get_q_sorted_indices()
+        for stitching_row, original_row in enumerate(sorted_indices):
+            _lconfig = big_table_data[original_row, 2]
             if _lconfig is None:
                 break
 
-            sf_manual_value = self.parent.ui.dataStitchingTable.cellWidget(index_row, 1).value()
+            sf_manual_value = self.parent.ui.dataStitchingTable.cellWidget(stitching_row, 1).value()
             _lconfig.sf_manual = sf_manual_value
-            big_table_data[index_row, 2] = _lconfig
+            big_table_data[original_row, 2] = _lconfig
 
         self.big_table_data = big_table_data
         self.parent.big_table_data = big_table_data
@@ -45,7 +47,10 @@ class ReducedDataHandler(object):
         big_table_data = self.big_table_data
         _data = big_table_data[0, 0]
 
-        for index_row, _lconfig in enumerate(big_table_data[:, 2]):
+        sorted_indices = big_table_data.get_q_sorted_indices()
+
+        for color_index, original_row in enumerate(sorted_indices):
+            _lconfig = big_table_data[original_row, 2]
             if _lconfig is None:
                 break
 
@@ -68,7 +73,7 @@ class ReducedDataHandler(object):
             e_axis = o_produce_output.output_e_axis
 
             self.parent.ui.data_stitching_plot.errorbar(
-                _q_axis, y_axis, yerr=e_axis, color=self.get_current_color_plot(index_row)
+                _q_axis, y_axis, yerr=e_axis, color=self.get_current_color_plot(color_index)
             )
 
             if _data.all_plot_axis.is_reduced_plot_stitching_tab_ylog:

@@ -12,25 +12,43 @@ class LiveReducedDataHandler(object):
     colors = None
     row_index = 0
 
-    def __init__(self, parent=None, row_index=0):
+    def __init__(self, parent=None, row_index=0, rows_processed=None):
         self.parent = parent
         self.big_table_data: TableData = self.parent.big_table_data  # type: ignore
         self.colors = refred.colors.COLOR_LIST
         self.row_index = row_index
+        # rows_processed is the list of big_table_data row indices that have
+        # been reduced so far (in the order they were processed, which should
+        # be q-sorted order).  When None we fall back to computing it.
+        self._rows_processed = rows_processed
+
+    def _get_rows_to_display(self):
+        """Return the q-sorted row indices that should currently be shown."""
+        if self._rows_processed is not None:
+            # Already in q-sorted order as provided by the caller
+            return list(self._rows_processed)
+        # Fallback: compute from big_table_data, filtered to rows <= row_index
+        sorted_indices = self.big_table_data.get_q_sorted_indices()
+        return [i for i in sorted_indices if i <= self.row_index]
 
     def populate_table(self):
-        self.clear_stiching_table()
-        o_fill_table = FillStitchingTable(parent=self.parent)
-        o_fill_table.fillRow(row_index=self.row_index)
+        rows = self._get_rows_to_display()
+        is_first = len(rows) == 1 and rows[0] == self.row_index
+        self.clear_stiching_table(is_first=is_first)
 
-        if self.row_index == 0:
+        o_fill_table = FillStitchingTable(parent=self.parent)
+        # Re-fill the entire stitching table in q-sorted order
+        for stitching_row, original_row in enumerate(rows):
+            o_fill_table.fillRow(row_index=original_row, stitching_row=stitching_row)
+
+        if is_first:
             self.activate_stitching_tab()
 
     def activate_stitching_tab(self):
         self.parent.ui.plotTab.setCurrentIndex(1)
 
-    def clear_stiching_table(self):
-        if self.row_index == 0:
+    def clear_stiching_table(self, is_first=False):
+        if is_first:
             o_gui_utility = GuiUtility(parent=self.parent)
             o_gui_utility.clear_table(self.parent.ui.dataStitchingTable)
 
@@ -40,8 +58,10 @@ class LiveReducedDataHandler(object):
         big_table_data = self.big_table_data
         _data = big_table_data[0, 0]
 
-        for index_row in range(self.row_index + 1):
-            _lconfig = big_table_data.reduction_config(index_row)
+        rows = self._get_rows_to_display()
+
+        for color_index, original_row in enumerate(rows):
+            _lconfig = big_table_data.reduction_config(original_row)
             if _lconfig is None:
                 return
 
@@ -64,7 +84,7 @@ class LiveReducedDataHandler(object):
             e_axis = o_produce_output.output_e_axis
 
             self.parent.ui.data_stitching_plot.errorbar(
-                _q_axis, y_axis, yerr=e_axis, color=self.get_current_color_plot(index_row)
+                _q_axis, y_axis, yerr=e_axis, color=self.get_current_color_plot(color_index)
             )
 
             if _data.all_plot_axis.is_reduced_plot_stitching_tab_ylog:
@@ -79,38 +99,41 @@ class LiveReducedDataHandler(object):
             QApplication.processEvents()
 
     def live_plot(self):
-        if self.row_index == 0:
-            self.parent.ui.data_stitching_plot.clear()
-            self.parent.ui.data_stitching_plot.draw()
-
         big_table_data = self.big_table_data
         _data = big_table_data[0, 0]
 
-        _lconfig = big_table_data[self.row_index, 2]
-        if _lconfig is None:
-            return
+        rows = self._get_rows_to_display()
 
-        _q_axis = _lconfig.q_axis_for_display.copy()
-        _y_axis = _lconfig.y_axis_for_display.copy()
-        _e_axis = _lconfig.e_axis_for_display.copy()
-        sf = self.generate_selected_sf(lconfig=_lconfig)
+        # Clear and re-draw all runs processed so far in q-sorted order
+        self.parent.ui.data_stitching_plot.clear()
+        self.parent.ui.data_stitching_plot.draw()
 
-        _y_axis = np.array(_y_axis, dtype=float)
-        _e_axis = np.array(_e_axis, dtype=float)
+        for color_index, original_row in enumerate(rows):
+            _lconfig = big_table_data[original_row, 2]
+            if _lconfig is None:
+                return
 
-        _y_axis = _y_axis * sf
-        _e_axis = _e_axis * sf
+            _q_axis = _lconfig.q_axis_for_display.copy()
+            _y_axis = _lconfig.y_axis_for_display.copy()
+            _e_axis = _lconfig.e_axis_for_display.copy()
+            sf = self.generate_selected_sf(lconfig=_lconfig)
 
-        o_produce_output = ProducedSelectedOutputScaled(
-            parent=self.parent, q_axis=_q_axis, y_axis=_y_axis, e_axis=_e_axis
-        )
-        o_produce_output.calculate()
-        y_axis = o_produce_output.output_y_axis
-        e_axis = o_produce_output.output_e_axis
+            _y_axis = np.array(_y_axis, dtype=float)
+            _e_axis = np.array(_e_axis, dtype=float)
 
-        self.parent.ui.data_stitching_plot.errorbar(
-            _q_axis, y_axis, yerr=e_axis, color=self.get_current_color_plot(self.row_index)
-        )
+            _y_axis = _y_axis * sf
+            _e_axis = _e_axis * sf
+
+            o_produce_output = ProducedSelectedOutputScaled(
+                parent=self.parent, q_axis=_q_axis, y_axis=_y_axis, e_axis=_e_axis
+            )
+            o_produce_output.calculate()
+            y_axis = o_produce_output.output_y_axis
+            e_axis = o_produce_output.output_e_axis
+
+            self.parent.ui.data_stitching_plot.errorbar(
+                _q_axis, y_axis, yerr=e_axis, color=self.get_current_color_plot(color_index)
+            )
 
         if _data.all_plot_axis.is_reduced_plot_stitching_tab_ylog:
             self.parent.ui.data_stitching_plot.set_yscale("log")

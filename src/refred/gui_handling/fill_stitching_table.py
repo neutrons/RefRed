@@ -18,8 +18,19 @@ class FillStitchingTable(ParentHandler):
         super(FillStitchingTable, self).__init__(parent=parent)
         self.row_index = row_index
 
-    def fillRow(self, row_index=0):
+    def fillRow(self, row_index=0, stitching_row=None):
+        """Fill a row in the stitching table.
+
+        Parameters
+        ----------
+        row_index : int
+            The row index in big_table_data to read the reduction config from.
+        stitching_row : int or None
+            The row index in the stitching table GUI to write to.
+            If None, defaults to row_index (original behavior).
+        """
         self._row_index = row_index
+        self._stitching_row = stitching_row if stitching_row is not None else row_index
         self._lconfig = self.big_table_data.reduction_config(self._row_index)
         if self._lconfig is None:
             return
@@ -40,7 +51,7 @@ class FillStitchingTable(ParentHandler):
         _run_number = self.parent.ui.reductionTable.item(self._row_index, 1).text()
         _run_item = QtWidgets.QTableWidgetItem(_run_number)
         _run_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
-        self.parent.ui.dataStitchingTable.setItem(self._row_index, 0, _run_item)
+        self.parent.ui.dataStitchingTable.setItem(self._stitching_row, 0, _run_item)
 
     def fillTableForAbsoluteNormalization(self):
         _sf = self._lconfig.sf_abs_normalization
@@ -59,7 +70,7 @@ class FillStitchingTable(ParentHandler):
         _auto_item = QtWidgets.QTableWidgetItem(sf)
         _auto_item.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
         _auto_item.setForeground(_color)
-        self.parent.ui.dataStitchingTable.setItem(self._row_index, 1, _auto_item)
+        self.parent.ui.dataStitchingTable.setItem(self._stitching_row, 1, _auto_item)
 
     def fillTableForManualStitching(self):
         try:
@@ -75,4 +86,4 @@ class FillStitchingTable(ParentHandler):
         _widget_manual.setSingleStep(0.001)
         _widget_manual.setDecimals(6)
         _widget_manual.valueChanged.connect(self.parent.data_stitching_table_manual_spin_box)
-        self.parent.ui.dataStitchingTable.setCellWidget(self._row_index, 1, _widget_manual)
+        self.parent.ui.dataStitchingTable.setCellWidget(self._stitching_row, 1, _widget_manual)

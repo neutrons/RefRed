@@ -220,18 +220,20 @@ class ExportPlotAscii:
     def write_output_file(self, file_path):
         """
         Collect all the reduced data and create an output file.
+        Runs are exported in ascending q-value order.
         """
         # Gather data
-        o_gui_utility = GuiUtility(parent=self.parent)
-        nbr_row = o_gui_utility.reductionTable_nbr_row()
         o_reduced_data_hanlder = ReducedDataHandler(parent=self.parent)
 
         # Check wheter we want to export each individual run
         export_all = self.parent.ui.export_individual_checkbox.isChecked()
         _root, _ext = os.path.splitext(file_path)
 
+        # Get q-sorted row indices
+        sorted_indices = self.parent.big_table_data.get_q_sorted_indices()
+
         coll = lr_output.RunCollection()
-        for row in range(nbr_row):
+        for export_index, row in enumerate(sorted_indices):
             _data = self.parent.big_table_data.reduction_config(row)
 
             # Get the scaling factor, which may change in the UI
@@ -251,7 +253,7 @@ class ExportPlotAscii:
 
             # At the user's request, save each individual run
             if export_all:
-                run_file_path = "%s-%d%s" % (_root, row, _ext)
+                run_file_path = "%s-%d%s" % (_root, export_index, _ext)
                 coll_run = lr_output.RunCollection()
                 coll_run.add(qz_mid, refl, d_refl, meta_data=_data.meta_data)
                 coll_run.save_ascii(run_file_path)
