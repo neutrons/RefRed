@@ -25,13 +25,13 @@ class ReducedDataHandler(object):
         big_table_data = self.big_table_data
         sorted_indices = big_table_data.get_q_sorted_indices()
         for stitching_row, original_row in enumerate(sorted_indices):
-            _lconfig = big_table_data[original_row, 2]
+            _lconfig = big_table_data.reduction_config(original_row)
             if _lconfig is None:
                 break
 
             sf_manual_value = self.parent.ui.dataStitchingTable.cellWidget(stitching_row, 1).value()
             _lconfig.sf_manual = sf_manual_value
-            big_table_data[original_row, 2] = _lconfig
+            big_table_data.set_reduction_config(original_row, _lconfig)
 
         self.big_table_data = big_table_data
         self.parent.big_table_data = big_table_data
@@ -50,7 +50,7 @@ class ReducedDataHandler(object):
         sorted_indices = big_table_data.get_q_sorted_indices()
 
         for color_index, original_row in enumerate(sorted_indices):
-            _lconfig = big_table_data[original_row, 2]
+            _lconfig = big_table_data.reduction_config(original_row)
             if _lconfig is None:
                 break
 

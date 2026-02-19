@@ -109,7 +109,7 @@ class LiveReducedDataHandler(object):
         self.parent.ui.data_stitching_plot.draw()
 
         for color_index, original_row in enumerate(rows):
-            _lconfig = big_table_data[original_row, 2]
+            _lconfig = big_table_data.reduction_config(original_row)
             if _lconfig is None:
                 return
 

@@ -9,7 +9,7 @@ class ParentHandler(object):
         self.row_index = row_index
         self.n_runs = n_runs
 
-    def _calculateSFCE(self, data_type="absolute"):
+    def _calculateSFCE(self, first_q_row: int, data_type="absolute"):
         """
         Scaling factor calculation of Critical Edge (CE)
         """
@@ -37,9 +37,7 @@ class ParentHandler(object):
             _sf = 1
 
         # Save the SF in the lowest-q run (first in q-sorted order)
-        sorted_indices = self.parent.big_table_data.get_q_sorted_indices()
-        first_q_row = sorted_indices[0] if sorted_indices else 0
-        self.saveSFinLConfig(self.parent.big_table_data[first_q_row, 2], _sf, data_type=data_type)
+        self.saveSFinLConfig(self.parent.big_table_data.reduction_config(first_q_row), _sf, data_type=data_type)
 
     def saveSFinLConfig(self, lconfig, sf, data_type="absolute"):
         if data_type == "absolute":
@@ -71,22 +69,18 @@ class AbsoluteNormalization(ParentHandler):
 
         if self.row_index == first_q_row:
             if self.parent.ui.sf_button.isChecked():
-                self.useManuallyDefineSF()
+                self.useManuallyDefineSF(first_q_row)
             else:
-                self._calculateSFCE()
+                self._calculateSFCE(first_q_row)
         else:
-            self.copySFtoOtherAngles()
+            self.copySFtoOtherAngles(first_q_row)
 
-    def useManuallyDefineSF(self):
+    def useManuallyDefineSF(self, first_q_row: int):
         _sf = float(str(self.parent.ui.sf_value.text()))
-        sorted_indices = self.parent.big_table_data.get_q_sorted_indices()
-        first_q_row = sorted_indices[0] if sorted_indices else 0
         data_set = self.getLConfig(first_q_row)
         data_set.sf_abs_normalization = _sf
 
-    def copySFtoOtherAngles(self):
-        sorted_indices = self.parent.big_table_data.get_q_sorted_indices()
-        first_q_row = sorted_indices[0] if sorted_indices else 0
+    def copySFtoOtherAngles(self, first_q_row: int):
         ce_lconfig = self.getLConfig(first_q_row)
         _sf = ce_lconfig.sf_abs_normalization
         lconfig = self.getLConfig(self.row_index)
@@ -109,7 +103,7 @@ class AutomaticStitching(ParentHandler):
         first_q_row = sorted_indices[0] if sorted_indices else 0
 
         if self.row_index == first_q_row:
-            self._calculateSFCE(data_type="auto")
+            self._calculateSFCE(first_q_row, data_type="auto")
         else:
             self._calculateSFOtherAngles()
 
