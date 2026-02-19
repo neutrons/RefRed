@@ -9,9 +9,9 @@ class ParentHandler(object):
         self.row_index = row_index
         self.n_runs = n_runs
 
-    def _calculateSFCE(self, data_type="absolute"):
+    def _calculateSFCE(self, first_q_row: int, data_type="absolute"):
         """
-        Scaling factor calculation of Ctritical Edge (CE)
+        Scaling factor calculation of Critical Edge (CE)
         """
         _q_min = float(str(self.parent.ui.sf_qmin_value.text()))
         _q_max = float(str(self.parent.ui.sf_qmax_value.text()))
@@ -36,8 +36,8 @@ class ParentHandler(object):
         else:
             _sf = 1
 
-        # Save the SF in first run
-        self.saveSFinLConfig(self.parent.big_table_data[0, 2], _sf, data_type=data_type)
+        # Save the SF in the lowest-q run (first in q-sorted order)
+        self.saveSFinLConfig(self.parent.big_table_data.reduction_config(first_q_row), _sf, data_type=data_type)
 
     def saveSFinLConfig(self, lconfig, sf, data_type="absolute"):
         if data_type == "absolute":
@@ -64,21 +64,24 @@ class AbsoluteNormalization(ParentHandler):
         super(AbsoluteNormalization, self).__init__(parent=parent, row_index=row_index, n_runs=n_runs)
 
     def run(self):
-        if self.row_index == 0:
-            if self.parent.ui.sf_button.isChecked():
-                self.useManuallyDefineSF()
-            else:
-                self._calculateSFCE()
-        else:
-            self.copySFtoOtherAngles()
+        sorted_indices = self.parent.big_table_data.get_q_sorted_indices()
+        first_q_row = sorted_indices[0] if sorted_indices else 0
 
-    def useManuallyDefineSF(self):
+        if self.row_index == first_q_row:
+            if self.parent.ui.sf_button.isChecked():
+                self.useManuallyDefineSF(first_q_row)
+            else:
+                self._calculateSFCE(first_q_row)
+        else:
+            self.copySFtoOtherAngles(first_q_row)
+
+    def useManuallyDefineSF(self, first_q_row: int):
         _sf = float(str(self.parent.ui.sf_value.text()))
-        data_set = self.getLConfig(0)
+        data_set = self.getLConfig(first_q_row)
         data_set.sf_abs_normalization = _sf
 
-    def copySFtoOtherAngles(self):
-        ce_lconfig = self.getLConfig(0)
+    def copySFtoOtherAngles(self, first_q_row: int):
+        ce_lconfig = self.getLConfig(first_q_row)
         _sf = ce_lconfig.sf_abs_normalization
         lconfig = self.getLConfig(self.row_index)
         lconfig = self.saveSFinLConfig(lconfig, _sf, data_type="absolute")
@@ -86,7 +89,7 @@ class AbsoluteNormalization(ParentHandler):
 
 class AutomaticStitching(ParentHandler):
     """
-    automatic stiching of the reduced data using the Q range to calculate the CE
+    automatic stitching of the reduced data using the Q range to calculate the CE
     """
 
     def __init__(self, parent=None, row_index=0, n_runs=1):
@@ -96,18 +99,33 @@ class AutomaticStitching(ParentHandler):
         self.use_first_angle_range()
 
     def use_first_angle_range(self):
-        if self.row_index == 0:
-            self._calculateSFCE(data_type="auto")
+        sorted_indices = self.parent.big_table_data.get_q_sorted_indices()
+        first_q_row = sorted_indices[0] if sorted_indices else 0
+
+        if self.row_index == first_q_row:
+            self._calculateSFCE(first_q_row, data_type="auto")
         else:
             self._calculateSFOtherAngles()
 
     def _calculateSFOtherAngles(self):
         """
-        Scaling factor calculation of other angles
+        Scaling factor calculation of other angles.
+        Uses q-sorted order to find the correct left (lower-q) neighbor.
         """
-        _row_index = self.row_index
-        left_lconfig = self.getLConfig(_row_index - 1)
-        right_lconfig = self.getLConfig(_row_index)
+        sorted_indices = self.parent.big_table_data.get_q_sorted_indices()
+
+        # Find the position of self.row_index in q-sorted order
+        try:
+            q_position = sorted_indices.index(self.row_index)
+        except ValueError:
+            return
+
+        # The left neighbor in q-space is the previous entry in sorted order
+        left_row = sorted_indices[q_position - 1]
+        right_row = self.row_index
+
+        left_lconfig = self.getLConfig(left_row)
+        right_lconfig = self.getLConfig(right_row)
 
         calculate_sf = CalculateSFoverlapRange(left_lconfig, right_lconfig)
         _sf = 1.0 / calculate_sf.getSF()

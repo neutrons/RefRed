@@ -1,5 +1,6 @@
 from unittest.mock import patch
 
+import numpy as np
 import pytest
 
 from refred.calculations.lr_data import LRData
@@ -77,6 +78,49 @@ class TestTableData:
         for row_index in range(row_begin, row_end):
             del counters[row_begin]
         assert new_counters == counters
+
+    def _make_config_with_q(self, q_values):
+        """Helper to create an LConfigDataset with the given q_axis_for_display."""
+        config = LConfigDataset()
+        config.q_axis_for_display = np.array(q_values, dtype=float)
+        return config
+
+    def test_get_q_sorted_indices_already_sorted(self):
+        """Rows already in ascending q order should be returned as-is."""
+        self.table.set_reduction_config(0, self._make_config_with_q([0.01, 0.02, 0.03]))
+        self.table.set_reduction_config(1, self._make_config_with_q([0.04, 0.05, 0.06]))
+        self.table.set_reduction_config(2, self._make_config_with_q([0.07, 0.08, 0.09]))
+        assert self.table.get_q_sorted_indices() == [0, 1, 2]
+
+    def test_get_q_sorted_indices_reverse_order(self):
+        """Rows in descending q order should be reversed."""
+        self.table.set_reduction_config(0, self._make_config_with_q([0.07, 0.08, 0.09]))
+        self.table.set_reduction_config(1, self._make_config_with_q([0.04, 0.05, 0.06]))
+        self.table.set_reduction_config(2, self._make_config_with_q([0.01, 0.02, 0.03]))
+        assert self.table.get_q_sorted_indices() == [2, 1, 0]
+
+    def test_get_q_sorted_indices_scrambled(self):
+        """Rows in arbitrary order should be sorted by ascending min(q)."""
+        self.table.set_reduction_config(0, self._make_config_with_q([0.04, 0.05, 0.06]))
+        self.table.set_reduction_config(1, self._make_config_with_q([0.01, 0.02, 0.03]))
+        self.table.set_reduction_config(2, self._make_config_with_q([0.07, 0.08, 0.09]))
+        assert self.table.get_q_sorted_indices() == [1, 0, 2]
+
+    def test_get_q_sorted_indices_single_row(self):
+        """A single populated row should return a single-element list."""
+        self.table.set_reduction_config(0, self._make_config_with_q([0.05, 0.06]))
+        assert self.table.get_q_sorted_indices() == [0]
+
+    def test_get_q_sorted_indices_empty_table(self):
+        """A table with no reduction configs should return an empty list."""
+        assert self.table.get_q_sorted_indices() == []
+
+    def test_get_q_sorted_indices_overlapping_q_ranges(self):
+        """Rows with overlapping q ranges should sort by their minimum q value."""
+        self.table.set_reduction_config(0, self._make_config_with_q([0.03, 0.05, 0.07]))
+        self.table.set_reduction_config(1, self._make_config_with_q([0.01, 0.04, 0.06]))
+        self.table.set_reduction_config(2, self._make_config_with_q([0.02, 0.03, 0.08]))
+        assert self.table.get_q_sorted_indices() == [1, 2, 0]
 
 
 if __name__ == "__main__":

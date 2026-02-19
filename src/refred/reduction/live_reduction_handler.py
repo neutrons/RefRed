@@ -37,7 +37,13 @@ class LiveReductionHandler(object):
         self.nbr_reduction_process = self.calculate_nbr_reduction_process()
 
     def recalculate(self, replot_only=False):
-        for row_index in range(self.nbr_reduction_process):
+        # Process runs in q-sorted order so auto stitching finds correct neighbors
+        sorted_indices = self.big_table_data.get_q_sorted_indices()
+        rows_processed_so_far = []
+
+        for row_index in sorted_indices:
+            rows_processed_so_far.append(row_index)
+
             # scale
             if not replot_only:
                 o_calculate_sf = LiveCalculateSF(
@@ -48,7 +54,11 @@ class LiveReductionHandler(object):
                 o_calculate_sf.run()
 
             # plot
-            o_reduced_plot = LiveReducedDataHandler(parent=self.parent, row_index=row_index)
+            o_reduced_plot = LiveReducedDataHandler(
+                parent=self.parent,
+                row_index=row_index,
+                rows_processed=list(rows_processed_so_far),
+            )
             o_reduced_plot.populate_table()
             o_reduced_plot.live_plot()
 
@@ -75,6 +85,7 @@ class LiveReductionHandler(object):
 
         common_pars = GlobalReductionSettingsHandler(parent=self.parent).to_dict()
 
+        # First pass: run all reductions (order doesn't matter for the reduction itself)
         for row_index in range(self.nbr_reduction_process):
             # Reduction options to pass as template data
             reduction_pars = IndividualReductionSettingsHandler(parent=self.parent, row_index=row_index).to_dict()
@@ -100,18 +111,29 @@ class LiveReductionHandler(object):
                 )
                 return
 
+            o_reduction_progressbar_handler.next_step()
+
+        # Second pass: scale and plot in q-sorted order so auto stitching works correctly
+        sorted_indices = self.big_table_data.get_q_sorted_indices()
+        rows_processed_so_far = []
+
+        for row_index in sorted_indices:
+            rows_processed_so_far.append(row_index)
+
             # scale
             o_calculate_sf = LiveCalculateSF(parent=self.parent, row_index=row_index)
             o_calculate_sf.run()
 
             # plot
-            o_reduced_plot = LiveReducedDataHandler(parent=self.parent, row_index=row_index)
+            o_reduced_plot = LiveReducedDataHandler(
+                parent=self.parent,
+                row_index=row_index,
+                rows_processed=list(rows_processed_so_far),
+            )
             o_reduced_plot.populate_table()
             o_reduced_plot.live_plot()
             self.parent.ui.data_stitching_plot.draw()
             QApplication.processEvents()
-
-            o_reduction_progressbar_handler.next_step()
 
         self.parent.big_table_data = self.big_table_data
         o_reduction_progressbar_handler.end()

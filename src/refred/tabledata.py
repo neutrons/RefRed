@@ -152,3 +152,25 @@ class TableData(np.ndarray):
         self[row_begin:row_end, :] = None
         # Move cleared rows to the end by first concatenating non-cleared rows with cleared ones
         self[:] = np.vstack((self[0:row_begin, :], self[row_end:, :], self[row_begin:row_end, :]))
+
+    def get_q_sorted_indices(self):
+        """Return row indices of non-None reduction configs sorted by ascending minimum q-value.
+
+        Returns
+        -------
+        list[int]
+            Row indices sorted by the minimum q-value of each run's q_axis_for_display.
+        """
+        row_q_pairs = []
+        for index_row, _lconfig in enumerate(self[:, 2]):
+            if _lconfig is None:
+                continue
+            q_axis = _lconfig.q_axis_for_display
+            if q_axis is not None and len(q_axis) > 0:
+                min_q = np.min(q_axis)
+            else:
+                min_q = float("inf")
+            row_q_pairs.append((index_row, min_q))
+
+        row_q_pairs.sort(key=lambda pair: pair[1])
+        return [pair[0] for pair in row_q_pairs]
