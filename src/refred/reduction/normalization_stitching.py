@@ -1,6 +1,13 @@
-import numpy as np
+from lr_reduction.scaling_factors import OverlapScalingFactor, ReducedData, scaling_factor_critical_edge
 
-from refred.reduction.calculate_sf_overlap_range import CalculateSFoverlapRange
+
+def _lconfig_to_reduced_data(lconfig) -> ReducedData:
+    """Convert LConfigDataset to the ReducedData dataclass used in scaling factor calculation"""
+    return ReducedData(
+        q=lconfig.reduce_q_axis,
+        r=lconfig.reduce_y_axis,
+        err=lconfig.reduce_e_axis,
+    )
 
 
 class ParentHandler(object):
@@ -13,31 +20,19 @@ class ParentHandler(object):
         """
         Scaling factor calculation of Critical Edge (CE)
         """
-        _q_min = float(str(self.parent.ui.sf_qmin_value.text()))
-        _q_max = float(str(self.parent.ui.sf_qmax_value.text()))
+        q_min = float(str(self.parent.ui.sf_qmin_value.text()))
+        q_max = float(str(self.parent.ui.sf_qmax_value.text()))
 
-        values = np.zeros(0)
-        errors = np.zeros(0)
+        # Build list of ReducedData for all runs
+        all_data = [
+            _lconfig_to_reduced_data(self.parent.big_table_data.reduction_config(row_index))
+            for row_index in range(self.n_runs)
+        ]
 
-        for row_index in range(self.n_runs):
-            reduction_config = self.parent.big_table_data.reduction_config(row_index)
-            low_bound = reduction_config.reduce_q_axis >= _q_min
-            high_bound = reduction_config.reduce_q_axis <= _q_max
-            indices = np.argwhere(low_bound & high_bound).T[0]
-
-            _values_i = reduction_config.reduce_y_axis[indices]
-            values = np.concatenate((values, _values_i))
-
-            _errors_i = reduction_config.reduce_e_axis[indices]
-            errors = np.concatenate((errors, _errors_i))
-
-        if len(values) > 1:
-            _sf = 1 / np.average(values, weights=1 / errors**2)
-        else:
-            _sf = 1
+        sf = scaling_factor_critical_edge(q_min, q_max, all_data)
 
         # Save the SF in the lowest-q run (first in q-sorted order)
-        self.saveSFinLConfig(self.parent.big_table_data.reduction_config(first_q_row), _sf, data_type=data_type)
+        self.saveSFinLConfig(self.parent.big_table_data.reduction_config(first_q_row), sf, data_type=data_type)
 
     def saveSFinLConfig(self, lconfig, sf, data_type="absolute"):
         if data_type == "absolute":
@@ -46,7 +41,6 @@ class ParentHandler(object):
             lconfig.sf_auto = sf
         else:
             lconfig.sf_manual = sf
-
         return lconfig
 
     def getLConfig(self, row_index):
@@ -57,11 +51,11 @@ class ParentHandler(object):
 
 class AbsoluteNormalization(ParentHandler):
     """
-    this class performs the absolute normalization of reduced data
+    Absolute normalization of reduced data.
     """
 
     def __init__(self, parent=None, row_index=0, n_runs=1):
-        super(AbsoluteNormalization, self).__init__(parent=parent, row_index=row_index, n_runs=n_runs)
+        super().__init__(parent=parent, row_index=row_index, n_runs=n_runs)
 
     def run(self):
         sorted_indices = self.parent.big_table_data.get_q_sorted_indices()
@@ -84,16 +78,16 @@ class AbsoluteNormalization(ParentHandler):
         ce_lconfig = self.getLConfig(first_q_row)
         _sf = ce_lconfig.sf_abs_normalization
         lconfig = self.getLConfig(self.row_index)
-        lconfig = self.saveSFinLConfig(lconfig, _sf, data_type="absolute")
+        self.saveSFinLConfig(lconfig, _sf, data_type="absolute")
 
 
 class AutomaticStitching(ParentHandler):
     """
-    automatic stitching of the reduced data using the Q range to calculate the CE
+    Automatic stitching of the reduced data using the Q overlap range.
     """
 
     def __init__(self, parent=None, row_index=0, n_runs=1):
-        super(AutomaticStitching, self).__init__(parent=parent, row_index=row_index, n_runs=n_runs)
+        super().__init__(parent=parent, row_index=row_index, n_runs=n_runs)
 
     def run(self):
         self.use_first_angle_range()
@@ -109,40 +103,43 @@ class AutomaticStitching(ParentHandler):
 
     def _calculateSFOtherAngles(self):
         """
-        Scaling factor calculation of other angles.
-        Uses q-sorted order to find the correct left (lower-q) neighbor.
+        Scaling factor calculation for non-first-angle runs
         """
         sorted_indices = self.parent.big_table_data.get_q_sorted_indices()
 
-        # Find the position of self.row_index in q-sorted order
         try:
             q_position = sorted_indices.index(self.row_index)
         except ValueError:
             return
 
-        # The left neighbor in q-space is the previous entry in sorted order
         left_row = sorted_indices[q_position - 1]
         right_row = self.row_index
 
         left_lconfig = self.getLConfig(left_row)
         right_lconfig = self.getLConfig(right_row)
 
-        calculate_sf = CalculateSFoverlapRange(left_lconfig, right_lconfig)
-        _sf = 1.0 / calculate_sf.getSF()
-        right_lconfig.sf_auto = _sf
+        left_data = _lconfig_to_reduced_data(left_lconfig)
+        right_data = _lconfig_to_reduced_data(right_lconfig)
+
+        calculator = OverlapScalingFactor(
+            left_data=left_data,
+            right_data=right_data,
+            sf_auto=left_lconfig.sf_auto,  # propagate the cumulative auto-SF of the left neighbor
+        )
+        sf = 1.0 / calculator.get_scaling_factor()
+        right_lconfig.sf_auto = sf
 
 
 class ManualStitching(ParentHandler):
     """
-    manual stitching of the data. The program will simply used the data defined
-    in the main table to scaled the data
+    Manual stitching: uses the sf_manual value from the table as-is.
     """
 
     def __init__(self, parent=None, row_index=0, n_runs=1):
-        super(ManualStitching, self).__init__(parent=parent, row_index=row_index, n_runs=n_runs)
+        super().__init__(parent=parent, row_index=row_index, n_runs=n_runs)
 
     def run(self):
         ce_lconfig = self.getLConfig(self.row_index)
         _sf = ce_lconfig.sf_manual
         lconfig = self.getLConfig(self.row_index)
-        lconfig = self.saveSFinLConfig(lconfig, _sf, data_type="manual")
+        self.saveSFinLConfig(lconfig, _sf, data_type="manual")
