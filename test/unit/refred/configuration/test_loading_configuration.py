@@ -84,8 +84,8 @@ class TestLoadingConfiguration(object):
             "scaling_factor_flag": 6.006,
         }
 
-        def side_effect(node, arg):
-            return values[arg]
+        def side_effect(node, arg, default=""):
+            return values.get(arg, default)
 
         loadingConfiguration.getNodeValue = mock.Mock()
         loadingConfiguration.getNodeValue.side_effect = side_effect
@@ -190,6 +190,114 @@ class TestLoadingConfiguration(object):
         assert config.data_back[1] == values["back_roi1_to"]
         assert config.data_low_res == [values["x_min_pixel"], values["x_max_pixel"]]
         assert config.const_q == values["const_q"]
+
+    # ------------------------------------------------------------------
+    # Stitching type → radio button mapping
+    # ------------------------------------------------------------------
+
+    @pytest.mark.parametrize(
+        "xml_value, button_attr",
+        [
+            ("AbsoluteNormalization", "absolute_normalization_button"),
+            ("AutomaticAverage", "auto_stitching_button"),
+            ("None", "manual_stitching_button"),
+        ],
+    )
+    def test_populate_main_gui_general_settings_stitching_radio(self, xml_value, button_attr):
+        """The correct radio button is set when loading stitching_type from XML."""
+        loader = self.test_init()
+
+        loader.parent.ui.selectIncidentMediumList.count.return_value = 0
+
+        # Provide numeric defaults for fields that populate_main_gui_general_settings casts to int/float
+        _numeric_defaults = {
+            "incident_medium_index_selected": "0",
+            "q_step": "0.02",
+            "q_min": "0.005",
+            "angle_offset": "0.0",
+            "angle_offset_error": "0.0",
+            "scaling_factor_flag": "False",
+            "scaling_factor_file": "",
+            "norm_flag": "False",
+        }
+
+        def node_value(node, flag, default=""):
+            if flag == "stitching_type":
+                return xml_value
+            return _numeric_defaults.get(flag, default)
+
+        loader.getNodeValue = mock.Mock(side_effect=node_value)
+        loader.dom = mock.Mock()
+        node_0 = mock.Mock()
+        loader.dom.getElementsByTagName.return_value = [node_0]
+        loader.parent.gui_metadata = mock.MagicMock()
+        loader.parent.deadtime_settings = mock.MagicMock()
+        loader.parent.instrument_settings = mock.MagicMock()
+
+        loader.populate_main_gui_general_settings()
+
+        getattr(loader.parent.ui, button_attr).setChecked.assert_called_once_with(True)
+
+    # ------------------------------------------------------------------
+    # Stitching scale factor → LConfigDataset field mapping
+    # ------------------------------------------------------------------
+
+    @pytest.mark.parametrize(
+        "xml_stitching_type, sf_field",
+        [
+            ("AbsoluteNormalization", "sf_abs_normalization"),
+            ("AutomaticAverage", "sf_auto"),
+            ("None", "sf_manual"),
+        ],
+    )
+    def test_getMetadataObject_stitching_sf(self, xml_stitching_type, sf_field):
+        """The stitching_reflectivity_scale_factor is stored in the correct LConfigDataset field."""
+        loader = self.test_init()
+        node_mock = mock.Mock()
+
+        sf_value = 2.718
+
+        base_values = {
+            "from_peak_pixels": 1,
+            "to_peak_pixels": 2,
+            "back_roi1_from": 3,
+            "back_roi1_to": 4,
+            "x_min_pixel": 5,
+            "x_max_pixel": 6,
+            "background_flag": False,
+            "x_range_flag": False,
+            "from_tof_range": 0,
+            "to_tof_range": 1,
+            "from_q_range": 0,
+            "to_q_range": 1,
+            "from_lambda_range": 0,
+            "to_lambda_range": 1,
+            "data_sets": "",
+            "tof_range_flag": False,
+            "norm_from_peak_pixels": 0,
+            "norm_to_peak_pixels": 1,
+            "norm_from_back_pixels": 0,
+            "norm_to_back_pixels": 1,
+            "norm_dataset": "",
+            "norm_x_min": 0,
+            "norm_x_max": 1,
+            "norm_background_flag": False,
+            "norm_x_range_flag": False,
+            "data_full_file_name": "",
+            "norm_full_file_name": "",
+            "const_q": False,
+            "stitching_type": xml_stitching_type,
+            "stitching_reflectivity_scale_factor": str(sf_value),
+        }
+
+        def side_effect(_, arg, default=""):
+            return base_values.get(arg, default)
+
+        loader.getNodeValue = mock.Mock(side_effect=side_effect)
+
+        config = loader.getMetadataObject(node_mock)
+
+        assert getattr(config, sf_field) == pytest.approx(sf_value)
 
 
 if __name__ == "__main__":
