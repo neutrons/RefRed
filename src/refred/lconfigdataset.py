@@ -54,9 +54,9 @@ class LConfigDataset(object):
     wks_scaled = None
     meta_data = None
 
-    sf_auto = 1  # auto scaling calculated by program (auto stitching)
-    sf_manual = 1  # manual scaling (manual stitching)
-    sf_abs_normalization = 1  # absolute normalization
+    sf_auto = 1.0  # auto scaling calculated by program (auto stitching)
+    sf_manual = 1.0  # manual scaling (manual stitching)
+    sf_abs_normalization = 1.0  # absolute normalization
 
     sf_auto_found_match = False
     sf = 1  # scaling factor apply to data (will be either the auto, manual or 1)
