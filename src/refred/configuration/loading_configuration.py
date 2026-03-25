@@ -200,7 +200,6 @@ class LoadingConfiguration(object):
         elif stitching_type_str == "None":
             self.parent.ui.manual_stitching_button.setChecked(True)
 
-
     def getMetadataObject(self, node) -> LConfigDataset:
         r"""Populate an instance of type LConfigDataset using the information contained in one of the
         'RefLData    XML blocks within a configuration file."""

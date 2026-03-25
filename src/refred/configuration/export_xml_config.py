@@ -206,22 +206,26 @@ class ExportXMLConfig(object):
 
             # stitching configuration
             str_array.append("   <stitching_type>" + xml_stitching_type + "</stitching_type>\n")
-            str_array.append("   <scale_factor_qmin>" + str(self.parent.ui.sf_qmin_value.text()) + "</scale_factor_qmin>\n")
-            str_array.append("   <scale_factor_qmax>" + str(self.parent.ui.sf_qmax_value.text()) + "</scale_factor_qmax>\n")
+            str_array.append(
+                "   <scale_factor_qmin>" + str(self.parent.ui.sf_qmin_value.text()) + "</scale_factor_qmin>\n"
+            )
+            str_array.append(
+                "   <scale_factor_qmax>" + str(self.parent.ui.sf_qmax_value.text()) + "</scale_factor_qmax>\n"
+            )
             str_array.append("   <normalize_first_angle>True</normalize_first_angle>\n")
 
             # Write the per-row reflectivity stitching scale factor
             _lconfig = _big_table_data[row, 2]
             if _lconfig is not None:
-                sf = _lconfig.sf_auto if gui_stitching_type == "auto" else (
-                    _lconfig.sf_abs_normalization if gui_stitching_type == "absolute" else _lconfig.sf_manual
+                sf = (
+                    _lconfig.sf_auto
+                    if gui_stitching_type == "auto"
+                    else (_lconfig.sf_abs_normalization if gui_stitching_type == "absolute" else _lconfig.sf_manual)
                 )
             else:
                 sf = 1.0
             str_array.append(
-                "   <stitching_reflectivity_scale_factor>"
-                + str(sf)
-                + "</stitching_reflectivity_scale_factor>\n"
+                "   <stitching_reflectivity_scale_factor>" + str(sf) + "</stitching_reflectivity_scale_factor>\n"
             )
 
             str_array.append("  </RefLData>\n")
