@@ -15,10 +15,10 @@ from refred.configuration.populate_reduction_table_from_lconfigdataset import (
 from refred.gui_handling.first_angle_range_gui_handler import (
     NormalizationOrStitchingButtonStatus,
 )
+from refred.gui_handling.gui_utility import GuiUtility
 from refred.gui_handling.scaling_factor_widgets_handler import (
     ScalingFactorWidgetsHandler,
 )
-from refred.gui_handling.gui_utility import GuiUtility
 from refred.lconfigdataset import LConfigDataset
 from refred.plot.clear_plots import ClearPlots
 from refred.reduction_table_handling.reduction_table_handler import ReductionTableHandler
