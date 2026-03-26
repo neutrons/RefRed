@@ -4904,6 +4904,9 @@
                      </item>
                      <item>
                       <widget class="QCheckBox" name="normalize_first_angle_checkbox">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
                        <property name="text">
                         <string>Normalize first angle</string>
                        </property>

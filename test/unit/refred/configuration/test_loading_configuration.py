@@ -238,6 +238,53 @@ class TestLoadingConfiguration(object):
 
         getattr(loader.parent.ui, button_attr).setChecked.assert_called_once_with(True)
 
+    @pytest.mark.parametrize(
+        "xml_value, button_attr, activated_button",
+        [
+            ("AbsoluteNormalization", "absolute_normalization_button", 0),
+            ("AutomaticAverage", "auto_stitching_button", 1),
+            ("None", "manual_stitching_button", 2),
+        ],
+    )
+    @mock.patch("refred.configuration.loading_configuration.NormalizationOrStitchingButtonStatus")
+    def test_populate_main_gui_general_settings_stitching_sets_widget(
+        self, MockNormStatus, xml_value, button_attr, activated_button
+    ):
+        """Loading a stitching type calls NormalizationOrStitchingButtonStatus.setWidget
+        so that normalize_first_angle_checkbox (and other dependent widgets) are
+        enabled/disabled correctly."""
+        loader = self.test_init()
+
+        loader.parent.ui.selectIncidentMediumList.count.return_value = 0
+
+        _numeric_defaults = {
+            "incident_medium_index_selected": "0",
+            "q_step": "0.02",
+            "q_min": "0.005",
+            "angle_offset": "0.0",
+            "angle_offset_error": "0.0",
+            "scaling_factor_flag": "False",
+            "scaling_factor_file": "",
+            "norm_flag": "False",
+        }
+
+        def node_value(node, flag, default=""):
+            if flag == "stitching_type":
+                return xml_value
+            return _numeric_defaults.get(flag, default)
+
+        loader.getNodeValue = mock.Mock(side_effect=node_value)
+        loader.dom = mock.Mock()
+        node_0 = mock.Mock()
+        loader.dom.getElementsByTagName.return_value = [node_0]
+        loader.parent.gui_metadata = mock.MagicMock()
+        loader.parent.deadtime_settings = mock.MagicMock()
+        loader.parent.instrument_settings = mock.MagicMock()
+
+        loader.populate_main_gui_general_settings()
+
+        MockNormStatus.return_value.setWidget.assert_called_once_with(activated_button=activated_button)
+
     # ------------------------------------------------------------------
     # Stitching scale factor → LConfigDataset field mapping
     # ------------------------------------------------------------------
