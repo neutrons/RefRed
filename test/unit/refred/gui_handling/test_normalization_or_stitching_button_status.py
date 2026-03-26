@@ -1,5 +1,6 @@
-import pytest
 from unittest.mock import MagicMock
+
+import pytest
 
 from refred.gui_handling.first_angle_range_gui_handler import NormalizationOrStitchingButtonStatus
 
@@ -8,7 +9,7 @@ from refred.gui_handling.first_angle_range_gui_handler import NormalizationOrSti
     "activated_button, expected_enabled",
     [
         (0, False),  # Absolute Normalization → checkbox disabled
-        (1, True),   # Auto. Stitching       → checkbox enabled
+        (1, True),  # Auto. Stitching       → checkbox enabled
         (2, False),  # Manual Stitching      → checkbox disabled
     ],
 )
