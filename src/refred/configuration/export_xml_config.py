@@ -212,7 +212,8 @@ class ExportXMLConfig(object):
             str_array.append(
                 "   <scale_factor_qmax>" + str(self.parent.ui.sf_qmax_value.text()) + "</scale_factor_qmax>\n"
             )
-            str_array.append("   <normalize_first_angle>True</normalize_first_angle>\n")
+            normalize_first_angle = self.parent.ui.normalize_first_angle_checkbox.isChecked()
+            str_array.append(f"   <normalize_first_angle>{normalize_first_angle}</normalize_first_angle>\n")
 
             # Write the per-row reflectivity stitching scale factor
             _lconfig = _big_table_data[row, 2]

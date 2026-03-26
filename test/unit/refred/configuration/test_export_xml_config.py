@@ -32,9 +32,23 @@ class TestExportXMLConfig:
     @patch("refred.configuration.export_xml_config.GuiUtility")
     def test_main_part(self, mock_gui_utility):
         mock_gui_utility.return_value.getStitchingType.return_value = "manual"
-        config = ExportXMLConfig(MagicMock())
+        parent = MagicMock()
+        parent.ui.normalize_first_angle_checkbox.isChecked.return_value = True
+        config = ExportXMLConfig(parent)
         config.main_part()
         assert len(config.str_array) == 61
+
+    @pytest.mark.parametrize("checked, expected_xml_value", [(True, "True"), (False, "False")])
+    @patch("refred.configuration.export_xml_config.GuiUtility")
+    def test_main_part_normalize_first_angle(self, mock_gui_utility, checked, expected_xml_value):
+        """normalize_first_angle XML tag reflects the checkbox state."""
+        mock_gui_utility.return_value.getStitchingType.return_value = "manual"
+        parent = MagicMock()
+        parent.ui.normalize_first_angle_checkbox.isChecked.return_value = checked
+        config = ExportXMLConfig(parent)
+        config.main_part()
+        xml = "".join(s for s in config.str_array if isinstance(s, str))
+        assert f"<normalize_first_angle>{expected_xml_value}</normalize_first_angle>" in xml
 
     @pytest.mark.parametrize(
         "stitching_type, expected_xml_value",
