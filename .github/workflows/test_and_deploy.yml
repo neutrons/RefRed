@@ -99,7 +99,7 @@ jobs:
           name: artifact-conda-package
 
       - name: Upload package to anaconda
-        uses: neutrons/conda-actions/publish@v6
+        uses: neutrons/conda-actions/publish@v1
         with:
           anaconda-token: ${{ secrets.ANACONDA_TOKEN }}
           organization: neutrons
