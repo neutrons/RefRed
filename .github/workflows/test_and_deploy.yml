@@ -59,16 +59,18 @@ jobs:
       - name: Build Conda package
         run: |
           pixi run conda-build
-          mkdir -p /tmp/local-channel/linux-64
-          cp *.conda /tmp/local-channel/linux-64
+          mkdir -p /tmp/local-channel/noarch
+          cp *.conda /tmp/local-channel/noarch/
+          # extract version from the package file name "refred-<version>-<build>.conda"
+          echo "PKG_VERSION=$(ls *.conda | cut -d'-' -f2)" >> $GITHUB_ENV
 
       - name: Verify conda package
-        uses: neutrons/conda-verify@main
+        uses: neutrons/conda-actions/pkg-verify@v1
         with:
-          package-name: refred
+          package-name: ${{ env.PKG_NAME }}=${{ env.PKG_VERSION }} # install exact version
           local-channel: /tmp/local-channel
           python-version: "3.11"
-          extra-channels: mantid neutrons
+          extra-channels: neutrons mantid
           extra-commands: pixi run python -c "import lr_reduction; import mantid; import qtpy; import configobj"
 
       - name: Upload conda package as artifact
@@ -81,7 +83,7 @@ jobs:
   publish:
     runs-on: ubuntu-24.04
     needs: [tests, build]
-    if: startsWith(github.ref, 'refs/tags/v')
+    if:  startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/next'
     defaults:
       run:
         shell: bash -el {0}
@@ -89,8 +91,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
         with:
-          fetch-depth: 100
-          fetch-tags: true
           ref: ${{ github.ref }}
 
       - name: Setup Pixi
@@ -102,15 +102,21 @@ jobs:
           name: artifact-conda-package
 
       - name: Upload package to anaconda
-        env:
-          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
-          IS_RC: ${{ contains(github.ref, 'rc') }}
-        run: |
-          # label is main or rc depending on the tag-name
-          CONDA_LABEL="main"
-          if [ "${IS_RC}" = "true" ]; then CONDA_LABEL="rc"; fi
-          echo pushing ${{ github.ref }} with label $CONDA_LABEL
-          pixi run anaconda upload --label $CONDA_LABEL --user neutrons ${{ env.PKG_NAME }}-*.conda
+        uses: neutrons/conda-actions/publish@v1
+        with:
+          anaconda-token: ${{ secrets.ANACONDA_TOKEN }}
+          organization: neutrons
+          package-path: ${{ env.PKG_NAME }}-*.conda
+
+      - name: Remove old packages
+        if: github.ref == 'refs/heads/next'
+        uses: neutrons/conda-actions/pkg-remove@v1
+        with:
+          anaconda_token: ${{ secrets.ANACONDA_TOKEN }}
+          organization: neutrons
+          package_name: ${{ env.PKG_NAME }}
+          label: ${{ env.CONDA_LABEL }}
+          keep: 5
 
   # Trigger GitLab dev deploy pipeline
   deploy-dev:
