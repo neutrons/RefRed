@@ -74,7 +74,7 @@ jobs:
           extra-commands: pixi run python -c "import lr_reduction; import mantid; import qtpy; import configobj"
 
       - name: Upload conda package as artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v8
         if: startsWith(github.ref, 'refs/tags/v')
         with:
           name: artifact-conda-package
@@ -99,7 +99,7 @@ jobs:
           name: artifact-conda-package
 
       - name: Upload package to anaconda
-        uses: neutrons/conda-actions/publish@v7
+        uses: neutrons/conda-actions/publish@v6
         with:
           anaconda-token: ${{ secrets.ANACONDA_TOKEN }}
           organization: neutrons
