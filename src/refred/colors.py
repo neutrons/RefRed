@@ -46,7 +46,7 @@ COLOR_LIST = [
 ]
 COLOR_BACKGROUND_LIST = ["#c0d2f0", "#c0d59e"]
 
-# From Okabe–Ito palette
+# Partly taken from Okabe–Ito palette
 PRIMARY_SELECTION_COLOR = "#1f77b4"  # blue
 PEAK_SELECTION_COLOR = "#F0E442"  # yellow
 BACK_SELECTION_COLOR = "#D55E00"  # red

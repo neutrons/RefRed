@@ -57,6 +57,16 @@ class ReductionTableCheckBox(object):
         _is_data_selected = self.is_data_tab_selected()
         if self.is_row_selected_checked(_row_selected):
             backgrounds_settings.update_from_table(_row_selected, is_data=_is_data_selected)
+            # Sync the label to the new row's subtract_background state (signals are suppressed by update_all_settings)
+            if _is_data_selected:
+                model = backgrounds_settings["data"]
+                self.parent.ui.backBoundariesLabel.setEnabled(model.subtract_background)
+                self.parent.ui.back2BoundariesLabel.setEnabled(model.subtract_background and model.two_backgrounds)
+            else:
+                model = backgrounds_settings["norm"]
+                self.parent.ui.normBackBoundariesLabel.setEnabled(model.subtract_background)
+                self.parent.ui.normBack2BoundariesLabel.setEnabled(model.subtract_background and model.two_backgrounds)
+
             DisplayPlots(parent=self.parent, row=self.row_selected, is_data=self.is_data_tab_selected())
         else:
             update_obj = UpdatePlotWidgetStatus(parent=self.parent)

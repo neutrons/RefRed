@@ -59,7 +59,7 @@
                                      border-radius: 2px;
                                      padding: 1px 4px;
                                    }
-                                   QLabel#normBack2BoundariesLabel:disabled {
+                                   QLabel#peakBoundariesLabel:disabled {
                                      color: rgb(190, 190, 190);
                                      background-color: rgb(245, 245, 245);
                                      border: 1px solid rgb(210, 210, 210);
