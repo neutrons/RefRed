@@ -236,8 +236,8 @@ class PopupPlot1d(QDialog):
             ui_plot2.canvas.ax.axvline(back1, color=refred.colors.BACK_SELECTION_COLOR, linestyle="--")
             ui_plot2.canvas.ax.axvline(back2, color=refred.colors.BACK_SELECTION_COLOR, linestyle="--")
             if self.background_settings.two_backgrounds:
-                ui_plot2.canvas.ax.axvline(back2_from, color=refred.colors.BACK2_SELECTION_COLOR)
-                ui_plot2.canvas.ax.axvline(back2_to, color=refred.colors.BACK2_SELECTION_COLOR)
+                ui_plot2.canvas.ax.axvline(back2_from, color=refred.colors.BACK2_SELECTION_COLOR, linestyle=":")
+                ui_plot2.canvas.ax.axvline(back2_to, color=refred.colors.BACK2_SELECTION_COLOR, linestyle=":")
 
         self.ui.plot_counts_vs_pixel.canvas.ax.set_xlim([ymin, ymax])
         self.ui.plot_counts_vs_pixel.canvas.ax.set_ylim([xmin, xmax])
@@ -358,8 +358,8 @@ class PopupPlot1d(QDialog):
             ui_plot2.canvas.ax.axvline(back1, color=refred.colors.BACK_SELECTION_COLOR, linestyle="--")
             ui_plot2.canvas.ax.axvline(back2, color=refred.colors.BACK_SELECTION_COLOR, linestyle="--")
             if backgrounds_settings[self.data_type].two_backgrounds:
-                ui_plot2.canvas.ax.axvline(back2_from, color=refred.colors.BACK2_SELECTION_COLOR)
-                ui_plot2.canvas.ax.axvline(back2_to, color=refred.colors.BACK2_SELECTION_COLOR)
+                ui_plot2.canvas.ax.axvline(back2_from, color=refred.colors.BACK2_SELECTION_COLOR, linestyle=":")
+                ui_plot2.canvas.ax.axvline(back2_to, color=refred.colors.BACK2_SELECTION_COLOR, linestyle=":")
 
         [xmin, xmax, ymin, ymax] = self.data.all_plot_axis.yi_view_interval
         self.ui.plot_counts_vs_pixel.canvas.ax.set_xlim([ymin, ymax])

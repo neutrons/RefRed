@@ -153,8 +153,12 @@ class PopupPlot2d(QDialog):
             self.ui.detector_plot.canvas.ax.axhline(back1, color=refred.colors.BACK_SELECTION_COLOR, linestyle="--")
             self.ui.detector_plot.canvas.ax.axhline(back2, color=refred.colors.BACK_SELECTION_COLOR, linestyle="--")
             if self.background_settings.two_backgrounds:
-                self.ui.detector_plot.canvas.ax.axhline(back2_from, color=refred.colors.BACK2_SELECTION_COLOR)
-                self.ui.detector_plot.canvas.ax.axhline(back2_to, color=refred.colors.BACK2_SELECTION_COLOR)
+                self.ui.detector_plot.canvas.ax.axhline(
+                    back2_from, color=refred.colors.BACK2_SELECTION_COLOR, linestyle=":"
+                )
+                self.ui.detector_plot.canvas.ax.axhline(
+                    back2_to, color=refred.colors.BACK2_SELECTION_COLOR, linestyle=":"
+                )
 
         if self.data.all_plot_axis.detector_data_interval is None:
             self.ui.detector_plot.draw()
@@ -207,8 +211,12 @@ class PopupPlot2d(QDialog):
                 back2, color=refred.colors.BACK_SELECTION_COLOR, linestyle="--"
             )
             if self.background_settings.two_backgrounds:
-                self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back2_from, color=refred.colors.BACK2_SELECTION_COLOR)
-                self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back2_to, color=refred.colors.BACK2_SELECTION_COLOR)
+                self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(
+                    back2_from, color=refred.colors.BACK2_SELECTION_COLOR, linestyle=":"
+                )
+                self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(
+                    back2_to, color=refred.colors.BACK2_SELECTION_COLOR, linestyle=":"
+                )
 
         if self.data.all_plot_axis.yt_data_interval is None:
             self.ui.y_pixel_vs_tof_plot.canvas.ax.set_ylim(0, pixel_to)
