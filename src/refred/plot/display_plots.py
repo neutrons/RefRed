@@ -254,8 +254,8 @@ class DisplayPlots(object):
             self.yi_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR, linestyle="--")
             self.yi_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR, linestyle="--")
             if self.backgrounds_settings.two_backgrounds:
-                self.yi_plot_ui.canvas.ax.axhline(self.back2[0], color=colors.BACK2_SELECTION_COLOR)
-                self.yi_plot_ui.canvas.ax.axhline(self.back2[1], color=colors.BACK2_SELECTION_COLOR)
+                self.yi_plot_ui.canvas.ax.axhline(self.back2[0], color=colors.BACK2_SELECTION_COLOR, linestyle=":")
+                self.yi_plot_ui.canvas.ax.axhline(self.back2[1], color=colors.BACK2_SELECTION_COLOR, linestyle=":")
 
         if self._data.all_plot_axis.is_yi_xlog:
             self.yi_plot_ui.canvas.ax.set_xscale("log")
@@ -328,8 +328,8 @@ class DisplayPlots(object):
             self.yt_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR, linestyle="--")
             self.yt_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR, linestyle="--")
             if self.backgrounds_settings.two_backgrounds:
-                self.yt_plot_ui.canvas.ax.axhline(self.back2[0], color=colors.BACK2_SELECTION_COLOR)
-                self.yt_plot_ui.canvas.ax.axhline(self.back2[1], color=colors.BACK2_SELECTION_COLOR)
+                self.yt_plot_ui.canvas.ax.axhline(self.back2[0], color=colors.BACK2_SELECTION_COLOR, linestyle=":")
+                self.yt_plot_ui.canvas.ax.axhline(self.back2[1], color=colors.BACK2_SELECTION_COLOR, linestyle=":")
 
         if self._data.all_plot_axis.is_yt_ylog:
             self.yt_plot_ui.canvas.ax.set_yscale("log")
