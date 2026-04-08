@@ -150,11 +150,15 @@ class PopupPlot2d(QDialog):
         self.ui.detector_plot.canvas.ax.axhline(peak2, color=refred.colors.PEAK_SELECTION_COLOR)
 
         if self.background_settings.subtract_background:
-            self.ui.detector_plot.canvas.ax.axhline(back1, color=refred.colors.BACK_SELECTION_COLOR)
-            self.ui.detector_plot.canvas.ax.axhline(back2, color=refred.colors.BACK_SELECTION_COLOR)
+            self.ui.detector_plot.canvas.ax.axhline(back1, color=refred.colors.BACK_SELECTION_COLOR, linestyle="--")
+            self.ui.detector_plot.canvas.ax.axhline(back2, color=refred.colors.BACK_SELECTION_COLOR, linestyle="--")
             if self.background_settings.two_backgrounds:
-                self.ui.detector_plot.canvas.ax.axhline(back2_from, color=refred.colors.BACK2_SELECTION_COLOR)
-                self.ui.detector_plot.canvas.ax.axhline(back2_to, color=refred.colors.BACK2_SELECTION_COLOR)
+                self.ui.detector_plot.canvas.ax.axhline(
+                    back2_from, color=refred.colors.BACK2_SELECTION_COLOR, linestyle=":"
+                )
+                self.ui.detector_plot.canvas.ax.axhline(
+                    back2_to, color=refred.colors.BACK2_SELECTION_COLOR, linestyle=":"
+                )
 
         if self.data.all_plot_axis.detector_data_interval is None:
             self.ui.detector_plot.draw()
@@ -193,18 +197,26 @@ class PopupPlot2d(QDialog):
 
         [tmin, tmax, peak1, peak2, back1, back2, back2_from, back2_to] = self.retrieveTofPeakBack()
 
-        self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmin, color=refred.colors.TOF_SELECTION_COLOR)
-        self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmax, color=refred.colors.TOF_SELECTION_COLOR)
+        self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmin, color=refred.colors.PRIMARY_SELECTION_COLOR)
+        self.ui.y_pixel_vs_tof_plot.canvas.ax.axvline(tmax, color=refred.colors.PRIMARY_SELECTION_COLOR)
 
         self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak1, color=refred.colors.PEAK_SELECTION_COLOR)
         self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(peak2, color=refred.colors.PEAK_SELECTION_COLOR)
 
         if self.background_settings.subtract_background:
-            self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back1, color=refred.colors.BACK_SELECTION_COLOR)
-            self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back2, color=refred.colors.BACK_SELECTION_COLOR)
+            self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(
+                back1, color=refred.colors.BACK_SELECTION_COLOR, linestyle="--"
+            )
+            self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(
+                back2, color=refred.colors.BACK_SELECTION_COLOR, linestyle="--"
+            )
             if self.background_settings.two_backgrounds:
-                self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back2_from, color=refred.colors.BACK2_SELECTION_COLOR)
-                self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(back2_to, color=refred.colors.BACK2_SELECTION_COLOR)
+                self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(
+                    back2_from, color=refred.colors.BACK2_SELECTION_COLOR, linestyle=":"
+                )
+                self.ui.y_pixel_vs_tof_plot.canvas.ax.axhline(
+                    back2_to, color=refred.colors.BACK2_SELECTION_COLOR, linestyle=":"
+                )
 
         if self.data.all_plot_axis.yt_data_interval is None:
             self.ui.y_pixel_vs_tof_plot.canvas.ax.set_ylim(0, pixel_to)
@@ -254,6 +266,15 @@ class PopupPlot2d(QDialog):
             first_background=("plot2dBackFromValue", "plot2dBackToValue"),
             second_background=("plot2dBack2FromValue", "plot2dBack2ToValue"),
         )
+
+        self.ui.plot2dBackBoundariesLabel.setEnabled(self.background_settings.subtract_background)
+        self.background_settings.signal_first_background.connect(self.ui.plot2dBackBoundariesLabel.setEnabled)
+
+        self.ui.plot2dBack2BoundariesLabel.setEnabled(
+            self.background_settings.subtract_background and self.background_settings.two_backgrounds
+        )
+        self.background_settings.signal_second_background.connect(self.ui.plot2dBack2BoundariesLabel.setEnabled)
+
         # hide/show the background lines on the plots based on the background settings
         self.background_settings.signal_first_background.connect(self.update_plots)
         self.background_settings.signal_second_background.connect(self.update_plots)
