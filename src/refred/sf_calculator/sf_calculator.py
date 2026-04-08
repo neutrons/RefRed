@@ -772,8 +772,8 @@ class SFCalculator(QtWidgets.QMainWindow):
         tof1 = float(tof1) * 1e-3
         tof2 = float(tof2) * 1e-3
 
-        self.yt_plot.canvas.ax.axvline(tof1, color=refred.colors.TOF_SELECTION_COLOR)
-        self.yt_plot.canvas.ax.axvline(tof2, color=refred.colors.TOF_SELECTION_COLOR)
+        self.yt_plot.canvas.ax.axvline(tof1, color=refred.colors.PRIMARY_SELECTION_COLOR)
+        self.yt_plot.canvas.ax.axvline(tof2, color=refred.colors.PRIMARY_SELECTION_COLOR)
 
         if peak1 != -1:
             self.yt_plot.canvas.ax.axhline(peak1, color=refred.colors.PEAK_SELECTION_COLOR)

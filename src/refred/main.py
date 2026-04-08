@@ -180,8 +180,12 @@ class MainGui(QtWidgets.QMainWindow):
         backgrounds_settings.set_maingui(self)
 
         # show/hide the red and orange background boundary lines  depending on the background settings
+        backgrounds_settings["data"].signal_first_background.connect(self.ui.backBoundariesLabel.setEnabled)
+        backgrounds_settings["data"].signal_second_background.connect(self.ui.back2BoundariesLabel.setEnabled)
         backgrounds_settings["data"].signal_first_background.connect(self.data_back_checkbox)
         backgrounds_settings["data"].signal_second_background.connect(self.data_back_checkbox)
+        backgrounds_settings["norm"].signal_first_background.connect(self.ui.normBackBoundariesLabel.setEnabled)
+        backgrounds_settings["norm"].signal_second_background.connect(self.ui.normBack2BoundariesLabel.setEnabled)
         backgrounds_settings["norm"].signal_first_background.connect(self.norm_back_checkbox)
         backgrounds_settings["norm"].signal_second_background.connect(self.norm_back_checkbox)
 

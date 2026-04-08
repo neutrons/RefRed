@@ -1978,6 +1978,20 @@
                                   <property name="text">
                                    <string>Peak</string>
                                   </property>
+                                  <property name="styleSheet">
+                                   <string notr="true">QLabel#peakBoundariesLabel {
+                                     color: rgb(0, 0, 0);
+                                     background-color: rgb(240, 228, 66);
+                                     border: 1px solid rgb(120, 120, 120);
+                                     border-radius: 2px;
+                                     padding: 1px 4px;
+                                   }
+                                   QLabel#peakBoundariesLabel:disabled {
+                                     color: rgb(190, 190, 190);
+                                     background-color: rgb(245, 245, 245);
+                                     border: 1px solid rgb(210, 210, 210);
+                                   }</string>
+                                  </property>
                                  </widget>
                                 </item>
                                 <item>
@@ -1987,70 +2001,6 @@
                                     <property name="enabled">
                                      <bool>true</bool>
                                     </property>
-                                    <property name="palette">
-                                     <palette>
-                                      <active>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>0</red>
-                                          <green>255</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>0</red>
-                                          <green>255</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </active>
-                                      <inactive>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>0</red>
-                                          <green>255</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>0</red>
-                                          <green>255</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </inactive>
-                                      <disabled>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>190</red>
-                                          <green>190</green>
-                                          <blue>190</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>0</red>
-                                          <green>255</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </disabled>
-                                     </palette>
-                                    </property>
                                     <property name="maximum">
                                      <number>303</number>
                                     </property>
@@ -2058,70 +2008,6 @@
                                   </item>
                                   <item>
                                    <widget class="QSpinBox" name="peakToValue">
-                                    <property name="palette">
-                                     <palette>
-                                      <active>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>0</red>
-                                          <green>255</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>0</red>
-                                          <green>255</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </active>
-                                      <inactive>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>0</red>
-                                          <green>255</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>0</red>
-                                          <green>255</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </inactive>
-                                      <disabled>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>190</red>
-                                          <green>190</green>
-                                          <blue>190</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>0</red>
-                                          <green>255</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </disabled>
-                                     </palette>
-                                    </property>
                                     <property name="maximum">
                                      <number>303</number>
                                     </property>
@@ -2185,76 +2071,26 @@
                                   <property name="text">
                                    <string>Back</string>
                                   </property>
+                                  <property name="styleSheet">
+                                   <string notr="true">QLabel#backBoundariesLabel {
+                                     color: rgb(0, 0, 0);
+                                     background-color: rgb(213, 94, 0);
+                                     border: 1px solid rgb(120, 120, 120);
+                                     border-radius: 2px;
+                                     padding: 1px 4px;
+                                   }
+                                   QLabel#backBoundariesLabel:disabled {
+                                     color: rgb(190, 190, 190);
+                                     background-color: rgb(245, 245, 245);
+                                     border: 1px solid rgb(210, 210, 210);
+                                   }</string>
+                                  </property>
                                  </widget>
                                 </item>
                                 <item>
                                  <layout class="QVBoxLayout" name="verticalLayout_19">
                                   <item>
                                    <widget class="QSpinBox" name="backFromValue">
-                                    <property name="palette">
-                                     <palette>
-                                      <active>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>255</red>
-                                          <green>15</green>
-                                          <blue>29</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>255</red>
-                                          <green>15</green>
-                                          <blue>29</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </active>
-                                      <inactive>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>255</red>
-                                          <green>15</green>
-                                          <blue>29</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>255</red>
-                                          <green>15</green>
-                                          <blue>29</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </inactive>
-                                      <disabled>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>190</red>
-                                          <green>190</green>
-                                          <blue>190</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>255</red>
-                                          <green>15</green>
-                                          <blue>29</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </disabled>
-                                     </palette>
-                                    </property>
                                     <property name="maximum">
                                      <number>303</number>
                                     </property>
@@ -2262,70 +2098,6 @@
                                   </item>
                                   <item>
                                    <widget class="QSpinBox" name="backToValue">
-                                    <property name="palette">
-                                     <palette>
-                                      <active>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>255</red>
-                                          <green>15</green>
-                                          <blue>29</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>255</red>
-                                          <green>15</green>
-                                          <blue>29</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </active>
-                                      <inactive>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>255</red>
-                                          <green>15</green>
-                                          <blue>29</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>255</red>
-                                          <green>15</green>
-                                          <blue>29</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </inactive>
-                                      <disabled>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>190</red>
-                                          <green>190</green>
-                                          <blue>190</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>255</red>
-                                          <green>15</green>
-                                          <blue>29</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </disabled>
-                                     </palette>
-                                    </property>
                                     <property name="maximum">
                                      <number>303</number>
                                     </property>
@@ -2380,6 +2152,9 @@
                                <layout class="QHBoxLayout" name="horizontalLayout_16">
                                 <item>
                                  <widget class="QLabel" name="back2BoundariesLabel">
+                                 <property name="enabled">
+                                     <bool>false</bool>
+                                    </property>
                                   <property name="minimumSize">
                                    <size>
                                     <width>44</width>
@@ -2388,6 +2163,20 @@
                                   </property>
                                   <property name="text">
                                    <string>Back2</string>
+                                  </property>
+                                  <property name="styleSheet">
+                                   <string notr="true">QLabel#back2BoundariesLabel {
+                                     color: rgb(0, 0, 0);
+                                     background-color: rgb(230, 159, 0);
+                                     border: 1px solid rgb(120, 120, 120);
+                                     border-radius: 2px;
+                                     padding: 1px 4px;
+                                   }
+                                   QLabel#back2BoundariesLabel:disabled {
+                                     color: rgb(190, 190, 190);
+                                     background-color: rgb(245, 245, 245);
+                                     border: 1px solid rgb(210, 210, 210);
+                                   }</string>
                                   </property>
                                  </widget>
                                 </item>
@@ -2398,70 +2187,6 @@
                                     <property name="enabled">
                                      <bool>true</bool>
                                     </property>
-                                    <property name="palette">
-                                     <palette>
-                                      <active>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>255</red>
-                                          <green>120</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>255</red>
-                                          <green>120</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </active>
-                                      <inactive>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>255</red>
-                                          <green>120</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>255</red>
-                                          <green>120</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </inactive>
-                                      <disabled>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>190</red>
-                                          <green>190</green>
-                                          <blue>190</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>255</red>
-                                          <green>120</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </disabled>
-                                     </palette>
-                                    </property>
                                     <property name="maximum">
                                      <number>303</number>
                                     </property>
@@ -2471,70 +2196,6 @@
                                    <widget class="QSpinBox" name="back2ToValue">
                                     <property name="enabled">
                                      <bool>true</bool>
-                                    </property>
-                                    <property name="palette">
-                                     <palette>
-                                      <active>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>255</red>
-                                          <green>120</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>255</red>
-                                          <green>120</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </active>
-                                      <inactive>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>255</red>
-                                          <green>120</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>255</red>
-                                          <green>120</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </inactive>
-                                      <disabled>
-                                       <colorrole role="Text">
-                                        <brush brushstyle="SolidPattern">
-                                         <color alpha="255">
-                                          <red>190</red>
-                                          <green>190</green>
-                                          <blue>190</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                       <colorrole role="PlaceholderText">
-                                        <brush brushstyle="NoBrush">
-                                         <color alpha="128">
-                                          <red>255</red>
-                                          <green>120</green>
-                                          <blue>0</blue>
-                                         </color>
-                                        </brush>
-                                       </colorrole>
-                                      </disabled>
-                                     </palette>
                                     </property>
                                     <property name="maximum">
                                      <number>303</number>
@@ -3070,6 +2731,20 @@
                                     <property name="text">
                                      <string>Peak</string>
                                     </property>
+                                    <property name="styleSheet">
+                                   <string notr="true">QLabel#normPeakBoundariesLabel {
+                                     color: rgb(0, 0, 0);
+                                     background-color: rgb(240, 228, 66);
+                                     border: 1px solid rgb(120, 120, 120);
+                                     border-radius: 2px;
+                                     padding: 1px 4px;
+                                   }
+                                   QLabel#normPeakBoundariesLabel:disabled {
+                                     color: rgb(190, 190, 190);
+                                     background-color: rgb(245, 245, 245);
+                                     border: 1px solid rgb(210, 210, 210);
+                                   }</string>
+                                  </property>
                                    </widget>
                                   </item>
                                   <item>
@@ -3078,70 +2753,6 @@
                                      <layout class="QHBoxLayout" name="horizontalLayout_24">
                                       <item>
                                        <widget class="QSpinBox" name="normPeakFromValue">
-                                        <property name="palette">
-                                         <palette>
-                                          <active>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>0</red>
-                                              <green>255</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>0</red>
-                                              <green>255</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </active>
-                                          <inactive>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>0</red>
-                                              <green>255</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>0</red>
-                                              <green>255</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </inactive>
-                                          <disabled>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>190</red>
-                                              <green>190</green>
-                                              <blue>190</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>0</red>
-                                              <green>255</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </disabled>
-                                         </palette>
-                                        </property>
                                         <property name="maximum">
                                          <number>303</number>
                                         </property>
@@ -3167,70 +2778,6 @@
                                      <layout class="QHBoxLayout" name="horizontalLayout_25">
                                       <item>
                                        <widget class="QSpinBox" name="normPeakToValue">
-                                        <property name="palette">
-                                         <palette>
-                                          <active>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>0</red>
-                                              <green>255</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>0</red>
-                                              <green>255</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </active>
-                                          <inactive>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>0</red>
-                                              <green>255</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>0</red>
-                                              <green>255</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </inactive>
-                                          <disabled>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>190</red>
-                                              <green>190</green>
-                                              <blue>190</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>0</red>
-                                              <green>255</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </disabled>
-                                         </palette>
-                                        </property>
                                         <property name="maximum">
                                          <number>303</number>
                                         </property>
@@ -3266,6 +2813,20 @@
                                     <property name="text">
                                      <string>Back</string>
                                     </property>
+                                    <property name="styleSheet">
+                                   <string notr="true">QLabel#normBackBoundariesLabel {
+                                     color: rgb(0, 0, 0);
+                                     background-color: rgb(213, 94, 0);
+                                     border: 1px solid rgb(120, 120, 120);
+                                     border-radius: 2px;
+                                     padding: 1px 4px;
+                                   }
+                                   QLabel#normBackBoundariesLabel:disabled {
+                                     color: rgb(190, 190, 190);
+                                     background-color: rgb(245, 245, 245);
+                                     border: 1px solid rgb(210, 210, 210);
+                                   }</string>
+                                  </property>
                                    </widget>
                                   </item>
                                   <item>
@@ -3274,70 +2835,6 @@
                                      <layout class="QHBoxLayout" name="horizontalLayout_27">
                                       <item>
                                        <widget class="QSpinBox" name="normBackFromValue">
-                                        <property name="palette">
-                                         <palette>
-                                          <active>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>255</red>
-                                              <green>15</green>
-                                              <blue>29</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>255</red>
-                                              <green>15</green>
-                                              <blue>29</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </active>
-                                          <inactive>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>255</red>
-                                              <green>15</green>
-                                              <blue>29</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>255</red>
-                                              <green>15</green>
-                                              <blue>29</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </inactive>
-                                          <disabled>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>190</red>
-                                              <green>190</green>
-                                              <blue>190</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>255</red>
-                                              <green>15</green>
-                                              <blue>29</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </disabled>
-                                         </palette>
-                                        </property>
                                         <property name="maximum">
                                          <number>303</number>
                                         </property>
@@ -3363,70 +2860,6 @@
                                      <layout class="QHBoxLayout" name="horizontalLayout_28">
                                       <item>
                                        <widget class="QSpinBox" name="normBackToValue">
-                                        <property name="palette">
-                                         <palette>
-                                          <active>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>255</red>
-                                              <green>15</green>
-                                              <blue>29</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>255</red>
-                                              <green>15</green>
-                                              <blue>29</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </active>
-                                          <inactive>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>255</red>
-                                              <green>15</green>
-                                              <blue>29</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>255</red>
-                                              <green>15</green>
-                                              <blue>29</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </inactive>
-                                          <disabled>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>190</red>
-                                              <green>190</green>
-                                              <blue>190</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>255</red>
-                                              <green>15</green>
-                                              <blue>29</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </disabled>
-                                         </palette>
-                                        </property>
                                         <property name="maximum">
                                          <number>303</number>
                                         </property>
@@ -3462,6 +2895,23 @@
                                     <property name="text">
                                      <string>Back2</string>
                                     </property>
+                                    <property name="enabled">
+                                     <bool>false</bool>
+                                    </property>
+                                    <property name="styleSheet">
+                                   <string notr="true">QLabel#normBack2BoundariesLabel {
+                                     color: rgb(0, 0, 0);
+                                     background-color: rgb(230, 159, 0);
+                                     border: 1px solid rgb(120, 120, 120);
+                                     border-radius: 2px;
+                                     padding: 1px 4px;
+                                   }
+                                   QLabel#normBack2BoundariesLabel:disabled {
+                                     color: rgb(190, 190, 190);
+                                     background-color: rgb(245, 245, 245);
+                                     border: 1px solid rgb(210, 210, 210);
+                                   }</string>
+                                  </property>
                                    </widget>
                                   </item>
                                   <item>
@@ -3470,70 +2920,6 @@
                                      <layout class="QHBoxLayout" name="horizontalLayout_32">
                                       <item>
                                        <widget class="QSpinBox" name="normBack2FromValue">
-                                        <property name="palette">
-                                         <palette>
-                                          <active>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>255</red>
-                                              <green>120</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>255</red>
-                                              <green>120</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </active>
-                                          <inactive>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>255</red>
-                                              <green>120</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>255</red>
-                                              <green>120</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </inactive>
-                                          <disabled>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>190</red>
-                                              <green>190</green>
-                                              <blue>190</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>255</red>
-                                              <green>120</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </disabled>
-                                         </palette>
-                                        </property>
                                         <property name="maximum">
                                          <number>303</number>
                                         </property>
@@ -3559,70 +2945,6 @@
                                      <layout class="QHBoxLayout" name="horizontalLayout_33">
                                       <item>
                                        <widget class="QSpinBox" name="normBack2ToValue">
-                                        <property name="palette">
-                                         <palette>
-                                          <active>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>255</red>
-                                              <green>120</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>255</red>
-                                              <green>120</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </active>
-                                          <inactive>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>255</red>
-                                              <green>120</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>255</red>
-                                              <green>120</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </inactive>
-                                          <disabled>
-                                           <colorrole role="Text">
-                                            <brush brushstyle="SolidPattern">
-                                             <color alpha="255">
-                                              <red>190</red>
-                                              <green>190</green>
-                                              <blue>190</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                           <colorrole role="PlaceholderText">
-                                            <brush brushstyle="NoBrush">
-                                             <color alpha="128">
-                                              <red>255</red>
-                                              <green>120</green>
-                                              <blue>0</blue>
-                                             </color>
-                                            </brush>
-                                           </colorrole>
-                                          </disabled>
-                                         </palette>
-                                        </property>
                                         <property name="maximum">
                                          <number>303</number>
                                         </property>

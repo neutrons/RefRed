@@ -68,6 +68,15 @@ class PopupPlot1d(QDialog):
             first_background=("plotBackFromSpinBox", "plotBackToSpinBox"),
             second_background=("plotBack2FromSpinBox", "plotBack2ToSpinBox"),
         )
+
+        self.ui.backBoundariesLabel.setEnabled(self.background_settings.subtract_background)
+        self.background_settings.signal_first_background.connect(self.ui.backBoundariesLabel.setEnabled)
+
+        self.ui.back2BoundariesLabel.setEnabled(
+            self.background_settings.subtract_background and self.background_settings.two_backgrounds
+        )
+        self.background_settings.signal_second_background.connect(self.ui.back2BoundariesLabel.setEnabled)
+
         # hide/show the background lines on the plots based on the background settings
         self.background_settings.signal_first_background.connect(self.plot_back_flag_clicked)
         self.background_settings.signal_second_background.connect(self.plot_back_flag_clicked)
@@ -224,8 +233,8 @@ class PopupPlot1d(QDialog):
         ui_plot2.canvas.ax.axvline(peak2, color=refred.colors.PEAK_SELECTION_COLOR)
 
         if self.background_settings.subtract_background:
-            ui_plot2.canvas.ax.axvline(back1, color=refred.colors.BACK_SELECTION_COLOR)
-            ui_plot2.canvas.ax.axvline(back2, color=refred.colors.BACK_SELECTION_COLOR)
+            ui_plot2.canvas.ax.axvline(back1, color=refred.colors.BACK_SELECTION_COLOR, linestyle="--")
+            ui_plot2.canvas.ax.axvline(back2, color=refred.colors.BACK_SELECTION_COLOR, linestyle="--")
             if self.background_settings.two_backgrounds:
                 ui_plot2.canvas.ax.axvline(back2_from, color=refred.colors.BACK2_SELECTION_COLOR)
                 ui_plot2.canvas.ax.axvline(back2_to, color=refred.colors.BACK2_SELECTION_COLOR)
@@ -346,8 +355,8 @@ class PopupPlot1d(QDialog):
         ui_plot2.canvas.ax.axvline(peak2, color=refred.colors.PEAK_SELECTION_COLOR)
 
         if backgrounds_settings[self.data_type].subtract_background:
-            ui_plot2.canvas.ax.axvline(back1, color=refred.colors.BACK_SELECTION_COLOR)
-            ui_plot2.canvas.ax.axvline(back2, color=refred.colors.BACK_SELECTION_COLOR)
+            ui_plot2.canvas.ax.axvline(back1, color=refred.colors.BACK_SELECTION_COLOR, linestyle="--")
+            ui_plot2.canvas.ax.axvline(back2, color=refred.colors.BACK_SELECTION_COLOR, linestyle="--")
             if backgrounds_settings[self.data_type].two_backgrounds:
                 ui_plot2.canvas.ax.axvline(back2_from, color=refred.colors.BACK2_SELECTION_COLOR)
                 ui_plot2.canvas.ax.axvline(back2_to, color=refred.colors.BACK2_SELECTION_COLOR)

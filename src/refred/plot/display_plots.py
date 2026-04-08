@@ -240,7 +240,7 @@ class DisplayPlots(object):
         _ycountsdata = self.get_ycountsdata_of_tof_range_selected()
 
         _xaxis = list(range(len(_ycountsdata)))
-        self.yi_plot_ui.canvas.ax.plot(_ycountsdata, _xaxis, color=colors.COLOR_LIST[1])
+        self.yi_plot_ui.canvas.ax.plot(_ycountsdata, _xaxis, color=colors.PRIMARY_SELECTION_COLOR)
         self.yi_plot_ui.canvas.ax.set_xlabel("counts")
         self.yi_plot_ui.canvas.ax.set_ylabel("y (pixel)")
 
@@ -251,8 +251,8 @@ class DisplayPlots(object):
         self.yi_plot_ui.canvas.ax.axhline(self.peak[1], color=colors.PEAK_SELECTION_COLOR)
 
         if self.backgrounds_settings.subtract_background:
-            self.yi_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR)
-            self.yi_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR)
+            self.yi_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR, linestyle="--")
+            self.yi_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR, linestyle="--")
             if self.backgrounds_settings.two_backgrounds:
                 self.yi_plot_ui.canvas.ax.axhline(self.back2[0], color=colors.BACK2_SELECTION_COLOR)
                 self.yi_plot_ui.canvas.ax.axhline(self.back2[1], color=colors.BACK2_SELECTION_COLOR)
@@ -285,8 +285,8 @@ class DisplayPlots(object):
 
         autotmin = float(self.tofRangeAuto[0])
         autotmax = float(self.tofRangeAuto[1])
-        self.it_plot_ui.canvas.ax.axvline(autotmin, color=colors.TOF_SELECTION_COLOR)
-        self.it_plot_ui.canvas.ax.axvline(autotmax, color=colors.TOF_SELECTION_COLOR)
+        self.it_plot_ui.canvas.ax.axvline(autotmin, color=colors.PRIMARY_SELECTION_COLOR)
+        self.it_plot_ui.canvas.ax.axvline(autotmax, color=colors.PRIMARY_SELECTION_COLOR)
 
         if self._data.all_plot_axis.is_it_ylog:
             self.it_plot_ui.canvas.ax.set_yscale("log")
@@ -319,14 +319,14 @@ class DisplayPlots(object):
         autotmax = float(self.tofRangeAuto[1])
 
         [tmin, tmax] = self.getTOFrangeInMs([autotmin, autotmax])
-        self.yt_plot_ui.canvas.ax.axvline(tmin, color=colors.TOF_SELECTION_COLOR)
-        self.yt_plot_ui.canvas.ax.axvline(tmax, color=colors.TOF_SELECTION_COLOR)
+        self.yt_plot_ui.canvas.ax.axvline(tmin, color=colors.PRIMARY_SELECTION_COLOR)
+        self.yt_plot_ui.canvas.ax.axvline(tmax, color=colors.PRIMARY_SELECTION_COLOR)
         self.yt_plot_ui.canvas.ax.axhline(self.peak[0], color=colors.PEAK_SELECTION_COLOR)
         self.yt_plot_ui.canvas.ax.axhline(self.peak[1], color=colors.PEAK_SELECTION_COLOR)
 
         if self.backgrounds_settings.subtract_background:
-            self.yt_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR)
-            self.yt_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR)
+            self.yt_plot_ui.canvas.ax.axhline(self.back[0], color=colors.BACK_SELECTION_COLOR, linestyle="--")
+            self.yt_plot_ui.canvas.ax.axhline(self.back[1], color=colors.BACK_SELECTION_COLOR, linestyle="--")
             if self.backgrounds_settings.two_backgrounds:
                 self.yt_plot_ui.canvas.ax.axhline(self.back2[0], color=colors.BACK2_SELECTION_COLOR)
                 self.yt_plot_ui.canvas.ax.axhline(self.back2[1], color=colors.BACK2_SELECTION_COLOR)
