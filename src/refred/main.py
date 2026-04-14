@@ -510,8 +510,11 @@ class MainGui(QtWidgets.QMainWindow):
 
     @config_file_has_been_modified
     def data_norm_sequence_event(self, *args, **kwargs):
+        sender = self.sender()
+        if sender == self.ui.norm_sequence_lineEdit:
+            self.norm_sequence_event()
+            return
         self.data_sequence_event()
-        self.norm_sequence_event()
 
     def sequence_line_edit(self, data_type):
         if data_type == "data":
