@@ -43,6 +43,10 @@ class ReductionTableAutoFill(object):
 
     def __init__(self, parent=None, list_of_run_from_input="", data_type_selected="data", reset_table=False):
         self.parent = parent
+        if data_type_selected != "data":
+            data_type_selected = "norm"
+        self.data_type_selected = data_type_selected
+        self.init_variable()
 
         if data_type_selected == "data":
             # add to norm box, previous loaded norm
@@ -63,12 +67,6 @@ class ReductionTableAutoFill(object):
             self.sorted_list_of_runs = []
             if not self.browsing_files_flag:
                 return
-
-        if data_type_selected != "data":
-            data_type_selected = "norm"
-        self.data_type_selected = data_type_selected
-
-        self.init_variable()
 
         self.reset_table = reset_table
 
@@ -126,11 +124,16 @@ class ReductionTableAutoFill(object):
         self.list_of_run_from_lconfig = []
         self.list_lrdata_sorted = None
         self.runs_found = 0
+        self.runs_processed = 0
         self.number_of_runs = 0
         self.filename_thread_array = None
         self.list_nexus_sorted = None
         self.list_nexus_loaded = None
         self.list_run_loaded = None
+        self.manual_runs_requested = []
+        self.manual_runs_requested_lookup = set()
+        self.manual_runs_not_found_lookup = set()
+        self.list_manual_runs_not_found = []
 
     def run(self):
         self.cleanup_workspaces()
@@ -196,14 +199,19 @@ class ReductionTableAutoFill(object):
         _list_of_runs = self.full_list_of_runs
         self.number_of_runs = len(_list_of_runs)
         self.runs_found = 0
+        self.runs_processed = 0
         self.init_filename_thread_array(len(_list_of_runs))
         for index, _run in enumerate(_list_of_runs):
             _thread = self.filename_thread_array[index]
             _thread.setup(self, _run, index)
             _thread.start()
 
-        while self.runs_found < self.number_of_runs:
+        while self.runs_processed < self.number_of_runs:
             time.sleep(0.5)
+
+        self.list_manual_runs_not_found = [
+            run for run in self.manual_runs_requested if run in self.manual_runs_not_found_lookup
+        ]
 
         if (self.runs_found > 0) or (self.browsing_files_flag):
             self.o_auto_fill_widgets_handler.step1()
@@ -227,11 +235,16 @@ class ReductionTableAutoFill(object):
     def retrieve_list_of_runs_from_nexus_metadata(self):
         _list_nxs = self.list_nxs
         _list_runs = []
+        _list_nxs_found = []
         for _nxs in _list_nxs:
+            if _nxs is None:
+                continue
             _run = get_run_number(_nxs)
             if _run is not None and nxs_has_required_properties(_nxs):
                 _list_runs.append(_run)
+                _list_nxs_found.append(_nxs)
 
+        self.list_nxs = _list_nxs_found
         self.full_list_of_runs = _list_runs
 
     def loading_runs(self):
@@ -339,7 +352,7 @@ class ReductionTableAutoFill(object):
         _list_full_file_name = []
         for i in range(sz):
             _filename_thread_array.append(LocateRunThread())
-            _list_full_file_name.append("")
+            _list_full_file_name.append(None)
         self.filename_thread_array = _filename_thread_array
         self.list_nxs = _list_full_file_name
 
@@ -347,6 +360,8 @@ class ReductionTableAutoFill(object):
         _raw_run_from_input = self.raw_run_from_input
         sequence_breaker = RunSequenceBreaker(_raw_run_from_input)
         self.list_of_run_from_input = sequence_breaker.final_list
+        self.manual_runs_requested = list(dict.fromkeys(self.list_of_run_from_input))
+        self.manual_runs_requested_lookup = set(self.manual_runs_requested)
 
     def retrieve_bigtable_list_data_loaded(self):
         parent = self.parent
@@ -371,6 +386,16 @@ class ReductionTableAutoFill(object):
         full_list_of_runs = self.full_list_of_runs
         full_list_without_duplicate = list(set(full_list_of_runs))
         self.full_list_of_runs = full_list_without_duplicate
+
+    def record_located_run(self, index, full_file_name):
+        self.list_nxs[index] = full_file_name
+        self.runs_found += 1
+        self.runs_processed += 1
+
+    def record_missing_run(self, run_number):
+        if run_number in self.manual_runs_requested_lookup:
+            self.manual_runs_not_found_lookup.add(run_number)
+        self.runs_processed += 1
 
     def check_minimum_requirements(self):
         _data_type_selected = self.data_type_selected

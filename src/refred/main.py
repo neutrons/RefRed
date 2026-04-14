@@ -168,6 +168,8 @@ class MainGui(QtWidgets.QMainWindow):
         self.ui.reductionTable.setUI(self)
         MakeGuiConnections(parent=self)
         RetrieveUserConfiguration(parent=self)
+        self.ui.data_sequence_lineEdit.textEdited.connect(self.data_sequence_line_edit_edited)
+        self.ui.norm_sequence_lineEdit.textEdited.connect(self.norm_sequence_line_edit_edited)
 
         self.file_loaded_signal.connect(self.file_loaded)
         log_file = os.path.expanduser("~") + "/.refred.log"
@@ -511,38 +513,71 @@ class MainGui(QtWidgets.QMainWindow):
         self.data_sequence_event()
         self.norm_sequence_event()
 
+    def sequence_line_edit(self, data_type):
+        if data_type == "data":
+            return self.ui.data_sequence_lineEdit
+        return self.ui.norm_sequence_lineEdit
+
+    def clear_sequence_line_edit_feedback(self, data_type):
+        line_edit = self.sequence_line_edit(data_type)
+        line_edit.setStyleSheet("")
+
+    def reset_sequence_line_edit(self, data_type):
+        line_edit = self.sequence_line_edit(data_type)
+        self.clear_sequence_line_edit_feedback(data_type)
+        line_edit.setText("")
+
+    def display_sequence_line_edit_error(self, data_type, missing_runs):
+        line_edit = self.sequence_line_edit(data_type)
+        runs_not_located = ",".join([str(run) for run in missing_runs])
+        line_edit.setStyleSheet("color: red;")
+        line_edit.setText(f"Cannot locate {data_type} run(s): {runs_not_located}.")
+
+    def update_sequence_line_edit_after_autofill(self, data_type, auto_fill):
+        missing_runs = getattr(auto_fill, "list_manual_runs_not_found", [])
+        if missing_runs:
+            self.display_sequence_line_edit_error(data_type, missing_runs)
+            return
+        self.reset_sequence_line_edit(data_type)
+
+    def data_sequence_line_edit_edited(self, text):
+        self.clear_sequence_line_edit_feedback("data")
+
+    def norm_sequence_line_edit_edited(self, text):
+        self.clear_sequence_line_edit_feedback("norm")
+
     @config_file_has_been_modified
     def data_sequence_event(self, *args, **kwargs):
         str_data_input = self.ui.data_sequence_lineEdit.text()
-        ReductionTableAutoFill(
+        auto_fill = ReductionTableAutoFill(
             parent=self,
             list_of_run_from_input=str_data_input,
             data_type_selected="data",
         )
-        self.ui.data_sequence_lineEdit.setText("")
+        self.update_sequence_line_edit_after_autofill("data", auto_fill)
         self.norm_sequence_event()
 
     @config_file_has_been_modified
     def data_browse_button(self, *args, **kwargs):
         BrowsingRuns(parent=self, data_type="data")
         ReductionTableAutoFill(parent=self, list_of_run_from_input="", data_type_selected="data")
-        self.ui.data_sequence_lineEdit.setText("")
+        self.reset_sequence_line_edit("data")
 
     @config_file_has_been_modified
     def norm_sequence_event(self, *args, **kwargs):
         str_norm_input = self.ui.norm_sequence_lineEdit.text()
-        ReductionTableAutoFill(
+        auto_fill = ReductionTableAutoFill(
             parent=self,
             list_of_run_from_input=str_norm_input,
             data_type_selected="norm",
         )
-        self.ui.norm_sequence_lineEdit.setText("")
+        self.update_sequence_line_edit_after_autofill("norm", auto_fill)
 
     @config_file_has_been_modified
     def norm_browse_button(self, *args, **kwargs):
         BrowsingRuns(parent=self, data_type="norm")
         ReductionTableAutoFill(parent=self, list_of_run_from_input="", data_type_selected="norm")
-        self.ui.norm_sequence_lineEdit.setText("")
+        self.reset_sequence_line_edit("norm")
 
     # Menu buttons
     def action_new(self):
