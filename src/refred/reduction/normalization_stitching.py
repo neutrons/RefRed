@@ -1,4 +1,4 @@
-from lr_reduction.scaling_factors import OverlapScalingFactor, ReducedData, scaling_factor_critical_edge
+from lr_reduction.stitching import OverlapScalingFactor, ReducedData, scaling_factor_critical_edge
 
 
 def _lconfig_to_reduced_data(lconfig) -> ReducedData:
