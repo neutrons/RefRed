@@ -1,6 +1,6 @@
 import logging
 import math
-from typing import List, Optional, Type
+from typing import List, Optional
 
 import numpy as np
 from mantid.api import mtd
@@ -43,7 +43,7 @@ class LRData(object):
         lconfig: Optional[LConfigDataset] = None,
         is_data=True,
         parent=None,
-        reduction_table_cell: Optional[Type["LRData"]] = None,
+        reduction_table_cell: Optional["LRData"] = None,
     ):
         """
         Constructor for LRData class
