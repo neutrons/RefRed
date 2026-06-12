@@ -119,7 +119,6 @@ toml-cli = "*"
 [tool.pixi.feature.dev.dependencies]
 mypy = ">=1.16.1"
 pip = ">=25.1.1"
-pip-audit = ">=2.9.0"
 pre-commit = ">=4.2.0"
 ruff = "*"
 versioningit = ">=3.2.0"
@@ -155,7 +154,6 @@ conda-publish = { cmd = "anaconda upload *.conda", description = "Publish the .c
   "conda-build",
 ] }
 # Misc
-audit-deps = { cmd = "pip-audit --local -s osv", description = "Audit the package dependencies for vulnerabilities" }
 clean = { cmd = 'rm -rf .mypy_cache .pytest_cache .ruff_cache **/*.egg-info **/dist **/__pycache__ **/_version.py', description = "Clean up various caches and build artifacts" }
 clean-conda = { cmd = "rm -f *.conda", description = "Clean the local .conda build artifacts" }
 clean-docs = { cmd = "rm -rf docs/_build", description = "Clean up documentation build artifacts" }

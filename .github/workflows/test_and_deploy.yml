@@ -42,6 +42,10 @@ jobs:
 
   build:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read          # for actions/checkout
+      security-events: write  # for github/codeql-action/upload-sarif to upload results
+      actions: read           # for upload-sarif to read run status (private repos)
     defaults:
       run:
         shell: bash -el {0}
@@ -64,6 +68,15 @@ jobs:
           # extract version from the package file name "refred-<version>-<build>.conda"
           echo "PKG_VERSION=$(ls *.conda | cut -d'-' -f2)" >> $GITHUB_ENV
 
+      # pkg-verify requires a conda env that already has the package
+      # installed (and micromamba on PATH); pkg-install sets both up.
+      - name: Install built conda package
+        id: install
+        uses: neutrons/conda-actions/pkg-install@v2
+        with:
+          package-name: ${{ env.PKG_NAME }}
+          local-channel: /tmp/local-channel
+
       - name: Verify conda package
         uses: neutrons/conda-actions/pkg-verify@v1
         with:
@@ -73,6 +86,13 @@ jobs:
           extra-channels: neutrons mantid
           extra-commands: pixi run python -c "import lr_reduction; import mantid; import qtpy; import configobj"
 
+      # Audit the dependencies of the conda package we just installed. SARIF
+      # results are uploaded to GitHub code scanning by the grype action.
+      - name: Scan installed environment with Grype
+        uses: neutrons/conda-actions/grype@v2
+        with:
+          path: ${{ steps.install.outputs.conda_install_dir }}
+          
       - name: Upload conda package as artifact
         uses: actions/upload-artifact@v7
         with:
