@@ -76,14 +76,14 @@ jobs:
         with:
           package-name: ${{ env.PKG_NAME }}
           local-channel: /tmp/local-channel
-
+          extra-channels: neutrons mantid
+          
       - name: Verify conda package
         uses: neutrons/conda-actions/pkg-verify@v1
         with:
           package-name: ${{ env.PKG_NAME }}=${{ env.PKG_VERSION }} # install exact version
           local-channel: /tmp/local-channel
           python-version: "3.11"
-          extra-channels: neutrons mantid
           extra-commands: pixi run python -c "import lr_reduction; import mantid; import qtpy; import configobj"
 
       # Audit the dependencies of the conda package we just installed. SARIF
