@@ -26,7 +26,7 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Setup Pixi
-        uses: prefix-dev/setup-pixi@v0.9.6
+        uses: prefix-dev/setup-pixi@a09b6247153796b190642a2b53fac4241043cf6f # v0.10.0
 
       - name: mypy type annotations
         run: pixi run mypy src/${{ env.PKG_NAME }} test
@@ -58,39 +58,38 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Setup Pixi
-        uses: prefix-dev/setup-pixi@v0.9.6
+        uses: prefix-dev/setup-pixi@a09b6247153796b190642a2b53fac4241043cf6f # v0.10.0
 
       - name: Build Conda package
         run: |
           pixi run conda-build
-          mkdir -p /tmp/local-channel/noarch
-          cp *.conda /tmp/local-channel/noarch/
-          # extract version from the package file name "refred-<version>-<build>.conda"
-          echo "PKG_VERSION=$(ls *.conda | cut -d'-' -f2)" >> $GITHUB_ENV
+
+          # Copy conda package to workspace root so it can be uploaded as an artifact.
+          find local-channel -name "*.conda" -exec cp {} . \;
 
       # pkg-verify requires a conda env that already has the package
       # installed (and micromamba on PATH); pkg-install sets both up.
       - name: Install built conda package
         id: install
-        uses: neutrons/conda-actions/pkg-install@v2
+        uses: neutrons/gh-actions/pkg-install@eb7a7c6fcfd0cda1a7b238329afc0afd09a4f4af # v2
         with:
           package-name: ${{ env.PKG_NAME }}
-          local-channel: /tmp/local-channel
+          local-channel: ./local-channel
           extra-channels: neutrons mantid
           
       - name: Verify Conda Package
-        uses: neutrons/conda-actions/pkg-verify@v2
+        uses: neutrons/gh-actions/pkg-verify@eb7a7c6fcfd0cda1a7b238329afc0afd09a4f4af # v2
         with:
           package-name: ${{ env.PKG_NAME }}
-          conda-env-name: ${{ steps.install.outputs.conda_env }}
+          conda-env-name: ${{ steps.install.outputs.conda-env }}
           extra-commands: python -c "import lr_reduction; import mantid; import qtpy; import configobj"
 
       # Audit the dependencies of the conda package we just installed. SARIF
       # results are uploaded to GitHub code scanning by the grype action.
       - name: Scan installed environment with Grype
-        uses: neutrons/conda-actions/grype@v2
+        uses: neutrons/gh-actions/grype@eb7a7c6fcfd0cda1a7b238329afc0afd09a4f4af # v2
         with:
-          path: ${{ steps.install.outputs.conda_install_dir }}
+          path: ${{ steps.install.outputs.conda-install-dir }}
           
       - name: Upload conda package as artifact
         uses: actions/upload-artifact@v7
@@ -109,7 +108,7 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Setup Pixi
-        uses: prefix-dev/setup-pixi@v0.9.6
+        uses: prefix-dev/setup-pixi@a09b6247153796b190642a2b53fac4241043cf6f # v0.10.0
 
       - name: Download conda package artifact
         uses: actions/download-artifact@v8
@@ -117,7 +116,7 @@ jobs:
           name: artifact-conda-package
 
       - name: Upload package to anaconda
-        uses: neutrons/conda-actions/publish@v2
+        uses: neutrons/gh-actions/publish@eb7a7c6fcfd0cda1a7b238329afc0afd09a4f4af # v2
         with:
           anaconda-token: ${{ secrets.ANACONDA_TOKEN }}
           organization: neutrons
@@ -125,11 +124,11 @@ jobs:
 
       - name: Remove old packages
         if: github.ref == 'refs/heads/next'
-        uses: neutrons/conda-actions/pkg-remove@v2
+        uses: neutrons/gh-actions/pkg-remove@eb7a7c6fcfd0cda1a7b238329afc0afd09a4f4af # v2
         with:
-          anaconda_token: ${{ secrets.ANACONDA_TOKEN }}
+          anaconda-token: ${{ secrets.ANACONDA_TOKEN }}
           organization: neutrons
-          package_name: ${{ env.PKG_NAME }}
+          package-name: ${{ env.PKG_NAME }}
           label: ${{ env.CONDA_LABEL }}
           keep: 5
 
@@ -146,8 +145,7 @@ jobs:
           prefix: refred
 
       - name: Trigger Dev Deploy
-        # use https://github.com/eic/trigger-gitlab-ci/pull/14 until merged
-        uses: eic/trigger-gitlab-ci@d984d8d53d871d2fdc1325639d94322da6e8747f
+        uses: eic/trigger-gitlab-ci@v3.3
         id: trigger
         with:
           url: https://code.ornl.gov
