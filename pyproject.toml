@@ -76,7 +76,7 @@ name = "refred"
 version = "0.0.0"
 
 [tool.pixi.package.build]
-backend = { name = "pixi-build-python", version = "0.4.*" }
+backend = { name = "pixi-build-python", version = "0.8.*" }
 
 # Conda packages to be installed in the environments. Includes all the run-dependencies.
 [tool.pixi.dependencies]
@@ -109,8 +109,6 @@ docs = { features = ["dev", "docs"], no-default-feature = true }
 build = { features = ["build"], no-default-feature = true }
 
 [tool.pixi.feature.build.dependencies]
-anaconda-client = ">=1.13.0"
-check-wheel-contents = ">=0.6.2"
 versioningit = ">=3.2.0"
 
 [tool.pixi.feature.build.pypi-dependencies]
@@ -121,7 +119,6 @@ mypy = ">=1.16.1"
 pip = ">=25.1.1"
 pre-commit = ">=4.2.0"
 ruff = "*"
-versioningit = ">=3.2.0"
 
 [tool.pixi.feature.docs.dependencies]
 sphinx = ">=8"
@@ -144,27 +141,28 @@ test-docs = { cmd = "sphinx-build -M doctest docs docs/_build/html", description
 # Testing
 test = { description = "Run the test suite", cmd = "pytest" }
 # Packaging
-conda-build-command = { cmd = "pixi build", description = "Wrapper for building the conda package - used by `conda-build`" }
+conda-build-command = { cmd = "pixi publish --target-channel ./local-channel", description = "Build the conda package command" }
 conda-build = { description = "Build the conda package", depends-on = [
-  "sync-version",
-  "conda-build-command",
-  "reset-version",
+    "sync-version",
+    "conda-build-command",
+    "reset-version",
 ] }
-conda-publish = { cmd = "anaconda upload *.conda", description = "Publish the .conda package to anaconda.org", depends-on = [
-  "conda-build",
+conda-publish = { cmd = "pixi upload anaconda --owner neutrons *.conda", description = "Publish the .conda package to anaconda.org", depends-on = [
+    "conda-build",
 ] }
 # Misc
-clean = { cmd = 'rm -rf .mypy_cache .pytest_cache .ruff_cache **/*.egg-info **/dist **/__pycache__ **/_version.py', description = "Clean up various caches and build artifacts" }
-clean-conda = { cmd = "rm -f *.conda", description = "Clean the local .conda build artifacts" }
+clean = { cmd = 'rm -rf .pytest_cache .ruff_cache **/*.egg-info **/dist **/__pycache__ **/_version.py', description = "Clean up various caches and build artifacts" }
+clean-conda = { cmd = "rm -rf ./local-channel", description = "Clean the local .conda build artifacts" }
 clean-docs = { cmd = "rm -rf docs/_build", description = "Clean up documentation build artifacts" }
 clean-all = { description = "Clean all artifacts", depends-on = [
-  "clean",
-  "clean-conda",
-  "clean-docs",
+    "clean",
+    "clean-conda",
+    "clean-docs",
 ] }
+# workaround for dynamic versioning
 sync-version = { cmd = 'version=$(python -m versioningit); toml set tool.pixi.package.version "$version" --toml-path pyproject.toml', description = "Sync pyproject.toml version with Git version" }
+backup-toml = { cmd = "cp pyproject.toml pyproject.toml.bak", description = "Backup the pyproject.toml file" }
 reset-version = { cmd = "toml set tool.pixi.package.version \"0.0.0\" --toml-path pyproject.toml", description = "Reset the package version to 0.0.0" }
-
 
 ##########################
 ### Pytest and CodeCov ###
@@ -200,16 +198,16 @@ ignore = [
   "ARG001", # Unused function argument
   "ARG002", # Unused method argument
   "ARG003", # Unused class method argument
-  "C901",   # function is too complex
-  "E402",   # module level import not at top of file
-  "E722",   # do not use bare 'except'
-  "F821",   # undefined name
-  "N802",   # function name should be lowercase
-  "N803",   # argument name should be lowercase
-  "N806",   # variable in function should be lowercase
-  "N815",   # mixed case class variable name
-  "N816",   # mixed case global variable name
-  "N999",   # invalid module name
+  "C901",   # Function is too complex
+  "E402",   # Module level import not at top of file
+  "E722",   # Do not use bare 'except'
+  "F821",   # Undefined name
+  "N802",   # Function name should be lowercase
+  "N803",   # Argument name should be lowercase
+  "N806",   # Variable in function should be lowercase
+  "N815",   # Mixed case class variable name
+  "N816",   # Mixed case global variable name
+  "N999",   # Invalid module name
 ]
 
 [tool.mypy]
