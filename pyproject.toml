@@ -48,9 +48,9 @@ default-tag = "4.0.0"
 method = "minor"
 
 [tool.versioningit.format]
-distance = "{next_version}.dev{distance}"
+distance = "{next_version}.dev{committer_date:%Y%m%d%H%M%S}"
 dirty = "{version}"
-distance-dirty = "{next_version}.dev{distance}"
+distance-dirty = "{next_version}.dev{committer_date:%Y%m%d%H%M%S}"
 
 [tool.versioningit.write]
 file = "src/refred/_version.py"
@@ -161,7 +161,6 @@ clean-all = { description = "Clean all artifacts", depends-on = [
 ] }
 # workaround for dynamic versioning
 sync-version = { cmd = 'version=$(python -m versioningit); toml set tool.pixi.package.version "$version" --toml-path pyproject.toml', description = "Sync pyproject.toml version with Git version" }
-backup-toml = { cmd = "cp pyproject.toml pyproject.toml.bak", description = "Backup the pyproject.toml file" }
 reset-version = { cmd = "toml set tool.pixi.package.version \"0.0.0\" --toml-path pyproject.toml", description = "Reset the package version to 0.0.0" }
 
 ##########################
