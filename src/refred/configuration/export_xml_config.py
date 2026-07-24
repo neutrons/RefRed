@@ -8,12 +8,20 @@ import mantid
 
 import refred
 from refred.calculations.lr_data import LRData
+from refred.gui_handling.gui_utility import GuiUtility
 from refred.reduction.global_reduction_settings_handler import (
     GlobalReductionSettingsHandler,
 )
 
 if TYPE_CHECKING:
     from refred.main import MainGui
+
+# Map RefRed stitching values to lrred/xml types
+_STITCHING_TYPE_TO_XML = {
+    "absolute": "AbsoluteNormalization",
+    "auto": "AutomaticAverage",
+    "manual": "None",
+}
 
 
 class ExportXMLConfig(object):
@@ -40,6 +48,11 @@ class ExportXMLConfig(object):
         _big_table_data = self.parent.big_table_data
         nbr_row = self.parent.REDUCTIONTABLE_MAX_ROWCOUNT
         o_general_settings = GlobalReductionSettingsHandler(parent=self.parent)
+
+        # Get the active stitching type and map to XML value
+        o_gui = GuiUtility(parent=self.parent)
+        gui_stitching_type = o_gui.getStitchingType()
+        xml_stitching_type = _STITCHING_TYPE_TO_XML.get(gui_stitching_type, "None")
 
         for row in range(nbr_row):
             _data: LRData = _big_table_data[row, 0]
@@ -190,6 +203,31 @@ class ExportXMLConfig(object):
             str_array.append(o_general_settings.instrument_settings.to_xml(indent="   "))
 
             str_array.append("   <const_q>" + str(const_q) + "</const_q>\n")
+
+            # stitching configuration
+            str_array.append("   <stitching_type>" + xml_stitching_type + "</stitching_type>\n")
+            str_array.append(
+                "   <scale_factor_qmin>" + str(self.parent.ui.sf_qmin_value.text()) + "</scale_factor_qmin>\n"
+            )
+            str_array.append(
+                "   <scale_factor_qmax>" + str(self.parent.ui.sf_qmax_value.text()) + "</scale_factor_qmax>\n"
+            )
+            normalize_first_angle = self.parent.ui.normalize_first_angle_checkbox.isChecked()
+            str_array.append(f"   <normalize_first_angle>{normalize_first_angle}</normalize_first_angle>\n")
+
+            # Write the per-row reflectivity stitching scale factor
+            _lconfig = _big_table_data[row, 2]
+            if _lconfig is not None:
+                sf = (
+                    _lconfig.sf_auto
+                    if gui_stitching_type == "auto"
+                    else (_lconfig.sf_abs_normalization if gui_stitching_type == "absolute" else _lconfig.sf_manual)
+                )
+            else:
+                sf = 1.0
+            str_array.append(
+                "   <stitching_reflectivity_scale_factor>" + str(sf) + "</stitching_reflectivity_scale_factor>\n"
+            )
 
             str_array.append("  </RefLData>\n")
 

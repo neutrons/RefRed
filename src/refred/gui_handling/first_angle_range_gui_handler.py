@@ -46,6 +46,7 @@ class NormalizationOrStitchingButtonStatus(ParentGuiHandler):
         self.handleWidgets()
 
     def handleWidgets(self):
+        self.parent.ui.normalize_first_angle_checkbox.setEnabled(self.is_auto_stitching)
         if self.is_manual_stitching:
             self.parent.ui.sf_first_angle_range_group.setEnabled(False)
             return

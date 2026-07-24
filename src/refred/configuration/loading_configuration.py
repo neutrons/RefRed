@@ -12,6 +12,9 @@ from refred.configuration.load_reduction_table_from_lconfigdataset import (
 from refred.configuration.populate_reduction_table_from_lconfigdataset import (
     PopulateReductionTableFromLConfigDataSet as PopulateReductionTable,
 )
+from refred.gui_handling.first_angle_range_gui_handler import (
+    NormalizationOrStitchingButtonStatus,
+)
 from refred.gui_handling.gui_utility import GuiUtility
 from refred.gui_handling.scaling_factor_widgets_handler import (
     ScalingFactorWidgetsHandler,
@@ -190,6 +193,21 @@ class LoadingConfiguration(object):
             self.parent.instrument_settings.apply_instrument_settings
         )
 
+        stitching_type_str = self.getNodeValue(node_0, "stitching_type", default="None")
+
+        # Map the lr_reduction StitchingType value back to the RefRed GUI radio button
+        # and sync all dependent widget states (including normalize_first_angle_checkbox)
+        norm_or_stitching = NormalizationOrStitchingButtonStatus(parent=self.parent)
+        if stitching_type_str == "AbsoluteNormalization":
+            self.parent.ui.absolute_normalization_button.setChecked(True)
+            norm_or_stitching.setWidget(activated_button=0)
+        elif stitching_type_str == "AutomaticAverage":
+            self.parent.ui.auto_stitching_button.setChecked(True)
+            norm_or_stitching.setWidget(activated_button=1)
+        elif stitching_type_str == "None":
+            self.parent.ui.manual_stitching_button.setChecked(True)
+            norm_or_stitching.setWidget(activated_button=2)
+
     def getMetadataObject(self, node) -> LConfigDataset:
         r"""Populate an instance of type LConfigDataset using the information contained in one of the
         'RefLData    XML blocks within a configuration file."""
@@ -290,6 +308,17 @@ class LoadingConfiguration(object):
         except:
             _norm_full_file_name = [""]
         iMetadata.norm_full_file_name = _norm_full_file_name
+
+        stitching_refl_sf = float(self.getNodeValue(node, "stitching_reflectivity_scale_factor", default="1.0"))
+
+        # Map the scale factor value to the corresponding active stitching type
+        stitching_type_str = self.getNodeValue(node, "stitching_type", default="None")
+        if stitching_type_str == "AbsoluteNormalization":
+            iMetadata.sf_abs_normalization = stitching_refl_sf
+        elif stitching_type_str == "AutomaticAverage":
+            iMetadata.sf_auto = stitching_refl_sf
+        else:
+            iMetadata.sf_manual = stitching_refl_sf
 
         return iMetadata
 

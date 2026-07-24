@@ -1,4 +1,12 @@
 from refred.configuration.global_settings import GlobalSettings
+from refred.gui_handling.gui_utility import GuiUtility
+
+# Map RefRed stitching values to lrred/xml types
+_STITCHING_TYPE_TO_XML = {
+    "absolute": "AbsoluteNormalization",
+    "auto": "AutomaticAverage",
+    "manual": "None",
+}
 
 
 class GlobalReductionSettingsHandler(object):
@@ -23,6 +31,9 @@ class GlobalReductionSettingsHandler(object):
 
     def retrieve_settings(self):
         r"""Retrieve the values of all the global settings from the GUI or from GlobalSettings instances"""
+        # Get the active stitching type and map to XML value
+        o_gui = GuiUtility(parent=self.parent)
+        gui_stitching_type = o_gui.getStitchingType()
         self.settings.update(
             {
                 "incident_medium_selected": str(self.parent.ui.selectIncidentMediumList.currentText()).strip(),
@@ -37,6 +48,7 @@ class GlobalReductionSettingsHandler(object):
                 "apply_normalization": self.parent.ui.useNormalizationFlag.isChecked(),
                 "dead_time": self.parent.deadtime_settings,  # an instance of `DeadTimeSettingsModel`
                 "instrument_settings": self.parent.instrument_settings,  # an instance of `InstrumentSettings`
+                "stitching_type": _STITCHING_TYPE_TO_XML.get(gui_stitching_type, "None"),
             }
         )
 
