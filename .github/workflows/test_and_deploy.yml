@@ -76,7 +76,7 @@ jobs:
           package-name: ${{ env.PKG_NAME }}
           local-channel: ./local-channel
           extra-channels: neutrons mantid
-          
+
       - name: Verify Conda Package
         uses: neutrons/gh-actions/pkg-verify@eb7a7c6fcfd0cda1a7b238329afc0afd09a4f4af # v2
         with:
@@ -90,7 +90,7 @@ jobs:
         uses: neutrons/gh-actions/grype@eb7a7c6fcfd0cda1a7b238329afc0afd09a4f4af # v2
         with:
           path: ${{ steps.install.outputs.conda-install-dir }}
-          
+
       - name: Upload conda package as artifact
         uses: actions/upload-artifact@v7
         with:
@@ -139,7 +139,7 @@ jobs:
     if: github.ref == 'refs/heads/next'
     steps:
       - name: Get Environment Name
-        uses: neutrons/branch-mapper@main
+        uses: neutrons/gh-actions/branch-mapper@eb7a7c6fcfd0cda1a7b238329afc0afd09a4f4af
         id: env_name
         with:
           prefix: refred
