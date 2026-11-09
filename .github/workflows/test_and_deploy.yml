@@ -71,7 +71,7 @@ jobs:
       # installed (and micromamba on PATH); pkg-install sets both up.
       - name: Install built conda package
         id: install
-        uses: neutrons/gh-actions/pkg-install@eb7a7c6fcfd0cda1a7b238329afc0afd09a4f4af # v2
+        uses: neutrons/gh-actions/pkg-install@46e28a74c8872901c571e0493d26871afe2662fb # v2
         with:
           package-name: ${{ env.PKG_NAME }}
           local-channel: ./local-channel
